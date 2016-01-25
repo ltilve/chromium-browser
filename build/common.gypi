@@ -3776,7 +3776,7 @@
                   '-fomit-frame-pointer',
                 ],
               }],
-              ['OS=="linux" and target_arch=="ia32"', {
+              ['OS=="linux"', {
                 'ldflags': [
                   '-Wl,--no-as-needed',
                 ],
@@ -3872,6 +3872,11 @@
               }, {
                 'cflags': ['-fno-unwind-tables', '-fno-asynchronous-unwind-tables'],
                 'defines': ['NO_UNWIND_TABLES'],
+              }],
+              ['OS=="linux"', {
+                'ldflags': [
+                  '-Wl,--no-as-needed',
+                ],
               }],
             ],
           },
