@@ -6,14 +6,12 @@ package org.chromium.chrome.browser.preferences;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
-import org.chromium.base.CalledByNative;
 import org.chromium.base.ThreadUtils;
+import org.chromium.base.annotations.CalledByNative;
 import org.chromium.chrome.browser.ContentSettingsType;
-import org.chromium.chrome.browser.UrlUtilities;
 import org.chromium.chrome.browser.preferences.website.ContentSetting;
 import org.chromium.chrome.browser.preferences.website.ContentSettingException;
 import org.chromium.chrome.browser.preferences.website.GeolocationInfo;
@@ -22,7 +20,6 @@ import org.chromium.chrome.browser.search_engines.TemplateUrlService;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 /**
  * PrefServiceBridge is a singleton which provides access to some native preferences. Ideally
@@ -148,65 +145,15 @@ public final class PrefServiceBridge {
         String url = templateUrlService.getSearchEngineUrlFromTemplateUrl(
                 templateUrlService.getDefaultSearchEngineIndex());
         if (allowed && !url.startsWith("https:")) return;
-        GeolocationInfo locationSettings = new GeolocationInfo(url, null);
+        GeolocationInfo locationSettings = new GeolocationInfo(url, null, false);
         ContentSetting locationPermission = locationSettings.getContentSetting();
         if (locationPermission == null || locationPermission == ContentSetting.ASK) {
-            WebsitePreferenceBridge.nativeSetGeolocationSettingForOrigin(
-                    url, url, allowed
-                            ? ContentSetting.ALLOW.toInt() : ContentSetting.BLOCK.toInt());
+            WebsitePreferenceBridge.nativeSetGeolocationSettingForOrigin(url, url,
+                    allowed ? ContentSetting.ALLOW.toInt() : ContentSetting.BLOCK.toInt(), false);
             SharedPreferences sharedPreferences =
                     PreferenceManager.getDefaultSharedPreferences(context);
             sharedPreferences.edit().putBoolean(LOCATION_AUTO_ALLOWED, true).apply();
         }
-    }
-
-    /**
-     * Whether the geo header is allowed to be sent for the current URL.
-     * @param context The Context used to get the device location.
-     * @param url The URL of the request with which this header will be sent.
-     * @param isIncognito Whether the request will happen in an incognito tab.
-     */
-    public static boolean isGeoHeaderEnabledForUrl(
-            Context context, String url, boolean isIncognito) {
-        // TODO(finnur): delete this method once GeolocationHeader has been upstreamed.
-        // Only send the Geo header in normal mode.
-        if (isIncognito) return false;
-
-        // Only send the Geo header to Google domains.
-        if (!UrlUtilities.nativeIsGoogleSearchUrl(url)) return false;
-
-        Uri uri = Uri.parse(url);
-        if (!HTTPS_SCHEME.equals(uri.getScheme())) return false;
-
-        // Only send Geo header if the user hasn't disabled geolocation for url.
-        if (isLocationDisabledForUrl(uri)) return false;
-
-        return true;
-    }
-
-    /**
-     * Returns true if the user has disabled sharing their location with url (e.g. via the
-     * geolocation infobar). If the user has not chosen a preference for url and url uses the https
-     * scheme, this considers the user's preference for url with the http scheme instead.
-     */
-    public static boolean isLocationDisabledForUrl(Uri uri) {
-        // TODO(finnur): Delete this method once GeolocationHeader has been upstreamed.
-        GeolocationInfo locationSettings = new GeolocationInfo(uri.toString(), null);
-        ContentSetting locationPermission = locationSettings.getContentSetting();
-
-        // If no preference has been chosen and the scheme is https, fall back to the preference for
-        // this same host over http with no explicit port number.
-        if (locationPermission == null || locationPermission == ContentSetting.ASK) {
-            String scheme = uri.getScheme();
-            if (scheme != null && scheme.toLowerCase(Locale.US).equals("https")
-                    && uri.getAuthority() != null && uri.getUserInfo() == null) {
-                String urlWithHttp = "http://" + uri.getHost();
-                locationSettings = new GeolocationInfo(urlWithHttp, null);
-                locationPermission = locationSettings.getContentSetting();
-            }
-        }
-
-        return locationPermission == ContentSetting.BLOCK;
     }
 
     /**
@@ -402,6 +349,13 @@ public final class PrefServiceBridge {
     }
 
     /**
+     * Sets the preference that controls automatic detection of character encoding.
+     */
+    public void setAutoDetectEncodingEnabled(boolean enabled) {
+        nativeSetAutoDetectEncodingEnabled(enabled);
+    }
+
+    /**
      * Sets the preference that signals when the user has accepted the EULA.
      */
     public void setEulaAccepted() {
@@ -427,20 +381,6 @@ public final class PrefServiceBridge {
      */
     public String getSyncLastAccountName() {
         return nativeGetSyncLastAccountName();
-    }
-
-    /**
-     * Enable or disable x-auto-login
-     */
-    public void setAutologinEnabled(boolean autologinEnabled) {
-        nativeSetAutologinEnabled(autologinEnabled);
-    }
-
-    /**
-     * @return true if x-auto-login is enabled, false otherwise.
-     */
-    public boolean isAutologinEnabled() {
-        return nativeGetAutologinEnabled();
     }
 
     /**
@@ -534,27 +474,45 @@ public final class PrefServiceBridge {
     }
 
     /**
-     * @return whether there is a user set value for kNetworkPredictionEnabled.  This should only be
-     * used for preference migration.
+     * @return whether Safe Browsing Extended Reporting is currently enabled.
      */
-    public boolean networkPredictionEnabledHasUserSetting() {
-        return nativeNetworkPredictionEnabledHasUserSetting();
+    public boolean isSafeBrowsingExtendedReportingEnabled() {
+        return nativeGetSafeBrowsingExtendedReportingEnabled();
     }
 
     /**
-     * @return whether there is a user set value for kNetworkPredictionOptions.  This should only be
-     * used for preference migration.
+     * @param whether Safe Browsing Extended Reporting should be enabled.
      */
-    public boolean networkPredictionOptionsHasUserSetting() {
-        return nativeNetworkPredictionOptionsHasUserSetting();
+    public void setSafeBrowsingExtendedReportingEnabled(boolean enabled) {
+        nativeSetSafeBrowsingExtendedReportingEnabled(enabled);
     }
 
     /**
-     * @return the user set value for kNetworkPredictionEnabled. This should only be used for
-     * preference migration.
+     * @return whether Safe Browsing Extended Reporting is managed
      */
-    public boolean getNetworkPredictionEnabledUserPrefValue() {
-        return nativeGetNetworkPredictionEnabledUserPrefValue();
+    public boolean isSafeBrowsingExtendedReportingManaged() {
+        return nativeGetSafeBrowsingExtendedReportingManaged();
+    }
+
+    /**
+     * @return whether Safe Browsing is currently enabled.
+     */
+    public boolean isSafeBrowsingEnabled() {
+        return nativeGetSafeBrowsingEnabled();
+    }
+
+    /**
+     * @param whether Safe Browsing should be enabled.
+     */
+    public void setSafeBrowsingEnabled(boolean enabled) {
+        nativeSetSafeBrowsingEnabled(enabled);
+    }
+
+    /**
+     * @return whether Safe Browsing is managed
+     */
+    public boolean isSafeBrowsingManaged() {
+        return nativeGetSafeBrowsingManaged();
     }
 
     /**
@@ -634,6 +592,13 @@ public final class PrefServiceBridge {
      */
     public boolean isTranslateManaged() {
         return nativeGetTranslateManaged();
+    }
+
+    /**
+     * @return true if automatic detection of character encoding is enabled, false otherwise.
+     */
+    public boolean isAutoDetectEncodingEnabled() {
+        return nativeGetAutoDetectEncodingEnabled();
     }
 
     /**
@@ -954,6 +919,7 @@ public final class PrefServiceBridge {
     private native boolean nativeGetFullscreenManaged();
     private native boolean nativeGetTranslateEnabled();
     private native boolean nativeGetTranslateManaged();
+    private native boolean nativeGetAutoDetectEncodingEnabled();
     private native boolean nativeGetResolveNavigationErrorEnabled();
     private native boolean nativeGetResolveNavigationErrorManaged();
     private native boolean nativeGetProtectedMediaIdentifierEnabled();
@@ -964,6 +930,7 @@ public final class PrefServiceBridge {
     private native boolean nativeGetPrintingManaged();
     private native boolean nativeGetForceGoogleSafeSearch();
     private native void nativeSetTranslateEnabled(boolean enabled);
+    private native void nativeSetAutoDetectEncodingEnabled(boolean enabled);
     private native void nativeResetTranslateDefaults();
     private native void nativeMigrateJavascriptPreference();
     private native void nativeMigrateLocationPreference();
@@ -985,8 +952,6 @@ public final class PrefServiceBridge {
     private native void nativeSetPushNotificationsEnabled(boolean allow);
     private native void nativeSetPasswordEchoEnabled(boolean enabled);
     private native void nativeSetPopupException(String pattern, int setting);
-    private native boolean nativeGetAutologinEnabled();
-    private native void nativeSetAutologinEnabled(boolean autologinEnabled);
     private native void nativeSetCrashReporting(boolean reporting);
     private native boolean nativeCanPredictNetworkActions();
     private native AboutVersionStrings nativeGetAboutVersionStrings();
@@ -996,10 +961,13 @@ public final class PrefServiceBridge {
     private native boolean nativeGetSearchSuggestEnabled();
     private native void nativeSetSearchSuggestEnabled(boolean enabled);
     private native boolean nativeGetSearchSuggestManaged();
+    private native boolean nativeGetSafeBrowsingExtendedReportingEnabled();
+    private native void nativeSetSafeBrowsingExtendedReportingEnabled(boolean enabled);
+    private native boolean nativeGetSafeBrowsingExtendedReportingManaged();
+    private native boolean nativeGetSafeBrowsingEnabled();
+    private native void nativeSetSafeBrowsingEnabled(boolean enabled);
+    private native boolean nativeGetSafeBrowsingManaged();
     private native boolean nativeGetNetworkPredictionManaged();
-    private native boolean nativeNetworkPredictionEnabledHasUserSetting();
-    private native boolean nativeNetworkPredictionOptionsHasUserSetting();
-    private native boolean nativeGetNetworkPredictionEnabledUserPrefValue();
     private native int nativeGetNetworkPredictionOptions();
     private native void nativeSetNetworkPredictionOptions(int option);
     private native void nativeSetResolveNavigationErrorEnabled(boolean enabled);

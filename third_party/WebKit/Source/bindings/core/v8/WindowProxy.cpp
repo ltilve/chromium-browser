@@ -255,12 +255,38 @@ bool WindowProxy::initialize()
     }
     if (m_frame->isLocalFrame()) {
         LocalFrame* frame = toLocalFrame(m_frame);
-        MainThreadDebugger::initializeContext(context, m_world->worldId());
+        MainThreadDebugger::initializeContext(context, frame, m_world->worldId());
         InspectorInstrumentation::didCreateScriptContext(frame, m_scriptState.get(), origin, m_world->worldId());
         frame->loader().client()->didCreateScriptContext(context, m_world->extensionGroup(), m_world->worldId());
     }
     return true;
 }
+
+namespace {
+
+void configureInnerGlobalObjectTemplate(v8::Local<v8::ObjectTemplate> templ, v8::Isolate* isolate)
+{
+    // Install a security handler with V8.
+    templ->SetAccessCheckCallbacks(V8Window::namedSecurityCheckCustom, V8Window::indexedSecurityCheckCustom, v8::External::New(isolate, const_cast<WrapperTypeInfo*>(&V8Window::wrapperTypeInfo)));
+    templ->SetInternalFieldCount(V8Window::internalFieldCount);
+}
+
+v8::Local<v8::ObjectTemplate> getInnerGlobalObjectTemplate(v8::Isolate* isolate)
+{
+    // It is OK to share the same object template between the main world and
+    // non-main worlds because the inner global object doesn't install any
+    // DOM attributes/methods.
+    DEFINE_STATIC_LOCAL(v8::Persistent<v8::ObjectTemplate>, innerGlobalObjectTemplate, ());
+    if (innerGlobalObjectTemplate.IsEmpty()) {
+        TRACE_EVENT_SCOPED_SAMPLING_STATE("blink", "BuildDOMTemplate");
+        v8::Local<v8::ObjectTemplate> templ = v8::ObjectTemplate::New(isolate);
+        configureInnerGlobalObjectTemplate(templ, isolate);
+        innerGlobalObjectTemplate.Reset(isolate, templ);
+    }
+    return v8::Local<v8::ObjectTemplate>::New(isolate, innerGlobalObjectTemplate);
+}
+
+} // namespace
 
 void WindowProxy::createContext()
 {
@@ -271,7 +297,7 @@ void WindowProxy::createContext()
 
     // Create a new environment using an empty template for the shadow
     // object. Reuse the global object if one has been created earlier.
-    v8::Local<v8::ObjectTemplate> globalTemplate = V8Window::getShadowObjectTemplate(m_isolate);
+    v8::Local<v8::ObjectTemplate> globalTemplate = getInnerGlobalObjectTemplate(m_isolate);
     if (globalTemplate.IsEmpty())
         return;
 
@@ -408,10 +434,7 @@ void WindowProxy::setSecurityToken(SecurityOrigin* origin)
     // - document.domain was modified
     // - the frame is showing the initial empty document
     // - the frame is remote
-    bool delaySet = m_world->isMainWorld()
-        && (m_frame->isRemoteFrame()
-            || origin->domainWasSetInDOM()
-            || toLocalFrame(m_frame)->loader().stateMachine()->isDisplayingInitialEmptyDocument());
+    bool delaySet = m_frame->isRemoteFrame() || (m_world->isMainWorld() && (origin->domainWasSetInDOM() || toLocalFrame(m_frame)->loader().stateMachine()->isDisplayingInitialEmptyDocument()));
     if (origin && !delaySet)
         token = origin->toString();
 
@@ -428,8 +451,22 @@ void WindowProxy::setSecurityToken(SecurityOrigin* origin)
         return;
     }
 
-    if (m_world->isPrivateScriptIsolatedWorld())
+    if (m_world->isPrivateScriptIsolatedWorld()) {
         token = "private-script://" + token;
+    } else if (m_world->isIsolatedWorld()) {
+        SecurityOrigin* frameSecurityOrigin = m_frame->securityContext()->securityOrigin();
+        String frameSecurityToken = frameSecurityOrigin->toString();
+        // We need to check the return value of domainWasSetInDOM() on the
+        // frame's SecurityOrigin because, if that's the case, only
+        // SecurityOrigin::m_domain would have been modified.
+        // m_domain is not used by SecurityOrigin::toString(), so we would end
+        // up generating the same token that was already set.
+        if (frameSecurityOrigin->domainWasSetInDOM() || frameSecurityToken.isEmpty() || frameSecurityToken == "null") {
+            context->UseDefaultSecurityToken();
+            return;
+        }
+        token = frameSecurityToken + token;
+    }
 
     CString utf8Token = token.utf8();
     // NOTE: V8 does identity comparison in fast path, must use a symbol
@@ -522,7 +559,6 @@ void WindowProxy::namedItemRemoved(HTMLDocument* document, const AtomicString& n
 
 void WindowProxy::updateSecurityOrigin(SecurityOrigin* origin)
 {
-    ASSERT(m_world->isMainWorld());
     if (!isContextInitialized())
         return;
     setSecurityToken(origin);

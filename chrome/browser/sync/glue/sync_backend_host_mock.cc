@@ -5,6 +5,7 @@
 #include "chrome/browser/sync/glue/sync_backend_host_mock.h"
 
 #include "components/sync_driver/sync_frontend.h"
+#include "sync/internal_api/public/activation_context.h"
 
 namespace browser_sync {
 
@@ -16,12 +17,16 @@ SyncBackendHostMock::~SyncBackendHostMock() {}
 void SyncBackendHostMock::Initialize(
     sync_driver::SyncFrontend* frontend,
     scoped_ptr<base::Thread> sync_thread,
+    const scoped_refptr<base::SingleThreadTaskRunner>& db_thread,
+    const scoped_refptr<base::SingleThreadTaskRunner>& file_thread,
     const syncer::WeakHandle<syncer::JsEventHandler>& event_handler,
     const GURL& service_url,
+    const std::string& sync_user_agent,
     const syncer::SyncCredentials& credentials,
     bool delete_sync_data_folder,
     scoped_ptr<syncer::SyncManagerFactory> sync_manager_factory,
-    scoped_ptr<syncer::UnrecoverableErrorHandler> unrecoverable_error_handler,
+    const syncer::WeakHandle<syncer::UnrecoverableErrorHandler>&
+        unrecoverable_error_handler,
     const base::Closure& report_unrecoverable_error_function,
     syncer::NetworkResources* network_resources,
     scoped_ptr<syncer::SyncEncryptionHandler::NigoriState> saved_nigori_state) {
@@ -66,18 +71,26 @@ syncer::ModelTypeSet SyncBackendHostMock::ConfigureDataTypes(
 
 void SyncBackendHostMock::EnableEncryptEverything() {}
 
-void SyncBackendHostMock::ActivateDataType(
-    syncer::ModelType type, syncer::ModelSafeGroup group,
+void SyncBackendHostMock::ActivateDirectoryDataType(
+    syncer::ModelType type,
+    syncer::ModelSafeGroup group,
     sync_driver::ChangeProcessor* change_processor) {}
-void SyncBackendHostMock::DeactivateDataType(syncer::ModelType type) {}
+void SyncBackendHostMock::DeactivateDirectoryDataType(syncer::ModelType type) {}
+
+void SyncBackendHostMock::ActivateNonBlockingDataType(
+    syncer::ModelType type,
+    scoped_ptr<syncer_v2::ActivationContext> activation_context) {}
+
+void SyncBackendHostMock::DeactivateNonBlockingDataType(
+    syncer::ModelType type) {}
 
 syncer::UserShare* SyncBackendHostMock::GetUserShare() const {
   return NULL;
 }
 
-scoped_ptr<syncer::SyncContextProxy>
+scoped_ptr<syncer_v2::SyncContextProxy>
 SyncBackendHostMock::GetSyncContextProxy() {
-  return scoped_ptr<syncer::SyncContextProxy>();
+  return scoped_ptr<syncer_v2::SyncContextProxy>();
 }
 
 SyncBackendHost::Status SyncBackendHostMock::GetDetailedStatus() {
@@ -94,7 +107,7 @@ bool SyncBackendHostMock::HasUnsyncedItems() const {
 }
 
 bool SyncBackendHostMock::IsNigoriEnabled() const {
- return false;
+ return true;
 }
 
 syncer::PassphraseType SyncBackendHostMock::GetPassphraseType() const {
@@ -136,6 +149,11 @@ void SyncBackendHostMock::GetAllNodesForTypes(
 
 void SyncBackendHostMock::set_fail_initial_download(bool should_fail) {
   fail_initial_download_ = should_fail;
+}
+
+void SyncBackendHostMock::ClearServerData(
+    const syncer::SyncManager::ClearServerDataCallback& callback) {
+  callback.Run();
 }
 
 }  // namespace browser_sync

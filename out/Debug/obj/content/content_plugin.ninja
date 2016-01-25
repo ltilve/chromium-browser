@@ -1,0 +1,14 @@
+build obj/content/content_plugin.actions_depends.stamp: stamp $
+    obj/ui/accessibility/libax_gen.a $
+    obj/mojo/libmojo_application_bindings.a $
+    obj/mojo/libnetwork_service_bindings_lib.a $
+    obj/content/libcontent_common_mojo_bindings.a
+
+build obj/content/content_plugin.compile_depends.stamp: stamp $
+    obj/ui/accessibility/ax_gen.actions_rules_copies.stamp $
+    obj/mojo/mojo_application_bindings.compile_depends.stamp $
+    obj/mojo/network_service_bindings_mojom.actions_rules_copies.stamp $
+    obj/content/content_common_mojo_bindings.compile_depends.stamp
+
+build obj/content/libcontent_plugin.a: alink_thin || $
+    obj/content/content_plugin.actions_depends.stamp

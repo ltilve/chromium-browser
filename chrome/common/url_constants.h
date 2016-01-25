@@ -43,6 +43,7 @@ extern const char kChromeUIFlagsURL[];
 extern const char kChromeUIFlashURL[];
 extern const char kChromeUIGCMInternalsURL[];
 extern const char kChromeUIHelpFrameURL[];
+extern const char kChromeUIHelpURL[];
 extern const char kChromeUIHistoryURL[];
 extern const char kChromeUIHistoryFrameURL[];
 extern const char kChromeUIIdentityInternalsURL[];
@@ -70,17 +71,16 @@ extern const char kChromeUIMdSettingsURL[];
 extern const char kChromeUISettingsURL[];
 extern const char kChromeUIContentSettingsURL[];
 extern const char kChromeUISettingsFrameURL[];
+extern const char kChromeUISiteEngagementHost[];
 extern const char kChromeUISuggestionsURL[];
 extern const char kChromeUISupervisedUserPassphrasePageURL[];
 extern const char kChromeUITermsURL[];
 extern const char kChromeUIThemeURL[];
 extern const char kChromeUIThumbnailURL[];
 extern const char kChromeUIThumbnailListURL[];
-extern const char kChromeUIUberURL[];
 extern const char kChromeUIUberFrameURL[];
 extern const char kChromeUIUserActionsURL[];
 extern const char kChromeUIVersionURL[];
-extern const char kChromeUIVoiceSearchURL[];
 
 #if defined(OS_ANDROID)
 extern const char kChromeUIContextualSearchPromoURL[];
@@ -95,7 +95,6 @@ extern const char kChromeUIBluetoothPairingURL[];
 extern const char kChromeUICertificateManagerDialogURL[];
 extern const char kChromeUIChooseMobileNetworkURL[];
 extern const char kChromeUIDeviceEmulatorURL[];
-extern const char kChromeUIDiscardsURL[];
 extern const char kChromeUIFirstRunURL[];
 extern const char kChromeUIImageBurnerURL[];
 extern const char kChromeUIKeyboardOverlayURL[];
@@ -140,6 +139,11 @@ extern const char kChromeUIWebRtcLogsURL[];
 extern const char kChromeUIMediaRouterURL[];
 #endif
 
+#if defined(OS_WIN) || defined(OS_MACOSX) || defined(OS_CHROMEOS)
+extern const char kChromeUIDiscardsHost[];
+extern const char kChromeUIDiscardsURL[];
+#endif
+
 // chrome components of URLs. Should be kept in sync with the full URLs above.
 extern const char kChromeUIAboutHost[];
 extern const char kChromeUIAboutPageFrameHost[];
@@ -178,6 +182,7 @@ extern const char kChromeUIGCMInternalsHost[];
 extern const char kChromeUIHelpFrameHost[];
 extern const char kChromeUIHelpHost[];
 extern const char kChromeUIHangHost[];
+extern const char kChromeUIHangUIHost[];
 extern const char kChromeUIHistoryHost[];
 extern const char kChromeUIHistoryFrameHost[];
 extern const char kChromeUIIdentityInternalsHost[];
@@ -212,6 +217,7 @@ extern const char kChromeUISettingsFrameHost[];
 extern const char kChromeUIShorthangHost[];
 extern const char kChromeUISignInInternalsHost[];
 extern const char kChromeUISuggestionsHost[];
+extern const char kChromeUISupervisedUserInternalsHost[];
 extern const char kChromeUISupervisedUserPassphrasePageHost[];
 extern const char kChromeUISyncHost[];
 extern const char kChromeUISyncFileSystemInternalsHost[];
@@ -229,7 +235,6 @@ extern const char kChromeUIUberFrameHost[];
 extern const char kChromeUIUberHost[];
 extern const char kChromeUIUserActionsHost[];
 extern const char kChromeUIVersionHost[];
-extern const char kChromeUIVoiceSearchHost[];
 extern const char kChromeUIWebRTCDeviceProviderHost[];
 extern const char kChromeUIWorkersHost[];
 
@@ -246,6 +251,7 @@ extern const char kChromeUISandboxHost[];
 
 #if defined(OS_ANDROID)
 extern const char kChromeUIContextualSearchPromoHost[];
+extern const char kChromeUIPopularSitesInternalsHost[];
 #endif
 
 #if defined(OS_CHROMEOS)
@@ -256,7 +262,6 @@ extern const char kChromeUICertificateManagerHost[];
 extern const char kChromeUIChooseMobileNetworkHost[];
 extern const char kChromeUICryptohomeHost[];
 extern const char kChromeUIDeviceEmulatorHost[];
-extern const char kChromeUIDiscardsHost[];
 extern const char kChromeUIFirstRunHost[];
 extern const char kChromeUIImageBurnerHost[];
 extern const char kChromeUIKeyboardOverlayHost[];
@@ -277,6 +282,7 @@ extern const char kChromeUISimUnlockHost[];
 extern const char kChromeUISlowHost[];
 extern const char kChromeUISlowTraceHost[];
 extern const char kChromeUIUserImageHost[];
+extern const char kChromeUIVoiceSearchHost[];
 
 extern const char kEULAPathFormat[];
 extern const char kOemEulaURLPath[];
@@ -339,6 +345,7 @@ extern const char kSyncGoogleDashboardURL[];
 extern const char kPasswordManagerLearnMoreURL[];
 extern const char kUpgradeHelpCenterBaseURL[];
 extern const char kPasswordManagerAccountDashboardURL[];
+extern const char kSmartLockHelpPage[];
 
 // "Learn more" URL for the Settings API, NTP bubble and other settings bubbles
 // showing which extension is controlling them.
@@ -376,12 +383,12 @@ extern const char kResetProfileSettingsLearnMoreURL[];
 // "Learn more" URL for when profile settings are automatically reset.
 extern const char kAutomaticSettingsResetLearnMoreURL[];
 
-// Management URL for the supervised users.
-extern const char kSupervisedUserManagementURL[];
+// Management URL for Chrome Supervised Users.
+extern const char kLegacySupervisedUserManagementURL[];
 
-// Management URL for the supervised users - version without scheme, used
+// Management URL for Chrome Supervised Users - version without scheme, used
 // for display.
-extern const char kSupervisedUserManagementDisplayURL[];
+extern const char kLegacySupervisedUserManagementDisplayURL[];
 
 // Help URL for the settings page's search feature.
 extern const char kSettingsSearchHelpURL[];
@@ -392,8 +399,11 @@ extern const char kOmniboxLearnMoreURL[];
 // "What do these mean?" URL for the Page Info bubble.
 extern const char kPageInfoHelpCenterURL[];
 
-// "Learn more" URL for "Aw snap" page.
+// "Learn more" URL for "Aw snap" page when showing "Reload" button.
 extern const char kCrashReasonURL[];
+
+// "Learn more" URL for "Aw snap" page when showing "Send feedback" button.
+extern const char kCrashReasonFeedbackDisplayedURL[];
 
 // "Learn more" URL for killed tab page.
 extern const char kKillReasonURL[];
@@ -544,6 +554,11 @@ extern const char kMac32BitDeprecationURL[];
 
 // The URL for the "Learn more" link the the Easy Unlock settings.
 extern const char kEasyUnlockLearnMoreUrl[];
+
+#if defined(OS_WIN) || defined(OS_CHROMEOS)
+extern const char kChromeUIDiscardsHost[];
+extern const char kChromeUIDiscardsURL[];
+#endif
 
 }  // namespace chrome
 

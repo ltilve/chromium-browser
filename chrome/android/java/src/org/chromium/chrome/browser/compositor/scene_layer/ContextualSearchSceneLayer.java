@@ -4,10 +4,9 @@
 
 package org.chromium.chrome.browser.compositor.scene_layer;
 
-import org.chromium.base.JNINamespace;
+import org.chromium.base.annotations.JNINamespace;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.compositor.bottombar.contextualsearch.ContextualSearchPanel;
-import org.chromium.chrome.browser.compositor.bottombar.contextualsearch.ContextualSearchPanelFeatures;
 import org.chromium.content.browser.ContentViewCore;
 import org.chromium.ui.resources.ResourceManager;
 
@@ -37,16 +36,22 @@ public class ContextualSearchSceneLayer extends SceneLayer {
      * @param resourceManager
      */
     public void update(@Nullable ContentViewCore contentViewCore, ResourceManager resourceManager) {
+        int searchContextViewId = mSearchPanel.getSearchContextViewId();
+        int searchTermViewId = mSearchPanel.getSearchTermViewId();
+
         boolean searchPromoVisible = mSearchPanel.getPromoVisible();
         float searchPromoHeightPx = mSearchPanel.getPromoHeightPx();
         float searchPromoOpacity = mSearchPanel.getPromoOpacity();
 
-        float searchPanelY = mSearchPanel.getContextualSearchPanelY();
+        float searchPanelX = mSearchPanel.getOffsetX();
+        float searchPanelY = mSearchPanel.getOffsetY();
         float searchPanelWidth = mSearchPanel.getWidth();
-        float searchBarMarginTop = mSearchPanel.getSearchBarMarginTop();
+        float searchPanelHeight = mSearchPanel.getHeight();
+
         float searchBarMarginSide = mSearchPanel.getSearchBarMarginSide();
         float searchBarHeight = mSearchPanel.getSearchBarHeight();
-        float searchBarTextOpacity = mSearchPanel.getSearchBarTextOpacity();
+        float searchContextOpacity = mSearchPanel.getSearchBarContextOpacity();
+        float searchTermOpacity = mSearchPanel.getSearchBarTermOpacity();
 
         boolean searchBarBorderVisible = mSearchPanel.isSearchBarBorderVisible();
         float searchBarBorderY = mSearchPanel.getSearchBarBorderY();
@@ -55,17 +60,9 @@ public class ContextualSearchSceneLayer extends SceneLayer {
         boolean searchBarShadowVisible = mSearchPanel.getSearchBarShadowVisible();
         float searchBarShadowOpacity = mSearchPanel.getSearchBarShadowOpacity();
 
-        boolean sideSearchProviderIconVisible = mSearchPanel.isSideSearchProviderIconVisible();
-        float searchProviderIconOpacity = mSearchPanel.getSearchProviderIconOpacity();
-
-        boolean searchIconVisible = mSearchPanel.isSearchIconVisible();
-        float searchIconOpacity = mSearchPanel.getSearchIconOpacity();
-
-        boolean arrowIconVisible = mSearchPanel.isArrowIconVisible();
         float arrowIconOpacity = mSearchPanel.getArrowIconOpacity();
         float arrowIconRotation = mSearchPanel.getArrowIconRotation();
 
-        boolean closeIconVisible = ContextualSearchPanelFeatures.isCloseButtonAvailable();
         float closeIconOpacity = mSearchPanel.getCloseIconOpacity();
 
         boolean isProgressBarVisible = mSearchPanel.isProgressBarVisible();
@@ -76,10 +73,10 @@ public class ContextualSearchSceneLayer extends SceneLayer {
 
         nativeUpdateContextualSearchLayer(mNativePtr,
                 R.drawable.contextual_search_bar_background,
-                R.id.contextual_search_view,
+                searchContextViewId,
+                searchTermViewId,
                 R.drawable.contextual_search_bar_shadow,
-                R.drawable.blue_google_icon,
-                R.drawable.ic_search,
+                R.drawable.google_icon,
                 R.drawable.breadcrumb_arrow,
                 ContextualSearchPanel.CLOSE_ICON_DRAWABLE_ID,
                 R.drawable.progress_bar_background,
@@ -89,25 +86,21 @@ public class ContextualSearchSceneLayer extends SceneLayer {
                 searchPromoVisible,
                 searchPromoHeightPx,
                 searchPromoOpacity,
+                searchPanelX * mDpToPx,
                 searchPanelY * mDpToPx,
                 searchPanelWidth * mDpToPx,
-                searchBarMarginTop * mDpToPx,
+                searchPanelHeight * mDpToPx,
                 searchBarMarginSide * mDpToPx,
                 searchBarHeight * mDpToPx,
-                searchBarTextOpacity,
+                searchContextOpacity,
+                searchTermOpacity,
                 searchBarBorderVisible,
                 searchBarBorderY * mDpToPx,
                 searchBarBorderHeight * mDpToPx,
                 searchBarShadowVisible,
                 searchBarShadowOpacity,
-                sideSearchProviderIconVisible,
-                searchProviderIconOpacity,
-                searchIconVisible,
-                searchIconOpacity,
-                arrowIconVisible,
                 arrowIconOpacity,
                 arrowIconRotation,
-                closeIconVisible,
                 closeIconOpacity,
                 isProgressBarVisible,
                 progressBarY * mDpToPx,
@@ -138,10 +131,10 @@ public class ContextualSearchSceneLayer extends SceneLayer {
     private native void nativeUpdateContextualSearchLayer(
             long nativeContextualSearchSceneLayer,
             int searchBarBackgroundResourceId,
-            int searchBarTextResourceId,
+            int searchContextResourceId,
+            int searchTermResourceId,
             int searchBarShadowResourceId,
             int searchProviderIconResourceId,
-            int searchIconResourceId,
             int arrowUpResourceId,
             int closeIconResourceId,
             int progressBarBackgroundResourceId,
@@ -151,25 +144,21 @@ public class ContextualSearchSceneLayer extends SceneLayer {
             boolean searchPromoVisible,
             float searchPromoHeight,
             float searchPromoOpacity,
+            float searchPanelX,
             float searchPanelY,
             float searchPanelWidth,
-            float searchBarMarginTop,
+            float searchPanelHeight,
             float searchBarMarginSide,
             float searchBarHeight,
-            float searchBarTextOpacity,
+            float searchContextOpacity,
+            float searchTermOpacity,
             boolean searchBarBorderVisible,
             float searchBarBorderY,
             float searchBarBorderHeight,
             boolean searchBarShadowVisible,
             float searchBarShadowOpacity,
-            boolean sideSearchProviderIconVisible,
-            float searchProviderIconOpacity,
-            boolean searchIconVisible,
-            float searchIconOpacity,
-            boolean arrowIconVisible,
             float arrowIconOpacity,
             float arrowIconRotation,
-            boolean closeIconVisible,
             float closeIconOpacity,
             boolean isProgressBarVisible,
             float progressBarY,

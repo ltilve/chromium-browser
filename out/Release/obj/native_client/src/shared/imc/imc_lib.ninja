@@ -1,0 +1,467 @@
+rule imc_lib_target_build_newlib_plib_1d3567b45a5ae7eab89e92bf6098bfad
+  command = cd ../../native_client/src/shared/imc; python $
+      ../../../../native_client/build/build_nexe.py --root ../../../.. $
+      --product-dir ../../../../out/Release/xyz --config-name Release -t $
+      ../../../../native_client/toolchain/ --arch pnacl --build newlib_plib $
+      --name ../../../../out/Release/gen/tc_pnacl_newlib/lib/libimc.a $
+      --objdir $
+      ../../../../out/Release/obj/native_client/src/shared/imc/imc_lib.gen/pnacl_newlib-pnacl/imc_lib $
+      "--include-dirs=../../../../out/Release/gen/tc_pnacl_newlib/include $
+      ../../../.. \"../../../../out/Release/gen\" ../../../src/third_party $
+      ../../../.." "--compile_flags=-O2 -g -Wall -fdiagnostics-show-option $
+      -Werror  -Wno-unused-function -Wno-char-subscripts $
+      -Wno-c++11-extensions -Wno-unnamed-type-template-args -Wno-extra-semi $
+      -Wno-unused-private-field -Wno-char-subscripts -Wno-unused-function $
+      \"-std=gnu++11\" " --gomadir "" "--defines=\"__STDC_LIMIT_MACROS=1\" $
+      \"__STDC_FORMAT_MACROS=1\" \"_GNU_SOURCE=1\" $
+      \"_POSIX_C_SOURCE=199506\" \"_XOPEN_SOURCE=600\" $
+      \"DYNAMIC_ANNOTATIONS_ENABLED=1\" $
+      \"DYNAMIC_ANNOTATIONS_PREFIX=NACL_\" \"NACL_BUILD_ARCH=x86\" $
+      V8_DEPRECATION_WARNINGS \"CLD_VERSION=2\" \"_FILE_OFFSET_BITS=64\" $
+      \"_POSIX_C_SOURCE=199506\" \"_XOPEN_SOURCE=600\" \"_GNU_SOURCE=1\" $
+      \"__STDC_LIMIT_MACROS=1\" CHROMIUM_BUILD $
+      \"CR_CLANG_REVISION=255169-1\" UI_COMPOSITOR_IMAGE_TRANSPORT $
+      \"USE_AURA=1\" \"USE_ASH=1\" \"USE_PANGO=1\" \"USE_CAIRO=1\" $
+      \"USE_DEFAULT_RENDER_THEME=1\" \"USE_LIBJPEG_TURBO=1\" \"USE_X11=1\" $
+      \"USE_CLIPBOARD_AURAX11=1\" ENABLE_ONE_CLICK_SIGNIN $
+      \"ENABLE_WEBRTC=1\" \"ENABLE_MEDIA_ROUTER=1\" ENABLE_PEPPER_CDMS $
+      ENABLE_CONFIGURATION_POLICY ENABLE_NOTIFICATIONS \"ENABLE_HIDPI=1\" $
+      \"ENABLE_TOPCHROME_MD=1\" USE_UDEV DONT_EMBED_BUILD_METADATA $
+      FIELDTRIAL_TESTING_ENABLED \"ENABLE_TASK_MANAGER=1\" $
+      \"ENABLE_EXTENSIONS=1\" \"ENABLE_PDF=1\" \"ENABLE_PLUGINS=1\" $
+      \"ENABLE_SESSION_SERVICE=1\" \"ENABLE_THEMES=1\" $
+      \"ENABLE_AUTOFILL_DIALOG=1\" \"ENABLE_BACKGROUND=1\" $
+      \"ENABLE_PRINTING=1\" \"ENABLE_BASIC_PRINTING=1\" $
+      \"ENABLE_PRINT_PREVIEW=1\" \"ENABLE_SPELLCHECK=1\" $
+      \"ENABLE_CAPTIVE_PORTAL_DETECTION=1\" \"ENABLE_APP_LIST=1\" $
+      \"ENABLE_SETTINGS_APP=1\" \"ENABLE_SUPERVISED_USERS=1\" $
+      \"ENABLE_MDNS=1\" \"ENABLE_SERVICE_DISCOVERY=1\" $
+      V8_USE_EXTERNAL_STARTUP_DATA FULL_SAFE_BROWSING SAFE_BROWSING_CSD $
+      SAFE_BROWSING_DB_LOCAL \"USE_LIBPCI=1\" \"USE_OPENSSL=1\" $
+      \"USE_GLIB=1\" \"USE_NSS_CERTS=1\"" $
+      "--link_flags=-B../../../../out/Release/gen/tc_pnacl_newlib/lib  " $
+      "--source-list=../../../../out/gypfiles/native_client/src/shared/imc/pnacl_newlib.imc_lib.source_list.gypcmd"
+  description = ACTION imc_lib: build newlib $
+      plib_1d3567b45a5ae7eab89e92bf6098bfad
+  restat = 1
+
+build gen/tc_pnacl_newlib/lib/libimc.a: $
+    imc_lib_target_build_newlib_plib_1d3567b45a5ae7eab89e92bf6098bfad $
+    ../../native_client/build/build_nexe.py $
+    ../../native_client/build/build_nexe_tools.py $
+    ../../native_client/src/include/build_config.h $
+    ../../native_client/src/include/nacl_base.h $
+    ../../native_client/src/include/nacl_compiler_annotations.h $
+    ../../native_client/src/include/nacl_macros.h $
+    ../../native_client/src/include/portability.h $
+    ../../native_client/src/include/win/port_win.h $
+    ../../native_client/src/public/imc_syscalls.h $
+    ../../native_client/src/third_party/valgrind/memcheck.h $
+    ../../native_client/src/third_party/valgrind/valgrind.h $
+    ../../native_client/src/trusted/service_runtime/include/bits/wordsize.h $
+    ../../native_client/src/trusted/service_runtime/include/machine/_types.h $
+    ../../native_client/src/shared/platform/nacl_log.h $
+    ../../native_client/src/shared/imc/nacl/nacl_imc.cc $
+    ../../native_client/src/shared/imc/nacl_imc_c.h $
+    ../../native_client/src/shared/imc/nacl_imc_common.cc $
+    ../../out/gypfiles/native_client/src/shared/imc/pnacl_newlib.imc_lib.source_list.gypcmd $
+    ../../native_client/toolchain/linux_x86/pnacl_newlib/pnacl_newlib.json
+
+rule imc_lib_target_build_newlib_x86_64_nlib_1d3567b45a5ae7eab89e92bf6098bfad
+  command = cd ../../native_client/src/shared/imc; python $
+      ../../../../native_client/build/build_nexe.py --root ../../../.. $
+      --product-dir ../../../../out/Release/xyz --config-name Release -t $
+      ../../../../native_client/toolchain/ --arch x86-64 --build $
+      newlib_nlib --name $
+      ../../../../out/Release/gen/tc_newlib/lib64/libimc.a --objdir $
+      ../../../../out/Release/obj/native_client/src/shared/imc/imc_lib.gen/newlib-x86-64/imc_lib $
+      "--include-dirs=../../../../out/Release/gen/tc_newlib/include $
+      ../../../.. \"../../../../out/Release/gen\" ../../../src/third_party $
+      ../../../.." "--compile_flags=-m64 -O2 -g -Wall $
+      -fdiagnostics-show-option -Werror " --gomadir "" $
+      "--defines=\"__STDC_LIMIT_MACROS=1\" \"__STDC_FORMAT_MACROS=1\" $
+      \"_GNU_SOURCE=1\" \"_POSIX_C_SOURCE=199506\" \"_XOPEN_SOURCE=600\" $
+      \"DYNAMIC_ANNOTATIONS_ENABLED=1\" $
+      \"DYNAMIC_ANNOTATIONS_PREFIX=NACL_\" \"NACL_BUILD_ARCH=x86\" $
+      V8_DEPRECATION_WARNINGS \"CLD_VERSION=2\" \"_FILE_OFFSET_BITS=64\" $
+      \"_POSIX_C_SOURCE=199506\" \"_XOPEN_SOURCE=600\" \"_GNU_SOURCE=1\" $
+      \"__STDC_LIMIT_MACROS=1\" CHROMIUM_BUILD $
+      \"CR_CLANG_REVISION=255169-1\" UI_COMPOSITOR_IMAGE_TRANSPORT $
+      \"USE_AURA=1\" \"USE_ASH=1\" \"USE_PANGO=1\" \"USE_CAIRO=1\" $
+      \"USE_DEFAULT_RENDER_THEME=1\" \"USE_LIBJPEG_TURBO=1\" \"USE_X11=1\" $
+      \"USE_CLIPBOARD_AURAX11=1\" ENABLE_ONE_CLICK_SIGNIN $
+      \"ENABLE_WEBRTC=1\" \"ENABLE_MEDIA_ROUTER=1\" ENABLE_PEPPER_CDMS $
+      ENABLE_CONFIGURATION_POLICY ENABLE_NOTIFICATIONS \"ENABLE_HIDPI=1\" $
+      \"ENABLE_TOPCHROME_MD=1\" USE_UDEV DONT_EMBED_BUILD_METADATA $
+      FIELDTRIAL_TESTING_ENABLED \"ENABLE_TASK_MANAGER=1\" $
+      \"ENABLE_EXTENSIONS=1\" \"ENABLE_PDF=1\" \"ENABLE_PLUGINS=1\" $
+      \"ENABLE_SESSION_SERVICE=1\" \"ENABLE_THEMES=1\" $
+      \"ENABLE_AUTOFILL_DIALOG=1\" \"ENABLE_BACKGROUND=1\" $
+      \"ENABLE_PRINTING=1\" \"ENABLE_BASIC_PRINTING=1\" $
+      \"ENABLE_PRINT_PREVIEW=1\" \"ENABLE_SPELLCHECK=1\" $
+      \"ENABLE_CAPTIVE_PORTAL_DETECTION=1\" \"ENABLE_APP_LIST=1\" $
+      \"ENABLE_SETTINGS_APP=1\" \"ENABLE_SUPERVISED_USERS=1\" $
+      \"ENABLE_MDNS=1\" \"ENABLE_SERVICE_DISCOVERY=1\" $
+      V8_USE_EXTERNAL_STARTUP_DATA FULL_SAFE_BROWSING SAFE_BROWSING_CSD $
+      SAFE_BROWSING_DB_LOCAL \"USE_LIBPCI=1\" \"USE_OPENSSL=1\" $
+      \"USE_GLIB=1\" \"USE_NSS_CERTS=1\"" $
+      "--link_flags=-B../../../../out/Release/gen/tc_newlib/lib64  " $
+      "--source-list=../../../../out/gypfiles/native_client/src/shared/imc/newlib-x86-64.imc_lib.source_list.gypcmd"
+  description = ACTION imc_lib: build newlib x86-64 $
+      nlib_1d3567b45a5ae7eab89e92bf6098bfad
+  restat = 1
+
+build gen/tc_newlib/lib64/libimc.a: $
+    imc_lib_target_build_newlib_x86_64_nlib_1d3567b45a5ae7eab89e92bf6098bfad $
+    ../../native_client/build/build_nexe.py $
+    ../../native_client/build/build_nexe_tools.py $
+    ../../native_client/src/include/build_config.h $
+    ../../native_client/src/include/nacl_base.h $
+    ../../native_client/src/include/nacl_compiler_annotations.h $
+    ../../native_client/src/include/nacl_macros.h $
+    ../../native_client/src/include/portability.h $
+    ../../native_client/src/include/win/port_win.h $
+    ../../native_client/src/public/imc_syscalls.h $
+    ../../native_client/src/third_party/valgrind/memcheck.h $
+    ../../native_client/src/third_party/valgrind/valgrind.h $
+    ../../native_client/src/trusted/service_runtime/include/bits/wordsize.h $
+    ../../native_client/src/trusted/service_runtime/include/machine/_types.h $
+    ../../native_client/src/shared/platform/nacl_log.h $
+    ../../native_client/src/shared/imc/nacl/nacl_imc.cc $
+    ../../native_client/src/shared/imc/nacl_imc_c.h $
+    ../../native_client/src/shared/imc/nacl_imc_common.cc $
+    ../../out/gypfiles/native_client/src/shared/imc/newlib-x86-64.imc_lib.source_list.gypcmd $
+    ../../native_client/toolchain/linux_x86/nacl_x86_newlib/nacl_x86_newlib.json
+
+rule imc_lib_target_build_newlib_x86_32_nlib_1d3567b45a5ae7eab89e92bf6098bfad
+  command = cd ../../native_client/src/shared/imc; python $
+      ../../../../native_client/build/build_nexe.py --root ../../../.. $
+      --product-dir ../../../../out/Release/xyz --config-name Release -t $
+      ../../../../native_client/toolchain/ --arch x86-32 --build $
+      newlib_nlib --name $
+      ../../../../out/Release/gen/tc_newlib/lib32/libimc.a --objdir $
+      ../../../../out/Release/obj/native_client/src/shared/imc/imc_lib.gen/newlib-x86-32/imc_lib $
+      "--include-dirs=../../../../out/Release/gen/tc_newlib/include $
+      ../../../.. \"../../../../out/Release/gen\" ../../../src/third_party $
+      ../../../.." "--compile_flags=-m32  -O2 -g -Wall $
+      -fdiagnostics-show-option -Werror " --gomadir "" $
+      "--defines=\"__STDC_LIMIT_MACROS=1\" \"__STDC_FORMAT_MACROS=1\" $
+      \"_GNU_SOURCE=1\" \"_POSIX_C_SOURCE=199506\" \"_XOPEN_SOURCE=600\" $
+      \"DYNAMIC_ANNOTATIONS_ENABLED=1\" $
+      \"DYNAMIC_ANNOTATIONS_PREFIX=NACL_\" \"NACL_BUILD_ARCH=x86\" $
+      V8_DEPRECATION_WARNINGS \"CLD_VERSION=2\" \"_FILE_OFFSET_BITS=64\" $
+      \"_POSIX_C_SOURCE=199506\" \"_XOPEN_SOURCE=600\" \"_GNU_SOURCE=1\" $
+      \"__STDC_LIMIT_MACROS=1\" CHROMIUM_BUILD $
+      \"CR_CLANG_REVISION=255169-1\" UI_COMPOSITOR_IMAGE_TRANSPORT $
+      \"USE_AURA=1\" \"USE_ASH=1\" \"USE_PANGO=1\" \"USE_CAIRO=1\" $
+      \"USE_DEFAULT_RENDER_THEME=1\" \"USE_LIBJPEG_TURBO=1\" \"USE_X11=1\" $
+      \"USE_CLIPBOARD_AURAX11=1\" ENABLE_ONE_CLICK_SIGNIN $
+      \"ENABLE_WEBRTC=1\" \"ENABLE_MEDIA_ROUTER=1\" ENABLE_PEPPER_CDMS $
+      ENABLE_CONFIGURATION_POLICY ENABLE_NOTIFICATIONS \"ENABLE_HIDPI=1\" $
+      \"ENABLE_TOPCHROME_MD=1\" USE_UDEV DONT_EMBED_BUILD_METADATA $
+      FIELDTRIAL_TESTING_ENABLED \"ENABLE_TASK_MANAGER=1\" $
+      \"ENABLE_EXTENSIONS=1\" \"ENABLE_PDF=1\" \"ENABLE_PLUGINS=1\" $
+      \"ENABLE_SESSION_SERVICE=1\" \"ENABLE_THEMES=1\" $
+      \"ENABLE_AUTOFILL_DIALOG=1\" \"ENABLE_BACKGROUND=1\" $
+      \"ENABLE_PRINTING=1\" \"ENABLE_BASIC_PRINTING=1\" $
+      \"ENABLE_PRINT_PREVIEW=1\" \"ENABLE_SPELLCHECK=1\" $
+      \"ENABLE_CAPTIVE_PORTAL_DETECTION=1\" \"ENABLE_APP_LIST=1\" $
+      \"ENABLE_SETTINGS_APP=1\" \"ENABLE_SUPERVISED_USERS=1\" $
+      \"ENABLE_MDNS=1\" \"ENABLE_SERVICE_DISCOVERY=1\" $
+      V8_USE_EXTERNAL_STARTUP_DATA FULL_SAFE_BROWSING SAFE_BROWSING_CSD $
+      SAFE_BROWSING_DB_LOCAL \"USE_LIBPCI=1\" \"USE_OPENSSL=1\" $
+      \"USE_GLIB=1\" \"USE_NSS_CERTS=1\"" "--link_flags=-m32 $
+      -B../../../../out/Release/gen/tc_newlib/lib32  " $
+      "--source-list=../../../../out/gypfiles/native_client/src/shared/imc/newlib-x86-32.imc_lib.source_list.gypcmd"
+  description = ACTION imc_lib: build newlib x86-32 $
+      nlib_1d3567b45a5ae7eab89e92bf6098bfad
+  restat = 1
+
+build gen/tc_newlib/lib32/libimc.a: $
+    imc_lib_target_build_newlib_x86_32_nlib_1d3567b45a5ae7eab89e92bf6098bfad $
+    ../../native_client/build/build_nexe.py $
+    ../../native_client/build/build_nexe_tools.py $
+    ../../native_client/src/include/build_config.h $
+    ../../native_client/src/include/nacl_base.h $
+    ../../native_client/src/include/nacl_compiler_annotations.h $
+    ../../native_client/src/include/nacl_macros.h $
+    ../../native_client/src/include/portability.h $
+    ../../native_client/src/include/win/port_win.h $
+    ../../native_client/src/public/imc_syscalls.h $
+    ../../native_client/src/third_party/valgrind/memcheck.h $
+    ../../native_client/src/third_party/valgrind/valgrind.h $
+    ../../native_client/src/trusted/service_runtime/include/bits/wordsize.h $
+    ../../native_client/src/trusted/service_runtime/include/machine/_types.h $
+    ../../native_client/src/shared/platform/nacl_log.h $
+    ../../native_client/src/shared/imc/nacl/nacl_imc.cc $
+    ../../native_client/src/shared/imc/nacl_imc_c.h $
+    ../../native_client/src/shared/imc/nacl_imc_common.cc $
+    ../../out/gypfiles/native_client/src/shared/imc/newlib-x86-32.imc_lib.source_list.gypcmd $
+    ../../native_client/toolchain/linux_x86/nacl_x86_newlib/nacl_x86_newlib.json
+
+rule imc_lib_target_build_glibc_x86_64_nlib_1d3567b45a5ae7eab89e92bf6098bfad
+  command = cd ../../native_client/src/shared/imc; python $
+      ../../../../native_client/build/build_nexe.py --root ../../../.. $
+      --product-dir ../../../../out/Release/xyz --config-name Release -t $
+      ../../../../native_client/toolchain/ --arch x86-64 --build glibc_nlib $
+      --name ../../../../out/Release/gen/tc_glibc/lib64/libimc.a --objdir $
+      ../../../../out/Release/obj/native_client/src/shared/imc/imc_lib.gen/glibc-x86-64/imc_lib $
+      "--include-dirs=../../../../out/Release/gen/tc_glibc/include $
+      ../../../.. \"../../../../out/Release/gen\" ../../../src/third_party $
+      ../../../.." "--compile_flags=-m64 -O2 -g -Wall $
+      -fdiagnostics-show-option -Werror " --gomadir "" $
+      "--defines=\"__STDC_LIMIT_MACROS=1\" \"__STDC_FORMAT_MACROS=1\" $
+      \"_GNU_SOURCE=1\" \"_POSIX_C_SOURCE=199506\" \"_XOPEN_SOURCE=600\" $
+      \"DYNAMIC_ANNOTATIONS_ENABLED=1\" $
+      \"DYNAMIC_ANNOTATIONS_PREFIX=NACL_\" \"NACL_BUILD_ARCH=x86\" $
+      V8_DEPRECATION_WARNINGS \"CLD_VERSION=2\" \"_FILE_OFFSET_BITS=64\" $
+      \"_POSIX_C_SOURCE=199506\" \"_XOPEN_SOURCE=600\" \"_GNU_SOURCE=1\" $
+      \"__STDC_LIMIT_MACROS=1\" CHROMIUM_BUILD $
+      \"CR_CLANG_REVISION=255169-1\" UI_COMPOSITOR_IMAGE_TRANSPORT $
+      \"USE_AURA=1\" \"USE_ASH=1\" \"USE_PANGO=1\" \"USE_CAIRO=1\" $
+      \"USE_DEFAULT_RENDER_THEME=1\" \"USE_LIBJPEG_TURBO=1\" \"USE_X11=1\" $
+      \"USE_CLIPBOARD_AURAX11=1\" ENABLE_ONE_CLICK_SIGNIN $
+      \"ENABLE_WEBRTC=1\" \"ENABLE_MEDIA_ROUTER=1\" ENABLE_PEPPER_CDMS $
+      ENABLE_CONFIGURATION_POLICY ENABLE_NOTIFICATIONS \"ENABLE_HIDPI=1\" $
+      \"ENABLE_TOPCHROME_MD=1\" USE_UDEV DONT_EMBED_BUILD_METADATA $
+      FIELDTRIAL_TESTING_ENABLED \"ENABLE_TASK_MANAGER=1\" $
+      \"ENABLE_EXTENSIONS=1\" \"ENABLE_PDF=1\" \"ENABLE_PLUGINS=1\" $
+      \"ENABLE_SESSION_SERVICE=1\" \"ENABLE_THEMES=1\" $
+      \"ENABLE_AUTOFILL_DIALOG=1\" \"ENABLE_BACKGROUND=1\" $
+      \"ENABLE_PRINTING=1\" \"ENABLE_BASIC_PRINTING=1\" $
+      \"ENABLE_PRINT_PREVIEW=1\" \"ENABLE_SPELLCHECK=1\" $
+      \"ENABLE_CAPTIVE_PORTAL_DETECTION=1\" \"ENABLE_APP_LIST=1\" $
+      \"ENABLE_SETTINGS_APP=1\" \"ENABLE_SUPERVISED_USERS=1\" $
+      \"ENABLE_MDNS=1\" \"ENABLE_SERVICE_DISCOVERY=1\" $
+      V8_USE_EXTERNAL_STARTUP_DATA FULL_SAFE_BROWSING SAFE_BROWSING_CSD $
+      SAFE_BROWSING_DB_LOCAL \"USE_LIBPCI=1\" \"USE_OPENSSL=1\" $
+      \"USE_GLIB=1\" \"USE_NSS_CERTS=1\"" $
+      "--link_flags=-B../../../../out/Release/gen/tc_glibc/lib64  " $
+      "--source-list=../../../../out/gypfiles/native_client/src/shared/imc/glibc-x86-64.imc_lib.source_list.gypcmd"
+  description = ACTION imc_lib: build glibc x86-64 $
+      nlib_1d3567b45a5ae7eab89e92bf6098bfad
+  restat = 1
+
+build gen/tc_glibc/lib64/libimc.a: $
+    imc_lib_target_build_glibc_x86_64_nlib_1d3567b45a5ae7eab89e92bf6098bfad $
+    ../../native_client/build/build_nexe.py $
+    ../../native_client/build/build_nexe_tools.py $
+    ../../native_client/src/include/build_config.h $
+    ../../native_client/src/include/nacl_base.h $
+    ../../native_client/src/include/nacl_compiler_annotations.h $
+    ../../native_client/src/include/nacl_macros.h $
+    ../../native_client/src/include/portability.h $
+    ../../native_client/src/include/win/port_win.h $
+    ../../native_client/src/public/imc_syscalls.h $
+    ../../native_client/src/third_party/valgrind/memcheck.h $
+    ../../native_client/src/third_party/valgrind/valgrind.h $
+    ../../native_client/src/trusted/service_runtime/include/bits/wordsize.h $
+    ../../native_client/src/trusted/service_runtime/include/machine/_types.h $
+    ../../native_client/src/shared/platform/nacl_log.h $
+    ../../native_client/src/shared/imc/nacl/nacl_imc.cc $
+    ../../native_client/src/shared/imc/nacl_imc_c.h $
+    ../../native_client/src/shared/imc/nacl_imc_common.cc $
+    ../../out/gypfiles/native_client/src/shared/imc/glibc-x86-64.imc_lib.source_list.gypcmd $
+    ../../native_client/toolchain/linux_x86/nacl_x86_glibc/nacl_x86_glibc.json
+
+rule imc_lib_target_build_glibc_x86_32_nlib_1d3567b45a5ae7eab89e92bf6098bfad
+  command = cd ../../native_client/src/shared/imc; python $
+      ../../../../native_client/build/build_nexe.py --root ../../../.. $
+      --product-dir ../../../../out/Release/xyz --config-name Release -t $
+      ../../../../native_client/toolchain/ --arch x86-32 --build glibc_nlib $
+      --name ../../../../out/Release/gen/tc_glibc/lib32/libimc.a --objdir $
+      ../../../../out/Release/obj/native_client/src/shared/imc/imc_lib.gen/glibc-x86-32/imc_lib $
+      "--include-dirs=../../../../out/Release/gen/tc_glibc/include $
+      ../../../.. \"../../../../out/Release/gen\" ../../../src/third_party $
+      ../../../.." "--compile_flags=-m32 -O2 -g -Wall $
+      -fdiagnostics-show-option -Werror " --gomadir "" $
+      "--defines=\"__STDC_LIMIT_MACROS=1\" \"__STDC_FORMAT_MACROS=1\" $
+      \"_GNU_SOURCE=1\" \"_POSIX_C_SOURCE=199506\" \"_XOPEN_SOURCE=600\" $
+      \"DYNAMIC_ANNOTATIONS_ENABLED=1\" $
+      \"DYNAMIC_ANNOTATIONS_PREFIX=NACL_\" \"NACL_BUILD_ARCH=x86\" $
+      V8_DEPRECATION_WARNINGS \"CLD_VERSION=2\" \"_FILE_OFFSET_BITS=64\" $
+      \"_POSIX_C_SOURCE=199506\" \"_XOPEN_SOURCE=600\" \"_GNU_SOURCE=1\" $
+      \"__STDC_LIMIT_MACROS=1\" CHROMIUM_BUILD $
+      \"CR_CLANG_REVISION=255169-1\" UI_COMPOSITOR_IMAGE_TRANSPORT $
+      \"USE_AURA=1\" \"USE_ASH=1\" \"USE_PANGO=1\" \"USE_CAIRO=1\" $
+      \"USE_DEFAULT_RENDER_THEME=1\" \"USE_LIBJPEG_TURBO=1\" \"USE_X11=1\" $
+      \"USE_CLIPBOARD_AURAX11=1\" ENABLE_ONE_CLICK_SIGNIN $
+      \"ENABLE_WEBRTC=1\" \"ENABLE_MEDIA_ROUTER=1\" ENABLE_PEPPER_CDMS $
+      ENABLE_CONFIGURATION_POLICY ENABLE_NOTIFICATIONS \"ENABLE_HIDPI=1\" $
+      \"ENABLE_TOPCHROME_MD=1\" USE_UDEV DONT_EMBED_BUILD_METADATA $
+      FIELDTRIAL_TESTING_ENABLED \"ENABLE_TASK_MANAGER=1\" $
+      \"ENABLE_EXTENSIONS=1\" \"ENABLE_PDF=1\" \"ENABLE_PLUGINS=1\" $
+      \"ENABLE_SESSION_SERVICE=1\" \"ENABLE_THEMES=1\" $
+      \"ENABLE_AUTOFILL_DIALOG=1\" \"ENABLE_BACKGROUND=1\" $
+      \"ENABLE_PRINTING=1\" \"ENABLE_BASIC_PRINTING=1\" $
+      \"ENABLE_PRINT_PREVIEW=1\" \"ENABLE_SPELLCHECK=1\" $
+      \"ENABLE_CAPTIVE_PORTAL_DETECTION=1\" \"ENABLE_APP_LIST=1\" $
+      \"ENABLE_SETTINGS_APP=1\" \"ENABLE_SUPERVISED_USERS=1\" $
+      \"ENABLE_MDNS=1\" \"ENABLE_SERVICE_DISCOVERY=1\" $
+      V8_USE_EXTERNAL_STARTUP_DATA FULL_SAFE_BROWSING SAFE_BROWSING_CSD $
+      SAFE_BROWSING_DB_LOCAL \"USE_LIBPCI=1\" \"USE_OPENSSL=1\" $
+      \"USE_GLIB=1\" \"USE_NSS_CERTS=1\"" "--link_flags=-m32 $
+      -B../../../../out/Release/gen/tc_glibc/lib32  " $
+      "--source-list=../../../../out/gypfiles/native_client/src/shared/imc/glibc-x86-32.imc_lib.source_list.gypcmd"
+  description = ACTION imc_lib: build glibc x86-32 $
+      nlib_1d3567b45a5ae7eab89e92bf6098bfad
+  restat = 1
+
+build gen/tc_glibc/lib32/libimc.a: $
+    imc_lib_target_build_glibc_x86_32_nlib_1d3567b45a5ae7eab89e92bf6098bfad $
+    ../../native_client/build/build_nexe.py $
+    ../../native_client/build/build_nexe_tools.py $
+    ../../native_client/src/include/build_config.h $
+    ../../native_client/src/include/nacl_base.h $
+    ../../native_client/src/include/nacl_compiler_annotations.h $
+    ../../native_client/src/include/nacl_macros.h $
+    ../../native_client/src/include/portability.h $
+    ../../native_client/src/include/win/port_win.h $
+    ../../native_client/src/public/imc_syscalls.h $
+    ../../native_client/src/third_party/valgrind/memcheck.h $
+    ../../native_client/src/third_party/valgrind/valgrind.h $
+    ../../native_client/src/trusted/service_runtime/include/bits/wordsize.h $
+    ../../native_client/src/trusted/service_runtime/include/machine/_types.h $
+    ../../native_client/src/shared/platform/nacl_log.h $
+    ../../native_client/src/shared/imc/nacl/nacl_imc.cc $
+    ../../native_client/src/shared/imc/nacl_imc_c.h $
+    ../../native_client/src/shared/imc/nacl_imc_common.cc $
+    ../../out/gypfiles/native_client/src/shared/imc/glibc-x86-32.imc_lib.source_list.gypcmd $
+    ../../native_client/toolchain/linux_x86/nacl_x86_glibc/nacl_x86_glibc.json
+
+rule imc_lib_target_build_glibc_x86_64_nso_1d3567b45a5ae7eab89e92bf6098bfad
+  command = cd ../../native_client/src/shared/imc; python $
+      ../../../../native_client/build/build_nexe.py --root ../../../.. $
+      --product-dir ../../../../out/Release/xyz --config-name Release -t $
+      ../../../../native_client/toolchain/ --arch x86-64 --build glibc_nso $
+      --name ../../../../out/Release/gen/tc_glibc/lib64/libimc.so --objdir $
+      ../../../../out/Release/obj/native_client/src/shared/imc/imc_lib.gen/glibc-x86-64-so/imc_lib $
+      "--include-dirs=../../../../out/Release/gen/tc_glibc/include $
+      ../../../.. \"../../../../out/Release/gen\" ../../../src/third_party $
+      ../../../.." "--compile_flags=-m64 -fPIC -O2 -g -Wall $
+      -fdiagnostics-show-option -Werror " --gomadir "" $
+      "--defines=\"__STDC_LIMIT_MACROS=1\" \"__STDC_FORMAT_MACROS=1\" $
+      \"_GNU_SOURCE=1\" \"_POSIX_C_SOURCE=199506\" \"_XOPEN_SOURCE=600\" $
+      \"DYNAMIC_ANNOTATIONS_ENABLED=1\" $
+      \"DYNAMIC_ANNOTATIONS_PREFIX=NACL_\" \"NACL_BUILD_ARCH=x86\" $
+      V8_DEPRECATION_WARNINGS \"CLD_VERSION=2\" \"_FILE_OFFSET_BITS=64\" $
+      \"_POSIX_C_SOURCE=199506\" \"_XOPEN_SOURCE=600\" \"_GNU_SOURCE=1\" $
+      \"__STDC_LIMIT_MACROS=1\" CHROMIUM_BUILD $
+      \"CR_CLANG_REVISION=255169-1\" UI_COMPOSITOR_IMAGE_TRANSPORT $
+      \"USE_AURA=1\" \"USE_ASH=1\" \"USE_PANGO=1\" \"USE_CAIRO=1\" $
+      \"USE_DEFAULT_RENDER_THEME=1\" \"USE_LIBJPEG_TURBO=1\" \"USE_X11=1\" $
+      \"USE_CLIPBOARD_AURAX11=1\" ENABLE_ONE_CLICK_SIGNIN $
+      \"ENABLE_WEBRTC=1\" \"ENABLE_MEDIA_ROUTER=1\" ENABLE_PEPPER_CDMS $
+      ENABLE_CONFIGURATION_POLICY ENABLE_NOTIFICATIONS \"ENABLE_HIDPI=1\" $
+      \"ENABLE_TOPCHROME_MD=1\" USE_UDEV DONT_EMBED_BUILD_METADATA $
+      FIELDTRIAL_TESTING_ENABLED \"ENABLE_TASK_MANAGER=1\" $
+      \"ENABLE_EXTENSIONS=1\" \"ENABLE_PDF=1\" \"ENABLE_PLUGINS=1\" $
+      \"ENABLE_SESSION_SERVICE=1\" \"ENABLE_THEMES=1\" $
+      \"ENABLE_AUTOFILL_DIALOG=1\" \"ENABLE_BACKGROUND=1\" $
+      \"ENABLE_PRINTING=1\" \"ENABLE_BASIC_PRINTING=1\" $
+      \"ENABLE_PRINT_PREVIEW=1\" \"ENABLE_SPELLCHECK=1\" $
+      \"ENABLE_CAPTIVE_PORTAL_DETECTION=1\" \"ENABLE_APP_LIST=1\" $
+      \"ENABLE_SETTINGS_APP=1\" \"ENABLE_SUPERVISED_USERS=1\" $
+      \"ENABLE_MDNS=1\" \"ENABLE_SERVICE_DISCOVERY=1\" $
+      V8_USE_EXTERNAL_STARTUP_DATA FULL_SAFE_BROWSING SAFE_BROWSING_CSD $
+      SAFE_BROWSING_DB_LOCAL \"USE_LIBPCI=1\" \"USE_OPENSSL=1\" $
+      \"USE_GLIB=1\" \"USE_NSS_CERTS=1\"" $
+      "--link_flags=-B../../../../out/Release/gen/tc_glibc/lib64  " $
+      "--source-list=../../../../out/gypfiles/native_client/src/shared/imc/glibc-x86-64-so.imc_lib.source_list.gypcmd"
+  description = ACTION imc_lib: build glibc x86-64 $
+      nso_1d3567b45a5ae7eab89e92bf6098bfad
+  restat = 1
+
+build gen/tc_glibc/lib64/libimc.so: $
+    imc_lib_target_build_glibc_x86_64_nso_1d3567b45a5ae7eab89e92bf6098bfad $
+    ../../native_client/build/build_nexe.py $
+    ../../native_client/build/build_nexe_tools.py $
+    ../../native_client/src/include/build_config.h $
+    ../../native_client/src/include/nacl_base.h $
+    ../../native_client/src/include/nacl_compiler_annotations.h $
+    ../../native_client/src/include/nacl_macros.h $
+    ../../native_client/src/include/portability.h $
+    ../../native_client/src/include/win/port_win.h $
+    ../../native_client/src/public/imc_syscalls.h $
+    ../../native_client/src/third_party/valgrind/memcheck.h $
+    ../../native_client/src/third_party/valgrind/valgrind.h $
+    ../../native_client/src/trusted/service_runtime/include/bits/wordsize.h $
+    ../../native_client/src/trusted/service_runtime/include/machine/_types.h $
+    ../../native_client/src/shared/platform/nacl_log.h $
+    ../../native_client/src/shared/imc/nacl/nacl_imc.cc $
+    ../../native_client/src/shared/imc/nacl_imc_c.h $
+    ../../native_client/src/shared/imc/nacl_imc_common.cc $
+    ../../out/gypfiles/native_client/src/shared/imc/glibc-x86-64-so.imc_lib.source_list.gypcmd $
+    ../../native_client/toolchain/linux_x86/nacl_x86_glibc/nacl_x86_glibc.json
+
+rule imc_lib_target_build_glibc_x86_32_nso_1d3567b45a5ae7eab89e92bf6098bfad
+  command = cd ../../native_client/src/shared/imc; python $
+      ../../../../native_client/build/build_nexe.py --root ../../../.. $
+      --product-dir ../../../../out/Release/xyz --config-name Release -t $
+      ../../../../native_client/toolchain/ --arch x86-32 --build glibc_nso $
+      --name ../../../../out/Release/gen/tc_glibc/lib32/libimc.so --objdir $
+      ../../../../out/Release/obj/native_client/src/shared/imc/imc_lib.gen/glibc-x86-32-so/imc_lib $
+      "--include-dirs=../../../../out/Release/gen/tc_glibc/include $
+      ../../../.. \"../../../../out/Release/gen\" ../../../src/third_party $
+      ../../../.." "--compile_flags=-m32 -fPIC -O2 -g -Wall $
+      -fdiagnostics-show-option -Werror " --gomadir "" $
+      "--defines=\"__STDC_LIMIT_MACROS=1\" \"__STDC_FORMAT_MACROS=1\" $
+      \"_GNU_SOURCE=1\" \"_POSIX_C_SOURCE=199506\" \"_XOPEN_SOURCE=600\" $
+      \"DYNAMIC_ANNOTATIONS_ENABLED=1\" $
+      \"DYNAMIC_ANNOTATIONS_PREFIX=NACL_\" \"NACL_BUILD_ARCH=x86\" $
+      V8_DEPRECATION_WARNINGS \"CLD_VERSION=2\" \"_FILE_OFFSET_BITS=64\" $
+      \"_POSIX_C_SOURCE=199506\" \"_XOPEN_SOURCE=600\" \"_GNU_SOURCE=1\" $
+      \"__STDC_LIMIT_MACROS=1\" CHROMIUM_BUILD $
+      \"CR_CLANG_REVISION=255169-1\" UI_COMPOSITOR_IMAGE_TRANSPORT $
+      \"USE_AURA=1\" \"USE_ASH=1\" \"USE_PANGO=1\" \"USE_CAIRO=1\" $
+      \"USE_DEFAULT_RENDER_THEME=1\" \"USE_LIBJPEG_TURBO=1\" \"USE_X11=1\" $
+      \"USE_CLIPBOARD_AURAX11=1\" ENABLE_ONE_CLICK_SIGNIN $
+      \"ENABLE_WEBRTC=1\" \"ENABLE_MEDIA_ROUTER=1\" ENABLE_PEPPER_CDMS $
+      ENABLE_CONFIGURATION_POLICY ENABLE_NOTIFICATIONS \"ENABLE_HIDPI=1\" $
+      \"ENABLE_TOPCHROME_MD=1\" USE_UDEV DONT_EMBED_BUILD_METADATA $
+      FIELDTRIAL_TESTING_ENABLED \"ENABLE_TASK_MANAGER=1\" $
+      \"ENABLE_EXTENSIONS=1\" \"ENABLE_PDF=1\" \"ENABLE_PLUGINS=1\" $
+      \"ENABLE_SESSION_SERVICE=1\" \"ENABLE_THEMES=1\" $
+      \"ENABLE_AUTOFILL_DIALOG=1\" \"ENABLE_BACKGROUND=1\" $
+      \"ENABLE_PRINTING=1\" \"ENABLE_BASIC_PRINTING=1\" $
+      \"ENABLE_PRINT_PREVIEW=1\" \"ENABLE_SPELLCHECK=1\" $
+      \"ENABLE_CAPTIVE_PORTAL_DETECTION=1\" \"ENABLE_APP_LIST=1\" $
+      \"ENABLE_SETTINGS_APP=1\" \"ENABLE_SUPERVISED_USERS=1\" $
+      \"ENABLE_MDNS=1\" \"ENABLE_SERVICE_DISCOVERY=1\" $
+      V8_USE_EXTERNAL_STARTUP_DATA FULL_SAFE_BROWSING SAFE_BROWSING_CSD $
+      SAFE_BROWSING_DB_LOCAL \"USE_LIBPCI=1\" \"USE_OPENSSL=1\" $
+      \"USE_GLIB=1\" \"USE_NSS_CERTS=1\"" "--link_flags=-m32 $
+      -B../../../../out/Release/gen/tc_glibc/lib32  " $
+      "--source-list=../../../../out/gypfiles/native_client/src/shared/imc/glibc-x86-32-so.imc_lib.source_list.gypcmd"
+  description = ACTION imc_lib: build glibc x86-32 $
+      nso_1d3567b45a5ae7eab89e92bf6098bfad
+  restat = 1
+
+build gen/tc_glibc/lib32/libimc.so: $
+    imc_lib_target_build_glibc_x86_32_nso_1d3567b45a5ae7eab89e92bf6098bfad $
+    ../../native_client/build/build_nexe.py $
+    ../../native_client/build/build_nexe_tools.py $
+    ../../native_client/src/include/build_config.h $
+    ../../native_client/src/include/nacl_base.h $
+    ../../native_client/src/include/nacl_compiler_annotations.h $
+    ../../native_client/src/include/nacl_macros.h $
+    ../../native_client/src/include/portability.h $
+    ../../native_client/src/include/win/port_win.h $
+    ../../native_client/src/public/imc_syscalls.h $
+    ../../native_client/src/third_party/valgrind/memcheck.h $
+    ../../native_client/src/third_party/valgrind/valgrind.h $
+    ../../native_client/src/trusted/service_runtime/include/bits/wordsize.h $
+    ../../native_client/src/trusted/service_runtime/include/machine/_types.h $
+    ../../native_client/src/shared/platform/nacl_log.h $
+    ../../native_client/src/shared/imc/nacl/nacl_imc.cc $
+    ../../native_client/src/shared/imc/nacl_imc_c.h $
+    ../../native_client/src/shared/imc/nacl_imc_common.cc $
+    ../../out/gypfiles/native_client/src/shared/imc/glibc-x86-32-so.imc_lib.source_list.gypcmd $
+    ../../native_client/toolchain/linux_x86/nacl_x86_glibc/nacl_x86_glibc.json
+
+build obj/native_client/src/shared/imc/imc_lib.actions_rules_copies.stamp: $
+    stamp gen/tc_pnacl_newlib/lib/libimc.a gen/tc_newlib/lib64/libimc.a $
+    gen/tc_newlib/lib32/libimc.a gen/tc_glibc/lib64/libimc.a $
+    gen/tc_glibc/lib32/libimc.a gen/tc_glibc/lib64/libimc.so $
+    gen/tc_glibc/lib32/libimc.so
+

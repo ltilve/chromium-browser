@@ -1,0 +1,251 @@
+build obj/build/both_gn_and_gyp.actions_depends.stamp: stamp $
+    base_i18n_perftests base_perftests base_unittests check_example $
+    cc_perftests cc_unittests cc_blink_unittests load_library_perf_tests $
+    unit_tests obj/components/libnetwork_hints_browser.a $
+    obj/components/policy_templates.actions_rules_copies.stamp $
+    components_browsertests components_perftests components_unittests $
+    obj/content/libcontent_app_browser.a obj/content/libcontent_app_child.a $
+    content_browsertests content_gl_benchmark content_gl_tests $
+    content_perftests content_unittests crypto_unittests device_unittests $
+    gen/gin//v8_snapshot_fingerprint.cc angle_unittests gl_tests $
+    gpu_perftests gpu_unittests ipc_tests ipc_mojo_unittests cast_unittests $
+    media_perftests media_unittests midi_unittests $
+    obj/mojo/libmojo_application_base.a dump_cache net_perftests $
+    net_unittests printing_unittests skia_unittests sql_unittests $
+    sync_unit_tests obj/testing/libgmock_main.a blink_heap_unittests $
+    blink_platform_unittests webkit_unit_tests wtf_unittests $
+    env_chromium_unittests libaddressinput_unittests $
+    obj/third_party/smhasher/libpmurhash.a battor_agent bitmaptools $
+    accessibility_unittests ui_base_unittests display_unittests $
+    events_unittests gfx_unittests gl_unittests snapshot_unittests $
+    ui_touch_selection_unittests url_unittests $
+    obj/v8/tools/gyp/libv8_snapshot.a gen/debug-support.cc llvm-symbolizer $
+    nacl_loader_unittests app_shell app_shell_unittests $
+    service_discovery_sniffer $
+    obj/remoting/remoting_all.actions_depends.stamp remoting_me2me_host $
+    native_messaging_host app_list_demo views_unittests $
+    ash_shell_with_content ash_unittests $
+    obj/components/libsession_manager_component.a aura_bench aura_demo $
+    aura_unittests keyboard_unittests wm_unittests xdisplaycheck $
+    compositor_model_bench build_utf8_validator_tables chrome_app_unittests $
+    chromedriver chromedriver_tests chromedriver_unittests $
+    cloud_print_unittests content_shell courgette courgette_fuzz $
+    courgette_minimal_tool courgette_unittests gin_unittests $
+    gles2_conform_support gcm_unit_tests mcs_probe google_apis_unittests $
+    jingle_unittests obj/mojo/mojo.actions_depends.stamp crash_cache $
+    crl_set_dump dns_fuzz_stub gdig get_server_time hpack_example_generator $
+    hpack_fuzz_mutator hpack_fuzz_wrapper net_watcher run_testserver $
+    stress_cache tld_cleanup lib/libppapi_example_audio.so.TOC $
+    lib/libppapi_example_audio_input.so.TOC $
+    lib/libppapi_example_c_stub.so.TOC lib/libppapi_example_cc_stub.so.TOC $
+    lib/libppapi_example_compositor.so.TOC $
+    lib/libppapi_example_crxfs.so.TOC $
+    lib/libppapi_example_enumerate_devices.so.TOC $
+    lib/libppapi_example_file_chooser.so.TOC $
+    lib/libppapi_example_flash_topmost.so.TOC $
+    lib/libppapi_example_gamepad.so.TOC lib/libppapi_example_gles2.so.TOC $
+    lib/libppapi_example_gles2_spinning_cube.so.TOC $
+    lib/libppapi_example_graphics_2d.so.TOC lib/libppapi_example_ime.so.TOC $
+    lib/libppapi_example_input.so.TOC $
+    lib/libppapi_example_media_stream_audio.so.TOC $
+    lib/libppapi_example_media_stream_video.so.TOC $
+    lib/libppapi_example_mouse_cursor.so.TOC $
+    lib/libppapi_example_mouse_lock.so.TOC $
+    lib/libppapi_example_paint_manager.so.TOC $
+    lib/libppapi_example_post_message.so.TOC $
+    lib/libppapi_example_printing.so.TOC $
+    lib/libppapi_example_scaling.so.TOC lib/libppapi_example_scroll.so.TOC $
+    lib/libppapi_example_simple_font.so.TOC $
+    lib/libppapi_example_threading.so.TOC $
+    lib/libppapi_example_url_loader.so.TOC $
+    lib/libppapi_example_url_loader_file.so.TOC $
+    lib/libppapi_example_vc.so.TOC lib/libppapi_example_video_decode.so.TOC $
+    lib/libppapi_example_video_decode_dev.so.TOC $
+    lib/libppapi_example_video_effects.so.TOC $
+    lib/libppapi_example_video_encode.so.TOC libppapi_tests.so.TOC $
+    ppapi_perftests ppapi_unittests run_sync_testserver $
+    cacheinvalidation_unittests libphonenumber_unittests $
+    mojo_system_unittests mojo_public_bindings_unittests $
+    mojo_public_environment_unittests mojo_public_system_perftests $
+    mojo_public_system_unittests mojo_public_utility_unittests image_diff $
+    app_list_unittests compositor_unittests browser_tests chrome $
+    interactive_ui_tests performance_browser_tests sync_integration_tests $
+    sync_performance_tests extensions_browsertests extensions_unittests $
+    gin_shell gles2_conform_test khronos_glcts_test ipc_perftests $
+    mojo_common_unittests pepper_hash_for_uma filter_fuzz_stub $
+    image_operations_bench sync_client sync_listen_notifications codesighs $
+    maptsvdifftool pdfium_diff pdfium_test generate_test_gn_data gn $
+    gn_unittests clear_system_cache message_center_unittests $
+    views_examples_with_content_exe ffmpeg_regression_tests $
+    disk_cache_memory_test breakpad_unittests core-2-minidump dump_syms $
+    generate_test_dump minidump-2-core microdump_stackwalk minidump_dump $
+    minidump_stackwalk symupload nm2tsv dbus_test_server dbus_unittests $
+    obj/media/cast/cast_testing_tools.actions_depends.stamp tap_proxy $
+    flip_in_mem_edsm_server flip_in_mem_edsm_server_unittests $
+    epoll_quic_client epoll_quic_server quic_client quic_server $
+    chrome_sandbox sandbox_linux_unittests sqlite_shell
+
+build obj/build/both_gn_and_gyp.compile_depends.stamp: stamp $
+    obj/base/base_i18n_perftests.compile_depends.stamp $
+    obj/base/base_perftests.compile_depends.stamp $
+    obj/base/base_unittests.compile_depends.stamp $
+    obj/base/check_example.compile_depends.stamp $
+    obj/cc/cc_perftests.compile_depends.stamp $
+    obj/cc/cc_unittests.compile_depends.stamp $
+    obj/cc/blink/cc_blink_unittests.compile_depends.stamp $
+    obj/chrome/load_library_perf_tests.compile_depends.stamp $
+    obj/chrome/unit_tests.actions_rules_copies.stamp $
+    obj/components/network_hints_browser.compile_depends.stamp $
+    obj/components/policy_templates.actions_rules_copies.stamp $
+    obj/components/components_browsertests.compile_depends.stamp $
+    obj/components/components_perftests.compile_depends.stamp $
+    obj/components/components_unittests.compile_depends.stamp $
+    obj/content/content_app_browser.compile_depends.stamp $
+    obj/content/content_app_child.compile_depends.stamp $
+    obj/content/content_browsertests.compile_depends.stamp $
+    obj/content/content_gl_benchmark.compile_depends.stamp $
+    obj/content/content_gl_tests.compile_depends.stamp $
+    obj/content/content_perftests.compile_depends.stamp $
+    obj/content/content_unittests.compile_depends.stamp $
+    obj/crypto/crypto_unittests.compile_depends.stamp $
+    obj/device/device_unittests.compile_depends.stamp $
+    gen/gin//v8_snapshot_fingerprint.cc $
+    obj/gpu/angle_unittests.compile_depends.stamp $
+    obj/gpu/gl_tests.compile_depends.stamp $
+    obj/gpu/gpu_perftests.compile_depends.stamp $
+    obj/gpu/gpu_unittests.compile_depends.stamp $
+    obj/ipc/ipc_tests.compile_depends.stamp $
+    obj/ipc/mojo/ipc_mojo_unittests.compile_depends.stamp $
+    obj/media/cast/cast_unittests.compile_depends.stamp $
+    obj/media/media_perftests.compile_depends.stamp $
+    obj/media/media_unittests.compile_depends.stamp $
+    obj/media/midi/midi_unittests.compile_depends.stamp $
+    obj/mojo/mojo_application_base.compile_depends.stamp $
+    obj/net/dump_cache.compile_depends.stamp $
+    obj/net/net_perftests.compile_depends.stamp $
+    obj/net/net_unittests.compile_depends.stamp $
+    obj/printing/printing_unittests.compile_depends.stamp $
+    obj/skia/skia_unittests.compile_depends.stamp $
+    obj/sql/sql_unittests.compile_depends.stamp $
+    obj/sync/sync_unit_tests.compile_depends.stamp $
+    obj/third_party/WebKit/Source/platform/blink_heap_unittests.compile_depends.stamp $
+    obj/third_party/WebKit/Source/platform/blink_platform_unittests.compile_depends.stamp $
+    obj/third_party/WebKit/Source/web/webkit_unit_tests.compile_depends.stamp $
+    obj/third_party/WebKit/Source/wtf/wtf_unittests.compile_depends.stamp $
+    obj/third_party/leveldatabase/env_chromium_unittests.compile_depends.stamp $
+    obj/third_party/libaddressinput/libaddressinput_unittests.compile_depends.stamp $
+    obj/tools/battor_agent/battor_agent.compile_depends.stamp $
+    obj/ui/accessibility/accessibility_unittests.compile_depends.stamp $
+    obj/ui/base/ui_base_unittests.compile_depends.stamp $
+    obj/ui/display/display_unittests.compile_depends.stamp $
+    obj/ui/events/events_unittests.compile_depends.stamp $
+    obj/ui/gfx/gfx_unittests.compile_depends.stamp $
+    obj/ui/gl/gl_unittests.compile_depends.stamp $
+    obj/ui/snapshot/snapshot_unittests.compile_depends.stamp $
+    obj/ui/touch_selection/ui_touch_selection_unittests.compile_depends.stamp $
+    obj/url/url_unittests.compile_depends.stamp $
+    obj/v8/tools/gyp/v8_snapshot.gen/snapshot.cc gen/debug-support.cc $
+    llvm-symbolizer $
+    obj/components/nacl_loader_unittests.compile_depends.stamp $
+    obj/extensions/shell/app_shell.compile_depends.stamp $
+    obj/extensions/shell/app_shell_unittests.compile_depends.stamp $
+    obj/chrome/service_discovery_sniffer.compile_depends.stamp $
+    obj/remoting/remoting_all.compile_depends.stamp $
+    obj/remoting/remoting_me2me_host.compile_depends.stamp $
+    obj/remoting/remoting_me2me_native_messaging_host.compile_depends.stamp $
+    obj/ui/app_list/app_list_demo.compile_depends.stamp $
+    obj/ui/views/views_unittests.compile_depends.stamp $
+    obj/ash/ash_shell_with_content.compile_depends.stamp $
+    obj/ash/ash_unittests.compile_depends.stamp $
+    obj/ui/aura/aura_bench.compile_depends.stamp $
+    obj/ui/aura/aura_demo.compile_depends.stamp $
+    obj/ui/aura/aura_unittests.compile_depends.stamp $
+    obj/ui/keyboard/keyboard_unittests.compile_depends.stamp $
+    obj/ui/wm/wm_unittests.compile_depends.stamp $
+    obj/gpu/tools/compositor_model_bench.compile_depends.stamp $
+    obj/base/build_utf8_validator_tables.compile_depends.stamp $
+    obj/chrome/chrome_app_unittests.compile_depends.stamp $
+    obj/chrome/chromedriver.compile_depends.stamp $
+    obj/chrome/chromedriver_tests.compile_depends.stamp $
+    obj/chrome/chromedriver_unittests.compile_depends.stamp $
+    obj/cloud_print/cloud_print_unittests.compile_depends.stamp $
+    obj/content/content_shell.compile_depends.stamp $
+    obj/courgette/courgette.compile_depends.stamp $
+    obj/courgette/courgette_fuzz.compile_depends.stamp $
+    obj/courgette/courgette_minimal_tool.compile_depends.stamp $
+    obj/courgette/courgette_unittests.compile_depends.stamp $
+    obj/gin/gin_unittests.compile_depends.stamp $
+    obj/gpu/gles2_conform_support/gles2_conform_support.compile_depends.stamp $
+    obj/google_apis/gcm/gcm_unit_tests.compile_depends.stamp $
+    obj/google_apis/gcm/mcs_probe.compile_depends.stamp $
+    obj/google_apis/google_apis_unittests.compile_depends.stamp $
+    obj/jingle/jingle_unittests.compile_depends.stamp $
+    obj/mojo/mojo.compile_depends.stamp $
+    obj/net/crash_cache.compile_depends.stamp $
+    obj/net/crl_set_dump.compile_depends.stamp $
+    obj/net/dns_fuzz_stub.compile_depends.stamp $
+    obj/net/gdig.compile_depends.stamp $
+    obj/net/get_server_time.compile_depends.stamp $
+    obj/net/hpack_example_generator.compile_depends.stamp $
+    obj/net/hpack_fuzz_mutator.compile_depends.stamp $
+    obj/net/hpack_fuzz_wrapper.compile_depends.stamp $
+    obj/net/net_watcher.compile_depends.stamp $
+    obj/net/run_testserver.compile_depends.stamp $
+    obj/net/stress_cache.compile_depends.stamp $
+    obj/net/tld_cleanup.compile_depends.stamp $
+    obj/ppapi/ppapi_tests.actions_rules_copies.stamp $
+    obj/ppapi/ppapi_perftests.compile_depends.stamp $
+    obj/ppapi/ppapi_unittests.compile_depends.stamp $
+    obj/sync/run_sync_testserver.compile_depends.stamp $
+    obj/third_party/cacheinvalidation/cacheinvalidation_unittests.compile_depends.stamp $
+    obj/third_party/libphonenumber/libphonenumber_unittests.compile_depends.stamp $
+    obj/third_party/mojo/mojo_system_unittests.compile_depends.stamp $
+    obj/third_party/mojo/mojo_public_bindings_unittests.compile_depends.stamp $
+    obj/third_party/mojo/mojo_public_environment_unittests.compile_depends.stamp $
+    obj/third_party/mojo/mojo_public_system_perftests.compile_depends.stamp $
+    obj/third_party/mojo/mojo_public_system_unittests.compile_depends.stamp $
+    obj/third_party/mojo/mojo_public_utility_unittests.compile_depends.stamp $
+    obj/tools/imagediff/image_diff.compile_depends.stamp $
+    obj/ui/app_list/app_list_unittests.compile_depends.stamp $
+    obj/ui/compositor/compositor_unittests.compile_depends.stamp $
+    obj/chrome/browser_tests.actions_rules_copies.stamp $
+    obj/chrome/chrome_initial.actions_rules_copies.stamp $
+    obj/chrome/interactive_ui_tests.compile_depends.stamp $
+    obj/chrome/performance_browser_tests.compile_depends.stamp $
+    obj/chrome/sync_integration_tests.compile_depends.stamp $
+    obj/chrome/sync_performance_tests.compile_depends.stamp $
+    obj/extensions/extensions_browsertests.compile_depends.stamp $
+    obj/extensions/extensions_unittests.compile_depends.stamp $
+    obj/gin/gin_shell.compile_depends.stamp $
+    obj/gpu/gles2_conform_support/gles2_conform_test.compile_depends.stamp $
+    obj/gpu/khronos_glcts_support/khronos_glcts_test.compile_depends.stamp $
+    obj/ipc/ipc_perftests.compile_depends.stamp $
+    obj/mojo/mojo_common_unittests.compile_depends.stamp $
+    obj/ppapi/tools/pepper_hash_for_uma.compile_depends.stamp $
+    obj/skia/filter_fuzz_stub.compile_depends.stamp $
+    obj/skia/image_operations_bench.compile_depends.stamp $
+    obj/sync/tools/sync_client.compile_depends.stamp $
+    obj/sync/tools/sync_listen_notifications.compile_depends.stamp $
+    obj/third_party/pdfium/samples/pdfium_diff.compile_depends.stamp $
+    obj/third_party/pdfium/samples/pdfium_test.compile_depends.stamp $
+    obj/tools/gn/generate_test_gn_data.compile_depends.stamp $
+    obj/tools/gn/gn.compile_depends.stamp $
+    obj/tools/gn/gn_unittests.compile_depends.stamp $
+    obj/tools/perf/clear_system_cache/clear_system_cache.compile_depends.stamp $
+    obj/ui/message_center/message_center_unittests.compile_depends.stamp $
+    obj/ui/views/examples/views_examples_with_content_exe.compile_depends.stamp $
+    obj/media/ffmpeg_regression_tests.compile_depends.stamp $
+    obj/net/disk_cache_memory_test.compile_depends.stamp $
+    obj/dbus/dbus_test_server.compile_depends.stamp $
+    obj/dbus/dbus_unittests.compile_depends.stamp $
+    obj/media/cast/cast_testing_tools.compile_depends.stamp $
+    obj/media/cast/tap_proxy.compile_depends.stamp $
+    obj/net/flip_in_mem_edsm_server.compile_depends.stamp $
+    obj/net/flip_in_mem_edsm_server_unittests.compile_depends.stamp $
+    obj/net/epoll_quic_client.compile_depends.stamp $
+    obj/net/epoll_quic_server.compile_depends.stamp $
+    obj/net/quic_client.compile_depends.stamp $
+    obj/net/quic_server.compile_depends.stamp $
+    obj/sandbox/sandbox_linux_unittests.compile_depends.stamp $
+    obj/third_party/sqlite/sqlite_shell.compile_depends.stamp
+

@@ -7,7 +7,6 @@
 
 #include <vector>
 
-#include "base/gtest_prod_util.h"
 #include "base/prefs/pref_member.h"
 #include "components/autofill/core/browser/suggestion.h"
 #include "components/autofill/core/browser/webdata/autofill_webdata_service.h"
@@ -41,7 +40,7 @@ class AutocompleteHistoryManager : public WebDataServiceConsumer {
       const base::string16& prefix,
       const std::string& form_control_type,
       const std::vector<Suggestion>& suggestions);
-  virtual void OnFormSubmitted(const FormData& form);
+  virtual void OnWillSubmitForm(const FormData& form);
 
   // Cancels the currently pending WebDataService query, if there is one.
   void CancelPendingQuery();

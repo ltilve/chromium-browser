@@ -87,7 +87,7 @@ namespace ash {
 ////////////////////////////////////////////////////////////////////////////////
 // MagnificationControllerImpl:
 
-class MagnificationControllerImpl : virtual public MagnificationController,
+class MagnificationControllerImpl : public MagnificationController,
                                     public ui::EventHandler,
                                     public ui::ImplicitAnimationObserver,
                                     public aura::WindowObserver,
@@ -248,7 +248,7 @@ class MagnificationControllerImpl : virtual public MagnificationController,
   ScrollDirection scroll_direction_;
 
   // Timer for moving magnifier window when it fires.
-  base::OneShotTimer<MagnificationControllerImpl> move_magnifier_timer_;
+  base::OneShotTimer move_magnifier_timer_;
 
   // Most recent caret position in |root_window_| coordinates.
   gfx::Point caret_point_;

@@ -23,8 +23,7 @@ bool UsernamesCollectionKey::operator<(
 }
 
 PasswordFormFillData::PasswordFormFillData()
-    : user_submitted(false),
-      wait_for_username(false),
+    : wait_for_username(false),
       is_possible_change_password_form(false) {
 }
 
@@ -53,14 +52,15 @@ void InitPasswordFormFillData(
   result->name = form_on_page.form_data.name;
   result->origin = form_on_page.origin;
   result->action = form_on_page.action;
-  result->user_submitted = form_on_page.form_data.user_submitted;
   result->username_field = username_field;
   result->password_field = password_field;
   result->wait_for_username = wait_for_username_before_autofill;
   result->is_possible_change_password_form =
       form_on_page.IsPossibleChangePasswordForm();
 
-  result->preferred_realm = preferred_match->original_signon_realm;
+  if (preferred_match->is_public_suffix_match ||
+      preferred_match->is_affiliation_based_match)
+    result->preferred_realm = preferred_match->signon_realm;
 
   // Copy additional username/value pairs.
   PasswordFormMap::const_iterator iter;
@@ -68,7 +68,9 @@ void InitPasswordFormFillData(
     if (iter->second != preferred_match) {
       PasswordAndRealm value;
       value.password = iter->second->password_value;
-      value.realm = iter->second->original_signon_realm;
+      if (iter->second->is_public_suffix_match ||
+          iter->second->is_affiliation_based_match)
+        value.realm = iter->second->signon_realm;
       result->additional_logins[iter->first] = value;
     }
     if (enable_other_possible_usernames &&
@@ -80,7 +82,9 @@ void InitPasswordFormFillData(
       UsernamesCollectionKey key;
       key.username = iter->first;
       key.password = iter->second->password_value;
-      key.realm = iter->second->original_signon_realm;
+      if (iter->second->is_public_suffix_match ||
+          iter->second->is_affiliation_based_match)
+        key.realm = iter->second->signon_realm;
       result->other_possible_usernames[key] =
           iter->second->other_possible_usernames;
     }

@@ -1,0 +1,25 @@
+build obj/components/components_tests_pak.actions_depends.stamp: stamp $
+    obj/components/components_resources.actions_rules_copies.stamp $
+    obj/components/components_strings.actions_rules_copies.stamp
+
+build obj/components/components_tests_pak.compile_depends.stamp: stamp $
+    obj/components/components_resources.actions_rules_copies.stamp $
+    obj/components/components_strings.actions_rules_copies.stamp
+
+rule $
+    components_tests_pak_target_repack_components_tests_pak_a7924506d89238d61357a496dd05874a
+  command = cd ../../components; python ../tools/grit/grit/format/repack.py $
+      ../out/Release/components_tests_resources.pak $
+      ../out/Release/gen/components/components_resources.pak $
+      ../out/Release/gen/components/strings/components_strings_en-US.pak
+  description = ACTION components_tests_pak: $
+      repack_components_tests_pak_a7924506d89238d61357a496dd05874a
+  restat = 1
+
+build components_tests_resources.pak: $
+    components_tests_pak_target_repack_components_tests_pak_a7924506d89238d61357a496dd05874a $
+    ../../tools/grit/grit/format/repack.py $
+    gen/components/components_resources.pak $
+    gen/components/strings/components_strings_en-US.pak || $
+    obj/components/components_tests_pak.actions_depends.stamp
+

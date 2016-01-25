@@ -38,11 +38,9 @@
 #include "content/public/common/content_descriptors.h"
 #include "content/public/common/send_zygote_child_ping_linux.h"
 #include "content/public/common/zygote_fork_delegate_linux.h"
-#include "crypto/nss_util.h"
 #include "ipc/ipc_descriptors.h"
 #include "ipc/ipc_switches.h"
 #include "sandbox/linux/services/credentials.h"
-#include "sandbox/linux/services/libc_urandom_override.h"
 #include "sandbox/linux/services/namespace_sandbox.h"
 
 #if defined(OS_NACL_NONSFI)
@@ -123,17 +121,11 @@ void BecomeNaClLoader(base::ScopedFD browser_fd,
   nacl::nonsfi::NonSfiListener listener;
   listener.Listen();
 #else
-  // TODO(hidehiko): Drop Non-SFI supporting from nacl_helper after the
-  // nacl_helper_nonsfi switching is done.
-  if (uses_nonsfi_mode) {
-    nacl::nonsfi::NonSfiListener listener;
-    listener.Listen();
-  } else {
-    NaClListener listener;
-    listener.set_prereserved_sandbox_size(system_info.prereserved_sandbox_size);
-    listener.set_number_of_cores(system_info.number_of_cores);
-    listener.Listen();
-  }
+  CHECK(!uses_nonsfi_mode);
+  NaClListener listener;
+  listener.set_prereserved_sandbox_size(system_info.prereserved_sandbox_size);
+  listener.set_number_of_cores(system_info.number_of_cores);
+  listener.Listen();
 #endif
   _exit(0);
 }
@@ -443,24 +435,6 @@ int main(int argc, char* argv[]) {
   base::AtExitManager exit_manager;
   base::RandUint64();  // acquire /dev/urandom fd before sandbox is raised
 
-#if !defined(OS_NACL_NONSFI)
-  // NSS is only needed for SFI NaCl.
-  // Allows NSS to fopen() /dev/urandom.
-  sandbox::InitLibcUrandomOverrides();
-#if !defined(USE_OPENSSL)
-  // Configure NSS for use inside the NaCl process.
-  // The fork check has not caused problems for NaCl, but this appears to be
-  // best practice (see other places LoadNSSLibraries is called.)
-  crypto::DisableNSSForkCheck();
-  // Without this line on Linux, HMAC::Init will instantiate a singleton that
-  // in turn attempts to open a file.  Disabling this behavior avoids a ~70 ms
-  // stall the first time HMAC is used.
-  crypto::ForceNSSNoDBInit();
-  // Load shared libraries before sandbox is raised.
-  // NSS is needed to perform hashing for validation caching.
-  crypto::LoadNSSLibraries();
-#endif  // !defined(USE_OPENSSL)
-#endif  // defined(OS_NACL_NONSFI)
   const NaClLoaderSystemInfo system_info = {
 #if !defined(OS_NACL_NONSFI)
     // These are not used by nacl_helper_nonsfi.

@@ -9,6 +9,7 @@
 #include "base/mac/bundle_locations.h"
 #include "base/mac/foundation_util.h"
 #include "base/mac/mac_util.h"
+#include "base/mac/sdk_forward_declarations.h"
 #include "base/memory/singleton.h"
 #include "base/prefs/pref_service.h"
 #include "base/strings/string_util.h"
@@ -21,6 +22,7 @@
 #include "chrome/browser/command_updater.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/search/search.h"
+#include "chrome/browser/sync/sync_global_error_factory.h"
 #include "chrome/browser/themes/theme_service.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_commands.h"
@@ -42,7 +44,6 @@
 #import "chrome/browser/ui/cocoa/toolbar/wrench_toolbar_button_cell.h"
 #import "chrome/browser/ui/cocoa/view_id_util.h"
 #import "chrome/browser/ui/cocoa/wrench_menu/wrench_menu_controller.h"
-#include "chrome/browser/ui/omnibox/omnibox_view.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/browser/ui/toolbar/wrench_menu_badge_controller.h"
 #include "chrome/browser/ui/toolbar/wrench_menu_model.h"
@@ -52,8 +53,9 @@
 #include "components/metrics/proto/omnibox_event.pb.h"
 #include "components/omnibox/browser/autocomplete_classifier.h"
 #include "components/omnibox/browser/autocomplete_match.h"
+#include "components/omnibox/browser/omnibox_view.h"
 #include "components/search_engines/template_url_service.h"
-#include "components/url_fixer/url_fixer.h"
+#include "components/url_formatter/url_fixer.h"
 #include "content/public/browser/web_contents.h"
 #include "grit/theme_resources.h"
 #import "ui/base/cocoa/menu_controller.h"
@@ -240,14 +242,30 @@ class NotificationBridge : public WrenchMenuBadgeController::Delegate {
                              profile:profile
                              browser:browser
                         nibFileNamed:@"Toolbar"])) {
+    // Start global error services now so we badge the menu correctly.
+    SyncGlobalErrorFactory::GetForProfile(profile);
   }
   return self;
 }
 
 // Called after the view is done loading and the outlets have been hooked up.
-// Now we can hook up bridges that rely on UI objects such as the location
-// bar and button state.
+// Now we can hook up bridges that rely on UI objects such as the location bar
+// and button state. -viewDidLoad is the recommended way to do this in 10.10
+// SDK. When running on 10.10 or above -awakeFromNib still works but for some
+// reason is not guaranteed to be called (http://crbug.com/526276), so implement
+// both.
 - (void)awakeFromNib {
+  [self viewDidLoad];
+}
+
+- (void)viewDidLoad {
+  // When linking and running on 10.10+, both -awakeFromNib and -viewDidLoad may
+  // be called, don't initialize twice.
+  if (locationBarView_) {
+    DCHECK(base::mac::IsOSYosemiteOrLater());
+    return;
+  }
+
   [[backButton_ cell] setImageID:IDR_BACK
                   forButtonState:image_button_cell::kDefaultState];
   [[backButton_ cell] setImageID:IDR_BACK_H
@@ -420,10 +438,20 @@ class NotificationBridge : public WrenchMenuBadgeController::Delegate {
   [[backButton_ cell]
       accessibilitySetOverrideValue:description
                        forAttribute:NSAccessibilityDescriptionAttribute];
+  NSString* helpTag = l10n_util::GetNSStringWithFixup(IDS_ACCNAME_TOOLTIP_BACK);
+  [[backButton_ cell]
+      accessibilitySetOverrideValue:helpTag
+                       forAttribute:NSAccessibilityHelpAttribute];
+
   description = l10n_util::GetNSStringWithFixup(IDS_ACCNAME_FORWARD);
   [[forwardButton_ cell]
       accessibilitySetOverrideValue:description
                        forAttribute:NSAccessibilityDescriptionAttribute];
+  helpTag = l10n_util::GetNSStringWithFixup(IDS_ACCNAME_TOOLTIP_FORWARD);
+  [[forwardButton_ cell]
+      accessibilitySetOverrideValue:helpTag
+                       forAttribute:NSAccessibilityHelpAttribute];
+
   description = l10n_util::GetNSStringWithFixup(IDS_ACCNAME_RELOAD);
   [[reloadButton_ cell]
       accessibilitySetOverrideValue:description
@@ -536,12 +564,6 @@ class NotificationBridge : public WrenchMenuBadgeController::Delegate {
 
 - (void)setTranslateIconLit:(BOOL)on {
   locationBarView_->SetTranslateIconLit(on);
-}
-
-- (void)setOverflowedToolbarActionWantsToRun:(BOOL)overflowedActionWantsToRun {
-  WrenchToolbarButtonCell* cell =
-      base::mac::ObjCCastStrict<WrenchToolbarButtonCell>([wrenchButton_ cell]);
-  [cell setOverflowedToolbarActionWantsToRun:overflowedActionWantsToRun];
 }
 
 - (void)zoomChangedForActiveTab:(BOOL)canShowBubble {
@@ -889,8 +911,8 @@ class NotificationBridge : public WrenchMenuBadgeController::Delegate {
     NOTIMPLEMENTED();
 
   // Get the first URL and fix it up.
-  GURL url(url_fixer::FixupURL(base::SysNSStringToUTF8([urls objectAtIndex:0]),
-                               std::string()));
+  GURL url(url_formatter::FixupURL(
+      base::SysNSStringToUTF8([urls objectAtIndex:0]), std::string()));
 
   if (url.SchemeIs(url::kJavaScriptScheme)) {
     browser_->window()->GetLocationBar()->GetOmniboxView()->SetUserText(

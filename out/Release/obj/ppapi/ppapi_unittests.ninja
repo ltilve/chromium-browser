@@ -1,0 +1,536 @@
+build obj/ppapi/ppapi_unittests.actions_depends.stamp: stamp $
+    obj/ppapi/libppapi_host.a obj/ppapi/libppapi_proxy.a $
+    obj/ppapi/libppapi_shared.a obj/ppapi/libppapi_unittest_shared.a $
+    obj/base/librun_all_unittests.a obj/base/libtest_support_base.a $
+    obj/gpu/libgpu_ipc.a obj/ipc/libipc.a obj/ipc/libtest_support_ipc.a $
+    obj/media/libshared_memory_support.a obj/testing/libgmock.a $
+    obj/testing/libgtest.a obj/ui/surface/libsurface.a $
+    obj/base/allocator/liballocator.a obj/base/libbase.a $
+    gen/base/debug/debugging_flags.h obj/base/libbase_static.a $
+    obj/third_party/modp_b64/libmodp_b64.a $
+    obj/base/third_party/dynamic_annotations/libdynamic_annotations.a $
+    obj/base/libsymbolize.a obj/base/libxdg_mime.a $
+    obj/third_party/libevent/libevent.a obj/ui/gfx/libgfx_geometry.a $
+    obj/skia/skia.actions_depends.stamp obj/skia/libskia_library.a $
+    obj/skia/libskia_opts.a obj/skia/libskia_opts_ssse3.a $
+    obj/skia/libskia_opts_sse41.a obj/skia/libskia_opts_sse42.a $
+    obj/skia/libskia_opts_avx.a obj/skia/libskia_opts_avx2.a $
+    obj/third_party/zlib/libchrome_zlib.a $
+    obj/third_party/zlib/libzlib_x86_simd.a $
+    obj/third_party/sfntly/libsfntly.a obj/third_party/icu/libicuuc.a $
+    icudtl.dat icudtl.dat obj/skia/libskia_chrome.a $
+    obj/ui/base/libui_base.a obj/base/libbase_i18n.a $
+    obj/third_party/icu/libicui18n.a obj/net/libnet.a $
+    obj/third_party/protobuf/libprotobuf_lite.a obj/url/liburl_lib.a $
+    obj/net/libnet_quic_proto.a obj/base/libbase_prefs.a $
+    obj/crypto/libcrcrypto.a obj/third_party/boringssl/libboringssl.a $
+    obj/third_party/boringssl/libboringssl.a obj/sdch/libsdch.a $
+    obj/net/net_derived_sources.actions_rules_copies.stamp $
+    obj/net/net_resources.actions_rules_copies.stamp $
+    obj/build/linux/libgio.a obj/ui/events/libevents.a obj/ui/gfx/libgfx.a $
+    obj/third_party/harfbuzz-ng/libharfbuzz-ng.a $
+    obj/third_party/libpng/libpng.a $
+    obj/third_party/libjpeg_turbo/libjpeg_turbo.a obj/ui/gfx/x/libgfx_x11.a $
+    obj/ui/events/libdom_keycode_converter.a obj/ui/events/libevents_base.a $
+    obj/ui/events/libgesture_detection.a $
+    obj/ui/events/devices/libevents_devices.a $
+    obj/ui/events/platform/libevents_platform.a $
+    obj/ui/resources/ui_resources.actions_rules_copies.stamp $
+    obj/ui/strings/ui_strings.actions_rules_copies.stamp $
+    obj/ui/events/platform/x11/libx11_events_platform.a $
+    obj/ui/gl/libgl_wrapper.a obj/gpu/command_buffer/libgles2_utils.a $
+    obj/ppapi/libppapi_ipc.a obj/gpu/libcommand_buffer_common.a $
+    obj/gpu/libcommand_buffer_client.a obj/gpu/libgles2_implementation.a $
+    obj/gpu/libgles2_cmd_helper.a obj/gin/libgin.a $
+    obj/v8/tools/gyp/v8_maybe_snapshot.actions_depends.stamp $
+    obj/v8/tools/gyp/v8_maybe_snapshot.actions_depends.stamp $
+    obj/v8/tools/gyp/libv8_base.a obj/v8/tools/gyp/libv8_libbase.a $
+    obj/v8/tools/gyp/libv8_external_snapshot.a $
+    obj/v8/tools/gyp/js2c.actions_rules_copies.stamp natives_blob.bin $
+    obj/third_party/WebKit/public/blink.actions_depends.stamp $
+    obj/third_party/WebKit/Source/platform/libblink_platform.a $
+    obj/third_party/WebKit/Source/wtf/libwtf.a $
+    obj/third_party/WebKit/Source/platform/libblink_common.a $
+    obj/third_party/WebKit/Source/platform/libblink_heap_asm_stubs.a $
+    obj/third_party/WebKit/Source/platform/make_platform_generated.actions_rules_copies.stamp $
+    obj/cc/libcc.a obj/cc/libcc_proto.a obj/gpu/gpu.actions_depends.stamp $
+    obj/gpu/libcommand_buffer_service.a obj/gpu/libdisk_cache_proto.a $
+    obj/gpu/libgpu_config.a obj/third_party/re2/libre2.a $
+    obj/build/linux/libpci.a obj/third_party/libXNVCtrl/libXNVCtrl.a $
+    obj/third_party/smhasher/libcityhash.a gen/angle/id/commit.h $
+    obj/third_party/angle/src/copy_scripts.actions_rules_copies.stamp $
+    obj/third_party/angle/src/libtranslator.a $
+    obj/third_party/angle/src/libtranslator_lib.a $
+    obj/third_party/angle/src/libpreprocessor.a $
+    obj/third_party/angle/src/libangle_common.a obj/media/libmedia.a $
+    obj/third_party/libwebm/libwebm.a libyuv.a $
+    obj/third_party/opus/libopus.a obj/third_party/ffmpeg/libffmpeg.a $
+    obj/third_party/ffmpeg/libffmpeg_yasm.a $
+    obj/third_party/libvpx_new/libvpx_new.a $
+    obj/third_party/libvpx_new/libvpx_intrinsics_mmx.a $
+    obj/third_party/libvpx_new/libvpx_intrinsics_sse2.a $
+    obj/third_party/libvpx_new/libvpx_intrinsics_ssse3.a $
+    obj/third_party/libvpx_new/libvpx_intrinsics_sse4_1.a $
+    obj/third_party/libvpx_new/libvpx_intrinsics_avx.a $
+    obj/third_party/libvpx_new/libvpx_intrinsics_avx2.a $
+    obj/media/libmedia_asm.a obj/gpu/libgles2_c_lib.a $
+    obj/third_party/iccjpeg/libiccjpeg.a $
+    obj/third_party/libwebp/libwebp.actions_depends.stamp $
+    obj/third_party/libwebp/libwebp_dec.a $
+    obj/third_party/libwebp/libwebp_dsp.a $
+    obj/third_party/libwebp/libwebp_utils.a $
+    obj/third_party/libwebp/libwebp_demux.a $
+    obj/third_party/libwebp/libwebp_enc.a obj/third_party/ots/libots.a $
+    obj/third_party/brotli/libbrotli.a obj/third_party/woff2/libwoff2_dec.a $
+    obj/third_party/qcms/libqcms.a $
+    obj/third_party/WebKit/Source/web/libblink_web.a $
+    obj/third_party/WebKit/Source/modules/libmodules.a $
+    obj/third_party/sqlite/libchromium_sqlite3.a $
+    obj/third_party/WebKit/Source/modules/make_modules_generated.actions_rules_copies.stamp $
+    obj/third_party/WebKit/Source/bindings/modules/modules_event_generated.actions_rules_copies.stamp $
+    obj/third_party/WebKit/Source/core/webcore.actions_depends.stamp $
+    obj/third_party/WebKit/Source/core/libwebcore_dom.a $
+    obj/third_party/WebKit/Source/core/webcore_prerequisites.actions_depends.stamp $
+    obj/third_party/WebKit/Source/core/inspector_protocol_sources.actions_rules_copies.stamp $
+    gen/blink/core/InspectorProtocolVersion.h $
+    obj/third_party/WebKit/Source/core/inspector_instrumentation_sources.actions_rules_copies.stamp $
+    obj/third_party/WebKit/Source/core/make_core_generated.actions_rules_copies.stamp $
+    obj/third_party/WebKit/Source/core/generated_testing_idls.actions_rules_copies.stamp $
+    gen/blink/core/EventInterfaces.in $
+    obj/third_party/WebKit/Source/bindings/core/v8/bindings_core_v8_generated.actions_depends.stamp $
+    obj/third_party/WebKit/Source/bindings/core/v8/bindings_core_impl_generated.actions_rules_copies.stamp $
+    gen/blink/bindings/scripts/cached_jinja_templates.stamp $
+    obj/third_party/WebKit/Source/bindings/scripts/cached_lex_yacc_tables.actions_rules_copies.stamp $
+    obj/third_party/WebKit/Source/bindings/core/interfaces_info_individual_core.actions_rules_copies.stamp $
+    obj/third_party/WebKit/Source/bindings/core/core_global_constructors_idls.actions_rules_copies.stamp $
+    gen/blink/bindings/core/GlobalObjectsCore.pickle $
+    gen/blink/bindings/modules/InterfacesInfoOverall.pickle $
+    obj/third_party/WebKit/Source/bindings/modules/interfaces_info_individual_modules.actions_rules_copies.stamp $
+    obj/third_party/WebKit/Source/bindings/modules/modules_core_global_constructors_idls.actions_rules_copies.stamp $
+    gen/blink/bindings/modules/GlobalObjectsModules.pickle $
+    obj/third_party/WebKit/Source/bindings/modules/modules_global_constructors_idls.actions_rules_copies.stamp $
+    obj/third_party/WebKit/Source/bindings/core/v8/bindings_core_v8_generated_aggregate.actions_rules_copies.stamp $
+    obj/third_party/WebKit/Source/bindings/core/v8/bindings_core_v8_generated_individual.actions_rules_copies.stamp $
+    obj/third_party/WebKit/Source/bindings/modules/v8/bindings_modules_v8_generated.actions_depends.stamp $
+    obj/third_party/WebKit/Source/bindings/modules/v8/bindings_modules_impl_generated.actions_rules_copies.stamp $
+    obj/third_party/WebKit/Source/bindings/modules/v8/bindings_modules_v8_generated_aggregate.actions_rules_copies.stamp $
+    obj/third_party/WebKit/Source/bindings/modules/v8/bindings_modules_v8_generated_individual.actions_rules_copies.stamp $
+    gen/blink/bindings/modules/v8/initPartialInterfacesInModules.cpp $
+    gen/blink/bindings/modules/v8/V8GeneratedModulesBindingsPartial.cpp $
+    obj/third_party/WebKit/Source/bindings/modules/v8/bindings_modules_v8_generated_partial_individual.actions_rules_copies.stamp $
+    obj/third_party/libxml/libxml2.a obj/third_party/libxslt/libxslt.a $
+    obj/third_party/WebKit/Source/core/libwebcore_html.a $
+    obj/third_party/WebKit/Source/core/libwebcore_remaining.a $
+    obj/third_party/WebKit/Source/core/libwebcore_rendering.a $
+    obj/third_party/WebKit/Source/core/libwebcore_svg.a $
+    obj/third_party/WebKit/Source/core/libwebcore_generated.a $
+    obj/third_party/snappy/libsnappy.a $
+    obj/third_party/WebKit/Source/platform/libblink_common.a
+
+build obj/ppapi/ppapi_unittests.compile_depends.stamp: stamp $
+    obj/third_party/WebKit/public/blink.compile_depends.stamp $
+    gen/base/debug/debugging_flags.h gen/base/debug/debugging_flags.h $
+    icudtl.dat icudtl.dat icudtl.dat $
+    obj/ui/base/ui_base.compile_depends.stamp $
+    obj/net/net.compile_depends.stamp $
+    obj/net/net_quic_proto.actions_rules_copies.stamp $
+    obj/net/net_derived_sources.actions_rules_copies.stamp $
+    obj/net/net_resources.actions_rules_copies.stamp $
+    obj/build/linux/gio.actions_rules_copies.stamp $
+    obj/third_party/libjpeg_turbo/libjpeg.actions_rules_copies.stamp $
+    obj/ui/resources/ui_resources.actions_rules_copies.stamp $
+    obj/ui/strings/ui_strings.actions_rules_copies.stamp snapshot_blob.bin $
+    snapshot_blob.bin snapshot_blob.bin snapshot_blob.bin $
+    obj/v8/tools/gyp/js2c.actions_rules_copies.stamp natives_blob.bin $
+    obj/third_party/WebKit/public/blink.compile_depends.stamp $
+    obj/third_party/WebKit/Source/platform/blink_platform.compile_depends.stamp $
+    gen/webcore/heap/SaveRegisters_x86.o $
+    obj/third_party/WebKit/Source/platform/make_platform_generated.actions_rules_copies.stamp $
+    obj/cc/cc.compile_depends.stamp $
+    obj/cc/cc_proto.actions_rules_copies.stamp $
+    obj/gpu/gpu.compile_depends.stamp $
+    obj/gpu/command_buffer_service.compile_depends.stamp $
+    obj/gpu/disk_cache_proto.actions_rules_copies.stamp $
+    obj/build/linux/libpci.actions_rules_copies.stamp $
+    obj/build/linux/libpci.actions_rules_copies.stamp gen/angle/id/commit.h $
+    obj/third_party/angle/src/copy_scripts.actions_rules_copies.stamp $
+    obj/media/media.actions_rules_copies.stamp $
+    obj/third_party/ffmpeg/ffmpeg_yasm.actions_rules_copies.stamp $
+    obj/third_party/libvpx_new/libvpx_new.actions_rules_copies.stamp $
+    obj/media/media_asm.actions_rules_copies.stamp $
+    obj/third_party/WebKit/Source/web/blink_web.compile_depends.stamp $
+    obj/third_party/WebKit/Source/modules/modules.compile_depends.stamp $
+    obj/third_party/WebKit/Source/modules/make_modules_generated.actions_rules_copies.stamp $
+    obj/third_party/WebKit/Source/bindings/modules/modules_event_generated.actions_rules_copies.stamp $
+    obj/third_party/WebKit/Source/core/webcore.compile_depends.stamp $
+    obj/third_party/WebKit/Source/core/webcore_prerequisites.compile_depends.stamp $
+    obj/third_party/WebKit/Source/core/webcore_prerequisites.compile_depends.stamp $
+    obj/third_party/WebKit/Source/core/inspector_protocol_sources.actions_rules_copies.stamp $
+    gen/blink/core/InspectorProtocolVersion.h $
+    obj/third_party/WebKit/Source/core/inspector_instrumentation_sources.actions_rules_copies.stamp $
+    obj/third_party/WebKit/Source/core/make_core_generated.actions_rules_copies.stamp $
+    obj/third_party/WebKit/Source/core/generated_testing_idls.actions_rules_copies.stamp $
+    gen/blink/core/EventInterfaces.in $
+    obj/third_party/WebKit/Source/bindings/core/v8/bindings_core_v8_generated.compile_depends.stamp $
+    obj/third_party/WebKit/Source/bindings/core/v8/bindings_core_impl_generated.actions_rules_copies.stamp $
+    gen/blink/bindings/scripts/cached_jinja_templates.stamp $
+    obj/third_party/WebKit/Source/bindings/scripts/cached_lex_yacc_tables.actions_rules_copies.stamp $
+    obj/third_party/WebKit/Source/bindings/core/interfaces_info_individual_core.actions_rules_copies.stamp $
+    obj/third_party/WebKit/Source/bindings/core/core_global_constructors_idls.actions_rules_copies.stamp $
+    gen/blink/bindings/core/GlobalObjectsCore.pickle $
+    gen/blink/bindings/modules/InterfacesInfoOverall.pickle $
+    obj/third_party/WebKit/Source/bindings/modules/interfaces_info_individual_modules.actions_rules_copies.stamp $
+    obj/third_party/WebKit/Source/bindings/modules/modules_core_global_constructors_idls.actions_rules_copies.stamp $
+    gen/blink/bindings/modules/GlobalObjectsModules.pickle $
+    obj/third_party/WebKit/Source/bindings/modules/modules_global_constructors_idls.actions_rules_copies.stamp $
+    obj/third_party/WebKit/Source/bindings/core/v8/bindings_core_v8_generated_aggregate.actions_rules_copies.stamp $
+    obj/third_party/WebKit/Source/bindings/core/v8/bindings_core_v8_generated_individual.actions_rules_copies.stamp $
+    obj/third_party/WebKit/Source/bindings/modules/v8/bindings_modules_v8_generated.compile_depends.stamp $
+    obj/third_party/WebKit/Source/bindings/modules/v8/bindings_modules_impl_generated.actions_rules_copies.stamp $
+    obj/third_party/WebKit/Source/bindings/modules/v8/bindings_modules_v8_generated_aggregate.actions_rules_copies.stamp $
+    obj/third_party/WebKit/Source/bindings/modules/v8/bindings_modules_v8_generated_individual.actions_rules_copies.stamp $
+    gen/blink/bindings/modules/v8/initPartialInterfacesInModules.cpp $
+    gen/blink/bindings/modules/v8/V8GeneratedModulesBindingsPartial.cpp $
+    obj/third_party/WebKit/Source/bindings/modules/v8/bindings_modules_v8_generated_partial_individual.actions_rules_copies.stamp $
+    obj/third_party/WebKit/Source/core/webcore_prerequisites.compile_depends.stamp $
+    obj/third_party/WebKit/Source/core/webcore_prerequisites.compile_depends.stamp $
+    obj/third_party/WebKit/Source/core/webcore_prerequisites.compile_depends.stamp $
+    obj/third_party/WebKit/Source/core/webcore_prerequisites.compile_depends.stamp $
+    obj/third_party/WebKit/Source/core/webcore_generated.compile_depends.stamp
+
+defines = -DV8_DEPRECATION_WARNINGS -DCLD_VERSION=2 -D_FILE_OFFSET_BITS=64 $
+    -DCHROMIUM_BUILD -DCR_CLANG_REVISION=255169-1 $
+    -DUI_COMPOSITOR_IMAGE_TRANSPORT -DUSE_AURA=1 -DUSE_ASH=1 -DUSE_PANGO=1 $
+    -DUSE_CAIRO=1 -DUSE_DEFAULT_RENDER_THEME=1 -DUSE_LIBJPEG_TURBO=1 $
+    -DUSE_X11=1 -DUSE_CLIPBOARD_AURAX11=1 -DENABLE_ONE_CLICK_SIGNIN $
+    -DENABLE_WEBRTC=1 -DENABLE_MEDIA_ROUTER=1 -DENABLE_PEPPER_CDMS $
+    -DENABLE_CONFIGURATION_POLICY -DENABLE_NOTIFICATIONS -DENABLE_HIDPI=1 $
+    -DENABLE_TOPCHROME_MD=1 -DUSE_UDEV -DDONT_EMBED_BUILD_METADATA $
+    -DFIELDTRIAL_TESTING_ENABLED -DENABLE_TASK_MANAGER=1 $
+    -DENABLE_EXTENSIONS=1 -DENABLE_PDF=1 -DENABLE_PLUGINS=1 $
+    -DENABLE_SESSION_SERVICE=1 -DENABLE_THEMES=1 -DENABLE_AUTOFILL_DIALOG=1 $
+    -DENABLE_BACKGROUND=1 -DENABLE_PRINTING=1 -DENABLE_BASIC_PRINTING=1 $
+    -DENABLE_PRINT_PREVIEW=1 -DENABLE_SPELLCHECK=1 $
+    -DENABLE_CAPTIVE_PORTAL_DETECTION=1 -DENABLE_APP_LIST=1 $
+    -DENABLE_SETTINGS_APP=1 -DENABLE_SUPERVISED_USERS=1 -DENABLE_MDNS=1 $
+    -DENABLE_SERVICE_DISCOVERY=1 -DV8_USE_EXTERNAL_STARTUP_DATA $
+    -DFULL_SAFE_BROWSING -DSAFE_BROWSING_CSD -DSAFE_BROWSING_DB_LOCAL $
+    -DGL_GLEXT_PROTOTYPES -DGTEST_HAS_POSIX_RE=0 -DGTEST_LANG_CXX11=0 $
+    -DUNIT_TEST -DGTEST_HAS_RTTI=0 -DUSE_LIBPCI=1 -DUSE_OPENSSL=1 $
+    -DUSE_GLIB=1 -DUSE_NSS_CERTS=1 -D__STDC_CONSTANT_MACROS $
+    -D__STDC_FORMAT_MACROS -DNDEBUG -DNVALGRIND $
+    -DDYNAMIC_ANNOTATIONS_ENABLED=0
+includes = -Igen -I../.. -I../../skia/config -I../../third_party/khronos $
+    -I../../gpu -I../../third_party/WebKit/Source -Igen/angle $
+    -I../../testing/gmock/include -I../../testing/gtest/include
+cflags = -fstack-protector --param=ssp-buffer-size=4 -Werror -pthread $
+    -fno-strict-aliasing -Wall -Wno-unused-parameter $
+    -Wno-missing-field-initializers -fvisibility=hidden -pipe -fPIC $
+    -Wno-reserved-user-defined-literal -Xclang -load -Xclang $
+    /b/build/slave/publish_tarball/build/src/third_party/llvm-build/Release+Asserts/lib/libFindBadConstructs.so $
+    -Xclang -add-plugin -Xclang find-bad-constructs -Xclang $
+    -plugin-arg-find-bad-constructs -Xclang check-templates $
+    -fcolor-diagnostics $
+    -B/b/build/slave/publish_tarball/build/src/third_party/binutils/Linux_x64/Release/bin $
+    -fPIC -fvisibility=hidden -Wheader-hygiene -Wno-char-subscripts $
+    -Wno-unneeded-internal-declaration -Wno-covered-switch-default $
+    -Wstring-conversion -Wno-c++11-narrowing -Wno-deprecated-register $
+    -Wno-inconsistent-missing-override -Wno-shift-negative-value $
+    -Wno-bitfield-width -pthread $
+    -I/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/include/glib-2.0 $
+    -I/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/lib/x86_64-linux-gnu/glib-2.0/include $
+    -m64 -march=x86-64 $
+    --sysroot=/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot $
+    -O2 -fno-ident -fdata-sections -ffunction-sections -funwind-tables
+cflags_c = 
+cflags_cc = -fno-exceptions -fno-rtti -fno-threadsafe-statics $
+    -fvisibility-inlines-hidden -Wsign-compare -std=gnu++11
+arflags = 
+
+build obj/ppapi/host/ppapi_unittests.resource_message_filter_unittest.o: $
+    cxx ../../ppapi/host/resource_message_filter_unittest.cc || $
+    obj/ppapi/ppapi_unittests.compile_depends.stamp
+build $
+    obj/ppapi/proxy/ppapi_unittests.device_enumeration_resource_helper_unittest.o: $
+    cxx ../../ppapi/proxy/device_enumeration_resource_helper_unittest.cc || $
+    obj/ppapi/ppapi_unittests.compile_depends.stamp
+build obj/ppapi/proxy/ppapi_unittests.file_chooser_resource_unittest.o: cxx $
+    ../../ppapi/proxy/file_chooser_resource_unittest.cc || $
+    obj/ppapi/ppapi_unittests.compile_depends.stamp
+build obj/ppapi/proxy/ppapi_unittests.file_system_resource_unittest.o: cxx $
+    ../../ppapi/proxy/file_system_resource_unittest.cc || $
+    obj/ppapi/ppapi_unittests.compile_depends.stamp
+build obj/ppapi/proxy/ppapi_unittests.flash_resource_unittest.o: cxx $
+    ../../ppapi/proxy/flash_resource_unittest.cc || $
+    obj/ppapi/ppapi_unittests.compile_depends.stamp
+build obj/ppapi/proxy/ppapi_unittests.interface_list_unittest.o: cxx $
+    ../../ppapi/proxy/interface_list_unittest.cc || $
+    obj/ppapi/ppapi_unittests.compile_depends.stamp
+build obj/ppapi/proxy/ppapi_unittests.mock_resource.o: cxx $
+    ../../ppapi/proxy/mock_resource.cc || $
+    obj/ppapi/ppapi_unittests.compile_depends.stamp
+build obj/ppapi/proxy/ppapi_unittests.nacl_message_scanner_unittest.o: cxx $
+    ../../ppapi/proxy/nacl_message_scanner_unittest.cc || $
+    obj/ppapi/ppapi_unittests.compile_depends.stamp
+build obj/ppapi/proxy/ppapi_unittests.pdf_resource_unittest.o: cxx $
+    ../../ppapi/proxy/pdf_resource_unittest.cc || $
+    obj/ppapi/ppapi_unittests.compile_depends.stamp
+build obj/ppapi/proxy/ppapi_unittests.plugin_dispatcher_unittest.o: cxx $
+    ../../ppapi/proxy/plugin_dispatcher_unittest.cc || $
+    obj/ppapi/ppapi_unittests.compile_depends.stamp
+build obj/ppapi/proxy/ppapi_unittests.plugin_resource_tracker_unittest.o: $
+    cxx ../../ppapi/proxy/plugin_resource_tracker_unittest.cc || $
+    obj/ppapi/ppapi_unittests.compile_depends.stamp
+build obj/ppapi/proxy/ppapi_unittests.plugin_var_tracker_unittest.o: cxx $
+    ../../ppapi/proxy/plugin_var_tracker_unittest.cc || $
+    obj/ppapi/ppapi_unittests.compile_depends.stamp
+build obj/ppapi/proxy/ppapi_unittests.ppb_var_unittest.o: cxx $
+    ../../ppapi/proxy/ppb_var_unittest.cc || $
+    obj/ppapi/ppapi_unittests.compile_depends.stamp
+build $
+    obj/ppapi/proxy/ppapi_unittests.ppp_instance_private_proxy_unittest.o: $
+    cxx ../../ppapi/proxy/ppp_instance_private_proxy_unittest.cc || $
+    obj/ppapi/ppapi_unittests.compile_depends.stamp
+build obj/ppapi/proxy/ppapi_unittests.ppp_instance_proxy_unittest.o: cxx $
+    ../../ppapi/proxy/ppp_instance_proxy_unittest.cc || $
+    obj/ppapi/ppapi_unittests.compile_depends.stamp
+build obj/ppapi/proxy/ppapi_unittests.ppp_messaging_proxy_unittest.o: cxx $
+    ../../ppapi/proxy/ppp_messaging_proxy_unittest.cc || $
+    obj/ppapi/ppapi_unittests.compile_depends.stamp
+build obj/ppapi/proxy/ppapi_unittests.printing_resource_unittest.o: cxx $
+    ../../ppapi/proxy/printing_resource_unittest.cc || $
+    obj/ppapi/ppapi_unittests.compile_depends.stamp
+build obj/ppapi/proxy/ppapi_unittests.raw_var_data_unittest.o: cxx $
+    ../../ppapi/proxy/raw_var_data_unittest.cc || $
+    obj/ppapi/ppapi_unittests.compile_depends.stamp
+build obj/ppapi/proxy/ppapi_unittests.serialized_var_unittest.o: cxx $
+    ../../ppapi/proxy/serialized_var_unittest.cc || $
+    obj/ppapi/ppapi_unittests.compile_depends.stamp
+build obj/ppapi/proxy/ppapi_unittests.tracked_callback_unittest.o: cxx $
+    ../../ppapi/proxy/tracked_callback_unittest.cc || $
+    obj/ppapi/ppapi_unittests.compile_depends.stamp
+build obj/ppapi/proxy/ppapi_unittests.video_decoder_resource_unittest.o: $
+    cxx ../../ppapi/proxy/video_decoder_resource_unittest.cc || $
+    obj/ppapi/ppapi_unittests.compile_depends.stamp
+build obj/ppapi/proxy/ppapi_unittests.video_encoder_resource_unittest.o: $
+    cxx ../../ppapi/proxy/video_encoder_resource_unittest.cc || $
+    obj/ppapi/ppapi_unittests.compile_depends.stamp
+build obj/ppapi/proxy/ppapi_unittests.websocket_resource_unittest.o: cxx $
+    ../../ppapi/proxy/websocket_resource_unittest.cc || $
+    obj/ppapi/ppapi_unittests.compile_depends.stamp
+build $
+    obj/ppapi/shared_impl/ppapi_unittests.media_stream_audio_track_shared_unittest.o: $
+    cxx ../../ppapi/shared_impl/media_stream_audio_track_shared_unittest.cc $
+    || obj/ppapi/ppapi_unittests.compile_depends.stamp
+build $
+    obj/ppapi/shared_impl/ppapi_unittests.media_stream_buffer_manager_unittest.o: $
+    cxx ../../ppapi/shared_impl/media_stream_buffer_manager_unittest.cc || $
+    obj/ppapi/ppapi_unittests.compile_depends.stamp
+build $
+    obj/ppapi/shared_impl/ppapi_unittests.media_stream_video_track_shared_unittest.o: $
+    cxx ../../ppapi/shared_impl/media_stream_video_track_shared_unittest.cc $
+    || obj/ppapi/ppapi_unittests.compile_depends.stamp
+build obj/ppapi/shared_impl/ppapi_unittests.proxy_lock_unittest.o: cxx $
+    ../../ppapi/shared_impl/proxy_lock_unittest.cc || $
+    obj/ppapi/ppapi_unittests.compile_depends.stamp
+build obj/ppapi/shared_impl/ppapi_unittests.resource_tracker_unittest.o: $
+    cxx ../../ppapi/shared_impl/resource_tracker_unittest.cc || $
+    obj/ppapi/ppapi_unittests.compile_depends.stamp
+build $
+    obj/ppapi/shared_impl/ppapi_unittests.thread_aware_callback_unittest.o: $
+    cxx ../../ppapi/shared_impl/thread_aware_callback_unittest.cc || $
+    obj/ppapi/ppapi_unittests.compile_depends.stamp
+build obj/ppapi/shared_impl/ppapi_unittests.time_conversion_unittest.o: cxx $
+    ../../ppapi/shared_impl/time_conversion_unittest.cc || $
+    obj/ppapi/ppapi_unittests.compile_depends.stamp
+build obj/ppapi/shared_impl/ppapi_unittests.var_tracker_unittest.o: cxx $
+    ../../ppapi/shared_impl/var_tracker_unittest.cc || $
+    obj/ppapi/ppapi_unittests.compile_depends.stamp
+
+ldflags = -Wl,-z,now -Wl,-z,relro -Wl,--fatal-warnings -Wl,-z,defs -pthread $
+    -Wl,-z,noexecstack -fPIC -fuse-ld=gold $
+    -B/b/build/slave/publish_tarball/build/src/third_party/binutils/Linux_x64/Release/bin $
+    -Wl,--disable-new-dtags -L. $
+    -Wl,-uhb_ft_face_create_cached,-uhb_glib_get_unicode_funcs $
+    -Wl,-uIsHeapProfilerRunning,-uProfilerStart $
+    -Wl,-u_Z21InitialMallocHook_NewPKvj,-u_Z22InitialMallocHook_MMapPKvS0_jiiix,-u_Z22InitialMallocHook_SbrkPKvi $
+    -Wl,-u_Z21InitialMallocHook_NewPKvm,-u_Z22InitialMallocHook_MMapPKvS0_miiil,-u_Z22InitialMallocHook_SbrkPKvl $
+    -Wl,-u_ZN15HeapLeakChecker12IgnoreObjectEPKv,-u_ZN15HeapLeakChecker14UnIgnoreObjectEPKv $
+    -m64 $
+    --sysroot=/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot $
+    -L/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/lib/x86_64-linux-gnu $
+    -Wl,-rpath-link=/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/lib/x86_64-linux-gnu $
+    -L/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/lib/x86_64-linux-gnu $
+    -Wl,-rpath-link=/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/lib/x86_64-linux-gnu $
+    -L/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/lib/gcc/x86_64-linux-gnu/4.6 $
+    -Wl,-rpath-link=/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/lib/gcc/x86_64-linux-gnu/4.6 $
+    -L/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/lib $
+    -Wl,-rpath-link=/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/lib $
+    -Wl,--detect-odr-violations -Wl,--icf=all -Wl,-O1 -Wl,--as-needed $
+    -Wl,--gc-sections
+libs =  -lrt -ldl -lgmodule-2.0 -lgobject-2.0 -lgthread-2.0 -lglib-2.0 $
+    -lfontconfig -lfreetype -lpangocairo-1.0 -lcairo -lpangoft2-1.0 $
+    -lpango-1.0 -lnss3 -lnssutil3 -lsmime3 -lplds4 -lplc4 -lnspr4 -lgconf-2 $
+    -lgio-2.0 -lresolv -lX11 -lXi -lXcursor -lXext -lXfixes -lXrender -lXss $
+    -lXcomposite -lasound -lm -lz -lXdamage -lXtst
+build ppapi_unittests: link $
+    obj/ppapi/host/ppapi_unittests.resource_message_filter_unittest.o $
+    obj/ppapi/proxy/ppapi_unittests.device_enumeration_resource_helper_unittest.o $
+    obj/ppapi/proxy/ppapi_unittests.file_chooser_resource_unittest.o $
+    obj/ppapi/proxy/ppapi_unittests.file_system_resource_unittest.o $
+    obj/ppapi/proxy/ppapi_unittests.flash_resource_unittest.o $
+    obj/ppapi/proxy/ppapi_unittests.interface_list_unittest.o $
+    obj/ppapi/proxy/ppapi_unittests.mock_resource.o $
+    obj/ppapi/proxy/ppapi_unittests.nacl_message_scanner_unittest.o $
+    obj/ppapi/proxy/ppapi_unittests.pdf_resource_unittest.o $
+    obj/ppapi/proxy/ppapi_unittests.plugin_dispatcher_unittest.o $
+    obj/ppapi/proxy/ppapi_unittests.plugin_resource_tracker_unittest.o $
+    obj/ppapi/proxy/ppapi_unittests.plugin_var_tracker_unittest.o $
+    obj/ppapi/proxy/ppapi_unittests.ppb_var_unittest.o $
+    obj/ppapi/proxy/ppapi_unittests.ppp_instance_private_proxy_unittest.o $
+    obj/ppapi/proxy/ppapi_unittests.ppp_instance_proxy_unittest.o $
+    obj/ppapi/proxy/ppapi_unittests.ppp_messaging_proxy_unittest.o $
+    obj/ppapi/proxy/ppapi_unittests.printing_resource_unittest.o $
+    obj/ppapi/proxy/ppapi_unittests.raw_var_data_unittest.o $
+    obj/ppapi/proxy/ppapi_unittests.serialized_var_unittest.o $
+    obj/ppapi/proxy/ppapi_unittests.tracked_callback_unittest.o $
+    obj/ppapi/proxy/ppapi_unittests.video_decoder_resource_unittest.o $
+    obj/ppapi/proxy/ppapi_unittests.video_encoder_resource_unittest.o $
+    obj/ppapi/proxy/ppapi_unittests.websocket_resource_unittest.o $
+    obj/ppapi/shared_impl/ppapi_unittests.media_stream_audio_track_shared_unittest.o $
+    obj/ppapi/shared_impl/ppapi_unittests.media_stream_buffer_manager_unittest.o $
+    obj/ppapi/shared_impl/ppapi_unittests.media_stream_video_track_shared_unittest.o $
+    obj/ppapi/shared_impl/ppapi_unittests.proxy_lock_unittest.o $
+    obj/ppapi/shared_impl/ppapi_unittests.resource_tracker_unittest.o $
+    obj/ppapi/shared_impl/ppapi_unittests.thread_aware_callback_unittest.o $
+    obj/ppapi/shared_impl/ppapi_unittests.time_conversion_unittest.o $
+    obj/ppapi/shared_impl/ppapi_unittests.var_tracker_unittest.o $
+    obj/ppapi/libppapi_host.a obj/ppapi/libppapi_proxy.a $
+    obj/ppapi/libppapi_shared.a obj/ppapi/libppapi_unittest_shared.a $
+    obj/base/librun_all_unittests.a obj/base/libtest_support_base.a $
+    obj/gpu/libgpu_ipc.a obj/ipc/libipc.a obj/ipc/libtest_support_ipc.a $
+    obj/media/libshared_memory_support.a obj/testing/libgmock.a $
+    obj/testing/libgtest.a obj/ui/surface/libsurface.a $
+    obj/base/allocator/liballocator.a obj/base/libbase.a $
+    obj/base/libbase_static.a obj/third_party/modp_b64/libmodp_b64.a $
+    obj/base/third_party/dynamic_annotations/libdynamic_annotations.a $
+    obj/base/libsymbolize.a obj/base/libxdg_mime.a $
+    obj/third_party/libevent/libevent.a obj/ui/gfx/libgfx_geometry.a $
+    obj/skia/libskia_library.a obj/skia/libskia_opts.a $
+    obj/skia/libskia_opts_ssse3.a obj/skia/libskia_opts_sse41.a $
+    obj/skia/libskia_opts_sse42.a obj/skia/libskia_opts_avx.a $
+    obj/skia/libskia_opts_avx2.a obj/third_party/zlib/libchrome_zlib.a $
+    obj/third_party/zlib/libzlib_x86_simd.a $
+    obj/third_party/sfntly/libsfntly.a obj/third_party/icu/libicuuc.a $
+    obj/skia/libskia_chrome.a obj/ui/base/libui_base.a $
+    obj/base/libbase_i18n.a obj/third_party/icu/libicui18n.a $
+    obj/net/libnet.a obj/third_party/protobuf/libprotobuf_lite.a $
+    obj/url/liburl_lib.a obj/net/libnet_quic_proto.a $
+    obj/base/libbase_prefs.a obj/crypto/libcrcrypto.a $
+    obj/third_party/boringssl/libboringssl.a obj/sdch/libsdch.a $
+    obj/build/linux/libgio.a obj/ui/events/libevents.a obj/ui/gfx/libgfx.a $
+    obj/third_party/harfbuzz-ng/libharfbuzz-ng.a $
+    obj/third_party/libpng/libpng.a $
+    obj/third_party/libjpeg_turbo/libjpeg_turbo.a obj/ui/gfx/x/libgfx_x11.a $
+    obj/ui/events/libdom_keycode_converter.a obj/ui/events/libevents_base.a $
+    obj/ui/events/libgesture_detection.a $
+    obj/ui/events/devices/libevents_devices.a $
+    obj/ui/events/platform/libevents_platform.a $
+    obj/ui/events/platform/x11/libx11_events_platform.a $
+    obj/ui/gl/libgl_wrapper.a obj/gpu/command_buffer/libgles2_utils.a $
+    obj/ppapi/libppapi_ipc.a obj/gpu/libcommand_buffer_common.a $
+    obj/gpu/libcommand_buffer_client.a obj/gpu/libgles2_implementation.a $
+    obj/gpu/libgles2_cmd_helper.a obj/gin/libgin.a $
+    obj/v8/tools/gyp/libv8_base.a obj/v8/tools/gyp/libv8_libbase.a $
+    obj/v8/tools/gyp/libv8_external_snapshot.a $
+    obj/third_party/WebKit/Source/platform/libblink_platform.a $
+    obj/third_party/WebKit/Source/wtf/libwtf.a $
+    obj/third_party/WebKit/Source/platform/libblink_common.a $
+    obj/third_party/WebKit/Source/platform/libblink_heap_asm_stubs.a $
+    obj/cc/libcc.a obj/cc/libcc_proto.a obj/gpu/libcommand_buffer_service.a $
+    obj/gpu/libdisk_cache_proto.a obj/gpu/libgpu_config.a $
+    obj/third_party/re2/libre2.a obj/build/linux/libpci.a $
+    obj/third_party/libXNVCtrl/libXNVCtrl.a $
+    obj/third_party/smhasher/libcityhash.a $
+    obj/third_party/angle/src/libtranslator.a $
+    obj/third_party/angle/src/libtranslator_lib.a $
+    obj/third_party/angle/src/libpreprocessor.a $
+    obj/third_party/angle/src/libangle_common.a obj/media/libmedia.a $
+    obj/third_party/libwebm/libwebm.a libyuv.a $
+    obj/third_party/opus/libopus.a obj/third_party/ffmpeg/libffmpeg.a $
+    obj/third_party/ffmpeg/libffmpeg_yasm.a $
+    obj/third_party/libvpx_new/libvpx_new.a $
+    obj/third_party/libvpx_new/libvpx_intrinsics_mmx.a $
+    obj/third_party/libvpx_new/libvpx_intrinsics_sse2.a $
+    obj/third_party/libvpx_new/libvpx_intrinsics_ssse3.a $
+    obj/third_party/libvpx_new/libvpx_intrinsics_sse4_1.a $
+    obj/third_party/libvpx_new/libvpx_intrinsics_avx.a $
+    obj/third_party/libvpx_new/libvpx_intrinsics_avx2.a $
+    obj/media/libmedia_asm.a obj/gpu/libgles2_c_lib.a $
+    obj/third_party/iccjpeg/libiccjpeg.a $
+    obj/third_party/libwebp/libwebp_dec.a $
+    obj/third_party/libwebp/libwebp_dsp.a $
+    obj/third_party/libwebp/libwebp_utils.a $
+    obj/third_party/libwebp/libwebp_demux.a $
+    obj/third_party/libwebp/libwebp_enc.a obj/third_party/ots/libots.a $
+    obj/third_party/brotli/libbrotli.a obj/third_party/woff2/libwoff2_dec.a $
+    obj/third_party/qcms/libqcms.a $
+    obj/third_party/WebKit/Source/web/libblink_web.a $
+    obj/third_party/WebKit/Source/modules/libmodules.a $
+    obj/third_party/sqlite/libchromium_sqlite3.a $
+    obj/third_party/WebKit/Source/core/libwebcore_dom.a $
+    obj/third_party/libxml/libxml2.a obj/third_party/libxslt/libxslt.a $
+    obj/third_party/WebKit/Source/core/libwebcore_html.a $
+    obj/third_party/WebKit/Source/core/libwebcore_remaining.a $
+    obj/third_party/WebKit/Source/core/libwebcore_rendering.a $
+    obj/third_party/WebKit/Source/core/libwebcore_svg.a $
+    obj/third_party/WebKit/Source/core/libwebcore_generated.a $
+    obj/third_party/snappy/libsnappy.a | $
+    gen/blink/bindings/scripts/cached_jinja_templates.stamp $
+    obj/third_party/WebKit/Source/bindings/core/interfaces_info_individual_core.actions_rules_copies.stamp $
+    obj/third_party/WebKit/Source/core/generated_testing_idls.actions_rules_copies.stamp $
+    obj/third_party/WebKit/Source/bindings/scripts/cached_lex_yacc_tables.actions_rules_copies.stamp $
+    obj/third_party/boringssl/libboringssl.a $
+    obj/third_party/WebKit/Source/core/webcore_prerequisites.actions_depends.stamp $
+    obj/gpu/gpu.actions_depends.stamp $
+    obj/third_party/WebKit/Source/bindings/core/v8/bindings_core_v8_generated_aggregate.actions_rules_copies.stamp $
+    icudtl.dat gen/blink/core/InspectorProtocolVersion.h $
+    obj/third_party/WebKit/Source/bindings/modules/v8/bindings_modules_impl_generated.actions_rules_copies.stamp $
+    obj/third_party/WebKit/Source/core/inspector_instrumentation_sources.actions_rules_copies.stamp $
+    obj/third_party/WebKit/Source/core/make_core_generated.actions_rules_copies.stamp $
+    obj/third_party/WebKit/Source/bindings/modules/v8/bindings_modules_v8_generated_aggregate.actions_rules_copies.stamp $
+    gen/blink/bindings/modules/v8/V8GeneratedModulesBindingsPartial.cpp $
+    obj/third_party/WebKit/Source/bindings/core/v8/bindings_core_impl_generated.actions_rules_copies.stamp $
+    gen/blink/bindings/modules/GlobalObjectsModules.pickle $
+    obj/third_party/WebKit/Source/bindings/core/v8/bindings_core_v8_generated_individual.actions_rules_copies.stamp $
+    obj/third_party/angle/src/copy_scripts.actions_rules_copies.stamp $
+    obj/third_party/WebKit/Source/bindings/core/core_global_constructors_idls.actions_rules_copies.stamp $
+    obj/skia/skia.actions_depends.stamp gen/blink/core/EventInterfaces.in $
+    obj/third_party/WebKit/Source/bindings/modules/interfaces_info_individual_modules.actions_rules_copies.stamp $
+    gen/blink/bindings/core/GlobalObjectsCore.pickle natives_blob.bin $
+    obj/third_party/WebKit/Source/bindings/modules/v8/bindings_modules_v8_generated_partial_individual.actions_rules_copies.stamp $
+    obj/third_party/WebKit/Source/core/inspector_protocol_sources.actions_rules_copies.stamp $
+    obj/ui/resources/ui_resources.actions_rules_copies.stamp $
+    obj/net/net_derived_sources.actions_rules_copies.stamp $
+    obj/ui/strings/ui_strings.actions_rules_copies.stamp $
+    obj/net/net_resources.actions_rules_copies.stamp $
+    obj/v8/tools/gyp/v8_maybe_snapshot.actions_depends.stamp $
+    obj/third_party/WebKit/Source/modules/make_modules_generated.actions_rules_copies.stamp $
+    obj/third_party/WebKit/public/blink.actions_depends.stamp $
+    obj/third_party/WebKit/Source/platform/make_platform_generated.actions_rules_copies.stamp $
+    gen/blink/bindings/modules/InterfacesInfoOverall.pickle $
+    gen/base/debug/debugging_flags.h $
+    obj/third_party/WebKit/Source/bindings/modules/v8/bindings_modules_v8_generated.actions_depends.stamp $
+    obj/third_party/WebKit/Source/platform/libblink_common.a $
+    obj/third_party/WebKit/Source/bindings/modules/modules_global_constructors_idls.actions_rules_copies.stamp $
+    gen/angle/id/commit.h $
+    obj/third_party/WebKit/Source/bindings/modules/modules_core_global_constructors_idls.actions_rules_copies.stamp $
+    obj/third_party/WebKit/Source/bindings/modules/v8/bindings_modules_v8_generated_individual.actions_rules_copies.stamp $
+    obj/v8/tools/gyp/js2c.actions_rules_copies.stamp $
+    obj/third_party/WebKit/Source/core/webcore.actions_depends.stamp $
+    obj/third_party/WebKit/Source/bindings/core/v8/bindings_core_v8_generated.actions_depends.stamp $
+    gen/blink/bindings/modules/v8/initPartialInterfacesInModules.cpp $
+    obj/third_party/WebKit/Source/bindings/modules/modules_event_generated.actions_rules_copies.stamp $
+    obj/third_party/libwebp/libwebp.actions_depends.stamp || $
+    obj/ppapi/ppapi_unittests.actions_depends.stamp
+  ld = $ldxx

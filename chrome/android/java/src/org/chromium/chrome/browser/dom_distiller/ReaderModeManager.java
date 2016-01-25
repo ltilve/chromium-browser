@@ -8,15 +8,13 @@ import android.app.Activity;
 import android.content.Context;
 import android.text.TextUtils;
 
+import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.base.CommandLine;
 import org.chromium.base.ObserverList;
 import org.chromium.base.metrics.RecordHistogram;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeActivity;
 import org.chromium.chrome.browser.ChromeSwitches;
-import org.chromium.chrome.browser.ChromeVersionInfo;
-import org.chromium.chrome.browser.EmptyTabObserver;
-import org.chromium.chrome.browser.Tab;
 import org.chromium.chrome.browser.contextualsearch.ContextualSearchManager;
 import org.chromium.chrome.browser.contextualsearch.ContextualSearchObserver;
 import org.chromium.chrome.browser.dom_distiller.ReaderModePanel.ReaderModePanelHost;
@@ -25,6 +23,8 @@ import org.chromium.chrome.browser.infobar.InfoBar;
 import org.chromium.chrome.browser.infobar.InfoBarContainer;
 import org.chromium.chrome.browser.infobar.InfoBarContainer.InfoBarContainerObserver;
 import org.chromium.chrome.browser.tab.ChromeTab;
+import org.chromium.chrome.browser.tab.EmptyTabObserver;
+import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.components.dom_distiller.content.DistillablePageUtils;
 import org.chromium.components.dom_distiller.core.DomDistillerUrlUtils;
 import org.chromium.content_public.browser.WebContents;
@@ -103,7 +103,9 @@ public class ReaderModeManager extends EmptyTabObserver
         mObservers = new ObserverList<ReaderModeManagerObserver>();
         mReaderModePanel = isEnabled(context) ? new ReaderModePanel(this) : null;
         mHeaderBackgroundColor = context != null
-                ? context.getResources().getColor(R.color.reader_mode_header_bg) : 0;
+                ? ApiCompatibilityUtils.getColor(
+                        context.getResources(), R.color.reader_mode_header_bg)
+                : 0;
     }
 
     /**
@@ -259,6 +261,14 @@ public class ReaderModeManager extends EmptyTabObserver
             }
 
             @Override
+            public void didFailLoad(boolean isProvisionalLoad, boolean isMainFrame, int errorCode,
+                        String description, String failingUrl, boolean wasIgnoredByHandler) {
+                if (!isMainFrame) return;
+                if (DomDistillerUrlUtils.isDistilledPage(mTab.getUrl())) return;
+                updateStatusBasedOnReaderModeCriteria(true);
+            }
+
+            @Override
             public void didStartProvisionalLoadForFrame(long frameId, long parentFrameId,
                     boolean isMainFrame, String validatedUrl, boolean isErrorPage,
                     boolean isIframeSrcdoc) {
@@ -285,7 +295,8 @@ public class ReaderModeManager extends EmptyTabObserver
                                 mReaderModePageUrl))) {
                     mReaderModeStatus = NOT_POSSIBLE;
                     mIsUmaRecorded = false;
-                    updateStatusBasedOnReaderModeCriteria(false);
+                    // Do not call updateStatusBasedOnReaderModeCriteria here.
+                    // For ADABOOST_MODEL, it is unlikely to get valid info at this event.
                 }
                 mReaderModePageUrl = null;
                 sendReaderModeStatusChangedNotification();
@@ -342,12 +353,8 @@ public class ReaderModeManager extends EmptyTabObserver
         boolean enabled = CommandLine.getInstance().hasSwitch(ChromeSwitches.ENABLE_DOM_DISTILLER)
                 && !CommandLine.getInstance().hasSwitch(
                         ChromeSwitches.DISABLE_READER_MODE_BOTTOM_BAR)
-                && !DeviceFormFactor.isTablet(context);
-        if (ChromeVersionInfo.isBetaBuild() || ChromeVersionInfo.isStableBuild()) {
-            enabled = enabled
-                    && CommandLine.getInstance().hasSwitch(
-                               ChromeSwitches.ENABLE_READER_MODE_BUTTON);
-        }
+                && !DeviceFormFactor.isTablet(context)
+                && DomDistillerTabUtils.isDistillerHeuristicsEnabled();
         return enabled;
     }
 }

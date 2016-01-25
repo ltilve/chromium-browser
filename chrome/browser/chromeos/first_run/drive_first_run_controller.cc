@@ -17,7 +17,6 @@
 #include "chrome/browser/chrome_notification_types.h"
 #include "chrome/browser/extensions/chrome_extension_web_contents_observer.h"
 #include "chrome/browser/extensions/extension_service.h"
-#include "chrome/browser/ui/browser_navigator.h"
 #include "chrome/browser/ui/host_desktop.h"
 #include "chrome/browser/ui/scoped_tabbed_browser_displayer.h"
 #include "chrome/browser/ui/singleton_tabs.h"
@@ -463,16 +462,14 @@ void DriveFirstRunController::ShowNotification() {
   ui::ResourceBundle& resource_bundle = ui::ResourceBundle::GetSharedInstance();
   scoped_ptr<message_center::Notification> notification(
       new message_center::Notification(
-          message_center::NOTIFICATION_TYPE_SIMPLE,
-          kDriveOfflineNotificationId,
-          base::string16(), // title
+          message_center::NOTIFICATION_TYPE_SIMPLE, kDriveOfflineNotificationId,
+          base::string16(),  // title
           l10n_util::GetStringUTF16(IDS_DRIVE_OFFLINE_NOTIFICATION_MESSAGE),
           resource_bundle.GetImageNamed(IDR_NOTIFICATION_DRIVE),
-          base::UTF8ToUTF16(extension->name()),
+          base::UTF8ToUTF16(extension->name()), GURL(),
           message_center::NotifierId(message_center::NotifierId::APPLICATION,
                                      kDriveHostedAppId),
-          data,
-          new DriveOfflineNotificationDelegate(profile_)));
+          data, new DriveOfflineNotificationDelegate(profile_)));
   notification->set_priority(message_center::LOW_PRIORITY);
   message_center::MessageCenter::Get()->AddNotification(notification.Pass());
 }

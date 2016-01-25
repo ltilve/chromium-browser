@@ -41,7 +41,7 @@ class LayerTreePixelTest : public LayerTreeTest {
   ~LayerTreePixelTest() override;
 
   scoped_ptr<OutputSurface> CreateOutputSurface() override;
-  void WillActivateTreeOnThread(LayerTreeHostImpl* impl) override;
+  void WillCommitCompleteOnThread(LayerTreeHostImpl* impl) override;
 
   virtual scoped_ptr<CopyOutputRequest> CreateCopyOutputRequest();
 
@@ -90,6 +90,8 @@ class LayerTreePixelTest : public LayerTreeTest {
                              uint32 texture,
                              uint32 sync_point,
                              bool lost_resource);
+
+  void Finish();
 
   void set_enlarge_texture_amount(const gfx::Vector2d& enlarge_texture_amount) {
     enlarge_texture_amount_ = enlarge_texture_amount;

@@ -7,7 +7,6 @@
 
 #include <vector>
 
-#include "base/gtest_prod_util.h"
 #include "components/omnibox/browser/autocomplete_match.h"
 #include "components/omnibox/browser/suggestion_answer.h"
 #include "third_party/skia/include/core/SkColor.h"
@@ -47,10 +46,6 @@ class OmniboxResultView : public views::View,
     NUM_KINDS
   };
 
-  // The minimum distance between the top and bottom of the text and the
-  // top or bottom of the row.
-  static const int kMinimumTextVerticalPadding = 3;
-
   OmniboxResultView(OmniboxPopupContentsView* model,
                     int model_index,
                     LocationBarView* location_bar_view,
@@ -68,8 +63,12 @@ class OmniboxResultView : public views::View,
 
   void Invalidate();
 
+  // Invoked when this result view has been selected.
+  void OnSelected();
+
   // views::View:
   gfx::Size GetPreferredSize() const override;
+  void GetAccessibleState(ui::AXViewState* state) override;
 
   ResultViewState GetState() const;
 
@@ -118,9 +117,6 @@ class OmniboxResultView : public views::View,
       bool force_dim) const;
 
   const gfx::Rect& text_bounds() const { return text_bounds_; }
-
-  void set_edge_item_padding(int value) { edge_item_padding_ = value; }
-  void set_item_padding(int value) { item_padding_ = value; }
 
  private:
   // views::View:
@@ -179,11 +175,14 @@ class OmniboxResultView : public views::View,
                               int text_type,
                               bool is_bold);
 
-  static int default_icon_size_;
+  // Returns the necessary margin, if any, at the start and end of the view.
+  // This allows us to keep the icon and text in the view aligned with the
+  // location bar contents. For a left-to-right language, StartMargin()
+  // and EndMargin() correspond to the left and right margins, respectively.
+  int StartMargin() const;
+  int EndMargin() const;
 
-  // Default values cached here, may be overridden using the setters above.
-  int edge_item_padding_;
-  int item_padding_;
+  static int default_icon_size_;
 
   // This row's model and model index.
   OmniboxPopupContentsView* model_;

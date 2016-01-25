@@ -1,0 +1,408 @@
+rule $
+    remoting_infoplist_strings_target_generate_strings_ee81cbfa9a88d0ae4838d5e63175be9d
+  command = cd ../../remoting; python tools/build/remoting_localize.py $
+      --locale_dir ../out/Debug/gen/remoting/webapp/_locales --template $
+      "${source}" --locale_output $
+      "../out/Debug/gen/remoting/${root}/@{json_suffix}.lproj/InfoPlist.strings" $
+      am ar bg bn ca cs da de el en en-GB es es-419 et fa fake-bidi fi fil $
+      fr gu he hi hr hu id it ja kn ko lt lv ml mr ms nb nl pl pt-BR pt-PT $
+      ro ru sk sl sr sv sw ta te th tr uk vi zh-CN zh-TW
+  description = RULE remoting_infoplist_strings: $
+      generate_strings_ee81cbfa9a88d0ae4838d5e63175be9d ${source}
+  restat = 1
+
+build $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/am.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/ar.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/bg.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/bn.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/ca.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/cs.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/da.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/de.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/el.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/en.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/en_GB.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/es.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/es_419.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/et.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/fa.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/fake_bidi.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/fi.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/fil.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/fr.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/gu.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/he.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/hi.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/hr.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/hu.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/id.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/it.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/ja.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/kn.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/ko.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/lt.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/lv.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/ml.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/mr.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/ms.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/nb.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/nl.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/pl.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/pt_BR.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/pt_PT.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/ro.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/ru.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/sk.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/sl.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/sr.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/sv.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/sw.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/ta.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/te.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/th.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/tr.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/uk.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/vi.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/zh_CN.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/zh_TW.lproj/InfoPlist.strings: $
+    remoting_infoplist_strings_target_generate_strings_ee81cbfa9a88d0ae4838d5e63175be9d $
+    ../../remoting/host/remoting_me2me_host-InfoPlist.strings.jinja2 | $
+    ../../remoting/tools/build/remoting_localize.py || $
+    obj/remoting/remoting_resources.actions_rules_copies.stamp
+  source = host/remoting_me2me_host-InfoPlist.strings.jinja2
+  root = remoting_me2me_host-InfoPlist.strings
+build $
+    gen/remoting/native_messaging_host-InfoPlist.strings/am.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/ar.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/bg.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/bn.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/ca.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/cs.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/da.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/de.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/el.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/en.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/en_GB.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/es.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/es_419.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/et.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/fa.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/fake_bidi.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/fi.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/fil.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/fr.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/gu.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/he.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/hi.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/hr.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/hu.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/id.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/it.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/ja.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/kn.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/ko.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/lt.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/lv.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/ml.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/mr.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/ms.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/nb.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/nl.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/pl.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/pt_BR.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/pt_PT.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/ro.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/ru.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/sk.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/sl.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/sr.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/sv.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/sw.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/ta.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/te.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/th.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/tr.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/uk.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/vi.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/zh_CN.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/zh_TW.lproj/InfoPlist.strings: $
+    remoting_infoplist_strings_target_generate_strings_ee81cbfa9a88d0ae4838d5e63175be9d $
+    ../../remoting/host/setup/native_messaging_host-InfoPlist.strings.jinja2 $
+    | ../../remoting/tools/build/remoting_localize.py || $
+    obj/remoting/remoting_resources.actions_rules_copies.stamp
+  source = host/setup/native_messaging_host-InfoPlist.strings.jinja2
+  root = native_messaging_host-InfoPlist.strings
+build $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/am.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/ar.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/bg.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/bn.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/ca.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/cs.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/da.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/de.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/el.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/en.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/en_GB.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/es.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/es_419.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/et.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/fa.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/fake_bidi.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/fi.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/fil.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/fr.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/gu.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/he.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/hi.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/hr.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/hu.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/id.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/it.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/ja.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/kn.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/ko.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/lt.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/lv.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/ml.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/mr.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/ms.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/nb.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/nl.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/pl.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/pt_BR.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/pt_PT.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/ro.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/ru.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/sk.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/sl.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/sr.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/sv.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/sw.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/ta.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/te.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/th.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/tr.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/uk.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/vi.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/zh_CN.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/zh_TW.lproj/InfoPlist.strings: $
+    remoting_infoplist_strings_target_generate_strings_ee81cbfa9a88d0ae4838d5e63175be9d $
+    ../../remoting/host/it2me/remote_assistance_host-InfoPlist.strings.jinja2 $
+    | ../../remoting/tools/build/remoting_localize.py || $
+    obj/remoting/remoting_resources.actions_rules_copies.stamp
+  source = host/it2me/remote_assistance_host-InfoPlist.strings.jinja2
+  root = remote_assistance_host-InfoPlist.strings
+build obj/remoting/remoting_infoplist_strings.actions_rules_copies.stamp: $
+    stamp $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/am.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/ar.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/bg.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/bn.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/ca.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/cs.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/da.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/de.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/el.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/en.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/en_GB.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/es.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/es_419.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/et.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/fa.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/fake_bidi.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/fi.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/fil.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/fr.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/gu.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/he.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/hi.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/hr.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/hu.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/id.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/it.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/ja.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/kn.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/ko.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/lt.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/lv.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/ml.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/mr.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/ms.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/nb.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/nl.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/pl.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/pt_BR.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/pt_PT.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/ro.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/ru.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/sk.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/sl.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/sr.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/sv.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/sw.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/ta.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/te.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/th.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/tr.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/uk.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/vi.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/zh_CN.lproj/InfoPlist.strings $
+    gen/remoting/remoting_me2me_host-InfoPlist.strings/zh_TW.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/am.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/ar.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/bg.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/bn.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/ca.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/cs.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/da.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/de.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/el.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/en.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/en_GB.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/es.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/es_419.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/et.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/fa.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/fake_bidi.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/fi.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/fil.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/fr.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/gu.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/he.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/hi.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/hr.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/hu.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/id.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/it.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/ja.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/kn.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/ko.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/lt.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/lv.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/ml.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/mr.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/ms.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/nb.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/nl.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/pl.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/pt_BR.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/pt_PT.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/ro.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/ru.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/sk.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/sl.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/sr.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/sv.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/sw.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/ta.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/te.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/th.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/tr.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/uk.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/vi.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/zh_CN.lproj/InfoPlist.strings $
+    gen/remoting/native_messaging_host-InfoPlist.strings/zh_TW.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/am.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/ar.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/bg.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/bn.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/ca.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/cs.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/da.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/de.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/el.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/en.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/en_GB.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/es.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/es_419.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/et.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/fa.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/fake_bidi.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/fi.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/fil.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/fr.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/gu.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/he.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/hi.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/hr.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/hu.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/id.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/it.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/ja.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/kn.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/ko.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/lt.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/lv.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/ml.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/mr.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/ms.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/nb.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/nl.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/pl.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/pt_BR.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/pt_PT.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/ro.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/ru.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/sk.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/sl.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/sr.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/sv.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/sw.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/ta.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/te.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/th.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/tr.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/uk.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/vi.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/zh_CN.lproj/InfoPlist.strings $
+    gen/remoting/remote_assistance_host-InfoPlist.strings/zh_TW.lproj/InfoPlist.strings
+
+defines = -DBINARY_CORE=1 -DBINARY_DESKTOP=2 -DBINARY_HOST_ME2ME=3 $
+    -DBINARY_NATIVE_MESSAGING_HOST=4 -DBINARY_REMOTE_ASSISTANCE_HOST=5 $
+    -DV8_DEPRECATION_WARNINGS -DCLD_VERSION=2 -D_FILE_OFFSET_BITS=64 $
+    -DCHROMIUM_BUILD -DCR_CLANG_REVISION=255169-1 $
+    -DUI_COMPOSITOR_IMAGE_TRANSPORT -DUSE_AURA=1 -DUSE_ASH=1 -DUSE_PANGO=1 $
+    -DUSE_CAIRO=1 -DUSE_DEFAULT_RENDER_THEME=1 -DUSE_LIBJPEG_TURBO=1 $
+    -DUSE_X11=1 -DUSE_CLIPBOARD_AURAX11=1 -DENABLE_ONE_CLICK_SIGNIN $
+    -DENABLE_WEBRTC=1 -DENABLE_MEDIA_ROUTER=1 -DENABLE_PEPPER_CDMS $
+    -DENABLE_CONFIGURATION_POLICY -DENABLE_NOTIFICATIONS -DENABLE_HIDPI=1 $
+    -DENABLE_TOPCHROME_MD=1 -DUSE_UDEV -DDONT_EMBED_BUILD_METADATA $
+    -DFIELDTRIAL_TESTING_ENABLED -DENABLE_TASK_MANAGER=1 $
+    -DENABLE_EXTENSIONS=1 -DENABLE_PDF=1 -DENABLE_PLUGINS=1 $
+    -DENABLE_SESSION_SERVICE=1 -DENABLE_THEMES=1 -DENABLE_AUTOFILL_DIALOG=1 $
+    -DENABLE_BACKGROUND=1 -DENABLE_PRINTING=1 -DENABLE_BASIC_PRINTING=1 $
+    -DENABLE_PRINT_PREVIEW=1 -DENABLE_SPELLCHECK=1 $
+    -DENABLE_CAPTIVE_PORTAL_DETECTION=1 -DENABLE_APP_LIST=1 $
+    -DENABLE_SETTINGS_APP=1 -DENABLE_SUPERVISED_USERS=1 -DENABLE_MDNS=1 $
+    -DENABLE_SERVICE_DISCOVERY=1 -DV8_USE_EXTERNAL_STARTUP_DATA $
+    -DFULL_SAFE_BROWSING -DSAFE_BROWSING_CSD -DSAFE_BROWSING_DB_LOCAL $
+    -DUSE_LIBPCI=1 -DUSE_OPENSSL=1 -DUSE_GLIB=1 -DUSE_NSS_CERTS=1 $
+    -D__STDC_CONSTANT_MACROS -D__STDC_FORMAT_MACROS $
+    -DDYNAMIC_ANNOTATIONS_ENABLED=1 -DWTF_USE_DYNAMIC_ANNOTATIONS=1 $
+    -D_DEBUG -D_GLIBCXX_DEBUG=1
+includes = -I../.. -Igen
+cflags = -fstack-protector --param=ssp-buffer-size=4 -Werror -pthread $
+    -fno-strict-aliasing -Wall -Wno-unused-parameter $
+    -Wno-missing-field-initializers -fvisibility=hidden -pipe -fPIC $
+    -Wno-reserved-user-defined-literal -Xclang -load -Xclang $
+    /b/build/slave/publish_tarball/build/src/third_party/llvm-build/Release+Asserts/lib/libFindBadConstructs.so $
+    -Xclang -add-plugin -Xclang find-bad-constructs -Xclang $
+    -plugin-arg-find-bad-constructs -Xclang check-templates $
+    -fcolor-diagnostics $
+    -B/b/build/slave/publish_tarball/build/src/third_party/binutils/Linux_x64/Release/bin $
+    -Wheader-hygiene -Wno-char-subscripts $
+    -Wno-unneeded-internal-declaration -Wno-covered-switch-default $
+    -Wstring-conversion -Wno-c++11-narrowing -Wno-deprecated-register $
+    -Wno-inconsistent-missing-override -Wno-shift-negative-value $
+    -Wno-bitfield-width -m64 -march=x86-64 $
+    --sysroot=/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot $
+    -O0 -g -funwind-tables -gsplit-dwarf -Wno-undefined-bool-conversion $
+    -Wno-tautological-undefined-compare
+cflags_c = 
+cflags_cc = -fno-exceptions -fno-rtti -fno-threadsafe-statics $
+    -fvisibility-inlines-hidden -Wsign-compare -std=gnu++11
+arflags = 
+
+

@@ -158,13 +158,11 @@ class ExistingUserControllerTest : public policy::DevicePolicyCrosBrowserTest {
   }
 
   void TearDownOnMainThread() override {
-    // ExistingUserController must be deleted before the thread is cleaned up:
-    // If there is an outstanding login attempt when ExistingUserController is
-    // deleted, its LoginPerformer instance will be deleted, which in turn
-    // deletes its OnlineAttemptHost instance.  However, OnlineAttemptHost must
-    // be deleted on the UI thread.
-    existing_user_controller_.reset();
     DevicePolicyCrosBrowserTest::InProcessBrowserTest::TearDownOnMainThread();
+
+    // |existing_user_controller_| has data members that are CrosSettings
+    // observers. They need to be destructed before CrosSettings.
+    existing_user_controller_.reset();
 
     // Test case may be configured with the real user manager but empty user
     // list initially. So network OOBE screen is initialized.
@@ -194,7 +192,7 @@ class ExistingUserControllerTest : public policy::DevicePolicyCrosBrowserTest {
   }
 
   // ExistingUserController private member accessors.
-  base::OneShotTimer<ExistingUserController>* auto_login_timer() {
+  base::OneShotTimer* auto_login_timer() {
     return existing_user_controller()->auto_login_timer_.get();
   }
 
@@ -462,10 +460,10 @@ class ExistingUserControllerPublicSessionTest
     if (!proto.has_device_local_accounts() ||
         !proto.device_local_accounts().has_auto_login_delay() ||
         proto.device_local_accounts().auto_login_delay() != delay) {
-      runner1 = new content::MessageLoopRunner;
-      subscription1 = chromeos::CrosSettings::Get()->AddSettingsObserver(
+      runner2 = new content::MessageLoopRunner;
+      subscription2 = chromeos::CrosSettings::Get()->AddSettingsObserver(
           chromeos::kAccountsPrefDeviceLocalAccountAutoLoginDelay,
-          runner1->QuitClosure());
+          runner2->QuitClosure());
     }
 
     // Update the policy.
@@ -561,7 +559,7 @@ IN_PROC_BROWSER_TEST_F(ExistingUserControllerPublicSessionTest,
 
   // Wait for the timer to fire.
   base::RunLoop runner;
-  base::OneShotTimer<base::RunLoop> timer;
+  base::OneShotTimer timer;
   timer.Start(FROM_HERE,
               base::TimeDelta::FromMilliseconds(kAutoLoginShortDelay + 1),
               runner.QuitClosure());
@@ -740,9 +738,8 @@ IN_PROC_BROWSER_TEST_F(ExistingUserControllerPublicSessionTest,
   // First run propagates public accounts and stores them in Local State.
 }
 
-// See http://crbug.com/393704; flaky.
 IN_PROC_BROWSER_TEST_F(ExistingUserControllerPublicSessionTest,
-                       DISABLED_TestLoadingPublicUsersFromLocalState) {
+                       TestLoadingPublicUsersFromLocalState) {
   // Second run loads list of public accounts from Local State.
 }
 

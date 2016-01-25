@@ -1,0 +1,72 @@
+build obj/build/chromium_builder_webrtc.actions_depends.stamp: stamp $
+    obj/build/chromium_builder_perf.actions_depends.stamp browser_tests $
+    content_browsertests content_unittests media_unittests midi_unittests $
+    frame_analyzer rgba_to_i420_converter $
+    obj/remoting/libremoting_breakpad.a $
+    obj/remoting/remoting_resources.actions_rules_copies.stamp $
+    obj/remoting/libremoting_base.a obj/remoting/libremoting_protocol.a $
+    obj/remoting/libremoting_client.a $
+    obj/remoting/remoting_webapp_html.actions_rules_copies.stamp $
+    gen/remoting/credits.html $
+    obj/remoting/remoting_webapp.actions_rules_copies.stamp $
+    obj/remoting/libremoting_test_support.a chromoting_test_driver $
+    obj/remoting/libar_test_driver_common.a ar_sample_test_driver $
+    remoting_unittests $
+    obj/remoting/remoting_browser_test_resources.actions_rules_copies.stamp $
+    gen/browser_test/main.html $
+    obj/remoting/remoting_webapp_unittests.actions_rules_copies.stamp $
+    obj/remoting/libremoting_host.a gen/remoting/CREDITS.txt $
+    obj/remoting/libremoting_native_messaging_base.a $
+    obj/remoting/libremoting_host_setup_base.a $
+    obj/remoting/remoting_native_messaging_manifests.actions_rules_copies.stamp $
+    remoting_start_host $
+    obj/remoting/remoting_infoplist_strings.actions_rules_copies.stamp $
+    obj/remoting/libremoting_it2me_host_static.a $
+    obj/remoting/libremoting_me2me_host_static.a remoting_me2me_host $
+    native_messaging_host remote_assistance_host $
+    obj/remoting/remoting_key_tester.actions_rules_copies.stamp $
+    obj/remoting/remoting_key_tester_pexe.actions_rules_copies.stamp $
+    remoting_perftests $
+    obj/remoting/remoting_webapp_browser_test.actions_rules_copies.stamp $
+    remoting_unittests.isolated
+
+build obj/build/chromium_builder_webrtc.compile_depends.stamp: stamp $
+    obj/build/chromium_builder_perf.compile_depends.stamp $
+    obj/chrome/browser_tests.actions_rules_copies.stamp $
+    obj/content/content_browsertests.compile_depends.stamp $
+    obj/content/content_unittests.compile_depends.stamp $
+    obj/media/media_unittests.compile_depends.stamp $
+    obj/media/midi/midi_unittests.compile_depends.stamp $
+    obj/third_party/webrtc/tools/frame_analyzer.compile_depends.stamp $
+    obj/third_party/webrtc/tools/rgba_to_i420_converter.compile_depends.stamp $
+    obj/remoting/remoting_resources.actions_rules_copies.stamp $
+    obj/remoting/remoting_base.compile_depends.stamp $
+    obj/remoting/remoting_protocol.compile_depends.stamp $
+    obj/remoting/remoting_client.compile_depends.stamp $
+    obj/remoting/remoting_webapp_html.actions_rules_copies.stamp $
+    gen/remoting/credits.html $
+    obj/remoting/remoting_webapp.actions_rules_copies.stamp $
+    obj/remoting/remoting_test_support.compile_depends.stamp $
+    obj/remoting/chromoting_test_driver.compile_depends.stamp $
+    obj/remoting/proto/chromotocol_proto_lib.actions_rules_copies.stamp $
+    obj/remoting/ar_sample_test_driver.compile_depends.stamp $
+    obj/remoting/remoting_unittests.compile_depends.stamp $
+    obj/remoting/remoting_browser_test_resources.actions_rules_copies.stamp $
+    gen/browser_test/main.html $
+    obj/remoting/remoting_webapp_unittests.actions_rules_copies.stamp $
+    obj/remoting/remoting_host.compile_depends.stamp $
+    gen/remoting/CREDITS.txt $
+    obj/remoting/remoting_native_messaging_manifests.actions_rules_copies.stamp $
+    obj/remoting/remoting_start_host.compile_depends.stamp $
+    obj/remoting/remoting_infoplist_strings.actions_rules_copies.stamp $
+    obj/remoting/remoting_it2me_host_static.compile_depends.stamp $
+    obj/remoting/remoting_me2me_host_static.compile_depends.stamp $
+    obj/remoting/remoting_me2me_host.compile_depends.stamp $
+    obj/remoting/remoting_me2me_native_messaging_host.compile_depends.stamp $
+    obj/remoting/remoting_it2me_native_messaging_host.compile_depends.stamp $
+    obj/remoting/remoting_key_tester.actions_rules_copies.stamp $
+    obj/remoting/remoting_key_tester_pexe.actions_rules_copies.stamp $
+    obj/remoting/remoting_perftests.compile_depends.stamp $
+    obj/remoting/remoting_webapp_browser_test.actions_rules_copies.stamp $
+    remoting_unittests.isolated
+

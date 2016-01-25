@@ -12,9 +12,9 @@
 #include "base/prefs/scoped_user_pref_update.h"
 #include "base/time/time.h"
 #include "base/values.h"
+#include "chrome/browser/certificate_viewer.h"
 #include "chrome/browser/file_select_helper.h"
 #include "chrome/browser/infobars/infobar_service.h"
-#include "chrome/browser/prefs/pref_service_syncable.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/sessions/session_tab_helper.h"
 #include "chrome/browser/task_management/web_contents_tags.h"
@@ -31,9 +31,9 @@
 #include "chrome/browser/ui/webui/devtools_ui.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/pref_names.h"
-#include "chrome/common/render_messages.h"
 #include "chrome/common/url_constants.h"
 #include "components/pref_registry/pref_registry_syncable.h"
+#include "components/syncable_prefs/pref_service_syncable.h"
 #include "components/ui/zoom/page_zoom.h"
 #include "components/ui/zoom/zoom_controller.h"
 #include "content/public/browser/browser_thread.h"
@@ -528,6 +528,22 @@ void DevToolsWindow::InspectElement(
     window->inspect_element_start_time_ = start_time;
 }
 
+// static
+content::DevToolsExternalAgentProxyDelegate*
+DevToolsWindow::CreateWebSocketAPIChannel(const std::string& path) {
+  if (path.find("/devtools/frontend_api") != 0)
+    return nullptr;
+  DevToolsWindows* instances = g_instances.Pointer();
+  if (g_instances == nullptr)
+    return nullptr;
+  for (DevToolsWindow* window : *instances) {
+    auto result = window->bindings_->CreateWebSocketAPIChannel();
+    if (result)
+      return result;
+  }
+  return nullptr;
+}
+
 void DevToolsWindow::ScheduleShow(const DevToolsToggleAction& action) {
   if (life_stage_ == kLoadCompleted) {
     Show(action);
@@ -661,7 +677,7 @@ bool DevToolsWindow::HasFiredBeforeUnloadEventForDevToolsBrowser(
 
 // static
 void DevToolsWindow::OnPageCloseCanceled(WebContents* contents) {
-  DevToolsWindow *window =
+  DevToolsWindow* window =
       DevToolsWindow::GetInstanceForInspectedWebContents(contents);
   if (!window)
     return;
@@ -733,8 +749,8 @@ DevToolsWindow* DevToolsWindow::Create(
     const std::string& remote_frontend,
     bool can_dock,
     const std::string& settings) {
-  // If developer tools disabled by policy don't open the window.
-  if (profile->GetPrefs()->GetBoolean(prefs::kDevToolsDisabled))
+  if (profile->GetPrefs()->GetBoolean(prefs::kDevToolsDisabled) ||
+      base::CommandLine::ForCurrentProcess()->HasSwitch(switches::kKioskMode))
     return nullptr;
 
   if (inspected_web_contents) {
@@ -843,6 +859,12 @@ WebContents* DevToolsWindow::OpenURLFromTab(
   content::NavigationController::LoadURLParams load_url_params(params.url);
   main_web_contents_->GetController().LoadURLWithParams(load_url_params);
   return main_web_contents_;
+}
+
+void DevToolsWindow::ShowCertificateViewer(int certificate_id) {
+  ::ShowCertificateViewerByID(
+      is_docked_ ? GetInspectedWebContents() : main_web_contents_,
+      nullptr, certificate_id);
 }
 
 void DevToolsWindow::ActivateContents(WebContents* contents) {
@@ -1239,4 +1261,15 @@ void DevToolsWindow::SetLoadCompletedCallback(const base::Closure& closure) {
 bool DevToolsWindow::ForwardKeyboardEvent(
     const content::NativeWebKeyboardEvent& event) {
   return event_forwarder_->ForwardEvent(event);
+}
+
+bool DevToolsWindow::ReloadInspectedWebContents(bool ignore_cache) {
+  // Only route reload via front-end if the agent is attached.
+  WebContents* wc = GetInspectedWebContents();
+  if (!wc || wc->GetCrashedStatus() != base::TERMINATION_STATUS_STILL_RUNNING)
+    return false;
+  base::FundamentalValue ignore_cache_value(ignore_cache);
+  bindings_->CallClientFunction("DevToolsAPI.reloadInspectedPage",
+                                &ignore_cache_value, nullptr, nullptr);
+  return true;
 }

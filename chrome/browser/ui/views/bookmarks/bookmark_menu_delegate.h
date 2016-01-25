@@ -16,11 +16,18 @@
 #include "ui/views/controls/menu/menu_delegate.h"
 
 class Browser;
-class ChromeBookmarkClient;
 class Profile;
+
+namespace bookmarks {
+class ManagedBookmarkService;
+}
 
 namespace content {
 class PageNavigator;
+}
+
+namespace gfx {
+class ImageSkia;
 }
 
 namespace ui {
@@ -74,7 +81,7 @@ class BookmarkMenuDelegate : public bookmarks::BaseBookmarkModelObserver,
   void SetActiveMenu(const bookmarks::BookmarkNode* node, int start_index);
 
   bookmarks::BookmarkModel* GetBookmarkModel();
-  ChromeBookmarkClient* GetChromeBookmarkClient();
+  bookmarks::ManagedBookmarkService* GetManagedBookmarkService();
 
   // Returns the menu.
   views::MenuItemView* menu() { return menu_; }
@@ -150,7 +157,7 @@ class BookmarkMenuDelegate : public bookmarks::BaseBookmarkModelObserver,
   // separator is added before the new menu items and |added_separator| is set
   // to true.
   void BuildMenuForPermanentNode(const bookmarks::BookmarkNode* node,
-                                 int icon_resource_id,
+                                 const gfx::ImageSkia& icon,
                                  views::MenuItemView* menu,
                                  bool* added_separator);
 

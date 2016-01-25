@@ -14,10 +14,13 @@ ManagePasswordsUIControllerMock::ManagePasswordsUIControllerMock(
     : ManagePasswordsUIController(contents),
       navigated_to_settings_page_(false),
       saved_password_(false),
+      updated_password_(false),
       never_saved_password_(false),
-      unblacklist_site_(false),
       choose_credential_(false),
-      manage_accounts_(false) {
+      manage_accounts_(false),
+      state_overridden_(false),
+      state_(password_manager::ui::INACTIVE_STATE),
+      password_manager_(&client_) {
   // Do not silently replace an existing ManagePasswordsUIController because it
   // unregisters itself in WebContentsDestroyed().
   EXPECT_FALSE(contents->GetUserData(UserDataKey()));
@@ -43,6 +46,20 @@ void ManagePasswordsUIControllerMock::SetPendingPassword(
   pending_password_ = pending_password;
 }
 
+password_manager::ui::State ManagePasswordsUIControllerMock::state() const {
+  return state_overridden_ ? state_ : ManagePasswordsUIController::state();
+}
+
+void ManagePasswordsUIControllerMock::SetState(
+    password_manager::ui::State state) {
+  state_overridden_ = true;
+  state_ = state;
+}
+
+void ManagePasswordsUIControllerMock::UnsetState() {
+  state_overridden_ = false;
+}
+
 void ManagePasswordsUIControllerMock::ManageAccounts() {
   manage_accounts_ = true;
 }
@@ -60,12 +77,12 @@ void ManagePasswordsUIControllerMock::SavePassword() {
   saved_password_ = true;
 }
 
+void ManagePasswordsUIControllerMock::UpdatePassword(
+    const autofill::PasswordForm& password_form) {
+  updated_password_ = true;
+}
 void ManagePasswordsUIControllerMock::NeverSavePassword() {
   never_saved_password_ = true;
-}
-
-void ManagePasswordsUIControllerMock::UnblacklistSite() {
-  unblacklist_site_ = true;
 }
 
 void ManagePasswordsUIControllerMock::ChooseCredential(
@@ -80,23 +97,11 @@ void ManagePasswordsUIControllerMock::PretendSubmittedPassword(
     ScopedVector<autofill::PasswordForm> best_matches) {
   ASSERT_FALSE(best_matches.empty());
   autofill::PasswordForm observed_form = *best_matches[0];
-  scoped_ptr<password_manager::PasswordFormManager> form_manager =
-      CreateFormManager(&client_, observed_form, best_matches.Pass());
+  scoped_ptr<password_manager::PasswordFormManager> form_manager(
+      new password_manager::PasswordFormManager(&password_manager_, &client_,
+                                                driver_.AsWeakPtr(),
+                                                observed_form, true));
+  form_manager->SimulateFetchMatchingLoginsFromPasswordStore();
+  form_manager->OnGetPasswordStoreResults(best_matches.Pass());
   OnPasswordSubmitted(form_manager.Pass());
-}
-
-// static
-scoped_ptr<password_manager::PasswordFormManager>
-ManagePasswordsUIControllerMock::CreateFormManager(
-      password_manager::PasswordManagerClient* client,
-      const autofill::PasswordForm& observed_form,
-      ScopedVector<autofill::PasswordForm> best_matches) {
-  scoped_ptr<password_manager::PasswordFormManager> test_form_manager(
-      new password_manager::PasswordFormManager(
-          nullptr, client,
-          base::WeakPtr<password_manager::PasswordManagerDriver>(),
-          observed_form, true));
-  test_form_manager->SimulateFetchMatchingLoginsFromPasswordStore();
-  test_form_manager->OnGetPasswordStoreResults(best_matches.Pass());
-  return test_form_manager.Pass();
 }

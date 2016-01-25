@@ -7,23 +7,23 @@
 
 #include <set>
 
-#include "base/callback.h"
 #include "base/macros.h"
 #include "base/memory/scoped_ptr.h"
-#include "components/html_viewer/html_document.h"
+#include "base/memory/weak_ptr.h"
+#include "components/html_viewer/html_factory.h"
 #include "mojo/application/public/cpp/application_delegate.h"
 #include "mojo/application/public/cpp/application_impl.h"
-#include "mojo/services/network/public/interfaces/network_service.mojom.h"
 #include "mojo/services/network/public/interfaces/url_loader_factory.mojom.h"
 #include "third_party/mojo/src/mojo/public/cpp/bindings/interface_request.h"
 
 namespace html_viewer {
 
 class GlobalState;
-class HTMLDocumentOOPIF;
+class HTMLDocument;
 
 // ApplicationDelegate created by the content handler for a specific url.
-class HTMLDocumentApplicationDelegate : public mojo::ApplicationDelegate {
+class HTMLDocumentApplicationDelegate : public mojo::ApplicationDelegate,
+                                        public HTMLFactory {
  public:
   HTMLDocumentApplicationDelegate(
       mojo::InterfaceRequest<mojo::Application> request,
@@ -31,11 +31,8 @@ class HTMLDocumentApplicationDelegate : public mojo::ApplicationDelegate {
       GlobalState* global_state,
       scoped_ptr<mojo::AppRefCount> parent_app_refcount);
 
-  typedef base::Callback<HTMLDocument*(HTMLDocument::CreateParams*)>
-      HTMLDocumentCreationCallback;
-
-  void SetHTMLDocumentCreationCallback(
-      const HTMLDocumentCreationCallback& callback);
+  void set_html_factory(HTMLFactory* factory) { html_factory_ = factory; }
+  HTMLFactory* html_factory() { return html_factory_; }
 
  private:
   class ServiceConnectorQueue;
@@ -53,31 +50,33 @@ class HTMLDocumentApplicationDelegate : public mojo::ApplicationDelegate {
   bool ConfigureIncomingConnection(
       mojo::ApplicationConnection* connection) override;
 
-  void OnHTMLDocumentDeleted(HTMLDocument* document);
-  void OnHTMLDocumentDeleted2(HTMLDocumentOOPIF* document);
-  void OnResponseReceived(mojo::URLLoaderPtr loader,
+  void OnHTMLDocumentDeleted2(HTMLDocument* document);
+  void OnResponseReceived(scoped_ptr<mojo::AppRefCount> app_refcount,
+                          mojo::URLLoaderPtr loader,
                           mojo::ApplicationConnection* connection,
                           scoped_ptr<ServiceConnectorQueue> connector_queue,
                           mojo::URLResponsePtr response);
+
+  // HTMLFactory:
+  HTMLFrame* CreateHTMLFrame(HTMLFrame::CreateParams* params) override;
+  HTMLWidgetRootLocal* CreateHTMLWidgetRootLocal(
+      HTMLWidgetRootLocal::CreateParams* params) override;
 
   mojo::ApplicationImpl app_;
   // AppRefCount of the parent (HTMLViewer).
   scoped_ptr<mojo::AppRefCount> parent_app_refcount_;
   const mojo::String url_;
-  mojo::NetworkServicePtr network_service_;
   mojo::URLLoaderFactoryPtr url_loader_factory_;
   mojo::URLResponsePtr initial_response_;
   GlobalState* global_state_;
 
   // As we create HTMLDocuments they are added here. They are removed when the
   // HTMLDocument is deleted.
-  std::set<HTMLDocument*> documents_;
+  std::set<HTMLDocument*> documents2_;
 
-  // As we create HTMLDocuments they are added here. They are removed when the
-  // HTMLDocument is deleted.
-  std::set<HTMLDocumentOOPIF*> documents2_;
+  HTMLFactory* html_factory_;
 
-  HTMLDocumentCreationCallback html_document_creation_callback_;
+  base::WeakPtrFactory<HTMLDocumentApplicationDelegate> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(HTMLDocumentApplicationDelegate);
 };

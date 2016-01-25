@@ -29,8 +29,18 @@ void ManagePasswordsControllerTest::SetUp() {
 ManagePasswordsBubbleModel*
 ManagePasswordsControllerTest::model() {
   if (!model_) {
-    model_.reset(new ManagePasswordsBubbleModel(test_web_contents_.get()));
-    model_->set_state(password_manager::ui::PENDING_PASSWORD_STATE);
+    model_.reset(new ManagePasswordsBubbleModel(
+        test_web_contents_.get(), ManagePasswordsBubbleModel::AUTOMATIC));
   }
   return model_.get();
 }
+
+@implementation ContentViewDelegateMock
+
+@synthesize dismissed = _dismissed;
+
+- (void)viewShouldDismiss {
+  _dismissed = YES;
+}
+
+@end

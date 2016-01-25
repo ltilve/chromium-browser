@@ -1,0 +1,149 @@
+rule $
+    event_nacl_nonsfi_target_build_nonsfi_helper_x86_32_nlib_99d1f61b951609f03089bc2bd997e36a
+  command = cd ../../third_party/libevent; python $
+      ../../native_client/build/build_nexe.py --root ../.. --product-dir $
+      ../../out/Release/xyz --config-name Release -t $
+      ../../native_client/toolchain/ --arch x86-32-nonsfi --build $
+      newlib_nlib_pnacl --name $
+      ../../out/Release/gen/tc_nonsfi_helper/lib32/libevent_nacl_nonsfi.a $
+      --objdir $
+      ../../out/Release/obj/third_party/libevent/event_nacl_nonsfi.gen/nonsfi_helper-x86-32-nonsfi/event_nacl_nonsfi $
+      "--include-dirs=../../out/Release/gen/tc_newlib/include $
+      ../../native_client/src/public/linux_syscalls ../.. $
+      \"../../out/Release/gen\" nacl_nonsfi" $
+      "--compile_flags=--target=i686-unknown-nacl $
+      --pnacl-bias=x86-32-nonsfi --pnacl-allow-translate $
+      --pnacl-allow-native -arch x86-32-nonsfi -O2 -g -Wall $
+      -fdiagnostics-show-option -Werror  -Wno-unused-function $
+      -Wno-char-subscripts -Wno-c++11-extensions $
+      -Wno-unnamed-type-template-args -Wno-extra-semi $
+      -Wno-unused-private-field -Wno-char-subscripts -Wno-unused-function $
+      \"-std=gnu++11\" " --gomadir "" "--defines=\"__STDC_LIMIT_MACROS=1\" $
+      \"__STDC_FORMAT_MACROS=1\" \"_GNU_SOURCE=1\" $
+      \"_POSIX_C_SOURCE=199506\" \"_XOPEN_SOURCE=600\" $
+      \"DYNAMIC_ANNOTATIONS_ENABLED=1\" $
+      \"DYNAMIC_ANNOTATIONS_PREFIX=NACL_\" \"NACL_BUILD_ARCH=x86\" $
+      V8_DEPRECATION_WARNINGS \"CLD_VERSION=2\" \"_FILE_OFFSET_BITS=64\" $
+      CHROMIUM_BUILD \"CR_CLANG_REVISION=255169-1\" $
+      UI_COMPOSITOR_IMAGE_TRANSPORT \"USE_AURA=1\" \"USE_ASH=1\" $
+      \"USE_PANGO=1\" \"USE_CAIRO=1\" \"USE_DEFAULT_RENDER_THEME=1\" $
+      \"USE_LIBJPEG_TURBO=1\" \"USE_X11=1\" \"USE_CLIPBOARD_AURAX11=1\" $
+      ENABLE_ONE_CLICK_SIGNIN \"ENABLE_WEBRTC=1\" \"ENABLE_MEDIA_ROUTER=1\" $
+      ENABLE_PEPPER_CDMS ENABLE_CONFIGURATION_POLICY ENABLE_NOTIFICATIONS $
+      \"ENABLE_HIDPI=1\" \"ENABLE_TOPCHROME_MD=1\" USE_UDEV $
+      DONT_EMBED_BUILD_METADATA FIELDTRIAL_TESTING_ENABLED $
+      \"ENABLE_TASK_MANAGER=1\" \"ENABLE_EXTENSIONS=1\" \"ENABLE_PDF=1\" $
+      \"ENABLE_PLUGINS=1\" \"ENABLE_SESSION_SERVICE=1\" \"ENABLE_THEMES=1\" $
+      \"ENABLE_AUTOFILL_DIALOG=1\" \"ENABLE_BACKGROUND=1\" $
+      \"ENABLE_PRINTING=1\" \"ENABLE_BASIC_PRINTING=1\" $
+      \"ENABLE_PRINT_PREVIEW=1\" \"ENABLE_SPELLCHECK=1\" $
+      \"ENABLE_CAPTIVE_PORTAL_DETECTION=1\" \"ENABLE_APP_LIST=1\" $
+      \"ENABLE_SETTINGS_APP=1\" \"ENABLE_SUPERVISED_USERS=1\" $
+      \"ENABLE_MDNS=1\" \"ENABLE_SERVICE_DISCOVERY=1\" $
+      V8_USE_EXTERNAL_STARTUP_DATA FULL_SAFE_BROWSING SAFE_BROWSING_CSD $
+      SAFE_BROWSING_DB_LOCAL HAVE_CONFIG_H \"USE_LIBPCI=1\" $
+      \"USE_OPENSSL=1\" \"USE_OPENSSL_CERTS=1\"" $
+      "--link_flags=-B../../out/Release/gen/tc_nonsfi_helper/lib32  " $
+      "--source-list=../../out/gypfiles/third_party/libevent/nonsfi_helper-x86-32-nonsfi.event_nacl_nonsfi.source_list.gypcmd"
+  description = ACTION event_nacl_nonsfi: build nonsfi_helper x86-32 $
+      nlib_99d1f61b951609f03089bc2bd997e36a
+  restat = 1
+
+build gen/tc_nonsfi_helper/lib32/libevent_nacl_nonsfi.a: $
+    event_nacl_nonsfi_target_build_nonsfi_helper_x86_32_nlib_99d1f61b951609f03089bc2bd997e36a $
+    ../../native_client/build/build_nexe.py $
+    ../../native_client/build/build_nexe_tools.py $
+    ../../third_party/libevent/android/event-config.h $
+    ../../third_party/libevent/buffer.c $
+    ../../third_party/libevent/evbuffer.c $
+    ../../third_party/libevent/event-config.h $
+    ../../third_party/libevent/event-internal.h $
+    ../../third_party/libevent/event.c ../../third_party/libevent/event.h $
+    ../../third_party/libevent/evsignal.h $
+    ../../third_party/libevent/evutil.c ../../third_party/libevent/evutil.h $
+    ../../third_party/libevent/freebsd/event-config.h $
+    ../../third_party/libevent/linux/event-config.h $
+    ../../third_party/libevent/log.c ../../third_party/libevent/log.h $
+    ../../third_party/libevent/mac/event-config.h $
+    ../../third_party/libevent/min_heap.h $
+    ../../third_party/libevent/nacl_nonsfi/config.h $
+    ../../third_party/libevent/nacl_nonsfi/event-config.h $
+    ../../third_party/libevent/nacl_nonsfi/random.c $
+    ../../third_party/libevent/nacl_nonsfi/signal_stub.c $
+    ../../third_party/libevent/poll.c $
+    ../../third_party/libevent/solaris/event-config.h $
+    ../../third_party/libevent/strlcpy-internal.h $
+    ../../third_party/libevent/strlcpy.c $
+    ../../out/gypfiles/third_party/libevent/nonsfi_helper-x86-32-nonsfi.event_nacl_nonsfi.source_list.gypcmd $
+    ../../native_client/toolchain/linux_x86/pnacl_newlib/pnacl_newlib.json
+
+defines = -DV8_DEPRECATION_WARNINGS -DCLD_VERSION=2 -D_FILE_OFFSET_BITS=64 $
+    -DCHROMIUM_BUILD -DCR_CLANG_REVISION=255169-1 $
+    -DUI_COMPOSITOR_IMAGE_TRANSPORT -DUSE_AURA=1 -DUSE_ASH=1 -DUSE_PANGO=1 $
+    -DUSE_CAIRO=1 -DUSE_DEFAULT_RENDER_THEME=1 -DUSE_LIBJPEG_TURBO=1 $
+    -DUSE_X11=1 -DUSE_CLIPBOARD_AURAX11=1 -DENABLE_ONE_CLICK_SIGNIN $
+    -DENABLE_WEBRTC=1 -DENABLE_MEDIA_ROUTER=1 -DENABLE_PEPPER_CDMS $
+    -DENABLE_CONFIGURATION_POLICY -DENABLE_NOTIFICATIONS -DENABLE_HIDPI=1 $
+    -DENABLE_TOPCHROME_MD=1 -DUSE_UDEV -DDONT_EMBED_BUILD_METADATA $
+    -DFIELDTRIAL_TESTING_ENABLED -DENABLE_TASK_MANAGER=1 $
+    -DENABLE_EXTENSIONS=1 -DENABLE_PDF=1 -DENABLE_PLUGINS=1 $
+    -DENABLE_SESSION_SERVICE=1 -DENABLE_THEMES=1 -DENABLE_AUTOFILL_DIALOG=1 $
+    -DENABLE_BACKGROUND=1 -DENABLE_PRINTING=1 -DENABLE_BASIC_PRINTING=1 $
+    -DENABLE_PRINT_PREVIEW=1 -DENABLE_SPELLCHECK=1 $
+    -DENABLE_CAPTIVE_PORTAL_DETECTION=1 -DENABLE_APP_LIST=1 $
+    -DENABLE_SETTINGS_APP=1 -DENABLE_SUPERVISED_USERS=1 -DENABLE_MDNS=1 $
+    -DENABLE_SERVICE_DISCOVERY=1 -DV8_USE_EXTERNAL_STARTUP_DATA $
+    -DFULL_SAFE_BROWSING -DSAFE_BROWSING_CSD -DSAFE_BROWSING_DB_LOCAL $
+    -DHAVE_CONFIG_H -DUSE_LIBPCI=1 -DUSE_OPENSSL=1 -DUSE_OPENSSL_CERTS=1 $
+    -DNDEBUG -DNVALGRIND -DDYNAMIC_ANNOTATIONS_ENABLED=0
+includes = -Igen -I../../third_party/libevent/nacl_nonsfi
+cflags = -fstack-protector --param=ssp-buffer-size=4 -Werror -pthread $
+    -fno-strict-aliasing -Wno-unused-parameter $
+    -Wno-missing-field-initializers -fvisibility=hidden -pipe -fPIC $
+    -Wno-reserved-user-defined-literal -Xclang -load -Xclang $
+    /b/build/slave/publish_tarball/build/src/third_party/llvm-build/Release+Asserts/lib/libFindBadConstructs.so $
+    -Xclang -add-plugin -Xclang find-bad-constructs -Xclang $
+    -plugin-arg-find-bad-constructs -Xclang check-templates $
+    -fcolor-diagnostics $
+    -B/b/build/slave/publish_tarball/build/src/third_party/binutils/Linux_x64/Release/bin $
+    -Wheader-hygiene -Wno-char-subscripts $
+    -Wno-unneeded-internal-declaration -Wno-covered-switch-default $
+    -Wstring-conversion -Wno-c++11-narrowing -Wno-deprecated-register $
+    -Wno-inconsistent-missing-override -Wno-shift-negative-value $
+    -Wno-bitfield-width -Wno-unused-variable -Wno-format -Wno-unused-result $
+    -m64 -march=x86-64 $
+    --sysroot=/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot $
+    -O2 -fno-ident -fdata-sections -ffunction-sections -funwind-tables
+cflags_c = 
+cflags_cc = -fno-exceptions -fno-rtti -fno-threadsafe-statics $
+    -fvisibility-inlines-hidden -std=gnu++11 -Wno-deprecated
+arflags = 
+
+build obj/third_party/libevent/event_nacl_nonsfi.buffer.o: cc $
+    ../../third_party/libevent/buffer.c || $
+    gen/tc_nonsfi_helper/lib32/libevent_nacl_nonsfi.a
+build obj/third_party/libevent/event_nacl_nonsfi.evbuffer.o: cc $
+    ../../third_party/libevent/evbuffer.c || $
+    gen/tc_nonsfi_helper/lib32/libevent_nacl_nonsfi.a
+build obj/third_party/libevent/event_nacl_nonsfi.event.o: cc $
+    ../../third_party/libevent/event.c || $
+    gen/tc_nonsfi_helper/lib32/libevent_nacl_nonsfi.a
+build obj/third_party/libevent/event_nacl_nonsfi.evutil.o: cc $
+    ../../third_party/libevent/evutil.c || $
+    gen/tc_nonsfi_helper/lib32/libevent_nacl_nonsfi.a
+build obj/third_party/libevent/event_nacl_nonsfi.log.o: cc $
+    ../../third_party/libevent/log.c || $
+    gen/tc_nonsfi_helper/lib32/libevent_nacl_nonsfi.a
+build obj/third_party/libevent/event_nacl_nonsfi.poll.o: cc $
+    ../../third_party/libevent/poll.c || $
+    gen/tc_nonsfi_helper/lib32/libevent_nacl_nonsfi.a
+build obj/third_party/libevent/event_nacl_nonsfi.strlcpy.o: cc $
+    ../../third_party/libevent/strlcpy.c || $
+    gen/tc_nonsfi_helper/lib32/libevent_nacl_nonsfi.a
+build obj/third_party/libevent/nacl_nonsfi/event_nacl_nonsfi.random.o: cc $
+    ../../third_party/libevent/nacl_nonsfi/random.c || $
+    gen/tc_nonsfi_helper/lib32/libevent_nacl_nonsfi.a
+build obj/third_party/libevent/nacl_nonsfi/event_nacl_nonsfi.signal_stub.o: $
+    cc ../../third_party/libevent/nacl_nonsfi/signal_stub.c || $
+    gen/tc_nonsfi_helper/lib32/libevent_nacl_nonsfi.a
+

@@ -68,6 +68,8 @@ class AwContents : public FindHelper::Listener,
   // render_process_id and render_view_id, or NULL.
   static AwContents* FromID(int render_process_id, int render_view_id);
 
+  static std::string GetLocale();
+
   AwContents(scoped_ptr<content::WebContents> web_contents);
   ~AwContents() override;
 
@@ -113,6 +115,7 @@ class AwContents : public FindHelper::Listener,
   void SetIsPaused(JNIEnv* env, jobject obj, bool paused);
   void OnAttachedToWindow(JNIEnv* env, jobject obj, int w, int h);
   void OnDetachedFromWindow(JNIEnv* env, jobject obj);
+  bool IsVisible(JNIEnv* env, jobject obj);
   base::android::ScopedJavaLocalRef<jbyteArray> GetOpaqueState(
       JNIEnv* env, jobject obj);
   jboolean RestoreFromOpaqueState(JNIEnv* env, jobject obj, jbyteArray state);
@@ -134,7 +137,7 @@ class AwContents : public FindHelper::Listener,
   void EnableOnNewPicture(JNIEnv* env, jobject obj, jboolean enabled);
   void InsertVisualStateCallback(JNIEnv* env,
                         jobject obj,
-                        long request_id,
+                        jlong request_id,
                         jobject callback);
   void ClearView(JNIEnv* env, jobject obj);
   void SetExtraHeadersForUrl(JNIEnv* env, jobject obj,
@@ -204,7 +207,6 @@ class AwContents : public FindHelper::Listener,
   void OnNewPicture() override;
   gfx::Point GetLocationOnScreen() override;
   void ScrollContainerViewTo(gfx::Vector2d new_value) override;
-  bool IsSmoothScrollingActive() const override;
   void UpdateScrollState(gfx::Vector2d max_scroll_offset,
                          gfx::SizeF contents_size_dip,
                          float page_scale_factor,
@@ -221,6 +223,11 @@ class AwContents : public FindHelper::Listener,
   jlong ReleasePopupAwContents(JNIEnv* env, jobject obj);
 
   void ScrollTo(JNIEnv* env, jobject obj, jint x, jint y);
+  void SmoothScroll(JNIEnv* env,
+                    jobject obj,
+                    jint target_x,
+                    jint target_y,
+                    jlong duration_ms);
   void SetDipScale(JNIEnv* env, jobject obj, jfloat dip_scale);
   void SetSaveFormData(bool enabled);
 
@@ -235,8 +242,11 @@ class AwContents : public FindHelper::Listener,
       jstring message, jstring target_origin, jintArray sent_ports);
   void CreateMessageChannel(JNIEnv* env, jobject obj, jobjectArray ports);
 
+  void GrantFileSchemeAccesstoChildProcess(JNIEnv* env, jobject obj);
+
+  void ResumeLoadingCreatedPopupWebContents(JNIEnv* env, jobject obj);
+
  private:
-  void InitDataReductionProxyIfNecessary();
   void InitAutofillIfNecessary(bool enabled);
 
   // Geolocation API support

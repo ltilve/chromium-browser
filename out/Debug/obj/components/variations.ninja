@@ -1,0 +1,208 @@
+rule variations_target_genproto_e8ff2db4db96d74f982ddd929ca77e3f
+  command = cd ../../components; python $
+      ../tools/protoc_wrapper/protoc_wrapper.py --include "" --protobuf $
+      "../out/Debug/gen/protoc_out/components/variations/proto/${root}.pb.h" $
+      --proto-in-dir variations/proto --proto-in-file "${root}${ext}" $
+      "--use-system-protobuf=0" -- ../out/Debug/protoc --cpp_out $
+      ../out/Debug/gen/protoc_out/components/variations/proto --python_out $
+      ../out/Debug/pyproto/components/variations/proto
+  description = RULE Generating C++ and Python code from ${source}
+  restat = 1
+
+build obj/components/variations.genproto.stamp: stamp $
+    ../../tools/protoc_wrapper/protoc_wrapper.py protoc || protoc
+
+build pyproto/components/variations/proto/client_variations_pb2.py $
+    gen/protoc_out/components/variations/proto/client_variations.pb.cc $
+    gen/protoc_out/components/variations/proto/client_variations.pb.h: $
+    variations_target_genproto_e8ff2db4db96d74f982ddd929ca77e3f $
+    ../../components/variations/proto/client_variations.proto | $
+    obj/components/variations.genproto.stamp
+  source = variations/proto/client_variations.proto
+  ext = .proto
+  root = client_variations
+build pyproto/components/variations/proto/permuted_entropy_cache_pb2.py $
+    gen/protoc_out/components/variations/proto/permuted_entropy_cache.pb.cc $
+    gen/protoc_out/components/variations/proto/permuted_entropy_cache.pb.h: $
+    variations_target_genproto_e8ff2db4db96d74f982ddd929ca77e3f $
+    ../../components/variations/proto/permuted_entropy_cache.proto | $
+    obj/components/variations.genproto.stamp
+  source = variations/proto/permuted_entropy_cache.proto
+  ext = .proto
+  root = permuted_entropy_cache
+build pyproto/components/variations/proto/study_pb2.py $
+    gen/protoc_out/components/variations/proto/study.pb.cc $
+    gen/protoc_out/components/variations/proto/study.pb.h: $
+    variations_target_genproto_e8ff2db4db96d74f982ddd929ca77e3f $
+    ../../components/variations/proto/study.proto | $
+    obj/components/variations.genproto.stamp
+  source = variations/proto/study.proto
+  ext = .proto
+  root = study
+build pyproto/components/variations/proto/variations_seed_pb2.py $
+    gen/protoc_out/components/variations/proto/variations_seed.pb.cc $
+    gen/protoc_out/components/variations/proto/variations_seed.pb.h: $
+    variations_target_genproto_e8ff2db4db96d74f982ddd929ca77e3f $
+    ../../components/variations/proto/variations_seed.proto | $
+    obj/components/variations.genproto.stamp
+  source = variations/proto/variations_seed.proto
+  ext = .proto
+  root = variations_seed
+build obj/components/variations.actions_rules_copies.stamp: stamp $
+    pyproto/components/variations/proto/client_variations_pb2.py $
+    gen/protoc_out/components/variations/proto/client_variations.pb.cc $
+    gen/protoc_out/components/variations/proto/client_variations.pb.h $
+    pyproto/components/variations/proto/permuted_entropy_cache_pb2.py $
+    gen/protoc_out/components/variations/proto/permuted_entropy_cache.pb.cc $
+    gen/protoc_out/components/variations/proto/permuted_entropy_cache.pb.h $
+    pyproto/components/variations/proto/study_pb2.py $
+    gen/protoc_out/components/variations/proto/study.pb.cc $
+    gen/protoc_out/components/variations/proto/study.pb.h $
+    pyproto/components/variations/proto/variations_seed_pb2.py $
+    gen/protoc_out/components/variations/proto/variations_seed.pb.cc $
+    gen/protoc_out/components/variations/proto/variations_seed.pb.h
+
+defines = -DV8_DEPRECATION_WARNINGS -DCLD_VERSION=2 -D_FILE_OFFSET_BITS=64 $
+    -DCHROMIUM_BUILD -DCR_CLANG_REVISION=255169-1 $
+    -DUI_COMPOSITOR_IMAGE_TRANSPORT -DUSE_AURA=1 -DUSE_ASH=1 -DUSE_PANGO=1 $
+    -DUSE_CAIRO=1 -DUSE_DEFAULT_RENDER_THEME=1 -DUSE_LIBJPEG_TURBO=1 $
+    -DUSE_X11=1 -DUSE_CLIPBOARD_AURAX11=1 -DENABLE_ONE_CLICK_SIGNIN $
+    -DENABLE_WEBRTC=1 -DENABLE_MEDIA_ROUTER=1 -DENABLE_PEPPER_CDMS $
+    -DENABLE_CONFIGURATION_POLICY -DENABLE_NOTIFICATIONS -DENABLE_HIDPI=1 $
+    -DENABLE_TOPCHROME_MD=1 -DUSE_UDEV -DDONT_EMBED_BUILD_METADATA $
+    -DFIELDTRIAL_TESTING_ENABLED -DENABLE_TASK_MANAGER=1 $
+    -DENABLE_EXTENSIONS=1 -DENABLE_PDF=1 -DENABLE_PLUGINS=1 $
+    -DENABLE_SESSION_SERVICE=1 -DENABLE_THEMES=1 -DENABLE_AUTOFILL_DIALOG=1 $
+    -DENABLE_BACKGROUND=1 -DENABLE_PRINTING=1 -DENABLE_BASIC_PRINTING=1 $
+    -DENABLE_PRINT_PREVIEW=1 -DENABLE_SPELLCHECK=1 $
+    -DENABLE_CAPTIVE_PORTAL_DETECTION=1 -DENABLE_APP_LIST=1 $
+    -DENABLE_SETTINGS_APP=1 -DENABLE_SUPERVISED_USERS=1 -DENABLE_MDNS=1 $
+    -DENABLE_SERVICE_DISCOVERY=1 -DV8_USE_EXTERNAL_STARTUP_DATA $
+    -DFULL_SAFE_BROWSING -DSAFE_BROWSING_CSD -DSAFE_BROWSING_DB_LOCAL $
+    -DPROTOBUF_USE_DLLS -DGOOGLE_PROTOBUF_NO_RTTI $
+    -DGOOGLE_PROTOBUF_NO_STATIC_INITIALIZER -DUSE_LIBPCI=1 -DUSE_OPENSSL=1 $
+    -DUSE_GLIB=1 -DUSE_NSS_CERTS=1 -D__STDC_CONSTANT_MACROS $
+    -D__STDC_FORMAT_MACROS -DDYNAMIC_ANNOTATIONS_ENABLED=1 $
+    -DWTF_USE_DYNAMIC_ANNOTATIONS=1 -D_DEBUG -D_GLIBCXX_DEBUG=1
+includes = -Igen -I../.. -Igen/protoc_out -I../../third_party/protobuf $
+    -I../../third_party/protobuf/src
+cflags = -fstack-protector --param=ssp-buffer-size=4 -Werror -pthread $
+    -fno-strict-aliasing -Wall -Wno-unused-parameter $
+    -Wno-missing-field-initializers -fvisibility=hidden -pipe -fPIC $
+    -Wno-reserved-user-defined-literal -Xclang -load -Xclang $
+    /b/build/slave/publish_tarball/build/src/third_party/llvm-build/Release+Asserts/lib/libFindBadConstructs.so $
+    -Xclang -add-plugin -Xclang find-bad-constructs -Xclang $
+    -plugin-arg-find-bad-constructs -Xclang check-templates $
+    -fcolor-diagnostics $
+    -B/b/build/slave/publish_tarball/build/src/third_party/binutils/Linux_x64/Release/bin $
+    -Wheader-hygiene -Wno-char-subscripts $
+    -Wno-unneeded-internal-declaration -Wno-covered-switch-default $
+    -Wstring-conversion -Wno-c++11-narrowing -Wno-deprecated-register $
+    -Wno-inconsistent-missing-override -Wno-shift-negative-value $
+    -Wno-bitfield-width -pthread $
+    -I/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/include/glib-2.0 $
+    -I/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/lib/x86_64-linux-gnu/glib-2.0/include $
+    -I/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/include/nss $
+    -I/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/include/nspr $
+    -Wno-header-guard -m64 -march=x86-64 $
+    --sysroot=/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot $
+    -O0 -g -funwind-tables -gsplit-dwarf -Wno-undefined-bool-conversion $
+    -Wno-tautological-undefined-compare
+cflags_c = 
+cflags_cc = -fno-exceptions -fno-rtti -fno-threadsafe-statics $
+    -fvisibility-inlines-hidden -Wsign-compare -std=gnu++11
+arflags = 
+
+build $
+    obj/components/gen/protoc_out/components/variations/proto/variations.client_variations.pb.o: $
+    cxx gen/protoc_out/components/variations/proto/client_variations.pb.cc $
+    || obj/components/variations.actions_rules_copies.stamp
+build $
+    obj/components/gen/protoc_out/components/variations/proto/variations.permuted_entropy_cache.pb.o: $
+    cxx $
+    gen/protoc_out/components/variations/proto/permuted_entropy_cache.pb.cc $
+    || obj/components/variations.actions_rules_copies.stamp
+build $
+    obj/components/gen/protoc_out/components/variations/proto/variations.study.pb.o: $
+    cxx gen/protoc_out/components/variations/proto/study.pb.cc || $
+    obj/components/variations.actions_rules_copies.stamp
+build $
+    obj/components/gen/protoc_out/components/variations/proto/variations.variations_seed.pb.o: $
+    cxx gen/protoc_out/components/variations/proto/variations_seed.pb.cc || $
+    obj/components/variations.actions_rules_copies.stamp
+build obj/components/variations/variations.active_field_trials.o: cxx $
+    ../../components/variations/active_field_trials.cc || $
+    obj/components/variations.actions_rules_copies.stamp
+build $
+    obj/components/variations/variations.caching_permuted_entropy_provider.o: $
+    cxx ../../components/variations/caching_permuted_entropy_provider.cc || $
+    obj/components/variations.actions_rules_copies.stamp
+build obj/components/variations/variations.entropy_provider.o: cxx $
+    ../../components/variations/entropy_provider.cc || $
+    obj/components/variations.actions_rules_copies.stamp
+build obj/components/variations/variations.experiment_labels.o: cxx $
+    ../../components/variations/experiment_labels.cc || $
+    obj/components/variations.actions_rules_copies.stamp
+build obj/components/variations/variations.metrics_util.o: cxx $
+    ../../components/variations/metrics_util.cc || $
+    obj/components/variations.actions_rules_copies.stamp
+build obj/components/variations/variations.pref_names.o: cxx $
+    ../../components/variations/pref_names.cc || $
+    obj/components/variations.actions_rules_copies.stamp
+build obj/components/variations/variations.processed_study.o: cxx $
+    ../../components/variations/processed_study.cc || $
+    obj/components/variations.actions_rules_copies.stamp
+build obj/components/variations/variations.study_filtering.o: cxx $
+    ../../components/variations/study_filtering.cc || $
+    obj/components/variations.actions_rules_copies.stamp
+build obj/components/variations/variations.variations_associated_data.o: $
+    cxx ../../components/variations/variations_associated_data.cc || $
+    obj/components/variations.actions_rules_copies.stamp
+build obj/components/variations/variations.variations_experiment_util.o: $
+    cxx ../../components/variations/variations_experiment_util.cc || $
+    obj/components/variations.actions_rules_copies.stamp
+build obj/components/variations/variations.variations_request_scheduler.o: $
+    cxx ../../components/variations/variations_request_scheduler.cc || $
+    obj/components/variations.actions_rules_copies.stamp
+build obj/components/variations/variations.variations_seed_processor.o: cxx $
+    ../../components/variations/variations_seed_processor.cc || $
+    obj/components/variations.actions_rules_copies.stamp
+build obj/components/variations/variations.variations_seed_simulator.o: cxx $
+    ../../components/variations/variations_seed_simulator.cc || $
+    obj/components/variations.actions_rules_copies.stamp
+build obj/components/variations/variations.variations_seed_store.o: cxx $
+    ../../components/variations/variations_seed_store.cc || $
+    obj/components/variations.actions_rules_copies.stamp
+build obj/components/variations/variations.variations_switches.o: cxx $
+    ../../components/variations/variations_switches.cc || $
+    obj/components/variations.actions_rules_copies.stamp
+build obj/components/variations/variations.variations_url_constants.o: cxx $
+    ../../components/variations/variations_url_constants.cc || $
+    obj/components/variations.actions_rules_copies.stamp
+build obj/components/variations/variations.variations_util.o: cxx $
+    ../../components/variations/variations_util.cc || $
+    obj/components/variations.actions_rules_copies.stamp
+
+build obj/components/libvariations.a: alink_thin $
+    obj/components/gen/protoc_out/components/variations/proto/variations.client_variations.pb.o $
+    obj/components/gen/protoc_out/components/variations/proto/variations.permuted_entropy_cache.pb.o $
+    obj/components/gen/protoc_out/components/variations/proto/variations.study.pb.o $
+    obj/components/gen/protoc_out/components/variations/proto/variations.variations_seed.pb.o $
+    obj/components/variations/variations.active_field_trials.o $
+    obj/components/variations/variations.caching_permuted_entropy_provider.o $
+    obj/components/variations/variations.entropy_provider.o $
+    obj/components/variations/variations.experiment_labels.o $
+    obj/components/variations/variations.metrics_util.o $
+    obj/components/variations/variations.pref_names.o $
+    obj/components/variations/variations.processed_study.o $
+    obj/components/variations/variations.study_filtering.o $
+    obj/components/variations/variations.variations_associated_data.o $
+    obj/components/variations/variations.variations_experiment_util.o $
+    obj/components/variations/variations.variations_request_scheduler.o $
+    obj/components/variations/variations.variations_seed_processor.o $
+    obj/components/variations/variations.variations_seed_simulator.o $
+    obj/components/variations/variations.variations_seed_store.o $
+    obj/components/variations/variations.variations_switches.o $
+    obj/components/variations/variations.variations_url_constants.o $
+    obj/components/variations/variations.variations_util.o || $
+    obj/components/variations.actions_rules_copies.stamp

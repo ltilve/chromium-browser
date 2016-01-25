@@ -1,0 +1,278 @@
+build obj/content/content_common_mojo_bindings_mojom.actions_depends.stamp: $
+    stamp obj/base/libbase.a $
+    obj/third_party/mojo/mojo_interface_bindings_mojom.actions_rules_copies.stamp
+
+build obj/content/content_common_mojo_bindings_mojom.compile_depends.stamp: $
+    stamp gen/base/debug/debugging_flags.h $
+    obj/third_party/mojo/mojo_interface_bindings_mojom.actions_rules_copies.stamp
+
+rule $
+    content_common_mojo_bindings_mojom_target_content_common_mojo_bindings_mojom_mojom_bindings_stamp_8eef5e0e613aee3d0a95c814c49802b6
+  command = cd ../../content; python ../build/rmdir_and_stamp.py $
+      ../out/Debug/java_mojo/content_common_mojo_bindings_mojom/src $
+      ../out/Debug/java_mojo/content_common_mojo_bindings_mojom/content_common_mojo_bindings_mojom.stamp
+  description = ACTION content_common_mojo_bindings_mojom: $
+      content_common_mojo_bindings_mojom_mojom_bindings_stamp_8eef5e0e613aee3d0a95c814c49802b6
+  restat = 1
+
+build $
+    java_mojo/content_common_mojo_bindings_mojom/content_common_mojo_bindings_mojom.stamp: $
+    content_common_mojo_bindings_mojom_target_content_common_mojo_bindings_mojom_mojom_bindings_stamp_8eef5e0e613aee3d0a95c814c49802b6 $
+    ../../content/common/application_setup.mojom $
+    ../../content/common/background_sync_service.mojom $
+    ../../content/common/geolocation_service.mojom $
+    ../../content/common/image_downloader/image_downloader.mojom $
+    ../../content/common/permission_service.mojom $
+    ../../content/common/presentation/presentation_service.mojom $
+    ../../content/common/process_control.mojom $
+    ../../content/common/routed_service_provider.mojom $
+    ../../content/common/service_port_service.mojom $
+    ../../content/common/service_worker/embedded_worker_setup.mojom $
+    ../../content/common/vr_service.mojom $
+    ../../content/common/wake_lock_service.mojom $
+    ../../content/public/common/background_sync.mojom $
+    ../../content/public/common/mojo_geoposition.mojom $
+    ../../content/public/common/permission_status.mojom $
+    ../../content/public/common/service_worker_event_status.mojom || $
+    obj/content/content_common_mojo_bindings_mojom.actions_depends.stamp
+
+rule $
+    content_common_mojo_bindings_mojom_target_content_common_mojo_bindings_mojom_mojom_bindings_generator_8eef5e0e613aee3d0a95c814c49802b6
+  command = cd ../../content; python $
+      ../mojo/public/tools/bindings/mojom_bindings_generator.py $
+      common/application_setup.mojom common/background_sync_service.mojom $
+      common/geolocation_service.mojom $
+      common/image_downloader/image_downloader.mojom $
+      common/permission_service.mojom $
+      common/presentation/presentation_service.mojom $
+      common/process_control.mojom common/routed_service_provider.mojom $
+      common/service_port_service.mojom $
+      common/service_worker/embedded_worker_setup.mojom $
+      common/vr_service.mojom common/wake_lock_service.mojom $
+      public/common/background_sync.mojom $
+      public/common/mojo_geoposition.mojom $
+      public/common/permission_status.mojom $
+      public/common/service_worker_event_status.mojom --use_bundled_pylibs $
+      -d .. -I.. -I../mojo/services -I.. -o ../out/Debug/gen $
+      "--java_output_directory=../out/Debug/java_mojo/content_common_mojo_bindings_mojom/src"
+  description = ACTION Generating Mojo bindings from $
+      common/application_setup.mojom common/background_sync_service.mojom $
+      common/geolocation_service.mojom $
+      common/image_downloader/image_downloader.mojom $
+      common/permission_service.mojom $
+      common/presentation/presentation_service.mojom $
+      common/process_control.mojom common/routed_service_provider.mojom $
+      common/service_port_service.mojom $
+      common/service_worker/embedded_worker_setup.mojom $
+      common/vr_service.mojom common/wake_lock_service.mojom $
+      public/common/background_sync.mojom $
+      public/common/mojo_geoposition.mojom $
+      public/common/permission_status.mojom $
+      public/common/service_worker_event_status.mojom
+  restat = 1
+
+build gen/content/common/application_setup.mojom.cc $
+    gen/content/common/application_setup.mojom.h $
+    gen/content/common/application_setup.mojom-internal.h $
+    gen/content/common/application_setup.mojom.js $
+    gen/content/common/background_sync_service.mojom.cc $
+    gen/content/common/background_sync_service.mojom.h $
+    gen/content/common/background_sync_service.mojom-internal.h $
+    gen/content/common/background_sync_service.mojom.js $
+    gen/content/common/geolocation_service.mojom.cc $
+    gen/content/common/geolocation_service.mojom.h $
+    gen/content/common/geolocation_service.mojom-internal.h $
+    gen/content/common/geolocation_service.mojom.js $
+    gen/content/common/image_downloader/image_downloader.mojom.cc $
+    gen/content/common/image_downloader/image_downloader.mojom.h $
+    gen/content/common/image_downloader/image_downloader.mojom-internal.h $
+    gen/content/common/image_downloader/image_downloader.mojom.js $
+    gen/content/common/permission_service.mojom.cc $
+    gen/content/common/permission_service.mojom.h $
+    gen/content/common/permission_service.mojom-internal.h $
+    gen/content/common/permission_service.mojom.js $
+    gen/content/common/presentation/presentation_service.mojom.cc $
+    gen/content/common/presentation/presentation_service.mojom.h $
+    gen/content/common/presentation/presentation_service.mojom-internal.h $
+    gen/content/common/presentation/presentation_service.mojom.js $
+    gen/content/common/process_control.mojom.cc $
+    gen/content/common/process_control.mojom.h $
+    gen/content/common/process_control.mojom-internal.h $
+    gen/content/common/process_control.mojom.js $
+    gen/content/common/routed_service_provider.mojom.cc $
+    gen/content/common/routed_service_provider.mojom.h $
+    gen/content/common/routed_service_provider.mojom-internal.h $
+    gen/content/common/routed_service_provider.mojom.js $
+    gen/content/common/service_port_service.mojom.cc $
+    gen/content/common/service_port_service.mojom.h $
+    gen/content/common/service_port_service.mojom-internal.h $
+    gen/content/common/service_port_service.mojom.js $
+    gen/content/common/service_worker/embedded_worker_setup.mojom.cc $
+    gen/content/common/service_worker/embedded_worker_setup.mojom.h $
+    gen/content/common/service_worker/embedded_worker_setup.mojom-internal.h $
+    gen/content/common/service_worker/embedded_worker_setup.mojom.js $
+    gen/content/common/vr_service.mojom.cc $
+    gen/content/common/vr_service.mojom.h $
+    gen/content/common/vr_service.mojom-internal.h $
+    gen/content/common/vr_service.mojom.js $
+    gen/content/common/wake_lock_service.mojom.cc $
+    gen/content/common/wake_lock_service.mojom.h $
+    gen/content/common/wake_lock_service.mojom-internal.h $
+    gen/content/common/wake_lock_service.mojom.js $
+    gen/content/public/common/background_sync.mojom.cc $
+    gen/content/public/common/background_sync.mojom.h $
+    gen/content/public/common/background_sync.mojom-internal.h $
+    gen/content/public/common/background_sync.mojom.js $
+    gen/content/public/common/mojo_geoposition.mojom.cc $
+    gen/content/public/common/mojo_geoposition.mojom.h $
+    gen/content/public/common/mojo_geoposition.mojom-internal.h $
+    gen/content/public/common/mojo_geoposition.mojom.js $
+    gen/content/public/common/permission_status.mojom.cc $
+    gen/content/public/common/permission_status.mojom.h $
+    gen/content/public/common/permission_status.mojom-internal.h $
+    gen/content/public/common/permission_status.mojom.js $
+    gen/content/public/common/service_worker_event_status.mojom.cc $
+    gen/content/public/common/service_worker_event_status.mojom.h $
+    gen/content/public/common/service_worker_event_status.mojom-internal.h $
+    gen/content/public/common/service_worker_event_status.mojom.js: $
+    content_common_mojo_bindings_mojom_target_content_common_mojo_bindings_mojom_mojom_bindings_generator_8eef5e0e613aee3d0a95c814c49802b6 $
+    ../../mojo/public/tools/bindings/mojom_bindings_generator.py $
+    ../../mojo/public/tools/bindings/generators/cpp_templates/enum_macros.tmpl $
+    ../../mojo/public/tools/bindings/generators/cpp_templates/interface_declaration.tmpl $
+    ../../mojo/public/tools/bindings/generators/cpp_templates/interface_definition.tmpl $
+    ../../mojo/public/tools/bindings/generators/cpp_templates/interface_macros.tmpl $
+    ../../mojo/public/tools/bindings/generators/cpp_templates/interface_proxy_declaration.tmpl $
+    ../../mojo/public/tools/bindings/generators/cpp_templates/interface_request_validator_declaration.tmpl $
+    ../../mojo/public/tools/bindings/generators/cpp_templates/interface_response_validator_declaration.tmpl $
+    ../../mojo/public/tools/bindings/generators/cpp_templates/interface_stub_declaration.tmpl $
+    ../../mojo/public/tools/bindings/generators/cpp_templates/module.cc.tmpl $
+    ../../mojo/public/tools/bindings/generators/cpp_templates/module.h.tmpl $
+    ../../mojo/public/tools/bindings/generators/cpp_templates/module-internal.h.tmpl $
+    ../../mojo/public/tools/bindings/generators/cpp_templates/struct_declaration.tmpl $
+    ../../mojo/public/tools/bindings/generators/cpp_templates/struct_definition.tmpl $
+    ../../mojo/public/tools/bindings/generators/cpp_templates/struct_macros.tmpl $
+    ../../mojo/public/tools/bindings/generators/cpp_templates/struct_serialization_definition.tmpl $
+    ../../mojo/public/tools/bindings/generators/cpp_templates/wrapper_class_declaration.tmpl $
+    ../../mojo/public/tools/bindings/generators/cpp_templates/wrapper_class_definition.tmpl $
+    ../../mojo/public/tools/bindings/generators/java_templates/constant_definition.tmpl $
+    ../../mojo/public/tools/bindings/generators/java_templates/constants.java.tmpl $
+    ../../mojo/public/tools/bindings/generators/java_templates/data_types_definition.tmpl $
+    ../../mojo/public/tools/bindings/generators/java_templates/enum_definition.tmpl $
+    ../../mojo/public/tools/bindings/generators/java_templates/enum.java.tmpl $
+    ../../mojo/public/tools/bindings/generators/java_templates/header.java.tmpl $
+    ../../mojo/public/tools/bindings/generators/java_templates/interface_definition.tmpl $
+    ../../mojo/public/tools/bindings/generators/java_templates/interface_internal.java.tmpl $
+    ../../mojo/public/tools/bindings/generators/java_templates/interface.java.tmpl $
+    ../../mojo/public/tools/bindings/generators/java_templates/struct.java.tmpl $
+    ../../mojo/public/tools/bindings/generators/java_templates/union.java.tmpl $
+    ../../mojo/public/tools/bindings/generators/js_templates/enum_definition.tmpl $
+    ../../mojo/public/tools/bindings/generators/js_templates/interface_definition.tmpl $
+    ../../mojo/public/tools/bindings/generators/js_templates/module_definition.tmpl $
+    ../../mojo/public/tools/bindings/generators/js_templates/module.amd.tmpl $
+    ../../mojo/public/tools/bindings/generators/js_templates/struct_definition.tmpl $
+    ../../mojo/public/tools/bindings/generators/js_templates/union_definition.tmpl $
+    ../../mojo/public/tools/bindings/generators/js_templates/validation_macros.tmpl $
+    ../../mojo/public/tools/bindings/generators/mojom_cpp_generator.py $
+    ../../mojo/public/tools/bindings/generators/mojom_java_generator.py $
+    ../../mojo/public/tools/bindings/generators/mojom_js_generator.py $
+    ../../mojo/public/tools/bindings/pylib/mojom/__init__.py $
+    ../../mojo/public/tools/bindings/pylib/mojom/error.py $
+    ../../mojo/public/tools/bindings/pylib/mojom/generate/__init__.py $
+    ../../mojo/public/tools/bindings/pylib/mojom/generate/data.py $
+    ../../mojo/public/tools/bindings/pylib/mojom/generate/generator.py $
+    ../../mojo/public/tools/bindings/pylib/mojom/generate/module.py $
+    ../../mojo/public/tools/bindings/pylib/mojom/generate/pack.py $
+    ../../mojo/public/tools/bindings/pylib/mojom/generate/template_expander.py $
+    ../../mojo/public/tools/bindings/pylib/mojom/parse/__init__.py $
+    ../../mojo/public/tools/bindings/pylib/mojom/parse/ast.py $
+    ../../mojo/public/tools/bindings/pylib/mojom/parse/lexer.py $
+    ../../mojo/public/tools/bindings/pylib/mojom/parse/parser.py $
+    ../../mojo/public/tools/bindings/pylib/mojom/parse/translate.py $
+    ../../content/common/application_setup.mojom $
+    ../../content/common/background_sync_service.mojom $
+    ../../content/common/geolocation_service.mojom $
+    ../../content/common/image_downloader/image_downloader.mojom $
+    ../../content/common/permission_service.mojom $
+    ../../content/common/presentation/presentation_service.mojom $
+    ../../content/common/process_control.mojom $
+    ../../content/common/routed_service_provider.mojom $
+    ../../content/common/service_port_service.mojom $
+    ../../content/common/service_worker/embedded_worker_setup.mojom $
+    ../../content/common/vr_service.mojom $
+    ../../content/common/wake_lock_service.mojom $
+    ../../content/public/common/background_sync.mojom $
+    ../../content/public/common/mojo_geoposition.mojom $
+    ../../content/public/common/permission_status.mojom $
+    ../../content/public/common/service_worker_event_status.mojom $
+    java_mojo/content_common_mojo_bindings_mojom/content_common_mojo_bindings_mojom.stamp $
+    || obj/content/content_common_mojo_bindings_mojom.actions_depends.stamp
+
+build $
+    obj/content/content_common_mojo_bindings_mojom.actions_rules_copies.stamp: $
+    stamp $
+    java_mojo/content_common_mojo_bindings_mojom/content_common_mojo_bindings_mojom.stamp $
+    gen/content/common/application_setup.mojom.cc $
+    gen/content/common/application_setup.mojom.h $
+    gen/content/common/application_setup.mojom-internal.h $
+    gen/content/common/application_setup.mojom.js $
+    gen/content/common/background_sync_service.mojom.cc $
+    gen/content/common/background_sync_service.mojom.h $
+    gen/content/common/background_sync_service.mojom-internal.h $
+    gen/content/common/background_sync_service.mojom.js $
+    gen/content/common/geolocation_service.mojom.cc $
+    gen/content/common/geolocation_service.mojom.h $
+    gen/content/common/geolocation_service.mojom-internal.h $
+    gen/content/common/geolocation_service.mojom.js $
+    gen/content/common/image_downloader/image_downloader.mojom.cc $
+    gen/content/common/image_downloader/image_downloader.mojom.h $
+    gen/content/common/image_downloader/image_downloader.mojom-internal.h $
+    gen/content/common/image_downloader/image_downloader.mojom.js $
+    gen/content/common/permission_service.mojom.cc $
+    gen/content/common/permission_service.mojom.h $
+    gen/content/common/permission_service.mojom-internal.h $
+    gen/content/common/permission_service.mojom.js $
+    gen/content/common/presentation/presentation_service.mojom.cc $
+    gen/content/common/presentation/presentation_service.mojom.h $
+    gen/content/common/presentation/presentation_service.mojom-internal.h $
+    gen/content/common/presentation/presentation_service.mojom.js $
+    gen/content/common/process_control.mojom.cc $
+    gen/content/common/process_control.mojom.h $
+    gen/content/common/process_control.mojom-internal.h $
+    gen/content/common/process_control.mojom.js $
+    gen/content/common/routed_service_provider.mojom.cc $
+    gen/content/common/routed_service_provider.mojom.h $
+    gen/content/common/routed_service_provider.mojom-internal.h $
+    gen/content/common/routed_service_provider.mojom.js $
+    gen/content/common/service_port_service.mojom.cc $
+    gen/content/common/service_port_service.mojom.h $
+    gen/content/common/service_port_service.mojom-internal.h $
+    gen/content/common/service_port_service.mojom.js $
+    gen/content/common/service_worker/embedded_worker_setup.mojom.cc $
+    gen/content/common/service_worker/embedded_worker_setup.mojom.h $
+    gen/content/common/service_worker/embedded_worker_setup.mojom-internal.h $
+    gen/content/common/service_worker/embedded_worker_setup.mojom.js $
+    gen/content/common/vr_service.mojom.cc $
+    gen/content/common/vr_service.mojom.h $
+    gen/content/common/vr_service.mojom-internal.h $
+    gen/content/common/vr_service.mojom.js $
+    gen/content/common/wake_lock_service.mojom.cc $
+    gen/content/common/wake_lock_service.mojom.h $
+    gen/content/common/wake_lock_service.mojom-internal.h $
+    gen/content/common/wake_lock_service.mojom.js $
+    gen/content/public/common/background_sync.mojom.cc $
+    gen/content/public/common/background_sync.mojom.h $
+    gen/content/public/common/background_sync.mojom-internal.h $
+    gen/content/public/common/background_sync.mojom.js $
+    gen/content/public/common/mojo_geoposition.mojom.cc $
+    gen/content/public/common/mojo_geoposition.mojom.h $
+    gen/content/public/common/mojo_geoposition.mojom-internal.h $
+    gen/content/public/common/mojo_geoposition.mojom.js $
+    gen/content/public/common/permission_status.mojom.cc $
+    gen/content/public/common/permission_status.mojom.h $
+    gen/content/public/common/permission_status.mojom-internal.h $
+    gen/content/public/common/permission_status.mojom.js $
+    gen/content/public/common/service_worker_event_status.mojom.cc $
+    gen/content/public/common/service_worker_event_status.mojom.h $
+    gen/content/public/common/service_worker_event_status.mojom-internal.h $
+    gen/content/public/common/service_worker_event_status.mojom.js
+

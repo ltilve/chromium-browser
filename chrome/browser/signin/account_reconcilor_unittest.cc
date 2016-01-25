@@ -9,14 +9,12 @@
 #include "base/test/histogram_tester.h"
 #include "base/time/time.h"
 #include "build/build_config.h"
-#include "chrome/browser/prefs/pref_service_syncable.h"
 #include "chrome/browser/signin/account_reconcilor_factory.h"
 #include "chrome/browser/signin/account_tracker_service_factory.h"
 #include "chrome/browser/signin/chrome_signin_client_factory.h"
 #include "chrome/browser/signin/fake_gaia_cookie_manager_service.h"
-#include "chrome/browser/signin/fake_profile_oauth2_token_service.h"
 #include "chrome/browser/signin/fake_profile_oauth2_token_service_builder.h"
-#include "chrome/browser/signin/fake_signin_manager.h"
+#include "chrome/browser/signin/fake_signin_manager_builder.h"
 #include "chrome/browser/signin/gaia_cookie_manager_service_factory.h"
 #include "chrome/browser/signin/profile_oauth2_token_service_factory.h"
 #include "chrome/browser/signin/signin_manager_factory.h"
@@ -26,12 +24,14 @@
 #include "chrome/test/base/testing_profile_manager.h"
 #include "components/signin/core/browser/account_reconcilor.h"
 #include "components/signin/core/browser/account_tracker_service.h"
+#include "components/signin/core/browser/fake_profile_oauth2_token_service.h"
 #include "components/signin/core/browser/profile_oauth2_token_service.h"
 #include "components/signin/core/browser/signin_manager.h"
 #include "components/signin/core/browser/signin_metrics.h"
 #include "components/signin/core/browser/test_signin_client.h"
 #include "components/signin/core/common/profile_management_switches.h"
 #include "components/signin/core/common/signin_switches.h"
+#include "components/syncable_prefs/pref_service_syncable.h"
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "google_apis/gaia/fake_oauth2_token_service_delegate.h"
 #include "google_apis/gaia/gaia_constants.h"
@@ -179,12 +179,12 @@ void AccountReconcilorTest::SetUp() {
       GaiaCookieManagerServiceFactory::GetInstance(),
       FakeGaiaCookieManagerService::Build));
   factories.push_back(std::make_pair(SigninManagerFactory::GetInstance(),
-      FakeSigninManagerBase::Build));
+                                     BuildFakeSigninManagerBase));
   factories.push_back(std::make_pair(AccountReconcilorFactory::GetInstance(),
       MockAccountReconcilor::Build));
 
   profile_ = testing_profile_manager_.get()->CreateTestingProfile("name",
-                              scoped_ptr<PrefServiceSyncable>(),
+                              scoped_ptr<syncable_prefs::PrefServiceSyncable>(),
                               base::UTF8ToUTF16("name"), 0, std::string(),
                               factories);
 
@@ -581,7 +581,7 @@ TEST_P(AccountReconcilorTest, StartReconcileRemoveFromCookie) {
   ASSERT_TRUE(reconcilor->is_reconcile_started_);
 
   base::RunLoop().RunUntilIdle();
-  SimulateAddAccountToCookieCompleted(reconcilor, "user@gmail.com",
+  SimulateAddAccountToCookieCompleted(reconcilor, account_id,
                                       GoogleServiceAuthError::AuthErrorNone());
   ASSERT_FALSE(reconcilor->is_reconcile_started_);
 
@@ -631,7 +631,7 @@ TEST_P(AccountReconcilorTest, StartReconcileAddToCookieTwice) {
   // Do another pass after I've added a third account to the token service
   cookie_manager_service()->SetListAccountsResponseTwoAccounts(
       "user@gmail.com", "12345", "other@gmail.com", "67890");
-  cookie_manager_service()->set_list_accounts_fetched_once_for_testing(false);
+  cookie_manager_service()->set_list_accounts_stale_for_testing(true);
 
   // This will cause the reconcilor to fire.
   token_service()->UpdateCredentials(account_id3, "refresh_token");
@@ -668,7 +668,7 @@ TEST_P(AccountReconcilorTest, StartReconcileBadPrimary) {
 
   token_service()->UpdateCredentials(account_id2, "refresh_token");
   cookie_manager_service()->SetListAccountsResponseTwoAccounts(
-      "other@gmail.com", "12345", "user@gmail.com", "67890");
+      "other@gmail.com", "67890", "user@gmail.com", "12345");
 
   EXPECT_CALL(*GetMockReconcilor(), PerformLogoutAllAccountsAction());
   EXPECT_CALL(*GetMockReconcilor(), PerformMergeAction(account_id));
@@ -721,7 +721,7 @@ TEST_P(AccountReconcilorTest, StartReconcileWithSessionInfoExpiredDefault) {
       PickAccountIdForAccount("67890", "other@gmail.com");
   token_service()->UpdateCredentials(account_id2, "refresh_token");
   cookie_manager_service()->SetListAccountsResponseTwoAccountsWithExpiry(
-      "user@gmail.com", true, "other@gmail.com", false);
+      "user@gmail.com", "12345", true, "other@gmail.com", "67890", false);
 
   EXPECT_CALL(*GetMockReconcilor(), PerformMergeAction(account_id));
 

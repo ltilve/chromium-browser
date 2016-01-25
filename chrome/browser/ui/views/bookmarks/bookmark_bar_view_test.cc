@@ -17,6 +17,7 @@
 #include "chrome/browser/chrome_notification_types.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/bookmarks/bookmark_utils.h"
+#include "chrome/browser/ui/bookmarks/bookmark_utils_desktop.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_tabstrip.h"
 #include "chrome/browser/ui/browser_window.h"
@@ -259,7 +260,7 @@ class BookmarkBarViewEventTestBase : public ViewEventTestBase {
   void SetUp() override {
     content_client_.reset(new ChromeContentClient);
     content::SetContentClient(content_client_.get());
-    browser_content_client_.reset(new chrome::ChromeContentBrowserClient());
+    browser_content_client_.reset(new ChromeContentBrowserClient());
     content::SetBrowserClientForTesting(browser_content_client_.get());
 
     views::MenuController::TurnOffMenuSelectionHoldForTest();
@@ -274,8 +275,7 @@ class BookmarkBarViewEventTestBase : public ViewEventTestBase {
 
     Browser::CreateParams native_params(profile_.get(),
                                         chrome::GetActiveDesktop());
-    browser_.reset(
-        chrome::CreateBrowserWithTestWindowForParams(&native_params));
+    browser_ = chrome::CreateBrowserWithTestWindowForParams(&native_params);
 
     local_state_.reset(new ScopedTestingLocalState(
         TestingBrowserProcess::GetGlobal()));
@@ -287,23 +287,15 @@ class BookmarkBarViewEventTestBase : public ViewEventTestBase {
 
     AddTestData(CreateBigMenu());
 
-    // Calculate the preferred size so that one button doesn't fit, which
-    // triggers the overflow button to appear. We have to do this incrementally
-    // as there isn't a good way to determine the point at which the overflow
-    // button is shown.
-    //
-    // This code looks a bit hacky, but I've written it so that it shouldn't
-    // be dependant upon any of the layout code in BookmarkBarView. Instead
-    // we brute force search for a size that triggers the overflow button.
-    bb_view_pref_ = bb_view_->GetPreferredSize();
-    bb_view_pref_.set_width(1000);
-    do {
-      bb_view_pref_.set_width(bb_view_pref_.width() - 25);
-      bb_view_->SetBounds(0, 0, bb_view_pref_.width(), bb_view_pref_.height());
-      bb_view_->Layout();
-    } while (GetBookmarkButton(6)->visible());
-
+    // Create the Widget. Note the initial size is given by GetPreferredSize()
+    // during initialization. This occurs after the WidgetDelegate provides
+    // |bb_view_| as the contents view and adds it to the hierarchy.
     ViewEventTestBase::SetUp();
+
+    // Verify the layout triggered by the initial size preserves the overflow
+    // state calculated in GetPreferredSize().
+    EXPECT_TRUE(GetBookmarkButton(5)->visible());
+    EXPECT_FALSE(GetBookmarkButton(6)->visible());
   }
 
   void TearDown() override {
@@ -333,7 +325,25 @@ class BookmarkBarViewEventTestBase : public ViewEventTestBase {
  protected:
   views::View* CreateContentsView() override { return bb_view_.get(); }
 
-  gfx::Size GetPreferredSize() const override { return bb_view_pref_; }
+  gfx::Size GetPreferredSize() const override {
+    // Calculate the preferred size so that one button doesn't fit, which
+    // triggers the overflow button to appear. We have to do this incrementally
+    // as there isn't a good way to determine the point at which the overflow
+    // button is shown.
+    //
+    // This code looks a bit hacky, but it is written so that it shouldn't
+    // depend on any of the layout code in BookmarkBarView, or extra buttons
+    // added to the right of the bookmarks. Instead, brute force search for a
+    // size that triggers the overflow button.
+    gfx::Size size = bb_view_->GetPreferredSize();
+    size.set_width(1000);
+    do {
+      size.set_width(size.width() - 25);
+      bb_view_->SetBounds(0, 0, size.width(), size.height());
+      bb_view_->Layout();
+    } while (bb_view_->GetBookmarkButton(6)->visible());
+    return size;
+  }
 
   views::LabelButton* GetBookmarkButton(int view_index) {
     return bb_view_->GetBookmarkButton(view_index);
@@ -379,9 +389,8 @@ class BookmarkBarViewEventTestBase : public ViewEventTestBase {
     model_->AddURL(of2, 1, ASCIIToUTF16("of2b"), GURL(test_base + "of2b"));
   }
 
-  gfx::Size bb_view_pref_;
   scoped_ptr<ChromeContentClient> content_client_;
-  scoped_ptr<chrome::ChromeContentBrowserClient> browser_content_client_;
+  scoped_ptr<ChromeContentBrowserClient> browser_content_client_;
   scoped_ptr<TestingProfile> profile_;
   scoped_ptr<Browser> browser_;
   scoped_ptr<ScopedTestingLocalState> local_state_;
@@ -768,7 +777,12 @@ class BookmarkBarViewTest6 : public BookmarkBarViewEventTestBase {
   GURL url_dragging_;
 };
 
-VIEW_TEST(BookmarkBarViewTest6, OpenMenuOnClickAndHold)
+#if defined(OS_WIN)  // flaky http://crbug.com/523255
+#define MAYBE_OpenMenuOnClickAndHold DISABLED_OpenMenuOnClickAndHold
+#else
+#define MAYBE_OpenMenuOnClickAndHold OpenMenuOnClickAndHold
+#endif
+VIEW_TEST(BookmarkBarViewTest6, MAYBE_OpenMenuOnClickAndHold)
 
 // Tests drag and drop to different menu.
 class BookmarkBarViewTest7 : public BookmarkBarViewEventTestBase {
@@ -1995,7 +2009,12 @@ class BookmarkBarViewTest21 : public BookmarkBarViewEventTestBase {
   BookmarkContextMenuNotificationObserver observer_;
 };
 
-VIEW_TEST(BookmarkBarViewTest21, ContextMenusForEmptyFolder)
+#if defined(OS_WIN)  // flaky http://crbug.com/523255
+#define MAYBE_ContextMenusForEmptyFolder DISABLED_ContextMenusForEmptyFolder
+#else
+#define MAYBE_ContextMenusForEmptyFolder ContextMenusForEmptyFolder
+#endif
+VIEW_TEST(BookmarkBarViewTest21, MAYBE_ContextMenusForEmptyFolder)
 
 // Test that closing the source browser window while dragging a bookmark does
 // not cause a crash.
@@ -2136,3 +2155,87 @@ class BookmarkBarViewTest23 : public BookmarkBarViewEventTestBase {
 #define MAYBE_ContextMenusKeyboard ContextMenusKeyboard
 #endif
 VIEW_TEST(BookmarkBarViewTest23, MAYBE_ContextMenusKeyboard)
+
+// Test that pressing escape on a menu opened via the keyboard dismisses the
+// context menu but not the parent menu.
+class BookmarkBarViewTest24 : public BookmarkBarViewEventTestBase {
+ public:
+  BookmarkBarViewTest24()
+      : observer_(CreateEventTask(this, &BookmarkBarViewTest24::Step4)) {}
+
+ protected:
+  void DoTestOnMessageLoop() override {
+    // Move the mouse to the first folder on the bookmark bar and press the
+    // mouse.
+    views::LabelButton* button = bb_view_->other_bookmarks_button();
+    ui_test_utils::MoveMouseToCenterAndPress(button, ui_controls::LEFT,
+        ui_controls::DOWN | ui_controls::UP,
+        CreateEventTask(this, &BookmarkBarViewTest24::Step2));
+  }
+
+ private:
+  void Step2() {
+    // Menu should be showing.
+    views::MenuItemView* menu = bb_view_->GetMenu();
+    ASSERT_TRUE(menu);
+    ASSERT_TRUE(menu->GetSubmenu()->IsShowing());
+
+    // Navigate down to highlight the first menu item.
+    ui_controls::SendKeyPressNotifyWhenDone(
+        GetWidget()->GetNativeWindow(), ui::VKEY_DOWN,
+        false, false, false, false,  // No modifer keys
+        CreateEventTask(this, &BookmarkBarViewTest24::Step3));
+  }
+
+  void Step3() {
+    // Menu should be showing.
+    views::MenuItemView* menu = bb_view_->GetMenu();
+    ASSERT_TRUE(menu);
+    ASSERT_TRUE(menu->GetSubmenu()->IsShowing());
+
+    // Open the context menu via the keyboard.
+    ui_controls::SendKeyPress(
+        GetWidget()->GetNativeWindow(), ui::VKEY_APPS,
+        false, false, false, false);  // No modifer keys
+    // The BookmarkContextMenuNotificationObserver triggers Step4.
+  }
+
+  void Step4() {
+    // Make sure the context menu is showing.
+    views::MenuItemView* menu = bb_view_->GetContextMenu();
+    ASSERT_TRUE(menu);
+    ASSERT_TRUE(menu->GetSubmenu());
+    ASSERT_TRUE(menu->GetSubmenu()->IsShowing());
+
+    // Send escape to close the context menu.
+    ui_controls::SendKeyPressNotifyWhenDone(
+        window_->GetNativeWindow(), ui::VKEY_ESCAPE, false, false, false, false,
+        CreateEventTask(this, &BookmarkBarViewTest24::Step5));
+  }
+
+  void Step5() {
+    // The context menu should be closed but the parent menu should still be
+    // showing.
+    ASSERT_FALSE(bb_view_->GetContextMenu());
+
+    views::MenuItemView* menu = bb_view_->GetMenu();
+    ASSERT_TRUE(menu);
+    ASSERT_TRUE(menu->GetSubmenu()->IsShowing());
+
+    // Send escape to close the main menu.
+    ui_controls::SendKeyPressNotifyWhenDone(
+        window_->GetNativeWindow(), ui::VKEY_ESCAPE, false, false, false, false,
+        CreateEventTask(this, &BookmarkBarViewTest24::Done));
+  }
+
+  BookmarkContextMenuNotificationObserver observer_;
+};
+
+#if defined(USE_OZONE)
+// ozone bringup - http://crbug.com/401304
+#define MAYBE_ContextMenusKeyboardEscape DISABLED_ContextMenusKeyboardEscape
+#else
+#define MAYBE_ContextMenusKeyboardEscape ContextMenusKeyboardEscape
+#endif
+VIEW_TEST(BookmarkBarViewTest24, MAYBE_ContextMenusKeyboardEscape)
+

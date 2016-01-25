@@ -7,9 +7,11 @@
 #include "config.h"
 #include "V8TestDictionary.h"
 
+#include "bindings/core/v8/Dictionary.h"
 #include "bindings/core/v8/ExceptionState.h"
 #include "bindings/core/v8/ScriptValue.h"
 #include "bindings/core/v8/UnionTypesCore.h"
+#include "bindings/core/v8/V8ArrayBufferView.h"
 #include "bindings/core/v8/V8Element.h"
 #include "bindings/core/v8/V8EventTarget.h"
 #include "bindings/core/v8/V8InternalDictionary.h"
@@ -18,6 +20,7 @@
 #include "bindings/core/v8/V8TestInterfaceGarbageCollected.h"
 #include "bindings/core/v8/V8TestInterfaceWillBeGarbageCollected.h"
 #include "bindings/core/v8/V8Uint8Array.h"
+#include "core/dom/FlexibleArrayBufferView.h"
 #include "core/frame/UseCounter.h"
 
 namespace blink {
@@ -97,6 +100,26 @@ void V8TestDictionary::toImpl(v8::Isolate* isolate, v8::Local<v8::Value> v8Value
             if (exceptionState.hadException())
                 return;
             impl.setCreateMember(deprecatedCreateMember);
+        }
+    }
+
+    {
+        v8::Local<v8::Value> dictionaryMemberValue;
+        if (!v8Object->Get(isolate->GetCurrentContext(), v8String(isolate, "dictionaryMember")).ToLocal(&dictionaryMemberValue)) {
+            exceptionState.rethrowV8Exception(block.Exception());
+            return;
+        }
+        if (dictionaryMemberValue.IsEmpty() || dictionaryMemberValue->IsUndefined()) {
+            // Do nothing.
+        } else {
+            Dictionary dictionaryMember = Dictionary(dictionaryMemberValue, isolate, exceptionState);
+            if (exceptionState.hadException())
+                return;
+            if (!dictionaryMember.isObject()) {
+                exceptionState.throwTypeError("member dictionaryMember is not an object.");
+                return;
+            }
+            impl.setDictionaryMember(dictionaryMember);
         }
     }
 
@@ -183,7 +206,7 @@ void V8TestDictionary::toImpl(v8::Isolate* isolate, v8::Local<v8::Value> v8Value
             V8StringResource<> enumMember = enumMemberValue;
             if (!enumMember.prepare(exceptionState))
                 return;
-            static const char* validValues[] = {
+            const char* validValues[] = {
                 "",
                 "EnumValue1",
                 "EnumValue2",
@@ -207,7 +230,7 @@ void V8TestDictionary::toImpl(v8::Isolate* isolate, v8::Local<v8::Value> v8Value
             Vector<String> enumSequenceMember = toImplArray<Vector<String>>(enumSequenceMemberValue, 0, isolate, exceptionState);
             if (exceptionState.hadException())
                 return;
-            static const char* validValues[] = {
+            const char* validValues[] = {
                 "",
                 "EnumValue1",
                 "EnumValue2",
@@ -651,6 +674,12 @@ bool toV8TestDictionary(const TestDictionary& impl, v8::Local<v8::Object> dictio
 
     if (impl.hasCreateMember()) {
         if (!v8CallBoolean(dictionary->CreateDataProperty(isolate->GetCurrentContext(), v8String(isolate, "deprecatedCreateMember"), v8Boolean(impl.createMember(), isolate))))
+            return false;
+    }
+
+    if (impl.hasDictionaryMember()) {
+        ASSERT(impl.dictionaryMember().isObject());
+        if (!v8CallBoolean(dictionary->CreateDataProperty(isolate->GetCurrentContext(), v8String(isolate, "dictionaryMember"), impl.dictionaryMember().v8Value())))
             return false;
     }
 

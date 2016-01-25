@@ -11,8 +11,8 @@
 #include "content/browser/service_worker/service_worker_context_core.h"
 #include "content/browser/service_worker/service_worker_disk_cache.h"
 #include "content/browser/service_worker/service_worker_metrics.h"
-#include "content/browser/service_worker/service_worker_utils.h"
 #include "content/common/service_worker/service_worker_types.h"
+#include "content/common/service_worker/service_worker_utils.h"
 #include "net/base/io_buffer.h"
 #include "net/base/net_errors.h"
 #include "net/http/http_network_session.h"
@@ -41,6 +41,15 @@ const char kRedirectError[] =
 const char kServiceWorkerAllowed[] = "Service-Worker-Allowed";
 
 const int kBufferSize = 16 * 1024;
+
+// The net error code used when the job fails the update attempt because the new
+// script is byte-by-byte identical to the incumbent script. This error is shown
+// in DevTools and in netlog, so we want something obscure enough that it won't
+// conflict with a legitimate network error, and not too alarming if seen by
+// developers.
+// TODO(falken): Redesign this class so we don't have to fail at the network
+// stack layer just to cancel the update.
+const int kIdenticalScriptError = net::ERR_FILE_EXISTS;
 
 }  // namespace
 
@@ -331,7 +340,8 @@ void ServiceWorkerWriteToCacheJob::Start() {
         net::URLRequestStatus::FAILED, net::ERR_FAILED));
     return;
   }
-  if (incumbent_response_id_ != kInvalidServiceWorkerResourceId) {
+  if (incumbent_response_id_ != kInvalidServiceWorkerResourceId &&
+      !version_->skip_script_comparison()) {
     scoped_ptr<ServiceWorkerResponseReader> incumbent_reader =
         context_->storage()->CreateResponseReader(incumbent_response_id_);
     consumer_.reset(new Comparer(this, incumbent_reader.Pass()));
@@ -749,9 +759,9 @@ void ServiceWorkerWriteToCacheJob::OnCompareComplete(int bytes_matched,
     // This version is identical to the incumbent, so discard it and fail this
     // job.
     version_->SetStartWorkerStatusCode(SERVICE_WORKER_ERROR_EXISTS);
-    AsyncNotifyDoneHelper(
-        net::URLRequestStatus(net::URLRequestStatus::FAILED, net::ERR_FAILED),
-        kFetchScriptError);
+    AsyncNotifyDoneHelper(net::URLRequestStatus(net::URLRequestStatus::FAILED,
+                                                kIdenticalScriptError),
+                          kFetchScriptError);
     return;
   }
 

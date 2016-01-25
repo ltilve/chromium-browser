@@ -1,0 +1,282 @@
+rule irt_target_build_irt_x86_64_nlib_316b04399dd72324c4a6b8f635d8494f
+  command = cd ../../ppapi/native_client/src/untrusted/pnacl_irt_shim; $
+      python ../../../../../native_client/build/build_nexe.py --root $
+      ../../../../.. --product-dir ../../../../../out/Release/xyz $
+      --config-name Release -t ../../../../../native_client/toolchain/ $
+      --arch x86-64 --build newlib_nlib_clang --name $
+      ../../../../../out/Release/gen/tc_irt/lib64/libpnacl_irt_shim_for_irt.a $
+      --objdir $
+      ../../../../../out/Release/obj/ppapi/native_client/src/untrusted/pnacl_irt_shim/irt.gen/irt-x86-64/irt $
+      "--include-dirs=../../../../../out/Release/gen/tc_newlib/include $
+      ../../../../.. \"../../../../../out/Release/gen\"" $
+      "--compile_flags=-O2 -g -Wall -fdiagnostics-show-option -Werror  $
+      -Wno-unused-function -Wno-char-subscripts -Wno-c++11-extensions $
+      -Wno-unnamed-type-template-args -Wno-extra-semi $
+      -Wno-unused-private-field -Wno-char-subscripts -Wno-unused-function $
+      \"-std=gnu++11\"  -Os -fno-exceptions -ffunction-sections $
+      -fdata-sections -fasynchronous-unwind-tables -fomit-frame-pointer $
+      -integrated-as" --gomadir "" "--defines=\"__STDC_LIMIT_MACROS=1\" $
+      \"__STDC_FORMAT_MACROS=1\" \"_GNU_SOURCE=1\" $
+      \"_POSIX_C_SOURCE=199506\" \"_XOPEN_SOURCE=600\" $
+      \"DYNAMIC_ANNOTATIONS_ENABLED=1\" $
+      \"DYNAMIC_ANNOTATIONS_PREFIX=NACL_\" \"NACL_BUILD_ARCH=x86\" $
+      V8_DEPRECATION_WARNINGS \"CLD_VERSION=2\" \"_FILE_OFFSET_BITS=64\" $
+      CHROMIUM_BUILD \"CR_CLANG_REVISION=255169-1\" $
+      UI_COMPOSITOR_IMAGE_TRANSPORT \"USE_AURA=1\" \"USE_ASH=1\" $
+      \"USE_PANGO=1\" \"USE_CAIRO=1\" \"USE_DEFAULT_RENDER_THEME=1\" $
+      \"USE_LIBJPEG_TURBO=1\" \"USE_X11=1\" \"USE_CLIPBOARD_AURAX11=1\" $
+      ENABLE_ONE_CLICK_SIGNIN \"ENABLE_WEBRTC=1\" \"ENABLE_MEDIA_ROUTER=1\" $
+      ENABLE_PEPPER_CDMS ENABLE_CONFIGURATION_POLICY ENABLE_NOTIFICATIONS $
+      \"ENABLE_HIDPI=1\" \"ENABLE_TOPCHROME_MD=1\" USE_UDEV $
+      DONT_EMBED_BUILD_METADATA FIELDTRIAL_TESTING_ENABLED $
+      \"ENABLE_TASK_MANAGER=1\" \"ENABLE_EXTENSIONS=1\" \"ENABLE_PDF=1\" $
+      \"ENABLE_PLUGINS=1\" \"ENABLE_SESSION_SERVICE=1\" \"ENABLE_THEMES=1\" $
+      \"ENABLE_AUTOFILL_DIALOG=1\" \"ENABLE_BACKGROUND=1\" $
+      \"ENABLE_PRINTING=1\" \"ENABLE_BASIC_PRINTING=1\" $
+      \"ENABLE_PRINT_PREVIEW=1\" \"ENABLE_SPELLCHECK=1\" $
+      \"ENABLE_CAPTIVE_PORTAL_DETECTION=1\" \"ENABLE_APP_LIST=1\" $
+      \"ENABLE_SETTINGS_APP=1\" \"ENABLE_SUPERVISED_USERS=1\" $
+      \"ENABLE_MDNS=1\" \"ENABLE_SERVICE_DISCOVERY=1\" $
+      V8_USE_EXTERNAL_STARTUP_DATA FULL_SAFE_BROWSING SAFE_BROWSING_CSD $
+      SAFE_BROWSING_DB_LOCAL \"USE_LIBPCI=1\" \"USE_OPENSSL=1\" $
+      \"USE_GLIB=1\" \"USE_NSS_CERTS=1\"" $
+      "--link_flags=-B../../../../../out/Release/gen/tc_irt/lib64   $
+      -Wl,--gc-sections -nodefaultlibs -lc++ -lm -lirt_browser $
+      -Wl,--start-group -lc -lnacl -lgcc -lgcc_eh -Wl,--end-group" $
+      "--source-list=../../../../../out/gypfiles/ppapi/native_client/src/untrusted/pnacl_irt_shim/irt-x86-64.irt.source_list.gypcmd"
+  description = ACTION irt: build irt x86-64 $
+      nlib_316b04399dd72324c4a6b8f635d8494f
+  restat = 1
+
+build gen/tc_irt/lib64/libpnacl_irt_shim_for_irt.a: $
+    irt_target_build_irt_x86_64_nlib_316b04399dd72324c4a6b8f635d8494f $
+    ../../native_client/build/build_nexe.py $
+    ../../native_client/build/build_nexe_tools.py $
+    ../../native_client/src/untrusted/irt/irt.h $
+    ../../ppapi/c/dev/pp_print_settings_dev.h $
+    ../../ppapi/c/dev/pp_video_capture_dev.h $
+    ../../ppapi/c/dev/pp_video_dev.h $
+    ../../ppapi/c/dev/ppb_audio_input_dev.h $
+    ../../ppapi/c/dev/ppb_device_ref_dev.h $
+    ../../ppapi/c/dev/ppb_file_chooser_dev.h $
+    ../../ppapi/c/dev/ppb_ime_input_event_dev.h $
+    ../../ppapi/c/dev/ppb_printing_dev.h $
+    ../../ppapi/c/dev/ppb_truetype_font_dev.h $
+    ../../ppapi/c/dev/ppb_url_util_dev.h $
+    ../../ppapi/c/dev/ppb_video_capture_dev.h $
+    ../../ppapi/c/dev/ppb_video_decoder_dev.h $
+    ../../ppapi/c/pp_array_output.h ../../ppapi/c/pp_bool.h $
+    ../../ppapi/c/pp_codecs.h ../../ppapi/c/pp_completion_callback.h $
+    ../../ppapi/c/pp_file_info.h ../../ppapi/c/pp_graphics_3d.h $
+    ../../ppapi/c/pp_instance.h ../../ppapi/c/pp_macros.h $
+    ../../ppapi/c/pp_module.h ../../ppapi/c/pp_point.h $
+    ../../ppapi/c/pp_rect.h ../../ppapi/c/pp_resource.h $
+    ../../ppapi/c/pp_size.h ../../ppapi/c/pp_stdint.h $
+    ../../ppapi/c/pp_time.h ../../ppapi/c/pp_touch_point.h $
+    ../../ppapi/c/pp_var.h ../../ppapi/c/ppb.h $
+    ../../ppapi/c/ppb_audio_buffer.h ../../ppapi/c/ppb_audio_encoder.h $
+    ../../ppapi/c/ppb_compositor.h ../../ppapi/c/ppb_compositor_layer.h $
+    ../../ppapi/c/ppb_console.h ../../ppapi/c/ppb_core.h $
+    ../../ppapi/c/ppb_file_io.h ../../ppapi/c/ppb_file_ref.h $
+    ../../ppapi/c/ppb_file_system.h ../../ppapi/c/ppb_graphics_2d.h $
+    ../../ppapi/c/ppb_graphics_3d.h ../../ppapi/c/ppb_host_resolver.h $
+    ../../ppapi/c/ppb_input_event.h $
+    ../../ppapi/c/ppb_media_stream_audio_track.h $
+    ../../ppapi/c/ppb_media_stream_video_track.h $
+    ../../ppapi/c/ppb_message_loop.h ../../ppapi/c/ppb_messaging.h $
+    ../../ppapi/c/ppb_mouse_lock.h ../../ppapi/c/ppb_net_address.h $
+    ../../ppapi/c/ppb_network_list.h ../../ppapi/c/ppb_network_monitor.h $
+    ../../ppapi/c/ppb_network_proxy.h ../../ppapi/c/ppb_tcp_socket.h $
+    ../../ppapi/c/ppb_text_input_controller.h $
+    ../../ppapi/c/ppb_udp_socket.h ../../ppapi/c/ppb_url_loader.h $
+    ../../ppapi/c/ppb_url_request_info.h $
+    ../../ppapi/c/ppb_url_response_info.h ../../ppapi/c/ppb_var.h $
+    ../../ppapi/c/ppb_var_array.h ../../ppapi/c/ppb_var_array_buffer.h $
+    ../../ppapi/c/ppb_var_dictionary.h ../../ppapi/c/ppb_video_decoder.h $
+    ../../ppapi/c/ppb_video_encoder.h ../../ppapi/c/ppb_video_frame.h $
+    ../../ppapi/c/ppb_websocket.h ../../ppapi/c/ppp.h $
+    ../../ppapi/c/ppp_message_handler.h ../../ppapi/c/ppp_messaging.h $
+    ../../ppapi/c/private/pp_content_decryptor.h $
+    ../../ppapi/c/private/pp_file_handle.h $
+    ../../ppapi/c/private/pp_video_frame_private.h $
+    ../../ppapi/c/private/ppb_camera_device_private.h $
+    ../../ppapi/c/private/ppb_content_decryptor_private.h $
+    ../../ppapi/c/private/ppb_display_color_profile_private.h $
+    ../../ppapi/c/private/ppb_ext_crx_file_system_private.h $
+    ../../ppapi/c/private/ppb_file_io_private.h $
+    ../../ppapi/c/private/ppb_file_ref_private.h $
+    ../../ppapi/c/private/ppb_flash.h $
+    ../../ppapi/c/private/ppb_flash_clipboard.h $
+    ../../ppapi/c/private/ppb_flash_device_id.h $
+    ../../ppapi/c/private/ppb_flash_drm.h $
+    ../../ppapi/c/private/ppb_flash_menu.h $
+    ../../ppapi/c/private/ppb_host_resolver_private.h $
+    ../../ppapi/c/private/ppb_instance_private.h $
+    ../../ppapi/c/private/ppb_isolated_file_system_private.h $
+    ../../ppapi/c/private/ppb_net_address_private.h $
+    ../../ppapi/c/private/ppb_output_protection_private.h $
+    ../../ppapi/c/private/ppb_platform_verification_private.h $
+    ../../ppapi/c/private/ppb_tcp_server_socket_private.h $
+    ../../ppapi/c/private/ppb_tcp_socket_private.h $
+    ../../ppapi/c/private/ppb_testing_private.h $
+    ../../ppapi/c/private/ppb_udp_socket_private.h $
+    ../../ppapi/c/private/ppb_uma_private.h $
+    ../../ppapi/c/private/ppb_video_destination_private.h $
+    ../../ppapi/c/private/ppb_video_source_private.h $
+    ../../ppapi/c/private/ppb_x509_certificate_private.h $
+    ../../ppapi/c/private/ppp_content_decryptor_private.h $
+    ../../ppapi/c/private/ppp_instance_private.h $
+    ../../ppapi/c/trusted/ppb_browser_font_trusted.h $
+    ../../ppapi/nacl_irt/irt_ppapi.h $
+    ../../ppapi/nacl_irt/public/irt_ppapi.h $
+    ../../ppapi/native_client/src/untrusted/pnacl_irt_shim/irt_shim_ppapi.c $
+    ../../ppapi/native_client/src/untrusted/pnacl_irt_shim/irt_shim_ppapi.h $
+    ../../ppapi/native_client/src/untrusted/pnacl_irt_shim/pnacl_shim.c $
+    ../../ppapi/native_client/src/untrusted/pnacl_irt_shim/pnacl_shim.h $
+    ../../out/gypfiles/ppapi/native_client/src/untrusted/pnacl_irt_shim/irt-x86-64.irt.source_list.gypcmd $
+    ../../native_client/toolchain/linux_x86/pnacl_newlib/pnacl_newlib.json
+
+rule irt_target_build_IRT_x86_32_nlib_316b04399dd72324c4a6b8f635d8494f
+  command = cd ../../ppapi/native_client/src/untrusted/pnacl_irt_shim; $
+      python ../../../../../native_client/build/build_nexe.py --root $
+      ../../../../.. --product-dir ../../../../../out/Release/xyz $
+      --config-name Release -t ../../../../../native_client/toolchain/ $
+      --arch x86-32 --build newlib_nlib_clang --name $
+      ../../../../../out/Release/gen/tc_irt/lib32/libpnacl_irt_shim_for_irt.a $
+      --objdir $
+      ../../../../../out/Release/obj/ppapi/native_client/src/untrusted/pnacl_irt_shim/irt.gen/irt-x86-32/irt $
+      "--include-dirs=../../../../../out/Release/gen/tc_newlib/include $
+      ../../../../.. \"../../../../../out/Release/gen\"" $
+      "--compile_flags=-m32 -mstackrealign -mno-sse -O2 -g -Wall $
+      -fdiagnostics-show-option -Werror  -Wno-unused-function $
+      -Wno-char-subscripts -Wno-c++11-extensions $
+      -Wno-unnamed-type-template-args -Wno-extra-semi $
+      -Wno-unused-private-field -Wno-char-subscripts -Wno-unused-function $
+      \"-std=gnu++11\"  -Os -fno-exceptions -ffunction-sections $
+      -fdata-sections -fasynchronous-unwind-tables -fomit-frame-pointer $
+      -integrated-as" --gomadir "" "--defines=\"__STDC_LIMIT_MACROS=1\" $
+      \"__STDC_FORMAT_MACROS=1\" \"_GNU_SOURCE=1\" $
+      \"_POSIX_C_SOURCE=199506\" \"_XOPEN_SOURCE=600\" $
+      \"DYNAMIC_ANNOTATIONS_ENABLED=1\" $
+      \"DYNAMIC_ANNOTATIONS_PREFIX=NACL_\" \"NACL_BUILD_ARCH=x86\" $
+      V8_DEPRECATION_WARNINGS \"CLD_VERSION=2\" \"_FILE_OFFSET_BITS=64\" $
+      CHROMIUM_BUILD \"CR_CLANG_REVISION=255169-1\" $
+      UI_COMPOSITOR_IMAGE_TRANSPORT \"USE_AURA=1\" \"USE_ASH=1\" $
+      \"USE_PANGO=1\" \"USE_CAIRO=1\" \"USE_DEFAULT_RENDER_THEME=1\" $
+      \"USE_LIBJPEG_TURBO=1\" \"USE_X11=1\" \"USE_CLIPBOARD_AURAX11=1\" $
+      ENABLE_ONE_CLICK_SIGNIN \"ENABLE_WEBRTC=1\" \"ENABLE_MEDIA_ROUTER=1\" $
+      ENABLE_PEPPER_CDMS ENABLE_CONFIGURATION_POLICY ENABLE_NOTIFICATIONS $
+      \"ENABLE_HIDPI=1\" \"ENABLE_TOPCHROME_MD=1\" USE_UDEV $
+      DONT_EMBED_BUILD_METADATA FIELDTRIAL_TESTING_ENABLED $
+      \"ENABLE_TASK_MANAGER=1\" \"ENABLE_EXTENSIONS=1\" \"ENABLE_PDF=1\" $
+      \"ENABLE_PLUGINS=1\" \"ENABLE_SESSION_SERVICE=1\" \"ENABLE_THEMES=1\" $
+      \"ENABLE_AUTOFILL_DIALOG=1\" \"ENABLE_BACKGROUND=1\" $
+      \"ENABLE_PRINTING=1\" \"ENABLE_BASIC_PRINTING=1\" $
+      \"ENABLE_PRINT_PREVIEW=1\" \"ENABLE_SPELLCHECK=1\" $
+      \"ENABLE_CAPTIVE_PORTAL_DETECTION=1\" \"ENABLE_APP_LIST=1\" $
+      \"ENABLE_SETTINGS_APP=1\" \"ENABLE_SUPERVISED_USERS=1\" $
+      \"ENABLE_MDNS=1\" \"ENABLE_SERVICE_DISCOVERY=1\" $
+      V8_USE_EXTERNAL_STARTUP_DATA FULL_SAFE_BROWSING SAFE_BROWSING_CSD $
+      SAFE_BROWSING_DB_LOCAL \"USE_LIBPCI=1\" \"USE_OPENSSL=1\" $
+      \"USE_GLIB=1\" \"USE_NSS_CERTS=1\"" "--link_flags=-m32 $
+      -B../../../../../out/Release/gen/tc_irt/lib32   -Wl,--gc-sections $
+      -nodefaultlibs -lc++ -lm -lirt_browser -Wl,--start-group -lc -lnacl $
+      -lgcc -lgcc_eh -Wl,--end-group" $
+      "--source-list=../../../../../out/gypfiles/ppapi/native_client/src/untrusted/pnacl_irt_shim/irt-x86-32.irt.source_list.gypcmd"
+  description = ACTION irt: build IRT x86-32 $
+      nlib_316b04399dd72324c4a6b8f635d8494f
+  restat = 1
+
+build gen/tc_irt/lib32/libpnacl_irt_shim_for_irt.a: $
+    irt_target_build_IRT_x86_32_nlib_316b04399dd72324c4a6b8f635d8494f $
+    ../../native_client/build/build_nexe.py $
+    ../../native_client/build/build_nexe_tools.py $
+    ../../native_client/src/untrusted/irt/irt.h $
+    ../../ppapi/c/dev/pp_print_settings_dev.h $
+    ../../ppapi/c/dev/pp_video_capture_dev.h $
+    ../../ppapi/c/dev/pp_video_dev.h $
+    ../../ppapi/c/dev/ppb_audio_input_dev.h $
+    ../../ppapi/c/dev/ppb_device_ref_dev.h $
+    ../../ppapi/c/dev/ppb_file_chooser_dev.h $
+    ../../ppapi/c/dev/ppb_ime_input_event_dev.h $
+    ../../ppapi/c/dev/ppb_printing_dev.h $
+    ../../ppapi/c/dev/ppb_truetype_font_dev.h $
+    ../../ppapi/c/dev/ppb_url_util_dev.h $
+    ../../ppapi/c/dev/ppb_video_capture_dev.h $
+    ../../ppapi/c/dev/ppb_video_decoder_dev.h $
+    ../../ppapi/c/pp_array_output.h ../../ppapi/c/pp_bool.h $
+    ../../ppapi/c/pp_codecs.h ../../ppapi/c/pp_completion_callback.h $
+    ../../ppapi/c/pp_file_info.h ../../ppapi/c/pp_graphics_3d.h $
+    ../../ppapi/c/pp_instance.h ../../ppapi/c/pp_macros.h $
+    ../../ppapi/c/pp_module.h ../../ppapi/c/pp_point.h $
+    ../../ppapi/c/pp_rect.h ../../ppapi/c/pp_resource.h $
+    ../../ppapi/c/pp_size.h ../../ppapi/c/pp_stdint.h $
+    ../../ppapi/c/pp_time.h ../../ppapi/c/pp_touch_point.h $
+    ../../ppapi/c/pp_var.h ../../ppapi/c/ppb.h $
+    ../../ppapi/c/ppb_audio_buffer.h ../../ppapi/c/ppb_audio_encoder.h $
+    ../../ppapi/c/ppb_compositor.h ../../ppapi/c/ppb_compositor_layer.h $
+    ../../ppapi/c/ppb_console.h ../../ppapi/c/ppb_core.h $
+    ../../ppapi/c/ppb_file_io.h ../../ppapi/c/ppb_file_ref.h $
+    ../../ppapi/c/ppb_file_system.h ../../ppapi/c/ppb_graphics_2d.h $
+    ../../ppapi/c/ppb_graphics_3d.h ../../ppapi/c/ppb_host_resolver.h $
+    ../../ppapi/c/ppb_input_event.h $
+    ../../ppapi/c/ppb_media_stream_audio_track.h $
+    ../../ppapi/c/ppb_media_stream_video_track.h $
+    ../../ppapi/c/ppb_message_loop.h ../../ppapi/c/ppb_messaging.h $
+    ../../ppapi/c/ppb_mouse_lock.h ../../ppapi/c/ppb_net_address.h $
+    ../../ppapi/c/ppb_network_list.h ../../ppapi/c/ppb_network_monitor.h $
+    ../../ppapi/c/ppb_network_proxy.h ../../ppapi/c/ppb_tcp_socket.h $
+    ../../ppapi/c/ppb_text_input_controller.h $
+    ../../ppapi/c/ppb_udp_socket.h ../../ppapi/c/ppb_url_loader.h $
+    ../../ppapi/c/ppb_url_request_info.h $
+    ../../ppapi/c/ppb_url_response_info.h ../../ppapi/c/ppb_var.h $
+    ../../ppapi/c/ppb_var_array.h ../../ppapi/c/ppb_var_array_buffer.h $
+    ../../ppapi/c/ppb_var_dictionary.h ../../ppapi/c/ppb_video_decoder.h $
+    ../../ppapi/c/ppb_video_encoder.h ../../ppapi/c/ppb_video_frame.h $
+    ../../ppapi/c/ppb_websocket.h ../../ppapi/c/ppp.h $
+    ../../ppapi/c/ppp_message_handler.h ../../ppapi/c/ppp_messaging.h $
+    ../../ppapi/c/private/pp_content_decryptor.h $
+    ../../ppapi/c/private/pp_file_handle.h $
+    ../../ppapi/c/private/pp_video_frame_private.h $
+    ../../ppapi/c/private/ppb_camera_device_private.h $
+    ../../ppapi/c/private/ppb_content_decryptor_private.h $
+    ../../ppapi/c/private/ppb_display_color_profile_private.h $
+    ../../ppapi/c/private/ppb_ext_crx_file_system_private.h $
+    ../../ppapi/c/private/ppb_file_io_private.h $
+    ../../ppapi/c/private/ppb_file_ref_private.h $
+    ../../ppapi/c/private/ppb_flash.h $
+    ../../ppapi/c/private/ppb_flash_clipboard.h $
+    ../../ppapi/c/private/ppb_flash_device_id.h $
+    ../../ppapi/c/private/ppb_flash_drm.h $
+    ../../ppapi/c/private/ppb_flash_menu.h $
+    ../../ppapi/c/private/ppb_host_resolver_private.h $
+    ../../ppapi/c/private/ppb_instance_private.h $
+    ../../ppapi/c/private/ppb_isolated_file_system_private.h $
+    ../../ppapi/c/private/ppb_net_address_private.h $
+    ../../ppapi/c/private/ppb_output_protection_private.h $
+    ../../ppapi/c/private/ppb_platform_verification_private.h $
+    ../../ppapi/c/private/ppb_tcp_server_socket_private.h $
+    ../../ppapi/c/private/ppb_tcp_socket_private.h $
+    ../../ppapi/c/private/ppb_testing_private.h $
+    ../../ppapi/c/private/ppb_udp_socket_private.h $
+    ../../ppapi/c/private/ppb_uma_private.h $
+    ../../ppapi/c/private/ppb_video_destination_private.h $
+    ../../ppapi/c/private/ppb_video_source_private.h $
+    ../../ppapi/c/private/ppb_x509_certificate_private.h $
+    ../../ppapi/c/private/ppp_content_decryptor_private.h $
+    ../../ppapi/c/private/ppp_instance_private.h $
+    ../../ppapi/c/trusted/ppb_browser_font_trusted.h $
+    ../../ppapi/nacl_irt/irt_ppapi.h $
+    ../../ppapi/nacl_irt/public/irt_ppapi.h $
+    ../../ppapi/native_client/src/untrusted/pnacl_irt_shim/irt_shim_ppapi.c $
+    ../../ppapi/native_client/src/untrusted/pnacl_irt_shim/irt_shim_ppapi.h $
+    ../../ppapi/native_client/src/untrusted/pnacl_irt_shim/pnacl_shim.c $
+    ../../ppapi/native_client/src/untrusted/pnacl_irt_shim/pnacl_shim.h $
+    ../../out/gypfiles/ppapi/native_client/src/untrusted/pnacl_irt_shim/irt-x86-32.irt.source_list.gypcmd $
+    ../../native_client/toolchain/linux_x86/pnacl_newlib/pnacl_newlib.json
+
+build $
+    obj/ppapi/native_client/src/untrusted/pnacl_irt_shim/irt.actions_rules_copies.stamp: $
+    stamp gen/tc_irt/lib64/libpnacl_irt_shim_for_irt.a $
+    gen/tc_irt/lib32/libpnacl_irt_shim_for_irt.a
+

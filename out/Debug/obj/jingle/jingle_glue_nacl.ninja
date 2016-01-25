@@ -1,0 +1,388 @@
+build obj/jingle/jingle_glue_nacl.actions_depends.stamp: stamp $
+    obj/base/base_nacl.actions_rules_copies.stamp $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+
+build obj/jingle/jingle_glue_nacl.compile_depends.stamp: stamp $
+    obj/base/base_nacl.actions_rules_copies.stamp $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+
+rule $
+    jingle_glue_nacl_target_build_newlib_plib_81ed548de02e472faa93976fe5c5859a
+  command = cd ../../jingle; python ../native_client/build/build_nexe.py $
+      --root .. --product-dir ../out/Debug/xyz --config-name Debug -t $
+      ../native_client/toolchain/ --arch pnacl --build newlib_plib --name $
+      ../out/Debug/gen/tc_pnacl_newlib/lib/libjingle_glue_nacl.a --objdir $
+      ../out/Debug/obj/jingle/jingle_glue_nacl.gen/pnacl_newlib-pnacl/jingle_glue_nacl $
+      "--include-dirs=../out/Debug/gen/tc_pnacl_newlib/include .. $
+      \"../out/Debug/gen\" ../third_party/libjingle/overrides $
+      ../third_party/libjingle/source ../third_party/webrtc_overrides $
+      ../third_party ../third_party/webrtc $
+      ../native_client_sdk/src/libraries $
+      ../native_client_sdk/src/libraries/nacl_io/include $
+      ../native_client_sdk/src/libraries/third_party/newlib-extras" $
+      "--compile_flags=-O2 -g -Wall -fdiagnostics-show-option -Werror  $
+      -Wno-unused-function -Wno-char-subscripts -Wno-c++11-extensions $
+      -Wno-unnamed-type-template-args -Wno-extra-semi $
+      -Wno-unused-private-field -Wno-char-subscripts -Wno-unused-function $
+      \"-std=gnu++11\" " --gomadir "" "--defines=\"__STDC_LIMIT_MACROS=1\" $
+      \"__STDC_FORMAT_MACROS=1\" \"_GNU_SOURCE=1\" $
+      \"_POSIX_C_SOURCE=199506\" \"_XOPEN_SOURCE=600\" $
+      \"DYNAMIC_ANNOTATIONS_ENABLED=1\" $
+      \"DYNAMIC_ANNOTATIONS_PREFIX=NACL_\" \"NACL_BUILD_ARCH=x86\" $
+      V8_DEPRECATION_WARNINGS \"CLD_VERSION=2\" \"_FILE_OFFSET_BITS=64\" $
+      CHROMIUM_BUILD \"CR_CLANG_REVISION=255169-1\" $
+      UI_COMPOSITOR_IMAGE_TRANSPORT \"USE_AURA=1\" \"USE_ASH=1\" $
+      \"USE_PANGO=1\" \"USE_CAIRO=1\" \"USE_DEFAULT_RENDER_THEME=1\" $
+      \"USE_LIBJPEG_TURBO=1\" \"USE_X11=1\" \"USE_CLIPBOARD_AURAX11=1\" $
+      ENABLE_ONE_CLICK_SIGNIN \"ENABLE_WEBRTC=1\" \"ENABLE_MEDIA_ROUTER=1\" $
+      ENABLE_PEPPER_CDMS ENABLE_CONFIGURATION_POLICY ENABLE_NOTIFICATIONS $
+      \"ENABLE_HIDPI=1\" \"ENABLE_TOPCHROME_MD=1\" USE_UDEV $
+      DONT_EMBED_BUILD_METADATA FIELDTRIAL_TESTING_ENABLED $
+      \"ENABLE_TASK_MANAGER=1\" \"ENABLE_EXTENSIONS=1\" \"ENABLE_PDF=1\" $
+      \"ENABLE_PLUGINS=1\" \"ENABLE_SESSION_SERVICE=1\" \"ENABLE_THEMES=1\" $
+      \"ENABLE_AUTOFILL_DIALOG=1\" \"ENABLE_BACKGROUND=1\" $
+      \"ENABLE_PRINTING=1\" \"ENABLE_BASIC_PRINTING=1\" $
+      \"ENABLE_PRINT_PREVIEW=1\" \"ENABLE_SPELLCHECK=1\" $
+      \"ENABLE_CAPTIVE_PORTAL_DETECTION=1\" \"ENABLE_APP_LIST=1\" $
+      \"ENABLE_SETTINGS_APP=1\" \"ENABLE_SUPERVISED_USERS=1\" $
+      \"ENABLE_MDNS=1\" \"ENABLE_SERVICE_DISCOVERY=1\" $
+      V8_USE_EXTERNAL_STARTUP_DATA FULL_SAFE_BROWSING SAFE_BROWSING_CSD $
+      SAFE_BROWSING_DB_LOCAL EXPAT_RELATIVE_PATH FEATURE_ENABLE_SSL $
+      GTEST_RELATIVE_PATH NO_MAIN_THREAD_WRAPPING NO_SOUND_SYSTEM $
+      WEBRTC_POSIX SRTP_RELATIVE_PATH SSL_USE_OPENSSL USE_WEBRTC_DEV_BRANCH $
+      \"USE_LIBPCI=1\" \"USE_OPENSSL=1\" \"USE_OPENSSL_CERTS=1\" $
+      __STDC_CONSTANT_MACROS __STDC_FORMAT_MACROS" $
+      "--link_flags=-B../out/Debug/gen/tc_pnacl_newlib/lib  " $
+      "--source-list=../out/gypfiles/jingle/pnacl_newlib.jingle_glue_nacl.source_list.gypcmd"
+  description = ACTION jingle_glue_nacl: build newlib $
+      plib_81ed548de02e472faa93976fe5c5859a
+  restat = 1
+
+build gen/tc_pnacl_newlib/lib/libjingle_glue_nacl.a: $
+    jingle_glue_nacl_target_build_newlib_plib_81ed548de02e472faa93976fe5c5859a $
+    ../../native_client/build/build_nexe.py $
+    ../../native_client/build/build_nexe_tools.py $
+    ../../base/atomic_ref_count.h ../../base/atomicops.h $
+    ../../base/atomicops_internals_atomicword_compat.h $
+    ../../base/atomicops_internals_portable.h $
+    ../../base/atomicops_internals_x86_msvc.h ../../base/base_export.h $
+    ../../base/basictypes.h ../../base/bind.h ../../base/bind_helpers.h $
+    ../../base/bind_internal.h ../../base/bind_internal_win.h $
+    ../../base/callback.h ../../base/callback_forward.h $
+    ../../base/callback_internal.h ../../base/cancelable_callback.h $
+    ../../base/compiler_specific.h ../../base/containers/hash_tables.h $
+    ../../base/containers/linked_list.h ../../base/containers/mru_cache.h $
+    ../../base/debug/alias.h ../../base/debug/debugger.h $
+    ../../base/debug/leak_annotations.h ../../base/debug/leak_tracker.h $
+    ../../base/debug/stack_trace.h ../../base/debug/task_annotator.h $
+    ../../base/event_types.h ../../base/files/file.h $
+    ../../base/files/file_path.h ../../base/files/file_tracing.h $
+    ../../base/files/scoped_file.h ../../base/gtest_prod_util.h $
+    ../../base/json/json_reader.h ../../base/json/json_writer.h $
+    ../../base/lazy_instance.h ../../base/location.h ../../base/logging.h $
+    ../../base/mac/scoped_cffiledescriptorref.h $
+    ../../base/mac/scoped_cftyperef.h ../../base/mac/scoped_typeref.h $
+    ../../base/macros.h ../../base/md5.h ../../base/memory/aligned_memory.h $
+    ../../base/memory/linked_ptr.h $
+    ../../base/memory/raw_scoped_refptr_mismatch_checker.h $
+    ../../base/memory/ref_counted.h ../../base/memory/scoped_policy.h $
+    ../../base/memory/scoped_ptr.h ../../base/memory/weak_ptr.h $
+    ../../base/message_loop/incoming_task_queue.h $
+    ../../base/message_loop/message_loop.h $
+    ../../base/message_loop/message_loop_task_runner.h $
+    ../../base/message_loop/message_pump.h $
+    ../../base/message_loop/message_pump_dispatcher.h $
+    ../../base/message_loop/message_pump_io_ios.h $
+    ../../base/message_loop/message_pump_libevent.h $
+    ../../base/message_loop/message_pump_mac.h $
+    ../../base/message_loop/message_pump_win.h $
+    ../../base/message_loop/timer_slack.h ../../base/move.h $
+    ../../base/numerics/safe_conversions.h $
+    ../../base/numerics/safe_conversions_impl.h $
+    ../../base/numerics/safe_math.h ../../base/numerics/safe_math_impl.h $
+    ../../base/observer_list.h ../../base/observer_list_threadsafe.h $
+    ../../base/pending_task.h ../../base/pickle.h $
+    ../../base/profiler/tracked_time.h ../../base/scoped_generic.h $
+    ../../base/sequence_checker.h ../../base/sequence_checker_impl.h $
+    ../../base/sequenced_task_runner.h $
+    ../../base/sequenced_task_runner_helpers.h $
+    ../../base/single_thread_task_runner.h ../../base/stl_util.h $
+    ../../base/strings/string16.h ../../base/strings/string_piece.h $
+    ../../base/strings/string_tokenizer.h $
+    ../../base/strings/utf_offset_string_conversions.h $
+    ../../base/supports_user_data.h ../../base/synchronization/lock.h $
+    ../../base/synchronization/lock_impl.h $
+    ../../base/synchronization/waitable_event.h ../../base/sys_byteorder.h $
+    ../../base/task_runner.h ../../base/template_util.h $
+    ../../base/thread_task_runner_handle.h $
+    ../../base/threading/non_thread_safe.h $
+    ../../base/threading/non_thread_safe_impl.h $
+    ../../base/threading/platform_thread.h $
+    ../../base/threading/sequenced_worker_pool.h $
+    ../../base/threading/thread_checker.h $
+    ../../base/threading/thread_checker_impl.h $
+    ../../base/threading/thread_collision_warner.h $
+    ../../base/threading/thread_local.h $
+    ../../base/threading/thread_local_storage.h $
+    ../../base/threading/thread_restrictions.h ../../base/time/time.h $
+    ../../base/tracking_info.h ../../base/tuple.h ../../base/values.h $
+    ../../base/win/object_watcher.h ../../base/win/scoped_handle.h $
+    ../../build/build_config.h ../../crypto/wincrypt_shim.h $
+    ../../native_client_sdk/src/libraries/nacl_io/include/sys/time.h $
+    ../../native_client_sdk/src/libraries/third_party/newlib-extras/arpa/inet.h $
+    ../../native_client_sdk/src/libraries/third_party/newlib-extras/netdb.h $
+    ../../native_client_sdk/src/libraries/third_party/newlib-extras/netinet/in.h $
+    ../../native_client_sdk/src/libraries/third_party/newlib-extras/netinet6/in6.h $
+    ../../native_client_sdk/src/libraries/third_party/newlib-extras/sys/socket.h $
+    ../../net/base/address_family.h ../../net/base/address_list.h $
+    ../../net/base/auth.h ../../net/base/completion_callback.h $
+    ../../net/base/escape.h ../../net/base/expiring_cache.h $
+    ../../net/base/hash_value.h ../../net/base/host_port_pair.h $
+    ../../net/base/int128.h ../../net/base/io_buffer.h $
+    ../../net/base/iovec.h ../../net/base/ip_address_number.h $
+    ../../net/base/ip_endpoint.h ../../net/base/linked_hash_map.h $
+    ../../net/base/load_flags.h ../../net/base/load_flags_list.h $
+    ../../net/base/load_states.h ../../net/base/load_states_list.h $
+    ../../net/base/load_timing_info.h ../../net/base/net_error_details.h $
+    ../../net/base/net_error_list.h ../../net/base/net_errors.h $
+    ../../net/base/net_export.h ../../net/base/net_util.h $
+    ../../net/base/network_change_notifier.h $
+    ../../net/base/network_delegate.h $
+    ../../net/base/prioritized_dispatcher.h ../../net/base/priority_queue.h $
+    ../../net/base/privacy_mode.h ../../net/base/rand_callback.h $
+    ../../net/base/request_priority.h $
+    ../../net/base/socket_performance_watcher.h $
+    ../../net/base/socket_performance_watcher_factory.h $
+    ../../net/base/sys_addrinfo.h ../../net/base/upload_data_stream.h $
+    ../../net/base/upload_progress.h ../../net/cert/cert_database.h $
+    ../../net/cert/cert_status_flags.h $
+    ../../net/cert/cert_status_flags_list.h ../../net/cert/cert_type.h $
+    ../../net/cert/crl_set.h ../../net/cert/ct_ev_whitelist.h $
+    ../../net/cert/ct_verify_result.h ../../net/cert/sct_status_flags.h $
+    ../../net/cert/signed_certificate_timestamp.h $
+    ../../net/cert/x509_cert_types.h ../../net/cert/x509_certificate.h $
+    ../../net/cookies/canonical_cookie.h $
+    ../../net/cookies/cookie_constants.h ../../net/cookies/cookie_options.h $
+    ../../net/dns/host_resolver.h ../../net/http/http_auth.h $
+    ../../net/http/http_auth_cache.h ../../net/http/http_auth_controller.h $
+    ../../net/http/http_byte_range.h ../../net/http/http_network_session.h $
+    ../../net/http/http_request_headers.h $
+    ../../net/http/http_request_info.h ../../net/http/http_response_info.h $
+    ../../net/http/http_server_properties.h ../../net/http/http_stream.h $
+    ../../net/http/http_stream_factory.h ../../net/http/http_util.h $
+    ../../net/http/http_vary_data.h ../../net/http/http_version.h $
+    ../../net/http/proxy_client_socket.h $
+    ../../net/http/transport_security_state.h ../../net/log/net_log.h $
+    ../../net/log/net_log_capture_mode.h $
+    ../../net/log/net_log_event_type_list.h $
+    ../../net/log/net_log_source_type_list.h $
+    ../../net/proxy/proxy_bypass_rules.h ../../net/proxy/proxy_config.h $
+    ../../net/proxy/proxy_config_service.h $
+    ../../net/proxy/proxy_config_source.h ../../net/proxy/proxy_info.h $
+    ../../net/proxy/proxy_list.h ../../net/proxy/proxy_retry_info.h $
+    ../../net/proxy/proxy_server.h ../../net/proxy/proxy_service.h $
+    ../../net/quic/congestion_control/loss_detection_interface.h $
+    ../../net/quic/congestion_control/rtt_stats.h $
+    ../../net/quic/congestion_control/send_algorithm_interface.h $
+    ../../net/quic/crypto/channel_id.h $
+    ../../net/quic/crypto/crypto_framer.h $
+    ../../net/quic/crypto/crypto_handshake.h $
+    ../../net/quic/crypto/crypto_handshake_message.h $
+    ../../net/quic/crypto/crypto_protocol.h $
+    ../../net/quic/crypto/crypto_utils.h $
+    ../../net/quic/crypto/proof_verifier.h $
+    ../../net/quic/crypto/quic_crypto_client_config.h $
+    ../../net/quic/crypto/quic_decrypter.h ../../net/quic/interval.h $
+    ../../net/quic/interval_set.h ../../net/quic/network_connection.h $
+    ../../net/quic/quic_ack_listener_interface.h $
+    ../../net/quic/quic_alarm.h ../../net/quic/quic_bandwidth.h $
+    ../../net/quic/quic_blocked_writer_interface.h $
+    ../../net/quic/quic_chromium_client_session.h $
+    ../../net/quic/quic_client_session_base.h ../../net/quic/quic_clock.h $
+    ../../net/quic/quic_config.h ../../net/quic/quic_connection.h $
+    ../../net/quic/quic_connection_logger.h $
+    ../../net/quic/quic_connection_stats.h $
+    ../../net/quic/quic_crypto_client_stream.h $
+    ../../net/quic/quic_crypto_stream.h ../../net/quic/quic_fec_group.h $
+    ../../net/quic/quic_fec_group_interface.h ../../net/quic/quic_flags.h $
+    ../../net/quic/quic_flow_controller.h ../../net/quic/quic_frame_list.h $
+    ../../net/quic/quic_framer.h ../../net/quic/quic_headers_stream.h $
+    ../../net/quic/quic_http_stream.h ../../net/quic/quic_packet_creator.h $
+    ../../net/quic/quic_packet_generator.h $
+    ../../net/quic/quic_packet_reader.h ../../net/quic/quic_packet_writer.h $
+    ../../net/quic/quic_protocol.h $
+    ../../net/quic/quic_received_packet_manager.h $
+    ../../net/quic/quic_reliable_client_stream.h $
+    ../../net/quic/quic_sent_entropy_manager.h $
+    ../../net/quic/quic_sent_packet_manager.h $
+    ../../net/quic/quic_server_id.h ../../net/quic/quic_session.h $
+    ../../net/quic/quic_spdy_session.h ../../net/quic/quic_spdy_stream.h $
+    ../../net/quic/quic_stream_factory.h $
+    ../../net/quic/quic_stream_sequencer.h $
+    ../../net/quic/quic_stream_sequencer_buffer_interface.h $
+    ../../net/quic/quic_sustained_bandwidth_recorder.h $
+    ../../net/quic/quic_time.h ../../net/quic/quic_types.h $
+    ../../net/quic/quic_unacked_packet_map.h $
+    ../../net/quic/quic_write_blocked_list.h $
+    ../../net/quic/reliable_quic_stream.h $
+    ../../net/socket/client_socket_factory.h $
+    ../../net/socket/client_socket_handle.h $
+    ../../net/socket/client_socket_pool.h $
+    ../../net/socket/client_socket_pool_manager.h $
+    ../../net/socket/connection_attempts.h ../../net/socket/next_proto.h $
+    ../../net/socket/socket.h ../../net/socket/ssl_client_socket.h $
+    ../../net/socket/ssl_socket.h ../../net/socket/stream_socket.h $
+    ../../net/socket/tcp_client_socket.h ../../net/socket/tcp_socket.h $
+    ../../net/socket/tcp_socket_posix.h ../../net/socket/tcp_socket_win.h $
+    ../../net/spdy/hpack/hpack_constants.h $
+    ../../net/spdy/hpack/hpack_decoder.h $
+    ../../net/spdy/hpack/hpack_encoder.h ../../net/spdy/hpack/hpack_entry.h $
+    ../../net/spdy/hpack/hpack_header_table.h $
+    ../../net/spdy/hpack/hpack_huffman_table.h $
+    ../../net/spdy/hpack/hpack_input_stream.h $
+    ../../net/spdy/hpack/hpack_output_stream.h $
+    ../../net/spdy/spdy_alt_svc_wire_format.h $
+    ../../net/spdy/spdy_bitmasks.h ../../net/spdy/spdy_framer.h $
+    ../../net/spdy/spdy_header_block.h $
+    ../../net/spdy/spdy_headers_handler_interface.h $
+    ../../net/spdy/spdy_protocol.h ../../net/spdy/spdy_session_key.h $
+    ../../net/spdy/spdy_session_pool.h ../../net/spdy/write_blocked_list.h $
+    ../../net/ssl/signed_certificate_timestamp_and_status.h $
+    ../../net/ssl/ssl_client_auth_cache.h ../../net/ssl/ssl_config.h $
+    ../../net/ssl/ssl_config_service.h ../../net/ssl/ssl_failure_state.h $
+    ../../net/ssl/ssl_info.h ../../net/ssl/ssl_private_key.h $
+    ../../net/udp/datagram_client_socket.h ../../net/udp/datagram_socket.h $
+    ../../net/url_request/url_request.h $
+    ../../net/url_request/url_request_context.h $
+    ../../net/url_request/url_request_context_getter.h $
+    ../../net/url_request/url_request_status.h $
+    ../../net/url_request/websocket_handshake_userdata_key.h $
+    ../../net/websockets/websocket_event_interface.h $
+    ../../net/websockets/websocket_handshake_request_info.h $
+    ../../net/websockets/websocket_handshake_response_info.h $
+    ../../net/websockets/websocket_handshake_stream_base.h $
+    ../../net/websockets/websocket_stream.h $
+    ../../testing/gtest/include/gtest/gtest_prod.h $
+    ../../third_party/webrtc/base/asyncfile.h $
+    ../../third_party/webrtc/base/asyncsocket.h $
+    ../../third_party/webrtc/base/atomicops.h $
+    ../../third_party/webrtc/base/basictypes.h $
+    ../../third_party/webrtc/base/byteorder.h $
+    ../../third_party/webrtc/base/common.h $
+    ../../third_party/webrtc/base/constructormagic.h $
+    ../../third_party/webrtc/base/criticalsection.h $
+    ../../third_party/webrtc/base/event.h $
+    ../../third_party/webrtc/base/helpers.h $
+    ../../third_party/webrtc/base/ipaddress.h $
+    ../../third_party/webrtc/base/messagehandler.h $
+    ../../third_party/webrtc/base/messagequeue.h $
+    ../../third_party/webrtc/base/network.h $
+    ../../third_party/webrtc/base/nullsocketserver.h $
+    ../../third_party/webrtc/base/physicalsocketserver.h $
+    ../../third_party/webrtc/base/scoped_ptr.h $
+    ../../third_party/webrtc/base/scoped_ref_ptr.h $
+    ../../third_party/webrtc/base/sigslot.h $
+    ../../third_party/webrtc/base/socket.h $
+    ../../third_party/webrtc/base/socketaddress.h $
+    ../../third_party/webrtc/base/socketfactory.h $
+    ../../third_party/webrtc/base/socketserver.h $
+    ../../third_party/webrtc/base/stringutils.h $
+    ../../third_party/webrtc/base/taskparent.h $
+    ../../third_party/webrtc/base/taskrunner.h $
+    ../../third_party/webrtc/base/template_util.h $
+    ../../third_party/webrtc/base/thread.h $
+    ../../third_party/webrtc/base/thread_annotations.h $
+    ../../third_party/webrtc/base/timeutils.h $
+    ../../third_party/webrtc/base/win32.h $
+    ../../third_party/webrtc/common_types.h $
+    ../../third_party/webrtc/config.h $
+    ../../third_party/webrtc/libjingle/xmpp/asyncsocket.h $
+    ../../third_party/webrtc/p2p/base/candidate.h $
+    ../../third_party/webrtc/p2p/base/constants.h $
+    ../../third_party/webrtc/typedefs.h ../../url/gurl.h ../../url/origin.h $
+    ../../url/scheme_host_port.h ../../url/third_party/mozilla/url_parse.h $
+    ../../url/url_canon.h ../../url/url_canon_stdstring.h $
+    ../../url/url_constants.h ../../url/url_export.h $
+    ../../jingle/glue/chrome_async_socket.cc $
+    ../../jingle/glue/chrome_async_socket.h $
+    ../../jingle/glue/fake_ssl_client_socket.cc $
+    ../../jingle/glue/fake_ssl_client_socket.h $
+    ../../jingle/glue/proxy_resolving_client_socket.cc $
+    ../../jingle/glue/proxy_resolving_client_socket.h $
+    ../../jingle/glue/resolving_client_socket_factory.h $
+    ../../jingle/glue/task_pump.cc ../../jingle/glue/task_pump.h $
+    ../../jingle/glue/thread_wrapper.cc ../../jingle/glue/thread_wrapper.h $
+    ../../jingle/glue/utils.cc ../../jingle/glue/utils.h $
+    ../../jingle/glue/xmpp_client_socket_factory.cc $
+    ../../jingle/glue/xmpp_client_socket_factory.h $
+    ../../out/gypfiles/jingle/pnacl_newlib.jingle_glue_nacl.source_list.gypcmd $
+    ../../native_client/toolchain/linux_x86/pnacl_newlib/pnacl_newlib.json $
+    || obj/jingle/jingle_glue_nacl.actions_depends.stamp
+
+defines = -DV8_DEPRECATION_WARNINGS -DCLD_VERSION=2 -D_FILE_OFFSET_BITS=64 $
+    -DCHROMIUM_BUILD -DCR_CLANG_REVISION=255169-1 $
+    -DUI_COMPOSITOR_IMAGE_TRANSPORT -DUSE_AURA=1 -DUSE_ASH=1 -DUSE_PANGO=1 $
+    -DUSE_CAIRO=1 -DUSE_DEFAULT_RENDER_THEME=1 -DUSE_LIBJPEG_TURBO=1 $
+    -DUSE_X11=1 -DUSE_CLIPBOARD_AURAX11=1 -DENABLE_ONE_CLICK_SIGNIN $
+    -DENABLE_WEBRTC=1 -DENABLE_MEDIA_ROUTER=1 -DENABLE_PEPPER_CDMS $
+    -DENABLE_CONFIGURATION_POLICY -DENABLE_NOTIFICATIONS -DENABLE_HIDPI=1 $
+    -DENABLE_TOPCHROME_MD=1 -DUSE_UDEV -DDONT_EMBED_BUILD_METADATA $
+    -DFIELDTRIAL_TESTING_ENABLED -DENABLE_TASK_MANAGER=1 $
+    -DENABLE_EXTENSIONS=1 -DENABLE_PDF=1 -DENABLE_PLUGINS=1 $
+    -DENABLE_SESSION_SERVICE=1 -DENABLE_THEMES=1 -DENABLE_AUTOFILL_DIALOG=1 $
+    -DENABLE_BACKGROUND=1 -DENABLE_PRINTING=1 -DENABLE_BASIC_PRINTING=1 $
+    -DENABLE_PRINT_PREVIEW=1 -DENABLE_SPELLCHECK=1 $
+    -DENABLE_CAPTIVE_PORTAL_DETECTION=1 -DENABLE_APP_LIST=1 $
+    -DENABLE_SETTINGS_APP=1 -DENABLE_SUPERVISED_USERS=1 -DENABLE_MDNS=1 $
+    -DENABLE_SERVICE_DISCOVERY=1 -DV8_USE_EXTERNAL_STARTUP_DATA $
+    -DFULL_SAFE_BROWSING -DSAFE_BROWSING_CSD -DSAFE_BROWSING_DB_LOCAL $
+    -DEXPAT_RELATIVE_PATH -DFEATURE_ENABLE_SSL -DGTEST_RELATIVE_PATH $
+    -DNO_MAIN_THREAD_WRAPPING -DNO_SOUND_SYSTEM -DWEBRTC_POSIX $
+    -DSRTP_RELATIVE_PATH -DSSL_USE_OPENSSL -DUSE_WEBRTC_DEV_BRANCH $
+    -DUSE_LIBPCI=1 -DUSE_OPENSSL=1 -DUSE_OPENSSL_CERTS=1 $
+    -D__STDC_CONSTANT_MACROS -D__STDC_FORMAT_MACROS $
+    -DDYNAMIC_ANNOTATIONS_ENABLED=1 -DWTF_USE_DYNAMIC_ANNOTATIONS=1 $
+    -D_DEBUG -D_GLIBCXX_DEBUG=1
+includes = -Igen -I../../third_party/libjingle/overrides $
+    -I../../third_party/libjingle/source $
+    -I../../third_party/webrtc_overrides -I../../third_party $
+    -I../../third_party/webrtc -I../../native_client_sdk/src/libraries $
+    -I../../native_client_sdk/src/libraries/nacl_io/include $
+    -I../../native_client_sdk/src/libraries/third_party/newlib-extras
+cflags = -fstack-protector --param=ssp-buffer-size=4 -Werror -pthread $
+    -fno-strict-aliasing -Wall -Wno-unused-parameter $
+    -Wno-missing-field-initializers -fvisibility=hidden -pipe -fPIC $
+    -Wno-reserved-user-defined-literal -Xclang -load -Xclang $
+    /b/build/slave/publish_tarball/build/src/third_party/llvm-build/Release+Asserts/lib/libFindBadConstructs.so $
+    -Xclang -add-plugin -Xclang find-bad-constructs -Xclang $
+    -plugin-arg-find-bad-constructs -Xclang check-templates $
+    -fcolor-diagnostics $
+    -B/b/build/slave/publish_tarball/build/src/third_party/binutils/Linux_x64/Release/bin $
+    -Wheader-hygiene -Wno-char-subscripts $
+    -Wno-unneeded-internal-declaration -Wno-covered-switch-default $
+    -Wstring-conversion -Wno-c++11-narrowing -Wno-deprecated-register $
+    -Wno-inconsistent-missing-override -Wno-shift-negative-value $
+    -Wno-bitfield-width -m64 -march=x86-64 $
+    --sysroot=/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot $
+    -O0 -g -funwind-tables -gsplit-dwarf -Wno-undefined-bool-conversion $
+    -Wno-tautological-undefined-compare
+cflags_c = 
+cflags_cc = -fno-exceptions -fno-rtti -fno-threadsafe-statics $
+    -fvisibility-inlines-hidden -Wsign-compare -std=gnu++11
+arflags = 
+
+build obj/jingle/glue/jingle_glue_nacl.fake_ssl_client_socket.o: cxx $
+    ../../jingle/glue/fake_ssl_client_socket.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_glue_nacl.a
+build obj/jingle/glue/jingle_glue_nacl.task_pump.o: cxx $
+    ../../jingle/glue/task_pump.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_glue_nacl.a
+build obj/jingle/glue/jingle_glue_nacl.thread_wrapper.o: cxx $
+    ../../jingle/glue/thread_wrapper.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_glue_nacl.a
+build obj/jingle/glue/jingle_glue_nacl.utils.o: cxx $
+    ../../jingle/glue/utils.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_glue_nacl.a
+

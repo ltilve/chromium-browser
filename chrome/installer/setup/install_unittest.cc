@@ -144,8 +144,10 @@ class InstallShortcutTest : public testing::Test {
   void TearDown() override {
     // Try to unpin potentially pinned shortcuts (although pinning isn't tested,
     // the call itself might still have pinned the Start Menu shortcuts).
-    base::win::TaskbarUnpinShortcutLink(user_start_menu_shortcut_);
-    base::win::TaskbarUnpinShortcutLink(system_start_menu_shortcut_);
+    base::win::UnpinShortcutFromTaskbar(user_start_menu_shortcut_);
+    base::win::UnpinShortcutFromTaskbar(system_start_menu_shortcut_);
+    base::win::UnpinShortcutFromStart(user_start_menu_shortcut_);
+    base::win::UnpinShortcutFromStart(system_start_menu_shortcut_);
     CoUninitialize();
   }
 
@@ -228,18 +230,14 @@ TEST_F(CreateVisualElementsManifestTest, VisualElementsManifestCreated) {
   ASSERT_TRUE(base::ReadFileToString(manifest_path_, &read_manifest));
 
   static const char kExpectedManifest[] =
-      "<Application>\r\n"
+      "<Application xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'>\r\n"
       "  <VisualElements\r\n"
-      "      DisplayName='Google Chrome'\r\n"
-      "      Logo='0.0.0.0\\VisualElements\\Logo.png'\r\n"
-      "      SmallLogo='0.0.0.0\\VisualElements\\SmallLogo.png'\r\n"
+      "      ShowNameOnSquare150x150Logo='on'\r\n"
+      "      Square150x150Logo='0.0.0.0\\VisualElements\\Logo.png'\r\n"
+      "      Square70x70Logo='0.0.0.0\\VisualElements\\SmallLogo.png'\r\n"
       "      ForegroundText='light'\r\n"
-      "      BackgroundColor='#323232'>\r\n"
-      "    <DefaultTile ShowName='allLogos'/>\r\n"
-      "    <SplashScreen Image='0.0.0.0\\VisualElements\\splash-620x300.png'/>"
-      "\r\n"
-      "  </VisualElements>\r\n"
-      "</Application>";
+      "      BackgroundColor='#323232'/>\r\n"
+      "</Application>\r\n";
 
   ASSERT_STREQ(kExpectedManifest, read_manifest.c_str());
 }

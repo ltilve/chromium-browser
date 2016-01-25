@@ -13,7 +13,6 @@ import android.view.MotionEvent;
 import android.view.ViewGroup;
 
 import org.chromium.chrome.browser.ChromeApplication;
-import org.chromium.chrome.browser.Tab;
 import org.chromium.chrome.browser.UrlConstants;
 import org.chromium.chrome.browser.compositor.bottombar.contextualsearch.ContextualSearchPanel;
 import org.chromium.chrome.browser.compositor.layouts.components.LayoutTab;
@@ -41,12 +40,14 @@ import org.chromium.chrome.browser.dom_distiller.ReaderModeStaticEventFilter.Rea
 import org.chromium.chrome.browser.dom_distiller.ReaderModeStaticEventFilter.ReaderModeTapHandler;
 import org.chromium.chrome.browser.fullscreen.FullscreenManager;
 import org.chromium.chrome.browser.tab.ChromeTab;
+import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.tabmodel.TabCreatorManager;
 import org.chromium.chrome.browser.tabmodel.TabModel;
 import org.chromium.chrome.browser.tabmodel.TabModelSelector;
 import org.chromium.chrome.browser.tabmodel.TabModelSelectorTabObserver;
 import org.chromium.chrome.browser.tabmodel.TabModelUtils;
 import org.chromium.chrome.browser.tabmodel.document.DocumentTabModelSelector;
+import org.chromium.chrome.browser.util.ColorUtils;
 import org.chromium.chrome.browser.util.FeatureUtilities;
 import org.chromium.content.browser.ContentViewCore;
 import org.chromium.ui.resources.dynamics.DynamicResourceLoader;
@@ -175,6 +176,11 @@ public class LayoutManagerDocument extends LayoutManager
             public void onBackgroundColorChanged(Tab tab, int color) {
                 initLayoutTabFromHost(tab.getId());
             }
+
+            @Override
+            public void onDidChangeThemeColor(Tab tab, int color) {
+                initLayoutTabFromHost(tab.getId());
+            }
         };
 
         super.init(selector, creator, content, androidContentContainer, contextualSearchDelegate,
@@ -187,6 +193,7 @@ public class LayoutManagerDocument extends LayoutManager
 
         if (mStaticLayout != null) mStaticLayout.destroy();
         if (mContextualSearchLayout != null) mContextualSearchLayout.destroy();
+        if (mContextualSearchPanel != null) mContextualSearchPanel.destroy();
         if (mTabModelSelectorTabObserver != null) mTabModelSelectorTabObserver.destroy();
     }
 
@@ -260,7 +267,8 @@ public class LayoutManagerDocument extends LayoutManager
         boolean canUseLiveTexture =
                 tab.getContentViewCore() != null && !tab.isShowingSadTab() && !isNativePage;
         layoutTab.initFromHost(tab.getBackgroundColor(), tab.getFallbackTextureId(),
-                tab.shouldStall(), canUseLiveTexture);
+                tab.shouldStall(), canUseLiveTexture, tab.getThemeColor(),
+                ColorUtils.getTextBoxColorForToolbarBackground(tab.getThemeColor()));
 
         mHost.requestRender();
     }
@@ -437,6 +445,7 @@ public class LayoutManagerDocument extends LayoutManager
         public boolean isSwipeEnabled(ScrollDirection direction) {
             FullscreenManager manager = mHost.getFullscreenManager();
             if (getActiveLayout() != mStaticLayout
+                    || !FeatureUtilities.isDocumentModeEligible(mHost.getContext())
                     || !DeviceClassManager.enableToolbarSwipe(
                                FeatureUtilities.isDocumentMode(mHost.getContext()))
                     || (manager != null && manager.getPersistentFullscreenMode())) {

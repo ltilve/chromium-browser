@@ -1,0 +1,131 @@
+defines = -DV8_DEPRECATION_WARNINGS -DCLD_VERSION=2 -D_FILE_OFFSET_BITS=64 $
+    -DCHROMIUM_BUILD -DCR_CLANG_REVISION=255169-1 $
+    -DUI_COMPOSITOR_IMAGE_TRANSPORT -DUSE_AURA=1 -DUSE_ASH=1 -DUSE_PANGO=1 $
+    -DUSE_CAIRO=1 -DUSE_DEFAULT_RENDER_THEME=1 -DUSE_LIBJPEG_TURBO=1 $
+    -DUSE_X11=1 -DUSE_CLIPBOARD_AURAX11=1 -DENABLE_ONE_CLICK_SIGNIN $
+    -DENABLE_WEBRTC=1 -DENABLE_MEDIA_ROUTER=1 -DENABLE_PEPPER_CDMS $
+    -DENABLE_CONFIGURATION_POLICY -DENABLE_NOTIFICATIONS -DENABLE_HIDPI=1 $
+    -DENABLE_TOPCHROME_MD=1 -DUSE_UDEV -DDONT_EMBED_BUILD_METADATA $
+    -DFIELDTRIAL_TESTING_ENABLED -DENABLE_TASK_MANAGER=1 $
+    -DENABLE_EXTENSIONS=1 -DENABLE_PDF=1 -DENABLE_PLUGINS=1 $
+    -DENABLE_SESSION_SERVICE=1 -DENABLE_THEMES=1 -DENABLE_AUTOFILL_DIALOG=1 $
+    -DENABLE_BACKGROUND=1 -DENABLE_PRINTING=1 -DENABLE_BASIC_PRINTING=1 $
+    -DENABLE_PRINT_PREVIEW=1 -DENABLE_SPELLCHECK=1 $
+    -DENABLE_CAPTIVE_PORTAL_DETECTION=1 -DENABLE_APP_LIST=1 $
+    -DENABLE_SETTINGS_APP=1 -DENABLE_SUPERVISED_USERS=1 -DENABLE_MDNS=1 $
+    -DENABLE_SERVICE_DISCOVERY=1 -DV8_USE_EXTERNAL_STARTUP_DATA $
+    -DFULL_SAFE_BROWSING -DSAFE_BROWSING_CSD -DSAFE_BROWSING_DB_LOCAL $
+    -DUSE_LIBPCI=1 -DUSE_OPENSSL=1 -DUSE_GLIB=1 -DUSE_NSS_CERTS=1 $
+    -DDYNAMIC_ANNOTATIONS_ENABLED=1 -DWTF_USE_DYNAMIC_ANNOTATIONS=1 $
+    -D_DEBUG -D_GLIBCXX_DEBUG=1
+includes = -Igen -I../../third_party/cld_2/src/internal $
+    -I../../third_party/cld_2/src/public
+cflags = -fstack-protector --param=ssp-buffer-size=4 -Werror -pthread $
+    -fno-strict-aliasing -Wno-unused-parameter $
+    -Wno-missing-field-initializers -fvisibility=hidden -pipe -fPIC $
+    -Wno-reserved-user-defined-literal -Xclang -load -Xclang $
+    /b/build/slave/publish_tarball/build/src/third_party/llvm-build/Release+Asserts/lib/libFindBadConstructs.so $
+    -Xclang -add-plugin -Xclang find-bad-constructs -Xclang $
+    -plugin-arg-find-bad-constructs -Xclang check-templates $
+    -fcolor-diagnostics $
+    -B/b/build/slave/publish_tarball/build/src/third_party/binutils/Linux_x64/Release/bin $
+    -Wheader-hygiene -Wno-char-subscripts $
+    -Wno-unneeded-internal-declaration -Wno-covered-switch-default $
+    -Wstring-conversion -Wno-c++11-narrowing -Wno-deprecated-register $
+    -Wno-inconsistent-missing-override -Wno-shift-negative-value $
+    -Wno-bitfield-width -Wno-missing-braces -Wno-unused-private-field $
+    -Wno-unused-variable -Wno-format -Wno-unused-result -m64 -march=x86-64 $
+    --sysroot=/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot $
+    -O0 -g -funwind-tables -gsplit-dwarf -Wno-undefined-bool-conversion $
+    -Wno-tautological-undefined-compare
+cflags_c = 
+cflags_cc = -fno-exceptions -fno-rtti -fno-threadsafe-statics $
+    -fvisibility-inlines-hidden -std=gnu++11 -Wno-deprecated
+arflags = 
+
+build $
+    obj/third_party/cld_2/src/internal/cld2_static.cld2_generated_quadchrome_2.o: $
+    cxx ../../third_party/cld_2/src/internal/cld2_generated_quadchrome_2.cc
+build obj/third_party/cld_2/src/internal/cld2_static.cldutil.o: cxx $
+    ../../third_party/cld_2/src/internal/cldutil.cc
+build obj/third_party/cld_2/src/internal/cld2_static.cldutil_shared.o: cxx $
+    ../../third_party/cld_2/src/internal/cldutil_shared.cc
+build obj/third_party/cld_2/src/internal/cld2_static.compact_lang_det.o: $
+    cxx ../../third_party/cld_2/src/internal/compact_lang_det.cc
+build $
+    obj/third_party/cld_2/src/internal/cld2_static.compact_lang_det_hint_code.o: $
+    cxx ../../third_party/cld_2/src/internal/compact_lang_det_hint_code.cc
+build $
+    obj/third_party/cld_2/src/internal/cld2_static.compact_lang_det_impl.o: $
+    cxx ../../third_party/cld_2/src/internal/compact_lang_det_impl.cc
+build obj/third_party/cld_2/src/internal/cld2_static.debug_empty.o: cxx $
+    ../../third_party/cld_2/src/internal/debug_empty.cc
+build obj/third_party/cld_2/src/internal/cld2_static.fixunicodevalue.o: cxx $
+    ../../third_party/cld_2/src/internal/fixunicodevalue.cc
+build obj/third_party/cld_2/src/internal/cld2_static.generated_entities.o: $
+    cxx ../../third_party/cld_2/src/internal/generated_entities.cc
+build obj/third_party/cld_2/src/internal/cld2_static.generated_language.o: $
+    cxx ../../third_party/cld_2/src/internal/generated_language.cc
+build obj/third_party/cld_2/src/internal/cld2_static.generated_ulscript.o: $
+    cxx ../../third_party/cld_2/src/internal/generated_ulscript.cc
+build obj/third_party/cld_2/src/internal/cld2_static.getonescriptspan.o: $
+    cxx ../../third_party/cld_2/src/internal/getonescriptspan.cc
+build obj/third_party/cld_2/src/internal/cld2_static.lang_script.o: cxx $
+    ../../third_party/cld_2/src/internal/lang_script.cc
+build obj/third_party/cld_2/src/internal/cld2_static.offsetmap.o: cxx $
+    ../../third_party/cld_2/src/internal/offsetmap.cc
+build obj/third_party/cld_2/src/internal/cld2_static.scoreonescriptspan.o: $
+    cxx ../../third_party/cld_2/src/internal/scoreonescriptspan.cc
+build obj/third_party/cld_2/src/internal/cld2_static.tote.o: cxx $
+    ../../third_party/cld_2/src/internal/tote.cc
+build obj/third_party/cld_2/src/internal/cld2_static.utf8statetable.o: cxx $
+    ../../third_party/cld_2/src/internal/utf8statetable.cc
+build $
+    obj/third_party/cld_2/src/internal/cld2_static.cld2_generated_cjk_compatible.o: $
+    cxx ../../third_party/cld_2/src/internal/cld2_generated_cjk_compatible.cc
+build $
+    obj/third_party/cld_2/src/internal/cld2_static.cld2_generated_deltaoctachrome.o: $
+    cxx ../../third_party/cld_2/src/internal/cld2_generated_deltaoctachrome.cc
+build $
+    obj/third_party/cld_2/src/internal/cld2_static.cld2_generated_distinctoctachrome.o: $
+    cxx $
+    ../../third_party/cld_2/src/internal/cld2_generated_distinctoctachrome.cc
+build $
+    obj/third_party/cld_2/src/internal/cld2_static.cld_generated_cjk_delta_bi_4.o: $
+    cxx ../../third_party/cld_2/src/internal/cld_generated_cjk_delta_bi_4.cc
+build $
+    obj/third_party/cld_2/src/internal/cld2_static.cld_generated_cjk_uni_prop_80.o: $
+    cxx ../../third_party/cld_2/src/internal/cld_generated_cjk_uni_prop_80.cc
+build $
+    obj/third_party/cld_2/src/internal/cld2_static.cld_generated_score_quad_octa_2.o: $
+    cxx $
+    ../../third_party/cld_2/src/internal/cld_generated_score_quad_octa_2.cc
+build $
+    obj/third_party/cld_2/src/internal/cld2_static.generated_distinct_bi_0.o: $
+    cxx ../../third_party/cld_2/src/internal/generated_distinct_bi_0.cc
+
+build obj/third_party/cld_2/libcld2_static.a: alink_thin $
+    obj/third_party/cld_2/src/internal/cld2_static.cld2_generated_quadchrome_2.o $
+    obj/third_party/cld_2/src/internal/cld2_static.cldutil.o $
+    obj/third_party/cld_2/src/internal/cld2_static.cldutil_shared.o $
+    obj/third_party/cld_2/src/internal/cld2_static.compact_lang_det.o $
+    obj/third_party/cld_2/src/internal/cld2_static.compact_lang_det_hint_code.o $
+    obj/third_party/cld_2/src/internal/cld2_static.compact_lang_det_impl.o $
+    obj/third_party/cld_2/src/internal/cld2_static.debug_empty.o $
+    obj/third_party/cld_2/src/internal/cld2_static.fixunicodevalue.o $
+    obj/third_party/cld_2/src/internal/cld2_static.generated_entities.o $
+    obj/third_party/cld_2/src/internal/cld2_static.generated_language.o $
+    obj/third_party/cld_2/src/internal/cld2_static.generated_ulscript.o $
+    obj/third_party/cld_2/src/internal/cld2_static.getonescriptspan.o $
+    obj/third_party/cld_2/src/internal/cld2_static.lang_script.o $
+    obj/third_party/cld_2/src/internal/cld2_static.offsetmap.o $
+    obj/third_party/cld_2/src/internal/cld2_static.scoreonescriptspan.o $
+    obj/third_party/cld_2/src/internal/cld2_static.tote.o $
+    obj/third_party/cld_2/src/internal/cld2_static.utf8statetable.o $
+    obj/third_party/cld_2/src/internal/cld2_static.cld2_generated_cjk_compatible.o $
+    obj/third_party/cld_2/src/internal/cld2_static.cld2_generated_deltaoctachrome.o $
+    obj/third_party/cld_2/src/internal/cld2_static.cld2_generated_distinctoctachrome.o $
+    obj/third_party/cld_2/src/internal/cld2_static.cld_generated_cjk_delta_bi_4.o $
+    obj/third_party/cld_2/src/internal/cld2_static.cld_generated_cjk_uni_prop_80.o $
+    obj/third_party/cld_2/src/internal/cld2_static.cld_generated_score_quad_octa_2.o $
+    obj/third_party/cld_2/src/internal/cld2_static.generated_distinct_bi_0.o

@@ -5,6 +5,7 @@
 #include "extensions/browser/api/device_permissions_prompt.h"
 
 #include "base/bind.h"
+#include "base/i18n/message_formatter.h"
 #include "base/scoped_observer.h"
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
@@ -36,6 +37,11 @@ using device::UsbService;
 namespace extensions {
 
 namespace {
+
+void NoopHidCallback(const std::vector<scoped_refptr<device::HidDeviceInfo>>&) {
+}
+
+void NoopUsbCallback(const std::vector<scoped_refptr<device::UsbDevice>>&) {}
 
 class UsbDeviceInfo : public DevicePermissionsPrompt::Prompt::DeviceInfo {
  public:
@@ -91,9 +97,8 @@ class UsbDevicePermissionsPrompt : public DevicePermissionsPrompt::Prompt,
   }
 
   base::string16 GetHeading() const override {
-    return l10n_util::GetStringUTF16(
-        multiple() ? IDS_USB_DEVICE_PERMISSIONS_PROMPT_TITLE_MULTIPLE
-                   : IDS_USB_DEVICE_PERMISSIONS_PROMPT_TITLE_SINGLE);
+    return l10n_util::GetSingleOrMultipleStringUTF16(
+        IDS_USB_DEVICE_PERMISSIONS_PROMPT_TITLE, multiple());
   }
 
   void Dismissed() override {
@@ -206,9 +211,8 @@ class HidDevicePermissionsPrompt : public DevicePermissionsPrompt::Prompt,
   }
 
   base::string16 GetHeading() const override {
-    return l10n_util::GetStringUTF16(
-        multiple() ? IDS_HID_DEVICE_PERMISSIONS_PROMPT_TITLE_MULTIPLE
-                   : IDS_HID_DEVICE_PERMISSIONS_PROMPT_TITLE_SINGLE);
+    return l10n_util::GetSingleOrMultipleStringUTF16(
+        IDS_HID_DEVICE_PERMISSIONS_PROMPT_TITLE, multiple());
   }
 
   void Dismissed() override {
@@ -308,10 +312,9 @@ void DevicePermissionsPrompt::Prompt::SetObserver(Observer* observer) {
 }
 
 base::string16 DevicePermissionsPrompt::Prompt::GetPromptMessage() const {
-  return l10n_util::GetStringFUTF16(multiple_
-                                        ? IDS_DEVICE_PERMISSIONS_PROMPT_MULTIPLE
-                                        : IDS_DEVICE_PERMISSIONS_PROMPT_SINGLE,
-                                    base::UTF8ToUTF16(extension_->name()));
+  return base::i18n::MessageFormatter::FormatWithNumberedArgs(
+      l10n_util::GetStringUTF16(IDS_DEVICE_PERMISSIONS_PROMPT),
+      multiple_ ? "multiple" : "single", extension_->name());
 }
 
 base::string16 DevicePermissionsPrompt::Prompt::GetDeviceName(
@@ -373,6 +376,24 @@ void DevicePermissionsPrompt::AskForHidDevices(
   prompt_ = new HidDevicePermissionsPrompt(extension, context, multiple,
                                            filters, callback);
   ShowDialog();
+}
+
+// static
+scoped_refptr<DevicePermissionsPrompt::Prompt>
+DevicePermissionsPrompt::CreateHidPromptForTest(const Extension* extension,
+                                                bool multiple) {
+  return make_scoped_refptr(new HidDevicePermissionsPrompt(
+      extension, nullptr, multiple, std::vector<HidDeviceFilter>(),
+      base::Bind(&NoopHidCallback)));
+}
+
+// static
+scoped_refptr<DevicePermissionsPrompt::Prompt>
+DevicePermissionsPrompt::CreateUsbPromptForTest(const Extension* extension,
+                                                bool multiple) {
+  return make_scoped_refptr(new UsbDevicePermissionsPrompt(
+      extension, nullptr, multiple, std::vector<UsbDeviceFilter>(),
+      base::Bind(&NoopUsbCallback)));
 }
 
 }  // namespace extensions

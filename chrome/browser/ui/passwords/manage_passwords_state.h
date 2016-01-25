@@ -43,6 +43,10 @@ class ManagePasswordsState {
   void OnPendingPassword(
       scoped_ptr<password_manager::PasswordFormManager> form_manager);
 
+  // Move to PENDING_PASSWORD_UPDATE_STATE.
+  void OnUpdatePassword(
+      scoped_ptr<password_manager::PasswordFormManager> form_manager);
+
   // Move to CREDENTIAL_REQUEST_STATE.
   void OnRequestCredentials(
       ScopedVector<autofill::PasswordForm> local_credentials,
@@ -57,13 +61,16 @@ class ManagePasswordsState {
       scoped_ptr<password_manager::PasswordFormManager> form_manager);
 
   // Move to MANAGE_STATE or INACTIVE_STATE for PSL matched passwords.
-  void OnPasswordAutofilled(const autofill::PasswordFormMap& password_form_map);
+  // |password_form_map| contains best matches from the password store for the
+  // form which was autofilled, |origin| is an origin of the form which was
+  // autofilled.
+  void OnPasswordAutofilled(const autofill::PasswordFormMap& password_form_map,
+                            const GURL& origin);
 
   // Move to INACTIVE_STATE.
   void OnInactive();
 
   // Moves the object to |state| without resetting the internal data. Allowed:
-  // * -> BLACKLIST_STATE
   // * -> MANAGE_STATE
   void TransitionToState(password_manager::ui::State state);
 

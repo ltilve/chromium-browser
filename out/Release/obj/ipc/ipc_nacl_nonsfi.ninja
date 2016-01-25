@@ -1,0 +1,344 @@
+rule $
+    ipc_nacl_nonsfi_target_build_nonsfi_helper_x86_32_nlib_04b0425629664f7c57144d97958a578c
+  command = cd ../../ipc; python ../native_client/build/build_nexe.py $
+      --root .. --product-dir ../out/Release/xyz --config-name Release -t $
+      ../native_client/toolchain/ --arch x86-32-nonsfi --build $
+      newlib_nlib_pnacl --name $
+      ../out/Release/gen/tc_nonsfi_helper/lib32/libipc_nacl_nonsfi.a $
+      --objdir $
+      ../out/Release/obj/ipc/ipc_nacl_nonsfi.gen/nonsfi_helper-x86-32-nonsfi/ipc_nacl_nonsfi $
+      "--include-dirs=../out/Release/gen/tc_newlib/include $
+      ../native_client/src/public/linux_syscalls .. \"../out/Release/gen\" $
+      .." "--compile_flags=--target=i686-unknown-nacl $
+      --pnacl-bias=x86-32-nonsfi --pnacl-allow-translate $
+      --pnacl-allow-native -arch x86-32-nonsfi -O2 -g -Wall $
+      -fdiagnostics-show-option -Werror  -Wno-unused-function $
+      -Wno-char-subscripts -Wno-c++11-extensions $
+      -Wno-unnamed-type-template-args -Wno-extra-semi $
+      -Wno-unused-private-field -Wno-char-subscripts -Wno-unused-function $
+      \"-std=gnu++11\" " --gomadir "" "--defines=\"__STDC_LIMIT_MACROS=1\" $
+      \"__STDC_FORMAT_MACROS=1\" \"_GNU_SOURCE=1\" $
+      \"_POSIX_C_SOURCE=199506\" \"_XOPEN_SOURCE=600\" $
+      \"DYNAMIC_ANNOTATIONS_ENABLED=1\" $
+      \"DYNAMIC_ANNOTATIONS_PREFIX=NACL_\" \"NACL_BUILD_ARCH=x86\" $
+      V8_DEPRECATION_WARNINGS \"CLD_VERSION=2\" \"_FILE_OFFSET_BITS=64\" $
+      CHROMIUM_BUILD \"CR_CLANG_REVISION=255169-1\" $
+      UI_COMPOSITOR_IMAGE_TRANSPORT \"USE_AURA=1\" \"USE_ASH=1\" $
+      \"USE_PANGO=1\" \"USE_CAIRO=1\" \"USE_DEFAULT_RENDER_THEME=1\" $
+      \"USE_LIBJPEG_TURBO=1\" \"USE_X11=1\" \"USE_CLIPBOARD_AURAX11=1\" $
+      ENABLE_ONE_CLICK_SIGNIN \"ENABLE_WEBRTC=1\" \"ENABLE_MEDIA_ROUTER=1\" $
+      ENABLE_PEPPER_CDMS ENABLE_CONFIGURATION_POLICY ENABLE_NOTIFICATIONS $
+      \"ENABLE_HIDPI=1\" \"ENABLE_TOPCHROME_MD=1\" USE_UDEV $
+      DONT_EMBED_BUILD_METADATA FIELDTRIAL_TESTING_ENABLED $
+      \"ENABLE_TASK_MANAGER=1\" \"ENABLE_EXTENSIONS=1\" \"ENABLE_PDF=1\" $
+      \"ENABLE_PLUGINS=1\" \"ENABLE_SESSION_SERVICE=1\" \"ENABLE_THEMES=1\" $
+      \"ENABLE_AUTOFILL_DIALOG=1\" \"ENABLE_BACKGROUND=1\" $
+      \"ENABLE_PRINTING=1\" \"ENABLE_BASIC_PRINTING=1\" $
+      \"ENABLE_PRINT_PREVIEW=1\" \"ENABLE_SPELLCHECK=1\" $
+      \"ENABLE_CAPTIVE_PORTAL_DETECTION=1\" \"ENABLE_APP_LIST=1\" $
+      \"ENABLE_SETTINGS_APP=1\" \"ENABLE_SUPERVISED_USERS=1\" $
+      \"ENABLE_MDNS=1\" \"ENABLE_SERVICE_DISCOVERY=1\" $
+      V8_USE_EXTERNAL_STARTUP_DATA FULL_SAFE_BROWSING SAFE_BROWSING_CSD $
+      SAFE_BROWSING_DB_LOCAL \"USE_LIBPCI=1\" \"USE_OPENSSL=1\" $
+      \"USE_OPENSSL_CERTS=1\" __STDC_CONSTANT_MACROS __STDC_FORMAT_MACROS $
+      IPC_IMPLEMENTATION" $
+      "--link_flags=-B../out/Release/gen/tc_nonsfi_helper/lib32  " $
+      "--source-list=../out/gypfiles/ipc/nonsfi_helper-x86-32-nonsfi.ipc_nacl_nonsfi.source_list.gypcmd"
+  description = ACTION ipc_nacl_nonsfi: build nonsfi_helper x86-32 $
+      nlib_04b0425629664f7c57144d97958a578c
+  restat = 1
+
+build gen/tc_nonsfi_helper/lib32/libipc_nacl_nonsfi.a: $
+    ipc_nacl_nonsfi_target_build_nonsfi_helper_x86_32_nlib_04b0425629664f7c57144d97958a578c $
+    ../../native_client/build/build_nexe.py $
+    ../../native_client/build/build_nexe_tools.py ../../base/at_exit.h $
+    ../../base/atomic_ref_count.h ../../base/atomic_sequence_num.h $
+    ../../base/atomicops.h $
+    ../../base/atomicops_internals_atomicword_compat.h $
+    ../../base/atomicops_internals_portable.h $
+    ../../base/atomicops_internals_x86_msvc.h ../../base/auto_reset.h $
+    ../../base/base_export.h ../../base/base_switches.h $
+    ../../base/basictypes.h ../../base/bind.h ../../base/bind_helpers.h $
+    ../../base/bind_internal.h ../../base/bind_internal_win.h $
+    ../../base/callback.h ../../base/callback_forward.h $
+    ../../base/callback_internal.h ../../base/command_line.h $
+    ../../base/compiler_specific.h ../../base/containers/hash_tables.h $
+    ../../base/containers/small_map.h $
+    ../../base/containers/stack_container.h ../../base/debug/alias.h $
+    ../../base/debug/debugger.h ../../base/debug/leak_annotations.h $
+    ../../base/debug/task_annotator.h ../../base/event_types.h $
+    ../../base/file_descriptor_posix.h ../../base/files/file.h $
+    ../../base/files/file_path.h ../../base/files/file_tracing.h $
+    ../../base/files/file_util.h ../../base/files/memory_mapped_file.h $
+    ../../base/files/scoped_file.h ../../base/format_macros.h $
+    ../../base/gtest_prod_util.h ../../base/json/json_writer.h $
+    ../../base/lazy_instance.h ../../base/location.h ../../base/logging.h $
+    ../../base/mac/mach_logging.h $
+    ../../base/mac/scoped_cffiledescriptorref.h $
+    ../../base/mac/scoped_cftyperef.h ../../base/mac/scoped_mach_port.h $
+    ../../base/mac/scoped_typeref.h ../../base/macros.h $
+    ../../base/memory/aligned_memory.h ../../base/memory/linked_ptr.h $
+    ../../base/memory/manual_constructor.h $
+    ../../base/memory/raw_scoped_refptr_mismatch_checker.h $
+    ../../base/memory/ref_counted.h ../../base/memory/ref_counted_memory.h $
+    ../../base/memory/scoped_policy.h ../../base/memory/scoped_ptr.h $
+    ../../base/memory/scoped_vector.h ../../base/memory/shared_memory.h $
+    ../../base/memory/shared_memory_handle.h ../../base/memory/singleton.h $
+    ../../base/memory/weak_ptr.h $
+    ../../base/message_loop/incoming_task_queue.h $
+    ../../base/message_loop/message_loop.h $
+    ../../base/message_loop/message_loop_task_runner.h $
+    ../../base/message_loop/message_pump.h $
+    ../../base/message_loop/message_pump_dispatcher.h $
+    ../../base/message_loop/message_pump_io_ios.h $
+    ../../base/message_loop/message_pump_libevent.h $
+    ../../base/message_loop/message_pump_mac.h $
+    ../../base/message_loop/message_pump_win.h $
+    ../../base/message_loop/timer_slack.h $
+    ../../base/metrics/bucket_ranges.h ../../base/metrics/histogram.h $
+    ../../base/metrics/histogram_base.h $
+    ../../base/metrics/histogram_macros.h $
+    ../../base/metrics/histogram_samples.h ../../base/move.h $
+    ../../base/numerics/safe_conversions.h $
+    ../../base/numerics/safe_conversions_impl.h $
+    ../../base/numerics/safe_math.h ../../base/numerics/safe_math_impl.h $
+    ../../base/observer_list.h ../../base/pending_task.h $
+    ../../base/pickle.h ../../base/posix/eintr_wrapper.h $
+    ../../base/posix/global_descriptors.h $
+    ../../base/process/port_provider_mac.h ../../base/process/process.h $
+    ../../base/process/process_handle.h $
+    ../../base/process/process_metrics.h $
+    ../../base/profiler/alternate_timer.h $
+    ../../base/profiler/scoped_profile.h $
+    ../../base/profiler/scoped_tracker.h ../../base/profiler/tracked_time.h $
+    ../../base/rand_util.h ../../base/scoped_generic.h $
+    ../../base/sequence_checker.h ../../base/sequence_checker_impl.h $
+    ../../base/sequenced_task_runner.h $
+    ../../base/sequenced_task_runner_helpers.h $
+    ../../base/single_thread_task_runner.h ../../base/stl_util.h $
+    ../../base/strings/nullable_string16.h ../../base/strings/string16.h $
+    ../../base/strings/string_number_conversions.h $
+    ../../base/strings/string_piece.h ../../base/strings/string_util.h $
+    ../../base/strings/string_util_posix.h $
+    ../../base/strings/string_util_win.h ../../base/strings/stringprintf.h $
+    ../../base/strings/utf_string_conversions.h $
+    ../../base/synchronization/condition_variable.h $
+    ../../base/synchronization/lock.h $
+    ../../base/synchronization/lock_impl.h $
+    ../../base/synchronization/waitable_event.h $
+    ../../base/synchronization/waitable_event_watcher.h $
+    ../../base/task_runner.h ../../base/task_runner_util.h $
+    ../../base/template_util.h ../../base/thread_task_runner_handle.h $
+    ../../base/threading/non_thread_safe.h $
+    ../../base/threading/non_thread_safe_impl.h $
+    ../../base/threading/platform_thread.h $
+    ../../base/threading/sequenced_worker_pool.h $
+    ../../base/threading/simple_thread.h ../../base/threading/thread.h $
+    ../../base/threading/thread_checker.h $
+    ../../base/threading/thread_checker_impl.h $
+    ../../base/threading/thread_collision_warner.h $
+    ../../base/threading/thread_local.h $
+    ../../base/threading/thread_local_storage.h $
+    ../../base/threading/thread_restrictions.h ../../base/time/time.h $
+    ../../base/timer/timer.h $
+    ../../base/trace_event/common/trace_event_common.h $
+    ../../base/trace_event/memory_dump_provider.h $
+    ../../base/trace_event/memory_dump_request_args.h $
+    ../../base/trace_event/trace_config.h $
+    ../../base/trace_event/trace_event.h $
+    ../../base/trace_event/trace_event_impl.h $
+    ../../base/trace_event/trace_event_memory_overhead.h $
+    ../../base/trace_event/trace_event_system_stats_monitor.h $
+    ../../base/trace_event/trace_log.h ../../base/tracked_objects.h $
+    ../../base/tracking_info.h ../../base/tuple.h ../../base/values.h $
+    ../../base/win/object_watcher.h ../../base/win/scoped_handle.h $
+    ../../build/build_config.h ../../crypto/crypto_export.h $
+    ../../crypto/random.h ../../native_client/src/include/build_config.h $
+    ../../native_client/src/include/nacl_base.h $
+    ../../native_client/src/include/nacl_compiler_annotations.h $
+    ../../native_client/src/include/nacl_macros.h $
+    ../../native_client/src/include/portability.h $
+    ../../native_client/src/include/win/port_win.h $
+    ../../native_client/src/public/imc_syscalls.h $
+    ../../native_client/src/public/imc_types.h $
+    ../../native_client/src/third_party/valgrind/memcheck.h $
+    ../../native_client/src/third_party/valgrind/valgrind.h $
+    ../../native_client/src/trusted/service_runtime/include/bits/wordsize.h $
+    ../../native_client/src/trusted/service_runtime/nacl_size_t.h $
+    ../../testing/gtest/include/gtest/gtest_prod.h $
+    ../../ipc/attachment_broker.cc ../../ipc/attachment_broker.h $
+    ../../ipc/attachment_broker_messages.h $
+    ../../ipc/attachment_broker_privileged.cc $
+    ../../ipc/attachment_broker_privileged.h $
+    ../../ipc/attachment_broker_privileged_mac.cc $
+    ../../ipc/attachment_broker_privileged_mac.h $
+    ../../ipc/attachment_broker_privileged_win.cc $
+    ../../ipc/attachment_broker_privileged_win.h $
+    ../../ipc/attachment_broker_unprivileged.cc $
+    ../../ipc/attachment_broker_unprivileged.h $
+    ../../ipc/attachment_broker_unprivileged_mac.cc $
+    ../../ipc/attachment_broker_unprivileged_mac.h $
+    ../../ipc/attachment_broker_unprivileged_win.cc $
+    ../../ipc/attachment_broker_unprivileged_win.h $
+    ../../ipc/brokerable_attachment.cc ../../ipc/brokerable_attachment.h $
+    ../../ipc/brokerable_attachment_mac.cc $
+    ../../ipc/brokerable_attachment_win.cc $
+    ../../ipc/handle_attachment_win.cc ../../ipc/handle_attachment_win.h $
+    ../../ipc/handle_win.cc ../../ipc/handle_win.h ../../ipc/ipc_channel.cc $
+    ../../ipc/ipc_channel.h ../../ipc/ipc_channel_common.cc $
+    ../../ipc/ipc_channel_factory.cc ../../ipc/ipc_channel_factory.h $
+    ../../ipc/ipc_channel_handle.h ../../ipc/ipc_channel_nacl.cc $
+    ../../ipc/ipc_channel_nacl.h ../../ipc/ipc_channel_posix.cc $
+    ../../ipc/ipc_channel_posix.h ../../ipc/ipc_channel_proxy.cc $
+    ../../ipc/ipc_channel_proxy.h ../../ipc/ipc_channel_reader.cc $
+    ../../ipc/ipc_channel_reader.h ../../ipc/ipc_channel_win.cc $
+    ../../ipc/ipc_channel_win.h ../../ipc/ipc_descriptors.h $
+    ../../ipc/ipc_endpoint.cc ../../ipc/ipc_endpoint.h $
+    ../../ipc/ipc_export.h ../../ipc/ipc_handle_win.cc $
+    ../../ipc/ipc_handle_win.h ../../ipc/ipc_listener.h $
+    ../../ipc/ipc_logging.cc ../../ipc/ipc_logging.h $
+    ../../ipc/ipc_message.cc ../../ipc/ipc_message.h $
+    ../../ipc/ipc_message_attachment.cc ../../ipc/ipc_message_attachment.h $
+    ../../ipc/ipc_message_attachment_set.cc $
+    ../../ipc/ipc_message_attachment_set.h $
+    ../../ipc/ipc_message_generator.cc ../../ipc/ipc_message_generator.h $
+    ../../ipc/ipc_message_macros.h ../../ipc/ipc_message_null_macros.h $
+    ../../ipc/ipc_message_start.h ../../ipc/ipc_message_utils.cc $
+    ../../ipc/ipc_message_utils.h ../../ipc/ipc_message_utils_impl.h $
+    ../../ipc/ipc_param_traits.h ../../ipc/ipc_platform_file.cc $
+    ../../ipc/ipc_platform_file.h $
+    ../../ipc/ipc_platform_file_attachment_posix.cc $
+    ../../ipc/ipc_platform_file_attachment_posix.h ../../ipc/ipc_sender.h $
+    ../../ipc/ipc_switches.cc ../../ipc/ipc_switches.h $
+    ../../ipc/ipc_sync_channel.cc ../../ipc/ipc_sync_channel.h $
+    ../../ipc/ipc_sync_message.cc ../../ipc/ipc_sync_message.h $
+    ../../ipc/ipc_sync_message_filter.cc $
+    ../../ipc/ipc_sync_message_filter.h $
+    ../../ipc/mach_port_attachment_mac.cc $
+    ../../ipc/mach_port_attachment_mac.h ../../ipc/mach_port_mac.cc $
+    ../../ipc/mach_port_mac.h ../../ipc/message_filter.cc $
+    ../../ipc/message_filter.h ../../ipc/message_filter_router.cc $
+    ../../ipc/message_filter_router.h ../../ipc/param_traits_log_macros.h $
+    ../../ipc/param_traits_macros.h ../../ipc/param_traits_read_macros.h $
+    ../../ipc/param_traits_write_macros.h $
+    ../../ipc/placeholder_brokerable_attachment.cc $
+    ../../ipc/placeholder_brokerable_attachment.h $
+    ../../ipc/struct_constructor_macros.h $
+    ../../ipc/struct_destructor_macros.h $
+    ../../ipc/unix_domain_socket_util.cc $
+    ../../ipc/unix_domain_socket_util.h $
+    ../../out/gypfiles/ipc/nonsfi_helper-x86-32-nonsfi.ipc_nacl_nonsfi.source_list.gypcmd $
+    ../../native_client/toolchain/linux_x86/pnacl_newlib/pnacl_newlib.json $
+    || gen/tc_nonsfi_helper/lib32/libbase_nacl_nonsfi.a
+
+defines = -DV8_DEPRECATION_WARNINGS -DCLD_VERSION=2 -D_FILE_OFFSET_BITS=64 $
+    -DCHROMIUM_BUILD -DCR_CLANG_REVISION=255169-1 $
+    -DUI_COMPOSITOR_IMAGE_TRANSPORT -DUSE_AURA=1 -DUSE_ASH=1 -DUSE_PANGO=1 $
+    -DUSE_CAIRO=1 -DUSE_DEFAULT_RENDER_THEME=1 -DUSE_LIBJPEG_TURBO=1 $
+    -DUSE_X11=1 -DUSE_CLIPBOARD_AURAX11=1 -DENABLE_ONE_CLICK_SIGNIN $
+    -DENABLE_WEBRTC=1 -DENABLE_MEDIA_ROUTER=1 -DENABLE_PEPPER_CDMS $
+    -DENABLE_CONFIGURATION_POLICY -DENABLE_NOTIFICATIONS -DENABLE_HIDPI=1 $
+    -DENABLE_TOPCHROME_MD=1 -DUSE_UDEV -DDONT_EMBED_BUILD_METADATA $
+    -DFIELDTRIAL_TESTING_ENABLED -DENABLE_TASK_MANAGER=1 $
+    -DENABLE_EXTENSIONS=1 -DENABLE_PDF=1 -DENABLE_PLUGINS=1 $
+    -DENABLE_SESSION_SERVICE=1 -DENABLE_THEMES=1 -DENABLE_AUTOFILL_DIALOG=1 $
+    -DENABLE_BACKGROUND=1 -DENABLE_PRINTING=1 -DENABLE_BASIC_PRINTING=1 $
+    -DENABLE_PRINT_PREVIEW=1 -DENABLE_SPELLCHECK=1 $
+    -DENABLE_CAPTIVE_PORTAL_DETECTION=1 -DENABLE_APP_LIST=1 $
+    -DENABLE_SETTINGS_APP=1 -DENABLE_SUPERVISED_USERS=1 -DENABLE_MDNS=1 $
+    -DENABLE_SERVICE_DISCOVERY=1 -DV8_USE_EXTERNAL_STARTUP_DATA $
+    -DFULL_SAFE_BROWSING -DSAFE_BROWSING_CSD -DSAFE_BROWSING_DB_LOCAL $
+    -DUSE_LIBPCI=1 -DUSE_OPENSSL=1 -DUSE_OPENSSL_CERTS=1 $
+    -D__STDC_CONSTANT_MACROS -D__STDC_FORMAT_MACROS -DIPC_IMPLEMENTATION $
+    -DNDEBUG -DNVALGRIND -DDYNAMIC_ANNOTATIONS_ENABLED=0
+includes = -Igen -I../..
+cflags = -fstack-protector --param=ssp-buffer-size=4 -Werror -pthread $
+    -fno-strict-aliasing -Wall -Wno-unused-parameter $
+    -Wno-missing-field-initializers -fvisibility=hidden -pipe -fPIC $
+    -Wno-reserved-user-defined-literal -Xclang -load -Xclang $
+    /b/build/slave/publish_tarball/build/src/third_party/llvm-build/Release+Asserts/lib/libFindBadConstructs.so $
+    -Xclang -add-plugin -Xclang find-bad-constructs -Xclang $
+    -plugin-arg-find-bad-constructs -Xclang check-templates $
+    -fcolor-diagnostics $
+    -B/b/build/slave/publish_tarball/build/src/third_party/binutils/Linux_x64/Release/bin $
+    -Wheader-hygiene -Wno-char-subscripts $
+    -Wno-unneeded-internal-declaration -Wno-covered-switch-default $
+    -Wstring-conversion -Wno-c++11-narrowing -Wno-deprecated-register $
+    -Wno-inconsistent-missing-override -Wno-shift-negative-value $
+    -Wno-bitfield-width -m64 -march=x86-64 $
+    --sysroot=/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot $
+    -O2 -fno-ident -fdata-sections -ffunction-sections -funwind-tables
+cflags_c = 
+cflags_cc = -fno-exceptions -fno-rtti -fno-threadsafe-statics $
+    -fvisibility-inlines-hidden -Wsign-compare -std=gnu++11
+arflags = 
+
+build obj/ipc/ipc_nacl_nonsfi.attachment_broker.o: cxx $
+    ../../ipc/attachment_broker.cc || $
+    gen/tc_nonsfi_helper/lib32/libipc_nacl_nonsfi.a
+build obj/ipc/ipc_nacl_nonsfi.attachment_broker_privileged.o: cxx $
+    ../../ipc/attachment_broker_privileged.cc || $
+    gen/tc_nonsfi_helper/lib32/libipc_nacl_nonsfi.a
+build obj/ipc/ipc_nacl_nonsfi.attachment_broker_unprivileged.o: cxx $
+    ../../ipc/attachment_broker_unprivileged.cc || $
+    gen/tc_nonsfi_helper/lib32/libipc_nacl_nonsfi.a
+build obj/ipc/ipc_nacl_nonsfi.brokerable_attachment.o: cxx $
+    ../../ipc/brokerable_attachment.cc || $
+    gen/tc_nonsfi_helper/lib32/libipc_nacl_nonsfi.a
+build obj/ipc/ipc_nacl_nonsfi.ipc_channel_factory.o: cxx $
+    ../../ipc/ipc_channel_factory.cc || $
+    gen/tc_nonsfi_helper/lib32/libipc_nacl_nonsfi.a
+build obj/ipc/ipc_nacl_nonsfi.ipc_channel_common.o: cxx $
+    ../../ipc/ipc_channel_common.cc || $
+    gen/tc_nonsfi_helper/lib32/libipc_nacl_nonsfi.a
+build obj/ipc/ipc_nacl_nonsfi.ipc_channel_proxy.o: cxx $
+    ../../ipc/ipc_channel_proxy.cc || $
+    gen/tc_nonsfi_helper/lib32/libipc_nacl_nonsfi.a
+build obj/ipc/ipc_nacl_nonsfi.ipc_channel_reader.o: cxx $
+    ../../ipc/ipc_channel_reader.cc || $
+    gen/tc_nonsfi_helper/lib32/libipc_nacl_nonsfi.a
+build obj/ipc/ipc_nacl_nonsfi.ipc_endpoint.o: cxx ../../ipc/ipc_endpoint.cc $
+    || gen/tc_nonsfi_helper/lib32/libipc_nacl_nonsfi.a
+build obj/ipc/ipc_nacl_nonsfi.ipc_logging.o: cxx ../../ipc/ipc_logging.cc $
+    || gen/tc_nonsfi_helper/lib32/libipc_nacl_nonsfi.a
+build obj/ipc/ipc_nacl_nonsfi.ipc_message.o: cxx ../../ipc/ipc_message.cc $
+    || gen/tc_nonsfi_helper/lib32/libipc_nacl_nonsfi.a
+build obj/ipc/ipc_nacl_nonsfi.ipc_message_attachment.o: cxx $
+    ../../ipc/ipc_message_attachment.cc || $
+    gen/tc_nonsfi_helper/lib32/libipc_nacl_nonsfi.a
+build obj/ipc/ipc_nacl_nonsfi.ipc_message_attachment_set.o: cxx $
+    ../../ipc/ipc_message_attachment_set.cc || $
+    gen/tc_nonsfi_helper/lib32/libipc_nacl_nonsfi.a
+build obj/ipc/ipc_nacl_nonsfi.ipc_message_generator.o: cxx $
+    ../../ipc/ipc_message_generator.cc || $
+    gen/tc_nonsfi_helper/lib32/libipc_nacl_nonsfi.a
+build obj/ipc/ipc_nacl_nonsfi.ipc_message_utils.o: cxx $
+    ../../ipc/ipc_message_utils.cc || $
+    gen/tc_nonsfi_helper/lib32/libipc_nacl_nonsfi.a
+build obj/ipc/ipc_nacl_nonsfi.ipc_platform_file.o: cxx $
+    ../../ipc/ipc_platform_file.cc || $
+    gen/tc_nonsfi_helper/lib32/libipc_nacl_nonsfi.a
+build obj/ipc/ipc_nacl_nonsfi.ipc_platform_file_attachment_posix.o: cxx $
+    ../../ipc/ipc_platform_file_attachment_posix.cc || $
+    gen/tc_nonsfi_helper/lib32/libipc_nacl_nonsfi.a
+build obj/ipc/ipc_nacl_nonsfi.ipc_switches.o: cxx ../../ipc/ipc_switches.cc $
+    || gen/tc_nonsfi_helper/lib32/libipc_nacl_nonsfi.a
+build obj/ipc/ipc_nacl_nonsfi.ipc_sync_channel.o: cxx $
+    ../../ipc/ipc_sync_channel.cc || $
+    gen/tc_nonsfi_helper/lib32/libipc_nacl_nonsfi.a
+build obj/ipc/ipc_nacl_nonsfi.ipc_sync_message.o: cxx $
+    ../../ipc/ipc_sync_message.cc || $
+    gen/tc_nonsfi_helper/lib32/libipc_nacl_nonsfi.a
+build obj/ipc/ipc_nacl_nonsfi.ipc_sync_message_filter.o: cxx $
+    ../../ipc/ipc_sync_message_filter.cc || $
+    gen/tc_nonsfi_helper/lib32/libipc_nacl_nonsfi.a
+build obj/ipc/ipc_nacl_nonsfi.message_filter.o: cxx $
+    ../../ipc/message_filter.cc || $
+    gen/tc_nonsfi_helper/lib32/libipc_nacl_nonsfi.a
+build obj/ipc/ipc_nacl_nonsfi.message_filter_router.o: cxx $
+    ../../ipc/message_filter_router.cc || $
+    gen/tc_nonsfi_helper/lib32/libipc_nacl_nonsfi.a
+build obj/ipc/ipc_nacl_nonsfi.placeholder_brokerable_attachment.o: cxx $
+    ../../ipc/placeholder_brokerable_attachment.cc || $
+    gen/tc_nonsfi_helper/lib32/libipc_nacl_nonsfi.a
+

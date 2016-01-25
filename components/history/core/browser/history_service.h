@@ -13,6 +13,7 @@
 #include "base/bind.h"
 #include "base/callback.h"
 #include "base/callback_list.h"
+#include "base/deferred_sequenced_task_runner.h"
 #include "base/files/file_path.h"
 #include "base/logging.h"
 #include "base/memory/ref_counted.h"
@@ -164,6 +165,16 @@ class HistoryService : public syncer::SyncableService, public KeyedService {
   //
   // Note: Virtual needed for mocking.
   virtual void TopHosts(int num_hosts, const TopHostsCallback& callback) const;
+
+  // Returns, for the given URL, a 0-based index into the list produced by
+  // TopHosts(), corresponding to that URL's host. If TopHosts() has not
+  // previously been run, or the host is not in the top kMaxTopHosts, returns
+  // kMaxTopHosts.
+  //
+  // Note: Virtual needed for mocking.
+  virtual void HostRankIfAvailable(
+      const GURL& url,
+      const base::Callback<void(int)>& callback) const;
 
   // Navigation ----------------------------------------------------------------
 
@@ -329,6 +340,20 @@ class HistoryService : public syncer::SyncableService, public KeyedService {
       const VisitFilter& filter,
       bool extended_info,
       const QueryFilteredURLsCallback& callback,
+      base::CancelableTaskTracker* tracker);
+
+  // Statistics ----------------------------------------------------------------
+
+  // Gets the number of URLs as seen in chrome://history within the time range
+  // [|begin_time|, |end_time|). Each URL is counted only once per day. For
+  // determination of the date, timestamps are converted to dates using local
+  // time.
+  typedef base::Callback<void(HistoryCountResult)> GetHistoryCountCallback;
+
+  base::CancelableTaskTracker::TaskId GetHistoryCount(
+      const base::Time& begin_time,
+      const base::Time& end_time,
+      const GetHistoryCountCallback& callback,
       base::CancelableTaskTracker* tracker);
 
   // Database management operations --------------------------------------------
@@ -776,6 +801,9 @@ class HistoryService : public syncer::SyncableService, public KeyedService {
   // Called by our BackendDelegate when there is a problem reading the database.
   void NotifyProfileError(sql::InitStatus init_status);
 
+  // Kicks off the |after_startup_task_runner_|.
+  void OnStartupComplete();
+
   // Call to schedule a given task for running on the history thread with the
   // specified priority. The task will have ownership taken.
   void ScheduleTask(SchedulePriority priority, const base::Closure& task);
@@ -801,6 +829,10 @@ class HistoryService : public syncer::SyncableService, public KeyedService {
   // This pointer will be null once Cleanup() has been called, meaning no
   // more calls should be made to the history thread.
   scoped_refptr<HistoryBackend> history_backend_;
+
+  // A DeferredSequencedTaskRunner that queues up all tasks that should be
+  // performed after startup.
+  scoped_refptr<base::DeferredSequencedTaskRunner> after_startup_task_runner_;
 
   // A cache of the user-typed URLs kept in memory that is used by the
   // autocomplete system. This will be null until the database has been created

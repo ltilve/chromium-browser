@@ -4,6 +4,7 @@
 
 #include "chrome/browser/push_messaging/push_messaging_permission_context.h"
 
+#include "chrome/browser/content_settings/host_content_settings_map_factory.h"
 #include "chrome/browser/notifications/notification_permission_context.h"
 #include "chrome/browser/notifications/notification_permission_context_factory.h"
 #include "chrome/browser/permissions/permission_context_uma_util.h"
@@ -34,7 +35,7 @@ ContentSetting PushMessagingPermissionContext::GetPermissionStatus(
     return CONTENT_SETTING_BLOCK;
 
   ContentSetting push_content_setting =
-      profile_->GetHostContentSettingsMap()->GetContentSetting(
+      HostContentSettingsMapFactory::GetForProfile(profile_)->GetContentSetting(
           requesting_origin, embedding_origin, kPushSettingType, std::string());
 
   NotificationPermissionContext* notification_context =
@@ -59,12 +60,6 @@ ContentSetting PushMessagingPermissionContext::GetPermissionStatus(
 #else
   return CONTENT_SETTING_BLOCK;
 #endif
-}
-
-void PushMessagingPermissionContext::CancelPermissionRequest(
-    content::WebContents* web_contents, const PermissionRequestID& id) {
-  // TODO(peter): consider implementing this method.
-  NOTIMPLEMENTED() << "CancelPermission not implemented for push messaging";
 }
 
 // Unlike other permissions, push is decided by the following algorithm
@@ -115,7 +110,7 @@ void PushMessagingPermissionContext::DecidePushPermission(
     ContentSetting notification_content_setting) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   ContentSetting push_content_setting =
-      profile_->GetHostContentSettingsMap()
+      HostContentSettingsMapFactory::GetForProfile(profile_)
           ->GetContentSettingAndMaybeUpdateLastUsage(
               requesting_origin, embedding_origin, kPushSettingType,
               std::string());

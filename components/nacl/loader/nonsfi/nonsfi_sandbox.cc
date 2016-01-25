@@ -22,6 +22,7 @@
 #include "sandbox/linux/seccomp-bpf-helpers/sigsys_handlers.h"
 #include "sandbox/linux/seccomp-bpf-helpers/syscall_parameters_restrictions.h"
 #include "sandbox/linux/system_headers/linux_futex.h"
+#include "sandbox/linux/system_headers/linux_signal.h"
 #include "sandbox/linux/system_headers/linux_syscalls.h"
 
 // Chrome OS Daisy (ARM) build environment and PNaCl toolchain do not define
@@ -29,10 +30,11 @@
 #if !defined(MAP_STACK)
 # if defined(ARCH_CPU_X86_FAMILY) || defined(ARCH_CPU_ARM_FAMILY)
 #  define MAP_STACK 0x20000
+# elif defined(ARCH_CPU_MIPS_FAMILY)
+#  define MAP_STACK 0x40000
 # else
-// Note that, on other architecture, MAP_STACK has different value (e.g. mips'
-// MAP_STACK is 0x40000), though Non-SFI is not supported on such
-// architectures.
+// Note that, on other architectures, MAP_STACK has different value,
+// though Non-SFI is not supported on such architectures.
 #  error "Unknown platform."
 # endif
 #endif  // !defined(MAP_STACK)
@@ -78,9 +80,9 @@ ResultExpr RestrictClone() {
   // We allow clone only for new thread creation.
   int clone_flags =
       CLONE_VM | CLONE_FS | CLONE_FILES | CLONE_SIGHAND |
-      CLONE_THREAD | CLONE_SYSVSEM | CLONE_SETTLS;
+      CLONE_THREAD | CLONE_SYSVSEM | CLONE_SETTLS | CLONE_PARENT_SETTID;
 #if !defined(OS_NACL_NONSFI)
-  clone_flags |= CLONE_PARENT_SETTID | CLONE_CHILD_CLEARTID;
+  clone_flags |= CLONE_CHILD_CLEARTID;
 #endif
   const Arg<int> flags(0);
   return If(flags == clone_flags, Allow()).Else(CrashSIGSYSClone());
@@ -143,6 +145,18 @@ ResultExpr RestrictMmap() {
   const uint64_t kAllowedProtMask = PROT_READ | PROT_WRITE;
   const Arg<int> prot(2), flags(3);
   return If((prot & ~kAllowedProtMask) == 0 && (flags & ~kAllowedFlagMask) == 0,
+            Allow()).Else(CrashSIGSYS());
+}
+
+ResultExpr RestrictTgkill(int policy_pid) {
+  const Arg<int> tgid(0), tid(1), signum(2);
+  // Only sending SIGUSR1 to a thread in the same process is allowed.
+  return If(tgid == policy_pid &&
+            // Arg does not support a greater-than operator, so two separate
+            // checks are needed to ensure tid is positive.
+            tid != 0 &&
+            (tid & (1u << 31)) == 0 &&  // tid is non-negative.
+            signum == LINUX_SIGUSR1,
             Allow()).Else(CrashSIGSYS());
 }
 
@@ -210,6 +224,16 @@ void RunSandboxSanityChecks() {
 }
 
 }  // namespace
+
+NaClNonSfiBPFSandboxPolicy::NaClNonSfiBPFSandboxPolicy()
+    : policy_pid_(getpid()) {
+}
+
+NaClNonSfiBPFSandboxPolicy::~NaClNonSfiBPFSandboxPolicy() {
+  // Make sure that this policy is created, used and destroyed by a single
+  // process.
+  DCHECK_EQ(getpid(), policy_pid_);
+}
 
 ResultExpr NaClNonSfiBPFSandboxPolicy::EvaluateSyscall(int sysno) const {
   switch (sysno) {
@@ -303,6 +327,9 @@ ResultExpr NaClNonSfiBPFSandboxPolicy::EvaluateSyscall(int sysno) const {
       return RestrictSocketpair();
 #endif
 #endif
+
+    case __NR_tgkill:
+      return RestrictTgkill(policy_pid_);
 
     case __NR_brk:
       // The behavior of brk on Linux is different from other system

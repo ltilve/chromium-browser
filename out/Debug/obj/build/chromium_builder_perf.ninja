@@ -1,0 +1,17 @@
+build obj/build/chromium_builder_perf.actions_depends.stamp: stamp $
+    cc_perftests chrome load_library_perf_tests performance_browser_tests $
+    sync_performance_tests content_shell gpu_perftests media_perftests $
+    midi_unittests clear_system_cache bitmaptools minidump_stackwalk
+
+build obj/build/chromium_builder_perf.compile_depends.stamp: stamp $
+    obj/cc/cc_perftests.compile_depends.stamp $
+    obj/chrome/chrome_initial.actions_rules_copies.stamp $
+    obj/chrome/load_library_perf_tests.compile_depends.stamp $
+    obj/chrome/performance_browser_tests.compile_depends.stamp $
+    obj/chrome/sync_performance_tests.compile_depends.stamp $
+    obj/content/content_shell.compile_depends.stamp $
+    obj/gpu/gpu_perftests.compile_depends.stamp $
+    obj/media/media_perftests.compile_depends.stamp $
+    obj/media/midi/midi_unittests.compile_depends.stamp $
+    obj/tools/perf/clear_system_cache/clear_system_cache.compile_depends.stamp
+

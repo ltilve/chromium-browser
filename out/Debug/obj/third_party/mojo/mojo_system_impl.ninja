@@ -1,0 +1,271 @@
+defines = -DV8_DEPRECATION_WARNINGS -DCLD_VERSION=2 -D_FILE_OFFSET_BITS=64 $
+    -DCHROMIUM_BUILD -DCR_CLANG_REVISION=255169-1 $
+    -DUI_COMPOSITOR_IMAGE_TRANSPORT -DUSE_AURA=1 -DUSE_ASH=1 -DUSE_PANGO=1 $
+    -DUSE_CAIRO=1 -DUSE_DEFAULT_RENDER_THEME=1 -DUSE_LIBJPEG_TURBO=1 $
+    -DUSE_X11=1 -DUSE_CLIPBOARD_AURAX11=1 -DENABLE_ONE_CLICK_SIGNIN $
+    -DENABLE_WEBRTC=1 -DENABLE_MEDIA_ROUTER=1 -DENABLE_PEPPER_CDMS $
+    -DENABLE_CONFIGURATION_POLICY -DENABLE_NOTIFICATIONS -DENABLE_HIDPI=1 $
+    -DENABLE_TOPCHROME_MD=1 -DUSE_UDEV -DDONT_EMBED_BUILD_METADATA $
+    -DFIELDTRIAL_TESTING_ENABLED -DENABLE_TASK_MANAGER=1 $
+    -DENABLE_EXTENSIONS=1 -DENABLE_PDF=1 -DENABLE_PLUGINS=1 $
+    -DENABLE_SESSION_SERVICE=1 -DENABLE_THEMES=1 -DENABLE_AUTOFILL_DIALOG=1 $
+    -DENABLE_BACKGROUND=1 -DENABLE_PRINTING=1 -DENABLE_BASIC_PRINTING=1 $
+    -DENABLE_PRINT_PREVIEW=1 -DENABLE_SPELLCHECK=1 $
+    -DENABLE_CAPTIVE_PORTAL_DETECTION=1 -DENABLE_APP_LIST=1 $
+    -DENABLE_SETTINGS_APP=1 -DENABLE_SUPERVISED_USERS=1 -DENABLE_MDNS=1 $
+    -DENABLE_SERVICE_DISCOVERY=1 -DV8_USE_EXTERNAL_STARTUP_DATA $
+    -DFULL_SAFE_BROWSING -DSAFE_BROWSING_CSD -DSAFE_BROWSING_DB_LOCAL $
+    -DMOJO_SYSTEM_IMPL_IMPLEMENTATION -DMOJO_SYSTEM_IMPLEMENTATION $
+    -DMOJO_USE_SYSTEM_IMPL -DUSE_LIBPCI=1 -DUSE_OPENSSL=1 -DUSE_GLIB=1 $
+    -DUSE_NSS_CERTS=1 -D__STDC_CONSTANT_MACROS -D__STDC_FORMAT_MACROS $
+    -DDYNAMIC_ANNOTATIONS_ENABLED=1 -DWTF_USE_DYNAMIC_ANNOTATIONS=1 $
+    -D_DEBUG -D_GLIBCXX_DEBUG=1
+includes = -I../.. -Igen
+cflags = -fstack-protector --param=ssp-buffer-size=4 -Werror -pthread $
+    -fno-strict-aliasing -Wall -Wno-unused-parameter $
+    -Wno-missing-field-initializers -fvisibility=hidden -pipe -fPIC $
+    -Wno-reserved-user-defined-literal -Xclang -load -Xclang $
+    /b/build/slave/publish_tarball/build/src/third_party/llvm-build/Release+Asserts/lib/libFindBadConstructs.so $
+    -Xclang -add-plugin -Xclang find-bad-constructs -Xclang $
+    -plugin-arg-find-bad-constructs -Xclang check-templates $
+    -fcolor-diagnostics $
+    -B/b/build/slave/publish_tarball/build/src/third_party/binutils/Linux_x64/Release/bin $
+    -Wheader-hygiene -Wno-char-subscripts $
+    -Wno-unneeded-internal-declaration -Wno-covered-switch-default $
+    -Wstring-conversion -Wno-c++11-narrowing -Wno-deprecated-register $
+    -Wno-inconsistent-missing-override -Wno-shift-negative-value $
+    -Wno-bitfield-width -pthread $
+    -I/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/include/glib-2.0 $
+    -I/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/lib/x86_64-linux-gnu/glib-2.0/include $
+    -m64 -march=x86-64 $
+    --sysroot=/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot $
+    -O0 -g -funwind-tables -gsplit-dwarf -Wno-undefined-bool-conversion $
+    -Wno-tautological-undefined-compare
+cflags_c = 
+cflags_cc = -fno-exceptions -fno-rtti -fno-threadsafe-statics $
+    -fvisibility-inlines-hidden -Wsign-compare -std=gnu++11
+arflags = 
+
+build $
+    obj/third_party/mojo/src/mojo/edk/embedder/mojo_system_impl.embedder.o: $
+    cxx ../../third_party/mojo/src/mojo/edk/embedder/embedder.cc
+build $
+    obj/third_party/mojo/src/mojo/edk/embedder/mojo_system_impl.entrypoints.o: $
+    cxx ../../third_party/mojo/src/mojo/edk/embedder/entrypoints.cc
+build $
+    obj/third_party/mojo/src/mojo/edk/embedder/mojo_system_impl.platform_channel_pair.o: $
+    cxx ../../third_party/mojo/src/mojo/edk/embedder/platform_channel_pair.cc
+build $
+    obj/third_party/mojo/src/mojo/edk/embedder/mojo_system_impl.platform_channel_pair_posix.o: $
+    cxx $
+    ../../third_party/mojo/src/mojo/edk/embedder/platform_channel_pair_posix.cc
+build $
+    obj/third_party/mojo/src/mojo/edk/embedder/mojo_system_impl.platform_channel_utils_posix.o: $
+    cxx $
+    ../../third_party/mojo/src/mojo/edk/embedder/platform_channel_utils_posix.cc
+build $
+    obj/third_party/mojo/src/mojo/edk/embedder/mojo_system_impl.platform_handle.o: $
+    cxx ../../third_party/mojo/src/mojo/edk/embedder/platform_handle.cc
+build $
+    obj/third_party/mojo/src/mojo/edk/embedder/mojo_system_impl.platform_handle_utils_posix.o: $
+    cxx $
+    ../../third_party/mojo/src/mojo/edk/embedder/platform_handle_utils_posix.cc
+build $
+    obj/third_party/mojo/src/mojo/edk/embedder/mojo_system_impl.simple_platform_shared_buffer.o: $
+    cxx $
+    ../../third_party/mojo/src/mojo/edk/embedder/simple_platform_shared_buffer.cc
+build $
+    obj/third_party/mojo/src/mojo/edk/embedder/mojo_system_impl.simple_platform_shared_buffer_posix.o: $
+    cxx $
+    ../../third_party/mojo/src/mojo/edk/embedder/simple_platform_shared_buffer_posix.cc
+build $
+    obj/third_party/mojo/src/mojo/edk/embedder/mojo_system_impl.simple_platform_support.o: $
+    cxx $
+    ../../third_party/mojo/src/mojo/edk/embedder/simple_platform_support.cc
+build $
+    obj/third_party/mojo/src/mojo/edk/system/mojo_system_impl.awakable_list.o: $
+    cxx ../../third_party/mojo/src/mojo/edk/system/awakable_list.cc
+build $
+    obj/third_party/mojo/src/mojo/edk/system/mojo_system_impl.async_waiter.o: $
+    cxx ../../third_party/mojo/src/mojo/edk/system/async_waiter.cc
+build obj/third_party/mojo/src/mojo/edk/system/mojo_system_impl.channel.o: $
+    cxx ../../third_party/mojo/src/mojo/edk/system/channel.cc
+build $
+    obj/third_party/mojo/src/mojo/edk/system/mojo_system_impl.channel_endpoint.o: $
+    cxx ../../third_party/mojo/src/mojo/edk/system/channel_endpoint.cc
+build $
+    obj/third_party/mojo/src/mojo/edk/system/mojo_system_impl.channel_endpoint_id.o: $
+    cxx ../../third_party/mojo/src/mojo/edk/system/channel_endpoint_id.cc
+build $
+    obj/third_party/mojo/src/mojo/edk/system/mojo_system_impl.channel_manager.o: $
+    cxx ../../third_party/mojo/src/mojo/edk/system/channel_manager.cc
+build $
+    obj/third_party/mojo/src/mojo/edk/system/mojo_system_impl.configuration.o: $
+    cxx ../../third_party/mojo/src/mojo/edk/system/configuration.cc
+build $
+    obj/third_party/mojo/src/mojo/edk/system/mojo_system_impl.connection_manager.o: $
+    cxx ../../third_party/mojo/src/mojo/edk/system/connection_manager.cc
+build obj/third_party/mojo/src/mojo/edk/system/mojo_system_impl.core.o: cxx $
+    ../../third_party/mojo/src/mojo/edk/system/core.cc
+build $
+    obj/third_party/mojo/src/mojo/edk/system/mojo_system_impl.data_pipe.o: $
+    cxx ../../third_party/mojo/src/mojo/edk/system/data_pipe.cc
+build $
+    obj/third_party/mojo/src/mojo/edk/system/mojo_system_impl.data_pipe_consumer_dispatcher.o: $
+    cxx $
+    ../../third_party/mojo/src/mojo/edk/system/data_pipe_consumer_dispatcher.cc
+build $
+    obj/third_party/mojo/src/mojo/edk/system/mojo_system_impl.data_pipe_impl.o: $
+    cxx ../../third_party/mojo/src/mojo/edk/system/data_pipe_impl.cc
+build $
+    obj/third_party/mojo/src/mojo/edk/system/mojo_system_impl.data_pipe_producer_dispatcher.o: $
+    cxx $
+    ../../third_party/mojo/src/mojo/edk/system/data_pipe_producer_dispatcher.cc
+build $
+    obj/third_party/mojo/src/mojo/edk/system/mojo_system_impl.dispatcher.o: $
+    cxx ../../third_party/mojo/src/mojo/edk/system/dispatcher.cc
+build $
+    obj/third_party/mojo/src/mojo/edk/system/mojo_system_impl.endpoint_relayer.o: $
+    cxx ../../third_party/mojo/src/mojo/edk/system/endpoint_relayer.cc
+build $
+    obj/third_party/mojo/src/mojo/edk/system/mojo_system_impl.handle_table.o: $
+    cxx ../../third_party/mojo/src/mojo/edk/system/handle_table.cc
+build $
+    obj/third_party/mojo/src/mojo/edk/system/mojo_system_impl.incoming_endpoint.o: $
+    cxx ../../third_party/mojo/src/mojo/edk/system/incoming_endpoint.cc
+build $
+    obj/third_party/mojo/src/mojo/edk/system/mojo_system_impl.ipc_support.o: $
+    cxx ../../third_party/mojo/src/mojo/edk/system/ipc_support.cc
+build $
+    obj/third_party/mojo/src/mojo/edk/system/mojo_system_impl.local_data_pipe_impl.o: $
+    cxx ../../third_party/mojo/src/mojo/edk/system/local_data_pipe_impl.cc
+build $
+    obj/third_party/mojo/src/mojo/edk/system/mojo_system_impl.local_message_pipe_endpoint.o: $
+    cxx $
+    ../../third_party/mojo/src/mojo/edk/system/local_message_pipe_endpoint.cc
+build $
+    obj/third_party/mojo/src/mojo/edk/system/mojo_system_impl.mapping_table.o: $
+    cxx ../../third_party/mojo/src/mojo/edk/system/mapping_table.cc
+build $
+    obj/third_party/mojo/src/mojo/edk/system/mojo_system_impl.master_connection_manager.o: $
+    cxx $
+    ../../third_party/mojo/src/mojo/edk/system/master_connection_manager.cc
+build obj/third_party/mojo/src/mojo/edk/system/mojo_system_impl.memory.o: $
+    cxx ../../third_party/mojo/src/mojo/edk/system/memory.cc
+build $
+    obj/third_party/mojo/src/mojo/edk/system/mojo_system_impl.message_in_transit.o: $
+    cxx ../../third_party/mojo/src/mojo/edk/system/message_in_transit.cc
+build $
+    obj/third_party/mojo/src/mojo/edk/system/mojo_system_impl.message_in_transit_queue.o: $
+    cxx ../../third_party/mojo/src/mojo/edk/system/message_in_transit_queue.cc
+build $
+    obj/third_party/mojo/src/mojo/edk/system/mojo_system_impl.message_pipe.o: $
+    cxx ../../third_party/mojo/src/mojo/edk/system/message_pipe.cc
+build $
+    obj/third_party/mojo/src/mojo/edk/system/mojo_system_impl.message_pipe_dispatcher.o: $
+    cxx ../../third_party/mojo/src/mojo/edk/system/message_pipe_dispatcher.cc
+build $
+    obj/third_party/mojo/src/mojo/edk/system/mojo_system_impl.message_pipe_endpoint.o: $
+    cxx ../../third_party/mojo/src/mojo/edk/system/message_pipe_endpoint.cc
+build obj/third_party/mojo/src/mojo/edk/system/mojo_system_impl.mutex.o: $
+    cxx ../../third_party/mojo/src/mojo/edk/system/mutex.cc
+build $
+    obj/third_party/mojo/src/mojo/edk/system/mojo_system_impl.platform_handle_dispatcher.o: $
+    cxx $
+    ../../third_party/mojo/src/mojo/edk/system/platform_handle_dispatcher.cc
+build $
+    obj/third_party/mojo/src/mojo/edk/system/mojo_system_impl.proxy_message_pipe_endpoint.o: $
+    cxx $
+    ../../third_party/mojo/src/mojo/edk/system/proxy_message_pipe_endpoint.cc
+build $
+    obj/third_party/mojo/src/mojo/edk/system/mojo_system_impl.remote_consumer_data_pipe_impl.o: $
+    cxx $
+    ../../third_party/mojo/src/mojo/edk/system/remote_consumer_data_pipe_impl.cc
+build $
+    obj/third_party/mojo/src/mojo/edk/system/mojo_system_impl.remote_producer_data_pipe_impl.o: $
+    cxx $
+    ../../third_party/mojo/src/mojo/edk/system/remote_producer_data_pipe_impl.cc
+build $
+    obj/third_party/mojo/src/mojo/edk/system/mojo_system_impl.raw_channel.o: $
+    cxx ../../third_party/mojo/src/mojo/edk/system/raw_channel.cc
+build $
+    obj/third_party/mojo/src/mojo/edk/system/mojo_system_impl.raw_channel_posix.o: $
+    cxx ../../third_party/mojo/src/mojo/edk/system/raw_channel_posix.cc
+build $
+    obj/third_party/mojo/src/mojo/edk/system/mojo_system_impl.shared_buffer_dispatcher.o: $
+    cxx ../../third_party/mojo/src/mojo/edk/system/shared_buffer_dispatcher.cc
+build $
+    obj/third_party/mojo/src/mojo/edk/system/mojo_system_impl.simple_dispatcher.o: $
+    cxx ../../third_party/mojo/src/mojo/edk/system/simple_dispatcher.cc
+build $
+    obj/third_party/mojo/src/mojo/edk/system/mojo_system_impl.slave_connection_manager.o: $
+    cxx ../../third_party/mojo/src/mojo/edk/system/slave_connection_manager.cc
+build $
+    obj/third_party/mojo/src/mojo/edk/system/mojo_system_impl.transport_data.o: $
+    cxx ../../third_party/mojo/src/mojo/edk/system/transport_data.cc
+build $
+    obj/third_party/mojo/src/mojo/edk/system/mojo_system_impl.unique_identifier.o: $
+    cxx ../../third_party/mojo/src/mojo/edk/system/unique_identifier.cc
+build $
+    obj/third_party/mojo/src/mojo/edk/system/mojo_system_impl.wait_set_dispatcher.o: $
+    cxx ../../third_party/mojo/src/mojo/edk/system/wait_set_dispatcher.cc
+build obj/third_party/mojo/src/mojo/edk/system/mojo_system_impl.waiter.o: $
+    cxx ../../third_party/mojo/src/mojo/edk/system/waiter.cc
+build $
+    obj/third_party/mojo/src/mojo/edk/embedder/mojo_system_impl.test_embedder.o: $
+    cxx ../../third_party/mojo/src/mojo/edk/embedder/test_embedder.cc
+
+build obj/third_party/mojo/libmojo_system_impl.a: alink_thin $
+    obj/third_party/mojo/src/mojo/edk/embedder/mojo_system_impl.embedder.o $
+    obj/third_party/mojo/src/mojo/edk/embedder/mojo_system_impl.entrypoints.o $
+    obj/third_party/mojo/src/mojo/edk/embedder/mojo_system_impl.platform_channel_pair.o $
+    obj/third_party/mojo/src/mojo/edk/embedder/mojo_system_impl.platform_channel_pair_posix.o $
+    obj/third_party/mojo/src/mojo/edk/embedder/mojo_system_impl.platform_channel_utils_posix.o $
+    obj/third_party/mojo/src/mojo/edk/embedder/mojo_system_impl.platform_handle.o $
+    obj/third_party/mojo/src/mojo/edk/embedder/mojo_system_impl.platform_handle_utils_posix.o $
+    obj/third_party/mojo/src/mojo/edk/embedder/mojo_system_impl.simple_platform_shared_buffer.o $
+    obj/third_party/mojo/src/mojo/edk/embedder/mojo_system_impl.simple_platform_shared_buffer_posix.o $
+    obj/third_party/mojo/src/mojo/edk/embedder/mojo_system_impl.simple_platform_support.o $
+    obj/third_party/mojo/src/mojo/edk/system/mojo_system_impl.awakable_list.o $
+    obj/third_party/mojo/src/mojo/edk/system/mojo_system_impl.async_waiter.o $
+    obj/third_party/mojo/src/mojo/edk/system/mojo_system_impl.channel.o $
+    obj/third_party/mojo/src/mojo/edk/system/mojo_system_impl.channel_endpoint.o $
+    obj/third_party/mojo/src/mojo/edk/system/mojo_system_impl.channel_endpoint_id.o $
+    obj/third_party/mojo/src/mojo/edk/system/mojo_system_impl.channel_manager.o $
+    obj/third_party/mojo/src/mojo/edk/system/mojo_system_impl.configuration.o $
+    obj/third_party/mojo/src/mojo/edk/system/mojo_system_impl.connection_manager.o $
+    obj/third_party/mojo/src/mojo/edk/system/mojo_system_impl.core.o $
+    obj/third_party/mojo/src/mojo/edk/system/mojo_system_impl.data_pipe.o $
+    obj/third_party/mojo/src/mojo/edk/system/mojo_system_impl.data_pipe_consumer_dispatcher.o $
+    obj/third_party/mojo/src/mojo/edk/system/mojo_system_impl.data_pipe_impl.o $
+    obj/third_party/mojo/src/mojo/edk/system/mojo_system_impl.data_pipe_producer_dispatcher.o $
+    obj/third_party/mojo/src/mojo/edk/system/mojo_system_impl.dispatcher.o $
+    obj/third_party/mojo/src/mojo/edk/system/mojo_system_impl.endpoint_relayer.o $
+    obj/third_party/mojo/src/mojo/edk/system/mojo_system_impl.handle_table.o $
+    obj/third_party/mojo/src/mojo/edk/system/mojo_system_impl.incoming_endpoint.o $
+    obj/third_party/mojo/src/mojo/edk/system/mojo_system_impl.ipc_support.o $
+    obj/third_party/mojo/src/mojo/edk/system/mojo_system_impl.local_data_pipe_impl.o $
+    obj/third_party/mojo/src/mojo/edk/system/mojo_system_impl.local_message_pipe_endpoint.o $
+    obj/third_party/mojo/src/mojo/edk/system/mojo_system_impl.mapping_table.o $
+    obj/third_party/mojo/src/mojo/edk/system/mojo_system_impl.master_connection_manager.o $
+    obj/third_party/mojo/src/mojo/edk/system/mojo_system_impl.memory.o $
+    obj/third_party/mojo/src/mojo/edk/system/mojo_system_impl.message_in_transit.o $
+    obj/third_party/mojo/src/mojo/edk/system/mojo_system_impl.message_in_transit_queue.o $
+    obj/third_party/mojo/src/mojo/edk/system/mojo_system_impl.message_pipe.o $
+    obj/third_party/mojo/src/mojo/edk/system/mojo_system_impl.message_pipe_dispatcher.o $
+    obj/third_party/mojo/src/mojo/edk/system/mojo_system_impl.message_pipe_endpoint.o $
+    obj/third_party/mojo/src/mojo/edk/system/mojo_system_impl.mutex.o $
+    obj/third_party/mojo/src/mojo/edk/system/mojo_system_impl.platform_handle_dispatcher.o $
+    obj/third_party/mojo/src/mojo/edk/system/mojo_system_impl.proxy_message_pipe_endpoint.o $
+    obj/third_party/mojo/src/mojo/edk/system/mojo_system_impl.remote_consumer_data_pipe_impl.o $
+    obj/third_party/mojo/src/mojo/edk/system/mojo_system_impl.remote_producer_data_pipe_impl.o $
+    obj/third_party/mojo/src/mojo/edk/system/mojo_system_impl.raw_channel.o $
+    obj/third_party/mojo/src/mojo/edk/system/mojo_system_impl.raw_channel_posix.o $
+    obj/third_party/mojo/src/mojo/edk/system/mojo_system_impl.shared_buffer_dispatcher.o $
+    obj/third_party/mojo/src/mojo/edk/system/mojo_system_impl.simple_dispatcher.o $
+    obj/third_party/mojo/src/mojo/edk/system/mojo_system_impl.slave_connection_manager.o $
+    obj/third_party/mojo/src/mojo/edk/system/mojo_system_impl.transport_data.o $
+    obj/third_party/mojo/src/mojo/edk/system/mojo_system_impl.unique_identifier.o $
+    obj/third_party/mojo/src/mojo/edk/system/mojo_system_impl.wait_set_dispatcher.o $
+    obj/third_party/mojo/src/mojo/edk/system/mojo_system_impl.waiter.o $
+    obj/third_party/mojo/src/mojo/edk/embedder/mojo_system_impl.test_embedder.o

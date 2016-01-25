@@ -60,6 +60,8 @@ class PresentationServiceDelegateImplTest
 };
 
 TEST_F(PresentationServiceDelegateImplTest, AddScreenAvailabilityListener) {
+  ON_CALL(router_, RegisterMediaSinksObserver(_)).WillByDefault(Return(true));
+
   std::string presentation_url1("http://url1");
   std::string presentation_url2("http://url2");
   MediaSource source1 = MediaSourceForPresentationUrl(presentation_url1);
@@ -94,6 +96,8 @@ TEST_F(PresentationServiceDelegateImplTest, AddScreenAvailabilityListener) {
 }
 
 TEST_F(PresentationServiceDelegateImplTest, AddSameListenerTwice) {
+  ON_CALL(router_, RegisterMediaSinksObserver(_)).WillByDefault(Return(true));
+
   std::string presentation_url1("http://url1");
   MediaSource source1(MediaSourceForPresentationUrl(presentation_url1));
   MockScreenAvailabilityListener listener1(presentation_url1);
@@ -125,21 +129,18 @@ TEST_F(PresentationServiceDelegateImplTest, SetDefaultPresentationUrl) {
 
   std::string presentation_url1("http://foo");
   delegate_impl_->SetDefaultPresentationUrl(render_process_id, routing_id,
-                                            presentation_url1,
-                                            "defaultPresentationId");
+                                            presentation_url1);
   EXPECT_TRUE(delegate_impl_->default_source().Equals(
       MediaSourceForPresentationUrl(presentation_url1)));
 
   // Remove default presentation URL.
-  delegate_impl_->SetDefaultPresentationUrl(render_process_id, routing_id, "",
-                                            "");
+  delegate_impl_->SetDefaultPresentationUrl(render_process_id, routing_id, "");
   EXPECT_TRUE(delegate_impl_->default_source().Empty());
 
   // Set to a new default presentation URL
   std::string presentation_url2("https://youtube.com");
   delegate_impl_->SetDefaultPresentationUrl(render_process_id, routing_id,
-                                            presentation_url2,
-                                            "defaultPresentationId");
+                                            presentation_url2);
   EXPECT_TRUE(delegate_impl_->default_source().Equals(
       MediaSourceForPresentationUrl(presentation_url2)));
 }
@@ -162,8 +163,8 @@ TEST_F(PresentationServiceDelegateImplTest, DefaultMediaSourceObserver) {
   EXPECT_CALL(observer2, OnDefaultMediaSourceChanged(
                              Equals(MediaSourceForPresentationUrl(url1)),
                              GURL("http://www.google.com"))).Times(1);
-  delegate_impl_->SetDefaultPresentationUrl(render_process_id, routing_id, url1,
-                                            "defaultPresentationId");
+  delegate_impl_->SetDefaultPresentationUrl(render_process_id,
+                                            routing_id, url1);
 
   EXPECT_TRUE(Mock::VerifyAndClearExpectations(&observer1));
   EXPECT_TRUE(Mock::VerifyAndClearExpectations(&observer2));
@@ -173,19 +174,20 @@ TEST_F(PresentationServiceDelegateImplTest, DefaultMediaSourceObserver) {
   EXPECT_CALL(observer1, OnDefaultMediaSourceChanged(
                              Equals(MediaSourceForPresentationUrl(url2)),
                              GURL("http://www.google.com"))).Times(1);
-  delegate_impl_->SetDefaultPresentationUrl(render_process_id, routing_id, url2,
-                                            "defaultPresentationId");
+  delegate_impl_->SetDefaultPresentationUrl(render_process_id,
+                                            routing_id, url2);
 
   EXPECT_TRUE(Mock::VerifyAndClearExpectations(&observer1));
   // Remove default presentation URL.
   EXPECT_CALL(observer1, OnDefaultMediaSourceChanged(
                              Equals(MediaSource()),
                              GURL("http://www.google.com"))).Times(1);
-  delegate_impl_->SetDefaultPresentationUrl(render_process_id, routing_id, "",
-                                            "");
+  delegate_impl_->SetDefaultPresentationUrl(render_process_id, routing_id, "");
 }
 
 TEST_F(PresentationServiceDelegateImplTest, Reset) {
+  ON_CALL(router_, RegisterMediaSinksObserver(_)).WillByDefault(Return(true));
+
   std::string presentation_url1("http://url1");
   MediaSource source = MediaSourceForPresentationUrl(presentation_url1);
   MockScreenAvailabilityListener listener1(presentation_url1);
@@ -218,6 +220,19 @@ TEST_F(PresentationServiceDelegateImplTest, DelegateObservers) {
 
   EXPECT_CALL(delegate_observer1, OnDelegateDestroyed()).Times(1);
   manager.reset();
+}
+
+TEST_F(PresentationServiceDelegateImplTest, SinksObserverCantRegister) {
+  ON_CALL(router_, RegisterMediaSinksObserver(_)).WillByDefault(Return(false));
+
+  const std::string presentation_url("http://url1");
+  MockScreenAvailabilityListener listener(presentation_url);
+  const int render_process_id = 10;
+  const int render_frame_id = 1;
+
+  EXPECT_CALL(router_, RegisterMediaSinksObserver(_)).Times(1);
+  EXPECT_FALSE(delegate_impl_->AddScreenAvailabilityListener(
+      render_process_id, render_frame_id, &listener));
 }
 
 }  // namespace media_router

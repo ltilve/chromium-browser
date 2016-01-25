@@ -1,0 +1,9 @@
+build obj/build/blink_tests.actions_depends.stamp: stamp $
+    obj/third_party/WebKit/public/all_blink.actions_depends.stamp $
+    content_shell image_diff minidump_stackwalk dump_syms
+
+build obj/build/blink_tests.compile_depends.stamp: stamp $
+    obj/third_party/WebKit/public/all_blink.compile_depends.stamp $
+    obj/content/content_shell.compile_depends.stamp $
+    obj/tools/imagediff/image_diff.compile_depends.stamp
+

@@ -39,7 +39,6 @@ class SkCanvas;
 namespace blink {
 class WebAXObject;
 class WebAudioDevice;
-class WebCachedURLRequest;
 class WebColorChooser;
 class WebColorChooserClient;
 class WebDataSource;
@@ -205,13 +204,10 @@ class TEST_RUNNER_EXPORT WebTestProxyBase {
                    blink::WebHistoryCommitType commit_type);
   void DidFinishLoad(blink::WebLocalFrame* frame);
   void DidChangeLocationWithinPage(blink::WebLocalFrame* frame);
-  void DidDetectXSS(blink::WebLocalFrame* frame,
-                    const blink::WebURL& insecure_url,
+  void DidDetectXSS(const blink::WebURL& insecure_url,
                     bool did_block_entire_page);
   void DidDispatchPingLoader(blink::WebLocalFrame* frame,
                              const blink::WebURL& url);
-  void WillRequestResource(blink::WebLocalFrame* frame,
-                           const blink::WebCachedURLRequest& url_request);
   void WillSendRequest(blink::WebLocalFrame* frame,
                        unsigned identifier,
                        blink::WebURLRequest& request,
@@ -302,10 +298,10 @@ class TEST_RUNNER_EXPORT WebTestProxyBase {
 // RenderWidget. It's safe to ignore that warning.
 #pragma warning(disable: 4250)
 #endif
-template <class Base, typename T>
+template <class Base, typename... Args>
 class WebTestProxy : public Base, public WebTestProxyBase {
  public:
-  explicit WebTestProxy(T t) : Base(t) {}
+  explicit WebTestProxy(Args... args) : Base(args...) {}
 
   // WebWidgetClient implementation.
   virtual blink::WebScreenInfo screenInfo() {

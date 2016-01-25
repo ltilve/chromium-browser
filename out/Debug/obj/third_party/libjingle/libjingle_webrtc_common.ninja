@@ -1,0 +1,320 @@
+defines = -DENABLE_EXTERNAL_AUTH -DEXPAT_RELATIVE_PATH -DFEATURE_ENABLE_SSL $
+    -DGTEST_RELATIVE_PATH -DHAVE_OPENSSL_SSL_H -DHAVE_SRTP $
+    -DHAVE_WEBRTC_VIDEO -DHAVE_WEBRTC_VOICE -DLOGGING_INSIDE_WEBRTC $
+    -DNO_MAIN_THREAD_WRAPPING -DNO_SOUND_SYSTEM -DSRTP_RELATIVE_PATH $
+    -DSSL_USE_OPENSSL -DUSE_WEBRTC_DEV_BRANCH -DWEBRTC_CHROMIUM_BUILD $
+    -DV8_DEPRECATION_WARNINGS -DCLD_VERSION=2 -D_FILE_OFFSET_BITS=64 $
+    -DLINUX -DWEBRTC_LINUX -DWEBRTC_POSIX -DCHROMIUM_BUILD $
+    -DCR_CLANG_REVISION=255169-1 -DUI_COMPOSITOR_IMAGE_TRANSPORT $
+    -DUSE_AURA=1 -DUSE_ASH=1 -DUSE_PANGO=1 -DUSE_CAIRO=1 $
+    -DUSE_DEFAULT_RENDER_THEME=1 -DUSE_LIBJPEG_TURBO=1 -DUSE_X11=1 $
+    -DUSE_CLIPBOARD_AURAX11=1 -DENABLE_ONE_CLICK_SIGNIN -DENABLE_WEBRTC=1 $
+    -DENABLE_MEDIA_ROUTER=1 -DENABLE_PEPPER_CDMS $
+    -DENABLE_CONFIGURATION_POLICY -DENABLE_NOTIFICATIONS -DENABLE_HIDPI=1 $
+    -DENABLE_TOPCHROME_MD=1 -DUSE_UDEV -DDONT_EMBED_BUILD_METADATA $
+    -DFIELDTRIAL_TESTING_ENABLED -DENABLE_TASK_MANAGER=1 $
+    -DENABLE_EXTENSIONS=1 -DENABLE_PDF=1 -DENABLE_PLUGINS=1 $
+    -DENABLE_SESSION_SERVICE=1 -DENABLE_THEMES=1 -DENABLE_AUTOFILL_DIALOG=1 $
+    -DENABLE_BACKGROUND=1 -DENABLE_PRINTING=1 -DENABLE_BASIC_PRINTING=1 $
+    -DENABLE_PRINT_PREVIEW=1 -DENABLE_SPELLCHECK=1 $
+    -DENABLE_CAPTIVE_PORTAL_DETECTION=1 -DENABLE_APP_LIST=1 $
+    -DENABLE_SETTINGS_APP=1 -DENABLE_SUPERVISED_USERS=1 -DENABLE_MDNS=1 $
+    -DENABLE_SERVICE_DISCOVERY=1 -DV8_USE_EXTERNAL_STARTUP_DATA $
+    -DFULL_SAFE_BROWSING -DSAFE_BROWSING_CSD -DSAFE_BROWSING_DB_LOCAL $
+    -DHAVE_SCTP -DOPENSSL_SMALL -DHAVE_INT16_T -DHAVE_INT32_T -DHAVE_INT8_T $
+    -DHAVE_UINT16_T -DHAVE_UINT32_T -DHAVE_UINT64_T -DHAVE_UINT8_T $
+    -DHAVE_STDINT_H -DHAVE_INTTYPES_H -DHAVE_NETINET_IN_H -DCPU_CISC $
+    -DFEATURE_ENABLE_VOICEMAIL -DUSE_LIBPCI=1 -DUSE_OPENSSL=1 -DUSE_GLIB=1 $
+    -DUSE_NSS_CERTS=1 -DDYNAMIC_ANNOTATIONS_ENABLED=1 $
+    -DWTF_USE_DYNAMIC_ANNOTATIONS=1 -D_DEBUG -D_GLIBCXX_DEBUG=1
+includes = -I../../third_party/libjingle/overrides $
+    -I../../third_party/webrtc_overrides $
+    -I../../third_party/libjingle/source -I../.. $
+    -I../../testing/gtest/include -I../../third_party $
+    -I../../third_party/libyuv/include $
+    -I../../third_party/usrsctp/usrsctplib -Igen $
+    -I../../third_party/boringssl/src/include $
+    -I../../third_party/libsrtp/config $
+    -I../../third_party/libsrtp/srtp/include $
+    -I../../third_party/libsrtp/srtp/crypto/include $
+    -I../../third_party/webrtc_overrides -I../../third_party $
+    -I../../third_party/usrsctp/usrsctplib/usrsctplib $
+    -I../../third_party/usrsctp/usrsctplib/usrsctplib/netinet
+cflags = -fstack-protector --param=ssp-buffer-size=4 -Werror -pthread $
+    -fno-strict-aliasing -Wno-unused-parameter $
+    -Wno-missing-field-initializers -fvisibility=hidden -pipe -fPIC $
+    -Wno-reserved-user-defined-literal -Xclang -load -Xclang $
+    /b/build/slave/publish_tarball/build/src/third_party/llvm-build/Release+Asserts/lib/libFindBadConstructs.so $
+    -Xclang -add-plugin -Xclang find-bad-constructs -Xclang $
+    -plugin-arg-find-bad-constructs -Xclang check-templates $
+    -fcolor-diagnostics $
+    -B/b/build/slave/publish_tarball/build/src/third_party/binutils/Linux_x64/Release/bin $
+    -Wheader-hygiene -Wno-char-subscripts $
+    -Wno-unneeded-internal-declaration -Wno-covered-switch-default $
+    -Wno-c++11-narrowing -Wno-deprecated-register $
+    -Wno-inconsistent-missing-override -Wno-shift-negative-value $
+    -Wno-bitfield-width -Wno-unused-variable -pthread $
+    -I/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/include/glib-2.0 $
+    -I/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/lib/x86_64-linux-gnu/glib-2.0/include $
+    -Wno-format -Wno-unused-result -m64 -march=x86-64 $
+    --sysroot=/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot $
+    -O0 -g -funwind-tables -gsplit-dwarf -Wno-undefined-bool-conversion $
+    -Wno-tautological-undefined-compare
+cflags_c = 
+cflags_cc = -fno-exceptions -fno-rtti -fno-threadsafe-statics $
+    -fvisibility-inlines-hidden -std=gnu++11 -Wno-deprecated
+arflags = 
+
+build $
+    obj/third_party/libjingle/source/talk/app/webrtc/libjingle_webrtc_common.audiotrack.o: $
+    cxx ../../third_party/libjingle/source/talk/app/webrtc/audiotrack.cc
+build $
+    obj/third_party/libjingle/source/talk/app/webrtc/libjingle_webrtc_common.datachannel.o: $
+    cxx ../../third_party/libjingle/source/talk/app/webrtc/datachannel.cc
+build $
+    obj/third_party/libjingle/source/talk/app/webrtc/libjingle_webrtc_common.dtlsidentitystore.o: $
+    cxx $
+    ../../third_party/libjingle/source/talk/app/webrtc/dtlsidentitystore.cc
+build $
+    obj/third_party/libjingle/source/talk/app/webrtc/libjingle_webrtc_common.dtmfsender.o: $
+    cxx ../../third_party/libjingle/source/talk/app/webrtc/dtmfsender.cc
+build $
+    obj/third_party/libjingle/source/talk/app/webrtc/libjingle_webrtc_common.jsepicecandidate.o: $
+    cxx ../../third_party/libjingle/source/talk/app/webrtc/jsepicecandidate.cc
+build $
+    obj/third_party/libjingle/source/talk/app/webrtc/libjingle_webrtc_common.jsepsessiondescription.o: $
+    cxx $
+    ../../third_party/libjingle/source/talk/app/webrtc/jsepsessiondescription.cc
+build $
+    obj/third_party/libjingle/source/talk/app/webrtc/libjingle_webrtc_common.localaudiosource.o: $
+    cxx ../../third_party/libjingle/source/talk/app/webrtc/localaudiosource.cc
+build $
+    obj/third_party/libjingle/source/talk/app/webrtc/libjingle_webrtc_common.mediaconstraintsinterface.o: $
+    cxx $
+    ../../third_party/libjingle/source/talk/app/webrtc/mediaconstraintsinterface.cc
+build $
+    obj/third_party/libjingle/source/talk/app/webrtc/libjingle_webrtc_common.mediacontroller.o: $
+    cxx ../../third_party/libjingle/source/talk/app/webrtc/mediacontroller.cc
+build $
+    obj/third_party/libjingle/source/talk/app/webrtc/libjingle_webrtc_common.mediastream.o: $
+    cxx ../../third_party/libjingle/source/talk/app/webrtc/mediastream.cc
+build $
+    obj/third_party/libjingle/source/talk/app/webrtc/libjingle_webrtc_common.mediastreamhandler.o: $
+    cxx $
+    ../../third_party/libjingle/source/talk/app/webrtc/mediastreamhandler.cc
+build $
+    obj/third_party/libjingle/source/talk/app/webrtc/libjingle_webrtc_common.mediastreamobserver.o: $
+    cxx $
+    ../../third_party/libjingle/source/talk/app/webrtc/mediastreamobserver.cc
+build $
+    obj/third_party/libjingle/source/talk/app/webrtc/libjingle_webrtc_common.peerconnection.o: $
+    cxx ../../third_party/libjingle/source/talk/app/webrtc/peerconnection.cc
+build $
+    obj/third_party/libjingle/source/talk/app/webrtc/libjingle_webrtc_common.peerconnectionfactory.o: $
+    cxx $
+    ../../third_party/libjingle/source/talk/app/webrtc/peerconnectionfactory.cc
+build $
+    obj/third_party/libjingle/source/talk/app/webrtc/libjingle_webrtc_common.portallocatorfactory.o: $
+    cxx $
+    ../../third_party/libjingle/source/talk/app/webrtc/portallocatorfactory.cc
+build $
+    obj/third_party/libjingle/source/talk/app/webrtc/libjingle_webrtc_common.remoteaudiosource.o: $
+    cxx $
+    ../../third_party/libjingle/source/talk/app/webrtc/remoteaudiosource.cc
+build $
+    obj/third_party/libjingle/source/talk/app/webrtc/libjingle_webrtc_common.remoteaudiotrack.o: $
+    cxx ../../third_party/libjingle/source/talk/app/webrtc/remoteaudiotrack.cc
+build $
+    obj/third_party/libjingle/source/talk/app/webrtc/libjingle_webrtc_common.remotevideocapturer.o: $
+    cxx $
+    ../../third_party/libjingle/source/talk/app/webrtc/remotevideocapturer.cc
+build $
+    obj/third_party/libjingle/source/talk/app/webrtc/libjingle_webrtc_common.rtpreceiver.o: $
+    cxx ../../third_party/libjingle/source/talk/app/webrtc/rtpreceiver.cc
+build $
+    obj/third_party/libjingle/source/talk/app/webrtc/libjingle_webrtc_common.rtpsender.o: $
+    cxx ../../third_party/libjingle/source/talk/app/webrtc/rtpsender.cc
+build $
+    obj/third_party/libjingle/source/talk/app/webrtc/libjingle_webrtc_common.sctputils.o: $
+    cxx ../../third_party/libjingle/source/talk/app/webrtc/sctputils.cc
+build $
+    obj/third_party/libjingle/source/talk/app/webrtc/libjingle_webrtc_common.statscollector.o: $
+    cxx ../../third_party/libjingle/source/talk/app/webrtc/statscollector.cc
+build $
+    obj/third_party/libjingle/source/talk/app/webrtc/libjingle_webrtc_common.statstypes.o: $
+    cxx ../../third_party/libjingle/source/talk/app/webrtc/statstypes.cc
+build $
+    obj/third_party/libjingle/source/talk/app/webrtc/libjingle_webrtc_common.videosource.o: $
+    cxx ../../third_party/libjingle/source/talk/app/webrtc/videosource.cc
+build $
+    obj/third_party/libjingle/source/talk/app/webrtc/libjingle_webrtc_common.videotrack.o: $
+    cxx ../../third_party/libjingle/source/talk/app/webrtc/videotrack.cc
+build $
+    obj/third_party/libjingle/source/talk/app/webrtc/libjingle_webrtc_common.videotrackrenderers.o: $
+    cxx $
+    ../../third_party/libjingle/source/talk/app/webrtc/videotrackrenderers.cc
+build $
+    obj/third_party/libjingle/source/talk/app/webrtc/libjingle_webrtc_common.webrtcsdp.o: $
+    cxx ../../third_party/libjingle/source/talk/app/webrtc/webrtcsdp.cc
+build $
+    obj/third_party/libjingle/source/talk/app/webrtc/libjingle_webrtc_common.webrtcsession.o: $
+    cxx ../../third_party/libjingle/source/talk/app/webrtc/webrtcsession.cc
+build $
+    obj/third_party/libjingle/source/talk/app/webrtc/libjingle_webrtc_common.webrtcsessiondescriptionfactory.o: $
+    cxx $
+    ../../third_party/libjingle/source/talk/app/webrtc/webrtcsessiondescriptionfactory.cc
+build $
+    obj/third_party/libjingle/source/talk/media/base/libjingle_webrtc_common.capturemanager.o: $
+    cxx ../../third_party/libjingle/source/talk/media/base/capturemanager.cc
+build $
+    obj/third_party/libjingle/source/talk/media/base/libjingle_webrtc_common.capturerenderadapter.o: $
+    cxx $
+    ../../third_party/libjingle/source/talk/media/base/capturerenderadapter.cc
+build $
+    obj/third_party/libjingle/source/talk/media/base/libjingle_webrtc_common.codec.o: $
+    cxx ../../third_party/libjingle/source/talk/media/base/codec.cc
+build $
+    obj/third_party/libjingle/source/talk/media/base/libjingle_webrtc_common.constants.o: $
+    cxx ../../third_party/libjingle/source/talk/media/base/constants.cc
+build $
+    obj/third_party/libjingle/source/talk/media/base/libjingle_webrtc_common.mediaengine.o: $
+    cxx ../../third_party/libjingle/source/talk/media/base/mediaengine.cc
+build $
+    obj/third_party/libjingle/source/talk/media/base/libjingle_webrtc_common.rtpdataengine.o: $
+    cxx ../../third_party/libjingle/source/talk/media/base/rtpdataengine.cc
+build $
+    obj/third_party/libjingle/source/talk/media/base/libjingle_webrtc_common.rtpdump.o: $
+    cxx ../../third_party/libjingle/source/talk/media/base/rtpdump.cc
+build $
+    obj/third_party/libjingle/source/talk/media/base/libjingle_webrtc_common.rtputils.o: $
+    cxx ../../third_party/libjingle/source/talk/media/base/rtputils.cc
+build $
+    obj/third_party/libjingle/source/talk/media/base/libjingle_webrtc_common.streamparams.o: $
+    cxx ../../third_party/libjingle/source/talk/media/base/streamparams.cc
+build $
+    obj/third_party/libjingle/source/talk/media/base/libjingle_webrtc_common.videoadapter.o: $
+    cxx ../../third_party/libjingle/source/talk/media/base/videoadapter.cc
+build $
+    obj/third_party/libjingle/source/talk/media/base/libjingle_webrtc_common.videocapturer.o: $
+    cxx ../../third_party/libjingle/source/talk/media/base/videocapturer.cc
+build $
+    obj/third_party/libjingle/source/talk/media/base/libjingle_webrtc_common.videocommon.o: $
+    cxx ../../third_party/libjingle/source/talk/media/base/videocommon.cc
+build $
+    obj/third_party/libjingle/source/talk/media/base/libjingle_webrtc_common.videoframe.o: $
+    cxx ../../third_party/libjingle/source/talk/media/base/videoframe.cc
+build $
+    obj/third_party/libjingle/source/talk/media/base/libjingle_webrtc_common.videoframefactory.o: $
+    cxx $
+    ../../third_party/libjingle/source/talk/media/base/videoframefactory.cc
+build $
+    obj/third_party/libjingle/source/talk/media/devices/libjingle_webrtc_common.dummydevicemanager.o: $
+    cxx $
+    ../../third_party/libjingle/source/talk/media/devices/dummydevicemanager.cc
+build $
+    obj/third_party/libjingle/source/talk/media/devices/libjingle_webrtc_common.filevideocapturer.o: $
+    cxx $
+    ../../third_party/libjingle/source/talk/media/devices/filevideocapturer.cc
+build $
+    obj/third_party/libjingle/source/talk/media/webrtc/libjingle_webrtc_common.webrtcvideoframe.o: $
+    cxx $
+    ../../third_party/libjingle/source/talk/media/webrtc/webrtcvideoframe.cc
+build $
+    obj/third_party/libjingle/source/talk/media/webrtc/libjingle_webrtc_common.webrtcvideoframefactory.o: $
+    cxx $
+    ../../third_party/libjingle/source/talk/media/webrtc/webrtcvideoframefactory.cc
+build $
+    obj/third_party/libjingle/source/talk/session/media/libjingle_webrtc_common.audiomonitor.o: $
+    cxx ../../third_party/libjingle/source/talk/session/media/audiomonitor.cc
+build $
+    obj/third_party/libjingle/source/talk/session/media/libjingle_webrtc_common.bundlefilter.o: $
+    cxx ../../third_party/libjingle/source/talk/session/media/bundlefilter.cc
+build $
+    obj/third_party/libjingle/source/talk/session/media/libjingle_webrtc_common.channel.o: $
+    cxx ../../third_party/libjingle/source/talk/session/media/channel.cc
+build $
+    obj/third_party/libjingle/source/talk/session/media/libjingle_webrtc_common.channelmanager.o: $
+    cxx $
+    ../../third_party/libjingle/source/talk/session/media/channelmanager.cc
+build $
+    obj/third_party/libjingle/source/talk/session/media/libjingle_webrtc_common.currentspeakermonitor.o: $
+    cxx $
+    ../../third_party/libjingle/source/talk/session/media/currentspeakermonitor.cc
+build $
+    obj/third_party/libjingle/source/talk/session/media/libjingle_webrtc_common.externalhmac.o: $
+    cxx ../../third_party/libjingle/source/talk/session/media/externalhmac.cc
+build $
+    obj/third_party/libjingle/source/talk/session/media/libjingle_webrtc_common.mediamonitor.o: $
+    cxx ../../third_party/libjingle/source/talk/session/media/mediamonitor.cc
+build $
+    obj/third_party/libjingle/source/talk/session/media/libjingle_webrtc_common.mediasession.o: $
+    cxx ../../third_party/libjingle/source/talk/session/media/mediasession.cc
+build $
+    obj/third_party/libjingle/source/talk/session/media/libjingle_webrtc_common.rtcpmuxfilter.o: $
+    cxx ../../third_party/libjingle/source/talk/session/media/rtcpmuxfilter.cc
+build $
+    obj/third_party/libjingle/source/talk/session/media/libjingle_webrtc_common.srtpfilter.o: $
+    cxx ../../third_party/libjingle/source/talk/session/media/srtpfilter.cc
+build $
+    obj/third_party/libjingle/source/talk/media/sctp/libjingle_webrtc_common.sctpdataengine.o: $
+    cxx ../../third_party/libjingle/source/talk/media/sctp/sctpdataengine.cc
+
+build obj/third_party/libjingle/libjingle_webrtc_common.a: alink_thin $
+    obj/third_party/libjingle/source/talk/app/webrtc/libjingle_webrtc_common.audiotrack.o $
+    obj/third_party/libjingle/source/talk/app/webrtc/libjingle_webrtc_common.datachannel.o $
+    obj/third_party/libjingle/source/talk/app/webrtc/libjingle_webrtc_common.dtlsidentitystore.o $
+    obj/third_party/libjingle/source/talk/app/webrtc/libjingle_webrtc_common.dtmfsender.o $
+    obj/third_party/libjingle/source/talk/app/webrtc/libjingle_webrtc_common.jsepicecandidate.o $
+    obj/third_party/libjingle/source/talk/app/webrtc/libjingle_webrtc_common.jsepsessiondescription.o $
+    obj/third_party/libjingle/source/talk/app/webrtc/libjingle_webrtc_common.localaudiosource.o $
+    obj/third_party/libjingle/source/talk/app/webrtc/libjingle_webrtc_common.mediaconstraintsinterface.o $
+    obj/third_party/libjingle/source/talk/app/webrtc/libjingle_webrtc_common.mediacontroller.o $
+    obj/third_party/libjingle/source/talk/app/webrtc/libjingle_webrtc_common.mediastream.o $
+    obj/third_party/libjingle/source/talk/app/webrtc/libjingle_webrtc_common.mediastreamhandler.o $
+    obj/third_party/libjingle/source/talk/app/webrtc/libjingle_webrtc_common.mediastreamobserver.o $
+    obj/third_party/libjingle/source/talk/app/webrtc/libjingle_webrtc_common.peerconnection.o $
+    obj/third_party/libjingle/source/talk/app/webrtc/libjingle_webrtc_common.peerconnectionfactory.o $
+    obj/third_party/libjingle/source/talk/app/webrtc/libjingle_webrtc_common.portallocatorfactory.o $
+    obj/third_party/libjingle/source/talk/app/webrtc/libjingle_webrtc_common.remoteaudiosource.o $
+    obj/third_party/libjingle/source/talk/app/webrtc/libjingle_webrtc_common.remoteaudiotrack.o $
+    obj/third_party/libjingle/source/talk/app/webrtc/libjingle_webrtc_common.remotevideocapturer.o $
+    obj/third_party/libjingle/source/talk/app/webrtc/libjingle_webrtc_common.rtpreceiver.o $
+    obj/third_party/libjingle/source/talk/app/webrtc/libjingle_webrtc_common.rtpsender.o $
+    obj/third_party/libjingle/source/talk/app/webrtc/libjingle_webrtc_common.sctputils.o $
+    obj/third_party/libjingle/source/talk/app/webrtc/libjingle_webrtc_common.statscollector.o $
+    obj/third_party/libjingle/source/talk/app/webrtc/libjingle_webrtc_common.statstypes.o $
+    obj/third_party/libjingle/source/talk/app/webrtc/libjingle_webrtc_common.videosource.o $
+    obj/third_party/libjingle/source/talk/app/webrtc/libjingle_webrtc_common.videotrack.o $
+    obj/third_party/libjingle/source/talk/app/webrtc/libjingle_webrtc_common.videotrackrenderers.o $
+    obj/third_party/libjingle/source/talk/app/webrtc/libjingle_webrtc_common.webrtcsdp.o $
+    obj/third_party/libjingle/source/talk/app/webrtc/libjingle_webrtc_common.webrtcsession.o $
+    obj/third_party/libjingle/source/talk/app/webrtc/libjingle_webrtc_common.webrtcsessiondescriptionfactory.o $
+    obj/third_party/libjingle/source/talk/media/base/libjingle_webrtc_common.capturemanager.o $
+    obj/third_party/libjingle/source/talk/media/base/libjingle_webrtc_common.capturerenderadapter.o $
+    obj/third_party/libjingle/source/talk/media/base/libjingle_webrtc_common.codec.o $
+    obj/third_party/libjingle/source/talk/media/base/libjingle_webrtc_common.constants.o $
+    obj/third_party/libjingle/source/talk/media/base/libjingle_webrtc_common.mediaengine.o $
+    obj/third_party/libjingle/source/talk/media/base/libjingle_webrtc_common.rtpdataengine.o $
+    obj/third_party/libjingle/source/talk/media/base/libjingle_webrtc_common.rtpdump.o $
+    obj/third_party/libjingle/source/talk/media/base/libjingle_webrtc_common.rtputils.o $
+    obj/third_party/libjingle/source/talk/media/base/libjingle_webrtc_common.streamparams.o $
+    obj/third_party/libjingle/source/talk/media/base/libjingle_webrtc_common.videoadapter.o $
+    obj/third_party/libjingle/source/talk/media/base/libjingle_webrtc_common.videocapturer.o $
+    obj/third_party/libjingle/source/talk/media/base/libjingle_webrtc_common.videocommon.o $
+    obj/third_party/libjingle/source/talk/media/base/libjingle_webrtc_common.videoframe.o $
+    obj/third_party/libjingle/source/talk/media/base/libjingle_webrtc_common.videoframefactory.o $
+    obj/third_party/libjingle/source/talk/media/devices/libjingle_webrtc_common.dummydevicemanager.o $
+    obj/third_party/libjingle/source/talk/media/devices/libjingle_webrtc_common.filevideocapturer.o $
+    obj/third_party/libjingle/source/talk/media/webrtc/libjingle_webrtc_common.webrtcvideoframe.o $
+    obj/third_party/libjingle/source/talk/media/webrtc/libjingle_webrtc_common.webrtcvideoframefactory.o $
+    obj/third_party/libjingle/source/talk/session/media/libjingle_webrtc_common.audiomonitor.o $
+    obj/third_party/libjingle/source/talk/session/media/libjingle_webrtc_common.bundlefilter.o $
+    obj/third_party/libjingle/source/talk/session/media/libjingle_webrtc_common.channel.o $
+    obj/third_party/libjingle/source/talk/session/media/libjingle_webrtc_common.channelmanager.o $
+    obj/third_party/libjingle/source/talk/session/media/libjingle_webrtc_common.currentspeakermonitor.o $
+    obj/third_party/libjingle/source/talk/session/media/libjingle_webrtc_common.externalhmac.o $
+    obj/third_party/libjingle/source/talk/session/media/libjingle_webrtc_common.mediamonitor.o $
+    obj/third_party/libjingle/source/talk/session/media/libjingle_webrtc_common.mediasession.o $
+    obj/third_party/libjingle/source/talk/session/media/libjingle_webrtc_common.rtcpmuxfilter.o $
+    obj/third_party/libjingle/source/talk/session/media/libjingle_webrtc_common.srtpfilter.o $
+    obj/third_party/libjingle/source/talk/media/sctp/libjingle_webrtc_common.sctpdataengine.o

@@ -18,24 +18,21 @@
 using content::WebContents;
 using guest_view::GuestViewBase;
 using guest_view::GuestViewEvent;
-using namespace extensions::core_api;
+using namespace extensions::api;
 
 namespace extensions {
 
 // static
 const char ExtensionViewGuest::Type[] = "extensionview";
 
-ExtensionViewGuest::ExtensionViewGuest(
-    content::WebContents* owner_web_contents)
-    : GuestView<ExtensionViewGuest>(owner_web_contents) {
-}
+ExtensionViewGuest::ExtensionViewGuest(WebContents* owner_web_contents)
+    : GuestView<ExtensionViewGuest>(owner_web_contents) {}
 
 ExtensionViewGuest::~ExtensionViewGuest() {
 }
 
 // static
-GuestViewBase* ExtensionViewGuest::Create(
-    content::WebContents* owner_web_contents) {
+GuestViewBase* ExtensionViewGuest::Create(WebContents* owner_web_contents) {
   return new ExtensionViewGuest(owner_web_contents);
 }
 
@@ -116,7 +113,6 @@ int ExtensionViewGuest::GetTaskPrefix() const {
   return IDS_EXTENSION_TASK_MANAGER_EXTENSIONVIEW_TAG_PREFIX;
 }
 
-// content::WebContentsObserver implementation.
 void ExtensionViewGuest::DidCommitProvisionalLoadForFrame(
     content::RenderFrameHost* render_frame_host,
     const GURL& url,

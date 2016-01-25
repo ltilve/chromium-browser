@@ -5,17 +5,15 @@
 #import "chrome/browser/ui/cocoa/passwords/manage_passwords_bubble_controller.h"
 
 #include "base/mac/scoped_nsobject.h"
+#include "chrome/browser/ui/browser_finder.h"
 #import "chrome/browser/ui/cocoa/browser_window_controller.h"
 #import "chrome/browser/ui/cocoa/info_bubble_view.h"
 #import "chrome/browser/ui/cocoa/info_bubble_window.h"
 #include "chrome/browser/ui/cocoa/location_bar/location_bar_view_mac.h"
 #import "chrome/browser/ui/cocoa/passwords/manage_passwords_bubble_account_chooser_view_controller.h"
 #import "chrome/browser/ui/cocoa/passwords/manage_passwords_bubble_auto_signin_view_controller.h"
-#import "chrome/browser/ui/cocoa/passwords/manage_passwords_bubble_blacklist_view_controller.h"
 #import "chrome/browser/ui/cocoa/passwords/manage_passwords_bubble_confirmation_view_controller.h"
-#import "chrome/browser/ui/cocoa/passwords/manage_passwords_bubble_manage_credentials_view_controller.h"
 #import "chrome/browser/ui/cocoa/passwords/manage_passwords_bubble_manage_view_controller.h"
-#import "chrome/browser/ui/cocoa/passwords/manage_passwords_bubble_save_view_controller.h"
 #include "ui/base/cocoa/window_size_constants.h"
 
 @interface ManagePasswordsBubbleController ()
@@ -60,37 +58,18 @@
   // Find the next view controller.
   currentController_.reset();
   if (model_->state() == password_manager::ui::PENDING_PASSWORD_STATE) {
-    if (model_->IsNewUIActive()) {
-      currentController_.reset(
-          [[ManagePasswordsBubbleSaveViewController alloc]
-              initWithModel:model_
-                   delegate:self]);
-    } else {
-      currentController_.reset(
-          [[ManagePasswordsBubblePendingViewController alloc]
-              initWithModel:model_
-                   delegate:self]);
-    }
+    currentController_.reset(
+        [[ManagePasswordsBubblePendingViewController alloc]
+            initWithModel:model_
+                 delegate:self]);
   } else if (model_->state() == password_manager::ui::CONFIRMATION_STATE) {
     currentController_.reset(
         [[ManagePasswordsBubbleConfirmationViewController alloc]
             initWithModel:model_
                  delegate:self]);
   } else if (model_->state() == password_manager::ui::MANAGE_STATE) {
-    if (model_->IsNewUIActive()) {
-      currentController_.reset(
-          [[ManagePasswordsBubbleManageCredentialsViewController alloc]
-              initWithModel:model_
-                   delegate:self]);
-    } else {
-      currentController_.reset(
-          [[ManagePasswordsBubbleManageViewController alloc]
-              initWithModel:model_
-                   delegate:self]);
-    }
-  } else if (model_->state() == password_manager::ui::BLACKLIST_STATE) {
     currentController_.reset(
-        [[ManagePasswordsBubbleBlacklistViewController alloc]
+        [[ManagePasswordsBubbleManageViewController alloc]
             initWithModel:model_
                  delegate:self]);
   } else if (model_->state() == password_manager::ui::AUTO_SIGNIN_STATE) {
@@ -117,23 +96,49 @@
   // Update the window.
   NSWindow* window = [self window];
   [[window contentView] setSubviews:@[ [currentController_ view] ]];
+  NSButton* button = [currentController_ defaultButton];
+  if (button)
+    [window setDefaultButtonCell:[button cell]];
 
-  // Update the anchor.
-  BrowserWindowController* controller = [BrowserWindowController
-      browserWindowControllerForWindow:[self parentWindow]];
-  NSPoint anchorPoint =
-      [controller locationBarBridge]->GetManagePasswordsBubblePoint();
+  NSPoint anchorPoint;
+  info_bubble::BubbleArrowLocation arrow;
+  Browser* browser = chrome::FindBrowserWithWindow([self parentWindow]);
+  bool hasLocationBar =
+      browser && browser->SupportsWindowFeature(Browser::FEATURE_LOCATIONBAR);
+
+  if (hasLocationBar) {
+    BrowserWindowController* controller = [BrowserWindowController
+        browserWindowControllerForWindow:[self parentWindow]];
+    anchorPoint =
+        [controller locationBarBridge]->GetManagePasswordsBubblePoint();
+    arrow = info_bubble::kTopRight;
+  } else {
+    // Center the bubble if there's no location bar.
+    NSRect contentFrame = [[[self parentWindow] contentView] frame];
+    anchorPoint = NSMakePoint(NSMidX(contentFrame), NSMaxY(contentFrame));
+    arrow = info_bubble::kNoArrow;
+  }
+
+  // Update the anchor arrow.
+  [[self bubble] setArrowLocation:arrow];
+
+  // Update the anchor point.
   anchorPoint = [[self parentWindow] convertBaseToScreen:anchorPoint];
   [self setAnchorPoint:anchorPoint];
 
   // Update the frame.
-  CGFloat height = NSHeight([[currentController_ view] frame]) +
-                   info_bubble::kBubbleArrowHeight;
+  CGFloat height = NSHeight([[currentController_ view] frame]);
   CGFloat width = NSWidth([[currentController_ view] frame]);
-  CGFloat x = anchorPoint.x - width +
-              info_bubble::kBubbleArrowXOffset +
-              (0.5 * info_bubble::kBubbleArrowWidth);
+  CGFloat x = anchorPoint.x - width;
   CGFloat y = anchorPoint.y - height;
+
+  // Make the frame large enough for the arrow.
+  if (hasLocationBar) {
+    height += info_bubble::kBubbleArrowHeight;
+    x += info_bubble::kBubbleArrowXOffset +
+         (0.5 * info_bubble::kBubbleArrowWidth);
+  }
+
   [window setFrame:NSMakeRect(x, y, width, height)
            display:YES
            animate:[window isVisible]];
@@ -143,21 +148,6 @@
 
 - (void)viewShouldDismiss {
   [self close];
-}
-
-#pragma mark ManagePasswordsBubblePendingViewDelegate
-
-- (void)passwordShouldNeverBeSavedOnSiteWithExistingPasswords {
-  currentController_.reset([[ManagePasswordsBubbleNeverSaveViewController alloc]
-      initWithModel:model_
-           delegate:self]);
-  [self performLayout];
-}
-
-#pragma mark ManagePasswordsBubbleNeverSaveViewDelegate
-
-- (void)neverSavePasswordCancelled {
-  [self updateState];
 }
 
 @end

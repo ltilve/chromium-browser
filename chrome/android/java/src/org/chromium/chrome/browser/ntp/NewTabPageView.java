@@ -32,16 +32,13 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.chromium.base.CommandLine;
-import org.chromium.base.FieldTrialList;
 import org.chromium.base.VisibleForTesting;
-import org.chromium.base.metrics.RecordHistogram;
 import org.chromium.chrome.R;
-import org.chromium.chrome.browser.ChromeSwitches;
-import org.chromium.chrome.browser.LogoBridge.Logo;
-import org.chromium.chrome.browser.LogoBridge.LogoObserver;
+import org.chromium.chrome.browser.favicon.FaviconHelper.FaviconAvailabilityCallback;
 import org.chromium.chrome.browser.favicon.FaviconHelper.FaviconImageCallback;
 import org.chromium.chrome.browser.favicon.LargeIconBridge.LargeIconCallback;
+import org.chromium.chrome.browser.ntp.LogoBridge.Logo;
+import org.chromium.chrome.browser.ntp.LogoBridge.LogoObserver;
 import org.chromium.chrome.browser.ntp.MostVisitedItem.MostVisitedItemManager;
 import org.chromium.chrome.browser.ntp.NewTabPage.OnSearchBoxScrollListener;
 import org.chromium.chrome.browser.profiles.MostVisitedSites.MostVisitedURLsObserver;
@@ -53,6 +50,8 @@ import org.chromium.ui.text.SpanApplier.SpanInfo;
 
 import java.util.Locale;
 
+import jp.tomorrowkey.android.gifplayer.BaseGifImage;
+
 /**
  * The native new tab page, represented by some basic data such as title and url, and an Android
  * View that displays the page.
@@ -63,9 +62,6 @@ public class NewTabPageView extends FrameLayout
     static final int MAX_MOST_VISITED_SITES = 12;
     private static final int SHADOW_COLOR = 0x11000000;
     private static final long SNAP_SCROLL_DELAY_MS = 30;
-
-    private static final String ICON_NTP_FIELD_TRIAL_NAME = "IconNTP";
-    private static final String ICON_NTP_ENABLED_GROUP = "Enabled";
 
     // Taken from https://support.google.com/googleplay/answer/1727131?hl=en-GB
     private static final String[] SUPPORTED_SAMSUNG_DEVICES = {
@@ -188,9 +184,20 @@ public class NewTabPageView extends FrameLayout
         void getLargeIconForUrl(String url, int size, LargeIconCallback callback);
 
         /**
-         * Navigates to a URL chosen by the search provider when the user clicks on the logo.
+         * Checks if a favicon with the given faviconUrl is available. If not,
+         * downloads it and stores it as a favicon for the given pageUrl.
+         * @param pageUrl The URL of the site whose icon is being requested.
+         * @param faviconUrl The URL of the favicon.
+         * @param callback The callback to be notified when the favicon has been checked.
          */
-        void openLogoLink();
+        void ensureFaviconIsAvailable(String pageUrl, String faviconUrl,
+                FaviconAvailabilityCallback callback);
+
+        /**
+         * Called when the user clicks on the logo.
+         * @param isAnimatedLogoShowing Whether the animated GIF logo is playing.
+         */
+        void onLogoClicked(boolean isAnimatedLogoShowing);
 
         /**
          * Gets the default search provider's logo and calls logoObserver with the result.
@@ -201,8 +208,9 @@ public class NewTabPageView extends FrameLayout
         /**
          * Called when the NTP has completely finished loading (all views will be inflated
          * and any dependent resources will have been loaded).
+         * @param mostVisitedItems The MostVisitedItem shown on the NTP. Used to record metrics.
          */
-        void onLoadingComplete();
+        void onLoadingComplete(MostVisitedItem[] mostVisitedItems);
     }
 
     /**
@@ -228,15 +236,6 @@ public class NewTabPageView extends FrameLayout
         super(context, attrs);
     }
 
-    private boolean isIconNtpEnabled() {
-        // Query the field trial state first, to ensure that UMA reports the correct group.
-        String fieldTrialGroup = FieldTrialList.findFullName(ICON_NTP_FIELD_TRIAL_NAME);
-        CommandLine commandLine = CommandLine.getInstance();
-        if (commandLine.hasSwitch(ChromeSwitches.DISABLE_ICON_NTP)) return false;
-        if (commandLine.hasSwitch(ChromeSwitches.ENABLE_ICON_NTP)) return true;
-        return fieldTrialGroup.equals(ICON_NTP_ENABLED_GROUP);
-    }
-
     /**
      * Initializes the NTP. This must be called immediately after inflation, before this object is
      * used in any other way.
@@ -245,16 +244,17 @@ public class NewTabPageView extends FrameLayout
      *                with the page.
      * @param isSingleUrlBarMode Whether the NTP is in single URL bar mode.
      * @param searchProviderHasLogo Whether the search provider has a logo.
+     * @param isIconMode Whether to show the icon-based design, as opposed to the thumbnail design.
      */
     public void initialize(NewTabPageManager manager, boolean isSingleUrlBarMode,
-            boolean searchProviderHasLogo) {
+            boolean searchProviderHasLogo, boolean isIconMode) {
         mManager = manager;
 
         mScrollView = (NewTabScrollView) findViewById(R.id.ntp_scrollview);
         mScrollView.enableBottomShadow(SHADOW_COLOR);
         mContentView = (ViewGroup) findViewById(R.id.ntp_content);
 
-        mMostVisitedDesign = isIconNtpEnabled()
+        mMostVisitedDesign = isIconMode
                 ? new IconMostVisitedDesign(getContext())
                 : new ThumbnailMostVisitedDesign(getContext());
         ViewStub mostVisitedLayoutStub = (ViewStub) findViewById(R.id.most_visited_layout_stub);
@@ -358,11 +358,10 @@ public class NewTabPageView extends FrameLayout
                 mManager.optOutPromoClicked(true);
             }
 
-            // Change link formatting to use our blue control color and no underline
+            // Disable underline on the link text.
             @Override
             public void updateDrawState(android.text.TextPaint textPaint) {
-                textPaint.setColor(getContext().getResources().getColor(
-                        R.color.light_active_color));
+                super.updateDrawState(textPaint);
                 textPaint.setUnderlineText(false);
             }
         };
@@ -406,7 +405,7 @@ public class NewTabPageView extends FrameLayout
         updateVisualsForToolbarTransition(percentage);
 
         if (mSearchBoxScrollListener != null) {
-            mSearchBoxScrollListener.onScrollChanged(percentage);
+            mSearchBoxScrollListener.onNtpScrollChanged(percentage);
         }
     }
 
@@ -464,8 +463,7 @@ public class NewTabPageView extends FrameLayout
                 assert false;
             } else {
                 mLoadHasCompleted = true;
-                mManager.onLoadingComplete();
-                mMostVisitedDesign.onLoadingComplete();
+                mManager.onLoadingComplete(mMostVisitedItems);
                 // Load the logo after everything else is finished, since it's lower priority.
                 loadSearchProviderLogo();
             }
@@ -525,6 +523,27 @@ public class NewTabPageView extends FrameLayout
         if (disable == mDisableUrlFocusChangeAnimations) return;
         mDisableUrlFocusChangeAnimations = disable;
         if (!disable) setUrlFocusChangeAnimationPercent(mUrlFocusChangePercent);
+    }
+
+    /**
+     * Shows a progressbar indicating the animated logo is being downloaded.
+     */
+    void showLogoLoadingView() {
+        mSearchProviderLogoView.showLoadingView();
+    }
+
+    /**
+     * Starts playing the given animated GIF logo.
+     */
+    void playAnimatedLogo(BaseGifImage gifImage) {
+        mSearchProviderLogoView.playAnimatedLogo(gifImage);
+    }
+
+    /**
+     * @return Whether the GIF animation is playing in the logo.
+     */
+    boolean isAnimatedLogoShowing() {
+        return mSearchProviderLogoView.isAnimatedLogoShowing();
     }
 
     /**
@@ -690,7 +709,7 @@ public class NewTabPageView extends FrameLayout
      *         InvalidationAwareThumbnailProvider#captureThumbnail(Canvas)
      */
     void captureThumbnail(Canvas canvas) {
-        mSearchProviderLogoView.endAnimation();
+        mSearchProviderLogoView.endFadeAnimation();
         ViewUtils.captureBitmap(this, canvas);
         mSnapshotWidth = getWidth();
         mSnapshotHeight = getHeight();
@@ -746,9 +765,10 @@ public class NewTabPageView extends FrameLayout
             // If nothing can be reused, create a new item.
             if (item == null) {
                 String displayTitle = getTitleForDisplay(title, url);
+                item = new MostVisitedItem(mManager, title, url, i);
                 View view = mMostVisitedDesign.createMostVisitedItemView(inflater, url, title,
-                        displayTitle, i, isInitialLoad);
-                item = new MostVisitedItem(mManager, title, url, i, view);
+                        displayTitle, item, isInitialLoad);
+                item.initView(view);
             }
 
             mMostVisitedItems[i] = item;
@@ -766,6 +786,25 @@ public class NewTabPageView extends FrameLayout
             mContentView.setVisibility(View.VISIBLE);
         }
         mSnapshotMostVisitedChanged = true;
+    }
+
+    @Override
+    public void onPopularURLsAvailable(String[] urls, String[] faviconUrls) {
+        for (int i = 0; i < urls.length; i++) {
+            final String url = urls[i];
+            final String faviconUrl = faviconUrls[i];
+            if (faviconUrl.isEmpty()) continue;
+
+            FaviconAvailabilityCallback callback = new FaviconAvailabilityCallback() {
+                @Override
+                public void onFaviconAvailabilityChecked(boolean newlyAvailable) {
+                    if (newlyAvailable) {
+                        mMostVisitedDesign.onFaviconUpdated(url);
+                    }
+                }
+            };
+            mManager.ensureFaviconIsAvailable(url, faviconUrl, callback);
+        }
     }
 
     /**
@@ -807,8 +846,8 @@ public class NewTabPageView extends FrameLayout
         void initMostVisitedLayout(ViewGroup mostVisitedLayout, boolean searchProviderHasLogo);
         void setSearchProviderHasLogo(View mostVisitedLayout, boolean hasLogo);
         View createMostVisitedItemView(LayoutInflater inflater, String url, String title,
-                String displayTitle, int index, boolean isInitialLoad);
-        void onLoadingComplete();
+                String displayTitle, MostVisitedItem item, boolean isInitialLoad);
+        void onFaviconUpdated(String url);
     }
 
     /**
@@ -827,7 +866,7 @@ public class NewTabPageView extends FrameLayout
 
         ThumbnailMostVisitedDesign(Context context) {
             Resources res = context.getResources();
-            mDesiredFaviconSize = res.getDimensionPixelSize(R.dimen.most_visited_favicon_size);
+            mDesiredFaviconSize = res.getDimensionPixelSize(R.dimen.default_favicon_size);
             int desiredFaviconSizeDp = Math.round(
                     mDesiredFaviconSize / res.getDisplayMetrics().density);
             mFaviconGenerator = new RoundedIconGenerator(
@@ -860,15 +899,24 @@ public class NewTabPageView extends FrameLayout
 
         @Override
         public View createMostVisitedItemView(LayoutInflater inflater, final String url,
-                String title, String displayTitle, int index, final boolean isInitialLoad) {
+                String title, String displayTitle, final MostVisitedItem item,
+                final boolean isInitialLoad) {
             final MostVisitedItemView view = (MostVisitedItemView) inflater.inflate(
                     R.layout.most_visited_item, mMostVisitedLayout, false);
             view.init(displayTitle);
 
             ThumbnailCallback thumbnailCallback = new ThumbnailCallback() {
                 @Override
-                public void onMostVisitedURLsThumbnailAvailable(Bitmap thumbnail) {
+                public void onMostVisitedURLsThumbnailAvailable(Bitmap thumbnail,
+                        boolean isLocalThumbnail) {
                     view.setThumbnail(thumbnail);
+                    if (thumbnail == null) {
+                        item.setTileType(MostVisitedTileType.THUMBNAIL_DEFAULT);
+                    } else if (isLocalThumbnail) {
+                        item.setTileType(MostVisitedTileType.THUMBNAIL_LOCAL);
+                    } else {
+                        item.setTileType(MostVisitedTileType.THUMBNAIL_SERVER);
+                    }
                     mSnapshotMostVisitedChanged = true;
                     if (isInitialLoad) loadTaskCompleted();
                 }
@@ -894,7 +942,26 @@ public class NewTabPageView extends FrameLayout
         }
 
         @Override
-        public void onLoadingComplete() {}
+        public void onFaviconUpdated(final String url) {
+            // Find a matching most visited item.
+            for (MostVisitedItem item : mMostVisitedItems) {
+                if (!item.getUrl().equals(url)) continue;
+
+                final MostVisitedItemView view = (MostVisitedItemView) item.getView();
+                FaviconImageCallback faviconCallback = new FaviconImageCallback() {
+                    @Override
+                    public void onFaviconAvailable(Bitmap image, String iconUrl) {
+                        if (image == null) {
+                            image = mFaviconGenerator.generateIconForUrl(url);
+                        }
+                        view.setFavicon(image);
+                        mSnapshotMostVisitedChanged = true;
+                    }
+                };
+                mManager.getLocalFaviconImageForURL(url, mDesiredFaviconSize, faviconCallback);
+                break;
+            }
+        }
     }
 
     /**
@@ -916,10 +983,6 @@ public class NewTabPageView extends FrameLayout
         private int mMinIconSize;
         private int mDesiredIconSize;
         private RoundedIconGenerator mIconGenerator;
-
-        private int mNumGrayIcons;
-        private int mNumColorIcons;
-        private int mNumRealIcons;
 
         IconMostVisitedDesign(Context context) {
             Resources res = context.getResources();
@@ -965,43 +1028,50 @@ public class NewTabPageView extends FrameLayout
             mostVisitedLayout.setPadding(0, paddingTop, 0, 0);
         }
 
+        class LargeIconCallbackImpl implements LargeIconCallback {
+            private MostVisitedItem mItem;
+            private boolean mIsInitialLoad;
+
+            public LargeIconCallbackImpl(MostVisitedItem item, boolean isInitialLoad) {
+                mItem = item;
+                mIsInitialLoad = isInitialLoad;
+            }
+
+            @Override
+            public void onLargeIconAvailable(Bitmap icon, int fallbackColor) {
+                IconMostVisitedItemView view = (IconMostVisitedItemView) mItem.getView();
+                if (icon == null) {
+                    mIconGenerator.setBackgroundColor(fallbackColor);
+                    icon = mIconGenerator.generateIconForUrl(mItem.getUrl());
+                    view.setIcon(new BitmapDrawable(getResources(), icon));
+                    mItem.setTileType(fallbackColor == ICON_BACKGROUND_COLOR
+                            ? MostVisitedTileType.ICON_DEFAULT : MostVisitedTileType.ICON_COLOR);
+                } else {
+                    RoundedBitmapDrawable roundedIcon = RoundedBitmapDrawableFactory.create(
+                            getResources(), icon);
+                    int cornerRadius = Math.round(ICON_CORNER_RADIUS_DP
+                            * getResources().getDisplayMetrics().density * icon.getWidth()
+                            / mDesiredIconSize);
+                    roundedIcon.setCornerRadius(cornerRadius);
+                    roundedIcon.setAntiAlias(true);
+                    roundedIcon.setFilterBitmap(true);
+                    view.setIcon(roundedIcon);
+                    mItem.setTileType(MostVisitedTileType.ICON_REAL);
+                }
+                mSnapshotMostVisitedChanged = true;
+                if (mIsInitialLoad) loadTaskCompleted();
+            }
+        }
+
         @Override
         public View createMostVisitedItemView(LayoutInflater inflater, final String url,
-                String title, String displayTitle, int index, final boolean isInitialLoad) {
+                String title, String displayTitle, MostVisitedItem item,
+                final boolean isInitialLoad) {
             final IconMostVisitedItemView view = (IconMostVisitedItemView) inflater.inflate(
                     R.layout.icon_most_visited_item, mMostVisitedLayout, false);
             view.setTitle(displayTitle);
 
-            LargeIconCallback iconCallback = new LargeIconCallback() {
-                @Override
-                public void onLargeIconAvailable(Bitmap icon, int fallbackColor) {
-                    if (icon == null) {
-                        mIconGenerator.setBackgroundColor(fallbackColor);
-                        icon = mIconGenerator.generateIconForUrl(url);
-                        view.setIcon(new BitmapDrawable(getResources(), icon));
-                        if (isInitialLoad) {
-                            if (fallbackColor == ICON_BACKGROUND_COLOR) {
-                                mNumGrayIcons++;
-                            } else {
-                                mNumColorIcons++;
-                            }
-                        }
-                    } else {
-                        RoundedBitmapDrawable roundedIcon = RoundedBitmapDrawableFactory.create(
-                                getResources(), icon);
-                        int cornerRadius = Math.round(ICON_CORNER_RADIUS_DP
-                                * getResources().getDisplayMetrics().density * icon.getWidth()
-                                / mDesiredIconSize);
-                        roundedIcon.setCornerRadius(cornerRadius);
-                        roundedIcon.setAntiAlias(true);
-                        roundedIcon.setFilterBitmap(true);
-                        view.setIcon(roundedIcon);
-                        if (isInitialLoad) mNumRealIcons++;
-                    }
-                    mSnapshotMostVisitedChanged = true;
-                    if (isInitialLoad) loadTaskCompleted();
-                }
-            };
+            LargeIconCallback iconCallback = new LargeIconCallbackImpl(item, isInitialLoad);
             if (isInitialLoad) mPendingLoadTasks++;
             mManager.getLargeIconForUrl(url, mMinIconSize, iconCallback);
 
@@ -1009,10 +1079,15 @@ public class NewTabPageView extends FrameLayout
         }
 
         @Override
-        public void onLoadingComplete() {
-            RecordHistogram.recordCount100Histogram("NewTabPage.IconsGray", mNumGrayIcons);
-            RecordHistogram.recordCount100Histogram("NewTabPage.IconsColor", mNumColorIcons);
-            RecordHistogram.recordCount100Histogram("NewTabPage.IconsReal", mNumRealIcons);
+        public void onFaviconUpdated(final String url) {
+            // Find a matching most visited item.
+            for (MostVisitedItem item : mMostVisitedItems) {
+                if (item.getUrl().equals(url)) {
+                    LargeIconCallback iconCallback = new LargeIconCallbackImpl(item, false);
+                    mManager.getLargeIconForUrl(url, mMinIconSize, iconCallback);
+                    break;
+                }
+            }
         }
     }
 }

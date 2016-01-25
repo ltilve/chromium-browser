@@ -6,17 +6,18 @@
 
 #include "base/containers/hash_tables.h"
 #include "base/environment.h"
+#include "base/lazy_instance.h"
 #include "base/logging.h"
 #include "base/metrics/histogram_macros.h"
-#include "base/process/process_info.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/sys_info.h"
-#include "base/time/time.h"
 
 #if defined(OS_WIN)
 #include <winternl.h>
 #include "base/win/windows_version.h"
 #endif
+
+namespace startup_metric_utils {
 
 namespace {
 
@@ -24,12 +25,30 @@ namespace {
 // Note that at the time of this writing, access is only on the UI thread.
 volatile bool g_non_browser_ui_displayed = false;
 
-base::Time* MainEntryPointTimeInternal() {
-  static base::Time main_start_time = base::Time::Now();
-  return &main_start_time;
-}
+base::LazyInstance<base::Time>::Leaky g_process_creation_time =
+    LAZY_INSTANCE_INITIALIZER;
+
+base::LazyInstance<base::Time>::Leaky g_main_entry_point_time =
+    LAZY_INSTANCE_INITIALIZER;
+
+StartupTemperature g_startup_temperature = UNCERTAIN_STARTUP_TEMPERATURE;
 
 #if defined(OS_WIN)
+
+// These values are taken from the Startup.BrowserMessageLoopStartHardFaultCount
+// histogram. If the cold start histogram starts looking strongly bimodal it may
+// be because the binary/resource sizes have grown significantly larger than
+// when these values were set. In this case the new values need to be chosen
+// from the original histogram.
+//
+// Maximum number of hard faults tolerated for a startup to be classified as a
+// warm start. Set at roughly the 40th percentile of the HardFaultCount
+// histogram.
+const uint32_t WARM_START_HARD_FAULT_COUNT_THRESHOLD = 5;
+// Minimum number of hard faults expected for a startup to be classified as a
+// cold start. Set at roughly the 60th percentile of the HardFaultCount
+// histogram.
+const uint32_t COLD_START_HARD_FAULT_COUNT_THRESHOLD = 1200;
 
 // The struct used to return system process information via the NT internal
 // QuerySystemInformation call. This is partially documented at
@@ -132,6 +151,30 @@ bool GetHardFaultCountForCurrentProcess(uint32_t* hard_fault_count,
 
 #endif  // defined(OS_WIN)
 
+
+// Helper macro for splitting out an UMA histogram based on cold or warm start.
+// |type| is the histogram type, and corresponds to an UMA macro like
+// UMA_HISTOGRAM_LONG_TIMES. It must be itself be a macro that only takes two
+// parameters.
+// |basename| is the basename of the histogram. A histogram of this name will
+// always be recorded to. If the startup is either cold or warm then a value
+// will also be recorded to the histogram with name |basename| and suffix
+// ".ColdStart" or ".WarmStart", as appropriate.
+// |value_expr| is an expression evaluating to the value to be recorded. This
+// will be evaluated exactly once and cached, so side effects are not an issue.
+#define UMA_HISTOGRAM_BY_STARTUP_TEMPERATURE(type, basename, value_expr) {  \
+      const auto kValue = value_expr;                                       \
+      /* Always record to the base histogram. */                            \
+      type(basename, kValue);                                               \
+      /* Record to the cold/warm suffixed histogram as appropriate. */      \
+      if (g_startup_temperature == COLD_STARTUP_TEMPERATURE) {              \
+        type(basename ".ColdStartup", kValue);                              \
+      } else if (g_startup_temperature == WARM_STARTUP_TEMPERATURE) {       \
+        type(basename ".WarmStartup", kValue);                              \
+      }                                                                     \
+    }
+
+
 // On Windows, records the number of hard-faults that have occurred in the
 // current chrome.exe process since it was started. This is a nop on other
 // platforms.
@@ -171,17 +214,29 @@ void RecordHardFaultHistogram(bool is_first_run) {
         hard_fault_count,
         0, 40000, 50);
   }
+
+  // Determine the startup type based on the number of observed hard faults.
+  DCHECK_EQ(UNCERTAIN_STARTUP_TEMPERATURE, g_startup_temperature);
+  if (hard_fault_count < WARM_START_HARD_FAULT_COUNT_THRESHOLD) {
+    g_startup_temperature = WARM_STARTUP_TEMPERATURE;
+  } else if (hard_fault_count >= COLD_START_HARD_FAULT_COUNT_THRESHOLD) {
+    g_startup_temperature = COLD_STARTUP_TEMPERATURE;
+  }
+
+  // Record the startup 'temperature'.
+  UMA_HISTOGRAM_ENUMERATION(
+      "Startup.Temperature", g_startup_temperature, STARTUP_TEMPERATURE_MAX);
 #endif  // defined(OS_WIN)
 }
 
-// Record time of main entry so it can be read from Telemetry performance
-// tests.
+// Record time of main entry so it can be read from Telemetry performance tests.
 // TODO(jeremy): Remove once crbug.com/317481 is fixed.
 void RecordMainEntryTimeHistogram() {
   const int kLowWordMask = 0xFFFFFFFF;
   const int kLower31BitsMask = 0x7FFFFFFF;
+  DCHECK(!MainEntryPointTime().is_null());
   base::TimeDelta browser_main_entry_time_absolute =
-      *MainEntryPointTimeInternal() - base::Time::UnixEpoch();
+      MainEntryPointTime() - base::Time::UnixEpoch();
 
   uint64 browser_main_entry_time_raw_ms =
       browser_main_entry_time_absolute.InMilliseconds();
@@ -201,15 +256,23 @@ void RecordMainEntryTimeHistogram() {
       browser_main_entry_time_raw_ms_low_word);
 }
 
-bool g_main_entry_time_was_recorded = false;
-
 // Environment variable that stores the timestamp when the executable's main()
 // function was entered.
 const char kChromeMainTimeEnvVar[] = "CHROME_MAIN_TIME";
 
-}  // namespace
+// Returns the time of main entry recorded from RecordExeMainEntryTime.
+base::Time ExeMainEntryPointTime() {
+  scoped_ptr<base::Environment> env(base::Environment::Create());
+  std::string time_string;
+  int64 time_int = 0;
+  if (env->GetVar(kChromeMainTimeEnvVar, &time_string) &&
+      base::StringToInt64(time_string, &time_int)) {
+    return base::Time::FromInternalValue(time_int);
+  }
+  return base::Time();
+}
 
-namespace startup_metric_utils {
+}  // namespace
 
 bool WasNonBrowserUIDisplayed() {
   return g_non_browser_ui_displayed;
@@ -219,36 +282,36 @@ void SetNonBrowserUIDisplayed() {
   g_non_browser_ui_displayed = true;
 }
 
-void RecordMainEntryPointTime() {
-  DCHECK(!g_main_entry_time_was_recorded);
-  g_main_entry_time_was_recorded = true;
-  MainEntryPointTimeInternal();
+void RecordStartupProcessCreationTime(const base::Time& time) {
+  DCHECK(g_process_creation_time.Get().is_null());
+  g_process_creation_time.Get() = time;
+  DCHECK(!g_process_creation_time.Get().is_null());
 }
 
-void RecordExeMainEntryTime() {
-  std::string exe_load_time =
-      base::Int64ToString(base::Time::Now().ToInternalValue());
+void RecordMainEntryPointTime(const base::Time& time) {
+  DCHECK(MainEntryPointTime().is_null());
+  g_main_entry_point_time.Get() = time;
+  DCHECK(!MainEntryPointTime().is_null());
+}
+
+void RecordExeMainEntryPointTime(const base::Time& time) {
+  std::string exe_load_time = base::Int64ToString(time.ToInternalValue());
   scoped_ptr<base::Environment> env(base::Environment::Create());
   env->SetVar(kChromeMainTimeEnvVar, exe_load_time);
 }
 
-#if defined(OS_ANDROID)
-void RecordSavedMainEntryPointTime(const base::Time& entry_point_time) {
-  DCHECK(!g_main_entry_time_was_recorded);
-  g_main_entry_time_was_recorded = true;
-  *MainEntryPointTimeInternal() = entry_point_time;
-}
-#endif // OS_ANDROID
-
-// Return the time recorded by RecordMainEntryPointTime().
-const base::Time MainEntryStartTime() {
-  DCHECK(g_main_entry_time_was_recorded);
-  return *MainEntryPointTimeInternal();
-}
-
-void OnBrowserStartupComplete(bool is_first_run) {
+void RecordBrowserMainMessageLoopStart(const base::Time& time,
+                                       bool is_first_run) {
   RecordHardFaultHistogram(is_first_run);
   RecordMainEntryTimeHistogram();
+
+  const base::Time& process_creation_time = g_process_creation_time.Get();
+  if (!is_first_run && !process_creation_time.is_null()) {
+    UMA_HISTOGRAM_BY_STARTUP_TEMPERATURE(
+        UMA_HISTOGRAM_LONG_TIMES_100,
+        "Startup.BrowserMessageLoopStartTime",
+        time - process_creation_time);
+  }
 
   // Bail if uptime < 7 minutes, to filter out cases where Chrome may have been
   // autostarted and the machine is under io pressure.
@@ -257,64 +320,104 @@ void OnBrowserStartupComplete(bool is_first_run) {
   if (base::SysInfo::Uptime() < kSevenMinutesInMilliseconds)
     return;
 
-  // The Startup.BrowserMessageLoopStartTime histogram recorded in
-  // chrome_browser_main.cc exhibits instability in the field which limits its
-  // usefulness in all scenarios except when we have a very large sample size.
-  // Attempt to mitigate this with a new metric:
-  // * Measure time from main entry rather than the OS' notion of process start
-  //   time.
+  // The Startup.BrowserMessageLoopStartTime histogram exhibits instability in
+  // the field which limits its usefulness in all scenarios except when we have
+  // a very large sample size. Attempt to mitigate this with a new metric:
+  // * Measure time from main entry rather than the OS' notion of process start.
   // * Only measure launches that occur 7 minutes after boot to try to avoid
   //   cases where Chrome is auto-started and IO is heavily loaded.
-  base::TimeDelta startup_time_from_main_entry =
-      base::Time::Now() - MainEntryStartTime();
+  const base::Time dll_main_time = MainEntryPointTime();
+  base::TimeDelta startup_time_from_main_entry = time - dll_main_time;
   if (is_first_run) {
-    UMA_HISTOGRAM_LONG_TIMES(
+    UMA_HISTOGRAM_BY_STARTUP_TEMPERATURE(
+        UMA_HISTOGRAM_LONG_TIMES,
         "Startup.BrowserMessageLoopStartTimeFromMainEntry.FirstRun",
         startup_time_from_main_entry);
   } else {
-    UMA_HISTOGRAM_LONG_TIMES(
+    UMA_HISTOGRAM_BY_STARTUP_TEMPERATURE(
+        UMA_HISTOGRAM_LONG_TIMES,
         "Startup.BrowserMessageLoopStartTimeFromMainEntry",
         startup_time_from_main_entry);
   }
 
-// CurrentProcessInfo::CreationTime() is currently only implemented on some
-// platforms.
-#if (defined(OS_MACOSX) && !defined(OS_IOS)) || defined(OS_WIN) || \
-    defined(OS_LINUX)
   // Record timings between process creation, the main() in the executable being
   // reached and the main() in the shared library being reached.
-  scoped_ptr<base::Environment> env(base::Environment::Create());
-  std::string chrome_main_entry_time_string;
-  if (env->GetVar(kChromeMainTimeEnvVar, &chrome_main_entry_time_string)) {
-    // The time that the Chrome executable's main() function was entered.
-    int64 chrome_main_entry_time_int = 0;
-    if (base::StringToInt64(chrome_main_entry_time_string,
-                            &chrome_main_entry_time_int)) {
-      base::Time process_create_time = base::CurrentProcessInfo::CreationTime();
-      base::Time exe_main_time =
-          base::Time::FromInternalValue(chrome_main_entry_time_int);
-      base::Time dll_main_time = MainEntryStartTime();
-
+  if (!process_creation_time.is_null()) {
+    const base::Time exe_main_time = ExeMainEntryPointTime();
+    if (!exe_main_time.is_null()) {
       // Process create to chrome.exe:main().
-      UMA_HISTOGRAM_LONG_TIMES("Startup.LoadTime.ProcessCreateToExeMain",
-                               exe_main_time - process_create_time);
+      UMA_HISTOGRAM_BY_STARTUP_TEMPERATURE(
+          UMA_HISTOGRAM_LONG_TIMES, "Startup.LoadTime.ProcessCreateToExeMain",
+          exe_main_time - process_creation_time);
 
       // chrome.exe:main() to chrome.dll:main().
-      UMA_HISTOGRAM_LONG_TIMES("Startup.LoadTime.ExeMainToDllMain",
-                               dll_main_time - exe_main_time);
+      UMA_HISTOGRAM_BY_STARTUP_TEMPERATURE(
+          UMA_HISTOGRAM_LONG_TIMES, "Startup.LoadTime.ExeMainToDllMain",
+          dll_main_time - exe_main_time);
 
       // Process create to chrome.dll:main().
-      UMA_HISTOGRAM_LONG_TIMES("Startup.LoadTime.ProcessCreateToDllMain",
-                               dll_main_time - process_create_time);
+      UMA_HISTOGRAM_BY_STARTUP_TEMPERATURE(
+          UMA_HISTOGRAM_LONG_TIMES, "Startup.LoadTime.ProcessCreateToDllMain",
+          dll_main_time - process_creation_time);
     }
   }
-#endif
 }
 
-const base::Time* MainEntryPointTime() {
-  if (!g_main_entry_time_was_recorded)
-    return NULL;
-  return MainEntryPointTimeInternal();
+void RecordBrowserWindowDisplay(const base::Time& time) {
+  static bool is_first_call = true;
+  if (!is_first_call || time.is_null())
+    return;
+  is_first_call = false;
+  if (WasNonBrowserUIDisplayed() || g_process_creation_time.Get().is_null())
+    return;
+
+  UMA_HISTOGRAM_BY_STARTUP_TEMPERATURE(
+      UMA_HISTOGRAM_LONG_TIMES, "Startup.BrowserWindowDisplay",
+      time - g_process_creation_time.Get());
+}
+
+void RecordBrowserOpenTabsDelta(const base::TimeDelta& delta) {
+  static bool is_first_call = true;
+  if (!is_first_call)
+    return;
+  is_first_call = false;
+
+  UMA_HISTOGRAM_BY_STARTUP_TEMPERATURE(
+      UMA_HISTOGRAM_LONG_TIMES_100, "Startup.BrowserOpenTabs", delta);
+}
+
+void RecordFirstWebContentsMainFrameLoad(const base::Time& time) {
+  static bool is_first_call = true;
+  if (!is_first_call || time.is_null())
+    return;
+  is_first_call = false;
+  if (WasNonBrowserUIDisplayed() || g_process_creation_time.Get().is_null())
+    return;
+
+  UMA_HISTOGRAM_BY_STARTUP_TEMPERATURE(
+      UMA_HISTOGRAM_LONG_TIMES_100, "Startup.FirstWebContents.MainFrameLoad",
+      time - g_process_creation_time.Get());
+}
+
+void RecordFirstWebContentsNonEmptyPaint(const base::Time& time) {
+  static bool is_first_call = true;
+  if (!is_first_call || time.is_null())
+    return;
+  is_first_call = false;
+  if (WasNonBrowserUIDisplayed() || g_process_creation_time.Get().is_null())
+    return;
+
+  UMA_HISTOGRAM_BY_STARTUP_TEMPERATURE(
+      UMA_HISTOGRAM_LONG_TIMES_100, "Startup.FirstWebContents.NonEmptyPaint",
+      time - g_process_creation_time.Get());
+}
+
+base::Time MainEntryPointTime() {
+  return g_main_entry_point_time.Get();
+}
+
+StartupTemperature GetStartupTemperature() {
+  return g_startup_temperature;
 }
 
 }  // namespace startup_metric_utils

@@ -14,11 +14,11 @@ import android.view.ViewGroup;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.test.util.Feature;
 import org.chromium.chrome.R;
-import org.chromium.chrome.browser.EmptyTabObserver;
-import org.chromium.chrome.browser.Tab;
 import org.chromium.chrome.browser.UrlConstants;
 import org.chromium.chrome.browser.omnibox.LocationBarLayout;
 import org.chromium.chrome.browser.omnibox.UrlBar;
+import org.chromium.chrome.browser.tab.EmptyTabObserver;
+import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.test.ChromeTabbedActivityTestBase;
 import org.chromium.chrome.test.util.ChromeTabUtils;
 import org.chromium.chrome.test.util.NewTabPageTestUtils;
@@ -289,15 +289,10 @@ public class NewTabPageTest extends ChromeTabbedActivityTestBase {
     }
 
     private boolean waitForTabLoading() throws InterruptedException {
-        return CriteriaHelper.pollForCriteria(new Criteria() {
+        return CriteriaHelper.pollForUIThreadCriteria(new Criteria() {
             @Override
             public boolean isSatisfied() {
-                return ThreadUtils.runOnUiThreadBlockingNoException(new Callable<Boolean>() {
-                    @Override
-                    public Boolean call() throws Exception {
-                        return mTab.isLoading();
-                    }
-                });
+                return mTab.isLoading();
             }
         });
     }
@@ -313,16 +308,10 @@ public class NewTabPageTest extends ChromeTabbedActivityTestBase {
 
     private void waitForUrlFocusPercent(final NewTabPage ntp, final float percent)
             throws InterruptedException {
-        assertTrue(CriteriaHelper.pollForCriteria(new Criteria() {
+        assertTrue(CriteriaHelper.pollForUIThreadCriteria(new Criteria() {
             @Override
             public boolean isSatisfied() {
-                return ThreadUtils.runOnUiThreadBlockingNoException(new Callable<Boolean>() {
-                    @Override
-                    public Boolean call() throws Exception {
-                        return ntp.getNewTabPageView().getUrlFocusChangeAnimationPercent()
-                                == percent;
-                    }
-                });
+                return ntp.getNewTabPageView().getUrlFocusChangeAnimationPercent() == percent;
             }
         }));
     }
@@ -352,15 +341,10 @@ public class NewTabPageTest extends ChromeTabbedActivityTestBase {
      */
     private void waitForFakeboxTopPosition(final NewTabPage ntp, final int position)
             throws InterruptedException {
-        assertTrue(CriteriaHelper.pollForCriteria(new Criteria() {
+        assertTrue(CriteriaHelper.pollForUIThreadCriteria(new Criteria() {
             @Override
             public boolean isSatisfied() {
-                return ThreadUtils.runOnUiThreadBlockingNoException(new Callable<Boolean>() {
-                    @Override
-                    public Boolean call() throws Exception {
-                        return getFakeboxTop(ntp) == position;
-                    }
-                });
+                return getFakeboxTop(ntp) == position;
             }
         }));
     }

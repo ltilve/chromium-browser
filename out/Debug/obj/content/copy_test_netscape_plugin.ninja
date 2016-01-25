@@ -1,0 +1,2 @@
+build plugins/libtest_netscape_plugin.so: copy libtest_netscape_plugin.so $
+    || libtest_netscape_plugin.so.TOC

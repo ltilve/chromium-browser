@@ -69,6 +69,7 @@ public:
     void releaseResources();
 
     void didChangePriority(ResourceLoadPriority, int intraPriorityValue);
+    bool shouldUseIncreasedPriorities();
 
     // WebURLLoaderClient
     void willSendRequest(WebURLLoader*, WebURLRequest&, const WebURLResponse& redirectResponse) override;
@@ -111,7 +112,6 @@ private:
 
     bool m_defersLoading;
     bool m_loadingMultipartContent;
-    OwnPtr<ResourceRequest> m_fallbackRequestForServiceWorker;
     ResourceRequest m_deferredRequest;
     ResourceLoaderOptions m_options;
 

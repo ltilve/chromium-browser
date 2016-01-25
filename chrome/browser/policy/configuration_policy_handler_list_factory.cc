@@ -27,6 +27,7 @@
 #include "components/policy/core/common/schema.h"
 #include "components/search_engines/default_search_policy_handler.h"
 #include "components/translate/core/common/translate_pref_names.h"
+#include "components/variations/pref_names.h"
 #include "policy/policy_constants.h"
 
 #if defined(OS_ANDROID)
@@ -39,15 +40,15 @@
 #include "chrome/browser/policy/javascript_policy_handler.h"
 #include "chrome/browser/policy/network_prediction_policy_handler.h"
 #include "chrome/browser/sessions/restore_on_startup_policy_handler.h"
-#include "chrome/browser/sync/sync_policy_handler.h"
+#include "components/sync_driver/sync_policy_handler.h"
 #endif
 
 #if defined(OS_CHROMEOS)
-#include "chrome/browser/chromeos/drive/drive_pref_names.h"
 #include "chrome/browser/chromeos/platform_keys/key_permissions_policy_handler.h"
 #include "chrome/browser/chromeos/policy/configuration_policy_handler_chromeos.h"
 #include "chromeos/chromeos_pref_names.h"
 #include "chromeos/dbus/power_policy_controller.h"
+#include "components/drive/drive_pref_names.h"
 #include "components/user_manager/user.h"
 #include "components/user_manager/user_manager.h"
 #include "ui/chromeos/accessibility_types.h"
@@ -118,7 +119,7 @@ const PolicyToPreferenceMapEntry kSimplePolicyMap[] = {
     prefs::kPrintPreviewDisabled,
     base::Value::TYPE_BOOLEAN },
   { key::kMetricsReportingEnabled,
-    prefs::kMetricsReportingEnabled,
+    metrics::prefs::kMetricsReportingEnabled,
     base::Value::TYPE_BOOLEAN },
   { key::kApplicationLocaleValue,
     prefs::kApplicationLocale,
@@ -209,9 +210,6 @@ const PolicyToPreferenceMapEntry kSimplePolicyMap[] = {
     base::Value::TYPE_INTEGER },
   { key::kSigninAllowed,
     prefs::kSigninAllowed,
-    base::Value::TYPE_BOOLEAN },
-  { key::kDisableSSLRecordSplitting,
-    prefs::kDisableSSLRecordSplitting,
     base::Value::TYPE_BOOLEAN },
   { key::kEnableOnlineRevocationChecks,
     prefs::kCertRevocationCheckingEnabled,
@@ -327,6 +325,9 @@ const PolicyToPreferenceMapEntry kSimplePolicyMap[] = {
   { key::kSSLErrorOverrideAllowed,
     prefs::kSSLErrorOverrideAllowed,
     base::Value::TYPE_BOOLEAN },
+  { key::kHardwareAccelerationModeEnabled,
+    prefs::kHardwareAccelerationModeEnabled,
+    base::Value::TYPE_BOOLEAN },
 
 #if defined(ENABLE_SPELLCHECK)
   { key::kSpellCheckServiceEnabled,
@@ -353,7 +354,7 @@ const PolicyToPreferenceMapEntry kSimplePolicyMap[] = {
     prefs::kHideWebStoreIcon,
     base::Value::TYPE_BOOLEAN },
   { key::kVariationsRestrictParameter,
-    prefs::kVariationsRestrictParameter,
+    variations::prefs::kVariationsRestrictParameter,
     base::Value::TYPE_STRING },
   { key::kSupervisedUserCreationEnabled,
     prefs::kSupervisedUserCreationAllowed,
@@ -473,6 +474,9 @@ const PolicyToPreferenceMapEntry kSimplePolicyMap[] = {
   { key::kForceMaximizeOnFirstRun,
     prefs::kForceMaximizeOnFirstRun,
     base::Value::TYPE_BOOLEAN },
+  { key::kUnifiedDesktopEnabledByDefault,
+    prefs::kUnifiedDesktopEnabledByDefault,
+    base::Value::TYPE_BOOLEAN },
 #endif  // defined(OS_CHROMEOS)
 
 #if !defined(OS_MACOSX) && !defined(OS_CHROMEOS)
@@ -485,6 +489,9 @@ const PolicyToPreferenceMapEntry kSimplePolicyMap[] = {
   { key::kDataCompressionProxyEnabled,
     data_reduction_proxy::prefs::kDataReductionProxyEnabled,
     base::Value::TYPE_BOOLEAN },
+  { key::kAuthAndroidNegotiateAccountType,
+    prefs::kAuthAndroidNegotiateAccountType,
+    base::Value::TYPE_STRING },
 #endif  // defined(OS_ANDROID)
 
 #if !defined(OS_CHROMEOS) && !defined(OS_ANDROID) && !defined(OS_IOS)
@@ -604,7 +611,7 @@ scoped_ptr<ConfigurationPolicyHandlerList> BuildHandlerList(
   handlers->AddHandler(make_scoped_ptr(new JavascriptPolicyHandler()));
   handlers->AddHandler(make_scoped_ptr(new NetworkPredictionPolicyHandler()));
   handlers->AddHandler(make_scoped_ptr(new RestoreOnStartupPolicyHandler()));
-  handlers->AddHandler(make_scoped_ptr(new browser_sync::SyncPolicyHandler()));
+  handlers->AddHandler(make_scoped_ptr(new sync_driver::SyncPolicyHandler()));
 
   handlers->AddHandler(make_scoped_ptr(new StringMappingListPolicyHandler(
       key::kEnableDeprecatedWebPlatformFeatures,

@@ -6,10 +6,10 @@ package org.chromium.chrome.browser.media.ui;
 
 import org.chromium.base.ApplicationStatus;
 import org.chromium.base.Log;
-import org.chromium.chrome.browser.EmptyTabObserver;
-import org.chromium.chrome.browser.Tab;
-import org.chromium.chrome.browser.TabObserver;
 import org.chromium.chrome.browser.UrlUtilities;
+import org.chromium.chrome.browser.tab.EmptyTabObserver;
+import org.chromium.chrome.browser.tab.Tab;
+import org.chromium.chrome.browser.tab.TabObserver;
 import org.chromium.content_public.browser.WebContents;
 import org.chromium.content_public.browser.WebContentsObserver;
 
@@ -39,6 +39,12 @@ public class MediaSessionTabHelper {
             assert mWebContents != null;
             mWebContents.suspendMediaSession();
         }
+
+        @Override
+        public void onStop() {
+            assert mWebContents != null;
+            mWebContents.stopMediaSession();
+        }
     };
 
     private WebContentsObserver createWebContentsObserver(WebContents webContents) {
@@ -62,7 +68,7 @@ public class MediaSessionTabHelper {
                 }
                 String origin = mTab.getUrl();
                 try {
-                    origin = UrlUtilities.getOriginForDisplay(new URI(origin), true);
+                    origin = UrlUtilities.formatUrlForSecurityDisplay(new URI(origin), true);
                 } catch (URISyntaxException e) {
                     Log.e(TAG, "Unable to parse the origin from the URL. "
                             + "Showing the full URL instead.");

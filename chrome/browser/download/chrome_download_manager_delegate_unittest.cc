@@ -16,8 +16,8 @@
 #include "chrome/browser/download/download_target_info.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/test/base/chrome_render_view_host_test_harness.h"
-#include "chrome/test/base/testing_pref_service_syncable.h"
 #include "chrome/test/base/testing_profile.h"
+#include "components/syncable_prefs/testing_pref_service_syncable.h"
 #include "content/public/browser/download_interrupt_reasons.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/browser/web_contents_delegate.h"
@@ -27,10 +27,6 @@
 #include "content/public/test/web_contents_tester.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
-
-#if defined(OS_ANDROID)
-#include "chrome/browser/android/download/mock_download_controller_android.h"
-#endif
 
 using ::testing::AtMost;
 using ::testing::Invoke;
@@ -165,14 +161,11 @@ class ChromeDownloadManagerDelegateTest
   DownloadPrefs* download_prefs();
 
  private:
-  TestingPrefServiceSyncable* pref_service_;
+  syncable_prefs::TestingPrefServiceSyncable* pref_service_;
   base::ScopedTempDir test_download_dir_;
   scoped_ptr<content::MockDownloadManager> download_manager_;
   scoped_ptr<TestChromeDownloadManagerDelegate> delegate_;
   MockWebContentsDelegate web_contents_delegate_;
-#if defined(OS_ANDROID)
-  chrome::android::MockDownloadControllerAndroid download_controller_;
-#endif
 
 };
 
@@ -191,18 +184,11 @@ void ChromeDownloadManagerDelegateTest::SetUp() {
 
   ASSERT_TRUE(test_download_dir_.CreateUniqueTempDir());
   SetDefaultDownloadPath(test_download_dir_.path());
-#if defined(OS_ANDROID)
-  content::DownloadControllerAndroid::SetDownloadControllerAndroid(
-     &download_controller_);
-#endif
 }
 
 void ChromeDownloadManagerDelegateTest::TearDown() {
   base::RunLoop().RunUntilIdle();
   delegate_->Shutdown();
-#if defined(OS_ANDROID)
-  content::DownloadControllerAndroid::SetDownloadControllerAndroid(nullptr);
-#endif
   ChromeRenderViewHostTestHarness::TearDown();
 }
 

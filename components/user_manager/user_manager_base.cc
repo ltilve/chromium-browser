@@ -381,6 +381,7 @@ void UserManagerBase::RemoveUserFromList(const std::string& user_id) {
     // boostrapping user during user list loading.
     ListPrefUpdate users_update(GetLocalState(), kRegularUsers);
     users_update->Remove(base::StringValue(user_id), NULL);
+    OnUserRemoved(user_id);
   } else {
     NOTREACHED() << "Users are not loaded yet.";
     return;
@@ -789,7 +790,7 @@ bool UserManagerBase::HasPendingBootstrap(const std::string& user_id) const {
   return false;
 }
 
-void UserManagerBase::SetOwnerEmail(std::string owner_user_id) {
+void UserManagerBase::SetOwnerEmail(const std::string& owner_user_id) {
   owner_email_ = owner_user_id;
 }
 
@@ -797,7 +798,7 @@ const std::string& UserManagerBase::GetPendingUserSwitchID() const {
   return pending_user_switch_;
 }
 
-void UserManagerBase::SetPendingUserSwitchID(std::string user_id) {
+void UserManagerBase::SetPendingUserSwitchID(const std::string& user_id) {
   pending_user_switch_ = user_id;
 }
 
@@ -1144,6 +1145,11 @@ void UserManagerBase::SetKnownUserIntegerPref(const UserID& user_id,
   UpdateKnownUserPrefs(user_id, dict, false);
 }
 
+bool UserManagerBase::GetKnownUserCanonicalEmail(const UserID& user_id,
+                                                 std::string* out_email) {
+  return GetKnownUserStringPref(user_id, kCanonicalEmail, out_email);
+}
+
 void UserManagerBase::UpdateGaiaID(const UserID& user_id,
                                    const std::string& gaia_id) {
   SetKnownUserStringPref(user_id, kGAIAIdKey, gaia_id);
@@ -1200,6 +1206,7 @@ User* UserManagerBase::RemoveRegularOrSupervisedUserFromList(
       ++it;
     }
   }
+  OnUserRemoved(user_id);
   return user;
 }
 

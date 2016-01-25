@@ -11,10 +11,10 @@
 #include "chrome/browser/password_manager/password_store_factory.h"
 #include "chrome/browser/ui/browser_command_controller.h"
 #include "chrome/browser/ui/browser_finder.h"
+#include "chrome/browser/ui/browser_navigator_params.h"
 #include "chrome/browser/ui/browser_window.h"
 #include "chrome/browser/ui/chrome_pages.h"
 #include "chrome/browser/ui/location_bar/location_bar.h"
-#include "chrome/browser/ui/passwords/manage_passwords_icon.h"
 #include "chrome/browser/ui/tab_dialogs.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/grit/generated_resources.h"
@@ -28,7 +28,9 @@
 #if defined(OS_ANDROID)
 #include "chrome/browser/android/chrome_application.h"
 #include "chrome/browser/infobars/infobar_service.h"
-#include "chrome/browser/password_manager/account_chooser_infobar_delegate_android.h"
+#include "chrome/browser/password_manager/account_chooser_dialog_android.h"
+#else
+#include "chrome/browser/ui/passwords/manage_passwords_icon.h"
 #endif
 
 using autofill::PasswordFormMap;
@@ -85,8 +87,11 @@ void ManagePasswordsUIController::UpdateBubbleAndIconVisibility() {
 void ManagePasswordsUIController::
     UpdateAndroidAccountChooserInfoBarVisibility() {
 #if defined(OS_ANDROID)
-  AccountChooserInfoBarDelegateAndroid::Create(
-      InfoBarService::FromWebContents(web_contents()), this);
+  // Deletes itself on the event from Java counterpart, when user interacts with
+  // dialog.
+  AccountChooserDialogAndroid* acccount_chooser_dialog =
+      new AccountChooserDialogAndroid(web_contents(), this);
+  acccount_chooser_dialog->ShowDialog();
   should_pop_up_bubble_ = false;
 #endif
 }
@@ -97,7 +102,16 @@ base::TimeDelta ManagePasswordsUIController::Elapsed() const {
 
 void ManagePasswordsUIController::OnPasswordSubmitted(
     scoped_ptr<PasswordFormManager> form_manager) {
+  bool blacklisted = form_manager->IsBlacklisted();
   passwords_data_.OnPendingPassword(form_manager.Pass());
+  timer_.reset(new base::ElapsedTimer);
+  base::AutoReset<bool> resetter(&should_pop_up_bubble_, !blacklisted);
+  UpdateBubbleAndIconVisibility();
+}
+
+void ManagePasswordsUIController::OnUpdatePasswordSubmitted(
+    scoped_ptr<PasswordFormManager> form_manager) {
+  passwords_data_.OnUpdatePassword(form_manager.Pass());
   timer_.reset(new base::ElapsedTimer);
   base::AutoReset<bool> resetter(&should_pop_up_bubble_, true);
   UpdateBubbleAndIconVisibility();
@@ -143,9 +157,19 @@ void ManagePasswordsUIController::OnAutomaticPasswordSave(
 }
 
 void ManagePasswordsUIController::OnPasswordAutofilled(
-    const PasswordFormMap& password_form_map) {
-  passwords_data_.OnPasswordAutofilled(password_form_map);
-  UpdateBubbleAndIconVisibility();
+    const PasswordFormMap& password_form_map,
+    const GURL& origin) {
+  // If we fill a form while a dialog is open, then skip the state change; we
+  // have
+  // the information we need, and the dialog will change its own state once the
+  // interaction is complete.
+  if (passwords_data_.state() !=
+          password_manager::ui::AUTO_SIGNIN_STATE &&
+      passwords_data_.state() !=
+          password_manager::ui::CREDENTIAL_REQUEST_STATE) {
+    passwords_data_.OnPasswordAutofilled(password_form_map, origin);
+    UpdateBubbleAndIconVisibility();
+  }
 }
 
 void ManagePasswordsUIController::OnBlacklistBlockedAutofill(
@@ -198,9 +222,29 @@ void ManagePasswordsUIController::NavigateToSmartLockPage() {
 #endif
 }
 
+void ManagePasswordsUIController::NavigateToSmartLockHelpPage() {
+#if defined(OS_ANDROID)
+  NOTREACHED();
+#else
+  chrome::NavigateParams params(
+      chrome::FindBrowserWithWebContents(web_contents()),
+      GURL(chrome::kSmartLockHelpPage), ui::PAGE_TRANSITION_LINK);
+  params.disposition = NEW_FOREGROUND_TAB;
+  chrome::Navigate(&params);
+#endif
+}
+
 void ManagePasswordsUIController::SavePassword() {
-  DCHECK(PasswordPendingUserDecision());
+  DCHECK_EQ(password_manager::ui::PENDING_PASSWORD_STATE, state());
   SavePasswordInternal();
+  passwords_data_.TransitionToState(password_manager::ui::MANAGE_STATE);
+  UpdateBubbleAndIconVisibility();
+}
+
+void ManagePasswordsUIController::UpdatePassword(
+    const autofill::PasswordForm& password_form) {
+  DCHECK_EQ(password_manager::ui::PENDING_PASSWORD_UPDATE_STATE, state());
+  UpdatePasswordInternal(password_form);
   passwords_data_.TransitionToState(password_manager::ui::MANAGE_STATE);
   UpdateBubbleAndIconVisibility();
 }
@@ -246,17 +290,29 @@ void ManagePasswordsUIController::ChooseCredential(
 }
 
 void ManagePasswordsUIController::SavePasswordInternal() {
+  password_manager::PasswordStore* password_store =
+      GetPasswordStore(web_contents());
   password_manager::PasswordFormManager* form_manager =
       passwords_data_.form_manager();
-  DCHECK(form_manager);
+  for (const autofill::PasswordForm* form :
+       form_manager->blacklisted_matches()) {
+    password_store->RemoveLogin(*form);
+  }
+
   form_manager->Save();
 }
 
+void ManagePasswordsUIController::UpdatePasswordInternal(
+    const autofill::PasswordForm& password_form) {
+  password_manager::PasswordFormManager* form_manager =
+      passwords_data_.form_manager();
+  form_manager->Update(password_form);
+}
+
 void ManagePasswordsUIController::NeverSavePassword() {
-  DCHECK(PasswordPendingUserDecision());
+  DCHECK_EQ(password_manager::ui::PENDING_PASSWORD_STATE, state());
   NeverSavePasswordInternal();
-  passwords_data_.TransitionToState(password_manager::ui::BLACKLIST_STATE);
-  UpdateBubbleAndIconVisibility();
+  // The state stays the same.
 }
 
 void ManagePasswordsUIController::NeverSavePasswordInternal() {
@@ -264,25 +320,6 @@ void ManagePasswordsUIController::NeverSavePasswordInternal() {
       passwords_data_.form_manager();
   DCHECK(form_manager);
   form_manager->PermanentlyBlacklist();
-}
-
-void ManagePasswordsUIController::UnblacklistSite() {
-  // We're in one of two states: either the user _just_ blacklisted the site
-  // by clicking "Never save" in the pending bubble, or the user is visiting
-  // a blacklisted site.
-  //
-  // Either way, |passwords_data_| has been populated with the relevant form. We
-  // can safely pull it out, send it over to the password store for removal, and
-  // update our internal state.
-  DCHECK(!passwords_data_.GetCurrentForms().empty());
-  DCHECK_EQ(password_manager::ui::BLACKLIST_STATE, state());
-  password_manager::PasswordStore* password_store =
-      GetPasswordStore(web_contents());
-  DCHECK(GetCurrentForms().front()->blacklisted_by_user);
-  if (password_store)
-    password_store->RemoveLogin(*GetCurrentForms().front());
-  passwords_data_.TransitionToState(password_manager::ui::MANAGE_STATE);
-  UpdateBubbleAndIconVisibility();
 }
 
 void ManagePasswordsUIController::ManageAccounts() {
@@ -320,14 +357,25 @@ void ManagePasswordsUIController::WasHidden() {
 
 const autofill::PasswordForm& ManagePasswordsUIController::
     PendingPassword() const {
+  if (state() == password_manager::ui::AUTO_SIGNIN_STATE)
+    return *GetCurrentForms()[0];
+
   DCHECK(state() == password_manager::ui::PENDING_PASSWORD_STATE ||
-         state() == password_manager::ui::CONFIRMATION_STATE) << state();
+         state() == password_manager::ui::PENDING_PASSWORD_UPDATE_STATE ||
+         state() == password_manager::ui::CONFIRMATION_STATE)
+      << state();
   password_manager::PasswordFormManager* form_manager =
       passwords_data_.form_manager();
-  DCHECK(form_manager);
   return form_manager->pending_credentials();
 }
 
+bool ManagePasswordsUIController::PasswordOverridden() const {
+  const password_manager::PasswordFormManager* form_manager =
+      passwords_data_.form_manager();
+  return form_manager ? form_manager->password_overridden() : false;
+}
+
+#if !defined(OS_ANDROID)
 void ManagePasswordsUIController::UpdateIconAndBubbleState(
     ManagePasswordsIcon* icon) {
   if (should_pop_up_bubble_) {
@@ -339,18 +387,24 @@ void ManagePasswordsUIController::UpdateIconAndBubbleState(
     icon->SetState(state());
   }
 }
+#endif
 
 void ManagePasswordsUIController::OnBubbleShown() {
   should_pop_up_bubble_ = false;
 }
 
 void ManagePasswordsUIController::OnBubbleHidden() {
+  // Avoid using |state()| which is overridden for some unit tests.
   if (state() == password_manager::ui::CREDENTIAL_REQUEST_STATE ||
       state() == password_manager::ui::CONFIRMATION_STATE ||
       state() == password_manager::ui::AUTO_SIGNIN_STATE) {
     passwords_data_.TransitionToState(password_manager::ui::MANAGE_STATE);
     UpdateBubbleAndIconVisibility();
   }
+}
+
+password_manager::ui::State ManagePasswordsUIController::state() const {
+  return passwords_data_.state();
 }
 
 void ManagePasswordsUIController::ShowBubbleWithoutUserInteraction() {

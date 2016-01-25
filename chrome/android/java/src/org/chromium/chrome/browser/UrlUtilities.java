@@ -36,7 +36,7 @@ public class UrlUtilities {
      * URI schemes that Chrome can download.
      */
     private static final HashSet<String> DOWNLOADABLE_SCHEMES = CollectionUtil.newHashSet(
-            "data", "filesystem", "http", "https", "blob");
+            "data", "filesystem", "http", "https", "blob", "file");
 
     /**
      * URI schemes that are internal to Chrome.
@@ -126,7 +126,7 @@ public class UrlUtilities {
     }
 
     /**
-     * Refer to url_fixer::FixupURL.
+     * Refer to url_formatter::FixupURL.
      *
      * Given a URL-like string, returns a real URL or null. For example:
      *  - "google.com" -> "http://google.com/"
@@ -147,30 +147,12 @@ public class UrlUtilities {
      * @return Stripped-down String containing the essential bits of the URL, or the original URL if
      *         it fails to parse it.
      */
-    public static String getOriginForDisplay(URI uri, boolean showScheme) {
-        String scheme = uri.getScheme();
-        String host = uri.getHost();
-        int port = uri.getPort();
-
-        String displayUrl;
-        if (TextUtils.isEmpty(scheme) || TextUtils.isEmpty(host)) {
-            displayUrl = uri.toString();
+    public static String formatUrlForSecurityDisplay(URI uri, boolean showScheme) {
+        if (showScheme) {
+            return nativeFormatUrlForSecurityDisplay(uri.toString());
         } else {
-            if (showScheme) {
-                scheme += "://";
-            } else {
-                scheme = "";
-            }
-
-            if (port == -1 || (port == 80 && "http".equals(scheme))
-                    || (port == 443 && "https".equals(scheme))) {
-                displayUrl = scheme + host;
-            } else {
-                displayUrl = scheme + host + ":" + port;
-            }
+            return nativeFormatUrlForSecurityDisplayOmitScheme(uri.toString());
         }
-
-        return displayUrl;
     }
 
     /**
@@ -380,5 +362,7 @@ public class UrlUtilities {
             boolean includePrivateRegistries);
     public static native boolean nativeIsGoogleSearchUrl(String url);
     public static native boolean nativeIsGoogleHomePageUrl(String url);
+    public static native String nativeFormatUrlForSecurityDisplay(String url);
+    public static native String nativeFormatUrlForSecurityDisplayOmitScheme(String url);
     private static native String nativeFixupUrl(String url, String desiredTld);
 }

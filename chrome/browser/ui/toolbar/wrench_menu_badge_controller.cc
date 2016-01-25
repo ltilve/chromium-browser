@@ -77,7 +77,8 @@ bool ShouldShowIncompatibilityWarning() {
 
 WrenchMenuBadgeController::WrenchMenuBadgeController(Profile* profile,
                                                      Delegate* delegate)
-    : profile_(profile), delegate_(delegate) {
+    : profile_(profile),
+      delegate_(delegate) {
   DCHECK(profile_);
   DCHECK(delegate_);
 

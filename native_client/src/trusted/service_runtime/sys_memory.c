@@ -267,6 +267,7 @@ int32_t NaClSysMmapIntern(struct NaClApp        *nap,
   nacl_off64_t                file_bytes;
   nacl_off64_t                host_rounded_file_bytes;
   size_t                      alloc_rounded_file_bytes;
+  uint32_t                    val_flags;
 
   holding_app_lock = 0;
   ndp = NULL;
@@ -328,9 +329,14 @@ int32_t NaClSysMmapIntern(struct NaClApp        *nap,
    * granularity.  (Windows.)
    */
   if (!NaClIsAllocPageMultiple(usraddr)) {
-    NaClLog(2, "NaClSysMmap: address not allocation granularity aligned\n");
-    map_result = -NACL_ABI_EINVAL;
-    goto cleanup;
+    if ((NACL_ABI_MAP_FIXED & flags) != 0) {
+      NaClLog(2, "NaClSysMmap: address not allocation granularity aligned\n");
+      map_result = -NACL_ABI_EINVAL;
+      goto cleanup;
+    } else {
+      NaClLog(2, "NaClSysMmap: Force alignment of misaligned hint address\n");
+      usraddr = NaClTruncAllocPage(usraddr);
+    }
   }
   /*
    * Offset should be non-negative (nacl_abi_off_t is signed).  This
@@ -721,6 +727,7 @@ int32_t NaClSysMmapIntern(struct NaClApp        *nap,
         goto cleanup;
       }
 
+      val_flags = nap->pnacl_mode ? NACL_DISABLE_NONTEMPORALS_X86 : 0;
       /* Ask validator / validation cache */
       NaClMetadataFromNaClDescCtor(&metadata, ndp);
       validator_status = NACL_FI("MMAP_FORCE_MMAP_VALIDATION_FAIL",
@@ -729,6 +736,7 @@ int32_t NaClSysMmapIntern(struct NaClApp        *nap,
                                             (uint8_t *) image_sys_addr,
                                             length,
                                             0,  /* stubout_mode: no */
+                                            val_flags,
                                             1,  /* readonly_text: yes */
                                             nap->cpu_features,
                                             &metadata,
@@ -819,18 +827,7 @@ int32_t NaClSysMmapIntern(struct NaClApp        *nap,
         map_result = (int32_t) usraddr;
       }
 
-#if NACL_WINDOWS
-      sys_ret = (*NACL_VTBL(NaClDesc, ndp)->
-                 UnmapUnsafe)(ndp, (void *) image_sys_addr, length);
-#else
-      sys_ret = munmap((void *) image_sys_addr, length);
-#endif
-      if (0 != sys_ret) {
-        NaClLog(LOG_FATAL,
-                "NaClSysMmap: could not unmap text at 0x%"NACL_PRIxPTR","
-                " length 0x%"NACL_PRIxS", NaCl errno %d\n",
-                image_sys_addr, length, -sys_ret);
-      }
+      NaClDescUnmapUnsafe(ndp, (void *) image_sys_addr, length);
       goto cleanup_no_locks;
     } else {
       /*

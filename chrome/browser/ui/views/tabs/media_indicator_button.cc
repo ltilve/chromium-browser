@@ -71,16 +71,8 @@ void MediaIndicatorButton::TransitionToMediaState(TabMediaState next_state) {
   if (next_state == media_state_)
     return;
 
-  if (next_state != TAB_MEDIA_STATE_NONE) {
-    const gfx::ImageSkia* const indicator_image =
-        chrome::GetTabMediaIndicatorImage(next_state).ToImageSkia();
-    SetImage(views::CustomButton::STATE_NORMAL, indicator_image);
-    SetImage(views::CustomButton::STATE_DISABLED, indicator_image);
-    const gfx::ImageSkia* const affordance_image =
-        chrome::GetTabMediaIndicatorAffordanceImage(next_state).ToImageSkia();
-    SetImage(views::CustomButton::STATE_HOVERED, affordance_image);
-    SetImage(views::CustomButton::STATE_PRESSED, affordance_image);
-  }
+  if (next_state != TAB_MEDIA_STATE_NONE)
+    ResetImages(next_state);
 
   if ((media_state_ == TAB_MEDIA_STATE_AUDIO_PLAYING &&
        next_state == TAB_MEDIA_STATE_AUDIO_MUTING) ||
@@ -119,7 +111,7 @@ void MediaIndicatorButton::TransitionToMediaState(TabMediaState next_state) {
 }
 
 void MediaIndicatorButton::UpdateEnabledForMuteToggle() {
-  bool enable = chrome::IsTabAudioMutingFeatureEnabled() &&
+  bool enable = chrome::AreExperimentalMuteControlsEnabled() &&
       (media_state_ == TAB_MEDIA_STATE_AUDIO_PLAYING ||
        media_state_ == TAB_MEDIA_STATE_AUDIO_MUTING);
 
@@ -134,6 +126,12 @@ void MediaIndicatorButton::UpdateEnabledForMuteToggle() {
   }
 
   SetEnabled(enable);
+}
+
+void MediaIndicatorButton::OnParentTabButtonColorChanged() {
+  if (media_state_ == TAB_MEDIA_STATE_AUDIO_PLAYING ||
+      media_state_ == TAB_MEDIA_STATE_AUDIO_MUTING)
+    ResetImages(media_state_);
 }
 
 const char* MediaIndicatorButton::GetClassName() const {
@@ -242,4 +240,16 @@ bool MediaIndicatorButton::IsTriggerableEvent(const ui::Event& event) {
 Tab* MediaIndicatorButton::GetTab() const {
   DCHECK_EQ(static_cast<views::View*>(parent_tab_), parent());
   return parent_tab_;
+}
+
+void MediaIndicatorButton::ResetImages(TabMediaState state) {
+  SkColor color = parent_tab_->button_color();
+  gfx::ImageSkia indicator_image =
+      chrome::GetTabMediaIndicatorImage(state, color).AsImageSkia();
+  SetImage(views::CustomButton::STATE_NORMAL, &indicator_image);
+  SetImage(views::CustomButton::STATE_DISABLED, &indicator_image);
+  gfx::ImageSkia affordance_image =
+      chrome::GetTabMediaIndicatorAffordanceImage(state, color).AsImageSkia();
+  SetImage(views::CustomButton::STATE_HOVERED, &affordance_image);
+  SetImage(views::CustomButton::STATE_PRESSED, &affordance_image);
 }

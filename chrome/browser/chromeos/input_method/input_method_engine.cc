@@ -26,7 +26,6 @@
 #include "ui/base/ime/chromeos/extension_ime_util.h"
 #include "ui/base/ime/chromeos/ime_keymap.h"
 #include "ui/base/ime/chromeos/input_method_manager.h"
-#include "ui/base/ime/input_method.h"
 #include "ui/base/ime/text_input_flags.h"
 #include "ui/chromeos/ime/input_method_menu_item.h"
 #include "ui/chromeos/ime/input_method_menu_manager.h"
@@ -276,6 +275,7 @@ bool InputMethodEngine::CommitText(int context_id, const char* text,
     size_t len = GetUtf8StringLength(text);
     UMA_HISTOGRAM_CUSTOM_COUNTS("InputMethod.CommitLength",
                                 len, 1, 25, 25);
+    composition_text_.reset(new CompositionText());
   }
   return true;
 }
@@ -292,8 +292,8 @@ bool InputMethodEngine::SendKeyEvents(
     return false;
   }
 
-  ui::InputMethod* input_method =
-      ash::Shell::GetTargetRootWindow()->GetHost()->GetInputMethod();
+  ui::EventProcessor* dispatcher =
+      ash::Shell::GetPrimaryRootWindow()->GetHost()->event_processor();
 
   for (size_t i = 0; i < events.size(); ++i) {
     const KeyboardEvent& event = events[i];
@@ -309,22 +309,16 @@ bool InputMethodEngine::SendKeyEvents(
     flags |= event.shift_key ? ui::EF_SHIFT_DOWN     : ui::EF_NONE;
     flags |= event.caps_lock ? ui::EF_CAPS_LOCK_DOWN : ui::EF_NONE;
 
-    base::char16 ch = 0;
-    // 4-bytes UTF-8 string is at least 2-characters UTF-16 string.
-    // And Key char can only be single UTF-16 character.
-    if (!event.key.empty() && event.key.size() < 4) {
-      base::string16 key_char = base::UTF8ToUTF16(event.key);
-      if (key_char.size() == 1)
-        ch = key_char[0];
-    }
     ui::KeyEvent ui_event(
         type, key_code,
         ui::KeycodeConverter::CodeStringToDomCode(event.code.c_str()), flags,
-        ui::KeycodeConverter::KeyStringToDomKey(event.key.c_str()), ch,
+        ui::KeycodeConverter::KeyStringToDomKey(event.key.c_str()),
         ui::EventTimeForNow());
     base::AutoReset<const ui::KeyEvent*> reset_sent_key(&sent_key_event_,
                                                         &ui_event);
-    input_method->DispatchKeyEvent(ui_event);
+    ui::EventDispatchDetails details = dispatcher->OnEventFromSource(&ui_event);
+    if (details.dispatcher_destroyed)
+      break;
   }
 
   return true;
@@ -600,6 +594,7 @@ void InputMethodEngine::Disable() {
   active_component_id_.clear();
   IMEBridge::Get()->GetInputContextHandler()->CommitText(
       base::UTF16ToUTF8(composition_text_->text()));
+  composition_text_.reset(new CompositionText());
   observer_->OnDeactivated(active_component_id_);
 }
 
@@ -612,6 +607,7 @@ void InputMethodEngine::PropertyActivate(const std::string& property_name) {
 void InputMethodEngine::Reset() {
   if (!CheckProfile())
     return;
+  composition_text_.reset(new CompositionText());
   observer_->OnReset(active_component_id_);
 }
 
@@ -658,13 +654,13 @@ void InputMethodEngine::CandidateClicked(uint32 index) {
 
 void InputMethodEngine::SetSurroundingText(const std::string& text,
                                            uint32 cursor_pos,
-                                           uint32 anchor_pos) {
+                                           uint32 anchor_pos,
+                                           uint32 offset_pos) {
   if (!CheckProfile())
     return;
-  observer_->OnSurroundingTextChanged(active_component_id_,
-                                      text,
-                                      static_cast<int>(cursor_pos),
-                                      static_cast<int>(anchor_pos));
+  observer_->OnSurroundingTextChanged(
+      active_component_id_, text, static_cast<int>(cursor_pos),
+      static_cast<int>(anchor_pos), static_cast<int>(offset_pos));
 }
 
 bool InputMethodEngine::CheckProfile() const {

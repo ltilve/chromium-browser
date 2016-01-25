@@ -28,8 +28,6 @@ import org.chromium.android_webview.permission.AwPermissionRequest;
 import org.chromium.base.Log;
 import org.chromium.base.annotations.SuppressFBWarnings;
 import org.chromium.content.browser.ContentViewCore;
-import org.chromium.content.browser.SelectActionMode;
-import org.chromium.content.browser.SelectActionModeCallback.ActionHandler;
 
 import java.security.Principal;
 import java.util.HashMap;
@@ -372,11 +370,6 @@ public abstract class AwContentsClient {
      * @param picture New picture.
      */
     public abstract void onNewPicture(Picture picture);
-
-    public abstract SelectActionMode startActionMode(
-            View view, ActionHandler actionHandler, boolean floating);
-
-    public abstract boolean supportsFloatingActionMode();
 
     public void updateTitle(String title, boolean forceNotification) {
         if (!forceNotification && TextUtils.equals(mTitle, title)) return;

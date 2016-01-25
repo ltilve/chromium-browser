@@ -61,8 +61,7 @@ static bool DigestsEqual(const DigestValue& digest1, const DigestValue& digest2)
 
 static String digestToString(const DigestValue& digest)
 {
-    // We always output base64url encoded data, even though we use base64 internally.
-    return base64URLEncode(reinterpret_cast<const char*>(digest.data()), digest.size(), Base64DoNotInsertLFs);
+    return base64Encode(reinterpret_cast<const char*>(digest.data()), digest.size(), Base64DoNotInsertLFs);
 }
 
 
@@ -102,7 +101,7 @@ HashAlgorithm SubresourceIntegrity::getPrioritizedHashFunction(HashAlgorithm alg
     return algorithm2;
 }
 
-bool SubresourceIntegrity::CheckSubresourceIntegrity(const Element& element, const String& source, const KURL& resourceUrl, const Resource& resource)
+bool SubresourceIntegrity::CheckSubresourceIntegrity(const Element& element, const char* content, size_t size, const KURL& resourceUrl, const Resource& resource)
 {
     Document& document = element.document();
     String attribute = element.fastGetAttribute(HTMLNames::integrityAttr);
@@ -111,18 +110,25 @@ bool SubresourceIntegrity::CheckSubresourceIntegrity(const Element& element, con
 
     if (!resource.isEligibleForIntegrityCheck(document.securityOrigin())) {
         UseCounter::count(document, UseCounter::SRIElementIntegrityAttributeButIneligible);
-        logErrorToConsole("Subresource Integrity: The resource '" + resourceUrl.elidedString() + "' has an integrity attribute, but the resource requires the request to be CORS enabled to check the integrity, and it is not. The resource has not been blocked, but no integrity check occurred.", document);
+        logErrorToConsole("Subresource Integrity: The resource '" + resourceUrl.elidedString() + "' has an integrity attribute, but the resource requires the request to be CORS enabled to check the integrity, and it is not. The resource has been blocked because the integrity cannot be enforced.", document);
         return false;
     }
 
+    String errorMessage;
+    bool result = CheckSubresourceIntegrity(attribute, content, size, resourceUrl, document, errorMessage);
+    if (!result)
+        logErrorToConsole(errorMessage, document);
+    return result;
+}
+
+bool SubresourceIntegrity::CheckSubresourceIntegrity(const String& integrityMetadata, const char* content, size_t size, const KURL& resourceUrl, Document& document, String& errorMessage)
+{
     WTF::Vector<IntegrityMetadata> metadataList;
-    IntegrityParseResult integrityParseResult = parseIntegrityAttribute(attribute, metadataList, document);
+    IntegrityParseResult integrityParseResult = parseIntegrityAttribute(integrityMetadata, metadataList, document);
     // On failed parsing, there's no need to log an error here, as
     // parseIntegrityAttribute() will output an appropriate console message.
     if (integrityParseResult != IntegrityParseValidResult)
         return true;
-
-    StringUTF8Adaptor normalizedSource(source, StringUTF8Adaptor::Normalize, WTF::EntitiesForUnencodables);
 
     if (!metadataList.size())
         return true;
@@ -137,7 +143,7 @@ bool SubresourceIntegrity::CheckSubresourceIntegrity(const Element& element, con
             continue;
 
         digest.clear();
-        bool digestSuccess = computeDigest(metadata.algorithm, normalizedSource.data(), normalizedSource.length(), digest);
+        bool digestSuccess = computeDigest(metadata.algorithm, content, size, digest);
 
         if (digestSuccess) {
             Vector<char> hashVector;
@@ -153,19 +159,20 @@ bool SubresourceIntegrity::CheckSubresourceIntegrity(const Element& element, con
     }
 
     digest.clear();
-    if (computeDigest(HashAlgorithmSha256, normalizedSource.data(), normalizedSource.length(), digest)) {
+    if (computeDigest(HashAlgorithmSha256, content, size, digest)) {
         // This message exposes the digest of the resource to the console.
         // Because this is only to the console, that's okay for now, but we
         // need to be very careful not to expose this in exceptions or
         // JavaScript, otherwise it risks exposing information about the
         // resource cross-origin.
-        logErrorToConsole("Failed to find a valid digest in the 'integrity' attribute for resource '" + resourceUrl.elidedString() + "' with computed SHA-256 integrity '" + digestToString(digest) + "'. The resource has been blocked.", document);
+        errorMessage = "Failed to find a valid digest in the 'integrity' attribute for resource '" + resourceUrl.elidedString() + "' with computed SHA-256 integrity '" + digestToString(digest) + "'. The resource has been blocked.";
     } else {
-        logErrorToConsole("There was an error computing an integrity value for resource '" + resourceUrl.elidedString() + "'. The resource has been blocked.", document);
+        errorMessage = "There was an error computing an integrity value for resource '" + resourceUrl.elidedString() + "'. The resource has been blocked.";
     }
     UseCounter::count(document, UseCounter::SRIElementWithNonMatchingIntegrityAttribute);
     return false;
 }
+
 
 // Before:
 //

@@ -1,0 +1,1290 @@
+build obj/remoting/remoting_client_plugin_lib_nacl.actions_depends.stamp: $
+    stamp obj/base/base_nacl.actions_rules_copies.stamp $
+    gen/tc_pnacl_newlib/lib/libjingle_glue_nacl.a $
+    obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a $
+    gen/tc_pnacl_newlib/lib/libexpat_nacl.a $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a $
+    gen/tc_pnacl_newlib/lib/libvpx_nacl.a $
+    gen/tc_pnacl_newlib/lib/libyuv_nacl.a $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a $
+    gen/tc_pnacl_newlib/lib/libremoting_proto_nacl.a $
+    gen/tc_pnacl_newlib/lib/libremoting_webrtc_nacl.a
+
+build obj/remoting/remoting_client_plugin_lib_nacl.compile_depends.stamp: $
+    stamp obj/base/base_nacl.actions_rules_copies.stamp $
+    gen/tc_pnacl_newlib/lib/libjingle_glue_nacl.a $
+    obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a $
+    gen/tc_pnacl_newlib/lib/libexpat_nacl.a $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a $
+    gen/tc_pnacl_newlib/lib/libvpx_nacl.a $
+    gen/tc_pnacl_newlib/lib/libyuv_nacl.a $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a $
+    gen/tc_pnacl_newlib/lib/libremoting_proto_nacl.a $
+    gen/tc_pnacl_newlib/lib/libremoting_webrtc_nacl.a
+
+rule $
+    remoting_client_plugin_lib_nacl_target_build_newlib_plib_ddee9967bcdc233d86dbd00730357e35
+  command = cd ../../remoting; python ../native_client/build/build_nexe.py $
+      --root .. --product-dir ../out/Release/xyz --config-name Release -t $
+      ../native_client/toolchain/ --arch pnacl --build newlib_plib --name $
+      ../out/Release/gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a $
+      --objdir $
+      ../out/Release/obj/remoting/remoting_client_plugin_lib_nacl.gen/pnacl_newlib-pnacl/remoting_client_plugin_lib_nacl $
+      "--include-dirs=../out/Release/gen/tc_pnacl_newlib/include .. $
+      \"../out/Release/gen\" ../third_party/khronos ../gpu $
+      ../native_client_sdk/src/libraries $
+      ../native_client_sdk/src/libraries/nacl_io/include $
+      ../native_client_sdk/src/libraries/third_party/newlib-extras $
+      ../third_party/boringssl/src/include ../third_party/expat/files/lib $
+      ../third_party/libjingle/overrides ../third_party/libjingle/source $
+      ../third_party/webrtc_overrides ../third_party ../third_party/webrtc $
+      ../third_party/libyuv/include \"../out/Release/gen/protoc_out\" $
+      ../third_party/protobuf ../third_party/protobuf/src" $
+      "--compile_flags=-O2 -g -Wall -fdiagnostics-show-option -Werror  $
+      -Wno-unused-function -Wno-char-subscripts -Wno-c++11-extensions $
+      -Wno-unnamed-type-template-args -Wno-extra-semi $
+      -Wno-unused-private-field -Wno-char-subscripts -Wno-unused-function $
+      \"-std=gnu++11\" " --gomadir "" "--defines=\"__STDC_LIMIT_MACROS=1\" $
+      \"__STDC_FORMAT_MACROS=1\" \"_GNU_SOURCE=1\" $
+      \"_POSIX_C_SOURCE=199506\" \"_XOPEN_SOURCE=600\" $
+      \"DYNAMIC_ANNOTATIONS_ENABLED=1\" $
+      \"DYNAMIC_ANNOTATIONS_PREFIX=NACL_\" \"NACL_BUILD_ARCH=x86\" $
+      V8_DEPRECATION_WARNINGS \"CLD_VERSION=2\" \"_FILE_OFFSET_BITS=64\" $
+      CHROMIUM_BUILD \"CR_CLANG_REVISION=255169-1\" $
+      UI_COMPOSITOR_IMAGE_TRANSPORT \"USE_AURA=1\" \"USE_ASH=1\" $
+      \"USE_PANGO=1\" \"USE_CAIRO=1\" \"USE_DEFAULT_RENDER_THEME=1\" $
+      \"USE_LIBJPEG_TURBO=1\" \"USE_X11=1\" \"USE_CLIPBOARD_AURAX11=1\" $
+      ENABLE_ONE_CLICK_SIGNIN \"ENABLE_WEBRTC=1\" \"ENABLE_MEDIA_ROUTER=1\" $
+      ENABLE_PEPPER_CDMS ENABLE_CONFIGURATION_POLICY ENABLE_NOTIFICATIONS $
+      \"ENABLE_HIDPI=1\" \"ENABLE_TOPCHROME_MD=1\" USE_UDEV $
+      DONT_EMBED_BUILD_METADATA FIELDTRIAL_TESTING_ENABLED $
+      \"ENABLE_TASK_MANAGER=1\" \"ENABLE_EXTENSIONS=1\" \"ENABLE_PDF=1\" $
+      \"ENABLE_PLUGINS=1\" \"ENABLE_SESSION_SERVICE=1\" \"ENABLE_THEMES=1\" $
+      \"ENABLE_AUTOFILL_DIALOG=1\" \"ENABLE_BACKGROUND=1\" $
+      \"ENABLE_PRINTING=1\" \"ENABLE_BASIC_PRINTING=1\" $
+      \"ENABLE_PRINT_PREVIEW=1\" \"ENABLE_SPELLCHECK=1\" $
+      \"ENABLE_CAPTIVE_PORTAL_DETECTION=1\" \"ENABLE_APP_LIST=1\" $
+      \"ENABLE_SETTINGS_APP=1\" \"ENABLE_SUPERVISED_USERS=1\" $
+      \"ENABLE_MDNS=1\" \"ENABLE_SERVICE_DISCOVERY=1\" $
+      V8_USE_EXTERNAL_STARTUP_DATA FULL_SAFE_BROWSING SAFE_BROWSING_CSD $
+      SAFE_BROWSING_DB_LOCAL XML_STATIC EXPAT_RELATIVE_PATH $
+      FEATURE_ENABLE_SSL GTEST_RELATIVE_PATH NO_MAIN_THREAD_WRAPPING $
+      NO_SOUND_SYSTEM WEBRTC_POSIX SRTP_RELATIVE_PATH SSL_USE_OPENSSL $
+      USE_WEBRTC_DEV_BRANCH GOOGLE_PROTOBUF_NO_RTTI $
+      GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER \"USE_LIBPCI=1\" $
+      \"USE_OPENSSL=1\" \"USE_OPENSSL_CERTS=1\" __STDC_CONSTANT_MACROS $
+      __STDC_FORMAT_MACROS" $
+      "--link_flags=-B../out/Release/gen/tc_pnacl_newlib/lib  " $
+      "--source-list=../out/gypfiles/remoting/pnacl_newlib.remoting_client_plugin_lib_nacl.source_list.gypcmd"
+  description = ACTION remoting_client_plugin_lib_nacl: build newlib $
+      plib_ddee9967bcdc233d86dbd00730357e35
+  restat = 1
+
+build gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a: $
+    remoting_client_plugin_lib_nacl_target_build_newlib_plib_ddee9967bcdc233d86dbd00730357e35 $
+    ../../native_client/build/build_nexe.py $
+    ../../native_client/build/build_nexe_tools.py ../../base/at_exit.h $
+    ../../base/atomic_ref_count.h ../../base/atomicops.h $
+    ../../base/atomicops_internals_atomicword_compat.h $
+    ../../base/atomicops_internals_portable.h $
+    ../../base/atomicops_internals_x86_msvc.h ../../base/base64.h $
+    ../../base/base_export.h ../../base/basictypes.h ../../base/bind.h $
+    ../../base/bind_helpers.h ../../base/bind_internal.h $
+    ../../base/bind_internal_win.h ../../base/callback.h $
+    ../../base/callback_forward.h ../../base/callback_helpers.h $
+    ../../base/callback_internal.h ../../base/cancelable_callback.h $
+    ../../base/command_line.h ../../base/compiler_specific.h $
+    ../../base/containers/hash_tables.h ../../base/containers/linked_list.h $
+    ../../base/containers/mru_cache.h ../../base/debug/alias.h $
+    ../../base/debug/leak_annotations.h ../../base/debug/leak_tracker.h $
+    ../../base/debug/stack_trace.h ../../base/debug/task_annotator.h $
+    ../../base/event_types.h ../../base/files/file.h $
+    ../../base/files/file_path.h ../../base/files/file_tracing.h $
+    ../../base/files/scoped_file.h ../../base/gtest_prod_util.h $
+    ../../base/guid.h ../../base/json/json_reader.h $
+    ../../base/json/json_string_value_serializer.h $
+    ../../base/json/json_writer.h ../../base/lazy_instance.h $
+    ../../base/location.h ../../base/mac/scoped_cffiledescriptorref.h $
+    ../../base/mac/scoped_cftyperef.h ../../base/mac/scoped_typeref.h $
+    ../../base/macros.h ../../base/md5.h ../../base/memory/aligned_memory.h $
+    ../../base/memory/linked_ptr.h $
+    ../../base/memory/raw_scoped_refptr_mismatch_checker.h $
+    ../../base/memory/ref_counted.h ../../base/memory/scoped_policy.h $
+    ../../base/memory/scoped_ptr.h ../../base/memory/scoped_vector.h $
+    ../../base/memory/singleton.h ../../base/memory/weak_ptr.h $
+    ../../base/message_loop/incoming_task_queue.h $
+    ../../base/message_loop/message_loop.h $
+    ../../base/message_loop/message_loop_task_runner.h $
+    ../../base/message_loop/message_pump.h $
+    ../../base/message_loop/message_pump_dispatcher.h $
+    ../../base/message_loop/message_pump_io_ios.h $
+    ../../base/message_loop/message_pump_libevent.h $
+    ../../base/message_loop/message_pump_mac.h $
+    ../../base/message_loop/message_pump_win.h $
+    ../../base/message_loop/timer_slack.h ../../base/move.h $
+    ../../base/numerics/safe_conversions.h $
+    ../../base/numerics/safe_conversions_impl.h $
+    ../../base/numerics/safe_math.h ../../base/numerics/safe_math_impl.h $
+    ../../base/observer_list.h ../../base/observer_list_threadsafe.h $
+    ../../base/pending_task.h ../../base/pickle.h $
+    ../../base/profiler/tracked_time.h ../../base/rand_util.h $
+    ../../base/scoped_generic.h ../../base/sequence_checker.h $
+    ../../base/sequence_checker_impl.h ../../base/sequenced_task_runner.h $
+    ../../base/sequenced_task_runner_helpers.h $
+    ../../base/single_thread_task_runner.h ../../base/stl_util.h $
+    ../../base/strings/string16.h $
+    ../../base/strings/string_number_conversions.h $
+    ../../base/strings/string_piece.h ../../base/strings/string_split.h $
+    ../../base/strings/string_tokenizer.h ../../base/strings/string_util.h $
+    ../../base/strings/string_util_posix.h $
+    ../../base/strings/string_util_win.h $
+    ../../base/strings/stringize_macros.h ../../base/strings/stringprintf.h $
+    ../../base/strings/utf_offset_string_conversions.h $
+    ../../base/strings/utf_string_conversion_utils.h $
+    ../../base/supports_user_data.h ../../base/synchronization/lock.h $
+    ../../base/synchronization/lock_impl.h $
+    ../../base/synchronization/waitable_event.h ../../base/sys_byteorder.h $
+    ../../base/sys_info.h ../../base/task_runner.h $
+    ../../base/task_runner_util.h ../../base/template_util.h $
+    ../../base/third_party/dynamic_annotations/dynamic_annotations.h $
+    ../../base/thread_task_runner_handle.h $
+    ../../base/threading/non_thread_safe.h $
+    ../../base/threading/non_thread_safe_impl.h $
+    ../../base/threading/platform_thread.h $
+    ../../base/threading/sequenced_worker_pool.h $
+    ../../base/threading/thread.h ../../base/threading/thread_checker.h $
+    ../../base/threading/thread_checker_impl.h $
+    ../../base/threading/thread_collision_warner.h $
+    ../../base/threading/thread_local.h $
+    ../../base/threading/thread_local_storage.h $
+    ../../base/threading/thread_restrictions.h ../../base/time/time.h $
+    ../../base/timer/timer.h ../../base/tracking_info.h ../../base/tuple.h $
+    ../../base/values.h ../../base/win/scoped_com_initializer.h $
+    ../../base/win/scoped_handle.h ../../build/build_config.h $
+    ../../crypto/crypto_export.h ../../crypto/ec_private_key.h $
+    ../../crypto/hmac.h ../../crypto/p224.h ../../crypto/p224_spake.h $
+    ../../crypto/random.h ../../crypto/rsa_private_key.h $
+    ../../crypto/secure_util.h ../../crypto/sha2.h $
+    ../../crypto/signature_creator.h ../../crypto/wincrypt_shim.h $
+    ../../gpu/command_buffer/client/gles2_c_lib_export.h $
+    ../../jingle/glue/proxy_resolving_client_socket.h $
+    ../../jingle/glue/thread_wrapper.h ../../jingle/glue/utils.h $
+    ../../media/base/audio_bus.h ../../media/base/media_export.h $
+    ../../media/base/multi_channel_resampler.h $
+    ../../media/base/sinc_resampler.h $
+    ../../mojo/public/c/gles2/gles2_export.h $
+    ../../native_client_sdk/src/libraries/nacl_io/include/sys/mount.h $
+    ../../native_client_sdk/src/libraries/nacl_io/include/sys/time.h $
+    ../../native_client_sdk/src/libraries/nacl_io/nacl_io.h $
+    ../../native_client_sdk/src/libraries/nacl_io/ostypes.h $
+    ../../native_client_sdk/src/libraries/sdk_util/macros.h $
+    ../../native_client_sdk/src/libraries/third_party/newlib-extras/arpa/inet.h $
+    ../../native_client_sdk/src/libraries/third_party/newlib-extras/netdb.h $
+    ../../native_client_sdk/src/libraries/third_party/newlib-extras/netinet/in.h $
+    ../../native_client_sdk/src/libraries/third_party/newlib-extras/netinet6/in6.h $
+    ../../native_client_sdk/src/libraries/third_party/newlib-extras/sys/socket.h $
+    ../../net/base/address_family.h ../../net/base/address_list.h $
+    ../../net/base/auth.h ../../net/base/completion_callback.h $
+    ../../net/base/escape.h ../../net/base/expiring_cache.h $
+    ../../net/base/hash_value.h ../../net/base/host_port_pair.h $
+    ../../net/base/int128.h ../../net/base/io_buffer.h $
+    ../../net/base/iovec.h ../../net/base/ip_address_number.h $
+    ../../net/base/ip_endpoint.h ../../net/base/linked_hash_map.h $
+    ../../net/base/load_flags.h ../../net/base/load_flags_list.h $
+    ../../net/base/load_states.h ../../net/base/load_states_list.h $
+    ../../net/base/load_timing_info.h ../../net/base/net_error_details.h $
+    ../../net/base/net_error_list.h ../../net/base/net_errors.h $
+    ../../net/base/net_export.h ../../net/base/net_util.h $
+    ../../net/base/network_change_notifier.h $
+    ../../net/base/network_delegate.h $
+    ../../net/base/prioritized_dispatcher.h ../../net/base/priority_queue.h $
+    ../../net/base/privacy_mode.h ../../net/base/rand_callback.h $
+    ../../net/base/request_priority.h $
+    ../../net/base/socket_performance_watcher.h $
+    ../../net/base/socket_performance_watcher_factory.h $
+    ../../net/base/sys_addrinfo.h ../../net/base/upload_data_stream.h $
+    ../../net/base/upload_progress.h ../../net/cert/cert_database.h $
+    ../../net/cert/cert_status_flags.h $
+    ../../net/cert/cert_status_flags_list.h ../../net/cert/cert_type.h $
+    ../../net/cert/cert_verifier.h ../../net/cert/cert_verify_result.h $
+    ../../net/cert/crl_set.h ../../net/cert/ct_ev_whitelist.h $
+    ../../net/cert/ct_verify_result.h ../../net/cert/sct_status_flags.h $
+    ../../net/cert/signed_certificate_timestamp.h $
+    ../../net/cert/x509_cert_types.h ../../net/cert/x509_certificate.h $
+    ../../net/cert/x509_util.h ../../net/cookies/canonical_cookie.h $
+    ../../net/cookies/cookie_constants.h ../../net/cookies/cookie_options.h $
+    ../../net/dns/host_resolver.h ../../net/http/http_auth.h $
+    ../../net/http/http_auth_cache.h ../../net/http/http_byte_range.h $
+    ../../net/http/http_network_session.h $
+    ../../net/http/http_request_headers.h $
+    ../../net/http/http_request_info.h ../../net/http/http_response_info.h $
+    ../../net/http/http_server_properties.h ../../net/http/http_stream.h $
+    ../../net/http/http_stream_factory.h ../../net/http/http_util.h $
+    ../../net/http/http_vary_data.h ../../net/http/http_version.h $
+    ../../net/http/transport_security_state.h ../../net/log/net_log.h $
+    ../../net/log/net_log_capture_mode.h $
+    ../../net/log/net_log_event_type_list.h $
+    ../../net/log/net_log_source_type_list.h $
+    ../../net/proxy/proxy_bypass_rules.h ../../net/proxy/proxy_config.h $
+    ../../net/proxy/proxy_config_service.h $
+    ../../net/proxy/proxy_config_source.h ../../net/proxy/proxy_info.h $
+    ../../net/proxy/proxy_list.h ../../net/proxy/proxy_retry_info.h $
+    ../../net/proxy/proxy_server.h ../../net/proxy/proxy_service.h $
+    ../../net/quic/congestion_control/loss_detection_interface.h $
+    ../../net/quic/congestion_control/rtt_stats.h $
+    ../../net/quic/congestion_control/send_algorithm_interface.h $
+    ../../net/quic/crypto/channel_id.h $
+    ../../net/quic/crypto/crypto_framer.h $
+    ../../net/quic/crypto/crypto_handshake.h $
+    ../../net/quic/crypto/crypto_handshake_message.h $
+    ../../net/quic/crypto/crypto_protocol.h $
+    ../../net/quic/crypto/crypto_utils.h $
+    ../../net/quic/crypto/proof_verifier.h $
+    ../../net/quic/crypto/quic_crypto_client_config.h $
+    ../../net/quic/crypto/quic_decrypter.h ../../net/quic/interval.h $
+    ../../net/quic/interval_set.h ../../net/quic/network_connection.h $
+    ../../net/quic/quic_ack_listener_interface.h $
+    ../../net/quic/quic_alarm.h ../../net/quic/quic_bandwidth.h $
+    ../../net/quic/quic_blocked_writer_interface.h $
+    ../../net/quic/quic_chromium_client_session.h $
+    ../../net/quic/quic_client_session_base.h ../../net/quic/quic_clock.h $
+    ../../net/quic/quic_config.h ../../net/quic/quic_connection.h $
+    ../../net/quic/quic_connection_logger.h $
+    ../../net/quic/quic_connection_stats.h $
+    ../../net/quic/quic_crypto_client_stream.h $
+    ../../net/quic/quic_crypto_stream.h ../../net/quic/quic_fec_group.h $
+    ../../net/quic/quic_fec_group_interface.h ../../net/quic/quic_flags.h $
+    ../../net/quic/quic_flow_controller.h ../../net/quic/quic_frame_list.h $
+    ../../net/quic/quic_framer.h ../../net/quic/quic_headers_stream.h $
+    ../../net/quic/quic_http_stream.h ../../net/quic/quic_packet_creator.h $
+    ../../net/quic/quic_packet_generator.h $
+    ../../net/quic/quic_packet_reader.h ../../net/quic/quic_packet_writer.h $
+    ../../net/quic/quic_protocol.h $
+    ../../net/quic/quic_received_packet_manager.h $
+    ../../net/quic/quic_reliable_client_stream.h $
+    ../../net/quic/quic_sent_entropy_manager.h $
+    ../../net/quic/quic_sent_packet_manager.h $
+    ../../net/quic/quic_server_id.h ../../net/quic/quic_session.h $
+    ../../net/quic/quic_spdy_session.h ../../net/quic/quic_spdy_stream.h $
+    ../../net/quic/quic_stream_factory.h $
+    ../../net/quic/quic_stream_sequencer.h $
+    ../../net/quic/quic_stream_sequencer_buffer_interface.h $
+    ../../net/quic/quic_sustained_bandwidth_recorder.h $
+    ../../net/quic/quic_time.h ../../net/quic/quic_types.h $
+    ../../net/quic/quic_unacked_packet_map.h $
+    ../../net/quic/quic_write_blocked_list.h $
+    ../../net/quic/reliable_quic_stream.h $
+    ../../net/socket/client_socket_factory.h $
+    ../../net/socket/client_socket_handle.h $
+    ../../net/socket/client_socket_pool.h $
+    ../../net/socket/connection_attempts.h ../../net/socket/next_proto.h $
+    ../../net/socket/socket.h ../../net/socket/ssl_client_socket.h $
+    ../../net/socket/ssl_client_socket_openssl.h $
+    ../../net/socket/ssl_server_socket.h ../../net/socket/ssl_socket.h $
+    ../../net/socket/stream_socket.h ../../net/spdy/hpack/hpack_constants.h $
+    ../../net/spdy/hpack/hpack_decoder.h $
+    ../../net/spdy/hpack/hpack_encoder.h ../../net/spdy/hpack/hpack_entry.h $
+    ../../net/spdy/hpack/hpack_header_table.h $
+    ../../net/spdy/hpack/hpack_huffman_table.h $
+    ../../net/spdy/hpack/hpack_input_stream.h $
+    ../../net/spdy/hpack/hpack_output_stream.h $
+    ../../net/spdy/spdy_alt_svc_wire_format.h $
+    ../../net/spdy/spdy_bitmasks.h ../../net/spdy/spdy_framer.h $
+    ../../net/spdy/spdy_header_block.h $
+    ../../net/spdy/spdy_headers_handler_interface.h $
+    ../../net/spdy/spdy_protocol.h ../../net/spdy/spdy_session_key.h $
+    ../../net/spdy/spdy_session_pool.h ../../net/spdy/write_blocked_list.h $
+    ../../net/ssl/channel_id_service.h ../../net/ssl/channel_id_store.h $
+    ../../net/ssl/openssl_ssl_util.h $
+    ../../net/ssl/signed_certificate_timestamp_and_status.h $
+    ../../net/ssl/ssl_client_auth_cache.h $
+    ../../net/ssl/ssl_client_cert_type.h ../../net/ssl/ssl_config.h $
+    ../../net/ssl/ssl_config_service.h ../../net/ssl/ssl_failure_state.h $
+    ../../net/ssl/ssl_info.h ../../net/ssl/ssl_private_key.h $
+    ../../net/ssl/ssl_server_config.h $
+    ../../net/udp/datagram_client_socket.h ../../net/udp/datagram_socket.h $
+    ../../net/url_request/url_request.h $
+    ../../net/url_request/url_request_context.h $
+    ../../net/url_request/url_request_context_builder.h $
+    ../../net/url_request/url_request_context_getter.h $
+    ../../net/url_request/url_request_status.h $
+    ../../net/url_request/websocket_handshake_userdata_key.h $
+    ../../net/websockets/websocket_event_interface.h $
+    ../../net/websockets/websocket_handshake_request_info.h $
+    ../../net/websockets/websocket_handshake_response_info.h $
+    ../../net/websockets/websocket_handshake_stream_base.h $
+    ../../net/websockets/websocket_stream.h $
+    ../../ppapi/c/dev/ppb_url_util_dev.h ../../ppapi/c/pp_array_output.h $
+    ../../ppapi/c/pp_bool.h ../../ppapi/c/pp_codecs.h $
+    ../../ppapi/c/pp_completion_callback.h ../../ppapi/c/pp_errors.h $
+    ../../ppapi/c/pp_graphics_3d.h ../../ppapi/c/pp_instance.h $
+    ../../ppapi/c/pp_macros.h ../../ppapi/c/pp_module.h $
+    ../../ppapi/c/pp_point.h ../../ppapi/c/pp_rect.h $
+    ../../ppapi/c/pp_resource.h ../../ppapi/c/pp_size.h $
+    ../../ppapi/c/pp_stdint.h ../../ppapi/c/pp_time.h $
+    ../../ppapi/c/pp_touch_point.h ../../ppapi/c/pp_var.h $
+    ../../ppapi/c/ppb.h ../../ppapi/c/ppb_audio.h $
+    ../../ppapi/c/ppb_audio_config.h ../../ppapi/c/ppb_console.h $
+    ../../ppapi/c/ppb_core.h ../../ppapi/c/ppb_graphics_3d.h $
+    ../../ppapi/c/ppb_host_resolver.h ../../ppapi/c/ppb_image_data.h $
+    ../../ppapi/c/ppb_input_event.h ../../ppapi/c/ppb_mouse_cursor.h $
+    ../../ppapi/c/ppb_net_address.h ../../ppapi/c/ppb_network_list.h $
+    ../../ppapi/c/ppb_opengles2.h ../../ppapi/c/ppb_text_input_controller.h $
+    ../../ppapi/c/ppb_udp_socket.h ../../ppapi/c/ppb_url_request_info.h $
+    ../../ppapi/c/ppb_url_response_info.h ../../ppapi/c/ppb_video_decoder.h $
+    ../../ppapi/cpp/array_output.h ../../ppapi/cpp/audio.h $
+    ../../ppapi/cpp/audio_config.h ../../ppapi/cpp/completion_callback.h $
+    ../../ppapi/cpp/core.h ../../ppapi/cpp/dev/url_util_dev.h $
+    ../../ppapi/cpp/graphics_2d.h ../../ppapi/cpp/graphics_3d.h $
+    ../../ppapi/cpp/host_resolver.h ../../ppapi/cpp/image_data.h $
+    ../../ppapi/cpp/input_event.h ../../ppapi/cpp/instance.h $
+    ../../ppapi/cpp/instance_handle.h ../../ppapi/cpp/logging.h $
+    ../../ppapi/cpp/module.h ../../ppapi/cpp/module_impl.h $
+    ../../ppapi/cpp/mouse_cursor.h ../../ppapi/cpp/mouse_lock.h $
+    ../../ppapi/cpp/net_address.h ../../ppapi/cpp/network_list.h $
+    ../../ppapi/cpp/network_monitor.h ../../ppapi/cpp/output_traits.h $
+    ../../ppapi/cpp/pass_ref.h ../../ppapi/cpp/point.h $
+    ../../ppapi/cpp/private/uma_private.h ../../ppapi/cpp/rect.h $
+    ../../ppapi/cpp/resource.h ../../ppapi/cpp/size.h $
+    ../../ppapi/cpp/text_input_controller.h ../../ppapi/cpp/touch_point.h $
+    ../../ppapi/cpp/udp_socket.h ../../ppapi/cpp/url_loader.h $
+    ../../ppapi/cpp/url_request_info.h ../../ppapi/cpp/url_response_info.h $
+    ../../ppapi/cpp/var.h ../../ppapi/cpp/var_array.h $
+    ../../ppapi/cpp/var_array_buffer.h ../../ppapi/cpp/var_dictionary.h $
+    ../../ppapi/cpp/video_decoder.h ../../ppapi/cpp/view.h $
+    ../../ppapi/lib/gl/include/GLES2/gl2.h $
+    ../../ppapi/lib/gl/include/GLES2/gl2ext.h $
+    ../../ppapi/utility/completion_callback_factory.h $
+    ../../ppapi/utility/completion_callback_factory_thread_traits.h $
+    ../../ppapi/utility/threading/lock.h $
+    ../../testing/gtest/include/gtest/gtest_prod.h $
+    ../../third_party/boringssl/src/include/openssl/aead.h $
+    ../../third_party/boringssl/src/include/openssl/asn1.h $
+    ../../third_party/boringssl/src/include/openssl/base.h $
+    ../../third_party/boringssl/src/include/openssl/base64.h $
+    ../../third_party/boringssl/src/include/openssl/bio.h $
+    ../../third_party/boringssl/src/include/openssl/bn.h $
+    ../../third_party/boringssl/src/include/openssl/buf.h $
+    ../../third_party/boringssl/src/include/openssl/bytestring.h $
+    ../../third_party/boringssl/src/include/openssl/cipher.h $
+    ../../third_party/boringssl/src/include/openssl/crypto.h $
+    ../../third_party/boringssl/src/include/openssl/dh.h $
+    ../../third_party/boringssl/src/include/openssl/digest.h $
+    ../../third_party/boringssl/src/include/openssl/dsa.h $
+    ../../third_party/boringssl/src/include/openssl/ec.h $
+    ../../third_party/boringssl/src/include/openssl/ec_key.h $
+    ../../third_party/boringssl/src/include/openssl/ecdh.h $
+    ../../third_party/boringssl/src/include/openssl/ecdsa.h $
+    ../../third_party/boringssl/src/include/openssl/engine.h $
+    ../../third_party/boringssl/src/include/openssl/err.h $
+    ../../third_party/boringssl/src/include/openssl/evp.h $
+    ../../third_party/boringssl/src/include/openssl/ex_data.h $
+    ../../third_party/boringssl/src/include/openssl/hmac.h $
+    ../../third_party/boringssl/src/include/openssl/lhash.h $
+    ../../third_party/boringssl/src/include/openssl/lhash_macros.h $
+    ../../third_party/boringssl/src/include/openssl/mem.h $
+    ../../third_party/boringssl/src/include/openssl/obj.h $
+    ../../third_party/boringssl/src/include/openssl/obj_mac.h $
+    ../../third_party/boringssl/src/include/openssl/opensslfeatures.h $
+    ../../third_party/boringssl/src/include/openssl/pem.h $
+    ../../third_party/boringssl/src/include/openssl/rsa.h $
+    ../../third_party/boringssl/src/include/openssl/sha.h $
+    ../../third_party/boringssl/src/include/openssl/ssl.h $
+    ../../third_party/boringssl/src/include/openssl/ssl3.h $
+    ../../third_party/boringssl/src/include/openssl/stack.h $
+    ../../third_party/boringssl/src/include/openssl/stack_macros.h $
+    ../../third_party/boringssl/src/include/openssl/thread.h $
+    ../../third_party/boringssl/src/include/openssl/tls1.h $
+    ../../third_party/boringssl/src/include/openssl/type_check.h $
+    ../../third_party/boringssl/src/include/openssl/x509.h $
+    ../../third_party/boringssl/src/include/openssl/x509_vfy.h $
+    ../../third_party/expat/files/lib/expat.h $
+    ../../third_party/expat/files/lib/expat_external.h $
+    ../../third_party/khronos/GLES2/gl2platform.h $
+    ../../third_party/khronos/KHR/khrplatform.h $
+    ../../third_party/libvpx_new/source/libvpx/vpx/vp8.h $
+    ../../third_party/libvpx_new/source/libvpx/vpx/vp8cx.h $
+    ../../third_party/libvpx_new/source/libvpx/vpx/vp8dx.h $
+    ../../third_party/libvpx_new/source/libvpx/vpx/vpx_codec.h $
+    ../../third_party/libvpx_new/source/libvpx/vpx/vpx_decoder.h $
+    ../../third_party/libvpx_new/source/libvpx/vpx/vpx_encoder.h $
+    ../../third_party/libvpx_new/source/libvpx/vpx/vpx_frame_buffer.h $
+    ../../third_party/libvpx_new/source/libvpx/vpx/vpx_image.h $
+    ../../third_party/libvpx_new/source/libvpx/vpx/vpx_integer.h $
+    ../../third_party/libyuv/include/libyuv/basic_types.h $
+    ../../third_party/libyuv/include/libyuv/convert.h $
+    ../../third_party/libyuv/include/libyuv/convert_argb.h $
+    ../../third_party/libyuv/include/libyuv/convert_from.h $
+    ../../third_party/libyuv/include/libyuv/convert_from_argb.h $
+    ../../third_party/libyuv/include/libyuv/planar_functions.h $
+    ../../third_party/libyuv/include/libyuv/rotate.h $
+    ../../third_party/libyuv/include/libyuv/scale.h $
+    ../../third_party/libyuv/include/libyuv/scale_argb.h $
+    ../../third_party/opus/src/include/opus.h $
+    ../../third_party/opus/src/include/opus_defines.h $
+    ../../third_party/opus/src/include/opus_types.h $
+    ../../third_party/protobuf/src/google/protobuf/io/zero_copy_stream.h $
+    ../../third_party/protobuf/src/google/protobuf/message_lite.h $
+    ../../third_party/protobuf/src/google/protobuf/stubs/common.h $
+    ../../third_party/webrtc/base/asyncpacketsocket.h $
+    ../../third_party/webrtc/base/asyncresolverinterface.h $
+    ../../third_party/webrtc/base/asyncsocket.h $
+    ../../third_party/webrtc/base/atomicops.h $
+    ../../third_party/webrtc/base/basictypes.h $
+    ../../third_party/webrtc/base/buffer.h $
+    ../../third_party/webrtc/base/bytebuffer.h $
+    ../../third_party/webrtc/base/byteorder.h $
+    ../../third_party/webrtc/base/checks.h $
+    ../../third_party/webrtc/base/common.h $
+    ../../third_party/webrtc/base/constructormagic.h $
+    ../../third_party/webrtc/base/criticalsection.h $
+    ../../third_party/webrtc/base/cryptstring.h $
+    ../../third_party/webrtc/base/dscp.h $
+    ../../third_party/webrtc/base/event.h $
+    ../../third_party/webrtc/base/helpers.h $
+    ../../third_party/webrtc/base/ipaddress.h $
+    ../../third_party/webrtc/base/linked_ptr.h $
+    ../../third_party/webrtc/base/messagedigest.h $
+    ../../third_party/webrtc/base/messagehandler.h $
+    ../../third_party/webrtc/base/messagequeue.h $
+    ../../third_party/webrtc/base/nethelpers.h $
+    ../../third_party/webrtc/base/network.h $
+    ../../third_party/webrtc/base/proxyinfo.h $
+    ../../third_party/webrtc/base/ratetracker.h $
+    ../../third_party/webrtc/base/refcount.h $
+    ../../third_party/webrtc/base/rtccertificate.h $
+    ../../third_party/webrtc/base/scoped_ptr.h $
+    ../../third_party/webrtc/base/scoped_ref_ptr.h $
+    ../../third_party/webrtc/base/signalthread.h $
+    ../../third_party/webrtc/base/sigslot.h $
+    ../../third_party/webrtc/base/socket.h $
+    ../../third_party/webrtc/base/socketaddress.h $
+    ../../third_party/webrtc/base/socketfactory.h $
+    ../../third_party/webrtc/base/socketserver.h $
+    ../../third_party/webrtc/base/sslfingerprint.h $
+    ../../third_party/webrtc/base/sslidentity.h $
+    ../../third_party/webrtc/base/sslstreamadapter.h $
+    ../../third_party/webrtc/base/stream.h $
+    ../../third_party/webrtc/base/stringutils.h $
+    ../../third_party/webrtc/base/template_util.h $
+    ../../third_party/webrtc/base/thread.h $
+    ../../third_party/webrtc/base/thread_annotations.h $
+    ../../third_party/webrtc/base/timeutils.h $
+    ../../third_party/webrtc/base/win32.h $
+    ../../third_party/webrtc/common_types.h $
+    ../../third_party/webrtc/config.h $
+    ../../third_party/webrtc/libjingle/xmllite/qname.h $
+    ../../third_party/webrtc/libjingle/xmllite/xmlbuilder.h $
+    ../../third_party/webrtc/libjingle/xmllite/xmlconstants.h $
+    ../../third_party/webrtc/libjingle/xmllite/xmlelement.h $
+    ../../third_party/webrtc/libjingle/xmllite/xmlnsstack.h $
+    ../../third_party/webrtc/libjingle/xmllite/xmlparser.h $
+    ../../third_party/webrtc/libjingle/xmpp/constants.h $
+    ../../third_party/webrtc/libjingle/xmpp/jid.h $
+    ../../third_party/webrtc/modules/desktop_capture/desktop_frame.h $
+    ../../third_party/webrtc/modules/desktop_capture/desktop_geometry.h $
+    ../../third_party/webrtc/modules/desktop_capture/desktop_region.h $
+    ../../third_party/webrtc/modules/desktop_capture/shared_memory.h $
+    ../../third_party/webrtc/p2p/base/candidate.h $
+    ../../third_party/webrtc/p2p/base/constants.h $
+    ../../third_party/webrtc/p2p/base/p2ptransport.h $
+    ../../third_party/webrtc/p2p/base/p2ptransportchannel.h $
+    ../../third_party/webrtc/p2p/base/packetsocketfactory.h $
+    ../../third_party/webrtc/p2p/base/port.h $
+    ../../third_party/webrtc/p2p/base/portallocator.h $
+    ../../third_party/webrtc/p2p/base/portinterface.h $
+    ../../third_party/webrtc/p2p/base/pseudotcp.h $
+    ../../third_party/webrtc/p2p/base/sessiondescription.h $
+    ../../third_party/webrtc/p2p/base/stun.h $
+    ../../third_party/webrtc/p2p/base/stunrequest.h $
+    ../../third_party/webrtc/p2p/base/transport.h $
+    ../../third_party/webrtc/p2p/base/transportchannel.h $
+    ../../third_party/webrtc/p2p/base/transportchannelimpl.h $
+    ../../third_party/webrtc/p2p/base/transportdescription.h $
+    ../../third_party/webrtc/p2p/base/transportinfo.h $
+    ../../third_party/webrtc/p2p/client/basicportallocator.h $
+    ../../third_party/webrtc/p2p/client/httpportallocator.h $
+    ../../third_party/webrtc/typedefs.h $
+    ../../third_party/webrtc_overrides/webrtc/base/diagnostic_logging.h $
+    ../../third_party/webrtc_overrides/webrtc/base/logging.h $
+    ../../ui/events/keycodes/dom/dom_code.h $
+    ../../ui/events/keycodes/dom/dom_key.h $
+    ../../ui/events/keycodes/dom/dom_key_data.inc $
+    ../../ui/events/keycodes/dom/keycode_converter.cc $
+    ../../ui/events/keycodes/dom/keycode_converter.h $
+    ../../ui/events/keycodes/dom/keycode_converter_data.inc $
+    ../../url/gurl.h ../../url/origin.h ../../url/scheme_host_port.h $
+    ../../url/third_party/mozilla/url_parse.h ../../url/url_canon.h $
+    ../../url/url_canon_stdstring.h ../../url/url_constants.h $
+    ../../url/url_export.h ../../remoting/base/auto_thread.cc $
+    ../../remoting/base/auto_thread.h $
+    ../../remoting/base/auto_thread_task_runner.cc $
+    ../../remoting/base/auto_thread_task_runner.h $
+    ../../remoting/base/buffered_socket_writer.cc $
+    ../../remoting/base/buffered_socket_writer.h $
+    ../../remoting/base/capabilities.cc ../../remoting/base/capabilities.h $
+    ../../remoting/base/compound_buffer.cc $
+    ../../remoting/base/compound_buffer.h ../../remoting/base/constants.cc $
+    ../../remoting/base/constants.h ../../remoting/base/logging.h $
+    ../../remoting/base/rate_counter.cc ../../remoting/base/rate_counter.h $
+    ../../remoting/base/rsa_key_pair.cc ../../remoting/base/rsa_key_pair.h $
+    ../../remoting/base/running_average.cc $
+    ../../remoting/base/running_average.h $
+    ../../remoting/base/scoped_sc_handle_win.h $
+    ../../remoting/base/service_urls.cc ../../remoting/base/service_urls.h $
+    ../../remoting/base/socket_reader.cc $
+    ../../remoting/base/socket_reader.h ../../remoting/base/typed_buffer.h $
+    ../../remoting/base/url_request_context_getter.cc $
+    ../../remoting/base/url_request_context_getter.h $
+    ../../remoting/base/util.cc ../../remoting/base/util.h $
+    ../../remoting/base/vlog_net_log.cc ../../remoting/base/vlog_net_log.h $
+    ../../remoting/client/audio_decode_scheduler.cc $
+    ../../remoting/client/audio_decode_scheduler.h $
+    ../../remoting/client/audio_player.cc $
+    ../../remoting/client/audio_player.h $
+    ../../remoting/client/chromoting_client.cc $
+    ../../remoting/client/chromoting_client.h $
+    ../../remoting/client/client_context.cc $
+    ../../remoting/client/client_context.h $
+    ../../remoting/client/client_status_logger.cc $
+    ../../remoting/client/client_status_logger.h $
+    ../../remoting/client/client_user_interface.h $
+    ../../remoting/client/empty_cursor_filter.cc $
+    ../../remoting/client/empty_cursor_filter.h $
+    ../../remoting/client/frame_consumer.h $
+    ../../remoting/client/key_event_mapper.cc $
+    ../../remoting/client/key_event_mapper.h $
+    ../../remoting/client/normalizing_input_filter_cros.cc $
+    ../../remoting/client/normalizing_input_filter_cros.h $
+    ../../remoting/client/normalizing_input_filter_mac.cc $
+    ../../remoting/client/normalizing_input_filter_mac.h $
+    ../../remoting/client/normalizing_input_filter_win.cc $
+    ../../remoting/client/normalizing_input_filter_win.h $
+    ../../remoting/client/plugin/chromoting_instance.cc $
+    ../../remoting/client/plugin/chromoting_instance.h $
+    ../../remoting/client/plugin/delegating_signal_strategy.cc $
+    ../../remoting/client/plugin/delegating_signal_strategy.h $
+    ../../remoting/client/plugin/pepper_address_resolver.cc $
+    ../../remoting/client/plugin/pepper_address_resolver.h $
+    ../../remoting/client/plugin/pepper_audio_player.cc $
+    ../../remoting/client/plugin/pepper_audio_player.h $
+    ../../remoting/client/plugin/pepper_cursor_setter.cc $
+    ../../remoting/client/plugin/pepper_cursor_setter.h $
+    ../../remoting/client/plugin/pepper_input_handler.cc $
+    ../../remoting/client/plugin/pepper_input_handler.h $
+    ../../remoting/client/plugin/pepper_main_thread_task_runner.cc $
+    ../../remoting/client/plugin/pepper_main_thread_task_runner.h $
+    ../../remoting/client/plugin/pepper_module.cc $
+    ../../remoting/client/plugin/pepper_mouse_locker.cc $
+    ../../remoting/client/plugin/pepper_mouse_locker.h $
+    ../../remoting/client/plugin/pepper_network_manager.cc $
+    ../../remoting/client/plugin/pepper_network_manager.h $
+    ../../remoting/client/plugin/pepper_packet_socket_factory.cc $
+    ../../remoting/client/plugin/pepper_packet_socket_factory.h $
+    ../../remoting/client/plugin/pepper_port_allocator.cc $
+    ../../remoting/client/plugin/pepper_port_allocator.h $
+    ../../remoting/client/plugin/pepper_util.cc $
+    ../../remoting/client/plugin/pepper_util.h $
+    ../../remoting/client/plugin/pepper_video_renderer.h $
+    ../../remoting/client/plugin/pepper_video_renderer_2d.cc $
+    ../../remoting/client/plugin/pepper_video_renderer_2d.h $
+    ../../remoting/client/plugin/pepper_video_renderer_3d.cc $
+    ../../remoting/client/plugin/pepper_video_renderer_3d.h $
+    ../../remoting/client/server_log_entry_client.cc $
+    ../../remoting/client/server_log_entry_client.h $
+    ../../remoting/client/software_video_renderer.cc $
+    ../../remoting/client/software_video_renderer.h $
+    ../../remoting/client/token_fetcher_proxy.cc $
+    ../../remoting/client/token_fetcher_proxy.h $
+    ../../remoting/client/touch_input_scaler.cc $
+    ../../remoting/client/touch_input_scaler.h $
+    ../../remoting/client/video_renderer.h $
+    ../../remoting/codec/audio_decoder.cc $
+    ../../remoting/codec/audio_decoder.h $
+    ../../remoting/codec/audio_decoder_opus.cc $
+    ../../remoting/codec/audio_decoder_opus.h $
+    ../../remoting/codec/audio_decoder_verbatim.cc $
+    ../../remoting/codec/audio_decoder_verbatim.h $
+    ../../remoting/codec/audio_encoder.h $
+    ../../remoting/codec/audio_encoder_opus.cc $
+    ../../remoting/codec/audio_encoder_opus.h $
+    ../../remoting/codec/audio_encoder_verbatim.cc $
+    ../../remoting/codec/audio_encoder_verbatim.h $
+    ../../remoting/codec/scoped_vpx_codec.cc $
+    ../../remoting/codec/scoped_vpx_codec.h $
+    ../../remoting/codec/video_decoder.h $
+    ../../remoting/codec/video_decoder_verbatim.cc $
+    ../../remoting/codec/video_decoder_verbatim.h $
+    ../../remoting/codec/video_decoder_vpx.cc $
+    ../../remoting/codec/video_decoder_vpx.h $
+    ../../remoting/codec/video_encoder.h $
+    ../../remoting/codec/video_encoder_helper.cc $
+    ../../remoting/codec/video_encoder_helper.h $
+    ../../remoting/codec/video_encoder_verbatim.cc $
+    ../../remoting/codec/video_encoder_verbatim.h $
+    ../../remoting/codec/video_encoder_vpx.cc $
+    ../../remoting/codec/video_encoder_vpx.h $
+    ../../remoting/protocol/audio_reader.cc $
+    ../../remoting/protocol/audio_reader.h $
+    ../../remoting/protocol/audio_stub.h $
+    ../../remoting/protocol/audio_writer.cc $
+    ../../remoting/protocol/audio_writer.h $
+    ../../remoting/protocol/auth_util.cc $
+    ../../remoting/protocol/auth_util.h $
+    ../../remoting/protocol/authentication_method.cc $
+    ../../remoting/protocol/authentication_method.h $
+    ../../remoting/protocol/authenticator.cc $
+    ../../remoting/protocol/authenticator.h $
+    ../../remoting/protocol/capability_names.h $
+    ../../remoting/protocol/channel_authenticator.h $
+    ../../remoting/protocol/channel_dispatcher_base.cc $
+    ../../remoting/protocol/channel_dispatcher_base.h $
+    ../../remoting/protocol/channel_multiplexer.cc $
+    ../../remoting/protocol/channel_multiplexer.h $
+    ../../remoting/protocol/channel_socket_adapter.cc $
+    ../../remoting/protocol/channel_socket_adapter.h $
+    ../../remoting/protocol/client_control_dispatcher.cc $
+    ../../remoting/protocol/client_control_dispatcher.h $
+    ../../remoting/protocol/client_event_dispatcher.cc $
+    ../../remoting/protocol/client_event_dispatcher.h $
+    ../../remoting/protocol/client_stub.h $
+    ../../remoting/protocol/client_video_dispatcher.cc $
+    ../../remoting/protocol/client_video_dispatcher.h $
+    ../../remoting/protocol/clipboard_echo_filter.cc $
+    ../../remoting/protocol/clipboard_echo_filter.h $
+    ../../remoting/protocol/clipboard_filter.cc $
+    ../../remoting/protocol/clipboard_filter.h $
+    ../../remoting/protocol/clipboard_stub.h $
+    ../../remoting/protocol/clipboard_thread_proxy.cc $
+    ../../remoting/protocol/clipboard_thread_proxy.h $
+    ../../remoting/protocol/connection_to_client.h $
+    ../../remoting/protocol/connection_to_host.h $
+    ../../remoting/protocol/connection_to_host_impl.cc $
+    ../../remoting/protocol/connection_to_host_impl.h $
+    ../../remoting/protocol/content_description.cc $
+    ../../remoting/protocol/content_description.h $
+    ../../remoting/protocol/cursor_shape_stub.h $
+    ../../remoting/protocol/datagram_channel_factory.h $
+    ../../remoting/protocol/errors.cc ../../remoting/protocol/errors.h $
+    ../../remoting/protocol/host_control_dispatcher.cc $
+    ../../remoting/protocol/host_control_dispatcher.h $
+    ../../remoting/protocol/host_event_dispatcher.cc $
+    ../../remoting/protocol/host_event_dispatcher.h $
+    ../../remoting/protocol/host_stub.h $
+    ../../remoting/protocol/host_video_dispatcher.cc $
+    ../../remoting/protocol/host_video_dispatcher.h $
+    ../../remoting/protocol/ice_transport.cc $
+    ../../remoting/protocol/ice_transport.h $
+    ../../remoting/protocol/ice_transport_channel.cc $
+    ../../remoting/protocol/ice_transport_channel.h $
+    ../../remoting/protocol/ice_transport_factory.cc $
+    ../../remoting/protocol/ice_transport_factory.h $
+    ../../remoting/protocol/input_event_tracker.cc $
+    ../../remoting/protocol/input_event_tracker.h $
+    ../../remoting/protocol/input_filter.cc $
+    ../../remoting/protocol/input_filter.h $
+    ../../remoting/protocol/input_stub.h $
+    ../../remoting/protocol/it2me_host_authenticator_factory.cc $
+    ../../remoting/protocol/it2me_host_authenticator_factory.h $
+    ../../remoting/protocol/jingle_messages.cc $
+    ../../remoting/protocol/jingle_messages.h $
+    ../../remoting/protocol/jingle_session.cc $
+    ../../remoting/protocol/jingle_session.h $
+    ../../remoting/protocol/jingle_session_manager.cc $
+    ../../remoting/protocol/jingle_session_manager.h $
+    ../../remoting/protocol/me2me_host_authenticator_factory.cc $
+    ../../remoting/protocol/me2me_host_authenticator_factory.h $
+    ../../remoting/protocol/message_decoder.cc $
+    ../../remoting/protocol/message_decoder.h $
+    ../../remoting/protocol/message_reader.cc $
+    ../../remoting/protocol/message_reader.h $
+    ../../remoting/protocol/message_serialization.cc $
+    ../../remoting/protocol/message_serialization.h $
+    ../../remoting/protocol/monitored_video_stub.cc $
+    ../../remoting/protocol/monitored_video_stub.h $
+    ../../remoting/protocol/mouse_input_filter.cc $
+    ../../remoting/protocol/mouse_input_filter.h $
+    ../../remoting/protocol/name_value_map.h $
+    ../../remoting/protocol/negotiating_authenticator_base.cc $
+    ../../remoting/protocol/negotiating_authenticator_base.h $
+    ../../remoting/protocol/negotiating_client_authenticator.cc $
+    ../../remoting/protocol/negotiating_client_authenticator.h $
+    ../../remoting/protocol/negotiating_host_authenticator.cc $
+    ../../remoting/protocol/negotiating_host_authenticator.h $
+    ../../remoting/protocol/network_settings.h $
+    ../../remoting/protocol/p2p_datagram_socket.h $
+    ../../remoting/protocol/p2p_stream_socket.h $
+    ../../remoting/protocol/pairing_authenticator_base.cc $
+    ../../remoting/protocol/pairing_authenticator_base.h $
+    ../../remoting/protocol/pairing_client_authenticator.cc $
+    ../../remoting/protocol/pairing_client_authenticator.h $
+    ../../remoting/protocol/pairing_host_authenticator.cc $
+    ../../remoting/protocol/pairing_host_authenticator.h $
+    ../../remoting/protocol/pairing_registry.cc $
+    ../../remoting/protocol/pairing_registry.h $
+    ../../remoting/protocol/performance_tracker.cc $
+    ../../remoting/protocol/performance_tracker.h $
+    ../../remoting/protocol/port_range.cc $
+    ../../remoting/protocol/port_range.h $
+    ../../remoting/protocol/protobuf_message_parser.h $
+    ../../remoting/protocol/pseudotcp_adapter.cc $
+    ../../remoting/protocol/pseudotcp_adapter.h $
+    ../../remoting/protocol/pseudotcp_channel_factory.cc $
+    ../../remoting/protocol/pseudotcp_channel_factory.h $
+    ../../remoting/protocol/secure_channel_factory.cc $
+    ../../remoting/protocol/secure_channel_factory.h $
+    ../../remoting/protocol/session.h $
+    ../../remoting/protocol/session_config.cc $
+    ../../remoting/protocol/session_config.h $
+    ../../remoting/protocol/session_manager.h $
+    ../../remoting/protocol/socket_util.cc $
+    ../../remoting/protocol/socket_util.h $
+    ../../remoting/protocol/ssl_hmac_channel_authenticator.cc $
+    ../../remoting/protocol/ssl_hmac_channel_authenticator.h $
+    ../../remoting/protocol/stream_channel_factory.h $
+    ../../remoting/protocol/third_party_authenticator_base.cc $
+    ../../remoting/protocol/third_party_authenticator_base.h $
+    ../../remoting/protocol/third_party_client_authenticator.cc $
+    ../../remoting/protocol/third_party_client_authenticator.h $
+    ../../remoting/protocol/third_party_host_authenticator.cc $
+    ../../remoting/protocol/third_party_host_authenticator.h $
+    ../../remoting/protocol/token_validator.h $
+    ../../remoting/protocol/transport.cc $
+    ../../remoting/protocol/transport.h $
+    ../../remoting/protocol/v2_authenticator.cc $
+    ../../remoting/protocol/v2_authenticator.h $
+    ../../remoting/protocol/video_feedback_stub.h $
+    ../../remoting/protocol/video_stub.h $
+    ../../remoting/signaling/iq_sender.cc $
+    ../../remoting/signaling/iq_sender.h $
+    ../../remoting/signaling/jid_util.cc $
+    ../../remoting/signaling/jid_util.h $
+    ../../remoting/signaling/jingle_info_request.cc $
+    ../../remoting/signaling/jingle_info_request.h $
+    ../../remoting/signaling/log_to_server.cc $
+    ../../remoting/signaling/log_to_server.h $
+    ../../remoting/signaling/push_notification_subscriber.cc $
+    ../../remoting/signaling/push_notification_subscriber.h $
+    ../../remoting/signaling/server_log_entry.cc $
+    ../../remoting/signaling/server_log_entry.h $
+    ../../remoting/signaling/signal_strategy.h $
+    ../../remoting/signaling/xmpp_login_handler.cc $
+    ../../remoting/signaling/xmpp_login_handler.h $
+    ../../remoting/signaling/xmpp_signal_strategy.cc $
+    ../../remoting/signaling/xmpp_signal_strategy.h $
+    ../../remoting/signaling/xmpp_stream_parser.cc $
+    ../../remoting/signaling/xmpp_stream_parser.h $
+    ../../out/gypfiles/remoting/pnacl_newlib.remoting_client_plugin_lib_nacl.source_list.gypcmd $
+    ../../native_client/toolchain/linux_x86/pnacl_newlib/pnacl_newlib.json $
+    || obj/remoting/remoting_client_plugin_lib_nacl.actions_depends.stamp
+
+defines = -DV8_DEPRECATION_WARNINGS -DCLD_VERSION=2 -D_FILE_OFFSET_BITS=64 $
+    -DCHROMIUM_BUILD -DCR_CLANG_REVISION=255169-1 $
+    -DUI_COMPOSITOR_IMAGE_TRANSPORT -DUSE_AURA=1 -DUSE_ASH=1 -DUSE_PANGO=1 $
+    -DUSE_CAIRO=1 -DUSE_DEFAULT_RENDER_THEME=1 -DUSE_LIBJPEG_TURBO=1 $
+    -DUSE_X11=1 -DUSE_CLIPBOARD_AURAX11=1 -DENABLE_ONE_CLICK_SIGNIN $
+    -DENABLE_WEBRTC=1 -DENABLE_MEDIA_ROUTER=1 -DENABLE_PEPPER_CDMS $
+    -DENABLE_CONFIGURATION_POLICY -DENABLE_NOTIFICATIONS -DENABLE_HIDPI=1 $
+    -DENABLE_TOPCHROME_MD=1 -DUSE_UDEV -DDONT_EMBED_BUILD_METADATA $
+    -DFIELDTRIAL_TESTING_ENABLED -DENABLE_TASK_MANAGER=1 $
+    -DENABLE_EXTENSIONS=1 -DENABLE_PDF=1 -DENABLE_PLUGINS=1 $
+    -DENABLE_SESSION_SERVICE=1 -DENABLE_THEMES=1 -DENABLE_AUTOFILL_DIALOG=1 $
+    -DENABLE_BACKGROUND=1 -DENABLE_PRINTING=1 -DENABLE_BASIC_PRINTING=1 $
+    -DENABLE_PRINT_PREVIEW=1 -DENABLE_SPELLCHECK=1 $
+    -DENABLE_CAPTIVE_PORTAL_DETECTION=1 -DENABLE_APP_LIST=1 $
+    -DENABLE_SETTINGS_APP=1 -DENABLE_SUPERVISED_USERS=1 -DENABLE_MDNS=1 $
+    -DENABLE_SERVICE_DISCOVERY=1 -DV8_USE_EXTERNAL_STARTUP_DATA $
+    -DFULL_SAFE_BROWSING -DSAFE_BROWSING_CSD -DSAFE_BROWSING_DB_LOCAL $
+    -DXML_STATIC -DEXPAT_RELATIVE_PATH -DFEATURE_ENABLE_SSL $
+    -DGTEST_RELATIVE_PATH -DNO_MAIN_THREAD_WRAPPING -DNO_SOUND_SYSTEM $
+    -DWEBRTC_POSIX -DSRTP_RELATIVE_PATH -DSSL_USE_OPENSSL $
+    -DUSE_WEBRTC_DEV_BRANCH -DGOOGLE_PROTOBUF_NO_RTTI $
+    -DGOOGLE_PROTOBUF_NO_STATIC_INITIALIZER -DUSE_LIBPCI=1 -DUSE_OPENSSL=1 $
+    -DUSE_OPENSSL_CERTS=1 -D__STDC_CONSTANT_MACROS -D__STDC_FORMAT_MACROS $
+    -DNDEBUG -DNVALGRIND -DDYNAMIC_ANNOTATIONS_ENABLED=0
+includes = -Igen -I../../third_party/khronos -I../../gpu $
+    -I../../native_client_sdk/src/libraries $
+    -I../../native_client_sdk/src/libraries/nacl_io/include $
+    -I../../native_client_sdk/src/libraries/third_party/newlib-extras $
+    -I../../third_party/boringssl/src/include $
+    -I../../third_party/expat/files/lib $
+    -I../../third_party/libjingle/overrides $
+    -I../../third_party/libjingle/source $
+    -I../../third_party/webrtc_overrides -I../../third_party $
+    -I../../third_party/webrtc -I../../third_party/libyuv/include $
+    -Igen/protoc_out -I../../third_party/protobuf $
+    -I../../third_party/protobuf/src
+cflags = -fstack-protector --param=ssp-buffer-size=4 -Werror -pthread $
+    -fno-strict-aliasing -Wall -Wno-unused-parameter $
+    -Wno-missing-field-initializers -fvisibility=hidden -pipe -fPIC $
+    -Wno-reserved-user-defined-literal -Xclang -load -Xclang $
+    /b/build/slave/publish_tarball/build/src/third_party/llvm-build/Release+Asserts/lib/libFindBadConstructs.so $
+    -Xclang -add-plugin -Xclang find-bad-constructs -Xclang $
+    -plugin-arg-find-bad-constructs -Xclang check-templates $
+    -fcolor-diagnostics $
+    -B/b/build/slave/publish_tarball/build/src/third_party/binutils/Linux_x64/Release/bin $
+    -Wheader-hygiene -Wno-char-subscripts $
+    -Wno-unneeded-internal-declaration -Wno-covered-switch-default $
+    -Wstring-conversion -Wno-c++11-narrowing -Wno-deprecated-register $
+    -Wno-inconsistent-missing-override -Wno-shift-negative-value $
+    -Wno-bitfield-width -m64 -march=x86-64 $
+    --sysroot=/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot $
+    -O2 -fno-ident -fdata-sections -ffunction-sections -funwind-tables
+cflags_c = 
+cflags_cc = -fno-exceptions -fno-rtti -fno-threadsafe-statics $
+    -fvisibility-inlines-hidden -Wsign-compare -std=gnu++11
+arflags = 
+
+build $
+    obj/ui/events/keycodes/dom/remoting_client_plugin_lib_nacl.keycode_converter.o: $
+    cxx ../../ui/events/keycodes/dom/keycode_converter.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build obj/remoting/base/remoting_client_plugin_lib_nacl.auto_thread.o: cxx $
+    ../../remoting/base/auto_thread.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build $
+    obj/remoting/base/remoting_client_plugin_lib_nacl.auto_thread_task_runner.o: $
+    cxx ../../remoting/base/auto_thread_task_runner.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build $
+    obj/remoting/base/remoting_client_plugin_lib_nacl.buffered_socket_writer.o: $
+    cxx ../../remoting/base/buffered_socket_writer.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build obj/remoting/base/remoting_client_plugin_lib_nacl.capabilities.o: cxx $
+    ../../remoting/base/capabilities.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build obj/remoting/base/remoting_client_plugin_lib_nacl.compound_buffer.o: $
+    cxx ../../remoting/base/compound_buffer.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build obj/remoting/base/remoting_client_plugin_lib_nacl.constants.o: cxx $
+    ../../remoting/base/constants.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build obj/remoting/base/remoting_client_plugin_lib_nacl.rate_counter.o: cxx $
+    ../../remoting/base/rate_counter.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build obj/remoting/base/remoting_client_plugin_lib_nacl.rsa_key_pair.o: cxx $
+    ../../remoting/base/rsa_key_pair.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build obj/remoting/base/remoting_client_plugin_lib_nacl.running_average.o: $
+    cxx ../../remoting/base/running_average.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build obj/remoting/base/remoting_client_plugin_lib_nacl.service_urls.o: cxx $
+    ../../remoting/base/service_urls.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build obj/remoting/base/remoting_client_plugin_lib_nacl.socket_reader.o: $
+    cxx ../../remoting/base/socket_reader.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build obj/remoting/base/remoting_client_plugin_lib_nacl.util.o: cxx $
+    ../../remoting/base/util.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build obj/remoting/base/remoting_client_plugin_lib_nacl.vlog_net_log.o: cxx $
+    ../../remoting/base/vlog_net_log.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build obj/remoting/codec/remoting_client_plugin_lib_nacl.audio_decoder.o: $
+    cxx ../../remoting/codec/audio_decoder.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build $
+    obj/remoting/codec/remoting_client_plugin_lib_nacl.audio_decoder_opus.o: $
+    cxx ../../remoting/codec/audio_decoder_opus.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build $
+    obj/remoting/codec/remoting_client_plugin_lib_nacl.audio_decoder_verbatim.o: $
+    cxx ../../remoting/codec/audio_decoder_verbatim.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build $
+    obj/remoting/codec/remoting_client_plugin_lib_nacl.audio_encoder_opus.o: $
+    cxx ../../remoting/codec/audio_encoder_opus.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build $
+    obj/remoting/codec/remoting_client_plugin_lib_nacl.audio_encoder_verbatim.o: $
+    cxx ../../remoting/codec/audio_encoder_verbatim.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build $
+    obj/remoting/codec/remoting_client_plugin_lib_nacl.scoped_vpx_codec.o: $
+    cxx ../../remoting/codec/scoped_vpx_codec.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build $
+    obj/remoting/codec/remoting_client_plugin_lib_nacl.video_decoder_verbatim.o: $
+    cxx ../../remoting/codec/video_decoder_verbatim.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build $
+    obj/remoting/codec/remoting_client_plugin_lib_nacl.video_decoder_vpx.o: $
+    cxx ../../remoting/codec/video_decoder_vpx.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build $
+    obj/remoting/codec/remoting_client_plugin_lib_nacl.video_encoder_helper.o: $
+    cxx ../../remoting/codec/video_encoder_helper.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build $
+    obj/remoting/codec/remoting_client_plugin_lib_nacl.video_encoder_verbatim.o: $
+    cxx ../../remoting/codec/video_encoder_verbatim.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build $
+    obj/remoting/codec/remoting_client_plugin_lib_nacl.video_encoder_vpx.o: $
+    cxx ../../remoting/codec/video_encoder_vpx.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build $
+    obj/remoting/client/plugin/remoting_client_plugin_lib_nacl.chromoting_instance.o: $
+    cxx ../../remoting/client/plugin/chromoting_instance.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build $
+    obj/remoting/client/plugin/remoting_client_plugin_lib_nacl.delegating_signal_strategy.o: $
+    cxx ../../remoting/client/plugin/delegating_signal_strategy.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build $
+    obj/remoting/client/plugin/remoting_client_plugin_lib_nacl.pepper_address_resolver.o: $
+    cxx ../../remoting/client/plugin/pepper_address_resolver.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build $
+    obj/remoting/client/plugin/remoting_client_plugin_lib_nacl.pepper_audio_player.o: $
+    cxx ../../remoting/client/plugin/pepper_audio_player.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build $
+    obj/remoting/client/plugin/remoting_client_plugin_lib_nacl.pepper_cursor_setter.o: $
+    cxx ../../remoting/client/plugin/pepper_cursor_setter.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build $
+    obj/remoting/client/plugin/remoting_client_plugin_lib_nacl.pepper_input_handler.o: $
+    cxx ../../remoting/client/plugin/pepper_input_handler.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build $
+    obj/remoting/client/plugin/remoting_client_plugin_lib_nacl.pepper_module.o: $
+    cxx ../../remoting/client/plugin/pepper_module.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build $
+    obj/remoting/client/plugin/remoting_client_plugin_lib_nacl.pepper_mouse_locker.o: $
+    cxx ../../remoting/client/plugin/pepper_mouse_locker.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build $
+    obj/remoting/client/plugin/remoting_client_plugin_lib_nacl.pepper_network_manager.o: $
+    cxx ../../remoting/client/plugin/pepper_network_manager.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build $
+    obj/remoting/client/plugin/remoting_client_plugin_lib_nacl.pepper_packet_socket_factory.o: $
+    cxx ../../remoting/client/plugin/pepper_packet_socket_factory.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build $
+    obj/remoting/client/plugin/remoting_client_plugin_lib_nacl.pepper_main_thread_task_runner.o: $
+    cxx ../../remoting/client/plugin/pepper_main_thread_task_runner.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build $
+    obj/remoting/client/plugin/remoting_client_plugin_lib_nacl.pepper_port_allocator.o: $
+    cxx ../../remoting/client/plugin/pepper_port_allocator.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build $
+    obj/remoting/client/plugin/remoting_client_plugin_lib_nacl.pepper_util.o: $
+    cxx ../../remoting/client/plugin/pepper_util.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build $
+    obj/remoting/client/plugin/remoting_client_plugin_lib_nacl.pepper_video_renderer_2d.o: $
+    cxx ../../remoting/client/plugin/pepper_video_renderer_2d.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build $
+    obj/remoting/client/plugin/remoting_client_plugin_lib_nacl.pepper_video_renderer_3d.o: $
+    cxx ../../remoting/client/plugin/pepper_video_renderer_3d.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build $
+    obj/remoting/client/remoting_client_plugin_lib_nacl.audio_decode_scheduler.o: $
+    cxx ../../remoting/client/audio_decode_scheduler.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build obj/remoting/client/remoting_client_plugin_lib_nacl.audio_player.o: $
+    cxx ../../remoting/client/audio_player.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build $
+    obj/remoting/client/remoting_client_plugin_lib_nacl.chromoting_client.o: $
+    cxx ../../remoting/client/chromoting_client.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build obj/remoting/client/remoting_client_plugin_lib_nacl.client_context.o: $
+    cxx ../../remoting/client/client_context.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build $
+    obj/remoting/client/remoting_client_plugin_lib_nacl.client_status_logger.o: $
+    cxx ../../remoting/client/client_status_logger.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build $
+    obj/remoting/client/remoting_client_plugin_lib_nacl.empty_cursor_filter.o: $
+    cxx ../../remoting/client/empty_cursor_filter.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build $
+    obj/remoting/client/remoting_client_plugin_lib_nacl.key_event_mapper.o: $
+    cxx ../../remoting/client/key_event_mapper.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build $
+    obj/remoting/client/remoting_client_plugin_lib_nacl.normalizing_input_filter_cros.o: $
+    cxx ../../remoting/client/normalizing_input_filter_cros.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build $
+    obj/remoting/client/remoting_client_plugin_lib_nacl.normalizing_input_filter_mac.o: $
+    cxx ../../remoting/client/normalizing_input_filter_mac.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build $
+    obj/remoting/client/remoting_client_plugin_lib_nacl.normalizing_input_filter_win.o: $
+    cxx ../../remoting/client/normalizing_input_filter_win.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build $
+    obj/remoting/client/remoting_client_plugin_lib_nacl.server_log_entry_client.o: $
+    cxx ../../remoting/client/server_log_entry_client.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build $
+    obj/remoting/client/remoting_client_plugin_lib_nacl.software_video_renderer.o: $
+    cxx ../../remoting/client/software_video_renderer.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build $
+    obj/remoting/client/remoting_client_plugin_lib_nacl.token_fetcher_proxy.o: $
+    cxx ../../remoting/client/token_fetcher_proxy.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build $
+    obj/remoting/client/remoting_client_plugin_lib_nacl.touch_input_scaler.o: $
+    cxx ../../remoting/client/touch_input_scaler.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build obj/remoting/protocol/remoting_client_plugin_lib_nacl.audio_reader.o: $
+    cxx ../../remoting/protocol/audio_reader.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build obj/remoting/protocol/remoting_client_plugin_lib_nacl.audio_writer.o: $
+    cxx ../../remoting/protocol/audio_writer.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build obj/remoting/protocol/remoting_client_plugin_lib_nacl.auth_util.o: $
+    cxx ../../remoting/protocol/auth_util.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build $
+    obj/remoting/protocol/remoting_client_plugin_lib_nacl.authentication_method.o: $
+    cxx ../../remoting/protocol/authentication_method.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build $
+    obj/remoting/protocol/remoting_client_plugin_lib_nacl.authenticator.o: $
+    cxx ../../remoting/protocol/authenticator.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build $
+    obj/remoting/protocol/remoting_client_plugin_lib_nacl.channel_dispatcher_base.o: $
+    cxx ../../remoting/protocol/channel_dispatcher_base.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build $
+    obj/remoting/protocol/remoting_client_plugin_lib_nacl.channel_multiplexer.o: $
+    cxx ../../remoting/protocol/channel_multiplexer.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build $
+    obj/remoting/protocol/remoting_client_plugin_lib_nacl.channel_socket_adapter.o: $
+    cxx ../../remoting/protocol/channel_socket_adapter.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build $
+    obj/remoting/protocol/remoting_client_plugin_lib_nacl.client_control_dispatcher.o: $
+    cxx ../../remoting/protocol/client_control_dispatcher.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build $
+    obj/remoting/protocol/remoting_client_plugin_lib_nacl.client_event_dispatcher.o: $
+    cxx ../../remoting/protocol/client_event_dispatcher.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build $
+    obj/remoting/protocol/remoting_client_plugin_lib_nacl.client_video_dispatcher.o: $
+    cxx ../../remoting/protocol/client_video_dispatcher.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build $
+    obj/remoting/protocol/remoting_client_plugin_lib_nacl.clipboard_echo_filter.o: $
+    cxx ../../remoting/protocol/clipboard_echo_filter.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build $
+    obj/remoting/protocol/remoting_client_plugin_lib_nacl.clipboard_filter.o: $
+    cxx ../../remoting/protocol/clipboard_filter.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build $
+    obj/remoting/protocol/remoting_client_plugin_lib_nacl.clipboard_thread_proxy.o: $
+    cxx ../../remoting/protocol/clipboard_thread_proxy.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build $
+    obj/remoting/protocol/remoting_client_plugin_lib_nacl.connection_to_host_impl.o: $
+    cxx ../../remoting/protocol/connection_to_host_impl.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build $
+    obj/remoting/protocol/remoting_client_plugin_lib_nacl.content_description.o: $
+    cxx ../../remoting/protocol/content_description.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build obj/remoting/protocol/remoting_client_plugin_lib_nacl.errors.o: cxx $
+    ../../remoting/protocol/errors.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build $
+    obj/remoting/protocol/remoting_client_plugin_lib_nacl.host_control_dispatcher.o: $
+    cxx ../../remoting/protocol/host_control_dispatcher.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build $
+    obj/remoting/protocol/remoting_client_plugin_lib_nacl.host_event_dispatcher.o: $
+    cxx ../../remoting/protocol/host_event_dispatcher.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build $
+    obj/remoting/protocol/remoting_client_plugin_lib_nacl.host_video_dispatcher.o: $
+    cxx ../../remoting/protocol/host_video_dispatcher.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build $
+    obj/remoting/protocol/remoting_client_plugin_lib_nacl.ice_transport_channel.o: $
+    cxx ../../remoting/protocol/ice_transport_channel.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build $
+    obj/remoting/protocol/remoting_client_plugin_lib_nacl.ice_transport_factory.o: $
+    cxx ../../remoting/protocol/ice_transport_factory.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build $
+    obj/remoting/protocol/remoting_client_plugin_lib_nacl.ice_transport.o: $
+    cxx ../../remoting/protocol/ice_transport.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build $
+    obj/remoting/protocol/remoting_client_plugin_lib_nacl.input_event_tracker.o: $
+    cxx ../../remoting/protocol/input_event_tracker.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build obj/remoting/protocol/remoting_client_plugin_lib_nacl.input_filter.o: $
+    cxx ../../remoting/protocol/input_filter.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build $
+    obj/remoting/protocol/remoting_client_plugin_lib_nacl.it2me_host_authenticator_factory.o: $
+    cxx ../../remoting/protocol/it2me_host_authenticator_factory.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build $
+    obj/remoting/protocol/remoting_client_plugin_lib_nacl.jingle_messages.o: $
+    cxx ../../remoting/protocol/jingle_messages.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build $
+    obj/remoting/protocol/remoting_client_plugin_lib_nacl.jingle_session.o: $
+    cxx ../../remoting/protocol/jingle_session.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build $
+    obj/remoting/protocol/remoting_client_plugin_lib_nacl.jingle_session_manager.o: $
+    cxx ../../remoting/protocol/jingle_session_manager.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build $
+    obj/remoting/protocol/remoting_client_plugin_lib_nacl.me2me_host_authenticator_factory.o: $
+    cxx ../../remoting/protocol/me2me_host_authenticator_factory.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build $
+    obj/remoting/protocol/remoting_client_plugin_lib_nacl.message_decoder.o: $
+    cxx ../../remoting/protocol/message_decoder.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build $
+    obj/remoting/protocol/remoting_client_plugin_lib_nacl.message_reader.o: $
+    cxx ../../remoting/protocol/message_reader.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build $
+    obj/remoting/protocol/remoting_client_plugin_lib_nacl.message_serialization.o: $
+    cxx ../../remoting/protocol/message_serialization.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build $
+    obj/remoting/protocol/remoting_client_plugin_lib_nacl.monitored_video_stub.o: $
+    cxx ../../remoting/protocol/monitored_video_stub.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build $
+    obj/remoting/protocol/remoting_client_plugin_lib_nacl.mouse_input_filter.o: $
+    cxx ../../remoting/protocol/mouse_input_filter.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build $
+    obj/remoting/protocol/remoting_client_plugin_lib_nacl.negotiating_authenticator_base.o: $
+    cxx ../../remoting/protocol/negotiating_authenticator_base.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build $
+    obj/remoting/protocol/remoting_client_plugin_lib_nacl.negotiating_client_authenticator.o: $
+    cxx ../../remoting/protocol/negotiating_client_authenticator.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build $
+    obj/remoting/protocol/remoting_client_plugin_lib_nacl.negotiating_host_authenticator.o: $
+    cxx ../../remoting/protocol/negotiating_host_authenticator.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build $
+    obj/remoting/protocol/remoting_client_plugin_lib_nacl.pairing_authenticator_base.o: $
+    cxx ../../remoting/protocol/pairing_authenticator_base.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build $
+    obj/remoting/protocol/remoting_client_plugin_lib_nacl.pairing_client_authenticator.o: $
+    cxx ../../remoting/protocol/pairing_client_authenticator.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build $
+    obj/remoting/protocol/remoting_client_plugin_lib_nacl.pairing_host_authenticator.o: $
+    cxx ../../remoting/protocol/pairing_host_authenticator.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build $
+    obj/remoting/protocol/remoting_client_plugin_lib_nacl.pairing_registry.o: $
+    cxx ../../remoting/protocol/pairing_registry.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build $
+    obj/remoting/protocol/remoting_client_plugin_lib_nacl.performance_tracker.o: $
+    cxx ../../remoting/protocol/performance_tracker.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build obj/remoting/protocol/remoting_client_plugin_lib_nacl.port_range.o: $
+    cxx ../../remoting/protocol/port_range.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build $
+    obj/remoting/protocol/remoting_client_plugin_lib_nacl.pseudotcp_adapter.o: $
+    cxx ../../remoting/protocol/pseudotcp_adapter.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build $
+    obj/remoting/protocol/remoting_client_plugin_lib_nacl.pseudotcp_channel_factory.o: $
+    cxx ../../remoting/protocol/pseudotcp_channel_factory.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build $
+    obj/remoting/protocol/remoting_client_plugin_lib_nacl.secure_channel_factory.o: $
+    cxx ../../remoting/protocol/secure_channel_factory.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build $
+    obj/remoting/protocol/remoting_client_plugin_lib_nacl.session_config.o: $
+    cxx ../../remoting/protocol/session_config.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build obj/remoting/protocol/remoting_client_plugin_lib_nacl.socket_util.o: $
+    cxx ../../remoting/protocol/socket_util.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build $
+    obj/remoting/protocol/remoting_client_plugin_lib_nacl.ssl_hmac_channel_authenticator.o: $
+    cxx ../../remoting/protocol/ssl_hmac_channel_authenticator.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build $
+    obj/remoting/protocol/remoting_client_plugin_lib_nacl.third_party_authenticator_base.o: $
+    cxx ../../remoting/protocol/third_party_authenticator_base.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build $
+    obj/remoting/protocol/remoting_client_plugin_lib_nacl.third_party_client_authenticator.o: $
+    cxx ../../remoting/protocol/third_party_client_authenticator.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build $
+    obj/remoting/protocol/remoting_client_plugin_lib_nacl.third_party_host_authenticator.o: $
+    cxx ../../remoting/protocol/third_party_host_authenticator.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build obj/remoting/protocol/remoting_client_plugin_lib_nacl.transport.o: $
+    cxx ../../remoting/protocol/transport.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build $
+    obj/remoting/protocol/remoting_client_plugin_lib_nacl.v2_authenticator.o: $
+    cxx ../../remoting/protocol/v2_authenticator.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build obj/remoting/signaling/remoting_client_plugin_lib_nacl.iq_sender.o: $
+    cxx ../../remoting/signaling/iq_sender.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build obj/remoting/signaling/remoting_client_plugin_lib_nacl.jid_util.o: $
+    cxx ../../remoting/signaling/jid_util.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build $
+    obj/remoting/signaling/remoting_client_plugin_lib_nacl.jingle_info_request.o: $
+    cxx ../../remoting/signaling/jingle_info_request.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build $
+    obj/remoting/signaling/remoting_client_plugin_lib_nacl.log_to_server.o: $
+    cxx ../../remoting/signaling/log_to_server.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build $
+    obj/remoting/signaling/remoting_client_plugin_lib_nacl.push_notification_subscriber.o: $
+    cxx ../../remoting/signaling/push_notification_subscriber.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build $
+    obj/remoting/signaling/remoting_client_plugin_lib_nacl.server_log_entry.o: $
+    cxx ../../remoting/signaling/server_log_entry.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build $
+    obj/remoting/signaling/remoting_client_plugin_lib_nacl.xmpp_signal_strategy.o: $
+    cxx ../../remoting/signaling/xmpp_signal_strategy.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build $
+    obj/remoting/signaling/remoting_client_plugin_lib_nacl.xmpp_stream_parser.o: $
+    cxx ../../remoting/signaling/xmpp_stream_parser.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+build $
+    obj/remoting/signaling/remoting_client_plugin_lib_nacl.xmpp_login_handler.o: $
+    cxx ../../remoting/signaling/xmpp_login_handler.cc || $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a
+

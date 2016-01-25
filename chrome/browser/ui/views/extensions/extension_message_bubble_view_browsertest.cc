@@ -40,8 +40,10 @@ void CheckBubbleAndReferenceView(views::BubbleDelegateView* bubble,
   EXPECT_FALSE(bubble_bounds.x() > reference_bounds.right());
   EXPECT_FALSE(reference_bounds.x() > bubble_bounds.right());
 
-  // And, of course, the bubble should be visible.
+  // And, of course, the bubble should be visible...
   EXPECT_TRUE(bubble->visible());
+  // ... as should its Widget.
+  EXPECT_TRUE(bubble->GetWidget()->IsVisible());
 }
 
 }  // namespace
@@ -49,13 +51,17 @@ void CheckBubbleAndReferenceView(views::BubbleDelegateView* bubble,
 class ExtensionMessageBubbleViewBrowserTest
     : public ExtensionMessageBubbleBrowserTest {
  protected:
-  ExtensionMessageBubbleViewBrowserTest() {}
+  ExtensionMessageBubbleViewBrowserTest() {
+    extensions::ExtensionMessageBubbleView::
+        set_bubble_appearance_wait_time_for_testing(0);
+  }
   ~ExtensionMessageBubbleViewBrowserTest() override {}
 
  private:
   // ExtensionMessageBubbleBrowserTest:
   void CheckBubble(Browser* browser, AnchorPosition anchor) override;
   void CloseBubble(Browser* browser) override;
+  void CheckBubbleIsNotPresent(Browser* browser) override;
 
   DISALLOW_COPY_AND_ASSIGN(ExtensionMessageBubbleViewBrowserTest);
 };
@@ -86,6 +92,13 @@ void ExtensionMessageBubbleViewBrowserTest::CloseBubble(Browser* browser) {
   EXPECT_EQ(nullptr, container->active_bubble());
 }
 
+void ExtensionMessageBubbleViewBrowserTest::CheckBubbleIsNotPresent(
+    Browser* browser) {
+  EXPECT_EQ(
+      nullptr,
+      GetToolbarViewForBrowser(browser)->browser_actions()->active_bubble());
+}
+
 IN_PROC_BROWSER_TEST_F(ExtensionMessageBubbleViewBrowserTest,
                        ExtensionBubbleAnchoredToExtensionAction) {
   TestBubbleAnchoredToExtensionAction();
@@ -109,4 +122,9 @@ IN_PROC_BROWSER_TEST_F(ExtensionMessageBubbleViewBrowserTest,
 IN_PROC_BROWSER_TEST_F(ExtensionMessageBubbleViewBrowserTest,
                        ExtensionBubbleShowsOnStartup) {
   TestBubbleShowsOnStartup();
+}
+
+IN_PROC_BROWSER_TEST_F(ExtensionMessageBubbleViewBrowserTest,
+                       TestUninstallDangerousExtension) {
+  TestUninstallDangerousExtension();
 }

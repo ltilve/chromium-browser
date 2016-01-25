@@ -15,7 +15,6 @@ class V8GCTimes(page_test.PageTest):
   _TIME_OUT_IN_SECONDS = 60
   _CATEGORIES = ['blink.console',
                  'renderer.scheduler',
-                 'toplevel',
                  'v8',
                  'webkit.console']
   _RENDERER_MAIN_THREAD = 'CrRendererMain'
@@ -42,9 +41,9 @@ class V8GCTimes(page_test.PageTest):
     renderer_process = timeline_model.GetRendererProcessFromTabId(tab.id)
     self._AddV8MetricsToResults(renderer_process, results)
 
-  def CleanUpAfterPage(self, page, tab):
-    if tab.browser.platform.tracing_controller.is_tracing_running:
-      tab.browser.platform.tracing_controller.Stop()
+  def DidRunPage(self, platform):
+    if platform.tracing_controller.is_tracing_running:
+      platform.tracing_controller.Stop()
 
   def _AddV8MetricsToResults(self, process, results):
     if process is None:

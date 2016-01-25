@@ -186,7 +186,8 @@ class PolicyWatcherTest : public testing::Test {
     policy::PolicyBundle policy_bundle;
     policy::PolicyMap& policy_map = policy_bundle.Get(policy_namespace);
     policy_map.LoadFrom(&dict, policy::POLICY_LEVEL_MANDATORY,
-                        policy::POLICY_SCOPE_MACHINE);
+                        policy::POLICY_SCOPE_MACHINE,
+                        policy::POLICY_SOURCE_CLOUD);
 
     // Simulate a policy file/registry/preference update.
     policy_loader_->SetPolicies(policy_bundle);
@@ -729,7 +730,13 @@ void OnPolicyUpdatedDumpPolicy(scoped_ptr<base::DictionaryValue> policies) {
 
 // To dump policy contents, run unit tests with the following flags:
 // out/Debug/remoting_unittests --gtest_filter=*TestRealChromotingPolicy* -v=1
-TEST_F(PolicyWatcherTest, TestRealChromotingPolicy) {
+#if defined(ADDRESS_SANITIZER)
+// http://crbug.com/517918
+#define MAYBE_TestRealChromotingPolicy DISABLED_TestRealChromotingPolicy
+#else
+#define MAYBE_TestRealChromotingPolicy TestRealChromotingPolicy
+#endif
+TEST_F(PolicyWatcherTest, MAYBE_TestRealChromotingPolicy) {
   scoped_refptr<base::SingleThreadTaskRunner> task_runner =
       base::MessageLoop::current()->task_runner();
   scoped_ptr<PolicyWatcher> policy_watcher(

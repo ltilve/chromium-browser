@@ -16,6 +16,7 @@
 #include "base/lazy_instance.h"
 #include "base/message_loop/message_loop.h"
 #include "base/strings/string_util.h"
+#include "base/strings/utf_string_conversions.h"
 #include "content/public/browser/render_process_host.h"
 #include "content/public/browser/render_view_host.h"
 #include "content/public/browser/web_contents.h"
@@ -114,7 +115,7 @@ void AwWebContentsDelegate::RunFileChooser(WebContents* web_contents,
       web_contents->GetRenderViewHost()->GetRoutingID(),
       mode_flags,
       ConvertUTF16ToJavaString(env,
-        JoinString(params.accept_types, ',')).obj(),
+          base::JoinString(params.accept_types, base::ASCIIToUTF16(","))).obj(),
       params.title.empty() ? NULL :
           ConvertUTF16ToJavaString(env, params.title).obj(),
       params.default_file_name.empty() ? NULL :
@@ -216,6 +217,13 @@ void AwWebContentsDelegate::LoadingStateChanged(WebContents* source,
   }
 }
 
+bool AwWebContentsDelegate::ShouldResumeRequestsForCreatedWindow() {
+  // Always return false here since we need to defer loading the created window
+  // until after we have attached a new delegate to the new webcontents (which
+  // happens asynchronously).
+  return false;
+}
+
 void AwWebContentsDelegate::RequestMediaAccessPermission(
     WebContents* web_contents,
     const content::MediaStreamRequest& request,
@@ -251,11 +259,14 @@ bool AwWebContentsDelegate::IsFullscreenForTabOrPending(
   return is_fullscreen_;
 }
 
-
 static void FilesSelectedInChooser(
-    JNIEnv* env, jclass clazz,
-    jint process_id, jint render_id, jint mode_flags,
-    jobjectArray file_paths, jobjectArray display_names) {
+    JNIEnv* env,
+    const JavaParamRef<jclass>& clazz,
+    jint process_id,
+    jint render_id,
+    jint mode_flags,
+    const JavaParamRef<jobjectArray>& file_paths,
+    const JavaParamRef<jobjectArray>& display_names) {
   content::RenderViewHost* rvh = content::RenderViewHost::FromID(process_id,
                                                                  render_id);
   if (!rvh)
@@ -293,7 +304,7 @@ static void FilesSelectedInChooser(
     mode = FileChooserParams::Open;
   }
   DVLOG(0) << "File Chooser result: mode = " << mode
-           << ", file paths = " << JoinString(file_path_str, ":");
+           << ", file paths = " << base::JoinString(file_path_str, ":");
   rvh->FilesSelectedInChooser(files, mode);
 }
 

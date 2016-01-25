@@ -1,0 +1,203 @@
+build $
+    obj/components/data_reduction_proxy_core_browser.actions_depends.stamp: $
+    stamp gen/components/data_reduction_proxy/core/common/version.h $
+    obj/components/libdata_reduction_proxy_proto.a
+
+build $
+    obj/components/data_reduction_proxy_core_browser.compile_depends.stamp: $
+    stamp gen/components/data_reduction_proxy/core/common/version.h $
+    obj/components/data_reduction_proxy_proto.actions_rules_copies.stamp
+
+defines = -DV8_DEPRECATION_WARNINGS -DCLD_VERSION=2 -D_FILE_OFFSET_BITS=64 $
+    -DCHROMIUM_BUILD -DCR_CLANG_REVISION=255169-1 $
+    -DUI_COMPOSITOR_IMAGE_TRANSPORT -DUSE_AURA=1 -DUSE_ASH=1 -DUSE_PANGO=1 $
+    -DUSE_CAIRO=1 -DUSE_DEFAULT_RENDER_THEME=1 -DUSE_LIBJPEG_TURBO=1 $
+    -DUSE_X11=1 -DUSE_CLIPBOARD_AURAX11=1 -DENABLE_ONE_CLICK_SIGNIN $
+    -DENABLE_WEBRTC=1 -DENABLE_MEDIA_ROUTER=1 -DENABLE_PEPPER_CDMS $
+    -DENABLE_CONFIGURATION_POLICY -DENABLE_NOTIFICATIONS -DENABLE_HIDPI=1 $
+    -DENABLE_TOPCHROME_MD=1 -DUSE_UDEV -DDONT_EMBED_BUILD_METADATA $
+    -DFIELDTRIAL_TESTING_ENABLED -DENABLE_TASK_MANAGER=1 $
+    -DENABLE_EXTENSIONS=1 -DENABLE_PDF=1 -DENABLE_PLUGINS=1 $
+    -DENABLE_SESSION_SERVICE=1 -DENABLE_THEMES=1 -DENABLE_AUTOFILL_DIALOG=1 $
+    -DENABLE_BACKGROUND=1 -DENABLE_PRINTING=1 -DENABLE_BASIC_PRINTING=1 $
+    -DENABLE_PRINT_PREVIEW=1 -DENABLE_SPELLCHECK=1 $
+    -DENABLE_CAPTIVE_PORTAL_DETECTION=1 -DENABLE_APP_LIST=1 $
+    -DENABLE_SETTINGS_APP=1 -DENABLE_SUPERVISED_USERS=1 -DENABLE_MDNS=1 $
+    -DENABLE_SERVICE_DISCOVERY=1 -DV8_USE_EXTERNAL_STARTUP_DATA $
+    -DFULL_SAFE_BROWSING -DSAFE_BROWSING_CSD -DSAFE_BROWSING_DB_LOCAL $
+    -DUSE_GOOGLE_API_KEYS -DUSE_GOOGLE_API_KEYS_FOR_AUTH_KEY $
+    -DPROTOBUF_USE_DLLS -DGOOGLE_PROTOBUF_NO_RTTI $
+    -DGOOGLE_PROTOBUF_NO_STATIC_INITIALIZER -DUSE_LIBPCI=1 -DUSE_OPENSSL=1 $
+    -DUSE_GLIB=1 -DUSE_NSS_CERTS=1 -D__STDC_CONSTANT_MACROS $
+    -D__STDC_FORMAT_MACROS -DDYNAMIC_ANNOTATIONS_ENABLED=1 $
+    -DWTF_USE_DYNAMIC_ANNOTATIONS=1 -D_DEBUG -D_GLIBCXX_DEBUG=1
+includes = -Igen -I../.. -Igen/protoc_out -I../../third_party/protobuf $
+    -I../../third_party/protobuf/src $
+    -I../../third_party/leveldatabase/src/include $
+    -I../../third_party/leveldatabase/src -I../../third_party/leveldatabase
+cflags = -fstack-protector --param=ssp-buffer-size=4 -Werror -pthread $
+    -fno-strict-aliasing -Wall -Wno-unused-parameter $
+    -Wno-missing-field-initializers -fvisibility=hidden -pipe -fPIC $
+    -Wno-reserved-user-defined-literal -Xclang -load -Xclang $
+    /b/build/slave/publish_tarball/build/src/third_party/llvm-build/Release+Asserts/lib/libFindBadConstructs.so $
+    -Xclang -add-plugin -Xclang find-bad-constructs -Xclang $
+    -plugin-arg-find-bad-constructs -Xclang check-templates $
+    -fcolor-diagnostics $
+    -B/b/build/slave/publish_tarball/build/src/third_party/binutils/Linux_x64/Release/bin $
+    -Wheader-hygiene -Wno-char-subscripts $
+    -Wno-unneeded-internal-declaration -Wno-covered-switch-default $
+    -Wstring-conversion -Wno-c++11-narrowing -Wno-deprecated-register $
+    -Wno-inconsistent-missing-override -Wno-shift-negative-value $
+    -Wno-bitfield-width -pthread $
+    -I/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/include/glib-2.0 $
+    -I/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/lib/x86_64-linux-gnu/glib-2.0/include $
+    -I/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/include/nss $
+    -I/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/include/nspr $
+    -Wno-header-guard -m64 -march=x86-64 $
+    --sysroot=/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot $
+    -O0 -g -funwind-tables -gsplit-dwarf -Wno-undefined-bool-conversion $
+    -Wno-tautological-undefined-compare
+cflags_c = 
+cflags_cc = -fno-exceptions -fno-rtti -fno-threadsafe-statics $
+    -fvisibility-inlines-hidden -Wsign-compare -std=gnu++11
+arflags = 
+
+build $
+    obj/components/data_reduction_proxy/core/browser/data_reduction_proxy_core_browser.data_reduction_proxy_bypass_protocol.o: $
+    cxx $
+    ../../components/data_reduction_proxy/core/browser/data_reduction_proxy_bypass_protocol.cc $
+    || obj/components/data_reduction_proxy_core_browser.compile_depends.stamp
+build $
+    obj/components/data_reduction_proxy/core/browser/data_reduction_proxy_core_browser.data_reduction_proxy_bypass_stats.o: $
+    cxx $
+    ../../components/data_reduction_proxy/core/browser/data_reduction_proxy_bypass_stats.cc $
+    || obj/components/data_reduction_proxy_core_browser.compile_depends.stamp
+build $
+    obj/components/data_reduction_proxy/core/browser/data_reduction_proxy_core_browser.data_reduction_proxy_compression_stats.o: $
+    cxx $
+    ../../components/data_reduction_proxy/core/browser/data_reduction_proxy_compression_stats.cc $
+    || obj/components/data_reduction_proxy_core_browser.compile_depends.stamp
+build $
+    obj/components/data_reduction_proxy/core/browser/data_reduction_proxy_core_browser.data_reduction_proxy_config.o: $
+    cxx $
+    ../../components/data_reduction_proxy/core/browser/data_reduction_proxy_config.cc $
+    || obj/components/data_reduction_proxy_core_browser.compile_depends.stamp
+build $
+    obj/components/data_reduction_proxy/core/browser/data_reduction_proxy_core_browser.data_reduction_proxy_config_retrieval_params.o: $
+    cxx $
+    ../../components/data_reduction_proxy/core/browser/data_reduction_proxy_config_retrieval_params.cc $
+    || obj/components/data_reduction_proxy_core_browser.compile_depends.stamp
+build $
+    obj/components/data_reduction_proxy/core/browser/data_reduction_proxy_core_browser.data_reduction_proxy_config_service_client.o: $
+    cxx $
+    ../../components/data_reduction_proxy/core/browser/data_reduction_proxy_config_service_client.cc $
+    || obj/components/data_reduction_proxy_core_browser.compile_depends.stamp
+build $
+    obj/components/data_reduction_proxy/core/browser/data_reduction_proxy_core_browser.data_reduction_proxy_configurator.o: $
+    cxx $
+    ../../components/data_reduction_proxy/core/browser/data_reduction_proxy_configurator.cc $
+    || obj/components/data_reduction_proxy_core_browser.compile_depends.stamp
+build $
+    obj/components/data_reduction_proxy/core/browser/data_reduction_proxy_core_browser.data_reduction_proxy_delegate.o: $
+    cxx $
+    ../../components/data_reduction_proxy/core/browser/data_reduction_proxy_delegate.cc $
+    || obj/components/data_reduction_proxy_core_browser.compile_depends.stamp
+build $
+    obj/components/data_reduction_proxy/core/browser/data_reduction_proxy_core_browser.data_reduction_proxy_experiments_stats.o: $
+    cxx $
+    ../../components/data_reduction_proxy/core/browser/data_reduction_proxy_experiments_stats.cc $
+    || obj/components/data_reduction_proxy_core_browser.compile_depends.stamp
+build $
+    obj/components/data_reduction_proxy/core/browser/data_reduction_proxy_core_browser.data_reduction_proxy_interceptor.o: $
+    cxx $
+    ../../components/data_reduction_proxy/core/browser/data_reduction_proxy_interceptor.cc $
+    || obj/components/data_reduction_proxy_core_browser.compile_depends.stamp
+build $
+    obj/components/data_reduction_proxy/core/browser/data_reduction_proxy_core_browser.data_reduction_proxy_io_data.o: $
+    cxx $
+    ../../components/data_reduction_proxy/core/browser/data_reduction_proxy_io_data.cc $
+    || obj/components/data_reduction_proxy_core_browser.compile_depends.stamp
+build $
+    obj/components/data_reduction_proxy/core/browser/data_reduction_proxy_core_browser.data_reduction_proxy_metrics.o: $
+    cxx $
+    ../../components/data_reduction_proxy/core/browser/data_reduction_proxy_metrics.cc $
+    || obj/components/data_reduction_proxy_core_browser.compile_depends.stamp
+build $
+    obj/components/data_reduction_proxy/core/browser/data_reduction_proxy_core_browser.data_reduction_proxy_mutable_config_values.o: $
+    cxx $
+    ../../components/data_reduction_proxy/core/browser/data_reduction_proxy_mutable_config_values.cc $
+    || obj/components/data_reduction_proxy_core_browser.compile_depends.stamp
+build $
+    obj/components/data_reduction_proxy/core/browser/data_reduction_proxy_core_browser.data_reduction_proxy_network_delegate.o: $
+    cxx $
+    ../../components/data_reduction_proxy/core/browser/data_reduction_proxy_network_delegate.cc $
+    || obj/components/data_reduction_proxy_core_browser.compile_depends.stamp
+build $
+    obj/components/data_reduction_proxy/core/browser/data_reduction_proxy_core_browser.data_reduction_proxy_prefs.o: $
+    cxx $
+    ../../components/data_reduction_proxy/core/browser/data_reduction_proxy_prefs.cc $
+    || obj/components/data_reduction_proxy_core_browser.compile_depends.stamp
+build $
+    obj/components/data_reduction_proxy/core/browser/data_reduction_proxy_core_browser.data_reduction_proxy_request_options.o: $
+    cxx $
+    ../../components/data_reduction_proxy/core/browser/data_reduction_proxy_request_options.cc $
+    || obj/components/data_reduction_proxy_core_browser.compile_depends.stamp
+build $
+    obj/components/data_reduction_proxy/core/browser/data_reduction_proxy_core_browser.data_reduction_proxy_service.o: $
+    cxx $
+    ../../components/data_reduction_proxy/core/browser/data_reduction_proxy_service.cc $
+    || obj/components/data_reduction_proxy_core_browser.compile_depends.stamp
+build $
+    obj/components/data_reduction_proxy/core/browser/data_reduction_proxy_core_browser.data_reduction_proxy_settings.o: $
+    cxx $
+    ../../components/data_reduction_proxy/core/browser/data_reduction_proxy_settings.cc $
+    || obj/components/data_reduction_proxy_core_browser.compile_depends.stamp
+build $
+    obj/components/data_reduction_proxy/core/browser/data_reduction_proxy_core_browser.data_reduction_proxy_tamper_detection.o: $
+    cxx $
+    ../../components/data_reduction_proxy/core/browser/data_reduction_proxy_tamper_detection.cc $
+    || obj/components/data_reduction_proxy_core_browser.compile_depends.stamp
+build $
+    obj/components/data_reduction_proxy/core/browser/data_reduction_proxy_core_browser.data_store.o: $
+    cxx ../../components/data_reduction_proxy/core/browser/data_store.cc || $
+    obj/components/data_reduction_proxy_core_browser.compile_depends.stamp
+build $
+    obj/components/data_reduction_proxy/core/browser/data_reduction_proxy_core_browser.data_usage_store.o: $
+    cxx $
+    ../../components/data_reduction_proxy/core/browser/data_usage_store.cc $
+    || obj/components/data_reduction_proxy_core_browser.compile_depends.stamp
+build $
+    obj/components/data_reduction_proxy/core/browser/data_reduction_proxy_core_browser.db_data_owner.o: $
+    cxx ../../components/data_reduction_proxy/core/browser/db_data_owner.cc $
+    || obj/components/data_reduction_proxy_core_browser.compile_depends.stamp
+build $
+    obj/components/data_reduction_proxy/core/browser/data_reduction_proxy_core_browser.data_store_impl.o: $
+    cxx $
+    ../../components/data_reduction_proxy/core/browser/data_store_impl.cc $
+    || obj/components/data_reduction_proxy_core_browser.compile_depends.stamp
+
+build obj/components/libdata_reduction_proxy_core_browser.a: alink_thin $
+    obj/components/data_reduction_proxy/core/browser/data_reduction_proxy_core_browser.data_reduction_proxy_bypass_protocol.o $
+    obj/components/data_reduction_proxy/core/browser/data_reduction_proxy_core_browser.data_reduction_proxy_bypass_stats.o $
+    obj/components/data_reduction_proxy/core/browser/data_reduction_proxy_core_browser.data_reduction_proxy_compression_stats.o $
+    obj/components/data_reduction_proxy/core/browser/data_reduction_proxy_core_browser.data_reduction_proxy_config.o $
+    obj/components/data_reduction_proxy/core/browser/data_reduction_proxy_core_browser.data_reduction_proxy_config_retrieval_params.o $
+    obj/components/data_reduction_proxy/core/browser/data_reduction_proxy_core_browser.data_reduction_proxy_config_service_client.o $
+    obj/components/data_reduction_proxy/core/browser/data_reduction_proxy_core_browser.data_reduction_proxy_configurator.o $
+    obj/components/data_reduction_proxy/core/browser/data_reduction_proxy_core_browser.data_reduction_proxy_delegate.o $
+    obj/components/data_reduction_proxy/core/browser/data_reduction_proxy_core_browser.data_reduction_proxy_experiments_stats.o $
+    obj/components/data_reduction_proxy/core/browser/data_reduction_proxy_core_browser.data_reduction_proxy_interceptor.o $
+    obj/components/data_reduction_proxy/core/browser/data_reduction_proxy_core_browser.data_reduction_proxy_io_data.o $
+    obj/components/data_reduction_proxy/core/browser/data_reduction_proxy_core_browser.data_reduction_proxy_metrics.o $
+    obj/components/data_reduction_proxy/core/browser/data_reduction_proxy_core_browser.data_reduction_proxy_mutable_config_values.o $
+    obj/components/data_reduction_proxy/core/browser/data_reduction_proxy_core_browser.data_reduction_proxy_network_delegate.o $
+    obj/components/data_reduction_proxy/core/browser/data_reduction_proxy_core_browser.data_reduction_proxy_prefs.o $
+    obj/components/data_reduction_proxy/core/browser/data_reduction_proxy_core_browser.data_reduction_proxy_request_options.o $
+    obj/components/data_reduction_proxy/core/browser/data_reduction_proxy_core_browser.data_reduction_proxy_service.o $
+    obj/components/data_reduction_proxy/core/browser/data_reduction_proxy_core_browser.data_reduction_proxy_settings.o $
+    obj/components/data_reduction_proxy/core/browser/data_reduction_proxy_core_browser.data_reduction_proxy_tamper_detection.o $
+    obj/components/data_reduction_proxy/core/browser/data_reduction_proxy_core_browser.data_store.o $
+    obj/components/data_reduction_proxy/core/browser/data_reduction_proxy_core_browser.data_usage_store.o $
+    obj/components/data_reduction_proxy/core/browser/data_reduction_proxy_core_browser.db_data_owner.o $
+    obj/components/data_reduction_proxy/core/browser/data_reduction_proxy_core_browser.data_store_impl.o $
+    || obj/components/data_reduction_proxy_core_browser.actions_depends.stamp

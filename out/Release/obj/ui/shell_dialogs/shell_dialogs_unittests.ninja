@@ -1,0 +1,177 @@
+build obj/ui/shell_dialogs/shell_dialogs_unittests.actions_depends.stamp: $
+    stamp obj/base/libbase.a obj/base/libtest_support_base.a $
+    obj/base/librun_all_unittests.a obj/testing/libgtest.a $
+    obj/ui/shell_dialogs/libshell_dialogs.a $
+    gen/base/debug/debugging_flags.h obj/base/libbase_static.a $
+    obj/third_party/modp_b64/libmodp_b64.a $
+    obj/base/third_party/dynamic_annotations/libdynamic_annotations.a $
+    obj/base/libsymbolize.a obj/base/libxdg_mime.a $
+    obj/third_party/libevent/libevent.a obj/base/libbase_i18n.a $
+    obj/third_party/icu/libicui18n.a obj/third_party/icu/libicuuc.a $
+    icudtl.dat icudtl.dat obj/testing/libgmock.a $
+    obj/third_party/libxml/libxml2.a obj/third_party/zlib/libchrome_zlib.a $
+    obj/third_party/zlib/libzlib_x86_simd.a $
+    obj/skia/skia.actions_depends.stamp obj/skia/libskia_library.a $
+    obj/skia/libskia_opts.a obj/skia/libskia_opts_ssse3.a $
+    obj/skia/libskia_opts_sse41.a obj/skia/libskia_opts_sse42.a $
+    obj/skia/libskia_opts_avx.a obj/skia/libskia_opts_avx2.a $
+    obj/third_party/sfntly/libsfntly.a obj/skia/libskia_chrome.a $
+    obj/ui/base/libui_base.a obj/net/libnet.a $
+    obj/third_party/protobuf/libprotobuf_lite.a obj/url/liburl_lib.a $
+    obj/net/libnet_quic_proto.a obj/base/libbase_prefs.a $
+    obj/crypto/libcrcrypto.a obj/third_party/boringssl/libboringssl.a $
+    obj/third_party/boringssl/libboringssl.a obj/sdch/libsdch.a $
+    obj/net/net_derived_sources.actions_rules_copies.stamp $
+    obj/net/net_resources.actions_rules_copies.stamp $
+    obj/build/linux/libgio.a obj/ui/events/libevents.a obj/ui/gfx/libgfx.a $
+    obj/third_party/harfbuzz-ng/libharfbuzz-ng.a $
+    obj/third_party/libpng/libpng.a obj/ui/gfx/libgfx_geometry.a $
+    obj/third_party/libjpeg_turbo/libjpeg_turbo.a obj/ui/gfx/x/libgfx_x11.a $
+    obj/ui/events/libdom_keycode_converter.a obj/ui/events/libevents_base.a $
+    obj/ui/events/libgesture_detection.a $
+    obj/ui/events/devices/libevents_devices.a $
+    obj/ui/events/platform/libevents_platform.a $
+    obj/ui/resources/ui_resources.actions_rules_copies.stamp $
+    obj/ui/strings/ui_strings.actions_rules_copies.stamp $
+    obj/ui/events/platform/x11/libx11_events_platform.a $
+    obj/ui/aura/libaura.a obj/ui/base/ime/libui_base_ime.a $
+    obj/ui/compositor/libcompositor.a obj/cc/libcc.a obj/cc/libcc_proto.a $
+    obj/gpu/gpu.actions_depends.stamp obj/gpu/libcommand_buffer_client.a $
+    obj/gpu/libcommand_buffer_common.a $
+    obj/gpu/command_buffer/libgles2_utils.a $
+    obj/gpu/libcommand_buffer_service.a obj/gpu/libdisk_cache_proto.a $
+    obj/gpu/libgpu_config.a obj/third_party/re2/libre2.a $
+    obj/ui/gl/libgl_wrapper.a obj/build/linux/libpci.a $
+    obj/third_party/libXNVCtrl/libXNVCtrl.a $
+    obj/third_party/smhasher/libcityhash.a gen/angle/id/commit.h $
+    obj/third_party/angle/src/copy_scripts.actions_rules_copies.stamp $
+    obj/third_party/angle/src/libtranslator.a $
+    obj/third_party/angle/src/libtranslator_lib.a $
+    obj/third_party/angle/src/libpreprocessor.a $
+    obj/third_party/angle/src/libangle_common.a $
+    obj/gpu/libgles2_cmd_helper.a obj/gpu/libgpu_ipc.a obj/ipc/libipc.a $
+    obj/media/libmedia.a obj/third_party/libwebm/libwebm.a libyuv.a $
+    obj/third_party/opus/libopus.a obj/media/libshared_memory_support.a $
+    obj/third_party/ffmpeg/libffmpeg.a $
+    obj/third_party/ffmpeg/libffmpeg_yasm.a $
+    obj/third_party/libvpx_new/libvpx_new.a $
+    obj/third_party/libvpx_new/libvpx_intrinsics_mmx.a $
+    obj/third_party/libvpx_new/libvpx_intrinsics_sse2.a $
+    obj/third_party/libvpx_new/libvpx_intrinsics_ssse3.a $
+    obj/third_party/libvpx_new/libvpx_intrinsics_sse4_1.a $
+    obj/third_party/libvpx_new/libvpx_intrinsics_avx.a $
+    obj/third_party/libvpx_new/libvpx_intrinsics_avx2.a $
+    obj/media/libmedia_asm.a obj/cc/libcc_surfaces.a
+
+build obj/ui/shell_dialogs/shell_dialogs_unittests.compile_depends.stamp: $
+    stamp gen/base/debug/debugging_flags.h $
+    obj/ui/strings/ui_strings.actions_rules_copies.stamp $
+    gen/base/debug/debugging_flags.h icudtl.dat icudtl.dat icudtl.dat $
+    obj/ui/base/ui_base.compile_depends.stamp $
+    obj/net/net.compile_depends.stamp $
+    obj/net/net_quic_proto.actions_rules_copies.stamp $
+    obj/net/net_derived_sources.actions_rules_copies.stamp $
+    obj/net/net_resources.actions_rules_copies.stamp $
+    obj/build/linux/gio.actions_rules_copies.stamp $
+    obj/third_party/libjpeg_turbo/libjpeg.actions_rules_copies.stamp $
+    obj/ui/resources/ui_resources.actions_rules_copies.stamp $
+    obj/ui/strings/ui_strings.actions_rules_copies.stamp $
+    obj/cc/cc.compile_depends.stamp $
+    obj/cc/cc_proto.actions_rules_copies.stamp $
+    obj/gpu/gpu.compile_depends.stamp $
+    obj/gpu/command_buffer_service.compile_depends.stamp $
+    obj/gpu/disk_cache_proto.actions_rules_copies.stamp $
+    obj/build/linux/libpci.actions_rules_copies.stamp $
+    obj/build/linux/libpci.actions_rules_copies.stamp gen/angle/id/commit.h $
+    obj/third_party/angle/src/copy_scripts.actions_rules_copies.stamp $
+    obj/media/media.actions_rules_copies.stamp $
+    obj/third_party/ffmpeg/ffmpeg_yasm.actions_rules_copies.stamp $
+    obj/third_party/libvpx_new/libvpx_new.actions_rules_copies.stamp $
+    obj/media/media_asm.actions_rules_copies.stamp $
+    obj/gpu/gpu.compile_depends.stamp
+
+ldflags = -Wl,-z,now -Wl,-z,relro -Wl,--fatal-warnings -Wl,-z,defs -pthread $
+    -Wl,-z,noexecstack -fPIC -fuse-ld=gold $
+    -B/b/build/slave/publish_tarball/build/src/third_party/binutils/Linux_x64/Release/bin $
+    -Wl,--disable-new-dtags -L. $
+    -Wl,-uhb_ft_face_create_cached,-uhb_glib_get_unicode_funcs -m64 $
+    --sysroot=/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot $
+    -L/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/lib/x86_64-linux-gnu $
+    -Wl,-rpath-link=/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/lib/x86_64-linux-gnu $
+    -L/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/lib/x86_64-linux-gnu $
+    -Wl,-rpath-link=/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/lib/x86_64-linux-gnu $
+    -L/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/lib/gcc/x86_64-linux-gnu/4.6 $
+    -Wl,-rpath-link=/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/lib/gcc/x86_64-linux-gnu/4.6 $
+    -L/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/lib $
+    -Wl,-rpath-link=/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/lib $
+    -Wl,--detect-odr-violations -Wl,--icf=all -Wl,-O1 -Wl,--as-needed $
+    -Wl,--gc-sections
+libs =  -lrt -ldl -lgmodule-2.0 -lgobject-2.0 -lgthread-2.0 -lglib-2.0 -lm $
+    -lfontconfig -lfreetype -lpangocairo-1.0 -lcairo -lpangoft2-1.0 $
+    -lpango-1.0 -lnss3 -lnssutil3 -lsmime3 -lplds4 -lplc4 -lnspr4 -lgconf-2 $
+    -lgio-2.0 -lresolv -lX11 -lXi -lXcursor -lXext -lXfixes -lXrender -lXss $
+    -lXcomposite -lasound -lz -lXdamage -lXtst -lXrandr
+build shell_dialogs_unittests: link obj/base/libbase.a $
+    obj/base/libtest_support_base.a obj/base/librun_all_unittests.a $
+    obj/testing/libgtest.a obj/ui/shell_dialogs/libshell_dialogs.a $
+    obj/base/libbase_static.a obj/third_party/modp_b64/libmodp_b64.a $
+    obj/base/third_party/dynamic_annotations/libdynamic_annotations.a $
+    obj/base/libsymbolize.a obj/base/libxdg_mime.a $
+    obj/third_party/libevent/libevent.a obj/base/libbase_i18n.a $
+    obj/third_party/icu/libicui18n.a obj/third_party/icu/libicuuc.a $
+    obj/testing/libgmock.a obj/third_party/libxml/libxml2.a $
+    obj/third_party/zlib/libchrome_zlib.a $
+    obj/third_party/zlib/libzlib_x86_simd.a obj/skia/libskia_library.a $
+    obj/skia/libskia_opts.a obj/skia/libskia_opts_ssse3.a $
+    obj/skia/libskia_opts_sse41.a obj/skia/libskia_opts_sse42.a $
+    obj/skia/libskia_opts_avx.a obj/skia/libskia_opts_avx2.a $
+    obj/third_party/sfntly/libsfntly.a obj/skia/libskia_chrome.a $
+    obj/ui/base/libui_base.a obj/net/libnet.a $
+    obj/third_party/protobuf/libprotobuf_lite.a obj/url/liburl_lib.a $
+    obj/net/libnet_quic_proto.a obj/base/libbase_prefs.a $
+    obj/crypto/libcrcrypto.a obj/third_party/boringssl/libboringssl.a $
+    obj/sdch/libsdch.a obj/build/linux/libgio.a obj/ui/events/libevents.a $
+    obj/ui/gfx/libgfx.a obj/third_party/harfbuzz-ng/libharfbuzz-ng.a $
+    obj/third_party/libpng/libpng.a obj/ui/gfx/libgfx_geometry.a $
+    obj/third_party/libjpeg_turbo/libjpeg_turbo.a obj/ui/gfx/x/libgfx_x11.a $
+    obj/ui/events/libdom_keycode_converter.a obj/ui/events/libevents_base.a $
+    obj/ui/events/libgesture_detection.a $
+    obj/ui/events/devices/libevents_devices.a $
+    obj/ui/events/platform/libevents_platform.a $
+    obj/ui/events/platform/x11/libx11_events_platform.a $
+    obj/ui/aura/libaura.a obj/ui/base/ime/libui_base_ime.a $
+    obj/ui/compositor/libcompositor.a obj/cc/libcc.a obj/cc/libcc_proto.a $
+    obj/gpu/libcommand_buffer_client.a obj/gpu/libcommand_buffer_common.a $
+    obj/gpu/command_buffer/libgles2_utils.a $
+    obj/gpu/libcommand_buffer_service.a obj/gpu/libdisk_cache_proto.a $
+    obj/gpu/libgpu_config.a obj/third_party/re2/libre2.a $
+    obj/ui/gl/libgl_wrapper.a obj/build/linux/libpci.a $
+    obj/third_party/libXNVCtrl/libXNVCtrl.a $
+    obj/third_party/smhasher/libcityhash.a $
+    obj/third_party/angle/src/libtranslator.a $
+    obj/third_party/angle/src/libtranslator_lib.a $
+    obj/third_party/angle/src/libpreprocessor.a $
+    obj/third_party/angle/src/libangle_common.a $
+    obj/gpu/libgles2_cmd_helper.a obj/gpu/libgpu_ipc.a obj/ipc/libipc.a $
+    obj/media/libmedia.a obj/third_party/libwebm/libwebm.a libyuv.a $
+    obj/third_party/opus/libopus.a obj/media/libshared_memory_support.a $
+    obj/third_party/ffmpeg/libffmpeg.a $
+    obj/third_party/ffmpeg/libffmpeg_yasm.a $
+    obj/third_party/libvpx_new/libvpx_new.a $
+    obj/third_party/libvpx_new/libvpx_intrinsics_mmx.a $
+    obj/third_party/libvpx_new/libvpx_intrinsics_sse2.a $
+    obj/third_party/libvpx_new/libvpx_intrinsics_ssse3.a $
+    obj/third_party/libvpx_new/libvpx_intrinsics_sse4_1.a $
+    obj/third_party/libvpx_new/libvpx_intrinsics_avx.a $
+    obj/third_party/libvpx_new/libvpx_intrinsics_avx2.a $
+    obj/media/libmedia_asm.a obj/cc/libcc_surfaces.a | $
+    gen/base/debug/debugging_flags.h $
+    obj/third_party/angle/src/copy_scripts.actions_rules_copies.stamp $
+    gen/angle/id/commit.h obj/skia/skia.actions_depends.stamp $
+    obj/ui/resources/ui_resources.actions_rules_copies.stamp $
+    obj/net/net_derived_sources.actions_rules_copies.stamp $
+    obj/ui/strings/ui_strings.actions_rules_copies.stamp icudtl.dat $
+    obj/net/net_resources.actions_rules_copies.stamp $
+    obj/gpu/gpu.actions_depends.stamp $
+    obj/third_party/boringssl/libboringssl.a || $
+    obj/ui/shell_dialogs/shell_dialogs_unittests.actions_depends.stamp

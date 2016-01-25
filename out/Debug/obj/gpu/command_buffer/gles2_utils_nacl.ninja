@@ -1,0 +1,241 @@
+build obj/gpu/command_buffer/gles2_utils_nacl.actions_depends.stamp: stamp $
+    obj/base/base_nacl.actions_rules_copies.stamp $
+    gen/tc_nonsfi_helper/lib32/libbase_nacl_nonsfi.a
+
+build obj/gpu/command_buffer/gles2_utils_nacl.compile_depends.stamp: stamp $
+    obj/base/base_nacl.actions_rules_copies.stamp $
+    gen/tc_nonsfi_helper/lib32/libbase_nacl_nonsfi.a
+
+rule $
+    gles2_utils_nacl_target_build_irt_x86_64_nlib_296255c8f6a46a876f6bfefef449abdb
+  command = cd ../../gpu/command_buffer; python $
+      ../../native_client/build/build_nexe.py --root ../.. --product-dir $
+      ../../out/Debug/xyz --config-name Debug -t $
+      ../../native_client/toolchain/ --arch x86-64 --build $
+      newlib_nlib_clang --name $
+      ../../out/Debug/gen/tc_irt/lib64/libgles2_utils_nacl.a --objdir $
+      ../../out/Debug/obj/gpu/command_buffer/gles2_utils_nacl.gen/irt-x86-64/gles2_utils_nacl $
+      "--include-dirs=../../out/Debug/gen/tc_newlib/include ../.. $
+      \"../../out/Debug/gen\" ../../third_party/khronos ../../gpu" $
+      "--compile_flags=-O2 -g -Wall -fdiagnostics-show-option -Werror  $
+      -Wno-unused-function -Wno-char-subscripts -Wno-c++11-extensions $
+      -Wno-unnamed-type-template-args -Wno-extra-semi $
+      -Wno-unused-private-field -Wno-char-subscripts -Wno-unused-function $
+      \"-std=gnu++11\"  -Os -fno-exceptions -ffunction-sections $
+      -fdata-sections -fasynchronous-unwind-tables -fomit-frame-pointer $
+      -integrated-as" --gomadir "" "--defines=\"__STDC_LIMIT_MACROS=1\" $
+      \"__STDC_FORMAT_MACROS=1\" \"_GNU_SOURCE=1\" $
+      \"_POSIX_C_SOURCE=199506\" \"_XOPEN_SOURCE=600\" $
+      \"DYNAMIC_ANNOTATIONS_ENABLED=1\" $
+      \"DYNAMIC_ANNOTATIONS_PREFIX=NACL_\" \"NACL_BUILD_ARCH=x86\" $
+      V8_DEPRECATION_WARNINGS \"CLD_VERSION=2\" \"_FILE_OFFSET_BITS=64\" $
+      CHROMIUM_BUILD \"CR_CLANG_REVISION=255169-1\" $
+      UI_COMPOSITOR_IMAGE_TRANSPORT \"USE_AURA=1\" \"USE_ASH=1\" $
+      \"USE_PANGO=1\" \"USE_CAIRO=1\" \"USE_DEFAULT_RENDER_THEME=1\" $
+      \"USE_LIBJPEG_TURBO=1\" \"USE_X11=1\" \"USE_CLIPBOARD_AURAX11=1\" $
+      ENABLE_ONE_CLICK_SIGNIN \"ENABLE_WEBRTC=1\" \"ENABLE_MEDIA_ROUTER=1\" $
+      ENABLE_PEPPER_CDMS ENABLE_CONFIGURATION_POLICY ENABLE_NOTIFICATIONS $
+      \"ENABLE_HIDPI=1\" \"ENABLE_TOPCHROME_MD=1\" USE_UDEV $
+      DONT_EMBED_BUILD_METADATA FIELDTRIAL_TESTING_ENABLED $
+      \"ENABLE_TASK_MANAGER=1\" \"ENABLE_EXTENSIONS=1\" \"ENABLE_PDF=1\" $
+      \"ENABLE_PLUGINS=1\" \"ENABLE_SESSION_SERVICE=1\" \"ENABLE_THEMES=1\" $
+      \"ENABLE_AUTOFILL_DIALOG=1\" \"ENABLE_BACKGROUND=1\" $
+      \"ENABLE_PRINTING=1\" \"ENABLE_BASIC_PRINTING=1\" $
+      \"ENABLE_PRINT_PREVIEW=1\" \"ENABLE_SPELLCHECK=1\" $
+      \"ENABLE_CAPTIVE_PORTAL_DETECTION=1\" \"ENABLE_APP_LIST=1\" $
+      \"ENABLE_SETTINGS_APP=1\" \"ENABLE_SUPERVISED_USERS=1\" $
+      \"ENABLE_MDNS=1\" \"ENABLE_SERVICE_DISCOVERY=1\" $
+      V8_USE_EXTERNAL_STARTUP_DATA FULL_SAFE_BROWSING SAFE_BROWSING_CSD $
+      SAFE_BROWSING_DB_LOCAL \"USE_LIBPCI=1\" \"USE_OPENSSL=1\" $
+      \"USE_OPENSSL_CERTS=1\" __STDC_CONSTANT_MACROS __STDC_FORMAT_MACROS $
+      GLES2_UTILS_IMPLEMENTATION" $
+      "--link_flags=-B../../out/Debug/gen/tc_irt/lib64   -Wl,--gc-sections $
+      -nodefaultlibs -lc++ -lm -lirt_browser -Wl,--start-group -lc -lnacl $
+      -lgcc -lgcc_eh -Wl,--end-group" $
+      "--source-list=../../out/gypfiles/gpu/command_buffer/irt-x86-64.gles2_utils_nacl.source_list.gypcmd"
+  description = ACTION gles2_utils_nacl: build irt x86-64 $
+      nlib_296255c8f6a46a876f6bfefef449abdb
+  restat = 1
+
+build gen/tc_irt/lib64/libgles2_utils_nacl.a: $
+    gles2_utils_nacl_target_build_irt_x86_64_nlib_296255c8f6a46a876f6bfefef449abdb $
+    ../../native_client/build/build_nexe.py $
+    ../../native_client/build/build_nexe_tools.py ../../base/atomicops.h $
+    ../../base/atomicops_internals_atomicword_compat.h $
+    ../../base/atomicops_internals_portable.h $
+    ../../base/atomicops_internals_x86_msvc.h ../../base/base_export.h $
+    ../../base/basictypes.h ../../base/debug/debugger.h $
+    ../../base/logging.h ../../base/macros.h $
+    ../../base/numerics/safe_conversions.h $
+    ../../base/numerics/safe_conversions_impl.h $
+    ../../base/numerics/safe_math.h ../../base/numerics/safe_math_impl.h $
+    ../../base/template_util.h ../../build/build_config.h $
+    ../../mojo/public/c/gles2/gles2_export.h $
+    ../../third_party/khronos/GLES2/gl2.h $
+    ../../third_party/khronos/GLES2/gl2ext.h $
+    ../../third_party/khronos/GLES2/gl2platform.h $
+    ../../third_party/khronos/GLES3/gl3.h $
+    ../../third_party/khronos/GLES3/gl3platform.h $
+    ../../third_party/khronos/KHR/khrplatform.h $
+    ../../gpu/GLES2/gl2chromium.h ../../gpu/GLES2/gl2chromium_autogen.h $
+    ../../gpu/GLES2/gl2extchromium.h ../../gpu/gpu_export.h $
+    ../../gpu/command_buffer/client/gles2_c_lib_export.h $
+    ../../gpu/command_buffer/common/bitfield_helpers.h $
+    ../../gpu/command_buffer/common/cmd_buffer_common.h $
+    ../../gpu/command_buffer/common/constants.h $
+    ../../gpu/command_buffer/common/gles2_cmd_format.h $
+    ../../gpu/command_buffer/common/gles2_cmd_format_autogen.h $
+    ../../gpu/command_buffer/common/gles2_cmd_ids.h $
+    ../../gpu/command_buffer/common/gles2_cmd_ids_autogen.h $
+    ../../gpu/command_buffer/common/gles2_cmd_utils.cc $
+    ../../gpu/command_buffer/common/gles2_cmd_utils.h $
+    ../../gpu/command_buffer/common/gles2_cmd_utils_autogen.h $
+    ../../gpu/command_buffer/common/gles2_cmd_utils_implementation_autogen.h $
+    ../../gpu/command_buffer/common/gles2_utils_export.h $
+    ../../out/gypfiles/gpu/command_buffer/irt-x86-64.gles2_utils_nacl.source_list.gypcmd $
+    ../../native_client/toolchain/linux_x86/pnacl_newlib/pnacl_newlib.json $
+    || obj/gpu/command_buffer/gles2_utils_nacl.actions_depends.stamp
+
+rule $
+    gles2_utils_nacl_target_build_nonsfi_helper_x86_32_nlib_296255c8f6a46a876f6bfefef449abdb
+  command = cd ../../gpu/command_buffer; python $
+      ../../native_client/build/build_nexe.py --root ../.. --product-dir $
+      ../../out/Debug/xyz --config-name Debug -t $
+      ../../native_client/toolchain/ --arch x86-32-nonsfi --build $
+      newlib_nlib_pnacl --name $
+      ../../out/Debug/gen/tc_nonsfi_helper/lib32/libgles2_utils_nacl.a $
+      --objdir $
+      ../../out/Debug/obj/gpu/command_buffer/gles2_utils_nacl.gen/nonsfi_helper-x86-32-nonsfi/gles2_utils_nacl $
+      "--include-dirs=../../out/Debug/gen/tc_newlib/include $
+      ../../native_client/src/public/linux_syscalls ../.. $
+      \"../../out/Debug/gen\" ../../third_party/khronos ../../gpu" $
+      "--compile_flags=--target=i686-unknown-nacl $
+      --pnacl-bias=x86-32-nonsfi --pnacl-allow-translate $
+      --pnacl-allow-native -arch x86-32-nonsfi -O2 -g -Wall $
+      -fdiagnostics-show-option -Werror  -Wno-unused-function $
+      -Wno-char-subscripts -Wno-c++11-extensions $
+      -Wno-unnamed-type-template-args -Wno-extra-semi $
+      -Wno-unused-private-field -Wno-char-subscripts -Wno-unused-function $
+      \"-std=gnu++11\" " --gomadir "" "--defines=\"__STDC_LIMIT_MACROS=1\" $
+      \"__STDC_FORMAT_MACROS=1\" \"_GNU_SOURCE=1\" $
+      \"_POSIX_C_SOURCE=199506\" \"_XOPEN_SOURCE=600\" $
+      \"DYNAMIC_ANNOTATIONS_ENABLED=1\" $
+      \"DYNAMIC_ANNOTATIONS_PREFIX=NACL_\" \"NACL_BUILD_ARCH=x86\" $
+      V8_DEPRECATION_WARNINGS \"CLD_VERSION=2\" \"_FILE_OFFSET_BITS=64\" $
+      CHROMIUM_BUILD \"CR_CLANG_REVISION=255169-1\" $
+      UI_COMPOSITOR_IMAGE_TRANSPORT \"USE_AURA=1\" \"USE_ASH=1\" $
+      \"USE_PANGO=1\" \"USE_CAIRO=1\" \"USE_DEFAULT_RENDER_THEME=1\" $
+      \"USE_LIBJPEG_TURBO=1\" \"USE_X11=1\" \"USE_CLIPBOARD_AURAX11=1\" $
+      ENABLE_ONE_CLICK_SIGNIN \"ENABLE_WEBRTC=1\" \"ENABLE_MEDIA_ROUTER=1\" $
+      ENABLE_PEPPER_CDMS ENABLE_CONFIGURATION_POLICY ENABLE_NOTIFICATIONS $
+      \"ENABLE_HIDPI=1\" \"ENABLE_TOPCHROME_MD=1\" USE_UDEV $
+      DONT_EMBED_BUILD_METADATA FIELDTRIAL_TESTING_ENABLED $
+      \"ENABLE_TASK_MANAGER=1\" \"ENABLE_EXTENSIONS=1\" \"ENABLE_PDF=1\" $
+      \"ENABLE_PLUGINS=1\" \"ENABLE_SESSION_SERVICE=1\" \"ENABLE_THEMES=1\" $
+      \"ENABLE_AUTOFILL_DIALOG=1\" \"ENABLE_BACKGROUND=1\" $
+      \"ENABLE_PRINTING=1\" \"ENABLE_BASIC_PRINTING=1\" $
+      \"ENABLE_PRINT_PREVIEW=1\" \"ENABLE_SPELLCHECK=1\" $
+      \"ENABLE_CAPTIVE_PORTAL_DETECTION=1\" \"ENABLE_APP_LIST=1\" $
+      \"ENABLE_SETTINGS_APP=1\" \"ENABLE_SUPERVISED_USERS=1\" $
+      \"ENABLE_MDNS=1\" \"ENABLE_SERVICE_DISCOVERY=1\" $
+      V8_USE_EXTERNAL_STARTUP_DATA FULL_SAFE_BROWSING SAFE_BROWSING_CSD $
+      SAFE_BROWSING_DB_LOCAL \"USE_LIBPCI=1\" \"USE_OPENSSL=1\" $
+      \"USE_OPENSSL_CERTS=1\" __STDC_CONSTANT_MACROS __STDC_FORMAT_MACROS $
+      GLES2_UTILS_IMPLEMENTATION" $
+      "--link_flags=-B../../out/Debug/gen/tc_nonsfi_helper/lib32  " $
+      "--source-list=../../out/gypfiles/gpu/command_buffer/nonsfi_helper-x86-32-nonsfi.gles2_utils_nacl.source_list.gypcmd"
+  description = ACTION gles2_utils_nacl: build nonsfi_helper x86-32 $
+      nlib_296255c8f6a46a876f6bfefef449abdb
+  restat = 1
+
+build gen/tc_nonsfi_helper/lib32/libgles2_utils_nacl.a: $
+    gles2_utils_nacl_target_build_nonsfi_helper_x86_32_nlib_296255c8f6a46a876f6bfefef449abdb $
+    ../../native_client/build/build_nexe.py $
+    ../../native_client/build/build_nexe_tools.py ../../base/atomicops.h $
+    ../../base/atomicops_internals_atomicword_compat.h $
+    ../../base/atomicops_internals_portable.h $
+    ../../base/atomicops_internals_x86_msvc.h ../../base/base_export.h $
+    ../../base/basictypes.h ../../base/debug/debugger.h $
+    ../../base/logging.h ../../base/macros.h $
+    ../../base/numerics/safe_conversions.h $
+    ../../base/numerics/safe_conversions_impl.h $
+    ../../base/numerics/safe_math.h ../../base/numerics/safe_math_impl.h $
+    ../../base/template_util.h ../../build/build_config.h $
+    ../../mojo/public/c/gles2/gles2_export.h $
+    ../../third_party/khronos/GLES2/gl2.h $
+    ../../third_party/khronos/GLES2/gl2ext.h $
+    ../../third_party/khronos/GLES2/gl2platform.h $
+    ../../third_party/khronos/GLES3/gl3.h $
+    ../../third_party/khronos/GLES3/gl3platform.h $
+    ../../third_party/khronos/KHR/khrplatform.h $
+    ../../gpu/GLES2/gl2chromium.h ../../gpu/GLES2/gl2chromium_autogen.h $
+    ../../gpu/GLES2/gl2extchromium.h ../../gpu/gpu_export.h $
+    ../../gpu/command_buffer/client/gles2_c_lib_export.h $
+    ../../gpu/command_buffer/common/bitfield_helpers.h $
+    ../../gpu/command_buffer/common/cmd_buffer_common.h $
+    ../../gpu/command_buffer/common/constants.h $
+    ../../gpu/command_buffer/common/gles2_cmd_format.h $
+    ../../gpu/command_buffer/common/gles2_cmd_format_autogen.h $
+    ../../gpu/command_buffer/common/gles2_cmd_ids.h $
+    ../../gpu/command_buffer/common/gles2_cmd_ids_autogen.h $
+    ../../gpu/command_buffer/common/gles2_cmd_utils.cc $
+    ../../gpu/command_buffer/common/gles2_cmd_utils.h $
+    ../../gpu/command_buffer/common/gles2_cmd_utils_autogen.h $
+    ../../gpu/command_buffer/common/gles2_cmd_utils_implementation_autogen.h $
+    ../../gpu/command_buffer/common/gles2_utils_export.h $
+    ../../out/gypfiles/gpu/command_buffer/nonsfi_helper-x86-32-nonsfi.gles2_utils_nacl.source_list.gypcmd $
+    ../../native_client/toolchain/linux_x86/pnacl_newlib/pnacl_newlib.json $
+    || obj/gpu/command_buffer/gles2_utils_nacl.actions_depends.stamp
+
+build obj/gpu/command_buffer/gles2_utils_nacl.actions_rules_copies.stamp: $
+    stamp gen/tc_irt/lib64/libgles2_utils_nacl.a $
+    gen/tc_nonsfi_helper/lib32/libgles2_utils_nacl.a
+
+defines = -DV8_DEPRECATION_WARNINGS -DCLD_VERSION=2 -D_FILE_OFFSET_BITS=64 $
+    -DCHROMIUM_BUILD -DCR_CLANG_REVISION=255169-1 $
+    -DUI_COMPOSITOR_IMAGE_TRANSPORT -DUSE_AURA=1 -DUSE_ASH=1 -DUSE_PANGO=1 $
+    -DUSE_CAIRO=1 -DUSE_DEFAULT_RENDER_THEME=1 -DUSE_LIBJPEG_TURBO=1 $
+    -DUSE_X11=1 -DUSE_CLIPBOARD_AURAX11=1 -DENABLE_ONE_CLICK_SIGNIN $
+    -DENABLE_WEBRTC=1 -DENABLE_MEDIA_ROUTER=1 -DENABLE_PEPPER_CDMS $
+    -DENABLE_CONFIGURATION_POLICY -DENABLE_NOTIFICATIONS -DENABLE_HIDPI=1 $
+    -DENABLE_TOPCHROME_MD=1 -DUSE_UDEV -DDONT_EMBED_BUILD_METADATA $
+    -DFIELDTRIAL_TESTING_ENABLED -DENABLE_TASK_MANAGER=1 $
+    -DENABLE_EXTENSIONS=1 -DENABLE_PDF=1 -DENABLE_PLUGINS=1 $
+    -DENABLE_SESSION_SERVICE=1 -DENABLE_THEMES=1 -DENABLE_AUTOFILL_DIALOG=1 $
+    -DENABLE_BACKGROUND=1 -DENABLE_PRINTING=1 -DENABLE_BASIC_PRINTING=1 $
+    -DENABLE_PRINT_PREVIEW=1 -DENABLE_SPELLCHECK=1 $
+    -DENABLE_CAPTIVE_PORTAL_DETECTION=1 -DENABLE_APP_LIST=1 $
+    -DENABLE_SETTINGS_APP=1 -DENABLE_SUPERVISED_USERS=1 -DENABLE_MDNS=1 $
+    -DENABLE_SERVICE_DISCOVERY=1 -DV8_USE_EXTERNAL_STARTUP_DATA $
+    -DFULL_SAFE_BROWSING -DSAFE_BROWSING_CSD -DSAFE_BROWSING_DB_LOCAL $
+    -DUSE_LIBPCI=1 -DUSE_OPENSSL=1 -DUSE_OPENSSL_CERTS=1 $
+    -D__STDC_CONSTANT_MACROS -D__STDC_FORMAT_MACROS $
+    -DGLES2_UTILS_IMPLEMENTATION -DDYNAMIC_ANNOTATIONS_ENABLED=1 $
+    -DWTF_USE_DYNAMIC_ANNOTATIONS=1 -D_DEBUG -D_GLIBCXX_DEBUG=1
+includes = -Igen -I../../third_party/khronos -I../../gpu
+cflags = -fstack-protector --param=ssp-buffer-size=4 -Werror -pthread $
+    -fno-strict-aliasing -Wall -Wno-unused-parameter $
+    -Wno-missing-field-initializers -fvisibility=hidden -pipe -fPIC $
+    -Wno-reserved-user-defined-literal -Xclang -load -Xclang $
+    /b/build/slave/publish_tarball/build/src/third_party/llvm-build/Release+Asserts/lib/libFindBadConstructs.so $
+    -Xclang -add-plugin -Xclang find-bad-constructs -Xclang $
+    -plugin-arg-find-bad-constructs -Xclang check-templates $
+    -fcolor-diagnostics $
+    -B/b/build/slave/publish_tarball/build/src/third_party/binutils/Linux_x64/Release/bin $
+    -Wheader-hygiene -Wno-char-subscripts $
+    -Wno-unneeded-internal-declaration -Wno-covered-switch-default $
+    -Wstring-conversion -Wno-c++11-narrowing -Wno-deprecated-register $
+    -Wno-inconsistent-missing-override -Wno-shift-negative-value $
+    -Wno-bitfield-width -m64 -march=x86-64 $
+    --sysroot=/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot $
+    -O0 -g -funwind-tables -gsplit-dwarf -Wno-undefined-bool-conversion $
+    -Wno-tautological-undefined-compare
+cflags_c = 
+cflags_cc = -fno-exceptions -fno-rtti -fno-threadsafe-statics $
+    -fvisibility-inlines-hidden -Wsign-compare -std=gnu++11
+arflags = 
+
+build obj/gpu/command_buffer/common/gles2_utils_nacl.gles2_cmd_utils.o: cxx $
+    ../../gpu/command_buffer/common/gles2_cmd_utils.cc || $
+    obj/gpu/command_buffer/gles2_utils_nacl.actions_rules_copies.stamp
+

@@ -15,6 +15,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AlertDialog;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -258,6 +259,8 @@ class SuggestionView extends ViewGroup {
     public void init(OmniboxResultItem suggestionItem,
             OmniboxSuggestionDelegate suggestionDelegate,
             int position, boolean useDarkColors) {
+        ViewCompat.setLayoutDirection(this, ViewCompat.getLayoutDirection(mUrlBar));
+
         // Update the position unconditionally.
         mPosition = position;
         jumpDrawablesToCurrentState();
@@ -391,9 +394,8 @@ class SuggestionView extends ViewGroup {
 
         mRefineIcon = TintedDrawable.constructTintedDrawable(
                 getResources(), R.drawable.btn_suggestion_refine);
-        mRefineIcon.setTint(getResources().getColorStateList(mUseDarkColors
-                ? R.color.dark_mode_tint
-                : R.color.light_mode_tint));
+        mRefineIcon.setTint(ApiCompatibilityUtils.getColorStateList(getResources(),
+                mUseDarkColors ? R.color.dark_mode_tint : R.color.light_mode_tint));
         mRefineIcon.setBounds(
                 0, 0,
                 mRefineIcon.getIntrinsicWidth(),
@@ -674,6 +676,7 @@ class SuggestionView extends ViewGroup {
                     new LayoutParams(LayoutParams.WRAP_CONTENT, mSuggestionHeight));
             mTextLine1.setSingleLine();
             mTextLine1.setTextColor(getStandardFontColor());
+            ApiCompatibilityUtils.setTextAlignment(mTextLine1, TEXT_ALIGNMENT_VIEW_START);
             addView(mTextLine1);
 
             mTextLine2 = new TextView(context);
@@ -681,6 +684,7 @@ class SuggestionView extends ViewGroup {
                     new LayoutParams(LayoutParams.WRAP_CONTENT, mSuggestionHeight));
             mTextLine2.setSingleLine();
             mTextLine2.setVisibility(INVISIBLE);
+            ApiCompatibilityUtils.setTextAlignment(mTextLine2, TEXT_ALIGNMENT_VIEW_START);
             addView(mTextLine2);
 
             mAnswerImage = new ImageView(context);
@@ -943,7 +947,7 @@ class SuggestionView extends ViewGroup {
             }
             mSuggestionIcon = ApiCompatibilityUtils.getDrawable(getResources(), drawableId);
             mSuggestionIcon.setColorFilter(mUseDarkColors
-                    ? getResources().getColor(R.color.light_normal_color)
+                    ? ApiCompatibilityUtils.getColor(getResources(), R.color.light_normal_color)
                     : Color.WHITE, PorterDuff.Mode.SRC_IN);
             mSuggestionIcon.setBounds(
                     0, 0,

@@ -9,26 +9,31 @@
 #include "base/logging.h"
 #include "base/prefs/pref_service.h"
 #include "chrome/browser/profiles/profile.h"
+#include "chrome/common/chrome_constants.h"
 #include "components/gcm_driver/gcm_driver.h"
 #include "components/pref_registry/pref_registry_syncable.h"
 
 #if defined(OS_ANDROID)
+#include "base/sequenced_task_runner.h"
+#include "base/threading/sequenced_worker_pool.h"
 #include "components/gcm_driver/gcm_driver_android.h"
+#include "content/public/browser/browser_thread.h"
 #else
 #include "base/bind.h"
 #include "base/files/file_path.h"
 #include "base/memory/weak_ptr.h"
-#include "chrome/browser/services/gcm/gcm_account_tracker.h"
-#include "chrome/browser/services/gcm/gcm_desktop_utils.h"
-#include "chrome/browser/signin/profile_identity_provider.h"
 #include "chrome/browser/signin/profile_oauth2_token_service_factory.h"
 #include "chrome/browser/signin/signin_manager_factory.h"
 #include "chrome/browser/ui/webui/signin/login_ui_service_factory.h"
-#include "chrome/common/chrome_constants.h"
+#include "chrome/common/channel_info.h"
+#include "components/gcm_driver/gcm_account_tracker.h"
 #include "components/gcm_driver/gcm_channel_status_syncer.h"
 #include "components/gcm_driver/gcm_client_factory.h"
+#include "components/gcm_driver/gcm_desktop_utils.h"
 #include "components/gcm_driver/gcm_driver_desktop.h"
+#include "components/signin/core/browser/profile_identity_provider.h"
 #include "components/signin/core/browser/signin_manager.h"
+#include "content/public/browser/browser_thread.h"
 #include "google_apis/gaia/account_tracker.h"
 #include "google_apis/gaia/identity_provider.h"
 #include "net/url_request/url_request_context_getter.h"
@@ -71,7 +76,7 @@ GCMProfileService::IdentityObserver::IdentityObserver(Profile* profile,
   identity_provider_.reset(new ProfileIdentityProvider(
       SigninManagerFactory::GetForProfile(profile),
       ProfileOAuth2TokenServiceFactory::GetForProfile(profile),
-      LoginUIServiceFactory::GetForProfile(profile)));
+      LoginUIServiceFactory::GetShowLoginPopupCallbackForProfile(profile)));
   identity_provider_->AddObserver(this);
 
   OnActiveAccountLogin();
@@ -153,7 +158,16 @@ GCMProfileService::GCMProfileService(Profile* profile)
   }
   debug_instance = this;
 
-  driver_.reset(new GCMDriverAndroid);
+  scoped_refptr<base::SequencedWorkerPool> worker_pool(
+      content::BrowserThread::GetBlockingPool());
+  scoped_refptr<base::SequencedTaskRunner> blocking_task_runner(
+      worker_pool->GetSequencedTaskRunnerWithShutdownBehavior(
+          worker_pool->GetSequenceToken(),
+          base::SequencedWorkerPool::SKIP_ON_SHUTDOWN));
+
+  driver_.reset(new GCMDriverAndroid(
+      profile_->GetPath().Append(chrome::kGCMStoreDirname),
+      blocking_task_runner));
 }
 #else
 GCMProfileService::GCMProfileService(
@@ -162,11 +176,24 @@ GCMProfileService::GCMProfileService(
     : profile_(profile) {
   DCHECK(!profile->IsOffTheRecord());
 
+  base::SequencedWorkerPool* worker_pool =
+      content::BrowserThread::GetBlockingPool();
+  scoped_refptr<base::SequencedTaskRunner> blocking_task_runner(
+      worker_pool->GetSequencedTaskRunnerWithShutdownBehavior(
+          worker_pool->GetSequenceToken(),
+          base::SequencedWorkerPool::SKIP_ON_SHUTDOWN));
+
   driver_ = CreateGCMDriverDesktop(
       gcm_client_factory.Pass(),
       profile_->GetPrefs(),
       profile_->GetPath().Append(chrome::kGCMStoreDirname),
-      profile_->GetRequestContext());
+      profile_->GetRequestContext(),
+      chrome::GetChannel(),
+      content::BrowserThread::GetMessageLoopProxyForThread(
+          content::BrowserThread::UI),
+      content::BrowserThread::GetMessageLoopProxyForThread(
+          content::BrowserThread::IO),
+      blocking_task_runner);
 
   identity_observer_.reset(new IdentityObserver(profile, driver_.get()));
 }

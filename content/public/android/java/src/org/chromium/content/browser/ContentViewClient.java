@@ -7,12 +7,10 @@ package org.chromium.content.browser;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
-import android.view.ActionMode;
 import android.view.KeyEvent;
-import android.view.View;
+import android.view.View.MeasureSpec;
 
 import org.chromium.base.Log;
-import org.chromium.content.browser.SelectActionModeCallback.ActionHandler;
 
 /**
  *  Main callback class used by ContentView.
@@ -29,6 +27,10 @@ import org.chromium.content.browser.SelectActionModeCallback.ActionHandler;
 public class ContentViewClient {
     // Tag used for logging.
     private static final String TAG = "cr.ContentViewClient";
+
+    // Default value to signal that the ContentView's size should not be overridden.
+    private static final int UNSPECIFIED_MEASURE_SPEC =
+            MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED);
 
     public void onUpdateTitle(String title) {
     }
@@ -55,13 +57,6 @@ public class ContentViewClient {
 
         if (!shouldPropagateKey(keyCode)) return true;
 
-        // We also have to intercept some shortcuts before we send them to the ContentView.
-        if (event.isCtrlPressed() && (keyCode == KeyEvent.KEYCODE_TAB
-                || keyCode == KeyEvent.KEYCODE_W
-                || keyCode == KeyEvent.KEYCODE_F4)) {
-            return true;
-        }
-
         return false;
     }
 
@@ -78,30 +73,6 @@ public class ContentViewClient {
      * @param editable Whether the focused node is editable.
      */
     public void onFocusedNodeEditabilityChanged(boolean editable) {
-    }
-
-    /**
-     * Starts an ActionMode for in-page selection.
-     * @param view The associated View.
-     * @param actionHandler The associated ActionHandler.
-     * @param floating Whether to try creating a floating ActionMode. If this
-     *                 feature is unsupported, the return value will be null.
-     * @return the SelectActionMode if creation is successful, otherwise null.
-     */
-    public SelectActionMode startActionMode(
-            View view, ActionHandler actionHandler, boolean floating) {
-        if (floating) return null;
-        ActionMode.Callback callback =
-                new SelectActionModeCallback(view.getContext(), actionHandler);
-        ActionMode actionMode = view.startActionMode(callback);
-        return actionMode != null ? new SelectActionMode(actionMode) : null;
-    }
-
-    /**
-     * @return whether the client supports the creation of floating ActionMode instances.
-     */
-    public boolean supportsFloatingActionMode() {
-        return false;
     }
 
     /**
@@ -168,14 +139,6 @@ public class ContentViewClient {
     }
 
     /**
-     * @return Whether an externally managed (i.e., not compositor-driven) fling
-     *         of this ContentView is active.
-     */
-    public boolean isExternalScrollActive() {
-        return false;
-    }
-
-    /**
      * Check whether a key should be propagated to the embedder or not.
      * We need to send almost every key to Blink. However:
      * 1. We don't want to block the device on the renderer for
@@ -201,5 +164,27 @@ public class ContentViewClient {
             return false;
         }
         return true;
+    }
+
+    /**
+     * ContentViewClient users can return a custom value to override the width of
+     * the ContentView. By default, this method returns MeasureSpec.UNSPECIFIED, which
+     * indicates that the value should not be overridden.
+     *
+     * @return The desired width of the ContentView.
+     */
+    public int getDesiredWidthMeasureSpec() {
+        return UNSPECIFIED_MEASURE_SPEC;
+    }
+
+    /**
+     * ContentViewClient users can return a custom value to override the height of
+     * the ContentView. By default, this method returns MeasureSpec.UNSPECIFIED, which
+     * indicates that the value should not be overridden.
+     *
+     * @return The desired height of the ContentView.
+     */
+    public int getDesiredHeightMeasureSpec() {
+        return UNSPECIFIED_MEASURE_SPEC;
     }
 }

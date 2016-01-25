@@ -82,7 +82,7 @@ void PasswordManagerHandler::GetLocalizedValues(
       ProfileSyncServiceFactory::GetForProfile(GetProfile());
   int title_id =
       password_bubble_experiment::IsSmartLockBrandingEnabled(sync_service) ?
-      IDS_PASSWORDS_EXCEPTIONS_SMART_LOCK_WINDOW_TITLE :
+      IDS_PASSWORD_MANAGER_SMART_LOCK_FOR_PASSWORDS :
       IDS_PASSWORDS_EXCEPTIONS_WINDOW_TITLE;
   RegisterTitle(localized_strings, "passwordsPage", title_id);
 
@@ -102,7 +102,7 @@ void PasswordManagerHandler::GetLocalizedValues(
                                full_text.substr(0, offset));
   localized_strings->SetString("passwordsManagePasswordsLinkText",
                                full_text.substr(offset,
-                                                offset + link_text.size()));
+                                                link_text.size()));
   localized_strings->SetString("passwordsManagePasswordsAfterLinkText",
                                full_text.substr(offset + link_text.size()));
 

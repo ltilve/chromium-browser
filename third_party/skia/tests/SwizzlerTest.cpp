@@ -29,7 +29,7 @@ static void check_fill(skiatest::Reporter* r,
     const size_t totalBytes = imageInfo.getSafeSize(rowBytes) + offset;
 
     // Create fake image data where every byte has a value of 0
-    SkAutoTDeleteArray<uint8_t> storage(SkNEW_ARRAY(uint8_t, totalBytes));
+    SkAutoTDeleteArray<uint8_t> storage(new uint8_t[totalBytes]);
     memset(storage.get(), 0, totalBytes);
     // Adjust the pointer in order to test on different memory alignments
     uint8_t* imageData = storage.get() + offset;
@@ -37,7 +37,7 @@ static void check_fill(skiatest::Reporter* r,
 
     // Fill image with the fill value starting at the indicated row
     SkSwizzler::Fill(imageStart, imageInfo, rowBytes, endRow - startRow + 1, colorOrIndex,
-            colorTable);
+            colorTable, SkCodec::kNo_ZeroInitialized);
 
     // Ensure that the pixels are filled properly
     // The bots should catch any memory corruption
@@ -116,15 +116,15 @@ DEF_TEST(SwizzlerFill, r) {
 
                             // Fill with a color
                             check_fill(r, colorInfo, startRow, endRow, colorRowBytes, offset,
-                                    kFillColor, NULL);
+                                    kFillColor, nullptr);
 
                             // Fill with an index
                             check_fill(r, indexInfo, startRow, endRow, indexRowBytes, offset,
-                                    kFillIndex, NULL);
+                                    kFillIndex, nullptr);
 
                             // Fill a grayscale image
                             check_fill(r, grayInfo, startRow, endRow, grayRowBytes, offset,
-                                    kFillColor, NULL);
+                                    kFillColor, nullptr);
                         }
                     }
                 }

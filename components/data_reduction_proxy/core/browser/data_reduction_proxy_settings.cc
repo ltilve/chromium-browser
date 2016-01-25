@@ -84,6 +84,7 @@ void DataReductionProxySettings::InitDataReductionProxySettings(
   InitPrefMembers();
   UpdateConfigValues();
   RecordDataReductionInit();
+  data_reduction_proxy_service_->InitializeLoFiPrefs();
 }
 
 void DataReductionProxySettings::OnServiceInitialized() {
@@ -173,6 +174,12 @@ bool DataReductionProxySettings::WasLoFiLoadImageRequestedBefore() {
 
 void DataReductionProxySettings::SetLoFiLoadImageRequested() {
   lo_fi_load_image_requested_ = true;
+}
+
+void DataReductionProxySettings::IncrementLoFiSnackbarShown() {
+  prefs_->SetInteger(
+      prefs::kLoFiSnackbarsShownPerSession,
+      prefs_->GetInteger(prefs::kLoFiSnackbarsShownPerSession) + 1);
 }
 
 void DataReductionProxySettings::IncrementLoFiUserRequestsForImages() {

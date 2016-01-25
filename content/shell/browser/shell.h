@@ -100,7 +100,7 @@ class Shell : public WebContentsDelegate,
 #if defined(OS_MACOSX)
   // Public to be called by an ObjC bridge object.
   void ActionPerformed(int control);
-  void URLEntered(std::string url_string);
+  void URLEntered(const std::string& url_string);
 #elif defined(OS_ANDROID)
   // Registers the Android Java to native methods.
   static bool Register(JNIEnv* env);
@@ -135,6 +135,10 @@ class Shell : public WebContentsDelegate,
   void DidNavigateMainFramePostCommit(WebContents* web_contents) override;
   JavaScriptDialogManager* GetJavaScriptDialogManager(
       WebContents* source) override;
+  scoped_ptr<BluetoothChooser> RunBluetoothChooser(
+      WebContents* web_contents,
+      const BluetoothChooser::EventHandler& event_handler,
+      const GURL& origin) override;
 #if defined(OS_MACOSX)
   void HandleKeyboardEvent(WebContents* source,
                            const NativeWebKeyboardEvent& event) override;
@@ -147,7 +151,6 @@ class Shell : public WebContentsDelegate,
   void RendererUnresponsive(WebContents* source) override;
   void ActivateContents(WebContents* contents) override;
   void DeactivateContents(WebContents* contents) override;
-  void WorkerCrashed(WebContents* source) override;
   bool HandleContextMenu(const content::ContextMenuParams& params) override;
 
   static gfx::Size GetShellDefaultSize();

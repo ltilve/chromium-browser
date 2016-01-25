@@ -6,25 +6,33 @@ package org.chromium.chrome.browser.webapps;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import org.chromium.base.ActivityState;
+import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.base.ApplicationStatus;
 import org.chromium.base.VisibleForTesting;
+import org.chromium.blink_public.platform.WebDisplayMode;
 import org.chromium.chrome.R;
-import org.chromium.chrome.browser.EmptyTabObserver;
-import org.chromium.chrome.browser.Tab;
-import org.chromium.chrome.browser.TabObserver;
 import org.chromium.chrome.browser.UrlUtilities;
 import org.chromium.chrome.browser.document.DocumentUtils;
 import org.chromium.chrome.browser.fullscreen.ChromeFullscreenManager;
+import org.chromium.chrome.browser.metrics.WebappUma;
 import org.chromium.chrome.browser.ssl.ConnectionSecurityLevel;
-import org.chromium.chrome.browser.util.FeatureUtilities;
+import org.chromium.chrome.browser.tab.EmptyTabObserver;
+import org.chromium.chrome.browser.tab.Tab;
+import org.chromium.chrome.browser.tab.TabObserver;
+import org.chromium.chrome.browser.util.ColorUtils;
 import org.chromium.content.browser.ScreenOrientationProvider;
 import org.chromium.content_public.browser.LoadUrlParams;
 import org.chromium.content_public.browser.WebContentsObserver;
@@ -43,14 +51,19 @@ public class WebappActivity extends FullScreenActivity {
     private static final long MS_BEFORE_NAVIGATING_BACK_FROM_INTERSTITIAL = 1000;
 
     private final WebappInfo mWebappInfo;
-    private AsyncTask<Void, Void, Void> mCleanupTask;
+    private final WebappDirectoryManager mDirectoryManager;
+
+    private boolean mOldWebappCleanupStarted;
 
     private WebContentsObserver mWebContentsObserver;
 
+    private ViewGroup mSplashScreen;
     private WebappUrlBar mUrlBar;
 
     private boolean mIsInitialized;
     private Integer mBrandColor;
+
+    private WebappUma mWebappUma;
 
     /**
      * Construct all the variables that shouldn't change.  We do it here both to clarify when the
@@ -59,6 +72,8 @@ public class WebappActivity extends FullScreenActivity {
      */
     public WebappActivity() {
         mWebappInfo = WebappInfo.createEmpty();
+        mDirectoryManager = new WebappDirectoryManager();
+        mWebappUma = new WebappUma();
     }
 
     @Override
@@ -90,16 +105,14 @@ public class WebappActivity extends FullScreenActivity {
 
         mWebContentsObserver = createWebContentsObserver();
         getActivityTab().addObserver(createTabObserver());
-        updateTaskDescription();
-        removeWindowBackground();
+        getActivityTab().getTabWebContentsDelegateAndroid().setDisplayMode(
+                (int) WebDisplayMode.Standalone);
     }
 
     @Override
     public void preInflationStartup() {
         WebappInfo info = WebappInfo.create(getIntent());
         if (info != null) mWebappInfo.copy(info);
-        mCleanupTask = new WebappDirectoryManager(getActivityDirectory(),
-                WEBAPP_SCHEME, FeatureUtilities.isDocumentModeEligible(this));
 
         ScreenOrientationProvider.lockOrientation((byte) mWebappInfo.orientation(), this);
         super.preInflationStartup();
@@ -116,20 +129,19 @@ public class WebappActivity extends FullScreenActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        mWebappInfo.writeToBundle(outState);
         if (getActivityTab() != null) getActivityTab().saveInstanceState(outState);
     }
 
     @Override
     public void onStartWithNative() {
         super.onStartWithNative();
-        if (mCleanupTask.getStatus() == AsyncTask.Status.PENDING) mCleanupTask.execute();
+        mDirectoryManager.cleanUpDirectories(this, getId());
     }
 
     @Override
     public void onStopWithNative() {
         super.onStopWithNative();
-        mCleanupTask.cancel(true);
+        mDirectoryManager.cancelCleanup();
         if (getActivityTab() != null) getActivityTab().saveState(getActivityDirectory());
         if (getFullscreenManager() != null) {
             getFullscreenManager().setPersistentFullscreenMode(false);
@@ -138,12 +150,29 @@ public class WebappActivity extends FullScreenActivity {
 
     @Override
     public void onResume() {
-        if (!isFinishing() && getIntent() != null) {
-            // Avoid situations where Android starts two Activities with the same data.
-            DocumentUtils.finishOtherTasksWithData(getIntent().getData(), getTaskId());
+        if (!isFinishing()) {
+            if (getIntent() != null) {
+                // Avoid situations where Android starts two Activities with the same data.
+                DocumentUtils.finishOtherTasksWithData(getIntent().getData(), getTaskId());
+            }
+            updateTaskDescription();
         }
         super.onResume();
+
+        // Kick off the old web app cleanup (if we haven't already) now that we have queued the
+        // current web app's storage to be opened.
+        if (!mOldWebappCleanupStarted) {
+            WebappRegistry.unregisterOldWebapps(this, System.currentTimeMillis());
+            mOldWebappCleanupStarted = true;
+        }
     }
+
+    @Override
+    public void onResumeWithNative() {
+        super.onResumeWithNative();
+        mWebappUma.commitMetrics();
+    }
+
     @Override
     protected int getControlContainerLayoutId() {
         return R.layout.webapp_control_container;
@@ -151,6 +180,8 @@ public class WebappActivity extends FullScreenActivity {
 
     @Override
     public void postInflationStartup() {
+        initializeSplashScreen();
+
         super.postInflationStartup();
         WebappControlContainer controlContainer =
                 (WebappControlContainer) findViewById(R.id.control_container);
@@ -162,6 +193,32 @@ public class WebappActivity extends FullScreenActivity {
      */
     WebappInfo getWebappInfo() {
         return mWebappInfo;
+    }
+
+    private void initializeSplashScreen() {
+        final int backgroundColor = ColorUtils.getOpaqueColor(mWebappInfo.backgroundColor(
+                ApiCompatibilityUtils.getColor(getResources(), R.color.webapp_default_bg)));
+
+        ViewGroup contentView = (ViewGroup) findViewById(android.R.id.content);
+        mSplashScreen = createSplashScreen(contentView);
+        mSplashScreen.setBackgroundColor(backgroundColor);
+        contentView.addView(mSplashScreen);
+
+        mWebappUma.splashscreenVisible();
+        mWebappUma.recordSplashscreenBackgroundColor(mWebappInfo.hasValidBackgroundColor()
+                ? WebappUma.SPLASHSCREEN_COLOR_STATUS_CUSTOM
+                : WebappUma.SPLASHSCREEN_COLOR_STATUS_DEFAULT);
+        mWebappUma.recordSplashscreenThemeColor(mWebappInfo.hasValidThemeColor()
+                ? WebappUma.SPLASHSCREEN_COLOR_STATUS_CUSTOM
+                : WebappUma.SPLASHSCREEN_COLOR_STATUS_DEFAULT);
+
+        WebappDataStorage.open(this, mWebappInfo.id())
+                .getSplashScreenImage(new WebappDataStorage.FetchCallback<Bitmap>() {
+                    @Override
+                    public void onDataRetrieved(Bitmap splashIcon) {
+                        setSplashScreenIconAndText(mSplashScreen, splashIcon, backgroundColor);
+                    }
+                });
     }
 
     private void updateUrlBar() {
@@ -234,7 +291,7 @@ public class WebappActivity extends FullScreenActivity {
             }
 
             @Override
-            public void onDidChangeThemeColor(int color) {
+            public void onDidChangeThemeColor(Tab tab, int color) {
                 if (!isWebappDomain()) return;
                 mBrandColor = color;
                 updateTaskDescription();
@@ -251,18 +308,69 @@ public class WebappActivity extends FullScreenActivity {
                 if (!isWebappDomain()) return;
                 updateTaskDescription();
             }
+
+            @Override
+            public void didFirstVisuallyNonEmptyPaint(Tab tab) {
+                hideSplashScreen(WebappUma.SPLASHSCREEN_HIDES_REASON_PAINT);
+            }
+
+            @Override
+            public void onPageLoadFinished(Tab tab) {
+                hideSplashScreen(WebappUma.SPLASHSCREEN_HIDES_REASON_LOAD_FINISHED);
+            }
+
+            @Override
+            public void onPageLoadFailed(Tab tab, int errorCode) {
+                hideSplashScreen(WebappUma.SPLASHSCREEN_HIDES_REASON_LOAD_FAILED);
+            }
+
+            @Override
+            public void onCrash(Tab tab, boolean sadTabShown) {
+                hideSplashScreen(WebappUma.SPLASHSCREEN_HIDES_REASON_CRASH);
+            }
         };
     }
 
     private void updateTaskDescription() {
-        String title = mWebappInfo.title() == null
-                ? getActivityTab().getTitle() : mWebappInfo.title();
-        Bitmap icon = mWebappInfo.icon() == null
-                ? getActivityTab().getFavicon() : mWebappInfo.icon();
-        int color = mBrandColor == null
-                ? getResources().getColor(R.color.default_primary_color) : mBrandColor;
+        String title = null;
+        if (!TextUtils.isEmpty(mWebappInfo.shortName())) {
+            title = mWebappInfo.shortName();
+        } else if (getActivityTab() != null) {
+            title = getActivityTab().getTitle();
+        }
 
-        DocumentUtils.updateTaskDescription(this, title, icon, color, mBrandColor == null);
+        Bitmap icon = null;
+        if (mWebappInfo.icon() != null) {
+            icon = mWebappInfo.icon();
+        } else if (getActivityTab() != null) {
+            icon = getActivityTab().getFavicon();
+        }
+
+        if (mBrandColor == null && mWebappInfo.hasValidThemeColor()) {
+            mBrandColor = (int) mWebappInfo.themeColor();
+        }
+
+        int taskDescriptionColor =
+                ApiCompatibilityUtils.getColor(getResources(), R.color.default_primary_color);
+        int statusBarColor = Color.BLACK;
+        if (mBrandColor != null) {
+            taskDescriptionColor = mBrandColor;
+            statusBarColor = ColorUtils.getDarkenedColorForStatusBar(mBrandColor);
+        }
+
+        ApiCompatibilityUtils.setTaskDescription(this, title, icon,
+                ColorUtils.getOpaqueColor(taskDescriptionColor));
+        ApiCompatibilityUtils.setStatusBarColor(getWindow(), statusBarColor);
+    }
+
+    @Override
+    protected void setStatusBarColor(Tab tab, int color) {
+        // Intentionally do nothing as WebappActivity explicitly sets status bar color.
+    }
+
+    /** Returns a unique identifier for this WebappActivity. */
+    protected String getId() {
+        return mWebappInfo.id();
     }
 
     /**
@@ -271,8 +379,62 @@ public class WebappActivity extends FullScreenActivity {
      * @return The directory used for the current web app.
      */
     @Override
-    protected File getActivityDirectory() {
-        return WebappDirectoryManager.getWebappDirectory(mWebappInfo.id());
+    protected final File getActivityDirectory() {
+        return mDirectoryManager.getWebappDirectory(this, getId());
+    }
+
+    @VisibleForTesting
+    ViewGroup createSplashScreen(ViewGroup parentView) {
+        return (ViewGroup) LayoutInflater.from(this)
+                .inflate(R.layout.webapp_splash_screen, parentView, false);
+    }
+
+    @VisibleForTesting
+    void setSplashScreenIconAndText(View splashScreen, Bitmap splashIcon, int backgroundColor) {
+        if (splashScreen == null) return;
+
+        Bitmap displayIcon = splashIcon == null ? mWebappInfo.icon() : splashIcon;
+        if (displayIcon == null || displayIcon.getWidth() < getResources()
+                .getDimensionPixelSize(R.dimen.webapp_splash_image_min_size)) {
+            mWebappUma.recordSplashscreenIconType(WebappUma.SPLASHSCREEN_ICON_TYPE_NONE);
+            return;
+        }
+
+        mWebappUma.recordSplashscreenIconType(splashIcon != null
+                ? WebappUma.SPLASHSCREEN_ICON_TYPE_CUSTOM
+                : WebappUma.SPLASHSCREEN_ICON_TYPE_FALLBACK);
+        mWebappUma.recordSplashscreenIconSize(Math.round(
+                (float) displayIcon.getWidth() / getResources().getDisplayMetrics().density));
+
+        TextView appNameView = (TextView) splashScreen.findViewById(
+                R.id.webapp_splash_screen_name);
+        ImageView splashIconView = (ImageView) splashScreen.findViewById(
+                R.id.webapp_splash_screen_icon);
+        appNameView.setText(mWebappInfo.name());
+        splashIconView.setImageBitmap(displayIcon);
+
+        if (ColorUtils.shoudUseLightForegroundOnBackground(backgroundColor)) {
+            appNameView.setTextColor(ApiCompatibilityUtils.getColor(getResources(),
+                    R.color.webapp_splash_title_light));
+        }
+    }
+
+    private void hideSplashScreen(final int reason) {
+        if (mSplashScreen == null) return;
+
+        mSplashScreen.animate()
+                .alpha(0f)
+                .withEndAction(new Runnable() {
+                    @Override
+                    public void run() {
+                        ViewGroup contentView =
+                                (ViewGroup) findViewById(android.R.id.content);
+                        if (mSplashScreen == null) return;
+                        contentView.removeView(mSplashScreen);
+                        mSplashScreen = null;
+                        mWebappUma.splashscreenHidden(reason);
+                    }
+                });
     }
 
     @VisibleForTesting
@@ -292,8 +454,13 @@ public class WebappActivity extends FullScreenActivity {
     }
 
     @Override
-    protected int getControlContainerHeightResource() {
+    public int getControlContainerHeightResource() {
         return R.dimen.webapp_control_container_height;
+    }
+
+    @Override
+    protected Drawable getBackgroundDrawable() {
+        return null;
     }
 
     // Implements {@link FullScreenActivityTab.TopControlsVisibilityDelegate}.

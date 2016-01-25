@@ -34,8 +34,11 @@ namespace chromeos {
 
 namespace {
 
-const char* kUser1 = "user1@test.com";
-const char* kUser2 = "user2@test.com";
+// Because policy is not needed this test it is better to use e-mails that
+// are definitely not enterprise. This lets us to avoid faking of policy fetch
+// procedure.
+const char kUser1[] = "user1@gmail.com";
+const char kUser2[] = "user2@gmail.com";
 
 base::HourClockType GetHourType() {
   const ash::TrayDate* tray_date = ash::Shell::GetInstance()
@@ -64,11 +67,7 @@ class DisplayNotificationsTest : public InProcessBrowserTest {
   void SetUp() override { InProcessBrowserTest::SetUp(); }
 
   void UpdateDisplay(const std::string& display_specs) {
-    ash::DisplayManager* display_manager =
-        ash::Shell::GetInstance()->display_manager();
-    ash::test::DisplayManagerTestApi display_manager_test_api(display_manager);
-    display_manager_test_api.UpdateDisplay(display_specs);
-    display_manager->RunPendingTasksForTest();
+    ash::test::DisplayManagerTestApi().UpdateDisplay(display_specs);
   }
 
   message_center::NotificationList::Notifications GetVisibleNotifications()
@@ -84,7 +83,7 @@ class SystemTrayDelegateChromeOSTest : public LoginManagerTest {
 
   ~SystemTrayDelegateChromeOSTest() override {}
 
-  void SetupUserProfile(std::string user_name, bool use_24_hour_clock) {
+  void SetupUserProfile(const std::string& user_name, bool use_24_hour_clock) {
     const user_manager::User* user =
         user_manager::UserManager::Get()->FindUser(user_name);
     Profile* profile = ProfileHelper::Get()->GetProfileByUser(user);

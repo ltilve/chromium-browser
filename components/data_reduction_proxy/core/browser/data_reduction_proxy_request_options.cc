@@ -4,6 +4,7 @@
 
 #include "components/data_reduction_proxy/core/browser/data_reduction_proxy_request_options.h"
 
+#include <algorithm>
 #include <vector>
 
 #include "base/bind.h"
@@ -49,6 +50,7 @@ const char kPatchNumberHeaderOption[] = "p";
 const char kClientHeaderOption[] = "c";
 const char kLoFiHeaderOption[] = "q";
 const char kExperimentsOption[] = "exp";
+const char kLoFiExperimentID[] = "lofi_active_control";
 
 // The empty version for the authentication protocol. Currently used by
 // Android webview.
@@ -87,11 +89,11 @@ bool DataReductionProxyRequestOptions::ParseLocalSessionKey(
     const std::string& session_key,
     std::string* session,
     std::string* credentials) {
-  std::vector<std::string> auth_values;
-  base::SplitString(session_key, '|', &auth_values);
+  std::vector<base::StringPiece> auth_values = base::SplitStringPiece(
+      session_key, "|", base::TRIM_WHITESPACE, base::SPLIT_WANT_ALL);
   if (auth_values.size() == 2) {
-    *session = auth_values[0];
-    *credentials = auth_values[1];
+    auth_values[0].CopyToString(session);
+    auth_values[1].CopyToString(credentials);
     return true;
   }
 
@@ -145,12 +147,12 @@ void DataReductionProxyRequestOptions::GetChromiumBuildAndPatch(
     const std::string& version,
     std::string* build,
     std::string* patch) const {
-  std::vector<std::string> version_parts;
-  base::SplitString(version, '.', &version_parts);
+  std::vector<base::StringPiece> version_parts = base::SplitStringPiece(
+      version, ".", base::TRIM_WHITESPACE, base::SPLIT_WANT_ALL);
   if (version_parts.size() != 4)
     return;
-  *build = version_parts[2];
-  *patch = version_parts[3];
+  version_parts[2].CopyToString(build);
+  version_parts[3].CopyToString(patch);
 }
 
 void DataReductionProxyRequestOptions::UpdateVersion() {
@@ -180,6 +182,29 @@ void DataReductionProxyRequestOptions::MayRegenerateHeaderBasedOnLoFi(
   if (!lofi_.empty() && !lofi_now_enabled) {
     lofi_ = std::string();
     RegenerateRequestHeaderValue();
+    return;
+  }
+
+  // User was not part of Lo-Fi active control experiment, but now is.
+  if (std::find(experiments_.begin(), experiments_.end(),
+                std::string(kLoFiExperimentID)) == experiments_.end() &&
+      data_reduction_proxy_config_->IsInLoFiActiveControlExperiment()) {
+    experiments_.push_back(kLoFiExperimentID);
+    RegenerateRequestHeaderValue();
+    DCHECK(std::find(experiments_.begin(), experiments_.end(),
+                     kLoFiExperimentID) != experiments_.end());
+    return;
+  }
+
+  // User was part of Lo-Fi active control experiment, but now is not.
+  auto it = std::find(experiments_.begin(), experiments_.end(),
+                      std::string(kLoFiExperimentID));
+  if (it != experiments_.end() &&
+      !data_reduction_proxy_config_->IsInLoFiActiveControlExperiment()) {
+    experiments_.erase(it);
+    RegenerateRequestHeaderValue();
+    DCHECK(std::find(experiments_.begin(), experiments_.end(),
+                     std::string(kLoFiExperimentID)) == experiments_.end());
     return;
   }
 }
@@ -306,7 +331,7 @@ void DataReductionProxyRequestOptions::PopulateConfigResponse(
   ComputeCredentials(now, &session, &credentials);
   config->set_session_key(CreateLocalSessionKey(session, credentials));
   config_parser::TimetoTimestamp(expiration_time,
-                                 config->mutable_expire_time());
+                                 config->mutable_refresh_time());
 }
 
 void DataReductionProxyRequestOptions::SetCredentials(
@@ -398,7 +423,7 @@ void DataReductionProxyRequestOptions::RegenerateRequestHeaderValue() {
   for (const auto& experiment : experiments_)
     headers.push_back(FormatOption(kExperimentsOption, experiment));
 
-  header_value_ = JoinString(headers, ", ");
+  header_value_ = base::JoinString(headers, ", ");
 }
 
 }  // namespace data_reduction_proxy

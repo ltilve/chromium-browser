@@ -1,0 +1,117 @@
+rule $
+    ar_sample_app_target_Build__sample_app__locales_listfile_8ddeb8a725509c15e16ce4f4cd78d366
+  command = cd ../../remoting; python tools/build/remoting_localize.py $
+      --locale_output $
+      "\"../out/Debug/gen/remoting/webapp/_locales/@{json_suffix}/messages.json\"" $
+      --locales_listfile ../out/Debug/gen/ar_sample_app_locales.txt am ar $
+      bg bn ca cs da de el en en-GB es es-419 et fa fake-bidi fi fil fr gu $
+      he hi hr hu id it ja kn ko lt lv ml mr ms nb nl pl pt-BR pt-PT ro ru $
+      sk sl sr sv sw ta te th tr uk vi zh-CN zh-TW
+  description = ACTION ar_sample_app: Build "sample_app" locales $
+      listfile_8ddeb8a725509c15e16ce4f4cd78d366
+  restat = 1
+
+build gen/ar_sample_app_locales.txt: $
+    ar_sample_app_target_Build__sample_app__locales_listfile_8ddeb8a725509c15e16ce4f4cd78d366 $
+    ../../remoting/tools/build/remoting_localize.py || $
+    obj/remoting/remoting_resources.actions_rules_copies.stamp
+
+rule $
+    ar_sample_app_target_Build__sample_app__application_stub_8ddeb8a725509c15e16ce4f4cd78d366
+  command = cd ../../remoting; python ../remoting/webapp/build-webapp.py $
+      Dev 49.0.2592.0 ../out/Debug/app_streaming/dev/ar_sample_app $
+      ../out/Debug/app_streaming/dev/ar_sample_app.zip $
+      webapp/app_remoting/apps/sample_app/manifest.json.jinja2 app_remoting $
+      webapp/app_remoting/apps/sample_app/icon16.png $
+      webapp/app_remoting/apps/sample_app/icon48.png $
+      webapp/app_remoting/apps/sample_app/icon128.png $
+      webapp/app_remoting/apps/sample_app/loading_splash.png $
+      webapp/app_remoting/vendor/arv_main.js $
+      webapp/app_remoting/vendor/arv_background.html $
+      webapp/app_remoting/vendor/arv_main.html $
+      webapp/app_remoting/vendor/arv_wcs_sandbox.html --locales_listfile $
+      ../out/Debug/gen/ar_sample_app_locales.txt --jinja_paths $
+      ../remoting/webapp/app_remoting --appid $
+      ljacajndfccfgnfohlgkdphmbnpkjflk --app_name "App Remoting Client" $
+      --app_description "App Remoting client" --app_capabilities $
+      GOOGLE_DRIVE CLOUD_PRINT --service_environment dev --manifest_key $
+      remotingdevbuild --app_client_id sample_client_id
+  description = ACTION ar_sample_app: Build "sample_app" application $
+      stub_8ddeb8a725509c15e16ce4f4cd78d366
+  restat = 1
+
+build app_streaming/dev/ar_sample_app app_streaming/dev/ar_sample_app.zip: $
+    ar_sample_app_target_Build__sample_app__application_stub_8ddeb8a725509c15e16ce4f4cd78d366 $
+    ../../remoting/webapp/build-webapp.py ../../chrome/VERSION $
+    ../../remoting/VERSION $
+    ../../remoting/webapp/app_remoting/apps/sample_app/icon16.png $
+    ../../remoting/webapp/app_remoting/apps/sample_app/icon48.png $
+    ../../remoting/webapp/app_remoting/apps/sample_app/icon128.png $
+    ../../remoting/webapp/app_remoting/apps/sample_app/loading_splash.png $
+    ../../remoting/webapp/app_remoting/vendor/arv_main.js $
+    ../../remoting/webapp/app_remoting/vendor/arv_background.html $
+    ../../remoting/webapp/app_remoting/vendor/arv_main.html $
+    ../../remoting/webapp/app_remoting/vendor/arv_wcs_sandbox.html $
+    gen/remoting/webapp/_locales/am/messages.json $
+    gen/remoting/webapp/_locales/ar/messages.json $
+    gen/remoting/webapp/_locales/bg/messages.json $
+    gen/remoting/webapp/_locales/bn/messages.json $
+    gen/remoting/webapp/_locales/ca/messages.json $
+    gen/remoting/webapp/_locales/cs/messages.json $
+    gen/remoting/webapp/_locales/da/messages.json $
+    gen/remoting/webapp/_locales/de/messages.json $
+    gen/remoting/webapp/_locales/el/messages.json $
+    gen/remoting/webapp/_locales/en/messages.json $
+    gen/remoting/webapp/_locales/en_GB/messages.json $
+    gen/remoting/webapp/_locales/es/messages.json $
+    gen/remoting/webapp/_locales/es_419/messages.json $
+    gen/remoting/webapp/_locales/et/messages.json $
+    gen/remoting/webapp/_locales/fa/messages.json $
+    gen/remoting/webapp/_locales/fake_bidi/messages.json $
+    gen/remoting/webapp/_locales/fi/messages.json $
+    gen/remoting/webapp/_locales/fil/messages.json $
+    gen/remoting/webapp/_locales/fr/messages.json $
+    gen/remoting/webapp/_locales/gu/messages.json $
+    gen/remoting/webapp/_locales/he/messages.json $
+    gen/remoting/webapp/_locales/hi/messages.json $
+    gen/remoting/webapp/_locales/hr/messages.json $
+    gen/remoting/webapp/_locales/hu/messages.json $
+    gen/remoting/webapp/_locales/id/messages.json $
+    gen/remoting/webapp/_locales/it/messages.json $
+    gen/remoting/webapp/_locales/ja/messages.json $
+    gen/remoting/webapp/_locales/kn/messages.json $
+    gen/remoting/webapp/_locales/ko/messages.json $
+    gen/remoting/webapp/_locales/lt/messages.json $
+    gen/remoting/webapp/_locales/lv/messages.json $
+    gen/remoting/webapp/_locales/ml/messages.json $
+    gen/remoting/webapp/_locales/mr/messages.json $
+    gen/remoting/webapp/_locales/ms/messages.json $
+    gen/remoting/webapp/_locales/nb/messages.json $
+    gen/remoting/webapp/_locales/nl/messages.json $
+    gen/remoting/webapp/_locales/pl/messages.json $
+    gen/remoting/webapp/_locales/pt_BR/messages.json $
+    gen/remoting/webapp/_locales/pt_PT/messages.json $
+    gen/remoting/webapp/_locales/ro/messages.json $
+    gen/remoting/webapp/_locales/ru/messages.json $
+    gen/remoting/webapp/_locales/sk/messages.json $
+    gen/remoting/webapp/_locales/sl/messages.json $
+    gen/remoting/webapp/_locales/sr/messages.json $
+    gen/remoting/webapp/_locales/sv/messages.json $
+    gen/remoting/webapp/_locales/sw/messages.json $
+    gen/remoting/webapp/_locales/ta/messages.json $
+    gen/remoting/webapp/_locales/te/messages.json $
+    gen/remoting/webapp/_locales/th/messages.json $
+    gen/remoting/webapp/_locales/tr/messages.json $
+    gen/remoting/webapp/_locales/uk/messages.json $
+    gen/remoting/webapp/_locales/vi/messages.json $
+    gen/remoting/webapp/_locales/zh_CN/messages.json $
+    gen/remoting/webapp/_locales/zh_TW/messages.json $
+    ../../remoting/webapp/app_remoting/apps/sample_app/manifest.json.jinja2 $
+    ../../remoting/webapp/app_remoting/manifest_common.json.jinja2 $
+    gen/ar_sample_app_locales.txt || $
+    obj/remoting/remoting_resources.actions_rules_copies.stamp
+
+build obj/remoting/ar_sample_app.actions_rules_copies.stamp: stamp $
+    gen/ar_sample_app_locales.txt app_streaming/dev/ar_sample_app $
+    app_streaming/dev/ar_sample_app.zip
+

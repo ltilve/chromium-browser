@@ -229,7 +229,7 @@ bool ScriptLoader::prepareScript(const TextPosition& scriptStartPosition, Legacy
     if (!client->charsetAttributeValue().isEmpty())
         m_characterEncoding = client->charsetAttributeValue();
     else
-        m_characterEncoding = elementDocument.charset();
+        m_characterEncoding = elementDocument.characterSet();
 
     if (client->hasSourceAttribute()) {
         FetchRequest::DeferOption defer = FetchRequest::NoDefer;
@@ -299,7 +299,14 @@ bool ScriptLoader::fetchScript(const String& sourceUrl, FetchRequest::DeferOptio
             request.setContentSecurityCheck(DoNotCheckContentSecurityPolicy);
         request.setDefer(defer);
 
+        String integrityAttr = m_element->fastGetAttribute(HTMLNames::integrityAttr);
+        if (!integrityAttr.isEmpty())
+            request.setIntegrityMetadata(integrityAttr);
+
         m_resource = ScriptResource::fetch(request, elementDocument->fetcher());
+        if (m_resource && !integrityAttr.isEmpty())
+            m_resource->setIntegrityMetadata(integrityAttr);
+
         m_isExternalScript = true;
     }
 
@@ -375,13 +382,6 @@ bool ScriptLoader::executeScript(const ScriptSourceCode& sourceCode, double* com
                 accessControlStatus = SharableCrossOrigin;
         } else if (sourceCode.resource()->passesAccessControlCheck(m_element->document().securityOrigin())) {
             accessControlStatus = SharableCrossOrigin;
-        }
-    }
-
-    if (m_isExternalScript) {
-        const KURL resourceUrl = sourceCode.resource()->resourceRequest().url();
-        if (!SubresourceIntegrity::CheckSubresourceIntegrity(*m_element, sourceCode.source(), sourceCode.resource()->url(), *sourceCode.resource())) {
-            return false;
         }
     }
 
@@ -464,16 +464,14 @@ bool ScriptLoader::isScriptForEventSupported() const
 {
     String eventAttribute = client()->eventAttributeValue();
     String forAttribute = client()->forAttributeValue();
-    if (!eventAttribute.isEmpty() && !forAttribute.isEmpty()) {
-        forAttribute = forAttribute.stripWhiteSpace();
-        if (!equalIgnoringCase(forAttribute, "window"))
-            return false;
+    if (eventAttribute.isNull() || forAttribute.isNull())
+        return true;
 
-        eventAttribute = eventAttribute.stripWhiteSpace();
-        if (!equalIgnoringCase(eventAttribute, "onload") && !equalIgnoringCase(eventAttribute, "onload()"))
-            return false;
-    }
-    return true;
+    forAttribute = forAttribute.stripWhiteSpace();
+    if (!equalIgnoringCase(forAttribute, "window"))
+        return false;
+    eventAttribute = eventAttribute.stripWhiteSpace();
+    return equalIgnoringCase(eventAttribute, "onload") || equalIgnoringCase(eventAttribute, "onload()");
 }
 
 String ScriptLoader::scriptContent() const

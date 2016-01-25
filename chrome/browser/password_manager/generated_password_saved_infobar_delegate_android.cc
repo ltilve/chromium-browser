@@ -36,14 +36,14 @@ void GeneratedPasswordSavedInfoBarDelegateAndroid::OnInlineLinkClicked() {
 
 GeneratedPasswordSavedInfoBarDelegateAndroid::
     GeneratedPasswordSavedInfoBarDelegateAndroid(
-        content::WebContents* web_contents)
-        : button_label_(l10n_util::GetStringUTF16(IDS_OK)),
-          web_contents_(web_contents),
-          smart_lock_branding_enabled_(
-              !password_bubble_experiment::IsSmartLockBrandingEnabled(
-                  ProfileSyncServiceFactory::GetForProfile(
-                      Profile::FromBrowserContext(
-                          web_contents->GetBrowserContext())))) {
+        content::WebContents *web_contents)
+    : button_label_(l10n_util::GetStringUTF16(IDS_OK)),
+      web_contents_(web_contents),
+      smart_lock_branding_enabled_(
+          password_bubble_experiment::IsSmartLockBrandingEnabled(
+              ProfileSyncServiceFactory::GetForProfile(
+                  Profile::FromBrowserContext(
+                      web_contents->GetBrowserContext())))) {
   base::string16 link = l10n_util::GetStringUTF16(
       IDS_MANAGE_PASSWORDS_LINK);
   int confirmation_id = IDS_MANAGE_PASSWORDS_CONFIRM_GENERATED_TEXT_INFOBAR;
@@ -65,6 +65,6 @@ GeneratedPasswordSavedInfoBarDelegateAndroid::GetInfoBarType() const {
   return PAGE_ACTION_TYPE;
 }
 
-int GeneratedPasswordSavedInfoBarDelegateAndroid::GetIconID() const {
+int GeneratedPasswordSavedInfoBarDelegateAndroid::GetIconId() const {
   return IDR_INFOBAR_SAVE_PASSWORD;
 }

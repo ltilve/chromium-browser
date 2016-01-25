@@ -1,0 +1,725 @@
+rule opus_nacl_target_build_newlib_plib_f54ca04346d3b14293173cfa5e9d9bf5
+  command = cd ../../third_party/opus; python $
+      ../../native_client/build/build_nexe.py --root ../.. --product-dir $
+      ../../out/Debug/xyz --config-name Debug -t $
+      ../../native_client/toolchain/ --arch pnacl --build newlib_plib $
+      --name ../../out/Debug/gen/tc_pnacl_newlib/lib/libopus_nacl.a $
+      --objdir $
+      ../../out/Debug/obj/third_party/opus/opus_nacl.gen/pnacl_newlib-pnacl/opus_nacl $
+      "--include-dirs=../../out/Debug/gen/tc_pnacl_newlib/include ../.. $
+      \"../../out/Debug/gen\" src/celt src/include src/silk src/silk/float" $
+      "--compile_flags=-O2 -g -Wall -fdiagnostics-show-option -Werror  $
+      -Wno-unused-function -Wno-char-subscripts -Wno-c++11-extensions $
+      -Wno-unnamed-type-template-args -Wno-extra-semi $
+      -Wno-unused-private-field -Wno-char-subscripts -Wno-unused-function $
+      \"-std=gnu++11\" " --gomadir "" "--defines=\"__STDC_LIMIT_MACROS=1\" $
+      \"__STDC_FORMAT_MACROS=1\" \"_GNU_SOURCE=1\" $
+      \"_POSIX_C_SOURCE=199506\" \"_XOPEN_SOURCE=600\" $
+      \"DYNAMIC_ANNOTATIONS_ENABLED=1\" $
+      \"DYNAMIC_ANNOTATIONS_PREFIX=NACL_\" \"NACL_BUILD_ARCH=x86\" $
+      V8_DEPRECATION_WARNINGS \"CLD_VERSION=2\" \"_FILE_OFFSET_BITS=64\" $
+      CHROMIUM_BUILD \"CR_CLANG_REVISION=255169-1\" $
+      UI_COMPOSITOR_IMAGE_TRANSPORT \"USE_AURA=1\" \"USE_ASH=1\" $
+      \"USE_PANGO=1\" \"USE_CAIRO=1\" \"USE_DEFAULT_RENDER_THEME=1\" $
+      \"USE_LIBJPEG_TURBO=1\" \"USE_X11=1\" \"USE_CLIPBOARD_AURAX11=1\" $
+      ENABLE_ONE_CLICK_SIGNIN \"ENABLE_WEBRTC=1\" \"ENABLE_MEDIA_ROUTER=1\" $
+      ENABLE_PEPPER_CDMS ENABLE_CONFIGURATION_POLICY ENABLE_NOTIFICATIONS $
+      \"ENABLE_HIDPI=1\" \"ENABLE_TOPCHROME_MD=1\" USE_UDEV $
+      DONT_EMBED_BUILD_METADATA FIELDTRIAL_TESTING_ENABLED $
+      \"ENABLE_TASK_MANAGER=1\" \"ENABLE_EXTENSIONS=1\" \"ENABLE_PDF=1\" $
+      \"ENABLE_PLUGINS=1\" \"ENABLE_SESSION_SERVICE=1\" \"ENABLE_THEMES=1\" $
+      \"ENABLE_AUTOFILL_DIALOG=1\" \"ENABLE_BACKGROUND=1\" $
+      \"ENABLE_PRINTING=1\" \"ENABLE_BASIC_PRINTING=1\" $
+      \"ENABLE_PRINT_PREVIEW=1\" \"ENABLE_SPELLCHECK=1\" $
+      \"ENABLE_CAPTIVE_PORTAL_DETECTION=1\" \"ENABLE_APP_LIST=1\" $
+      \"ENABLE_SETTINGS_APP=1\" \"ENABLE_SUPERVISED_USERS=1\" $
+      \"ENABLE_MDNS=1\" \"ENABLE_SERVICE_DISCOVERY=1\" $
+      V8_USE_EXTERNAL_STARTUP_DATA FULL_SAFE_BROWSING SAFE_BROWSING_CSD $
+      SAFE_BROWSING_DB_LOCAL OPUS_BUILD \"OPUS_EXPORT=\" HAVE_LRINT $
+      HAVE_LRINTF VAR_ARRAYS \"USE_LIBPCI=1\" \"USE_OPENSSL=1\" $
+      \"USE_GLIB=1\" \"USE_NSS_CERTS=1\"" $
+      "--link_flags=-B../../out/Debug/gen/tc_pnacl_newlib/lib  " $
+      "--source-list=../../out/gypfiles/third_party/opus/pnacl_newlib.opus_nacl.source_list.gypcmd"
+  description = ACTION opus_nacl: build newlib $
+      plib_f54ca04346d3b14293173cfa5e9d9bf5
+  restat = 1
+
+build gen/tc_pnacl_newlib/lib/libopus_nacl.a: $
+    opus_nacl_target_build_newlib_plib_f54ca04346d3b14293173cfa5e9d9bf5 $
+    ../../native_client/build/build_nexe.py $
+    ../../native_client/build/build_nexe_tools.py $
+    ../../third_party/opus/src/celt/_kiss_fft_guts.h $
+    ../../third_party/opus/src/celt/arch.h $
+    ../../third_party/opus/src/celt/arm/armcpu.h $
+    ../../third_party/opus/src/celt/arm/fixed_armv4.h $
+    ../../third_party/opus/src/celt/arm/fixed_armv5e.h $
+    ../../third_party/opus/src/celt/arm/kiss_fft_armv4.h $
+    ../../third_party/opus/src/celt/arm/kiss_fft_armv5e.h $
+    ../../third_party/opus/src/celt/arm/pitch_arm.h $
+    ../../third_party/opus/src/celt/bands.c $
+    ../../third_party/opus/src/celt/bands.h $
+    ../../third_party/opus/src/celt/celt.c $
+    ../../third_party/opus/src/celt/celt.h $
+    ../../third_party/opus/src/celt/celt_decoder.c $
+    ../../third_party/opus/src/celt/celt_encoder.c $
+    ../../third_party/opus/src/celt/celt_lpc.c $
+    ../../third_party/opus/src/celt/celt_lpc.h $
+    ../../third_party/opus/src/celt/cpu_support.h $
+    ../../third_party/opus/src/celt/cwrs.c $
+    ../../third_party/opus/src/celt/cwrs.h $
+    ../../third_party/opus/src/celt/ecintrin.h $
+    ../../third_party/opus/src/celt/entcode.c $
+    ../../third_party/opus/src/celt/entcode.h $
+    ../../third_party/opus/src/celt/entdec.c $
+    ../../third_party/opus/src/celt/entdec.h $
+    ../../third_party/opus/src/celt/entenc.c $
+    ../../third_party/opus/src/celt/entenc.h $
+    ../../third_party/opus/src/celt/fixed_c5x.h $
+    ../../third_party/opus/src/celt/fixed_c6x.h $
+    ../../third_party/opus/src/celt/fixed_debug.h $
+    ../../third_party/opus/src/celt/fixed_generic.h $
+    ../../third_party/opus/src/celt/float_cast.h $
+    ../../third_party/opus/src/celt/kiss_fft.c $
+    ../../third_party/opus/src/celt/kiss_fft.h $
+    ../../third_party/opus/src/celt/laplace.c $
+    ../../third_party/opus/src/celt/laplace.h $
+    ../../third_party/opus/src/celt/mathops.c $
+    ../../third_party/opus/src/celt/mathops.h $
+    ../../third_party/opus/src/celt/mdct.c $
+    ../../third_party/opus/src/celt/mdct.h $
+    ../../third_party/opus/src/celt/mfrngcod.h $
+    ../../third_party/opus/src/celt/modes.c $
+    ../../third_party/opus/src/celt/modes.h $
+    ../../third_party/opus/src/celt/os_support.h $
+    ../../third_party/opus/src/celt/pitch.c $
+    ../../third_party/opus/src/celt/pitch.h $
+    ../../third_party/opus/src/celt/quant_bands.c $
+    ../../third_party/opus/src/celt/quant_bands.h $
+    ../../third_party/opus/src/celt/rate.c $
+    ../../third_party/opus/src/celt/rate.h $
+    ../../third_party/opus/src/celt/stack_alloc.h $
+    ../../third_party/opus/src/celt/static_modes_fixed.h $
+    ../../third_party/opus/src/celt/static_modes_float.h $
+    ../../third_party/opus/src/celt/vq.c $
+    ../../third_party/opus/src/celt/vq.h $
+    ../../third_party/opus/src/celt/x86/pitch_sse.h $
+    ../../third_party/opus/src/include/opus.h $
+    ../../third_party/opus/src/include/opus_custom.h $
+    ../../third_party/opus/src/include/opus_defines.h $
+    ../../third_party/opus/src/include/opus_multistream.h $
+    ../../third_party/opus/src/include/opus_types.h $
+    ../../third_party/opus/src/silk/A2NLSF.c $
+    ../../third_party/opus/src/silk/API.h $
+    ../../third_party/opus/src/silk/CNG.c $
+    ../../third_party/opus/src/silk/HP_variable_cutoff.c $
+    ../../third_party/opus/src/silk/Inlines.h $
+    ../../third_party/opus/src/silk/LPC_analysis_filter.c $
+    ../../third_party/opus/src/silk/LPC_inv_pred_gain.c $
+    ../../third_party/opus/src/silk/LP_variable_cutoff.c $
+    ../../third_party/opus/src/silk/MacroCount.h $
+    ../../third_party/opus/src/silk/MacroDebug.h $
+    ../../third_party/opus/src/silk/NLSF2A.c $
+    ../../third_party/opus/src/silk/NLSF_VQ.c $
+    ../../third_party/opus/src/silk/NLSF_VQ_weights_laroia.c $
+    ../../third_party/opus/src/silk/NLSF_decode.c $
+    ../../third_party/opus/src/silk/NLSF_del_dec_quant.c $
+    ../../third_party/opus/src/silk/NLSF_encode.c $
+    ../../third_party/opus/src/silk/NLSF_stabilize.c $
+    ../../third_party/opus/src/silk/NLSF_unpack.c $
+    ../../third_party/opus/src/silk/NSQ.c $
+    ../../third_party/opus/src/silk/NSQ_del_dec.c $
+    ../../third_party/opus/src/silk/PLC.c $
+    ../../third_party/opus/src/silk/PLC.h $
+    ../../third_party/opus/src/silk/SigProc_FIX.h $
+    ../../third_party/opus/src/silk/VAD.c $
+    ../../third_party/opus/src/silk/VQ_WMat_EC.c $
+    ../../third_party/opus/src/silk/ana_filt_bank_1.c $
+    ../../third_party/opus/src/silk/arm/SigProc_FIX_armv4.h $
+    ../../third_party/opus/src/silk/arm/SigProc_FIX_armv5e.h $
+    ../../third_party/opus/src/silk/arm/macros_armv4.h $
+    ../../third_party/opus/src/silk/arm/macros_armv5e.h $
+    ../../third_party/opus/src/silk/biquad_alt.c $
+    ../../third_party/opus/src/silk/bwexpander.c $
+    ../../third_party/opus/src/silk/bwexpander_32.c $
+    ../../third_party/opus/src/silk/check_control_input.c $
+    ../../third_party/opus/src/silk/code_signs.c $
+    ../../third_party/opus/src/silk/control.h $
+    ../../third_party/opus/src/silk/control_SNR.c $
+    ../../third_party/opus/src/silk/control_audio_bandwidth.c $
+    ../../third_party/opus/src/silk/control_codec.c $
+    ../../third_party/opus/src/silk/debug.c $
+    ../../third_party/opus/src/silk/debug.h $
+    ../../third_party/opus/src/silk/dec_API.c $
+    ../../third_party/opus/src/silk/decode_core.c $
+    ../../third_party/opus/src/silk/decode_frame.c $
+    ../../third_party/opus/src/silk/decode_indices.c $
+    ../../third_party/opus/src/silk/decode_parameters.c $
+    ../../third_party/opus/src/silk/decode_pitch.c $
+    ../../third_party/opus/src/silk/decode_pulses.c $
+    ../../third_party/opus/src/silk/decoder_set_fs.c $
+    ../../third_party/opus/src/silk/define.h $
+    ../../third_party/opus/src/silk/enc_API.c $
+    ../../third_party/opus/src/silk/encode_indices.c $
+    ../../third_party/opus/src/silk/encode_pulses.c $
+    ../../third_party/opus/src/silk/errors.h $
+    ../../third_party/opus/src/silk/fixed/main_FIX.h $
+    ../../third_party/opus/src/silk/fixed/structs_FIX.h $
+    ../../third_party/opus/src/silk/float/LPC_analysis_filter_FLP.c $
+    ../../third_party/opus/src/silk/float/LPC_inv_pred_gain_FLP.c $
+    ../../third_party/opus/src/silk/float/LTP_analysis_filter_FLP.c $
+    ../../third_party/opus/src/silk/float/LTP_scale_ctrl_FLP.c $
+    ../../third_party/opus/src/silk/float/SigProc_FLP.h $
+    ../../third_party/opus/src/silk/float/apply_sine_window_FLP.c $
+    ../../third_party/opus/src/silk/float/autocorrelation_FLP.c $
+    ../../third_party/opus/src/silk/float/burg_modified_FLP.c $
+    ../../third_party/opus/src/silk/float/bwexpander_FLP.c $
+    ../../third_party/opus/src/silk/float/corrMatrix_FLP.c $
+    ../../third_party/opus/src/silk/float/encode_frame_FLP.c $
+    ../../third_party/opus/src/silk/float/energy_FLP.c $
+    ../../third_party/opus/src/silk/float/find_LPC_FLP.c $
+    ../../third_party/opus/src/silk/float/find_LTP_FLP.c $
+    ../../third_party/opus/src/silk/float/find_pitch_lags_FLP.c $
+    ../../third_party/opus/src/silk/float/find_pred_coefs_FLP.c $
+    ../../third_party/opus/src/silk/float/inner_product_FLP.c $
+    ../../third_party/opus/src/silk/float/k2a_FLP.c $
+    ../../third_party/opus/src/silk/float/levinsondurbin_FLP.c $
+    ../../third_party/opus/src/silk/float/main_FLP.h $
+    ../../third_party/opus/src/silk/float/noise_shape_analysis_FLP.c $
+    ../../third_party/opus/src/silk/float/pitch_analysis_core_FLP.c $
+    ../../third_party/opus/src/silk/float/prefilter_FLP.c $
+    ../../third_party/opus/src/silk/float/process_gains_FLP.c $
+    ../../third_party/opus/src/silk/float/regularize_correlations_FLP.c $
+    ../../third_party/opus/src/silk/float/residual_energy_FLP.c $
+    ../../third_party/opus/src/silk/float/scale_copy_vector_FLP.c $
+    ../../third_party/opus/src/silk/float/scale_vector_FLP.c $
+    ../../third_party/opus/src/silk/float/schur_FLP.c $
+    ../../third_party/opus/src/silk/float/solve_LS_FLP.c $
+    ../../third_party/opus/src/silk/float/sort_FLP.c $
+    ../../third_party/opus/src/silk/float/structs_FLP.h $
+    ../../third_party/opus/src/silk/float/warped_autocorrelation_FLP.c $
+    ../../third_party/opus/src/silk/float/wrappers_FLP.c $
+    ../../third_party/opus/src/silk/gain_quant.c $
+    ../../third_party/opus/src/silk/init_decoder.c $
+    ../../third_party/opus/src/silk/init_encoder.c $
+    ../../third_party/opus/src/silk/inner_prod_aligned.c $
+    ../../third_party/opus/src/silk/interpolate.c $
+    ../../third_party/opus/src/silk/lin2log.c $
+    ../../third_party/opus/src/silk/log2lin.c $
+    ../../third_party/opus/src/silk/macros.h $
+    ../../third_party/opus/src/silk/main.h $
+    ../../third_party/opus/src/silk/pitch_est_defines.h $
+    ../../third_party/opus/src/silk/pitch_est_tables.c $
+    ../../third_party/opus/src/silk/process_NLSFs.c $
+    ../../third_party/opus/src/silk/quant_LTP_gains.c $
+    ../../third_party/opus/src/silk/resampler.c $
+    ../../third_party/opus/src/silk/resampler_down2.c $
+    ../../third_party/opus/src/silk/resampler_down2_3.c $
+    ../../third_party/opus/src/silk/resampler_private.h $
+    ../../third_party/opus/src/silk/resampler_private_AR2.c $
+    ../../third_party/opus/src/silk/resampler_private_IIR_FIR.c $
+    ../../third_party/opus/src/silk/resampler_private_down_FIR.c $
+    ../../third_party/opus/src/silk/resampler_private_up2_HQ.c $
+    ../../third_party/opus/src/silk/resampler_rom.c $
+    ../../third_party/opus/src/silk/resampler_rom.h $
+    ../../third_party/opus/src/silk/resampler_structs.h $
+    ../../third_party/opus/src/silk/shell_coder.c $
+    ../../third_party/opus/src/silk/sigm_Q15.c $
+    ../../third_party/opus/src/silk/sort.c $
+    ../../third_party/opus/src/silk/stereo_LR_to_MS.c $
+    ../../third_party/opus/src/silk/stereo_MS_to_LR.c $
+    ../../third_party/opus/src/silk/stereo_decode_pred.c $
+    ../../third_party/opus/src/silk/stereo_encode_pred.c $
+    ../../third_party/opus/src/silk/stereo_find_predictor.c $
+    ../../third_party/opus/src/silk/stereo_quant_pred.c $
+    ../../third_party/opus/src/silk/structs.h $
+    ../../third_party/opus/src/silk/sum_sqr_shift.c $
+    ../../third_party/opus/src/silk/table_LSF_cos.c $
+    ../../third_party/opus/src/silk/tables.h $
+    ../../third_party/opus/src/silk/tables_LTP.c $
+    ../../third_party/opus/src/silk/tables_NLSF_CB_NB_MB.c $
+    ../../third_party/opus/src/silk/tables_NLSF_CB_WB.c $
+    ../../third_party/opus/src/silk/tables_gain.c $
+    ../../third_party/opus/src/silk/tables_other.c $
+    ../../third_party/opus/src/silk/tables_pitch_lag.c $
+    ../../third_party/opus/src/silk/tables_pulses_per_block.c $
+    ../../third_party/opus/src/silk/tuning_parameters.h $
+    ../../third_party/opus/src/silk/typedef.h $
+    ../../third_party/opus/src/src/analysis.c $
+    ../../third_party/opus/src/src/analysis.h $
+    ../../third_party/opus/src/src/mlp.c $
+    ../../third_party/opus/src/src/mlp.h $
+    ../../third_party/opus/src/src/mlp_data.c $
+    ../../third_party/opus/src/src/opus.c $
+    ../../third_party/opus/src/src/opus_decoder.c $
+    ../../third_party/opus/src/src/opus_encoder.c $
+    ../../third_party/opus/src/src/opus_multistream.c $
+    ../../third_party/opus/src/src/opus_multistream_decoder.c $
+    ../../third_party/opus/src/src/opus_multistream_encoder.c $
+    ../../third_party/opus/src/src/opus_private.h $
+    ../../third_party/opus/src/src/repacketizer.c $
+    ../../third_party/opus/src/src/tansig_table.h $
+    ../../out/gypfiles/third_party/opus/pnacl_newlib.opus_nacl.source_list.gypcmd $
+    ../../native_client/toolchain/linux_x86/pnacl_newlib/pnacl_newlib.json
+
+defines = -DV8_DEPRECATION_WARNINGS -DCLD_VERSION=2 -D_FILE_OFFSET_BITS=64 $
+    -DCHROMIUM_BUILD -DCR_CLANG_REVISION=255169-1 $
+    -DUI_COMPOSITOR_IMAGE_TRANSPORT -DUSE_AURA=1 -DUSE_ASH=1 -DUSE_PANGO=1 $
+    -DUSE_CAIRO=1 -DUSE_DEFAULT_RENDER_THEME=1 -DUSE_LIBJPEG_TURBO=1 $
+    -DUSE_X11=1 -DUSE_CLIPBOARD_AURAX11=1 -DENABLE_ONE_CLICK_SIGNIN $
+    -DENABLE_WEBRTC=1 -DENABLE_MEDIA_ROUTER=1 -DENABLE_PEPPER_CDMS $
+    -DENABLE_CONFIGURATION_POLICY -DENABLE_NOTIFICATIONS -DENABLE_HIDPI=1 $
+    -DENABLE_TOPCHROME_MD=1 -DUSE_UDEV -DDONT_EMBED_BUILD_METADATA $
+    -DFIELDTRIAL_TESTING_ENABLED -DENABLE_TASK_MANAGER=1 $
+    -DENABLE_EXTENSIONS=1 -DENABLE_PDF=1 -DENABLE_PLUGINS=1 $
+    -DENABLE_SESSION_SERVICE=1 -DENABLE_THEMES=1 -DENABLE_AUTOFILL_DIALOG=1 $
+    -DENABLE_BACKGROUND=1 -DENABLE_PRINTING=1 -DENABLE_BASIC_PRINTING=1 $
+    -DENABLE_PRINT_PREVIEW=1 -DENABLE_SPELLCHECK=1 $
+    -DENABLE_CAPTIVE_PORTAL_DETECTION=1 -DENABLE_APP_LIST=1 $
+    -DENABLE_SETTINGS_APP=1 -DENABLE_SUPERVISED_USERS=1 -DENABLE_MDNS=1 $
+    -DENABLE_SERVICE_DISCOVERY=1 -DV8_USE_EXTERNAL_STARTUP_DATA $
+    -DFULL_SAFE_BROWSING -DSAFE_BROWSING_CSD -DSAFE_BROWSING_DB_LOCAL $
+    -DOPUS_BUILD -DOPUS_EXPORT= -DHAVE_LRINT -DHAVE_LRINTF -DVAR_ARRAYS $
+    -DUSE_LIBPCI=1 -DUSE_OPENSSL=1 -DUSE_GLIB=1 -DUSE_NSS_CERTS=1 $
+    -DDYNAMIC_ANNOTATIONS_ENABLED=1 -DWTF_USE_DYNAMIC_ANNOTATIONS=1 $
+    -D_DEBUG -D_GLIBCXX_DEBUG=1
+includes = -Igen -I../../third_party/opus/src/celt $
+    -I../../third_party/opus/src/include -I../../third_party/opus/src/silk $
+    -I../../third_party/opus/src/silk/float
+cflags = -fstack-protector --param=ssp-buffer-size=4 -Werror -pthread $
+    -fno-strict-aliasing -Wno-unused-parameter $
+    -Wno-missing-field-initializers -fvisibility=hidden -pipe -fPIC $
+    -Wno-reserved-user-defined-literal -Xclang -load -Xclang $
+    /b/build/slave/publish_tarball/build/src/third_party/llvm-build/Release+Asserts/lib/libFindBadConstructs.so $
+    -Xclang -add-plugin -Xclang find-bad-constructs -Xclang $
+    -plugin-arg-find-bad-constructs -Xclang check-templates $
+    -fcolor-diagnostics $
+    -B/b/build/slave/publish_tarball/build/src/third_party/binutils/Linux_x64/Release/bin $
+    -Wheader-hygiene -Wno-char-subscripts $
+    -Wno-unneeded-internal-declaration -Wno-covered-switch-default $
+    -Wstring-conversion -Wno-c++11-narrowing -Wno-deprecated-register $
+    -Wno-inconsistent-missing-override -Wno-shift-negative-value $
+    -Wno-bitfield-width -Wno-unused-variable -Wno-#pragma-messages $
+    -Wno-format -Wno-unused-result -m64 -march=x86-64 $
+    --sysroot=/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot $
+    -O0 -g -funwind-tables -gsplit-dwarf -Wno-undefined-bool-conversion $
+    -Wno-tautological-undefined-compare
+cflags_c = 
+cflags_cc = -fno-exceptions -fno-rtti -fno-threadsafe-statics $
+    -fvisibility-inlines-hidden -std=gnu++11 -Wno-deprecated
+arflags = 
+
+build obj/third_party/opus/src/celt/opus_nacl.bands.o: cc $
+    ../../third_party/opus/src/celt/bands.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/celt/opus_nacl.celt.o: cc $
+    ../../third_party/opus/src/celt/celt.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/celt/opus_nacl.celt_decoder.o: cc $
+    ../../third_party/opus/src/celt/celt_decoder.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/celt/opus_nacl.celt_encoder.o: cc $
+    ../../third_party/opus/src/celt/celt_encoder.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/celt/opus_nacl.celt_lpc.o: cc $
+    ../../third_party/opus/src/celt/celt_lpc.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/celt/opus_nacl.cwrs.o: cc $
+    ../../third_party/opus/src/celt/cwrs.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/celt/opus_nacl.entcode.o: cc $
+    ../../third_party/opus/src/celt/entcode.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/celt/opus_nacl.entdec.o: cc $
+    ../../third_party/opus/src/celt/entdec.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/celt/opus_nacl.entenc.o: cc $
+    ../../third_party/opus/src/celt/entenc.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/celt/opus_nacl.kiss_fft.o: cc $
+    ../../third_party/opus/src/celt/kiss_fft.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/celt/opus_nacl.laplace.o: cc $
+    ../../third_party/opus/src/celt/laplace.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/celt/opus_nacl.mathops.o: cc $
+    ../../third_party/opus/src/celt/mathops.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/celt/opus_nacl.mdct.o: cc $
+    ../../third_party/opus/src/celt/mdct.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/celt/opus_nacl.modes.o: cc $
+    ../../third_party/opus/src/celt/modes.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/celt/opus_nacl.pitch.o: cc $
+    ../../third_party/opus/src/celt/pitch.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/celt/opus_nacl.quant_bands.o: cc $
+    ../../third_party/opus/src/celt/quant_bands.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/celt/opus_nacl.rate.o: cc $
+    ../../third_party/opus/src/celt/rate.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/celt/opus_nacl.vq.o: cc $
+    ../../third_party/opus/src/celt/vq.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/silk/opus_nacl.A2NLSF.o: cc $
+    ../../third_party/opus/src/silk/A2NLSF.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/silk/opus_nacl.ana_filt_bank_1.o: cc $
+    ../../third_party/opus/src/silk/ana_filt_bank_1.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/silk/opus_nacl.biquad_alt.o: cc $
+    ../../third_party/opus/src/silk/biquad_alt.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/silk/opus_nacl.bwexpander.o: cc $
+    ../../third_party/opus/src/silk/bwexpander.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/silk/opus_nacl.bwexpander_32.o: cc $
+    ../../third_party/opus/src/silk/bwexpander_32.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/silk/opus_nacl.check_control_input.o: cc $
+    ../../third_party/opus/src/silk/check_control_input.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/silk/opus_nacl.CNG.o: cc $
+    ../../third_party/opus/src/silk/CNG.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/silk/opus_nacl.code_signs.o: cc $
+    ../../third_party/opus/src/silk/code_signs.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/silk/opus_nacl.control_audio_bandwidth.o: cc $
+    ../../third_party/opus/src/silk/control_audio_bandwidth.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/silk/opus_nacl.control_codec.o: cc $
+    ../../third_party/opus/src/silk/control_codec.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/silk/opus_nacl.control_SNR.o: cc $
+    ../../third_party/opus/src/silk/control_SNR.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/silk/opus_nacl.debug.o: cc $
+    ../../third_party/opus/src/silk/debug.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/silk/opus_nacl.dec_API.o: cc $
+    ../../third_party/opus/src/silk/dec_API.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/silk/opus_nacl.decode_core.o: cc $
+    ../../third_party/opus/src/silk/decode_core.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/silk/opus_nacl.decode_frame.o: cc $
+    ../../third_party/opus/src/silk/decode_frame.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/silk/opus_nacl.decode_indices.o: cc $
+    ../../third_party/opus/src/silk/decode_indices.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/silk/opus_nacl.decode_parameters.o: cc $
+    ../../third_party/opus/src/silk/decode_parameters.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/silk/opus_nacl.decode_pitch.o: cc $
+    ../../third_party/opus/src/silk/decode_pitch.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/silk/opus_nacl.decode_pulses.o: cc $
+    ../../third_party/opus/src/silk/decode_pulses.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/silk/opus_nacl.decoder_set_fs.o: cc $
+    ../../third_party/opus/src/silk/decoder_set_fs.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/silk/opus_nacl.enc_API.o: cc $
+    ../../third_party/opus/src/silk/enc_API.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/silk/opus_nacl.encode_indices.o: cc $
+    ../../third_party/opus/src/silk/encode_indices.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/silk/opus_nacl.encode_pulses.o: cc $
+    ../../third_party/opus/src/silk/encode_pulses.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/silk/opus_nacl.gain_quant.o: cc $
+    ../../third_party/opus/src/silk/gain_quant.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/silk/opus_nacl.HP_variable_cutoff.o: cc $
+    ../../third_party/opus/src/silk/HP_variable_cutoff.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/silk/opus_nacl.init_decoder.o: cc $
+    ../../third_party/opus/src/silk/init_decoder.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/silk/opus_nacl.init_encoder.o: cc $
+    ../../third_party/opus/src/silk/init_encoder.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/silk/opus_nacl.inner_prod_aligned.o: cc $
+    ../../third_party/opus/src/silk/inner_prod_aligned.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/silk/opus_nacl.interpolate.o: cc $
+    ../../third_party/opus/src/silk/interpolate.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/silk/opus_nacl.lin2log.o: cc $
+    ../../third_party/opus/src/silk/lin2log.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/silk/opus_nacl.log2lin.o: cc $
+    ../../third_party/opus/src/silk/log2lin.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/silk/opus_nacl.LP_variable_cutoff.o: cc $
+    ../../third_party/opus/src/silk/LP_variable_cutoff.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/silk/opus_nacl.LPC_analysis_filter.o: cc $
+    ../../third_party/opus/src/silk/LPC_analysis_filter.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/silk/opus_nacl.LPC_inv_pred_gain.o: cc $
+    ../../third_party/opus/src/silk/LPC_inv_pred_gain.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/silk/opus_nacl.NLSF2A.o: cc $
+    ../../third_party/opus/src/silk/NLSF2A.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/silk/opus_nacl.NLSF_decode.o: cc $
+    ../../third_party/opus/src/silk/NLSF_decode.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/silk/opus_nacl.NLSF_del_dec_quant.o: cc $
+    ../../third_party/opus/src/silk/NLSF_del_dec_quant.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/silk/opus_nacl.NLSF_encode.o: cc $
+    ../../third_party/opus/src/silk/NLSF_encode.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/silk/opus_nacl.NLSF_stabilize.o: cc $
+    ../../third_party/opus/src/silk/NLSF_stabilize.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/silk/opus_nacl.NLSF_unpack.o: cc $
+    ../../third_party/opus/src/silk/NLSF_unpack.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/silk/opus_nacl.NLSF_VQ.o: cc $
+    ../../third_party/opus/src/silk/NLSF_VQ.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/silk/opus_nacl.NLSF_VQ_weights_laroia.o: cc $
+    ../../third_party/opus/src/silk/NLSF_VQ_weights_laroia.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/silk/opus_nacl.NSQ.o: cc $
+    ../../third_party/opus/src/silk/NSQ.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/silk/opus_nacl.NSQ_del_dec.o: cc $
+    ../../third_party/opus/src/silk/NSQ_del_dec.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/silk/opus_nacl.pitch_est_tables.o: cc $
+    ../../third_party/opus/src/silk/pitch_est_tables.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/silk/opus_nacl.PLC.o: cc $
+    ../../third_party/opus/src/silk/PLC.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/silk/opus_nacl.process_NLSFs.o: cc $
+    ../../third_party/opus/src/silk/process_NLSFs.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/silk/opus_nacl.quant_LTP_gains.o: cc $
+    ../../third_party/opus/src/silk/quant_LTP_gains.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/silk/opus_nacl.resampler.o: cc $
+    ../../third_party/opus/src/silk/resampler.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/silk/opus_nacl.resampler_down2.o: cc $
+    ../../third_party/opus/src/silk/resampler_down2.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/silk/opus_nacl.resampler_down2_3.o: cc $
+    ../../third_party/opus/src/silk/resampler_down2_3.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/silk/opus_nacl.resampler_private_AR2.o: cc $
+    ../../third_party/opus/src/silk/resampler_private_AR2.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/silk/opus_nacl.resampler_private_down_FIR.o: $
+    cc ../../third_party/opus/src/silk/resampler_private_down_FIR.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/silk/opus_nacl.resampler_private_IIR_FIR.o: $
+    cc ../../third_party/opus/src/silk/resampler_private_IIR_FIR.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/silk/opus_nacl.resampler_private_up2_HQ.o: $
+    cc ../../third_party/opus/src/silk/resampler_private_up2_HQ.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/silk/opus_nacl.resampler_rom.o: cc $
+    ../../third_party/opus/src/silk/resampler_rom.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/silk/opus_nacl.shell_coder.o: cc $
+    ../../third_party/opus/src/silk/shell_coder.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/silk/opus_nacl.sigm_Q15.o: cc $
+    ../../third_party/opus/src/silk/sigm_Q15.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/silk/opus_nacl.sort.o: cc $
+    ../../third_party/opus/src/silk/sort.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/silk/opus_nacl.stereo_decode_pred.o: cc $
+    ../../third_party/opus/src/silk/stereo_decode_pred.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/silk/opus_nacl.stereo_encode_pred.o: cc $
+    ../../third_party/opus/src/silk/stereo_encode_pred.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/silk/opus_nacl.stereo_find_predictor.o: cc $
+    ../../third_party/opus/src/silk/stereo_find_predictor.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/silk/opus_nacl.stereo_LR_to_MS.o: cc $
+    ../../third_party/opus/src/silk/stereo_LR_to_MS.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/silk/opus_nacl.stereo_MS_to_LR.o: cc $
+    ../../third_party/opus/src/silk/stereo_MS_to_LR.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/silk/opus_nacl.stereo_quant_pred.o: cc $
+    ../../third_party/opus/src/silk/stereo_quant_pred.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/silk/opus_nacl.sum_sqr_shift.o: cc $
+    ../../third_party/opus/src/silk/sum_sqr_shift.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/silk/opus_nacl.table_LSF_cos.o: cc $
+    ../../third_party/opus/src/silk/table_LSF_cos.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/silk/opus_nacl.tables_gain.o: cc $
+    ../../third_party/opus/src/silk/tables_gain.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/silk/opus_nacl.tables_LTP.o: cc $
+    ../../third_party/opus/src/silk/tables_LTP.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/silk/opus_nacl.tables_NLSF_CB_NB_MB.o: cc $
+    ../../third_party/opus/src/silk/tables_NLSF_CB_NB_MB.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/silk/opus_nacl.tables_NLSF_CB_WB.o: cc $
+    ../../third_party/opus/src/silk/tables_NLSF_CB_WB.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/silk/opus_nacl.tables_other.o: cc $
+    ../../third_party/opus/src/silk/tables_other.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/silk/opus_nacl.tables_pitch_lag.o: cc $
+    ../../third_party/opus/src/silk/tables_pitch_lag.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/silk/opus_nacl.tables_pulses_per_block.o: cc $
+    ../../third_party/opus/src/silk/tables_pulses_per_block.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/silk/opus_nacl.VAD.o: cc $
+    ../../third_party/opus/src/silk/VAD.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/silk/opus_nacl.VQ_WMat_EC.o: cc $
+    ../../third_party/opus/src/silk/VQ_WMat_EC.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/src/opus_nacl.analysis.o: cc $
+    ../../third_party/opus/src/src/analysis.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/src/opus_nacl.mlp.o: cc $
+    ../../third_party/opus/src/src/mlp.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/src/opus_nacl.mlp_data.o: cc $
+    ../../third_party/opus/src/src/mlp_data.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/src/opus_nacl.opus.o: cc $
+    ../../third_party/opus/src/src/opus.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/src/opus_nacl.opus_decoder.o: cc $
+    ../../third_party/opus/src/src/opus_decoder.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/src/opus_nacl.opus_encoder.o: cc $
+    ../../third_party/opus/src/src/opus_encoder.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/src/opus_nacl.opus_multistream.o: cc $
+    ../../third_party/opus/src/src/opus_multistream.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/src/opus_nacl.opus_multistream_decoder.o: cc $
+    ../../third_party/opus/src/src/opus_multistream_decoder.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/src/opus_nacl.opus_multistream_encoder.o: cc $
+    ../../third_party/opus/src/src/opus_multistream_encoder.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/src/opus_nacl.repacketizer.o: cc $
+    ../../third_party/opus/src/src/repacketizer.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build $
+    obj/third_party/opus/src/silk/float/opus_nacl.apply_sine_window_FLP.o: $
+    cc ../../third_party/opus/src/silk/float/apply_sine_window_FLP.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/silk/float/opus_nacl.autocorrelation_FLP.o: $
+    cc ../../third_party/opus/src/silk/float/autocorrelation_FLP.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/silk/float/opus_nacl.burg_modified_FLP.o: cc $
+    ../../third_party/opus/src/silk/float/burg_modified_FLP.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/silk/float/opus_nacl.bwexpander_FLP.o: cc $
+    ../../third_party/opus/src/silk/float/bwexpander_FLP.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/silk/float/opus_nacl.corrMatrix_FLP.o: cc $
+    ../../third_party/opus/src/silk/float/corrMatrix_FLP.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/silk/float/opus_nacl.encode_frame_FLP.o: cc $
+    ../../third_party/opus/src/silk/float/encode_frame_FLP.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/silk/float/opus_nacl.energy_FLP.o: cc $
+    ../../third_party/opus/src/silk/float/energy_FLP.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/silk/float/opus_nacl.find_LPC_FLP.o: cc $
+    ../../third_party/opus/src/silk/float/find_LPC_FLP.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/silk/float/opus_nacl.find_LTP_FLP.o: cc $
+    ../../third_party/opus/src/silk/float/find_LTP_FLP.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/silk/float/opus_nacl.find_pitch_lags_FLP.o: $
+    cc ../../third_party/opus/src/silk/float/find_pitch_lags_FLP.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/silk/float/opus_nacl.find_pred_coefs_FLP.o: $
+    cc ../../third_party/opus/src/silk/float/find_pred_coefs_FLP.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/silk/float/opus_nacl.inner_product_FLP.o: cc $
+    ../../third_party/opus/src/silk/float/inner_product_FLP.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/silk/float/opus_nacl.k2a_FLP.o: cc $
+    ../../third_party/opus/src/silk/float/k2a_FLP.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/silk/float/opus_nacl.levinsondurbin_FLP.o: $
+    cc ../../third_party/opus/src/silk/float/levinsondurbin_FLP.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build $
+    obj/third_party/opus/src/silk/float/opus_nacl.LPC_analysis_filter_FLP.o: $
+    cc ../../third_party/opus/src/silk/float/LPC_analysis_filter_FLP.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build $
+    obj/third_party/opus/src/silk/float/opus_nacl.LPC_inv_pred_gain_FLP.o: $
+    cc ../../third_party/opus/src/silk/float/LPC_inv_pred_gain_FLP.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build $
+    obj/third_party/opus/src/silk/float/opus_nacl.LTP_analysis_filter_FLP.o: $
+    cc ../../third_party/opus/src/silk/float/LTP_analysis_filter_FLP.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/silk/float/opus_nacl.LTP_scale_ctrl_FLP.o: $
+    cc ../../third_party/opus/src/silk/float/LTP_scale_ctrl_FLP.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build $
+    obj/third_party/opus/src/silk/float/opus_nacl.noise_shape_analysis_FLP.o: $
+    cc ../../third_party/opus/src/silk/float/noise_shape_analysis_FLP.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build $
+    obj/third_party/opus/src/silk/float/opus_nacl.pitch_analysis_core_FLP.o: $
+    cc ../../third_party/opus/src/silk/float/pitch_analysis_core_FLP.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/silk/float/opus_nacl.prefilter_FLP.o: cc $
+    ../../third_party/opus/src/silk/float/prefilter_FLP.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/silk/float/opus_nacl.process_gains_FLP.o: cc $
+    ../../third_party/opus/src/silk/float/process_gains_FLP.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build $
+    obj/third_party/opus/src/silk/float/opus_nacl.regularize_correlations_FLP.o: $
+    cc ../../third_party/opus/src/silk/float/regularize_correlations_FLP.c $
+    || gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/silk/float/opus_nacl.residual_energy_FLP.o: $
+    cc ../../third_party/opus/src/silk/float/residual_energy_FLP.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build $
+    obj/third_party/opus/src/silk/float/opus_nacl.scale_copy_vector_FLP.o: $
+    cc ../../third_party/opus/src/silk/float/scale_copy_vector_FLP.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/silk/float/opus_nacl.scale_vector_FLP.o: cc $
+    ../../third_party/opus/src/silk/float/scale_vector_FLP.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/silk/float/opus_nacl.schur_FLP.o: cc $
+    ../../third_party/opus/src/silk/float/schur_FLP.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/silk/float/opus_nacl.solve_LS_FLP.o: cc $
+    ../../third_party/opus/src/silk/float/solve_LS_FLP.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/silk/float/opus_nacl.sort_FLP.o: cc $
+    ../../third_party/opus/src/silk/float/sort_FLP.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build $
+    obj/third_party/opus/src/silk/float/opus_nacl.warped_autocorrelation_FLP.o: $
+    cc ../../third_party/opus/src/silk/float/warped_autocorrelation_FLP.c $
+    || gen/tc_pnacl_newlib/lib/libopus_nacl.a
+build obj/third_party/opus/src/silk/float/opus_nacl.wrappers_FLP.o: cc $
+    ../../third_party/opus/src/silk/float/wrappers_FLP.c || $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a
+

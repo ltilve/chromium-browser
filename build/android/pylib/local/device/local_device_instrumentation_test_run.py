@@ -6,11 +6,9 @@ import logging
 import re
 import time
 
+from devil.android import device_errors
 from pylib import flag_changer
 from pylib.base import base_test_result
-from pylib.base import test_run
-from pylib.constants import keyevent
-from pylib.device import device_errors
 from pylib.local.device import local_device_test_run
 
 
@@ -32,7 +30,7 @@ def DidPackageCrashOnDevice(package_name, device):
   # loop or we are failing to dismiss.
   try:
     for _ in xrange(10):
-      package = _DismissCrashDialog(device)
+      package = device.DismissCrashDialogIfNeeded()
       if not package:
         return False
       # Assume test package convention of ".test" suffix
@@ -45,22 +43,6 @@ def DidPackageCrashOnDevice(package_name, device):
 
 _CURRENT_FOCUS_CRASH_RE = re.compile(
     r'\s*mCurrentFocus.*Application (Error|Not Responding): (\S+)}')
-
-
-def _DismissCrashDialog(device):
-  # TODO(jbudorick): Try to grep the output on the device instead of using
-  # large_output if/when DeviceUtils exposes a public interface for piped
-  # shell command handling.
-  for l in device.RunShellCommand(
-      ['dumpsys', 'window', 'windows'], check_return=True, large_output=True):
-    m = re.match(_CURRENT_FOCUS_CRASH_RE, l)
-    if m:
-      device.SendKeyEvent(keyevent.KEYCODE_DPAD_RIGHT)
-      device.SendKeyEvent(keyevent.KEYCODE_DPAD_RIGHT)
-      device.SendKeyEvent(keyevent.KEYCODE_ENTER)
-      return m.group(2)
-
-  return None
 
 
 class LocalDeviceInstrumentationTestRun(
@@ -82,8 +64,12 @@ class LocalDeviceInstrumentationTestRun(
         return d
 
     def individual_device_set_up(dev, host_device_tuples):
-      dev.Install(self._test_instance.apk_under_test)
-      dev.Install(self._test_instance.test_apk)
+      dev.Install(self._test_instance.apk_under_test,
+                  permissions=self._test_instance.apk_under_test_permissions)
+      dev.Install(self._test_instance.test_apk,
+                  permissions=self._test_instance.test_permissions)
+      for apk in self._test_instance.additional_apks:
+        dev.Install(apk)
 
       external_storage = dev.GetExternalStoragePath()
       host_device_tuples = [
@@ -159,7 +145,7 @@ class LocalDeviceInstrumentationTestRun(
       extras['class'] = test_name
       timeout = self._GetTimeoutFromAnnotations(test['annotations'], test_name)
 
-    logging.info('preparing to run %s: %s' % (test_name, test))
+    logging.info('preparing to run %s: %s', test_name, test)
 
     time_ms = lambda: int(time.time() * 1e3)
     start_ms = time_ms()
@@ -192,8 +178,9 @@ class LocalDeviceInstrumentationTestRun(
     for k, v in TIMEOUT_ANNOTATIONS:
       if k in annotations:
         timeout = v
+        break
     else:
-      logging.warning('Using default 1 minute timeout for %s' % test_name)
+      logging.warning('Using default 1 minute timeout for %s', test_name)
       timeout = 60
 
     try:

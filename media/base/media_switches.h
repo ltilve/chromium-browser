@@ -14,11 +14,10 @@ namespace switches {
 
 MEDIA_EXPORT extern const char kAudioBufferSize[];
 
-MEDIA_EXPORT extern const char kDisableNewVideoRenderer[];
-
 MEDIA_EXPORT extern const char kVideoThreads[];
 
 #if defined(OS_ANDROID)
+MEDIA_EXPORT extern const char kDisableMediaThreadForMediaPlayback[];
 MEDIA_EXPORT extern const char kEnableMediaThreadForMediaPlayback[];
 #endif
 
@@ -58,6 +57,8 @@ MEDIA_EXPORT extern const char kEnableInbandTextTracks[];
 MEDIA_EXPORT extern const char kRequireAudioHardwareForTesting[];
 
 MEDIA_EXPORT extern const char kVideoUnderflowThresholdMs[];
+
+MEDIA_EXPORT extern const char kEnableRTCSmoothnessAlgorithm[];
 
 }  // namespace switches
 

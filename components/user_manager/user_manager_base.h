@@ -129,6 +129,8 @@ class USER_MANAGER_EXPORT UserManagerBase : public UserManager {
   void SetKnownUserIntegerPref(const UserID& user_id,
                                const std::string& path,
                                const int in_value) override;
+  bool GetKnownUserCanonicalEmail(const UserID& user_id,
+                                  std::string* out_email) override;
   void UpdateGaiaID(const UserID& user_id, const std::string& gaia_id) override;
   bool FindGaiaID(const UserID& user_id, std::string* out_value) override;
   void UpdateUsingSAML(const std::string& user_id,
@@ -276,6 +278,9 @@ class USER_MANAGER_EXPORT UserManagerBase : public UserManager {
   // Indicates that a supervised user just logged in.
   virtual void SupervisedUserLoggedIn(const std::string& user_id) = 0;
 
+  // Should be called when regular user was removed.
+  virtual void OnUserRemoved(const std::string& user_id) = 0;
+
   // Getters/setters for private members.
 
   virtual void SetCurrentUserIsOwner(bool is_current_user_owner);
@@ -283,10 +288,10 @@ class USER_MANAGER_EXPORT UserManagerBase : public UserManager {
   virtual bool GetEphemeralUsersEnabled() const;
   virtual void SetEphemeralUsersEnabled(bool enabled);
 
-  virtual void SetOwnerEmail(std::string owner_user_id);
+  virtual void SetOwnerEmail(const std::string& owner_user_id);
 
   virtual const std::string& GetPendingUserSwitchID() const;
-  virtual void SetPendingUserSwitchID(std::string user_id);
+  virtual void SetPendingUserSwitchID(const std::string& user_id);
 
   // The logged-in user that is currently active in current session.
   // NULL until a user has logged in, then points to one

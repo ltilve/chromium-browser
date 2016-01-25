@@ -73,16 +73,14 @@ class LibjingleTransport
   void AddRemoteCandidate(const cricket::Candidate& candidate) override;
   const std::string& name() const override;
   bool is_connected() const override;
-  void SetUseStandardIce(bool use_standard_ice) override;
 
  private:
   void DoStart();
   void NotifyConnected();
 
   // Signal handlers for cricket::TransportChannel.
-  void OnRequestSignaling(cricket::TransportChannelImpl* channel);
-  void OnCandidateReady(cricket::TransportChannelImpl* channel,
-                        const cricket::Candidate& candidate);
+  void OnCandidateGathered(cricket::TransportChannelImpl* channel,
+                           const cricket::Candidate& candidate);
   void OnRouteChange(cricket::TransportChannel* channel,
                      const cricket::Candidate& candidate);
   void OnWritableState(cricket::TransportChannel* channel);
@@ -100,8 +98,6 @@ class LibjingleTransport
   NetworkSettings network_settings_;
   TransportRole role_;
 
-  bool use_standard_ice_ = true;
-
   std::string name_;
   EventHandler* event_handler_;
   Transport::ConnectedCallback callback_;
@@ -114,7 +110,7 @@ class LibjingleTransport
   std::list<cricket::Candidate> pending_candidates_;
   scoped_ptr<cricket::P2PTransportChannel> channel_;
   int connect_attempts_left_;
-  base::RepeatingTimer<LibjingleTransport> reconnect_timer_;
+  base::RepeatingTimer reconnect_timer_;
 
   base::WeakPtrFactory<LibjingleTransport> weak_factory_;
 
@@ -164,11 +160,7 @@ void LibjingleTransport::OnCanStart() {
   }
 
   while (!pending_candidates_.empty()) {
-    if (!use_standard_ice_) {
-      channel_->SetRemoteIceCredentials(pending_candidates_.front().username(),
-                                        pending_candidates_.front().password());
-    }
-    channel_->OnCandidate(pending_candidates_.front());
+    channel_->AddRemoteCandidate(pending_candidates_.front());
     pending_candidates_.pop_front();
   }
 }
@@ -199,21 +191,15 @@ void LibjingleTransport::DoStart() {
   channel_.reset(new cricket::P2PTransportChannel(
       std::string(), 0, nullptr, port_allocator_));
   std::string ice_password = rtc::CreateRandomString(cricket::ICE_PWD_LENGTH);
-  if (use_standard_ice_) {
-    channel_->SetIceProtocolType(cricket::ICEPROTO_RFC5245);
-    channel_->SetIceRole((role_ == TransportRole::CLIENT)
-                             ? cricket::ICEROLE_CONTROLLING
-                             : cricket::ICEROLE_CONTROLLED);
-    event_handler_->OnTransportIceCredentials(this, ice_username_fragment_,
-                                              ice_password);
-  } else {
-    channel_->SetIceProtocolType(cricket::ICEPROTO_GOOGLE);
-  }
+  channel_->SetIceProtocolType(cricket::ICEPROTO_RFC5245);
+  channel_->SetIceRole((role_ == TransportRole::CLIENT)
+                           ? cricket::ICEROLE_CONTROLLING
+                           : cricket::ICEROLE_CONTROLLED);
+  event_handler_->OnTransportIceCredentials(this, ice_username_fragment_,
+                                            ice_password);
   channel_->SetIceCredentials(ice_username_fragment_, ice_password);
-  channel_->SignalRequestSignaling.connect(
-      this, &LibjingleTransport::OnRequestSignaling);
-  channel_->SignalCandidateReady.connect(
-      this, &LibjingleTransport::OnCandidateReady);
+  channel_->SignalCandidateGathered.connect(
+      this, &LibjingleTransport::OnCandidateGathered);
   channel_->SignalRouteChange.connect(
       this, &LibjingleTransport::OnRouteChange);
   channel_->SignalWritableState.connect(
@@ -222,6 +208,7 @@ void LibjingleTransport::DoStart() {
       !(network_settings_.flags & NetworkSettings::NAT_TRAVERSAL_OUTGOING));
 
   channel_->Connect();
+  channel_->MaybeStartGathering();
 
   --connect_attempts_left_;
 
@@ -236,7 +223,7 @@ void LibjingleTransport::DoStart() {
 }
 
 void LibjingleTransport::NotifyConnected() {
-  // Create net::Socket adapter for the P2PTransportChannel.
+  // Create P2PDatagramSocket adapter for the P2PTransportChannel.
   scoped_ptr<TransportChannelSocketAdapter> socket(
       new TransportChannelSocketAdapter(channel_.get()));
   socket->SetOnDestroyedCallback(base::Bind(
@@ -267,11 +254,7 @@ void LibjingleTransport::AddRemoteCandidate(
     return;
 
   if (channel_) {
-    if (!use_standard_ice_) {
-      channel_->SetRemoteIceCredentials(candidate.username(),
-                                        candidate.password());
-    }
-    channel_->OnCandidate(candidate);
+    channel_->AddRemoteCandidate(candidate);
   } else {
     pending_candidates_.push_back(candidate);
   }
@@ -287,19 +270,7 @@ bool LibjingleTransport::is_connected() const {
   return callback_.is_null();
 }
 
-void LibjingleTransport::SetUseStandardIce(bool use_standard_ice) {
-  DCHECK(CalledOnValidThread());
-  DCHECK(!channel_);
-  use_standard_ice_ = use_standard_ice;
-}
-
-void LibjingleTransport::OnRequestSignaling(
-    cricket::TransportChannelImpl* channel) {
-  DCHECK(CalledOnValidThread());
-  channel_->OnSignalingReady();
-}
-
-void LibjingleTransport::OnCandidateReady(
+void LibjingleTransport::OnCandidateGathered(
     cricket::TransportChannelImpl* channel,
     const cricket::Candidate& candidate) {
   DCHECK(CalledOnValidThread());
@@ -316,7 +287,7 @@ void LibjingleTransport::OnRouteChange(
 
 void LibjingleTransport::OnWritableState(
     cricket::TransportChannel* channel) {
-  DCHECK_EQ(channel, channel_.get());
+  DCHECK_EQ(channel, static_cast<cricket::TransportChannel*>(channel_.get()));
 
   if (channel->writable()) {
     connect_attempts_left_ = kMaxReconnectAttempts;
@@ -442,8 +413,9 @@ void LibjingleTransportFactory::EnsureFreshJingleInfo() {
     return;
   }
 
-  if (base::TimeTicks::Now() - last_jingle_info_update_time_ >
-      base::TimeDelta::FromSeconds(kJingleInfoUpdatePeriodSeconds)) {
+  if (last_jingle_info_update_time_.is_null() ||
+      base::TimeTicks::Now() - last_jingle_info_update_time_ >
+          base::TimeDelta::FromSeconds(kJingleInfoUpdatePeriodSeconds)) {
     jingle_info_request_.reset(new JingleInfoRequest(signal_strategy_));
     jingle_info_request_->Send(base::Bind(
         &LibjingleTransportFactory::OnJingleInfo, base::Unretained(this)));

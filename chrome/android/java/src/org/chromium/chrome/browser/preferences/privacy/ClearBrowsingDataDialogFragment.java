@@ -23,14 +23,15 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckedTextView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import org.chromium.base.VisibleForTesting;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.preferences.PrefServiceBridge;
 import org.chromium.chrome.browser.preferences.Preferences;
 import org.chromium.chrome.browser.signin.AccountManagementFragment;
 import org.chromium.sync.signin.ChromeSigninController;
 import org.chromium.ui.text.SpanApplier;
+import org.chromium.ui.widget.Toast;
 
 import java.util.EnumSet;
 
@@ -279,5 +280,10 @@ public class ClearBrowsingDataDialogFragment extends DialogFragment
                 getActivity().getString(R.string.clear_browsing_data_progress_title),
                 getActivity().getString(R.string.clear_browsing_data_progress_message), true,
                 false);
+    }
+
+    @VisibleForTesting
+    ProgressDialog getProgressDialog() {
+        return mProgressDialog;
     }
 }

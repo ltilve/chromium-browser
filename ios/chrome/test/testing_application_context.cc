@@ -60,3 +60,16 @@ TestingApplicationContext::GetChromeBrowserStateManager() {
 metrics::MetricsService* TestingApplicationContext::GetMetricsService() {
   return nullptr;
 }
+
+policy::BrowserPolicyConnector*
+TestingApplicationContext::GetBrowserPolicyConnector() {
+  return nullptr;
+}
+
+rappor::RapporService* TestingApplicationContext::GetRapporService() {
+  return nullptr;
+}
+
+net_log::ChromeNetLog* TestingApplicationContext::GetNetLog() {
+  return nullptr;
+}

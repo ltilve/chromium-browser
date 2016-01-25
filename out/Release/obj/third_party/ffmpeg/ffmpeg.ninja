@@ -1,0 +1,497 @@
+defines = -DV8_DEPRECATION_WARNINGS -DCLD_VERSION=2 -D_FILE_OFFSET_BITS=64 $
+    -DCHROMIUM_BUILD -DCR_CLANG_REVISION=255169-1 $
+    -DUI_COMPOSITOR_IMAGE_TRANSPORT -DUSE_AURA=1 -DUSE_ASH=1 -DUSE_PANGO=1 $
+    -DUSE_CAIRO=1 -DUSE_DEFAULT_RENDER_THEME=1 -DUSE_LIBJPEG_TURBO=1 $
+    -DUSE_X11=1 -DUSE_CLIPBOARD_AURAX11=1 -DENABLE_ONE_CLICK_SIGNIN $
+    -DENABLE_WEBRTC=1 -DENABLE_MEDIA_ROUTER=1 -DENABLE_PEPPER_CDMS $
+    -DENABLE_CONFIGURATION_POLICY -DENABLE_NOTIFICATIONS -DENABLE_HIDPI=1 $
+    -DENABLE_TOPCHROME_MD=1 -DUSE_UDEV -DDONT_EMBED_BUILD_METADATA $
+    -DFIELDTRIAL_TESTING_ENABLED -DENABLE_TASK_MANAGER=1 $
+    -DENABLE_EXTENSIONS=1 -DENABLE_PDF=1 -DENABLE_PLUGINS=1 $
+    -DENABLE_SESSION_SERVICE=1 -DENABLE_THEMES=1 -DENABLE_AUTOFILL_DIALOG=1 $
+    -DENABLE_BACKGROUND=1 -DENABLE_PRINTING=1 -DENABLE_BASIC_PRINTING=1 $
+    -DENABLE_PRINT_PREVIEW=1 -DENABLE_SPELLCHECK=1 $
+    -DENABLE_CAPTIVE_PORTAL_DETECTION=1 -DENABLE_APP_LIST=1 $
+    -DENABLE_SETTINGS_APP=1 -DENABLE_SUPERVISED_USERS=1 -DENABLE_MDNS=1 $
+    -DENABLE_SERVICE_DISCOVERY=1 -DV8_USE_EXTERNAL_STARTUP_DATA $
+    -DFULL_SAFE_BROWSING -DSAFE_BROWSING_CSD -DSAFE_BROWSING_DB_LOCAL $
+    -DHAVE_AV_CONFIG_H -D_POSIX_C_SOURCE=200112 -D_XOPEN_SOURCE=600 -DPIC $
+    -DFF_API_CONVERGENCE_DURATION=0 -D_ISOC99_SOURCE -D_LARGEFILE_SOURCE $
+    -DUSE_LIBPCI=1 -DUSE_OPENSSL=1 -DUSE_GLIB=1 -DUSE_NSS_CERTS=1 -DNDEBUG $
+    -DNVALGRIND -DDYNAMIC_ANNOTATIONS_ENABLED=0
+includes = -Igen $
+    -I../../third_party/ffmpeg/chromium/config/Chromium/linux/x64 $
+    -I../../third_party/ffmpeg
+cflags = -fstack-protector --param=ssp-buffer-size=4 -Werror -pthread $
+    -fno-strict-aliasing -Wno-unused-parameter $
+    -Wno-missing-field-initializers -fvisibility=hidden -pipe -fPIC $
+    -Wno-reserved-user-defined-literal -Xclang -load -Xclang $
+    /b/build/slave/publish_tarball/build/src/third_party/llvm-build/Release+Asserts/lib/libFindBadConstructs.so $
+    -Xclang -add-plugin -Xclang find-bad-constructs -Xclang $
+    -plugin-arg-find-bad-constructs -Xclang check-templates $
+    -fcolor-diagnostics $
+    -B/b/build/slave/publish_tarball/build/src/third_party/binutils/Linux_x64/Release/bin $
+    -Wheader-hygiene -Wno-char-subscripts $
+    -Wno-unneeded-internal-declaration -Wno-covered-switch-default $
+    -Wstring-conversion -Wno-c++11-narrowing -Wno-deprecated-register $
+    -Wno-inconsistent-missing-override -Wno-shift-negative-value $
+    -Wno-bitfield-width -Wno-absolute-value -Wno-deprecated-declarations $
+    -Wno-incompatible-pointer-types -Wno-parentheses -Wno-pointer-sign $
+    -Wno-switch -Wno-unused-label -Wno-unused-variable $
+    -Wno-string-conversion -Wno-sometimes-uninitialized $
+    -Wno-unused-function -Wno-unused-variable -fPIC -fomit-frame-pointer $
+    -Wno-deprecated-declarations -std=c99 -pthread -fno-math-errno $
+    -fno-signed-zeros -fno-tree-vectorize -Wno-format -Wno-unused-result $
+    -m64 -march=x86-64 $
+    --sysroot=/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot $
+    -O2 -fno-ident -fdata-sections -ffunction-sections -funwind-tables
+cflags_c = 
+cflags_cc = -fno-exceptions -fno-rtti -fno-threadsafe-statics $
+    -fvisibility-inlines-hidden -std=gnu++11 -Wno-deprecated
+arflags = 
+
+build $
+    obj/third_party/ffmpeg/libavcodec/x86/ffmpeg.autorename_libavcodec_x86_videodsp_init.o: $
+    cc $
+    ../../third_party/ffmpeg/libavcodec/x86/autorename_libavcodec_x86_videodsp_init.c
+build obj/third_party/ffmpeg/libavcodec/x86/ffmpeg.h264_intrapred_init.o: $
+    cc ../../third_party/ffmpeg/libavcodec/x86/h264_intrapred_init.c
+build obj/third_party/ffmpeg/libavcodec/x86/ffmpeg.hpeldsp_init.o: cc $
+    ../../third_party/ffmpeg/libavcodec/x86/hpeldsp_init.c
+build obj/third_party/ffmpeg/libavcodec/x86/ffmpeg.vp3dsp_init.o: cc $
+    ../../third_party/ffmpeg/libavcodec/x86/vp3dsp_init.c
+build obj/third_party/ffmpeg/libavcodec/x86/ffmpeg.vp8dsp_init.o: cc $
+    ../../third_party/ffmpeg/libavcodec/x86/vp8dsp_init.c
+build $
+    obj/third_party/ffmpeg/libavcodec/x86/ffmpeg.autorename_libavcodec_x86_vorbisdsp_init.o: $
+    cc $
+    ../../third_party/ffmpeg/libavcodec/x86/autorename_libavcodec_x86_vorbisdsp_init.c
+build obj/third_party/ffmpeg/libavcodec/x86/ffmpeg.constants.o: cc $
+    ../../third_party/ffmpeg/libavcodec/x86/constants.c
+build obj/third_party/ffmpeg/libavcodec/x86/ffmpeg.fft_init.o: cc $
+    ../../third_party/ffmpeg/libavcodec/x86/fft_init.c
+build $
+    obj/third_party/ffmpeg/libavutil/x86/ffmpeg.autorename_libavutil_x86_cpu.o: $
+    cc ../../third_party/ffmpeg/libavutil/x86/autorename_libavutil_x86_cpu.c
+build $
+    obj/third_party/ffmpeg/libavutil/x86/ffmpeg.autorename_libavutil_x86_float_dsp_init.o: $
+    cc $
+    ../../third_party/ffmpeg/libavutil/x86/autorename_libavutil_x86_float_dsp_init.c
+build obj/third_party/ffmpeg/libavutil/x86/ffmpeg.lls_init.o: cc $
+    ../../third_party/ffmpeg/libavutil/x86/lls_init.c
+build obj/third_party/ffmpeg/libavcodec/ffmpeg.h264pred.o: cc $
+    ../../third_party/ffmpeg/libavcodec/h264pred.c
+build obj/third_party/ffmpeg/libavcodec/ffmpeg.hpeldsp.o: cc $
+    ../../third_party/ffmpeg/libavcodec/hpeldsp.c
+build obj/third_party/ffmpeg/libavcodec/ffmpeg.videodsp.o: cc $
+    ../../third_party/ffmpeg/libavcodec/videodsp.c
+build obj/third_party/ffmpeg/libavcodec/ffmpeg.vp3.o: cc $
+    ../../third_party/ffmpeg/libavcodec/vp3.c
+build obj/third_party/ffmpeg/libavcodec/ffmpeg.vp3_parser.o: cc $
+    ../../third_party/ffmpeg/libavcodec/vp3_parser.c
+build obj/third_party/ffmpeg/libavcodec/ffmpeg.vp3dsp.o: cc $
+    ../../third_party/ffmpeg/libavcodec/vp3dsp.c
+build obj/third_party/ffmpeg/libavcodec/ffmpeg.vp56rac.o: cc $
+    ../../third_party/ffmpeg/libavcodec/vp56rac.c
+build obj/third_party/ffmpeg/libavcodec/ffmpeg.vp8.o: cc $
+    ../../third_party/ffmpeg/libavcodec/vp8.c
+build obj/third_party/ffmpeg/libavcodec/ffmpeg.vp8_parser.o: cc $
+    ../../third_party/ffmpeg/libavcodec/vp8_parser.c
+build obj/third_party/ffmpeg/libavcodec/ffmpeg.vp8dsp.o: cc $
+    ../../third_party/ffmpeg/libavcodec/vp8dsp.c
+build obj/third_party/ffmpeg/libavcodec/ffmpeg.allcodecs.o: cc $
+    ../../third_party/ffmpeg/libavcodec/allcodecs.c
+build $
+    obj/third_party/ffmpeg/libavcodec/ffmpeg.autorename_libavcodec_utils.o: $
+    cc ../../third_party/ffmpeg/libavcodec/autorename_libavcodec_utils.c
+build obj/third_party/ffmpeg/libavcodec/ffmpeg.avdct.o: cc $
+    ../../third_party/ffmpeg/libavcodec/avdct.c
+build obj/third_party/ffmpeg/libavcodec/ffmpeg.avfft.o: cc $
+    ../../third_party/ffmpeg/libavcodec/avfft.c
+build obj/third_party/ffmpeg/libavcodec/ffmpeg.avpacket.o: cc $
+    ../../third_party/ffmpeg/libavcodec/avpacket.c
+build obj/third_party/ffmpeg/libavcodec/ffmpeg.avpicture.o: cc $
+    ../../third_party/ffmpeg/libavcodec/avpicture.c
+build obj/third_party/ffmpeg/libavcodec/ffmpeg.bitstream.o: cc $
+    ../../third_party/ffmpeg/libavcodec/bitstream.c
+build obj/third_party/ffmpeg/libavcodec/ffmpeg.bitstream_filter.o: cc $
+    ../../third_party/ffmpeg/libavcodec/bitstream_filter.c
+build obj/third_party/ffmpeg/libavcodec/ffmpeg.codec_desc.o: cc $
+    ../../third_party/ffmpeg/libavcodec/codec_desc.c
+build obj/third_party/ffmpeg/libavcodec/ffmpeg.d3d11va.o: cc $
+    ../../third_party/ffmpeg/libavcodec/d3d11va.c
+build obj/third_party/ffmpeg/libavcodec/ffmpeg.dirac.o: cc $
+    ../../third_party/ffmpeg/libavcodec/dirac.c
+build obj/third_party/ffmpeg/libavcodec/ffmpeg.dv_profile.o: cc $
+    ../../third_party/ffmpeg/libavcodec/dv_profile.c
+build obj/third_party/ffmpeg/libavcodec/ffmpeg.fft_fixed.o: cc $
+    ../../third_party/ffmpeg/libavcodec/fft_fixed.c
+build obj/third_party/ffmpeg/libavcodec/ffmpeg.fft_fixed_32.o: cc $
+    ../../third_party/ffmpeg/libavcodec/fft_fixed_32.c
+build obj/third_party/ffmpeg/libavcodec/ffmpeg.fft_float.o: cc $
+    ../../third_party/ffmpeg/libavcodec/fft_float.c
+build obj/third_party/ffmpeg/libavcodec/ffmpeg.fft_init_table.o: cc $
+    ../../third_party/ffmpeg/libavcodec/fft_init_table.c
+build obj/third_party/ffmpeg/libavcodec/ffmpeg.golomb.o: cc $
+    ../../third_party/ffmpeg/libavcodec/golomb.c
+build obj/third_party/ffmpeg/libavcodec/ffmpeg.imgconvert.o: cc $
+    ../../third_party/ffmpeg/libavcodec/imgconvert.c
+build obj/third_party/ffmpeg/libavcodec/ffmpeg.mathtables.o: cc $
+    ../../third_party/ffmpeg/libavcodec/mathtables.c
+build obj/third_party/ffmpeg/libavcodec/ffmpeg.mdct_fixed.o: cc $
+    ../../third_party/ffmpeg/libavcodec/mdct_fixed.c
+build obj/third_party/ffmpeg/libavcodec/ffmpeg.mdct_fixed_32.o: cc $
+    ../../third_party/ffmpeg/libavcodec/mdct_fixed_32.c
+build obj/third_party/ffmpeg/libavcodec/ffmpeg.mdct_float.o: cc $
+    ../../third_party/ffmpeg/libavcodec/mdct_float.c
+build obj/third_party/ffmpeg/libavcodec/ffmpeg.mpeg12data.o: cc $
+    ../../third_party/ffmpeg/libavcodec/mpeg12data.c
+build obj/third_party/ffmpeg/libavcodec/ffmpeg.mpeg4audio.o: cc $
+    ../../third_party/ffmpeg/libavcodec/mpeg4audio.c
+build obj/third_party/ffmpeg/libavcodec/ffmpeg.mpegaudiodata.o: cc $
+    ../../third_party/ffmpeg/libavcodec/mpegaudiodata.c
+build obj/third_party/ffmpeg/libavcodec/ffmpeg.options.o: cc $
+    ../../third_party/ffmpeg/libavcodec/options.c
+build obj/third_party/ffmpeg/libavcodec/ffmpeg.opus.o: cc $
+    ../../third_party/ffmpeg/libavcodec/opus.c
+build obj/third_party/ffmpeg/libavcodec/ffmpeg.opus_parser.o: cc $
+    ../../third_party/ffmpeg/libavcodec/opus_parser.c
+build obj/third_party/ffmpeg/libavcodec/ffmpeg.parser.o: cc $
+    ../../third_party/ffmpeg/libavcodec/parser.c
+build obj/third_party/ffmpeg/libavcodec/ffmpeg.pcm.o: cc $
+    ../../third_party/ffmpeg/libavcodec/pcm.c
+build obj/third_party/ffmpeg/libavcodec/ffmpeg.pthread.o: cc $
+    ../../third_party/ffmpeg/libavcodec/pthread.c
+build obj/third_party/ffmpeg/libavcodec/ffmpeg.pthread_frame.o: cc $
+    ../../third_party/ffmpeg/libavcodec/pthread_frame.c
+build obj/third_party/ffmpeg/libavcodec/ffmpeg.pthread_slice.o: cc $
+    ../../third_party/ffmpeg/libavcodec/pthread_slice.c
+build obj/third_party/ffmpeg/libavcodec/ffmpeg.qsv_api.o: cc $
+    ../../third_party/ffmpeg/libavcodec/qsv_api.c
+build obj/third_party/ffmpeg/libavcodec/ffmpeg.raw.o: cc $
+    ../../third_party/ffmpeg/libavcodec/raw.c
+build obj/third_party/ffmpeg/libavcodec/ffmpeg.rdft.o: cc $
+    ../../third_party/ffmpeg/libavcodec/rdft.c
+build obj/third_party/ffmpeg/libavcodec/ffmpeg.vorbis.o: cc $
+    ../../third_party/ffmpeg/libavcodec/vorbis.c
+build obj/third_party/ffmpeg/libavcodec/ffmpeg.vorbis_data.o: cc $
+    ../../third_party/ffmpeg/libavcodec/vorbis_data.c
+build obj/third_party/ffmpeg/libavcodec/ffmpeg.vorbis_parser.o: cc $
+    ../../third_party/ffmpeg/libavcodec/vorbis_parser.c
+build obj/third_party/ffmpeg/libavcodec/ffmpeg.vorbisdec.o: cc $
+    ../../third_party/ffmpeg/libavcodec/vorbisdec.c
+build obj/third_party/ffmpeg/libavcodec/ffmpeg.vorbisdsp.o: cc $
+    ../../third_party/ffmpeg/libavcodec/vorbisdsp.c
+build obj/third_party/ffmpeg/libavcodec/ffmpeg.xiph.o: cc $
+    ../../third_party/ffmpeg/libavcodec/xiph.c
+build obj/third_party/ffmpeg/libavformat/ffmpeg.allformats.o: cc $
+    ../../third_party/ffmpeg/libavformat/allformats.c
+build $
+    obj/third_party/ffmpeg/libavformat/ffmpeg.autorename_libavformat_options.o: $
+    cc ../../third_party/ffmpeg/libavformat/autorename_libavformat_options.c
+build $
+    obj/third_party/ffmpeg/libavformat/ffmpeg.autorename_libavformat_pcm.o: $
+    cc ../../third_party/ffmpeg/libavformat/autorename_libavformat_pcm.c
+build $
+    obj/third_party/ffmpeg/libavformat/ffmpeg.autorename_libavformat_utils.o: $
+    cc ../../third_party/ffmpeg/libavformat/autorename_libavformat_utils.c
+build obj/third_party/ffmpeg/libavformat/ffmpeg.avio.o: cc $
+    ../../third_party/ffmpeg/libavformat/avio.c
+build obj/third_party/ffmpeg/libavformat/ffmpeg.aviobuf.o: cc $
+    ../../third_party/ffmpeg/libavformat/aviobuf.c
+build obj/third_party/ffmpeg/libavformat/ffmpeg.cutils.o: cc $
+    ../../third_party/ffmpeg/libavformat/cutils.c
+build obj/third_party/ffmpeg/libavformat/ffmpeg.dump.o: cc $
+    ../../third_party/ffmpeg/libavformat/dump.c
+build obj/third_party/ffmpeg/libavformat/ffmpeg.flac_picture.o: cc $
+    ../../third_party/ffmpeg/libavformat/flac_picture.c
+build obj/third_party/ffmpeg/libavformat/ffmpeg.format.o: cc $
+    ../../third_party/ffmpeg/libavformat/format.c
+build obj/third_party/ffmpeg/libavformat/ffmpeg.id3v1.o: cc $
+    ../../third_party/ffmpeg/libavformat/id3v1.c
+build obj/third_party/ffmpeg/libavformat/ffmpeg.id3v2.o: cc $
+    ../../third_party/ffmpeg/libavformat/id3v2.c
+build obj/third_party/ffmpeg/libavformat/ffmpeg.isom.o: cc $
+    ../../third_party/ffmpeg/libavformat/isom.c
+build obj/third_party/ffmpeg/libavformat/ffmpeg.matroska.o: cc $
+    ../../third_party/ffmpeg/libavformat/matroska.c
+build obj/third_party/ffmpeg/libavformat/ffmpeg.matroskadec.o: cc $
+    ../../third_party/ffmpeg/libavformat/matroskadec.c
+build obj/third_party/ffmpeg/libavformat/ffmpeg.metadata.o: cc $
+    ../../third_party/ffmpeg/libavformat/metadata.c
+build obj/third_party/ffmpeg/libavformat/ffmpeg.mux.o: cc $
+    ../../third_party/ffmpeg/libavformat/mux.c
+build obj/third_party/ffmpeg/libavformat/ffmpeg.oggdec.o: cc $
+    ../../third_party/ffmpeg/libavformat/oggdec.c
+build obj/third_party/ffmpeg/libavformat/ffmpeg.oggparsecelt.o: cc $
+    ../../third_party/ffmpeg/libavformat/oggparsecelt.c
+build obj/third_party/ffmpeg/libavformat/ffmpeg.oggparsedaala.o: cc $
+    ../../third_party/ffmpeg/libavformat/oggparsedaala.c
+build obj/third_party/ffmpeg/libavformat/ffmpeg.oggparsedirac.o: cc $
+    ../../third_party/ffmpeg/libavformat/oggparsedirac.c
+build obj/third_party/ffmpeg/libavformat/ffmpeg.oggparseflac.o: cc $
+    ../../third_party/ffmpeg/libavformat/oggparseflac.c
+build obj/third_party/ffmpeg/libavformat/ffmpeg.oggparseogm.o: cc $
+    ../../third_party/ffmpeg/libavformat/oggparseogm.c
+build obj/third_party/ffmpeg/libavformat/ffmpeg.oggparseopus.o: cc $
+    ../../third_party/ffmpeg/libavformat/oggparseopus.c
+build obj/third_party/ffmpeg/libavformat/ffmpeg.oggparseskeleton.o: cc $
+    ../../third_party/ffmpeg/libavformat/oggparseskeleton.c
+build obj/third_party/ffmpeg/libavformat/ffmpeg.oggparsespeex.o: cc $
+    ../../third_party/ffmpeg/libavformat/oggparsespeex.c
+build obj/third_party/ffmpeg/libavformat/ffmpeg.oggparsetheora.o: cc $
+    ../../third_party/ffmpeg/libavformat/oggparsetheora.c
+build obj/third_party/ffmpeg/libavformat/ffmpeg.oggparsevorbis.o: cc $
+    ../../third_party/ffmpeg/libavformat/oggparsevorbis.c
+build obj/third_party/ffmpeg/libavformat/ffmpeg.oggparsevp8.o: cc $
+    ../../third_party/ffmpeg/libavformat/oggparsevp8.c
+build obj/third_party/ffmpeg/libavformat/ffmpeg.os_support.o: cc $
+    ../../third_party/ffmpeg/libavformat/os_support.c
+build obj/third_party/ffmpeg/libavformat/ffmpeg.replaygain.o: cc $
+    ../../third_party/ffmpeg/libavformat/replaygain.c
+build obj/third_party/ffmpeg/libavformat/ffmpeg.riff.o: cc $
+    ../../third_party/ffmpeg/libavformat/riff.c
+build obj/third_party/ffmpeg/libavformat/ffmpeg.riffdec.o: cc $
+    ../../third_party/ffmpeg/libavformat/riffdec.c
+build obj/third_party/ffmpeg/libavformat/ffmpeg.rmsipr.o: cc $
+    ../../third_party/ffmpeg/libavformat/rmsipr.c
+build obj/third_party/ffmpeg/libavformat/ffmpeg.url.o: cc $
+    ../../third_party/ffmpeg/libavformat/url.c
+build obj/third_party/ffmpeg/libavformat/ffmpeg.vorbiscomment.o: cc $
+    ../../third_party/ffmpeg/libavformat/vorbiscomment.c
+build obj/third_party/ffmpeg/libavformat/ffmpeg.wavdec.o: cc $
+    ../../third_party/ffmpeg/libavformat/wavdec.c
+build obj/third_party/ffmpeg/libavutil/ffmpeg.aes.o: cc $
+    ../../third_party/ffmpeg/libavutil/aes.c
+build obj/third_party/ffmpeg/libavutil/ffmpeg.autorename_libavutil_cpu.o: $
+    cc ../../third_party/ffmpeg/libavutil/autorename_libavutil_cpu.c
+build obj/third_party/ffmpeg/libavutil/ffmpeg.avstring.o: cc $
+    ../../third_party/ffmpeg/libavutil/avstring.c
+build obj/third_party/ffmpeg/libavutil/ffmpeg.base64.o: cc $
+    ../../third_party/ffmpeg/libavutil/base64.c
+build obj/third_party/ffmpeg/libavutil/ffmpeg.bprint.o: cc $
+    ../../third_party/ffmpeg/libavutil/bprint.c
+build obj/third_party/ffmpeg/libavutil/ffmpeg.buffer.o: cc $
+    ../../third_party/ffmpeg/libavutil/buffer.c
+build obj/third_party/ffmpeg/libavutil/ffmpeg.camellia.o: cc $
+    ../../third_party/ffmpeg/libavutil/camellia.c
+build obj/third_party/ffmpeg/libavutil/ffmpeg.channel_layout.o: cc $
+    ../../third_party/ffmpeg/libavutil/channel_layout.c
+build obj/third_party/ffmpeg/libavutil/ffmpeg.color_utils.o: cc $
+    ../../third_party/ffmpeg/libavutil/color_utils.c
+build obj/third_party/ffmpeg/libavutil/ffmpeg.crc.o: cc $
+    ../../third_party/ffmpeg/libavutil/crc.c
+build obj/third_party/ffmpeg/libavutil/ffmpeg.dict.o: cc $
+    ../../third_party/ffmpeg/libavutil/dict.c
+build obj/third_party/ffmpeg/libavutil/ffmpeg.display.o: cc $
+    ../../third_party/ffmpeg/libavutil/display.c
+build obj/third_party/ffmpeg/libavutil/ffmpeg.downmix_info.o: cc $
+    ../../third_party/ffmpeg/libavutil/downmix_info.c
+build obj/third_party/ffmpeg/libavutil/ffmpeg.error.o: cc $
+    ../../third_party/ffmpeg/libavutil/error.c
+build obj/third_party/ffmpeg/libavutil/ffmpeg.eval.o: cc $
+    ../../third_party/ffmpeg/libavutil/eval.c
+build obj/third_party/ffmpeg/libavutil/ffmpeg.fifo.o: cc $
+    ../../third_party/ffmpeg/libavutil/fifo.c
+build obj/third_party/ffmpeg/libavutil/ffmpeg.file_open.o: cc $
+    ../../third_party/ffmpeg/libavutil/file_open.c
+build obj/third_party/ffmpeg/libavutil/ffmpeg.fixed_dsp.o: cc $
+    ../../third_party/ffmpeg/libavutil/fixed_dsp.c
+build obj/third_party/ffmpeg/libavutil/ffmpeg.float_dsp.o: cc $
+    ../../third_party/ffmpeg/libavutil/float_dsp.c
+build obj/third_party/ffmpeg/libavutil/ffmpeg.frame.o: cc $
+    ../../third_party/ffmpeg/libavutil/frame.c
+build obj/third_party/ffmpeg/libavutil/ffmpeg.imgutils.o: cc $
+    ../../third_party/ffmpeg/libavutil/imgutils.c
+build obj/third_party/ffmpeg/libavutil/ffmpeg.intmath.o: cc $
+    ../../third_party/ffmpeg/libavutil/intmath.c
+build obj/third_party/ffmpeg/libavutil/ffmpeg.lfg.o: cc $
+    ../../third_party/ffmpeg/libavutil/lfg.c
+build obj/third_party/ffmpeg/libavutil/ffmpeg.log.o: cc $
+    ../../third_party/ffmpeg/libavutil/log.c
+build obj/third_party/ffmpeg/libavutil/ffmpeg.log2_tab.o: cc $
+    ../../third_party/ffmpeg/libavutil/log2_tab.c
+build obj/third_party/ffmpeg/libavutil/ffmpeg.mathematics.o: cc $
+    ../../third_party/ffmpeg/libavutil/mathematics.c
+build obj/third_party/ffmpeg/libavutil/ffmpeg.md5.o: cc $
+    ../../third_party/ffmpeg/libavutil/md5.c
+build obj/third_party/ffmpeg/libavutil/ffmpeg.mem.o: cc $
+    ../../third_party/ffmpeg/libavutil/mem.c
+build obj/third_party/ffmpeg/libavutil/ffmpeg.opt.o: cc $
+    ../../third_party/ffmpeg/libavutil/opt.c
+build obj/third_party/ffmpeg/libavutil/ffmpeg.parseutils.o: cc $
+    ../../third_party/ffmpeg/libavutil/parseutils.c
+build obj/third_party/ffmpeg/libavutil/ffmpeg.pixdesc.o: cc $
+    ../../third_party/ffmpeg/libavutil/pixdesc.c
+build obj/third_party/ffmpeg/libavutil/ffmpeg.pixelutils.o: cc $
+    ../../third_party/ffmpeg/libavutil/pixelutils.c
+build obj/third_party/ffmpeg/libavutil/ffmpeg.random_seed.o: cc $
+    ../../third_party/ffmpeg/libavutil/random_seed.c
+build obj/third_party/ffmpeg/libavutil/ffmpeg.rational.o: cc $
+    ../../third_party/ffmpeg/libavutil/rational.c
+build obj/third_party/ffmpeg/libavutil/ffmpeg.reverse.o: cc $
+    ../../third_party/ffmpeg/libavutil/reverse.c
+build obj/third_party/ffmpeg/libavutil/ffmpeg.samplefmt.o: cc $
+    ../../third_party/ffmpeg/libavutil/samplefmt.c
+build obj/third_party/ffmpeg/libavutil/ffmpeg.sha.o: cc $
+    ../../third_party/ffmpeg/libavutil/sha.c
+build obj/third_party/ffmpeg/libavutil/ffmpeg.stereo3d.o: cc $
+    ../../third_party/ffmpeg/libavutil/stereo3d.c
+build obj/third_party/ffmpeg/libavutil/ffmpeg.tea.o: cc $
+    ../../third_party/ffmpeg/libavutil/tea.c
+build obj/third_party/ffmpeg/libavutil/ffmpeg.threadmessage.o: cc $
+    ../../third_party/ffmpeg/libavutil/threadmessage.c
+build obj/third_party/ffmpeg/libavutil/ffmpeg.time.o: cc $
+    ../../third_party/ffmpeg/libavutil/time.c
+build obj/third_party/ffmpeg/libavutil/ffmpeg.timecode.o: cc $
+    ../../third_party/ffmpeg/libavutil/timecode.c
+build obj/third_party/ffmpeg/libavutil/ffmpeg.twofish.o: cc $
+    ../../third_party/ffmpeg/libavutil/twofish.c
+build obj/third_party/ffmpeg/libavutil/ffmpeg.utils.o: cc $
+    ../../third_party/ffmpeg/libavutil/utils.c
+
+build obj/third_party/ffmpeg/libffmpeg.a: alink_thin $
+    obj/third_party/ffmpeg/libavcodec/x86/ffmpeg.autorename_libavcodec_x86_videodsp_init.o $
+    obj/third_party/ffmpeg/libavcodec/x86/ffmpeg.h264_intrapred_init.o $
+    obj/third_party/ffmpeg/libavcodec/x86/ffmpeg.hpeldsp_init.o $
+    obj/third_party/ffmpeg/libavcodec/x86/ffmpeg.vp3dsp_init.o $
+    obj/third_party/ffmpeg/libavcodec/x86/ffmpeg.vp8dsp_init.o $
+    obj/third_party/ffmpeg/libavcodec/x86/ffmpeg.autorename_libavcodec_x86_vorbisdsp_init.o $
+    obj/third_party/ffmpeg/libavcodec/x86/ffmpeg.constants.o $
+    obj/third_party/ffmpeg/libavcodec/x86/ffmpeg.fft_init.o $
+    obj/third_party/ffmpeg/libavutil/x86/ffmpeg.autorename_libavutil_x86_cpu.o $
+    obj/third_party/ffmpeg/libavutil/x86/ffmpeg.autorename_libavutil_x86_float_dsp_init.o $
+    obj/third_party/ffmpeg/libavutil/x86/ffmpeg.lls_init.o $
+    obj/third_party/ffmpeg/libavcodec/ffmpeg.h264pred.o $
+    obj/third_party/ffmpeg/libavcodec/ffmpeg.hpeldsp.o $
+    obj/third_party/ffmpeg/libavcodec/ffmpeg.videodsp.o $
+    obj/third_party/ffmpeg/libavcodec/ffmpeg.vp3.o $
+    obj/third_party/ffmpeg/libavcodec/ffmpeg.vp3_parser.o $
+    obj/third_party/ffmpeg/libavcodec/ffmpeg.vp3dsp.o $
+    obj/third_party/ffmpeg/libavcodec/ffmpeg.vp56rac.o $
+    obj/third_party/ffmpeg/libavcodec/ffmpeg.vp8.o $
+    obj/third_party/ffmpeg/libavcodec/ffmpeg.vp8_parser.o $
+    obj/third_party/ffmpeg/libavcodec/ffmpeg.vp8dsp.o $
+    obj/third_party/ffmpeg/libavcodec/ffmpeg.allcodecs.o $
+    obj/third_party/ffmpeg/libavcodec/ffmpeg.autorename_libavcodec_utils.o $
+    obj/third_party/ffmpeg/libavcodec/ffmpeg.avdct.o $
+    obj/third_party/ffmpeg/libavcodec/ffmpeg.avfft.o $
+    obj/third_party/ffmpeg/libavcodec/ffmpeg.avpacket.o $
+    obj/third_party/ffmpeg/libavcodec/ffmpeg.avpicture.o $
+    obj/third_party/ffmpeg/libavcodec/ffmpeg.bitstream.o $
+    obj/third_party/ffmpeg/libavcodec/ffmpeg.bitstream_filter.o $
+    obj/third_party/ffmpeg/libavcodec/ffmpeg.codec_desc.o $
+    obj/third_party/ffmpeg/libavcodec/ffmpeg.d3d11va.o $
+    obj/third_party/ffmpeg/libavcodec/ffmpeg.dirac.o $
+    obj/third_party/ffmpeg/libavcodec/ffmpeg.dv_profile.o $
+    obj/third_party/ffmpeg/libavcodec/ffmpeg.fft_fixed.o $
+    obj/third_party/ffmpeg/libavcodec/ffmpeg.fft_fixed_32.o $
+    obj/third_party/ffmpeg/libavcodec/ffmpeg.fft_float.o $
+    obj/third_party/ffmpeg/libavcodec/ffmpeg.fft_init_table.o $
+    obj/third_party/ffmpeg/libavcodec/ffmpeg.golomb.o $
+    obj/third_party/ffmpeg/libavcodec/ffmpeg.imgconvert.o $
+    obj/third_party/ffmpeg/libavcodec/ffmpeg.mathtables.o $
+    obj/third_party/ffmpeg/libavcodec/ffmpeg.mdct_fixed.o $
+    obj/third_party/ffmpeg/libavcodec/ffmpeg.mdct_fixed_32.o $
+    obj/third_party/ffmpeg/libavcodec/ffmpeg.mdct_float.o $
+    obj/third_party/ffmpeg/libavcodec/ffmpeg.mpeg12data.o $
+    obj/third_party/ffmpeg/libavcodec/ffmpeg.mpeg4audio.o $
+    obj/third_party/ffmpeg/libavcodec/ffmpeg.mpegaudiodata.o $
+    obj/third_party/ffmpeg/libavcodec/ffmpeg.options.o $
+    obj/third_party/ffmpeg/libavcodec/ffmpeg.opus.o $
+    obj/third_party/ffmpeg/libavcodec/ffmpeg.opus_parser.o $
+    obj/third_party/ffmpeg/libavcodec/ffmpeg.parser.o $
+    obj/third_party/ffmpeg/libavcodec/ffmpeg.pcm.o $
+    obj/third_party/ffmpeg/libavcodec/ffmpeg.pthread.o $
+    obj/third_party/ffmpeg/libavcodec/ffmpeg.pthread_frame.o $
+    obj/third_party/ffmpeg/libavcodec/ffmpeg.pthread_slice.o $
+    obj/third_party/ffmpeg/libavcodec/ffmpeg.qsv_api.o $
+    obj/third_party/ffmpeg/libavcodec/ffmpeg.raw.o $
+    obj/third_party/ffmpeg/libavcodec/ffmpeg.rdft.o $
+    obj/third_party/ffmpeg/libavcodec/ffmpeg.vorbis.o $
+    obj/third_party/ffmpeg/libavcodec/ffmpeg.vorbis_data.o $
+    obj/third_party/ffmpeg/libavcodec/ffmpeg.vorbis_parser.o $
+    obj/third_party/ffmpeg/libavcodec/ffmpeg.vorbisdec.o $
+    obj/third_party/ffmpeg/libavcodec/ffmpeg.vorbisdsp.o $
+    obj/third_party/ffmpeg/libavcodec/ffmpeg.xiph.o $
+    obj/third_party/ffmpeg/libavformat/ffmpeg.allformats.o $
+    obj/third_party/ffmpeg/libavformat/ffmpeg.autorename_libavformat_options.o $
+    obj/third_party/ffmpeg/libavformat/ffmpeg.autorename_libavformat_pcm.o $
+    obj/third_party/ffmpeg/libavformat/ffmpeg.autorename_libavformat_utils.o $
+    obj/third_party/ffmpeg/libavformat/ffmpeg.avio.o $
+    obj/third_party/ffmpeg/libavformat/ffmpeg.aviobuf.o $
+    obj/third_party/ffmpeg/libavformat/ffmpeg.cutils.o $
+    obj/third_party/ffmpeg/libavformat/ffmpeg.dump.o $
+    obj/third_party/ffmpeg/libavformat/ffmpeg.flac_picture.o $
+    obj/third_party/ffmpeg/libavformat/ffmpeg.format.o $
+    obj/third_party/ffmpeg/libavformat/ffmpeg.id3v1.o $
+    obj/third_party/ffmpeg/libavformat/ffmpeg.id3v2.o $
+    obj/third_party/ffmpeg/libavformat/ffmpeg.isom.o $
+    obj/third_party/ffmpeg/libavformat/ffmpeg.matroska.o $
+    obj/third_party/ffmpeg/libavformat/ffmpeg.matroskadec.o $
+    obj/third_party/ffmpeg/libavformat/ffmpeg.metadata.o $
+    obj/third_party/ffmpeg/libavformat/ffmpeg.mux.o $
+    obj/third_party/ffmpeg/libavformat/ffmpeg.oggdec.o $
+    obj/third_party/ffmpeg/libavformat/ffmpeg.oggparsecelt.o $
+    obj/third_party/ffmpeg/libavformat/ffmpeg.oggparsedaala.o $
+    obj/third_party/ffmpeg/libavformat/ffmpeg.oggparsedirac.o $
+    obj/third_party/ffmpeg/libavformat/ffmpeg.oggparseflac.o $
+    obj/third_party/ffmpeg/libavformat/ffmpeg.oggparseogm.o $
+    obj/third_party/ffmpeg/libavformat/ffmpeg.oggparseopus.o $
+    obj/third_party/ffmpeg/libavformat/ffmpeg.oggparseskeleton.o $
+    obj/third_party/ffmpeg/libavformat/ffmpeg.oggparsespeex.o $
+    obj/third_party/ffmpeg/libavformat/ffmpeg.oggparsetheora.o $
+    obj/third_party/ffmpeg/libavformat/ffmpeg.oggparsevorbis.o $
+    obj/third_party/ffmpeg/libavformat/ffmpeg.oggparsevp8.o $
+    obj/third_party/ffmpeg/libavformat/ffmpeg.os_support.o $
+    obj/third_party/ffmpeg/libavformat/ffmpeg.replaygain.o $
+    obj/third_party/ffmpeg/libavformat/ffmpeg.riff.o $
+    obj/third_party/ffmpeg/libavformat/ffmpeg.riffdec.o $
+    obj/third_party/ffmpeg/libavformat/ffmpeg.rmsipr.o $
+    obj/third_party/ffmpeg/libavformat/ffmpeg.url.o $
+    obj/third_party/ffmpeg/libavformat/ffmpeg.vorbiscomment.o $
+    obj/third_party/ffmpeg/libavformat/ffmpeg.wavdec.o $
+    obj/third_party/ffmpeg/libavutil/ffmpeg.aes.o $
+    obj/third_party/ffmpeg/libavutil/ffmpeg.autorename_libavutil_cpu.o $
+    obj/third_party/ffmpeg/libavutil/ffmpeg.avstring.o $
+    obj/third_party/ffmpeg/libavutil/ffmpeg.base64.o $
+    obj/third_party/ffmpeg/libavutil/ffmpeg.bprint.o $
+    obj/third_party/ffmpeg/libavutil/ffmpeg.buffer.o $
+    obj/third_party/ffmpeg/libavutil/ffmpeg.camellia.o $
+    obj/third_party/ffmpeg/libavutil/ffmpeg.channel_layout.o $
+    obj/third_party/ffmpeg/libavutil/ffmpeg.color_utils.o $
+    obj/third_party/ffmpeg/libavutil/ffmpeg.crc.o $
+    obj/third_party/ffmpeg/libavutil/ffmpeg.dict.o $
+    obj/third_party/ffmpeg/libavutil/ffmpeg.display.o $
+    obj/third_party/ffmpeg/libavutil/ffmpeg.downmix_info.o $
+    obj/third_party/ffmpeg/libavutil/ffmpeg.error.o $
+    obj/third_party/ffmpeg/libavutil/ffmpeg.eval.o $
+    obj/third_party/ffmpeg/libavutil/ffmpeg.fifo.o $
+    obj/third_party/ffmpeg/libavutil/ffmpeg.file_open.o $
+    obj/third_party/ffmpeg/libavutil/ffmpeg.fixed_dsp.o $
+    obj/third_party/ffmpeg/libavutil/ffmpeg.float_dsp.o $
+    obj/third_party/ffmpeg/libavutil/ffmpeg.frame.o $
+    obj/third_party/ffmpeg/libavutil/ffmpeg.imgutils.o $
+    obj/third_party/ffmpeg/libavutil/ffmpeg.intmath.o $
+    obj/third_party/ffmpeg/libavutil/ffmpeg.lfg.o $
+    obj/third_party/ffmpeg/libavutil/ffmpeg.log.o $
+    obj/third_party/ffmpeg/libavutil/ffmpeg.log2_tab.o $
+    obj/third_party/ffmpeg/libavutil/ffmpeg.mathematics.o $
+    obj/third_party/ffmpeg/libavutil/ffmpeg.md5.o $
+    obj/third_party/ffmpeg/libavutil/ffmpeg.mem.o $
+    obj/third_party/ffmpeg/libavutil/ffmpeg.opt.o $
+    obj/third_party/ffmpeg/libavutil/ffmpeg.parseutils.o $
+    obj/third_party/ffmpeg/libavutil/ffmpeg.pixdesc.o $
+    obj/third_party/ffmpeg/libavutil/ffmpeg.pixelutils.o $
+    obj/third_party/ffmpeg/libavutil/ffmpeg.random_seed.o $
+    obj/third_party/ffmpeg/libavutil/ffmpeg.rational.o $
+    obj/third_party/ffmpeg/libavutil/ffmpeg.reverse.o $
+    obj/third_party/ffmpeg/libavutil/ffmpeg.samplefmt.o $
+    obj/third_party/ffmpeg/libavutil/ffmpeg.sha.o $
+    obj/third_party/ffmpeg/libavutil/ffmpeg.stereo3d.o $
+    obj/third_party/ffmpeg/libavutil/ffmpeg.tea.o $
+    obj/third_party/ffmpeg/libavutil/ffmpeg.threadmessage.o $
+    obj/third_party/ffmpeg/libavutil/ffmpeg.time.o $
+    obj/third_party/ffmpeg/libavutil/ffmpeg.timecode.o $
+    obj/third_party/ffmpeg/libavutil/ffmpeg.twofish.o $
+    obj/third_party/ffmpeg/libavutil/ffmpeg.utils.o

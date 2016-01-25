@@ -42,7 +42,9 @@ class WebViewGuest : public guest_view::GuestView<WebViewGuest>,
  public:
   // Clean up state when this GuestView is being destroyed. See
   // GuestViewBase::CleanUp().
-  static void CleanUp(int embedder_process_id, int view_instance_id);
+  static void CleanUp(content::BrowserContext* browser_context,
+                      int embedder_process_id,
+                      int view_instance_id);
 
   static GuestViewBase* Create(content::WebContents* owner_web_contents);
 
@@ -57,6 +59,12 @@ class WebViewGuest : public guest_view::GuestView<WebViewGuest>,
                                              std::string* partition_domain,
                                              std::string* partition_name,
                                              bool* in_memory);
+
+  // Returns the WebView partition ID associated with the render process
+  // represented by |render_process_host|, if any. Otherwise, an empty string is
+  // returned.
+  static std::string GetPartitionID(
+      const content::RenderProcessHost* render_process_host);
 
   static const char Type[];
 
@@ -85,6 +93,7 @@ class WebViewGuest : public guest_view::GuestView<WebViewGuest>,
 
   // Sets the frame name of the guest.
   void SetName(const std::string& name);
+  const std::string& name() { return name_; }
 
   // Set the zoom factor.
   void SetZoom(double zoom_factor);
@@ -112,6 +121,12 @@ class WebViewGuest : public guest_view::GuestView<WebViewGuest>,
   void DidAttachToEmbedder() override;
   void DidDropLink(const GURL& url) override;
   void DidInitialize(const base::DictionaryValue& create_params) override;
+  void FindReply(content::WebContents* source,
+                 int request_id,
+                 int number_of_matches,
+                 const gfx::Rect& selection_rect,
+                 int active_match_ordinal,
+                 bool final_update) override;
   void GuestViewDidStopLoading() override;
   void EmbedderFullscreenToggled(bool entered_fullscreen) override;
   const char* GetAPINamespace() const override;
@@ -123,6 +138,7 @@ class WebViewGuest : public guest_view::GuestView<WebViewGuest>,
   void GuestZoomChanged(double old_zoom_level, double new_zoom_level) override;
   bool IsAutoSizeSupported() const override;
   void SignalWhenReady(const base::Closure& callback) override;
+  bool ShouldHandleFindRequestsForEmbedder() const override;
   void WillAttachToEmbedder() override;
   void WillDestroy() override;
 
@@ -135,12 +151,6 @@ class WebViewGuest : public guest_view::GuestView<WebViewGuest>,
   void LoadProgressChanged(content::WebContents* source,
                            double progress) override;
   void CloseContents(content::WebContents* source) override;
-  void FindReply(content::WebContents* source,
-                 int request_id,
-                 int number_of_matches,
-                 const gfx::Rect& selection_rect,
-                 int active_match_ordinal,
-                 bool final_update) override;
   bool HandleContextMenu(const content::ContextMenuParams& params) override;
   void HandleKeyboardEvent(
       content::WebContents* source,
@@ -349,6 +359,8 @@ class WebViewGuest : public guest_view::GuestView<WebViewGuest>,
   bool HandleKeyboardShortcuts(const content::NativeWebKeyboardEvent& event);
 
   void ApplyAttributes(const base::DictionaryValue& params);
+
+  void SetContextMenuPosition(const gfx::Point& position) override;
 
   // Identifies the set of rules registries belonging to this guest.
   int rules_registry_id_;

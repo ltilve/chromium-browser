@@ -31,15 +31,17 @@
 #include "config.h"
 #include "public/web/WebView.h"
 
+#include "bindings/core/v8/V8Document.h"
 #include "core/dom/Document.h"
 #include "core/dom/Element.h"
 #include "core/editing/FrameSelection.h"
+#include "core/editing/markers/DocumentMarkerController.h"
 #include "core/frame/EventHandlerRegistry.h"
 #include "core/frame/FrameHost.h"
 #include "core/frame/FrameView.h"
 #include "core/frame/LocalFrame.h"
-#include "core/frame/PinchViewport.h"
 #include "core/frame/Settings.h"
+#include "core/frame/VisualViewport.h"
 #include "core/html/HTMLDocument.h"
 #include "core/html/HTMLIFrameElement.h"
 #include "core/html/HTMLInputElement.h"
@@ -48,8 +50,8 @@
 #include "core/loader/DocumentLoader.h"
 #include "core/loader/FrameLoadRequest.h"
 #include "core/page/Page.h"
-#include "core/paint/DeprecatedPaintLayer.h"
-#include "core/paint/DeprecatedPaintLayerPainter.h"
+#include "core/paint/PaintLayer.h"
+#include "core/paint/PaintLayerPainter.h"
 #include "core/timing/DOMWindowPerformance.h"
 #include "core/timing/Performance.h"
 #include "core/timing/PerformanceCompositeTiming.h"
@@ -264,7 +266,7 @@ TEST_F(WebViewTest, SaveImageAt)
     EXPECT_EQ(WebString(), client.result());
 
     webView->setPageScaleFactor(4);
-    webView->setPinchViewportOffset(WebFloatPoint(1, 1));
+    webView->setVisualViewportOffset(WebFloatPoint(1, 1));
 
     client.reset();
     webView->saveImageAt(WebPoint(3, 3));
@@ -328,7 +330,7 @@ TEST_F(WebViewTest, CopyImageAtWithPinchZoom)
     webView->resize(WebSize(400, 400));
     webView->layout();
     webView->setPageScaleFactor(2);
-    webView->setPinchViewportOffset(WebFloatPoint(200, 200));
+    webView->setVisualViewportOffset(WebFloatPoint(200, 200));
 
     uint64_t sequence = Platform::current()->clipboard()->sequenceNumber(WebClipboard::BufferStandard);
 
@@ -530,10 +532,10 @@ TEST_F(WebViewTest, SetBaseBackgroundColorAndBlendWithExistingContent)
 
     // Paint the root of the main frame in the way that CompositedLayerMapping would.
     FrameView* view = m_webViewHelper.webViewImpl()->mainFrameImpl()->frameView();
-    DeprecatedPaintLayer* rootLayer = view->layoutView()->layer();
+    PaintLayer* rootLayer = view->layoutView()->layer();
     LayoutRect paintRect(0, 0, kWidth, kHeight);
-    DeprecatedPaintLayerPaintingInfo paintingInfo(rootLayer, paintRect, PaintBehaviorNormal, LayoutSize());
-    DeprecatedPaintLayerPainter(*rootLayer).paintLayerContents(&pictureBuilder.context(), paintingInfo, PaintLayerPaintingCompositingAllPhases);
+    PaintLayerPaintingInfo paintingInfo(rootLayer, paintRect, GlobalPaintNormalPhase, LayoutSize());
+    PaintLayerPainter(*rootLayer).paintLayerContents(&pictureBuilder.context(), paintingInfo, PaintLayerPaintingCompositingAllPhases);
 
     pictureBuilder.endRecording()->playback(&canvas);
 
@@ -596,14 +598,12 @@ TEST_F(WebViewTest, HitTestResultAtWithPageScale)
 
     // Image is at top left quandrant, so should not hit it.
     WebHitTestResult negativeResult = webView->hitTestResultAt(hitPoint);
-    ASSERT_EQ(WebNode::ElementNode, negativeResult.node().nodeType());
     EXPECT_FALSE(negativeResult.node().to<WebElement>().hasHTMLTagName("img"));
     negativeResult.reset();
 
     // Scale page up 2x so image should occupy the whole viewport.
     webView->setPageScaleFactor(2.0f);
     WebHitTestResult positiveResult = webView->hitTestResultAt(hitPoint);
-    ASSERT_EQ(WebNode::ElementNode, positiveResult.node().nodeType());
     EXPECT_TRUE(positiveResult.node().to<WebElement>().hasHTMLTagName("img"));
     positiveResult.reset();
 }
@@ -619,21 +619,18 @@ TEST_F(WebViewTest, HitTestResultAtWithPageScaleAndPan)
 
     // Image is at top left quandrant, so should not hit it.
     WebHitTestResult negativeResult = webView->hitTestResultAt(hitPoint);
-    ASSERT_EQ(WebNode::ElementNode, negativeResult.node().nodeType());
     EXPECT_FALSE(negativeResult.node().to<WebElement>().hasHTMLTagName("img"));
     negativeResult.reset();
 
     // Scale page up 2x so image should occupy the whole viewport.
     webView->setPageScaleFactor(2.0f);
     WebHitTestResult positiveResult = webView->hitTestResultAt(hitPoint);
-    ASSERT_EQ(WebNode::ElementNode, positiveResult.node().nodeType());
     EXPECT_TRUE(positiveResult.node().to<WebElement>().hasHTMLTagName("img"));
     positiveResult.reset();
 
     // Pan around the zoomed in page so the image is not visible in viewport.
-    webView->setPinchViewportOffset(WebFloatPoint(100, 100));
+    webView->setVisualViewportOffset(WebFloatPoint(100, 100));
     WebHitTestResult negativeResult2 = webView->hitTestResultAt(hitPoint);
-    ASSERT_EQ(WebNode::ElementNode, negativeResult2.node().nodeType());
     EXPECT_FALSE(negativeResult2.node().to<WebElement>().hasHTMLTagName("img"));
     negativeResult2.reset();
 }
@@ -648,21 +645,18 @@ TEST_F(WebViewTest, HitTestResultForTapWithTapArea)
 
     // Image is at top left quandrant, so should not hit it.
     WebHitTestResult negativeResult = webView->hitTestResultAt(hitPoint);
-    ASSERT_EQ(WebNode::ElementNode, negativeResult.node().nodeType());
     EXPECT_FALSE(negativeResult.node().to<WebElement>().hasHTMLTagName("img"));
     negativeResult.reset();
 
     // The tap area is 20 by 20 square, centered at 55, 55.
     WebSize tapArea(20, 20);
     WebHitTestResult positiveResult = webView->hitTestResultForTap(hitPoint, tapArea);
-    ASSERT_EQ(WebNode::ElementNode, positiveResult.node().nodeType());
     EXPECT_TRUE(positiveResult.node().to<WebElement>().hasHTMLTagName("img"));
     positiveResult.reset();
 
     // Move the hit point the image is just outside the tapped area now.
     hitPoint = WebPoint(61, 61);
     WebHitTestResult negativeResult2 = webView->hitTestResultForTap(hitPoint, tapArea);
-    ASSERT_EQ(WebNode::ElementNode, negativeResult2.node().nodeType());
     EXPECT_FALSE(negativeResult2.node().to<WebElement>().hasHTMLTagName("img"));
     negativeResult2.reset();
 }
@@ -678,22 +672,19 @@ TEST_F(WebViewTest, HitTestResultForTapWithTapAreaPageScaleAndPan)
 
     // Image is at top left quandrant, so should not hit it.
     WebHitTestResult negativeResult = webView->hitTestResultAt(hitPoint);
-    ASSERT_EQ(WebNode::ElementNode, negativeResult.node().nodeType());
     EXPECT_FALSE(negativeResult.node().to<WebElement>().hasHTMLTagName("img"));
     negativeResult.reset();
 
     // The tap area is 20 by 20 square, centered at 55, 55.
     WebSize tapArea(20, 20);
     WebHitTestResult positiveResult = webView->hitTestResultForTap(hitPoint, tapArea);
-    ASSERT_EQ(WebNode::ElementNode, positiveResult.node().nodeType());
     EXPECT_TRUE(positiveResult.node().to<WebElement>().hasHTMLTagName("img"));
     positiveResult.reset();
 
     // Zoom in and pan around the page so the image is not visible in viewport.
     webView->setPageScaleFactor(2.0f);
-    webView->setPinchViewportOffset(WebFloatPoint(100, 100));
+    webView->setVisualViewportOffset(WebFloatPoint(100, 100));
     WebHitTestResult negativeResult2 = webView->hitTestResultForTap(hitPoint, tapArea);
-    ASSERT_EQ(WebNode::ElementNode, negativeResult2.node().nodeType());
     EXPECT_FALSE(negativeResult2.node().to<WebElement>().hasHTMLTagName("img"));
     negativeResult2.reset();
 }
@@ -812,8 +803,14 @@ void WebViewTest::testTextInputType(WebTextInputType expectedType, const std::st
 {
     URLTestHelpers::registerMockedURLFromBaseURL(WebString::fromUTF8(m_baseURL.c_str()), WebString::fromUTF8(htmlFile.c_str()));
     WebView* webView = m_webViewHelper.initializeAndLoad(m_baseURL + htmlFile);
+    EXPECT_EQ(WebTextInputTypeNone, webView->textInputType());
+    EXPECT_EQ(WebTextInputTypeNone, webView->textInputInfo().type);
     webView->setInitialFocus(false);
+    EXPECT_EQ(expectedType, webView->textInputType());
     EXPECT_EQ(expectedType, webView->textInputInfo().type);
+    webView->clearFocusedElement();
+    EXPECT_EQ(WebTextInputTypeNone, webView->textInputType());
+    EXPECT_EQ(WebTextInputTypeNone, webView->textInputInfo().type);
 }
 
 TEST_F(WebViewTest, TextInputType)
@@ -991,9 +988,6 @@ TEST_F(WebViewTest, SetCompositionFromExistingText)
     WebLocalFrameImpl* frame = toWebLocalFrameImpl(webView->mainFrame());
     frame->setEditableSelectionOffsets(4, 10);
     frame->setCompositionFromExistingText(8, 12, underlines);
-    WebVector<WebCompositionUnderline> underlineResults = toWebViewImpl(webView)->compositionUnderlines();
-    EXPECT_EQ(8u, underlineResults[0].startOffset);
-    EXPECT_EQ(12u, underlineResults[0].endOffset);
     WebTextInputInfo info = webView->textInputInfo();
     EXPECT_EQ(4, info.selectionStart);
     EXPECT_EQ(10, info.selectionEnd);
@@ -1024,9 +1018,6 @@ TEST_F(WebViewTest, SetCompositionFromExistingTextInTextArea)
 
     frame->setEditableSelectionOffsets(31, 31);
     frame->setCompositionFromExistingText(30, 34, underlines);
-    WebVector<WebCompositionUnderline> underlineResults = toWebViewImpl(webView)->compositionUnderlines();
-    EXPECT_EQ(2u, underlineResults[0].startOffset);
-    EXPECT_EQ(6u, underlineResults[0].endOffset);
     info = webView->textInputInfo();
     EXPECT_EQ("0123456789abcdefghijklmnopq\nrstuvwxyz", std::string(info.value.utf8().data()));
     EXPECT_EQ(31, info.selectionStart);
@@ -1042,6 +1033,21 @@ TEST_F(WebViewTest, SetCompositionFromExistingTextInTextArea)
     EXPECT_EQ(34, info.selectionEnd);
     EXPECT_EQ(-1, info.compositionStart);
     EXPECT_EQ(-1, info.compositionEnd);
+}
+
+TEST_F(WebViewTest, SetCompositionFromExistingTextInRichText)
+{
+    URLTestHelpers::registerMockedURLFromBaseURL(WebString::fromUTF8(m_baseURL.c_str()), WebString::fromUTF8("content_editable_rich_text.html"));
+    WebView* webView = m_webViewHelper.initializeAndLoad(m_baseURL + "content_editable_rich_text.html");
+    webView->setInitialFocus(false);
+    WebVector<WebCompositionUnderline> underlines(static_cast<size_t>(1));
+    underlines[0] = WebCompositionUnderline(0, 4, 0, false, 0);
+    WebLocalFrameImpl* frame = toWebLocalFrameImpl(webView->mainFrame());
+    frame->setEditableSelectionOffsets(1, 1);
+    WebDocument document = webView->mainFrame()->document();
+    EXPECT_FALSE(document.getElementById("bold").isNull());
+    frame->setCompositionFromExistingText(0, 4, underlines);
+    EXPECT_FALSE(document.getElementById("bold").isNull());
 }
 
 TEST_F(WebViewTest, SetEditableSelectionOffsetsKeepsComposition)
@@ -1237,12 +1243,12 @@ TEST_F(WebViewTest, EnterFullscreenResetScrollAndScaleState)
     // Make the page scale and scroll with the given paremeters.
     webViewImpl->setPageScaleFactor(2.0f);
     webViewImpl->mainFrame()->setScrollOffset(WebSize(94, 111));
-    webViewImpl->setPinchViewportOffset(WebFloatPoint(12, 20));
+    webViewImpl->setVisualViewportOffset(WebFloatPoint(12, 20));
     EXPECT_EQ(2.0f, webViewImpl->pageScaleFactor());
     EXPECT_EQ(94, webViewImpl->mainFrame()->scrollOffset().width);
     EXPECT_EQ(111, webViewImpl->mainFrame()->scrollOffset().height);
-    EXPECT_EQ(12, webViewImpl->pinchViewportOffset().x);
-    EXPECT_EQ(20, webViewImpl->pinchViewportOffset().y);
+    EXPECT_EQ(12, webViewImpl->visualViewportOffset().x);
+    EXPECT_EQ(20, webViewImpl->visualViewportOffset().y);
 
     RefPtrWillBeRawPtr<Element> element = static_cast<PassRefPtrWillBeRawPtr<Element>>(webViewImpl->mainFrame()->document().body());
     webViewImpl->enterFullScreenForElement(element.get());
@@ -1261,8 +1267,8 @@ TEST_F(WebViewTest, EnterFullscreenResetScrollAndScaleState)
     EXPECT_EQ(2.0f, webViewImpl->pageScaleFactor());
     EXPECT_EQ(94, webViewImpl->mainFrame()->scrollOffset().width);
     EXPECT_EQ(111, webViewImpl->mainFrame()->scrollOffset().height);
-    EXPECT_EQ(12, webViewImpl->pinchViewportOffset().x);
-    EXPECT_EQ(20, webViewImpl->pinchViewportOffset().y);
+    EXPECT_EQ(12, webViewImpl->visualViewportOffset().x);
+    EXPECT_EQ(20, webViewImpl->visualViewportOffset().y);
 
     m_webViewHelper.reset(); // Explicitly reset to break dependency on locally scoped client.
 }
@@ -1298,7 +1304,7 @@ TEST_F(WebViewTest, PrintWithXHRInFlight)
     m_webViewHelper.reset();
 }
 
-class DropTask : public WebThread::Task {
+class DropTask : public WebTaskRunner::Task {
 public:
     explicit DropTask(WebView* webView) : m_webView(webView)
     {
@@ -1328,7 +1334,7 @@ static void DragAndDropURL(WebViewImpl* webView, const std::string& url)
     const WebPoint clientPoint(0, 0);
     const WebPoint screenPoint(0, 0);
     webView->dragTargetDragEnter(dragData, clientPoint, screenPoint, WebDragOperationCopy, 0);
-    Platform::current()->currentThread()->postTask(FROM_HERE, new DropTask(webView));
+    Platform::current()->currentThread()->taskRunner()->postTask(FROM_HERE, new DropTask(webView));
     FrameTestHelpers::pumpPendingRequestsDoNotUse(webView->mainFrame());
 }
 
@@ -1501,13 +1507,16 @@ TEST_F(WebViewTest, ClientTapHandling)
 TEST_F(WebViewTest, ClientTapHandlingNullWebViewClient)
 {
     WebViewImpl* webView = WebViewImpl::create(nullptr);
-    webView->setMainFrame(WebLocalFrame::create(WebTreeScopeType::Document, nullptr));
+    WebLocalFrame* localFrame = WebLocalFrame::create(WebTreeScopeType::Document, nullptr);
+    webView->setMainFrame(localFrame);
     WebGestureEvent event;
     event.type = WebInputEvent::GestureTap;
     event.x = 3;
     event.y = 8;
     EXPECT_FALSE(webView->handleInputEvent(event));
     webView->close();
+    // Explicitly close as the frame as no frame client to do so on frameDetached().
+    localFrame->close();
 }
 
 #if OS(ANDROID)
@@ -1669,7 +1678,6 @@ TEST_F(WebViewTest, LosingFocusDoesNotTriggerAutofillTextChange)
     // text changed notification for autofill.
     client.clearChangeCounts();
     webView->setFocus(false);
-    EXPECT_EQ(1, client.textChangesWhileIgnored());
     EXPECT_EQ(0, client.textChangesWhileNotIgnored());
 
     frame->setAutofillClient(0);
@@ -1988,14 +1996,14 @@ TEST_F(WebViewTest, SmartClipData)
     static const char* kExpectedClipText = "\nPrice 10,000,000won";
     static const char* kExpectedClipHtml =
         "<div id=\"div4\" style=\"padding: 10px; margin: 10px; border: 2px "
-        "solid rgb(135, 206, 235); float: left; width: 190px; height: 30px; "
+        "solid skyblue; float: left; width: 190px; height: 30px; "
         "color: rgb(0, 0, 0); font-family: myahem; font-size: 8px; font-style: "
         "normal; font-variant: normal; font-weight: normal; letter-spacing: "
         "normal; line-height: normal; orphans: auto; text-align: start; "
         "text-indent: 0px; text-transform: none; white-space: normal; widows: "
         "1; word-spacing: 0px; -webkit-text-stroke-width: 0px;\">Air "
         "conditioner</div><div id=\"div5\" style=\"padding: 10px; margin: "
-        "10px; border: 2px solid rgb(135, 206, 235); float: left; width: "
+        "10px; border: 2px solid skyblue; float: left; width: "
         "190px; height: 30px; color: rgb(0, 0, 0); font-family: myahem; "
         "font-size: 8px; font-style: normal; font-variant: normal; "
         "font-weight: normal; letter-spacing: normal; line-height: normal; "
@@ -2021,14 +2029,14 @@ TEST_F(WebViewTest, SmartClipDataWithPinchZoom)
     static const char* kExpectedClipText = "\nPrice 10,000,000won";
     static const char* kExpectedClipHtml =
         "<div id=\"div4\" style=\"padding: 10px; margin: 10px; border: 2px "
-        "solid rgb(135, 206, 235); float: left; width: 190px; height: 30px; "
+        "solid skyblue; float: left; width: 190px; height: 30px; "
         "color: rgb(0, 0, 0); font-family: myahem; font-size: 8px; font-style: "
         "normal; font-variant: normal; font-weight: normal; letter-spacing: "
         "normal; line-height: normal; orphans: auto; text-align: start; "
         "text-indent: 0px; text-transform: none; white-space: normal; widows: "
         "1; word-spacing: 0px; -webkit-text-stroke-width: 0px;\">Air "
         "conditioner</div><div id=\"div5\" style=\"padding: 10px; margin: "
-        "10px; border: 2px solid rgb(135, 206, 235); float: left; width: "
+        "10px; border: 2px solid skyblue; float: left; width: "
         "190px; height: 30px; color: rgb(0, 0, 0); font-family: myahem; "
         "font-size: 8px; font-style: normal; font-variant: normal; "
         "font-weight: normal; letter-spacing: normal; line-height: normal; "
@@ -2044,7 +2052,7 @@ TEST_F(WebViewTest, SmartClipDataWithPinchZoom)
     webView->resize(WebSize(500, 500));
     webView->layout();
     webView->setPageScaleFactor(1.5);
-    webView->setPinchViewportOffset(WebFloatPoint(167, 100));
+    webView->setVisualViewportOffset(WebFloatPoint(167, 100));
     WebRect cropRect(200, 38, 228, 75);
     webView->extractSmartClipData(cropRect, clipText, clipHtml, clipRect);
     EXPECT_STREQ(kExpectedClipText, clipText.utf8().c_str());
@@ -2086,18 +2094,16 @@ WebFrame* CreateChildCounterFrameClient::createChildFrame(WebLocalFrame* parent,
 
 TEST_F(WebViewTest, ChangeDisplayMode)
 {
-    WebView* webView = m_webViewHelper.initializeAndLoad("about:blank", true);
+    URLTestHelpers::registerMockedURLFromBaseURL(WebString::fromUTF8(m_baseURL.c_str()), WebString::fromUTF8("display_mode.html"));
+    WebView* webView = m_webViewHelper.initializeAndLoad(m_baseURL + "display_mode.html", true);
 
-    WebScriptSource source("document.querySelector('body').innerHTML = window.matchMedia('(display-mode: minimal-ui)').matches");
-
-    webView->mainFrame()->executeScript(source);
-    std::string content = webView->mainFrame()->contentAsText(5).utf8();
-    EXPECT_EQ("false", content);
+    std::string content = webView->mainFrame()->contentAsText(21).utf8();
+    EXPECT_EQ("regular-ui", content);
 
     webView->setDisplayMode(WebDisplayModeMinimalUi);
-    webView->mainFrame()->executeScript(source);
-    content = webView->mainFrame()->contentAsText(5).utf8();
-    EXPECT_EQ("true", content);
+    content = webView->mainFrame()->contentAsText(21).utf8();
+    EXPECT_EQ("minimal-ui", content);
+    m_webViewHelper.reset();
 }
 
 TEST_F(WebViewTest, AddFrameInCloseUnload)
@@ -2619,6 +2625,25 @@ TEST_F(WebViewTest, PreferredSize)
     EXPECT_EQ(2, size.height);
 }
 
+TEST_F(WebViewTest, PreferredSizeDirtyLayout)
+{
+    std::string url = m_baseURL + "specify_size.html?100px:100px";
+    URLTestHelpers::registerMockedURLLoad(toKURL(url), "specify_size.html");
+    WebView* webView = m_webViewHelper.initializeAndLoad(url, true);
+    WebElement documentElement = webView->mainFrame()->document().documentElement();
+
+    WebSize size = webView->contentsPreferredMinimumSize();
+    EXPECT_EQ(100, size.width);
+    EXPECT_EQ(100, size.height);
+
+    bool setStyle = documentElement.setAttribute("style", "display: none");
+    EXPECT_TRUE(setStyle);
+
+    size = webView->contentsPreferredMinimumSize();
+    EXPECT_EQ(0, size.width);
+    EXPECT_EQ(0, size.height);
+}
+
 class UnhandledTapWebViewClient : public FrameTestHelpers::TestWebViewClient {
 public:
     void showUnhandledTapUIIfNeeded(const WebPoint& tappedPosition, const WebNode& tappedNode, bool pageChanged) override
@@ -2680,7 +2705,7 @@ TEST_F(WebViewTest, ShowUnhandledTapUIIfNeeded)
 
     // Test correct conversion of coordinates to viewport space under pinch-zoom.
     webView->setPageScaleFactor(2);
-    webView->setPinchViewportOffset(WebFloatPoint(50, 20));
+    webView->setVisualViewportOffset(WebFloatPoint(50, 20));
     client.reset();
     EXPECT_TRUE(tapElementById(webView, WebInputEvent::GestureTap, WebString::fromUTF8("target")));
     EXPECT_TRUE(client.getWasCalled());
@@ -3027,6 +3052,23 @@ TEST_F(WebViewTest, TestRecordFrameTimingEvents)
         double docDuration = docFinishTime - docStartTime;
         ASSERT_DOUBLE_EQ(docDuration, renders[i]->duration());
     }
+}
+
+
+TEST_F(WebViewTest, StopLoadingIfJavaScriptURLReturnsNoStringResult)
+{
+    ViewCreatingWebViewClient client;
+    FrameTestHelpers::WebViewHelper mainWebView;
+    mainWebView.initializeAndLoad("about:blank", true, 0, &client);
+    mainWebView.webViewImpl()->page()->settings().setJavaScriptCanOpenWindowsAutomatically(true);
+
+    WebFrame* frame = mainWebView.webView()->mainFrame();
+    v8::HandleScope scope(v8::Isolate::GetCurrent());
+    v8::Local<v8::Value> v8Value = frame->executeScriptAndReturnValue(WebScriptSource("var win = window.open('javascript:false'); win.document"));
+    ASSERT_TRUE(v8Value->IsObject());
+    Document* document = V8Document::toImplWithTypeCheck(v8::Isolate::GetCurrent(), v8Value);
+    ASSERT_TRUE(document);
+    EXPECT_FALSE(document->frame()->isLoading());
 }
 
 } // namespace blink

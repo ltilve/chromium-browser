@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<!--
+Copyright (c) 2015 The Chromium Authors. All rights reserved.
+Use of this source code is governed by a BSD-style license that can be
+found in the LICENSE file.
+-->
+<link rel="import" href="/tracing/extras/rail/rail_interaction_record.html">
+
+<script>
+'use strict';
+
+/**
+ * @fileoverview The Response phase of RAIL.
+ */
+tr.exportTo('tr.e.rail', function() {
+  // The computeNormalizedPain regions are delineated at these millisecond
+  // latency values.
+  var PAIN_LATENCY_REGIONS = [150, 300, 1000, 5000];
+
+  function ResponseInteractionRecord(start, duration) {
+    tr.e.rail.RAILInteractionRecord.call(
+        this, 'Response', 'rail_response',
+        start, duration);
+  }
+
+  ResponseInteractionRecord.prototype = {
+    __proto__: tr.e.rail.RAILInteractionRecord.prototype,
+
+    get normalizedUserPain() {
+      // User pain is derived from the time between when the user thinks they
+      // begin an interation (expectedStart) and the time when the screen first
+      // changes to reflect the interaction (actualEnd).  There may be a delay
+      // between expectedStart and when chrome first starts processing the
+      // interaction (actualStart) if the main thread is busy.  The user doesn't
+      // know when actualStart is, they only know when expectedStart is. User
+      // pain, by definition, considers only what the user experiences, so
+      // "duration" is defined as actualEnd - expectedStart.
+
+      // https://www.desmos.com/calculator/xa9setwcmf
+      return tr.e.rail.computeNormalizedPain(this.duration, {
+        minValueExponential: PAIN_LATENCY_REGIONS[0],
+        minValueLinear: PAIN_LATENCY_REGIONS[1],
+        minValueLogarithmic: PAIN_LATENCY_REGIONS[2],
+        maxValue: PAIN_LATENCY_REGIONS[3]
+      });
+    }
+  };
+
+  return {
+    ResponseInteractionRecord: ResponseInteractionRecord
+  };
+});
+</script>

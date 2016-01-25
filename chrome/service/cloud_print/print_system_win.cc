@@ -68,7 +68,7 @@ class PrintSystemWatcherWin : public base::win::ObjectWatcher::Delegate {
       printer_change_.Set(FindFirstPrinterChangeNotification(
           printer_.Get(), PRINTER_CHANGE_PRINTER|PRINTER_CHANGE_JOB, 0, NULL));
       if (printer_change_.IsValid()) {
-        ret = watcher_.StartWatching(printer_change_.Get(), this);
+        ret = watcher_.StartWatchingOnce(printer_change_.Get(), this);
       }
     }
     if (!ret) {
@@ -106,7 +106,7 @@ class PrintSystemWatcherWin : public base::win::ObjectWatcher::Delegate {
         delegate_->OnJobChanged();
       }
     }
-    watcher_.StartWatching(printer_change_.Get(), this);
+    watcher_.StartWatchingOnce(printer_change_.Get(), this);
   }
 
   bool GetCurrentPrinterInfo(printing::PrinterBasicInfo* printer_info) {
@@ -361,7 +361,8 @@ class JobSpoolerWin : public PrintSystem::JobSpooler {
         delegate_->OnJobSpoolSucceeded(job_status.jobId);
       } else {
         job_progress_watcher_.StopWatching();
-        job_progress_watcher_.StartWatching(job_progress_event_.Get(), this);
+        job_progress_watcher_.StartWatchingOnce(
+            job_progress_event_.Get(), this);
       }
     }
 
@@ -409,7 +410,7 @@ class JobSpoolerWin : public PrintSystem::JobSpooler {
       int dc_width = GetDeviceCaps(printer_dc_.Get(), PHYSICALWIDTH);
       int dc_height = GetDeviceCaps(printer_dc_.Get(), PHYSICALHEIGHT);
       gfx::Rect render_area(0, 0, dc_width, dc_height);
-      g_service_process->io_thread()->task_runner()->PostTask(
+      g_service_process->io_task_runner()->PostTask(
           FROM_HERE,
           base::Bind(&JobSpoolerWin::Core::RenderPDFPagesInSandbox, this,
                      print_data_file_path_, render_area, printer_dpi,
@@ -422,9 +423,7 @@ class JobSpoolerWin : public PrintSystem::JobSpooler {
         const gfx::Rect& render_area,
         int render_dpi,
         const scoped_refptr<base::SingleThreadTaskRunner>& client_task_runner) {
-      DCHECK(g_service_process->io_thread()
-                 ->task_runner()
-                 ->BelongsToCurrentThread());
+      DCHECK(g_service_process->io_task_runner()->BelongsToCurrentThread());
       scoped_ptr<ServiceUtilityProcessHost> utility_host(
           new ServiceUtilityProcessHost(this, client_task_runner.get()));
       // TODO(gene): For now we disabling autorotation for CloudPrinting.
@@ -485,7 +484,8 @@ class JobSpoolerWin : public PrintSystem::JobSpooler {
       if (FAILED(doc_stream->Close()))
         return false;
 
-      job_progress_watcher_.StartWatching(job_progress_event_.Get(), this);
+      job_progress_watcher_.StartWatchingOnce(
+          job_progress_event_.Get(), this);
       job_canceler.reset();
       return true;
     }
@@ -552,14 +552,14 @@ class PrinterCapsHandler : public ServiceUtilityProcessHost::Client {
   }
 
   void StartGetPrinterCapsAndDefaults() {
-    g_service_process->io_thread()->task_runner()->PostTask(
+    g_service_process->io_task_runner()->PostTask(
         FROM_HERE,
         base::Bind(&PrinterCapsHandler::GetPrinterCapsAndDefaultsImpl, this,
                    base::ThreadTaskRunnerHandle::Get()));
   }
 
   void StartGetPrinterSemanticCapsAndDefaults() {
-    g_service_process->io_thread()->task_runner()->PostTask(
+    g_service_process->io_task_runner()->PostTask(
         FROM_HERE,
         base::Bind(&PrinterCapsHandler::GetPrinterSemanticCapsAndDefaultsImpl,
                    this, base::ThreadTaskRunnerHandle::Get()));
@@ -570,9 +570,7 @@ class PrinterCapsHandler : public ServiceUtilityProcessHost::Client {
 
   void GetPrinterCapsAndDefaultsImpl(
       const scoped_refptr<base::SingleThreadTaskRunner>& client_task_runner) {
-    DCHECK(g_service_process->io_thread()
-               ->task_runner()
-               ->BelongsToCurrentThread());
+    DCHECK(g_service_process->io_task_runner()->BelongsToCurrentThread());
     scoped_ptr<ServiceUtilityProcessHost> utility_host(
         new ServiceUtilityProcessHost(this, client_task_runner.get()));
     if (utility_host->StartGetPrinterCapsAndDefaults(printer_name_)) {
@@ -586,9 +584,7 @@ class PrinterCapsHandler : public ServiceUtilityProcessHost::Client {
 
   void GetPrinterSemanticCapsAndDefaultsImpl(
       const scoped_refptr<base::SingleThreadTaskRunner>& client_task_runner) {
-    DCHECK(g_service_process->io_thread()
-               ->task_runner()
-               ->BelongsToCurrentThread());
+    DCHECK(g_service_process->io_task_runner()->BelongsToCurrentThread());
     scoped_ptr<ServiceUtilityProcessHost> utility_host(
         new ServiceUtilityProcessHost(this, client_task_runner.get()));
     if (utility_host->StartGetPrinterSemanticCapsAndDefaults(printer_name_)) {

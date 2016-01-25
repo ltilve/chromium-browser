@@ -152,7 +152,7 @@
             'content_browser.gypi',
             # Disable LTO due to ELF section name out of range
             # crbug.com/422251
-            '../build/android/disable_lto.gypi',
+            '../build/android/disable_gcc_lto.gypi',
           ],
           'dependencies': [
             'content_common',
@@ -430,6 +430,7 @@
           'dependencies': [
             '../base/base.gyp:base',
             '../device/battery/battery.gyp:device_battery_java',
+            '../device/bluetooth/bluetooth.gyp:device_bluetooth_java',
             '../device/vibration/vibration.gyp:device_vibration_java',
             '../media/media.gyp:media_java',
             '../mojo/mojo_base.gyp:mojo_application_bindings',
@@ -601,6 +602,16 @@
             'motionevent_jni_headers'
           ],
           'includes': [ 'content_jni.gypi' ],
+          'conditions': [
+            ['enable_webvr==1', {
+              'sources': [
+                'public/android/java/src/org/chromium/content/browser/input/CardboardVRDevice.java',
+              ],
+              'dependencies': [
+                '../third_party/cardboard-java/cardboard.gyp:cardboard_jar',
+              ],
+            }],
+          ],
         },
         {
           'target_name': 'content_icudata',

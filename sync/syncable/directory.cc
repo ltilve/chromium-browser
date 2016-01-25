@@ -19,6 +19,7 @@
 #include "sync/syncable/entry.h"
 #include "sync/syncable/entry_kernel.h"
 #include "sync/syncable/in_memory_directory_backing_store.h"
+#include "sync/syncable/model_neutral_mutable_entry.h"
 #include "sync/syncable/on_disk_directory_backing_store.h"
 #include "sync/syncable/scoped_kernel_lock.h"
 #include "sync/syncable/scoped_parent_child_index_updater.h"
@@ -103,11 +104,12 @@ Directory::Kernel::~Kernel() {
                                        metahandles_map.end());
 }
 
-Directory::Directory(DirectoryBackingStore* store,
-                     UnrecoverableErrorHandler* unrecoverable_error_handler,
-                     const base::Closure& report_unrecoverable_error_function,
-                     NigoriHandler* nigori_handler,
-                     Cryptographer* cryptographer)
+Directory::Directory(
+    DirectoryBackingStore* store,
+    const WeakHandle<UnrecoverableErrorHandler>& unrecoverable_error_handler,
+    const base::Closure& report_unrecoverable_error_function,
+    NigoriHandler* nigori_handler,
+    Cryptographer* cryptographer)
     : kernel_(NULL),
       store_(store),
       unrecoverable_error_handler_(unrecoverable_error_handler),
@@ -116,8 +118,7 @@ Directory::Directory(DirectoryBackingStore* store,
       nigori_handler_(nigori_handler),
       cryptographer_(cryptographer),
       invariant_check_level_(VERIFY_CHANGES),
-      weak_ptr_factory_(this) {
-}
+      weak_ptr_factory_(this) {}
 
 Directory::~Directory() {
   Close();
@@ -231,8 +232,9 @@ void Directory::OnUnrecoverableError(const BaseTransaction* trans,
                                      const std::string & message) {
   DCHECK(trans != NULL);
   unrecoverable_error_set_ = true;
-  unrecoverable_error_handler_->OnUnrecoverableError(location,
-                                                     message);
+  unrecoverable_error_handler_.Call(
+      FROM_HERE, &UnrecoverableErrorHandler::OnUnrecoverableError, location,
+      message);
 }
 
 EntryKernel* Directory::GetEntryById(const Id& id) {
@@ -984,9 +986,29 @@ bool Directory::InitialSyncEndedForType(ModelType type) {
 
 bool Directory::InitialSyncEndedForType(
     BaseTransaction* trans, ModelType type) {
-  // True iff the type's root node has been created.
-  syncable::Entry entry(trans, syncable::GET_TYPE_ROOT, type);
-  return entry.good();
+  // True iff the type's root node has been created and changes
+  // for the type have been applied at least once.
+  Entry root(trans, GET_TYPE_ROOT, type);
+  return root.good() && root.GetBaseVersion() != CHANGES_VERSION;
+}
+
+void Directory::MarkInitialSyncEndedForType(BaseWriteTransaction* trans,
+                                            ModelType type) {
+  // If the root folder is downloaded for the server, the root's base version
+  // get updated automatically at the end of update cycle when the update gets
+  // applied. However if this is a type with client generated root, the root
+  // node gets created locally and never goes through the update cycle. In that
+  // case its base version has to be explictly changed from CHANGES_VERSION
+  // at the end of the initial update cycle to mark the type as downloaded.
+  // See Directory::InitialSyncEndedForType
+  DCHECK(IsTypeWithClientGeneratedRoot(type));
+  ModelNeutralMutableEntry root(trans, GET_TYPE_ROOT, type);
+
+  // Some tests don't bother creating type root. Need to check if the root
+  // exists before clearing its base version.
+  if (root.good() && root.GetBaseVersion() == CHANGES_VERSION) {
+    root.PutBaseVersion(0);
+  }
 }
 
 string Directory::store_birthday() const {
@@ -1469,7 +1491,7 @@ void Directory::PutPredecessor(EntryKernel* e, EntryKernel* predecessor) {
   // without valid positions.  See TODO above.
   // Using a release CHECK here because the following UniquePosition::Between
   // call crashes anyway when the position string is empty (see crbug/332371).
-  CHECK(successor->ref(UNIQUE_POSITION).IsValid());
+  CHECK(successor->ref(UNIQUE_POSITION).IsValid()) << *successor;
 
   // Finally, the normal case: inserting between two elements.
   UniquePosition pos = UniquePosition::Between(

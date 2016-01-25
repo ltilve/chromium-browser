@@ -434,9 +434,9 @@ TEST(WebInputEventConversionTest, InputEventsScaling)
     {
         PlatformGestureEvent platformGestureEvent(PlatformEvent::GestureScrollUpdate, IntPoint(10, 12), IntPoint(20, 22), IntSize(25, 27), 0,
             false, false, false, false);
-        platformGestureEvent.setScrollGestureData(30, 32, 40, 42, true, true);
+        platformGestureEvent.setScrollGestureData(30, 32, 40, 42, true, true, -1 /* null plugin id */);
         // FIXME: GestureEvent does not preserve velocityX, velocityY,
-        // preventPropagation, or inertial. It also fails to scale
+        // or preventPropagation. It also fails to scale
         // coordinates (x, y, deltaX, deltaY) to the page scale. This
         // may lead to unexpected bugs if a PlatformGestureEvent is
         // transformed into WebGestureEvent and back.
@@ -451,7 +451,7 @@ TEST(WebInputEventConversionTest, InputEventsScaling)
         EXPECT_EQ(32, webGestureBuilder.data.scrollUpdate.deltaY);
         EXPECT_EQ(0, webGestureBuilder.data.scrollUpdate.velocityX);
         EXPECT_EQ(0, webGestureBuilder.data.scrollUpdate.velocityY);
-        EXPECT_FALSE(webGestureBuilder.data.scrollUpdate.inertial);
+        EXPECT_TRUE(webGestureBuilder.data.scrollUpdate.inertial);
         EXPECT_FALSE(webGestureBuilder.data.scrollUpdate.preventPropagation);
     }
 
@@ -667,7 +667,7 @@ TEST(WebInputEventConversionTest, InputEventsConversions)
     }
 }
 
-TEST(WebInputEventConversionTest, PinchViewportOffset)
+TEST(WebInputEventConversionTest, VisualViewportOffset)
 {
     const std::string baseURL("http://www.test4.com/");
     const std::string fileName("fixed_layout.html");
@@ -682,8 +682,8 @@ TEST(WebInputEventConversionTest, PinchViewportOffset)
 
     webViewImpl->setPageScaleFactor(2);
 
-    IntPoint pinchOffset(35, 60);
-    webViewImpl->page()->frameHost().pinchViewport().setLocation(pinchOffset);
+    IntPoint visualOffset(35, 60);
+    webViewImpl->page()->frameHost().visualViewport().setLocation(visualOffset);
 
     FrameView* view = toLocalFrame(webViewImpl->page()->mainFrame())->view();
 
@@ -698,8 +698,8 @@ TEST(WebInputEventConversionTest, PinchViewportOffset)
         webMouseEvent.globalY = 10;
 
         PlatformMouseEventBuilder platformMouseBuilder(view, webMouseEvent);
-        EXPECT_EQ(5 + pinchOffset.x(), platformMouseBuilder.position().x());
-        EXPECT_EQ(5 + pinchOffset.y(), platformMouseBuilder.position().y());
+        EXPECT_EQ(5 + visualOffset.x(), platformMouseBuilder.position().x());
+        EXPECT_EQ(5 + visualOffset.y(), platformMouseBuilder.position().y());
         EXPECT_EQ(10, platformMouseBuilder.globalPosition().x());
         EXPECT_EQ(10, platformMouseBuilder.globalPosition().y());
     }
@@ -715,8 +715,8 @@ TEST(WebInputEventConversionTest, PinchViewportOffset)
         webMouseWheelEvent.globalY = 10;
 
         PlatformWheelEventBuilder platformWheelBuilder(view, webMouseWheelEvent);
-        EXPECT_EQ(5 + pinchOffset.x(), platformWheelBuilder.position().x());
-        EXPECT_EQ(5 + pinchOffset.y(), platformWheelBuilder.position().y());
+        EXPECT_EQ(5 + visualOffset.x(), platformWheelBuilder.position().x());
+        EXPECT_EQ(5 + visualOffset.y(), platformWheelBuilder.position().y());
         EXPECT_EQ(10, platformWheelBuilder.globalPosition().x());
         EXPECT_EQ(10, platformWheelBuilder.globalPosition().y());
     }
@@ -730,8 +730,8 @@ TEST(WebInputEventConversionTest, PinchViewportOffset)
         webGestureEvent.globalY = 10;
 
         PlatformGestureEventBuilder platformGestureBuilder(view, webGestureEvent);
-        EXPECT_EQ(5 + pinchOffset.x(), platformGestureBuilder.position().x());
-        EXPECT_EQ(5 + pinchOffset.y(), platformGestureBuilder.position().y());
+        EXPECT_EQ(5 + visualOffset.x(), platformGestureBuilder.position().x());
+        EXPECT_EQ(5 + visualOffset.y(), platformGestureBuilder.position().y());
         EXPECT_EQ(10, platformGestureBuilder.globalPosition().x());
         EXPECT_EQ(10, platformGestureBuilder.globalPosition().y());
     }
@@ -754,8 +754,8 @@ TEST(WebInputEventConversionTest, PinchViewportOffset)
         PlatformTouchEventBuilder platformTouchBuilder(view, webTouchEvent);
         EXPECT_FLOAT_EQ(10.6f, platformTouchBuilder.touchPoints()[0].screenPos().x());
         EXPECT_FLOAT_EQ(10.4f, platformTouchBuilder.touchPoints()[0].screenPos().y());
-        EXPECT_FLOAT_EQ(5.3f + pinchOffset.x(), platformTouchBuilder.touchPoints()[0].pos().x());
-        EXPECT_FLOAT_EQ(5.2f + pinchOffset.y(), platformTouchBuilder.touchPoints()[0].pos().y());
+        EXPECT_FLOAT_EQ(5.3f + visualOffset.x(), platformTouchBuilder.touchPoints()[0].pos().x());
+        EXPECT_FLOAT_EQ(5.2f + visualOffset.y(), platformTouchBuilder.touchPoints()[0].pos().y());
     }
 }
 
@@ -800,8 +800,8 @@ TEST(WebInputEventConversionTest, ElasticOverscroll)
     // pinch-zoom).
     float pageScale = 2;
     webViewImpl->setPageScaleFactor(pageScale);
-    IntPoint pinchOffset(35, 60);
-    webViewImpl->page()->frameHost().pinchViewport().setLocation(pinchOffset);
+    IntPoint visualOffset(35, 60);
+    webViewImpl->page()->frameHost().visualViewport().setLocation(visualOffset);
     {
         WebMouseEvent webMouseEvent;
         webMouseEvent.type = WebInputEvent::MouseMove;
@@ -813,8 +813,8 @@ TEST(WebInputEventConversionTest, ElasticOverscroll)
         webMouseEvent.globalY = 10;
 
         PlatformMouseEventBuilder platformMouseBuilder(view, webMouseEvent);
-        EXPECT_EQ(webMouseEvent.x / pageScale + pinchOffset.x() + elasticOverscroll.width(), platformMouseBuilder.position().x());
-        EXPECT_EQ(webMouseEvent.y / pageScale + pinchOffset.y() + elasticOverscroll.height(), platformMouseBuilder.position().y());
+        EXPECT_EQ(webMouseEvent.x / pageScale + visualOffset.x() + elasticOverscroll.width(), platformMouseBuilder.position().x());
+        EXPECT_EQ(webMouseEvent.y / pageScale + visualOffset.y() + elasticOverscroll.height(), platformMouseBuilder.position().y());
         EXPECT_EQ(webMouseEvent.globalX, platformMouseBuilder.globalPosition().x());
         EXPECT_EQ(webMouseEvent.globalY, platformMouseBuilder.globalPosition().y());
     }
@@ -823,7 +823,7 @@ TEST(WebInputEventConversionTest, ElasticOverscroll)
 // Page reload/navigation should not reset elastic overscroll.
 TEST(WebInputEventConversionTest, ElasticOverscrollWithPageReload)
 {
-    const std::string baseURL("http://www.test5.com/");
+    const std::string baseURL("http://www.test6.com/");
     const std::string fileName("fixed_layout.html");
 
     URLTestHelpers::registerMockedURLFromBaseURL(WebString::fromUTF8(baseURL.c_str()), WebString::fromUTF8("fixed_layout.html"));
@@ -860,7 +860,7 @@ TEST(WebInputEventConversionTest, ElasticOverscrollWithPageReload)
 
 TEST(WebInputEventConversionTest, WebMouseWheelEventBuilder)
 {
-    const std::string baseURL("http://www.test6.com/");
+    const std::string baseURL("http://www.test7.com/");
     const std::string fileName("fixed_layout.html");
 
     URLTestHelpers::registerMockedURLFromBaseURL(WebString::fromUTF8(baseURL.c_str()), WebString::fromUTF8("fixed_layout.html"));
@@ -874,7 +874,7 @@ TEST(WebInputEventConversionTest, WebMouseWheelEventBuilder)
     RefPtrWillBeRawPtr<Document> document = toLocalFrame(webViewImpl->page()->mainFrame())->document();
     RefPtrWillBeRawPtr<WheelEvent> event = WheelEvent::create(FloatPoint(1, 3), FloatPoint(5, 10),
         WheelEvent::DOM_DELTA_PAGE, document.get()->domWindow(),  IntPoint(2, 6), IntPoint(10, 30),
-        true, false, false, false, 0, true, true, Event::RailsModeHorizontal);
+        true, false, false, false, 0, true, -1 /* null plugin id */, true, Event::RailsModeHorizontal);
     WebMouseWheelEventBuilder webMouseWheel(toLocalFrame(webViewImpl->page()->mainFrame())->view(), document.get()->layoutView(), *event);
     EXPECT_EQ(1, webMouseWheel.wheelTicksX);
     EXPECT_EQ(3, webMouseWheel.wheelTicksY);
@@ -892,7 +892,7 @@ TEST(WebInputEventConversionTest, WebMouseWheelEventBuilder)
 
 TEST(WebInputEventConversionTest, PlatformWheelEventBuilder)
 {
-    const std::string baseURL("http://www.test7.com/");
+    const std::string baseURL("http://www.test8.com/");
     const std::string fileName("fixed_layout.html");
 
     URLTestHelpers::registerMockedURLFromBaseURL(WebString::fromUTF8(baseURL.c_str()), WebString::fromUTF8("fixed_layout.html"));

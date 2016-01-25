@@ -11,7 +11,7 @@
 #include "base/callback.h"
 #include "base/command_line.h"
 #include "base/lazy_instance.h"
-#include "base/metrics/field_trial.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/path_service.h"
 #include "base/prefs/pref_change_registrar.h"
 #include "base/prefs/pref_service.h"
@@ -21,22 +21,20 @@
 #include "base/threading/thread_restrictions.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/chrome_notification_types.h"
-#include "chrome/browser/prefs/tracked/tracked_preference_validation_delegate.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/profiles/profile_manager.h"
 #include "chrome/browser/safe_browsing/client_side_detection_service.h"
 #include "chrome/browser/safe_browsing/database_manager.h"
 #include "chrome/browser/safe_browsing/download_protection_service.h"
-#include "chrome/browser/safe_browsing/malware_details.h"
 #include "chrome/browser/safe_browsing/ping_manager.h"
 #include "chrome/browser/safe_browsing/protocol_manager.h"
-#include "chrome/browser/safe_browsing/safe_browsing_database.h"
 #include "chrome/browser/safe_browsing/ui_manager.h"
 #include "chrome/common/chrome_constants.h"
 #include "chrome/common/chrome_paths.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/common/url_constants.h"
+#include "components/user_prefs/tracked/tracked_preference_validation_delegate.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/cookie_store_factory.h"
 #include "content/public/browser/notification_service.h"
@@ -73,36 +71,27 @@ const base::FilePath::CharType kCookiesFile[] = FILE_PATH_LITERAL(" Cookies");
 
 // The default URL prefix where browser fetches chunk updates, hashes,
 // and reports safe browsing hits and malware details.
-const char* const kSbDefaultURLPrefix =
+const char kSbDefaultURLPrefix[] =
     "https://safebrowsing.google.com/safebrowsing";
 
 // The backup URL prefix used when there are issues establishing a connection
 // with the server at the primary URL.
-const char* const kSbBackupConnectErrorURLPrefix =
+const char kSbBackupConnectErrorURLPrefix[] =
     "https://alt1-safebrowsing.google.com/safebrowsing";
 
 // The backup URL prefix used when there are HTTP-specific issues with the
 // server at the primary URL.
-const char* const kSbBackupHttpErrorURLPrefix =
+const char kSbBackupHttpErrorURLPrefix[] =
     "https://alt2-safebrowsing.google.com/safebrowsing";
 
 // The backup URL prefix used when there are local network specific issues.
-const char* const kSbBackupNetworkErrorURLPrefix =
+const char kSbBackupNetworkErrorURLPrefix[] =
     "https://alt3-safebrowsing.google.com/safebrowsing";
 
 base::FilePath CookieFilePath() {
   return base::FilePath(
       SafeBrowsingService::GetBaseFilename().value() + kCookiesFile);
 }
-
-#if defined(FULL_SAFE_BROWSING)
-// Returns true if the incident reporting service is enabled via a field trial.
-bool IsIncidentReportingServiceEnabled() {
-  const std::string group_name = base::FieldTrialList::FindFullName(
-      "SafeBrowsingIncidentReportingService");
-  return group_name == "Enabled";
-}
-#endif  // defined(FULL_SAFE_BROWSING)
 
 }  // namespace
 
@@ -203,13 +192,11 @@ SafeBrowsingService* SafeBrowsingService::CreateSafeBrowsingService() {
   return factory_->CreateSafeBrowsingService();
 }
 
-
 SafeBrowsingService::SafeBrowsingService()
     : protocol_manager_(NULL),
       ping_manager_(NULL),
       enabled_(false),
-      enabled_by_prefs_(false) {
-}
+      enabled_by_prefs_(false) {}
 
 SafeBrowsingService::~SafeBrowsingService() {
   // We should have already been shut down. If we're still enabled, then the
@@ -247,12 +234,9 @@ void SafeBrowsingService::Initialize() {
       this, url_request_context_getter_.get()));
 #endif
 
-  if (IsIncidentReportingServiceEnabled()) {
-    incident_service_.reset(new safe_browsing::IncidentReportingService(
-        this, url_request_context_getter_));
-    resource_request_detector_.reset(new safe_browsing::ResourceRequestDetector(
-        incident_service_->GetIncidentReceiver()));
-  }
+  incident_service_.reset(CreateIncidentReportingService());
+  resource_request_detector_.reset(new safe_browsing::ResourceRequestDetector(
+      incident_service_->GetIncidentReceiver()));
 
   off_domain_inclusion_detector_.reset(
       new safe_browsing::OffDomainInclusionDetector(database_manager_));
@@ -264,6 +248,9 @@ void SafeBrowsingService::Initialize() {
   ProfileManager* profile_manager = g_browser_process->profile_manager();
   if (profile_manager) {
     std::vector<Profile*> profiles = profile_manager->GetLoadedProfiles();
+    // TODO(felt): I believe this for-loop is dead code. Confirm this and
+    // remove in a future CL. See https://codereview.chromium.org/1341533002/
+    DCHECK_EQ(0u, profiles.size());
     for (size_t i = 0; i < profiles.size(); ++i) {
       if (profiles[i]->IsOffTheRecord())
         continue;
@@ -360,25 +347,23 @@ scoped_ptr<TrackedPreferenceValidationDelegate>
 SafeBrowsingService::CreatePreferenceValidationDelegate(
     Profile* profile) const {
 #if defined(FULL_SAFE_BROWSING)
-  if (incident_service_)
-    return incident_service_->CreatePreferenceValidationDelegate(profile);
-#endif
+  return incident_service_->CreatePreferenceValidationDelegate(profile);
+#else
   return scoped_ptr<TrackedPreferenceValidationDelegate>();
+#endif
 }
 
 #if defined(FULL_SAFE_BROWSING)
 void SafeBrowsingService::RegisterDelayedAnalysisCallback(
     const safe_browsing::DelayedAnalysisCallback& callback) {
-  if (incident_service_)
-    incident_service_->RegisterDelayedAnalysisCallback(callback);
+  incident_service_->RegisterDelayedAnalysisCallback(callback);
 }
 #endif
 
 void SafeBrowsingService::AddDownloadManager(
     content::DownloadManager* download_manager) {
 #if defined(FULL_SAFE_BROWSING)
-  if (incident_service_)
-    incident_service_->AddDownloadManager(download_manager);
+  incident_service_->AddDownloadManager(download_manager);
 #endif
 }
 
@@ -404,6 +389,14 @@ SafeBrowsingDatabaseManager* SafeBrowsingService::CreateDatabaseManager() {
   return NULL;
 #endif
 }
+
+#if defined(FULL_SAFE_BROWSING)
+safe_browsing::IncidentReportingService*
+SafeBrowsingService::CreateIncidentReportingService() {
+  return new safe_browsing::IncidentReportingService(
+      this, url_request_context_getter_);
+}
+#endif
 
 void SafeBrowsingService::RegisterAllDelayedAnalysis() {
 #if defined(FULL_SAFE_BROWSING)
@@ -599,6 +592,13 @@ void SafeBrowsingService::AddPrefService(PrefService* pref_service) {
                             base::Unretained(this)));
   prefs_map_[pref_service] = registrar;
   RefreshState();
+
+  // Record the current pref state.
+  UMA_HISTOGRAM_BOOLEAN("SafeBrowsing.Pref.General",
+                        pref_service->GetBoolean(prefs::kSafeBrowsingEnabled));
+  UMA_HISTOGRAM_BOOLEAN(
+      "SafeBrowsing.Pref.Extended",
+      pref_service->GetBoolean(prefs::kSafeBrowsingExtendedReportingEnabled));
 }
 
 void SafeBrowsingService::RemovePrefService(PrefService* pref_service) {

@@ -12,19 +12,23 @@
 #include "content/public/browser/navigation_details.h"
 #include "content/public/browser/user_metrics.h"
 
+#if !defined(OS_ANDROID)
+#include "chrome/browser/ui/browser_finder.h"
+#endif
+
 namespace {
 
 class CancelledRequest : public PermissionBubbleRequest {
  public:
   explicit CancelledRequest(PermissionBubbleRequest* cancelled)
-      : icon_(cancelled->GetIconID()),
+      : icon_(cancelled->GetIconId()),
         message_text_(cancelled->GetMessageText()),
         message_fragment_(cancelled->GetMessageTextFragment()),
         user_gesture_(cancelled->HasUserGesture()),
         hostname_(cancelled->GetRequestingHostname()) {}
   ~CancelledRequest() override {}
 
-  int GetIconID() const override { return icon_; }
+  int GetIconId() const override { return icon_; }
   base::string16 GetMessageText() const override { return message_text_; }
   base::string16 GetMessageTextFragment() const override {
     return message_fragment_;
@@ -60,17 +64,6 @@ void PermissionBubbleManager::Observer::OnBubbleAdded() {
 // PermissionBubbleManager -----------------------------------------------------
 
 DEFINE_WEB_CONTENTS_USER_DATA_KEY(PermissionBubbleManager);
-
-// static
-bool PermissionBubbleManager::Enabled() {
-#if defined(OS_ANDROID) || defined(OS_IOS)
-  return false;
-#endif
-  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
-          switches::kDisablePermissionsBubbles))
-    return false;
-  return true;
-}
 
 PermissionBubbleManager::PermissionBubbleManager(
     content::WebContents* web_contents)
@@ -179,7 +172,12 @@ void PermissionBubbleManager::CancelRequest(PermissionBubbleRequest* request) {
       (*requests_iter)->RequestFinished();
       requests_.erase(requests_iter);
       accept_states_.erase(accepts_iter);
-      TriggerShowBubble();  // Will redraw the bubble if it is being shown.
+
+      if (IsBubbleVisible()) {
+        view_->Hide();
+        // Will redraw the bubble if it is being shown.
+        TriggerShowBubble();
+      }
       return;
     }
 
@@ -204,12 +202,17 @@ void PermissionBubbleManager::HideBubble() {
   view_.reset();
 }
 
-void PermissionBubbleManager::DisplayPendingRequests(Browser* browser) {
+void PermissionBubbleManager::DisplayPendingRequests() {
   if (IsBubbleVisible())
     return;
 
-  view_ = view_factory_.Run(browser);
+#if defined(OS_ANDROID)
+  NOTREACHED();
+  return;
+#else
+  view_ = view_factory_.Run(chrome::FindBrowserWithWebContents(web_contents()));
   view_->SetDelegate(this);
+#endif
 
   TriggerShowBubble();
 }
@@ -239,6 +242,8 @@ void PermissionBubbleManager::DidNavigateMainFrame(
   if (details.is_in_page)
     return;
 
+  CancelPendingQueues();
+  FinalizeBubble();
   main_frame_has_fully_loaded_ = false;
 }
 
@@ -255,25 +260,6 @@ void PermissionBubbleManager::DocumentOnLoadCompletedInMainFrame() {
 void PermissionBubbleManager::DocumentLoadedInFrame(
     content::RenderFrameHost* render_frame_host) {
   ScheduleShowBubble();
-}
-
-void PermissionBubbleManager::NavigationEntryCommitted(
-    const content::LoadCommittedDetails& details) {
-  // No permissions requests pending.
-  if (request_url_.is_empty())
-    return;
-
-  // If we have navigated to a new url or reloaded the page...
-  // GetAsReferrer strips fragment and username/password, meaning
-  // the navigation is really to the same page.
-  if ((request_url_.GetAsReferrer() !=
-       web_contents()->GetLastCommittedURL().GetAsReferrer()) ||
-      (details.type == content::NAVIGATION_TYPE_EXISTING_PAGE &&
-       !details.is_in_page)) {
-    // Kill off existing bubble and cancel any pending requests.
-    CancelPendingQueues();
-    FinalizeBubble();
-  }
 }
 
 void PermissionBubbleManager::WebContentsDestroyed() {

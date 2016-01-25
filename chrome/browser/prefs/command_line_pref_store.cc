@@ -7,6 +7,7 @@
 #include <string>
 #include <vector>
 
+#include "ash/ash_switches.h"
 #include "base/files/file_path.h"
 #include "base/logging.h"
 #include "base/strings/string_number_conversions.h"
@@ -15,6 +16,7 @@
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/pref_names.h"
 #include "components/proxy_config/proxy_config_dictionary.h"
+#include "components/proxy_config/proxy_config_pref_names.h"
 #include "ui/base/ui_base_switches.h"
 
 #if defined(OS_CHROMEOS)
@@ -26,9 +28,14 @@ const CommandLinePrefStore::StringSwitchToPreferenceMapEntry
       { switches::kLang, prefs::kApplicationLocale },
       { data_reduction_proxy::switches::kDataReductionProxy,
           data_reduction_proxy::prefs::kDataReductionProxy },
+      { switches::kAuthServerWhitelist, prefs::kAuthServerWhitelist },
       { switches::kSSLVersionMin, prefs::kSSLVersionMin },
       { switches::kSSLVersionMax, prefs::kSSLVersionMax },
       { switches::kSSLVersionFallbackMin, prefs::kSSLVersionFallbackMin },
+#if defined(OS_ANDROID)
+      { switches::kAuthAndroidNegotiateAccountType,
+          prefs::kAuthAndroidNegotiateAccountType },
+#endif
 };
 
 const CommandLinePrefStore::PathSwitchToPreferenceMapEntry
@@ -56,6 +63,8 @@ const CommandLinePrefStore::BooleanSwitchToPreferenceMapEntry
 #if defined(OS_CHROMEOS)
       { chromeos::switches::kEnableTouchpadThreeFingerClick,
           prefs::kEnableTouchpadThreeFingerClick, true },
+      { ash::switches::kAshEnableUnifiedDesktop,
+          prefs::kUnifiedDesktopEnabledByDefault, true },
 #endif
       { switches::kDisableAsyncDns, prefs::kBuiltInDnsClientEnabled, false },
 };
@@ -143,18 +152,18 @@ void CommandLinePrefStore::ApplySimpleSwitches() {
 
 void CommandLinePrefStore::ApplyProxyMode() {
   if (command_line_->HasSwitch(switches::kNoProxyServer)) {
-    SetValue(prefs::kProxy,
+    SetValue(proxy_config::prefs::kProxy,
              make_scoped_ptr(ProxyConfigDictionary::CreateDirect()),
              WriteablePrefStore::DEFAULT_PREF_WRITE_FLAGS);
   } else if (command_line_->HasSwitch(switches::kProxyPacUrl)) {
     std::string pac_script_url =
         command_line_->GetSwitchValueASCII(switches::kProxyPacUrl);
-    SetValue(prefs::kProxy,
+    SetValue(proxy_config::prefs::kProxy,
              make_scoped_ptr(
                  ProxyConfigDictionary::CreatePacScript(pac_script_url, false)),
              WriteablePrefStore::DEFAULT_PREF_WRITE_FLAGS);
   } else if (command_line_->HasSwitch(switches::kProxyAutoDetect)) {
-    SetValue(prefs::kProxy,
+    SetValue(proxy_config::prefs::kProxy,
              make_scoped_ptr(ProxyConfigDictionary::CreateAutoDetect()),
              WriteablePrefStore::DEFAULT_PREF_WRITE_FLAGS);
   } else if (command_line_->HasSwitch(switches::kProxyServer)) {
@@ -162,7 +171,7 @@ void CommandLinePrefStore::ApplyProxyMode() {
         command_line_->GetSwitchValueASCII(switches::kProxyServer);
     std::string bypass_list =
         command_line_->GetSwitchValueASCII(switches::kProxyBypassList);
-    SetValue(prefs::kProxy,
+    SetValue(proxy_config::prefs::kProxy,
              make_scoped_ptr(ProxyConfigDictionary::CreateFixedServers(
                  proxy_server, bypass_list)),
              WriteablePrefStore::DEFAULT_PREF_WRITE_FLAGS);
@@ -171,23 +180,19 @@ void CommandLinePrefStore::ApplyProxyMode() {
 
 void CommandLinePrefStore::ApplySSLSwitches() {
   if (command_line_->HasSwitch(switches::kCipherSuiteBlacklist)) {
-    std::string cipher_suites =
-        command_line_->GetSwitchValueASCII(switches::kCipherSuiteBlacklist);
-    std::vector<std::string> cipher_strings;
-    base::SplitString(cipher_suites, ',', &cipher_strings);
     scoped_ptr<base::ListValue> list_value(new base::ListValue());
-    for (std::vector<std::string>::const_iterator it = cipher_strings.begin();
-         it != cipher_strings.end(); ++it) {
-      list_value->AppendString(*it);
-    }
+    list_value->AppendStrings(base::SplitString(
+        command_line_->GetSwitchValueASCII(switches::kCipherSuiteBlacklist),
+        ",", base::TRIM_WHITESPACE, base::SPLIT_WANT_ALL));
     SetValue(prefs::kCipherSuiteBlacklist, list_value.Pass(),
              WriteablePrefStore::DEFAULT_PREF_WRITE_FLAGS);
   }
 }
 
 void CommandLinePrefStore::ApplyBackgroundModeSwitches() {
-  if (command_line_->HasSwitch(switches::kDisableExtensions))
+  if (command_line_->HasSwitch(switches::kDisableExtensions)) {
     SetValue(prefs::kBackgroundModeEnabled,
              make_scoped_ptr(new base::FundamentalValue(false)),
              WriteablePrefStore::DEFAULT_PREF_WRITE_FLAGS);
+  }
 }

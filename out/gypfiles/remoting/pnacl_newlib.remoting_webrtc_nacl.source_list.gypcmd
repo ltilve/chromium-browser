@@ -1,0 +1,8 @@
+../third_party/webrtc/modules/desktop_capture/desktop_frame.cc
+../third_party/webrtc/modules/desktop_capture/desktop_frame.h
+../third_party/webrtc/modules/desktop_capture/desktop_geometry.cc
+../third_party/webrtc/modules/desktop_capture/desktop_geometry.h
+../third_party/webrtc/modules/desktop_capture/desktop_region.cc
+../third_party/webrtc/modules/desktop_capture/desktop_region.h
+../third_party/webrtc/modules/desktop_capture/shared_desktop_frame.cc
+../third_party/webrtc/modules/desktop_capture/shared_desktop_frame.h

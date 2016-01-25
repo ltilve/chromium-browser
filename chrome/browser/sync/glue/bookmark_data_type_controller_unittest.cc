@@ -14,6 +14,7 @@
 #include "chrome/browser/bookmarks/bookmark_model_factory.h"
 #include "chrome/browser/bookmarks/chrome_bookmark_client.h"
 #include "chrome/browser/bookmarks/chrome_bookmark_client_factory.h"
+#include "chrome/browser/bookmarks/managed_bookmark_service_factory.h"
 #include "chrome/browser/history/history_service_factory.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/sync/profile_sync_components_factory_mock.h"
@@ -25,6 +26,7 @@
 #include "components/keyed_service/core/refcounted_keyed_service.h"
 #include "components/sync_driver/change_processor_mock.h"
 #include "components/sync_driver/data_type_controller_mock.h"
+#include "components/sync_driver/fake_sync_client.h"
 #include "components/sync_driver/model_associator_mock.h"
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "sync/api/sync_error.h"
@@ -55,12 +57,6 @@ class HistoryMock : public history::HistoryService {
   ~HistoryMock() override {}
 };
 
-scoped_ptr<KeyedService> BuildChromeBookmarkClient(
-    content::BrowserContext* context) {
-  return make_scoped_ptr(
-      new ChromeBookmarkClient(static_cast<Profile*>(context)));
-}
-
 scoped_ptr<KeyedService> BuildBookmarkModelWithoutLoading(
     content::BrowserContext* context) {
   Profile* profile = static_cast<Profile*>(context);
@@ -87,11 +83,26 @@ scoped_ptr<KeyedService> BuildHistoryService(content::BrowserContext* profile) {
 
 }  // namespace
 
-class SyncBookmarkDataTypeControllerTest : public testing::Test {
+class SyncBookmarkDataTypeControllerTest : public testing::Test,
+                                           public sync_driver::FakeSyncClient {
  public:
   SyncBookmarkDataTypeControllerTest()
       : thread_bundle_(content::TestBrowserThreadBundle::DEFAULT),
         service_(&profile_) {}
+
+  // FakeSyncClient overrides.
+  bookmarks::BookmarkModel* GetBookmarkModel() override {
+    return bookmark_model_;
+  }
+  history::HistoryService* GetHistoryService() override {
+    return history_service_;
+  }
+  sync_driver::SyncService* GetSyncService() override {
+    return &service_;
+  }
+  sync_driver::SyncApiComponentFactory* GetSyncApiComponentFactory() override {
+    return profile_sync_factory_.get();
+  }
 
   void SetUp() override {
     model_associator_ = new ModelAssociatorMock();
@@ -102,9 +113,7 @@ class SyncBookmarkDataTypeControllerTest : public testing::Test {
     profile_sync_factory_.reset(
         new ProfileSyncComponentsFactoryMock(model_associator_,
                                              change_processor_));
-    bookmark_dtc_ = new BookmarkDataTypeController(profile_sync_factory_.get(),
-                                                   &profile_,
-                                                   &service_);
+    bookmark_dtc_ = new BookmarkDataTypeController(this);
   }
 
  protected:
@@ -114,8 +123,10 @@ class SyncBookmarkDataTypeControllerTest : public testing::Test {
   };
 
   void CreateBookmarkModel(BookmarkLoadPolicy bookmark_load_policy) {
+    ManagedBookmarkServiceFactory::GetInstance()->SetTestingFactory(
+        &profile_, ManagedBookmarkServiceFactory::GetDefaultFactory());
     ChromeBookmarkClientFactory::GetInstance()->SetTestingFactory(
-        &profile_, BuildChromeBookmarkClient);
+        &profile_, ChromeBookmarkClientFactory::GetDefaultFactory());
     if (bookmark_load_policy == LOAD_MODEL) {
       bookmark_model_ = static_cast<BookmarkModel*>(
           BookmarkModelFactory::GetInstance()->SetTestingFactoryAndUse(
@@ -145,7 +156,6 @@ class SyncBookmarkDataTypeControllerTest : public testing::Test {
   }
 
   void SetStopExpectations() {
-    EXPECT_CALL(service_, DeactivateDataType(_));
     EXPECT_CALL(*model_associator_, DisassociateModels()).
                 WillOnce(Return(syncer::SyncError()));
   }

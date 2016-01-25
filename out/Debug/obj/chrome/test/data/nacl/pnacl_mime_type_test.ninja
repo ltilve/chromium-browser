@@ -1,0 +1,29 @@
+build obj/chrome/test/data/nacl/pnacl_mime_type_test.actions_depends.stamp: $
+    stamp $
+    obj/native_client/src/untrusted/nacl/nacl_lib.actions_depends.stamp $
+    obj/native_client/src/untrusted/pthread/pthread_lib.actions_rules_copies.stamp $
+    obj/ppapi/ppapi_cpp_lib.actions_rules_copies.stamp $
+    obj/ppapi/native_client/ppapi_lib.actions_rules_copies.stamp
+
+build obj/chrome/test/data/nacl/pnacl_mime_type_test.compile_depends.stamp: $
+    stamp $
+    obj/native_client/src/untrusted/nacl/nacl_lib.compile_depends.stamp $
+    obj/native_client/src/untrusted/pthread/pthread_lib.actions_rules_copies.stamp $
+    obj/ppapi/ppapi_cpp_lib.actions_rules_copies.stamp $
+    obj/ppapi/native_client/ppapi_lib.actions_rules_copies.stamp
+
+build nacl_test_data/newlib/pnacl_mime_type.html: copy $
+    ../../chrome/test/data/nacl/pnacl_mime_type/pnacl_mime_type.html || $
+    obj/chrome/test/data/nacl/pnacl_mime_type_test.actions_depends.stamp
+build nacl_test_data/glibc/pnacl_mime_type.html: copy $
+    ../../chrome/test/data/nacl/pnacl_mime_type/pnacl_mime_type.html || $
+    obj/chrome/test/data/nacl/pnacl_mime_type_test.actions_depends.stamp
+build nacl_test_data/pnacl/pnacl_mime_type.html: copy $
+    ../../chrome/test/data/nacl/pnacl_mime_type/pnacl_mime_type.html || $
+    obj/chrome/test/data/nacl/pnacl_mime_type_test.actions_depends.stamp
+build $
+    obj/chrome/test/data/nacl/pnacl_mime_type_test.actions_rules_copies.stamp: $
+    stamp nacl_test_data/newlib/pnacl_mime_type.html $
+    nacl_test_data/glibc/pnacl_mime_type.html $
+    nacl_test_data/pnacl/pnacl_mime_type.html
+

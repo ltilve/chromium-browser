@@ -42,7 +42,6 @@ remoting.LogToServer = function(signalStrategy, opt_isHost) {
   this.role_ = opt_isHost ? 'host' : 'client';
 
   this.setSessionId();
-  signalStrategy.sendConnectionSetupResults(this);
 };
 
 // Constants used for generating a session ID.
@@ -57,9 +56,10 @@ remoting.LogToServer.SESSION_ID_LEN_ = 20;
  *
  * @param {remoting.ClientSession.State} state
  * @param {!remoting.Error} connectionError
+ * @param {?remoting.ChromotingEvent.XmppError} xmppError
  */
 remoting.LogToServer.prototype.logClientSessionStateChange =
-    function(state, connectionError) {
+    function(state, connectionError, xmppError) {
   this.maybeExpireSessionId_();
   // Log the session state change.
   var entry = remoting.ServerLogEntry.makeClientSessionStateChange(
@@ -68,6 +68,8 @@ remoting.LogToServer.prototype.logClientSessionStateChange =
   entry.addChromeVersionField();
   entry.addWebappVersionField();
   entry.addSessionIdField(this.sessionId_);
+  entry.addXmppError(xmppError);
+
   this.log_(entry);
   // Don't accumulate connection statistics across state changes.
   this.logAccumulatedStatistics_();
@@ -194,8 +196,9 @@ remoting.LogToServer.prototype.log_ = function(entry) {
           this.authTotalTime_) / 1000.0;
   entry.addSessionDuration(sessionDurationInSeconds);
   entry.addApplicationId();
-  // The host-version will be blank for logs before a session has been created.
-  // For example, the signal-strategy log-entries won't have host version info.
+  // The host-version/os/os-version will be blank for logs before a session has
+  // been created. For example, the signal-strategy log-entries won't have host
+  // version info.
   entry.addHostVersion(this.hostVersion_);
 
   // Send the stanza to the debug log.
@@ -286,3 +289,31 @@ remoting.LogToServer.prototype.setAuthTotalTime = function(totalTime) {
 remoting.LogToServer.prototype.setHostVersion = function(hostVersion) {
   this.hostVersion_ = hostVersion;
 };
+
+/**
+ * Stub.
+ * @param {remoting.ChromotingEvent.Os} hostOs Type of the host OS for
+          current session.
+ * @return {void} Nothing.
+ */
+remoting.LogToServer.prototype.setHostOs = function(hostOs) {};
+
+/**
+ * Stub
+ * @override {remoting.Logger}
+ */
+remoting.LogToServer.prototype.setHostStatusUpdateElapsedTime = function(time) {
+};
+
+/**
+ * Stub.
+ * @param {string} hostOsVersion Version of the host OS for current session.
+ * @return {void} Nothing.
+ */
+remoting.LogToServer.prototype.setHostOsVersion = function(hostOsVersion) {};
+
+/**
+ * Stub.
+ * @override {remoting.Logger}
+ */
+remoting.LogToServer.prototype.setAuthMethod = function(authMethod) {};

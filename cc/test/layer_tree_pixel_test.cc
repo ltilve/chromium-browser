@@ -62,7 +62,7 @@ scoped_ptr<OutputSurface> LayerTreePixelTest::CreateOutputSurface() {
   return output_surface.Pass();
 }
 
-void LayerTreePixelTest::WillActivateTreeOnThread(LayerTreeHostImpl* impl) {
+void LayerTreePixelTest::WillCommitCompleteOnThread(LayerTreeHostImpl* impl) {
   if (impl->sync_tree()->source_frame_number() != 0)
     return;
 
@@ -379,6 +379,12 @@ void LayerTreePixelTest::CopyBitmapToTextureMailboxAsTexture(
                  base::Unretained(this),
                  base::Passed(&context),
                  texture_id));
+}
+
+void LayerTreePixelTest::Finish() {
+  scoped_ptr<gpu::GLInProcessContext> context = CreateTestInProcessContext();
+  GLES2Interface* gl = context->GetImplementation();
+  gl->Finish();
 }
 
 }  // namespace cc

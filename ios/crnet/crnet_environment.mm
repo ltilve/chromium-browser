@@ -16,7 +16,10 @@
 #include "base/mac/bind_objc_block.h"
 #include "base/mac/foundation_util.h"
 #include "base/mac/scoped_block.h"
+#include "base/metrics/statistics_recorder.h"
 #include "base/path_service.h"
+#include "base/prefs/json_pref_store.h"
+#include "base/prefs/pref_filter.h"
 #include "base/threading/worker_pool.h"
 #import "components/webp_transcode/webp_network_client_factory.h"
 #include "crypto/nss_util.h"
@@ -39,6 +42,7 @@
 #include "net/log/net_log.h"
 #include "net/log/write_to_file_net_log_observer.h"
 #include "net/proxy/proxy_service.h"
+#include "net/sdch/sdch_owner.h"
 #include "net/socket/next_proto.h"
 #include "net/ssl/channel_id_service.h"
 #include "net/ssl/default_channel_id_store.h"
@@ -149,6 +153,9 @@ void CrNetEnvironment::Initialize() {
   // this initialization can race to cause accidental free/allocation
   // mismatches.
   crypto::EnsureNSPRInit();
+  // Without doing this, StatisticsRecorder::FactoryGet() leaks one histogram
+  // per call after the first for a given name.
+  base::StatisticsRecorder::Initialize();
 
   // Create a message loop on the UI thread.
   base::MessageLoop* main_message_loop =
@@ -246,11 +253,13 @@ void CrNetEnvironment::CloseAllSpdySessionsInternal() {
   }
 }
 
-CrNetEnvironment::CrNetEnvironment(std::string user_agent_product_name)
-    : main_context_(new net::URLRequestContext),
-      user_agent_product_name_(user_agent_product_name) {
-
-}
+CrNetEnvironment::CrNetEnvironment(const std::string& user_agent_product_name)
+    : spdy_enabled_(false),
+      quic_enabled_(false),
+      sdch_enabled_(false),
+      main_context_(new net::URLRequestContext),
+      user_agent_product_name_(user_agent_product_name),
+      net_log_(new net::NetLog) {}
 
 void CrNetEnvironment::Install() {
   // Threads setup.
@@ -271,8 +280,8 @@ void CrNetEnvironment::Install() {
   // The network change notifier must be initialized so that registered
   // delegates will receive callbacks.
   network_change_notifier_.reset(net::NetworkChangeNotifier::Create());
-  proxy_config_service_.reset(net::ProxyService::CreateSystemProxyConfigService(
-      network_io_thread_->task_runner(), nullptr));
+  proxy_config_service_ = net::ProxyService::CreateSystemProxyConfigService(
+      network_io_thread_->task_runner(), nullptr);
 
   PostToNetworkThread(FROM_HERE,
       base::Bind(&CrNetEnvironment::InitializeOnNetworkThread,
@@ -315,6 +324,31 @@ void CrNetEnvironment::SetHTTPProtocolHandlerRegistered(bool registered) {
   }
 }
 
+void CrNetEnvironment::ConfigureSdchOnNetworkThread() {
+  DCHECK(base::MessageLoop::current() == network_io_thread_->message_loop());
+  net::URLRequestContext* context =
+      main_context_getter_->GetURLRequestContext();
+
+  if (!sdch_enabled_) {
+    DCHECK_EQ(static_cast<net::SdchManager*>(nullptr), context->sdch_manager());
+    return;
+  }
+
+  sdch_manager_.reset(new net::SdchManager());
+  sdch_owner_.reset(new net::SdchOwner(sdch_manager_.get(), context));
+  if (!sdch_pref_store_filename_.empty()) {
+    base::FilePath path(sdch_pref_store_filename_);
+    pref_store_worker_pool_ = file_user_blocking_thread_->task_runner();
+    net_pref_store_ = new JsonPrefStore(
+        path,
+        pref_store_worker_pool_.get(),
+        scoped_ptr<PrefFilter>());
+    net_pref_store_->ReadPrefsAsync(nullptr);
+    sdch_owner_->EnablePersistentStorage(net_pref_store_.get());
+  }
+  context->set_sdch_manager(sdch_manager_.get());
+}
+
 void CrNetEnvironment::InitializeOnNetworkThread() {
   DCHECK(base::MessageLoop::current() == network_io_thread_->message_loop());
 
@@ -324,16 +358,7 @@ void CrNetEnvironment::InitializeOnNetworkThread() {
           initWithTaskRunner:file_user_blocking_thread_
                                  ->task_runner()] autorelease]);
 
-#if 0
-  // TODO(huey): Re-enable this once SDCH supports SSL and dictionaries from
-  // previous sessions can be used on the first request after a fresh launch.
-  sdch_manager_.reset(new net::SdchManager());
-  sdch_manager_->set_sdch_fetcher(
-      new SdchDictionaryFetcher(main_context_getter_));
-#else
-  // Otherwise, explicitly disable SDCH to avoid a crash.
-  net::SdchManager::EnableSdchSupport(false);
-#endif
+  ConfigureSdchOnNetworkThread();
 
   NSString* bundlePath =
       [[NSBundle mainBundle] pathForResource:@"crnet_resources"
@@ -367,15 +392,22 @@ void CrNetEnvironment::InitializeOnNetworkThread() {
   http_server_properties_.reset(new net::HttpServerPropertiesImpl());
   main_context_->set_http_server_properties(
       http_server_properties_->GetWeakPtr());
+  // TODO(rdsmith): Note that the ".release()" calls below are leaking
+  // the objects in question; this should be fixed by having an object
+  // corresponding to URLRequestContextStorage that actually owns those
+  // objects.  See http://crbug.com/523858.
   main_context_->set_host_resolver(
       net::HostResolver::CreateDefaultResolver(nullptr).release());
-  main_context_->set_cert_verifier(net::CertVerifier::CreateDefault());
+  main_context_->set_cert_verifier(
+      net::CertVerifier::CreateDefault().release());
   main_context_->set_http_auth_handler_factory(
       net::HttpAuthHandlerRegistryFactory::CreateDefault(
-          main_context_->host_resolver()));
+          main_context_->host_resolver())
+          .release());
   main_context_->set_proxy_service(
       net::ProxyService::CreateUsingSystemProxyResolver(
-          proxy_config_service_.get(), 0, nullptr));
+          proxy_config_service_.Pass(), 0, nullptr)
+          .release());
 
   // Cache
   NSArray* dirs = NSSearchPathForDirectoriesInDomains(NSCachesDirectory,
@@ -404,7 +436,7 @@ void CrNetEnvironment::InitializeOnNetworkThread() {
   params.net_log = main_context_->net_log();
   params.next_protos =
       net::NextProtosWithSpdyAndQuic(spdy_enabled(), quic_enabled());
-  params.use_alternate_protocols = true;
+  params.use_alternative_services = true;
   params.enable_quic = quic_enabled();
   params.alternative_service_probability_threshold =
       alternate_protocol_threshold_;
@@ -429,12 +461,13 @@ void CrNetEnvironment::InitializeOnNetworkThread() {
 
   net::URLRequestJobFactoryImpl* job_factory =
       new net::URLRequestJobFactoryImpl;
-  job_factory->SetProtocolHandler("data", new net::DataProtocolHandler);
   job_factory->SetProtocolHandler(
-      "file", new net::FileProtocolHandler(file_thread_->task_runner()));
+      "data", make_scoped_ptr(new net::DataProtocolHandler));
+  job_factory->SetProtocolHandler(
+      "file", make_scoped_ptr(
+                  new net::FileProtocolHandler(file_thread_->task_runner())));
   main_context_->set_job_factory(job_factory);
 
-  net_log_.reset(new net::NetLog());
   main_context_->set_net_log(net_log_.get());
 }
 

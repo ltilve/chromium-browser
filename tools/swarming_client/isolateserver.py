@@ -5,7 +5,7 @@
 
 """Archives a set of files or directories to an Isolate Server."""
 
-__version__ = '0.4.3'
+__version__ = '0.4.4'
 
 import base64
 import functools
@@ -28,6 +28,7 @@ from third_party.depot_tools import fix_encoding
 from third_party.depot_tools import subcommand
 
 from utils import file_path
+from utils import logging_utils
 from utils import lru
 from utils import net
 from utils import on_error
@@ -993,7 +994,9 @@ class IsolateServer(StorageApi):
     response = self.do_fetch(source_url, digest, offset)
 
     if not response:
-      raise IOError('Attempted to fetch from %s; no data exist.' % source_url)
+      raise IOError(
+          'Attempted to fetch from %s; no data exist: %s / %s.' % (
+            source_url, self._namespace, digest))
 
     # for DB uploads
     content = response.get('content')
@@ -1002,6 +1005,8 @@ class IsolateServer(StorageApi):
 
     # for GS entities
     connection = net.url_open(response['url'])
+    if not connection:
+      raise IOError('Failed to download %s / %s' % (self._namespace, digest))
 
     # If |offset|, verify server respects it by checking Content-Range.
     if offset:
@@ -1454,8 +1459,11 @@ class DiskCache(LocalCache):
     file node will affect them all.
     """
     path = self._path(digest)
-    # TODO(maruel): file_path.HARDLINK_WITH_FALLBACK ?
-    file_path.hardlink(path, dest)
+    if not file_path.link_file(dest, path, file_path.HARDLINK_WITH_FALLBACK):
+      # Report to the server that it failed with more details. We'll want to
+      # squash them all.
+      on_error.report('Failed to hardlink\n%s -> %s' % (path, dest))
+
     if file_mode is not None:
       # Ignores all other bits.
       os.chmod(dest, file_mode & 0500)
@@ -2180,9 +2188,9 @@ def process_cache_options(options):
     return MemoryCache()
 
 
-class OptionParserIsolateServer(tools.OptionParserWithLogging):
+class OptionParserIsolateServer(logging_utils.OptionParserWithLogging):
   def __init__(self, **kwargs):
-    tools.OptionParserWithLogging.__init__(
+    logging_utils.OptionParserWithLogging.__init__(
         self,
         version=__version__,
         prog=os.path.basename(sys.modules[__name__].__file__),
@@ -2190,7 +2198,7 @@ class OptionParserIsolateServer(tools.OptionParserWithLogging):
     auth.add_auth_options(self)
 
   def parse_args(self, *args, **kwargs):
-    options, args = tools.OptionParserWithLogging.parse_args(
+    options, args = logging_utils.OptionParserWithLogging.parse_args(
         self, *args, **kwargs)
     auth.process_auth_options(self, options)
     return options, args

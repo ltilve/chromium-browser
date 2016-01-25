@@ -20,11 +20,11 @@ import android.text.TextUtils;
 
 import org.chromium.base.test.util.Restriction;
 import org.chromium.chrome.browser.ChromeActivity;
-import org.chromium.chrome.browser.EmptyTabObserver;
-import org.chromium.chrome.browser.Tab;
 import org.chromium.chrome.browser.document.ChromeLauncherActivity;
 import org.chromium.chrome.browser.externalnav.ExternalNavigationHandler.OverrideUrlLoadingResult;
 import org.chromium.chrome.browser.tab.ChromeTab;
+import org.chromium.chrome.browser.tab.EmptyTabObserver;
+import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.tabmodel.EmptyTabModelSelectorObserver;
 import org.chromium.chrome.test.ChromeActivityTestCaseBase;
 import org.chromium.chrome.test.util.TestHttpServerClient;
@@ -196,7 +196,8 @@ public class UrlOverridingTest extends ChromeActivityTestCaseBase<ChromeActivity
                         ChromeTab tab = (ChromeTab) latestTabHolder[0];
                         if (shouldLaunchExternalIntent
                                 != (OverrideUrlLoadingResult.OVERRIDE_WITH_EXTERNAL_INTENT
-                                        == tab.getLastOverrideUrlLoadingResultForTests())) {
+                                        == tab.getInterceptNavigationDelegate()
+                                                .getLastOverrideUrlLoadingResultForTests())) {
                             return false;
                         }
                         return expectedFinalUrl == null

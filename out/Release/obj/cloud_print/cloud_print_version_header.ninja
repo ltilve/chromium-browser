@@ -1,0 +1,17 @@
+rule $
+    cloud_print_version_header_target_version_header_652e7dc2d2583ce6341d1fee2594ea45
+  command = cd ../../cloud_print; python ../build/util/version.py -f $
+      ../chrome/VERSION -f ../chrome/app/theme/chromium/BRANDING -f $
+      ../build/util/LASTCHANGE -f BRANDING $
+      ../chrome/common/chrome_version.h.in $
+      ../out/Release/gen/cloud_print/version.h
+  description = ACTION Generating version header file: $
+      "gen/cloud_print/version.h"
+  restat = 1
+
+build gen/cloud_print/version.h: $
+    cloud_print_version_header_target_version_header_652e7dc2d2583ce6341d1fee2594ea45 $
+    ../../chrome/VERSION ../../chrome/app/theme/chromium/BRANDING $
+    ../../build/util/LASTCHANGE ../../chrome/common/chrome_version.h.in $
+    ../../cloud_print/BRANDING
+

@@ -7,6 +7,7 @@
 #include "base/command_line.h"
 #include "base/md5.h"
 #include "base/metrics/field_trial.h"
+#include "base/metrics/histogram_samples.h"
 #include "base/test/histogram_tester.h"
 #include "base/test/mock_entropy_provider.h"
 #include "components/data_reduction_proxy/core/browser/data_reduction_proxy_compression_stats.h"
@@ -334,18 +335,27 @@ TEST_F(DataReductionProxySettingsTest, TestEnableLoFiSyntheticTrial) {
 }
 
 TEST_F(DataReductionProxySettingsTest, TestLoFiImplicitOptOutClicksPerSession) {
+  settings_->InitPrefMembers();
+  settings_->data_reduction_proxy_service_->SetIOData(
+      test_context_->io_data()->GetWeakPtr());
   test_context_->config()->ResetLoFiStatusForTest();
   EXPECT_EQ(0, test_context_->pref_service()->GetInteger(
                    prefs::kLoFiLoadImagesPerSession));
+  EXPECT_EQ(0, test_context_->pref_service()->GetInteger(
+                   prefs::kLoFiSnackbarsShownPerSession));
   EXPECT_EQ(LoFiStatus::LOFI_STATUS_TEMPORARILY_OFF,
             test_context_->config()->GetLoFiStatus());
 
   // Click "Load images" |lo_fi_user_requests_for_images_per_session_| times.
   for (int i = 1; i <= settings_->lo_fi_user_requests_for_images_per_session_;
        ++i) {
+    settings_->IncrementLoFiSnackbarShown();
+    settings_->SetLoFiModeActiveOnMainFrame(true);
     settings_->IncrementLoFiUserRequestsForImages();
     EXPECT_EQ(i, test_context_->pref_service()->GetInteger(
                      prefs::kLoFiLoadImagesPerSession));
+    EXPECT_EQ(i, test_context_->pref_service()->GetInteger(
+                     prefs::kLoFiSnackbarsShownPerSession));
   }
 
   test_context_->RunUntilIdle();
@@ -360,22 +370,48 @@ TEST_F(DataReductionProxySettingsTest, TestLoFiImplicitOptOutClicksPerSession) {
   settings_->data_reduction_proxy_service_->InitializeLoFiPrefs();
   EXPECT_EQ(0, test_context_->pref_service()->GetInteger(
                    prefs::kLoFiLoadImagesPerSession));
+  EXPECT_EQ(0, test_context_->pref_service()->GetInteger(
+                   prefs::kLoFiSnackbarsShownPerSession));
+  EXPECT_EQ(1, test_context_->pref_service()->GetInteger(
+                   prefs::kLoFiConsecutiveSessionDisables));
+  EXPECT_EQ(LoFiStatus::LOFI_STATUS_TEMPORARILY_OFF,
+            test_context_->config()->GetLoFiStatus());
+
+  // Don't show any snackbars or have any "Load images" requests, but start
+  // a new session. kLoFiConsecutiveSessionDisables should not reset since
+  // the minimum number of snackbars were not shown.
+  test_context_->config()->ResetLoFiStatusForTest();
+  settings_->data_reduction_proxy_service_->InitializeLoFiPrefs();
+  EXPECT_EQ(0, test_context_->pref_service()->GetInteger(
+                   prefs::kLoFiLoadImagesPerSession));
+  EXPECT_EQ(0, test_context_->pref_service()->GetInteger(
+                   prefs::kLoFiSnackbarsShownPerSession));
+  EXPECT_EQ(1, test_context_->pref_service()->GetInteger(
+                   prefs::kLoFiConsecutiveSessionDisables));
   EXPECT_EQ(LoFiStatus::LOFI_STATUS_TEMPORARILY_OFF,
             test_context_->config()->GetLoFiStatus());
 
   // Have a session that doesn't have
-  // |lo_fi_user_requests_for_images_per_session_| so
-  // kLoFiConsecutiveSessionDisables resets.
+  // |lo_fi_user_requests_for_images_per_session_|, but has that number of
+  // snackbars shown so kLoFiConsecutiveSessionDisables resets.
   for (int i = 1;
        i <= settings_->lo_fi_user_requests_for_images_per_session_ - 1; ++i) {
+    settings_->IncrementLoFiSnackbarShown();
+    settings_->SetLoFiModeActiveOnMainFrame(true);
     settings_->IncrementLoFiUserRequestsForImages();
     EXPECT_EQ(i, test_context_->pref_service()->GetInteger(
                      prefs::kLoFiLoadImagesPerSession));
+    EXPECT_EQ(i, test_context_->pref_service()->GetInteger(
+                     prefs::kLoFiSnackbarsShownPerSession));
   }
+  settings_->IncrementLoFiSnackbarShown();
+  EXPECT_EQ(settings_->lo_fi_user_requests_for_images_per_session_,
+            test_context_->pref_service()->GetInteger(
+                prefs::kLoFiSnackbarsShownPerSession));
 
   test_context_->RunUntilIdle();
   // Still should have only one consecutive session disable and Lo-Fi status
-  // shouldn't have been set to off.
+  // should have been set to off.
   EXPECT_EQ(1, test_context_->pref_service()->GetInteger(
                    prefs::kLoFiConsecutiveSessionDisables));
   EXPECT_EQ(LoFiStatus::LOFI_STATUS_TEMPORARILY_OFF,
@@ -387,10 +423,15 @@ TEST_F(DataReductionProxySettingsTest, TestLoFiImplicitOptOutClicksPerSession) {
   settings_->data_reduction_proxy_service_->InitializeLoFiPrefs();
   EXPECT_EQ(0, test_context_->pref_service()->GetInteger(
                    prefs::kLoFiConsecutiveSessionDisables));
+  EXPECT_EQ(0, test_context_->pref_service()->GetInteger(
+                   prefs::kLoFiSnackbarsShownPerSession));
 }
 
 TEST_F(DataReductionProxySettingsTest,
        TestLoFiImplicitOptOutConsecutiveSessions) {
+  settings_->InitPrefMembers();
+  settings_->data_reduction_proxy_service_->SetIOData(
+      test_context_->io_data()->GetWeakPtr());
   test_context_->config()->ResetLoFiStatusForTest();
   EXPECT_EQ(0, test_context_->pref_service()->GetInteger(
                    prefs::kLoFiLoadImagesPerSession));
@@ -411,9 +452,13 @@ TEST_F(DataReductionProxySettingsTest,
     // for each session.
     for (int j = 1; j <= settings_->lo_fi_user_requests_for_images_per_session_;
          ++j) {
+      settings_->SetLoFiModeActiveOnMainFrame(true);
       settings_->IncrementLoFiUserRequestsForImages();
+      settings_->IncrementLoFiSnackbarShown();
       EXPECT_EQ(j, test_context_->pref_service()->GetInteger(
                        prefs::kLoFiLoadImagesPerSession));
+      EXPECT_EQ(j, test_context_->pref_service()->GetInteger(
+                       prefs::kLoFiSnackbarsShownPerSession));
     }
 
     test_context_->RunUntilIdle();
@@ -451,6 +496,9 @@ TEST_F(DataReductionProxySettingsTest, TestLoFiImplicitOptOutHistograms) {
   const char kUMALoFiImplicitOptOutAction[] =
       "DataReductionProxy.LoFi.ImplicitOptOutAction.Unknown";
   base::HistogramTester histogram_tester;
+  settings_->InitPrefMembers();
+  settings_->data_reduction_proxy_service_->SetIOData(
+      test_context_->io_data()->GetWeakPtr());
 
   // Disable Lo-Fi for |lo_fi_consecutive_session_disables_|.
   for (int i = 1; i <= settings_->lo_fi_consecutive_session_disables_; ++i) {
@@ -462,6 +510,7 @@ TEST_F(DataReductionProxySettingsTest, TestLoFiImplicitOptOutHistograms) {
     // each session.
     for (int j = 1; j <= settings_->lo_fi_user_requests_for_images_per_session_;
          ++j) {
+      settings_->SetLoFiModeActiveOnMainFrame(true);
       settings_->IncrementLoFiUserRequestsForImages();
     }
 
@@ -489,8 +538,22 @@ TEST_F(DataReductionProxySettingsTest, TestLoFiImplicitOptOutHistograms) {
 TEST_F(DataReductionProxySettingsTest, TestLoFiSessionStateHistograms) {
   const char kUMALoFiSessionState[] = "DataReductionProxy.LoFi.SessionState";
   base::HistogramTester histogram_tester;
+  settings_->InitPrefMembers();
+  settings_->data_reduction_proxy_service_->SetIOData(
+      test_context_->io_data()->GetWeakPtr());
 
+  // No session state histograms should be recorded when the Data Reduction
+  // Proxy is disabled.
+  settings_->SetDataReductionProxyEnabled(false);
   settings_->data_reduction_proxy_service_->InitializeLoFiPrefs();
+  test_context_->RunUntilIdle();
+  scoped_ptr<base::HistogramSamples> samples(
+      histogram_tester.GetHistogramSamplesSinceCreation(kUMALoFiSessionState));
+  EXPECT_EQ(0, samples->TotalCount());
+
+  settings_->SetDataReductionProxyEnabled(true);
+  settings_->data_reduction_proxy_service_->InitializeLoFiPrefs();
+  test_context_->RunUntilIdle();
   histogram_tester.ExpectBucketCount(
       kUMALoFiSessionState,
       DataReductionProxyService::LO_FI_SESSION_STATE_NOT_USED, 1);
@@ -500,7 +563,8 @@ TEST_F(DataReductionProxySettingsTest, TestLoFiSessionStateHistograms) {
     settings_->SetLoFiModeActiveOnMainFrame(true);
 
     // Click "Show images" |lo_fi_show_images_clicks_per_session_| times for
-    // each session.
+    // each session. This would put user in either the temporarary opt out
+    // state or permanent opt out.
     for (int j = 1; j <= settings_->lo_fi_user_requests_for_images_per_session_;
          ++j) {
       settings_->IncrementLoFiUserRequestsForImages();
@@ -512,8 +576,32 @@ TEST_F(DataReductionProxySettingsTest, TestLoFiSessionStateHistograms) {
     test_context_->RunUntilIdle();
     histogram_tester.ExpectBucketCount(
         kUMALoFiSessionState,
-        DataReductionProxyService::LO_FI_SESSION_STATE_USED, i);
+        DataReductionProxyService::LO_FI_SESSION_STATE_USED, 0);
+
+    histogram_tester.ExpectBucketCount(
+        kUMALoFiSessionState,
+        DataReductionProxyService::LO_FI_SESSION_STATE_NOT_USED, 1);
+
+    if (i < settings_->lo_fi_consecutive_session_disables_) {
+      histogram_tester.ExpectBucketCount(
+          kUMALoFiSessionState,
+          DataReductionProxyService::LO_FI_SESSION_STATE_TEMPORARILY_OPTED_OUT,
+          i);
+      // Still permanently not opted out.
+      histogram_tester.ExpectBucketCount(
+          kUMALoFiSessionState,
+          DataReductionProxyService::LO_FI_SESSION_STATE_OPTED_OUT, 0);
+    } else {
+      // Permanently opted out.
+      histogram_tester.ExpectBucketCount(
+          kUMALoFiSessionState,
+          DataReductionProxyService::LO_FI_SESSION_STATE_OPTED_OUT, 1);
+    }
   }
+
+  // Total count should be equal to the number of sessions.
+  histogram_tester.ExpectTotalCount(
+      kUMALoFiSessionState, settings_->lo_fi_consecutive_session_disables_ + 1);
 
   // Set the implicit opt out epoch to -1 so that the default value of zero
   // will be an increase and implicit opt out will be reset. This session
@@ -525,7 +613,7 @@ TEST_F(DataReductionProxySettingsTest, TestLoFiSessionStateHistograms) {
   test_context_->RunUntilIdle();
   histogram_tester.ExpectBucketCount(
       kUMALoFiSessionState,
-      DataReductionProxyService::LO_FI_SESSION_STATE_OPTED_OUT, 1);
+      DataReductionProxyService::LO_FI_SESSION_STATE_OPTED_OUT, 2);
 
   // The implicit opt out epoch should cause the state to no longer be opt out.
   test_context_->config()->ResetLoFiStatusForTest();
@@ -534,6 +622,10 @@ TEST_F(DataReductionProxySettingsTest, TestLoFiSessionStateHistograms) {
   histogram_tester.ExpectBucketCount(
       kUMALoFiSessionState,
       DataReductionProxyService::LO_FI_SESSION_STATE_NOT_USED, 2);
+
+  // Total count should be equal to the number of sessions.
+  histogram_tester.ExpectTotalCount(
+      kUMALoFiSessionState, settings_->lo_fi_consecutive_session_disables_ + 3);
 }
 
 TEST_F(DataReductionProxySettingsTest, TestGetDailyContentLengths) {
@@ -563,7 +655,7 @@ TEST_F(DataReductionProxySettingsTest, CheckInitMetricsWhenNotAllowed) {
 
   settings_->InitDataReductionProxySettings(
       test_context_->pref_service(), test_context_->io_data(),
-      test_context_->CreateDataReductionProxyService());
+      test_context_->CreateDataReductionProxyService(settings_.get()));
   settings_->SetCallbackToRegisterSyntheticFieldTrial(
       base::Bind(&DataReductionProxySettingsTestBase::
                  SyntheticFieldTrialRegistrationCallback,
@@ -573,8 +665,31 @@ TEST_F(DataReductionProxySettingsTest, CheckInitMetricsWhenNotAllowed) {
 }
 
 TEST_F(DataReductionProxySettingsTest, CheckQUICFieldTrials) {
-  for (int i = 0; i < 2; ++i) {
-    bool enable_quic = i == 0;
+  const struct {
+    bool enable_quic;
+    std::string field_trial_group_name;
+  } tests[] = {
+      {
+          false, std::string(),
+      },
+      {
+          false, "NotEnabled",
+      },
+      {
+          false, "Control",
+      },
+      {
+          false, "Disabled",
+      },
+      {
+          true, "EnabledControl",
+      },
+      {
+          true, "Enabled",
+      },
+  };
+
+  for (size_t i = 0; i < arraysize(tests); ++i) {
     // No call to |AddProxyToCommandLine()| was made, so the proxy feature
     // should be unavailable.
     // Clear the command line. Setting flags can force the proxy to be allowed.
@@ -586,27 +701,26 @@ TEST_F(DataReductionProxySettingsTest, CheckQUICFieldTrials) {
     EXPECT_CALL(*settings, RecordStartupState(PROXY_NOT_AVAILABLE));
 
     settings_->InitDataReductionProxySettings(
-         test_context_->pref_service(), test_context_->io_data(),
-         test_context_->CreateDataReductionProxyService());
+        test_context_->pref_service(), test_context_->io_data(),
+        test_context_->CreateDataReductionProxyService(settings_.get()));
 
     base::FieldTrialList field_trial_list(new base::MockEntropyProvider());
-    if (enable_quic) {
-      base::FieldTrialList::CreateFieldTrial(params::GetQuicFieldTrialName(),
-                                             "Enabled");
-    } else {
-      base::FieldTrialList::CreateFieldTrial(params::GetQuicFieldTrialName(),
-                                             "Disabled");
-    }
-    test_context_->config()->EnableQuic(enable_quic);
+
+    base::FieldTrialList::CreateFieldTrial(params::GetQuicFieldTrialName(),
+                                           tests[i].field_trial_group_name);
+    EXPECT_EQ(
+        tests[i].field_trial_group_name,
+        base::FieldTrialList::FindFullName(params::GetQuicFieldTrialName()));
+    test_context_->config()->EnableQuic(tests[i].enable_quic);
 
     settings_->SetCallbackToRegisterSyntheticFieldTrial(
         base::Bind(&DataReductionProxySettingsTestBase::
-                   SyntheticFieldTrialRegistrationCallback,
+                       SyntheticFieldTrialRegistrationCallback,
                    base::Unretained(this)));
 
     net::ProxyServer origin =
         test_context_->config()->test_params()->proxies_for_http().front();
-    EXPECT_EQ(enable_quic, origin.is_quic()) << i;
+    EXPECT_EQ(tests[i].enable_quic, origin.is_quic()) << i;
   }
 }
 

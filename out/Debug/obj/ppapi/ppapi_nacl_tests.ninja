@@ -1,0 +1,1119 @@
+build obj/ppapi/ppapi_nacl_tests.actions_depends.stamp: stamp $
+    obj/native_client/src/untrusted/nacl/nacl_lib.actions_depends.stamp $
+    obj/native_client/src/untrusted/pthread/pthread_lib.actions_rules_copies.stamp $
+    obj/ppapi/ppapi_cpp_lib.actions_rules_copies.stamp $
+    obj/ppapi/native_client/ppapi_lib.actions_rules_copies.stamp $
+    obj/ppapi/native_client/src/untrusted/pnacl_irt_shim/aot.actions_rules_copies.stamp
+
+build obj/ppapi/ppapi_nacl_tests.compile_depends.stamp: stamp $
+    obj/native_client/src/untrusted/nacl/nacl_lib.compile_depends.stamp $
+    obj/native_client/src/untrusted/pthread/pthread_lib.actions_rules_copies.stamp $
+    obj/ppapi/ppapi_cpp_lib.actions_rules_copies.stamp $
+    obj/ppapi/native_client/ppapi_lib.actions_rules_copies.stamp $
+    obj/ppapi/native_client/src/untrusted/pnacl_irt_shim/aot.actions_rules_copies.stamp
+
+rule $
+    ppapi_nacl_tests_target_Generate_GLIBC_NMF_and_copy_libs_7c7e3a74809a03cc997c0b1a439a0813
+  command = cd ../../ppapi; python $
+      ../native_client_sdk/src/tools/create_nmf.py $
+      ../out/Debug/ppapi_nacl_tests_glibc_x64.nexe --no-default-libpath $
+      "--objdump=../native_client/toolchain/linux_x86/nacl_x86_glibc/bin/x86_64-nacl-objdump" $
+      "--output=../out/Debug/ppapi_nacl_tests_glibc.nmf" $
+      "--stage-dependencies=../out/Debug" $
+      "--library-path=../native_client/toolchain/linux_x86/nacl_x86_glibc/x86_64-nacl/lib" $
+      "--library-path=../out/Debug/gen/tc_glibc/lib64"
+  description = ACTION ppapi_nacl_tests: Generate GLIBC NMF and copy $
+      libs_7c7e3a74809a03cc997c0b1a439a0813
+  restat = 1
+
+build ppapi_nacl_tests_glibc.nmf: $
+    ppapi_nacl_tests_target_Generate_GLIBC_NMF_and_copy_libs_7c7e3a74809a03cc997c0b1a439a0813 $
+    ../../native_client_sdk/src/tools/create_nmf.py $
+    ppapi_nacl_tests_glibc_x64.nexe || $
+    obj/ppapi/ppapi_nacl_tests.actions_depends.stamp
+
+rule $
+    ppapi_nacl_tests_target_Generate_PNACL_NEWLIB_NMF_7c7e3a74809a03cc997c0b1a439a0813
+  command = cd ../../ppapi; python $
+      ../native_client_sdk/src/tools/create_nmf.py $
+      ../out/Debug/ppapi_nacl_tests_pnacl_newlib_x64.nexe $
+      --no-default-libpath $
+      "--objdump=../native_client/toolchain/linux_x86/nacl_x86_glibc/bin/x86_64-nacl-objdump" $
+      "--output=../out/Debug/ppapi_nacl_tests_pnacl.nmf"
+  description = ACTION ppapi_nacl_tests: Generate PNACL NEWLIB $
+      NMF_7c7e3a74809a03cc997c0b1a439a0813
+  restat = 1
+
+build ppapi_nacl_tests_pnacl.nmf: $
+    ppapi_nacl_tests_target_Generate_PNACL_NEWLIB_NMF_7c7e3a74809a03cc997c0b1a439a0813 $
+    ../../native_client_sdk/src/tools/create_nmf.py $
+    ppapi_nacl_tests_pnacl_newlib_x64.nexe || $
+    obj/ppapi/ppapi_nacl_tests.actions_depends.stamp
+
+rule $
+    ppapi_nacl_tests_target_Generate_PNACL_NEWLIB_NONSFI_NMF_7c7e3a74809a03cc997c0b1a439a0813
+  command = cd ../../ppapi; python tests/create_nonsfi_test_nmf.py $
+      "--output=../out/Debug/ppapi_nacl_tests_pnacl_nonsfi.nmf" $
+      "--program=../out/Debug/ppapi_nacl_tests_pnacl_newlib_x32_nonsfi.nexe" $
+      "--arch=x86-64"
+  description = ACTION ppapi_nacl_tests: Generate PNACL NEWLIB NONSFI $
+      NMF_7c7e3a74809a03cc997c0b1a439a0813
+  restat = 1
+
+build ppapi_nacl_tests_pnacl_nonsfi.nmf: $
+    ppapi_nacl_tests_target_Generate_PNACL_NEWLIB_NONSFI_NMF_7c7e3a74809a03cc997c0b1a439a0813 $
+    ../../ppapi/tests/create_nonsfi_test_nmf.py $
+    ppapi_nacl_tests_pnacl_newlib_x32_nonsfi.nexe || $
+    obj/ppapi/ppapi_nacl_tests.actions_depends.stamp
+
+rule $
+    ppapi_nacl_tests_target_build_newlib_pexe_7c7e3a74809a03cc997c0b1a439a0813
+  command = cd ../../ppapi; python ../native_client/build/build_nexe.py $
+      --root .. --product-dir ../out/Debug/xyz --config-name Debug -t $
+      ../native_client/toolchain/ --strip-all --arch pnacl --build $
+      newlib_pexe --name ../out/Debug/ppapi_nacl_tests_newlib.pexe --objdir $
+      ../out/Debug/obj/ppapi/ppapi_nacl_tests.gen/pnacl_newlib/ppapi_nacl_tests $
+      "--include-dirs=../out/Debug/gen/tc_pnacl_newlib/include .. $
+      lib/gl/include \"../out/Debug/gen\"" "--compile_flags=-O2 -Wall $
+      -fdiagnostics-show-option -Werror -DGL_GLEXT_PROTOTYPES  $
+      -Wno-unused-function -Wno-char-subscripts -Wno-c++11-extensions $
+      -Wno-unnamed-type-template-args -Wno-extra-semi $
+      -Wno-unused-private-field -Wno-char-subscripts -Wno-unused-function $
+      \"-std=gnu++11\" " --gomadir "" "--defines=\"__STDC_LIMIT_MACROS=1\" $
+      \"__STDC_FORMAT_MACROS=1\" \"_GNU_SOURCE=1\" $
+      \"_POSIX_C_SOURCE=199506\" \"_XOPEN_SOURCE=600\" $
+      \"DYNAMIC_ANNOTATIONS_ENABLED=1\" $
+      \"DYNAMIC_ANNOTATIONS_PREFIX=NACL_\" \"NACL_BUILD_ARCH=x86\" $
+      GL_GLEXT_PROTOTYPES V8_DEPRECATION_WARNINGS \"CLD_VERSION=2\" $
+      \"_FILE_OFFSET_BITS=64\" CHROMIUM_BUILD $
+      \"CR_CLANG_REVISION=255169-1\" UI_COMPOSITOR_IMAGE_TRANSPORT $
+      \"USE_AURA=1\" \"USE_ASH=1\" \"USE_PANGO=1\" \"USE_CAIRO=1\" $
+      \"USE_DEFAULT_RENDER_THEME=1\" \"USE_LIBJPEG_TURBO=1\" \"USE_X11=1\" $
+      \"USE_CLIPBOARD_AURAX11=1\" ENABLE_ONE_CLICK_SIGNIN $
+      \"ENABLE_WEBRTC=1\" \"ENABLE_MEDIA_ROUTER=1\" ENABLE_PEPPER_CDMS $
+      ENABLE_CONFIGURATION_POLICY ENABLE_NOTIFICATIONS \"ENABLE_HIDPI=1\" $
+      \"ENABLE_TOPCHROME_MD=1\" USE_UDEV DONT_EMBED_BUILD_METADATA $
+      FIELDTRIAL_TESTING_ENABLED \"ENABLE_TASK_MANAGER=1\" $
+      \"ENABLE_EXTENSIONS=1\" \"ENABLE_PDF=1\" \"ENABLE_PLUGINS=1\" $
+      \"ENABLE_SESSION_SERVICE=1\" \"ENABLE_THEMES=1\" $
+      \"ENABLE_AUTOFILL_DIALOG=1\" \"ENABLE_BACKGROUND=1\" $
+      \"ENABLE_PRINTING=1\" \"ENABLE_BASIC_PRINTING=1\" $
+      \"ENABLE_PRINT_PREVIEW=1\" \"ENABLE_SPELLCHECK=1\" $
+      \"ENABLE_CAPTIVE_PORTAL_DETECTION=1\" \"ENABLE_APP_LIST=1\" $
+      \"ENABLE_SETTINGS_APP=1\" \"ENABLE_SUPERVISED_USERS=1\" $
+      \"ENABLE_MDNS=1\" \"ENABLE_SERVICE_DISCOVERY=1\" $
+      V8_USE_EXTERNAL_STARTUP_DATA FULL_SAFE_BROWSING SAFE_BROWSING_CSD $
+      SAFE_BROWSING_DB_LOCAL \"USE_LIBPCI=1\" \"USE_OPENSSL=1\" $
+      \"USE_OPENSSL_CERTS=1\"" $
+      "--link_flags=-B../out/Debug/gen/tc_pnacl_newlib/lib -lppapi_cpp $
+      -lppapi -pthread " $
+      "--source-list=../out/gypfiles/ppapi/pnacl_newlib.ppapi_nacl_tests.source_list.gypcmd"
+  description = ACTION ppapi_nacl_tests: build newlib $
+      pexe_7c7e3a74809a03cc997c0b1a439a0813
+  restat = 1
+
+build ppapi_nacl_tests_newlib.pexe ppapi_nacl_tests_newlib.pexe.debug: $
+    ppapi_nacl_tests_target_build_newlib_pexe_7c7e3a74809a03cc997c0b1a439a0813 $
+    ../../native_client/build/build_nexe.py $
+    ../../native_client/build/build_nexe_tools.py $
+    ../../native_client/src/untrusted/irt/irt.h $
+    ../../ppapi/c/dev/deprecated_bool.h $
+    ../../ppapi/c/dev/pp_cursor_type_dev.h $
+    ../../ppapi/c/dev/pp_print_settings_dev.h $
+    ../../ppapi/c/dev/pp_video_dev.h ../../ppapi/c/dev/ppb_buffer_dev.h $
+    ../../ppapi/c/dev/ppb_char_set_dev.h ../../ppapi/c/dev/ppb_crypto_dev.h $
+    ../../ppapi/c/dev/ppb_cursor_control_dev.h $
+    ../../ppapi/c/dev/ppb_device_ref_dev.h $
+    ../../ppapi/c/dev/ppb_file_chooser_dev.h $
+    ../../ppapi/c/dev/ppb_ime_input_event_dev.h $
+    ../../ppapi/c/dev/ppb_memory_dev.h $
+    ../../ppapi/c/dev/ppb_opengles2ext_dev.h $
+    ../../ppapi/c/dev/ppb_printing_dev.h $
+    ../../ppapi/c/dev/ppb_text_input_dev.h $
+    ../../ppapi/c/dev/ppb_trace_event_dev.h $
+    ../../ppapi/c/dev/ppb_truetype_font_dev.h $
+    ../../ppapi/c/dev/ppb_url_util_dev.h $
+    ../../ppapi/c/dev/ppb_var_deprecated.h $
+    ../../ppapi/c/dev/ppb_video_decoder_dev.h $
+    ../../ppapi/c/dev/ppb_view_dev.h $
+    ../../ppapi/c/dev/ppp_class_deprecated.h $
+    ../../ppapi/c/dev/ppp_printing_dev.h $
+    ../../ppapi/c/dev/ppp_text_input_dev.h $
+    ../../ppapi/c/dev/ppp_video_decoder_dev.h $
+    ../../ppapi/c/pp_array_output.h ../../ppapi/c/pp_bool.h $
+    ../../ppapi/c/pp_codecs.h ../../ppapi/c/pp_completion_callback.h $
+    ../../ppapi/c/pp_directory_entry.h ../../ppapi/c/pp_errors.h $
+    ../../ppapi/c/pp_file_info.h ../../ppapi/c/pp_graphics_3d.h $
+    ../../ppapi/c/pp_input_event.h ../../ppapi/c/pp_instance.h $
+    ../../ppapi/c/pp_macros.h ../../ppapi/c/pp_module.h $
+    ../../ppapi/c/pp_point.h ../../ppapi/c/pp_rect.h $
+    ../../ppapi/c/pp_resource.h ../../ppapi/c/pp_size.h $
+    ../../ppapi/c/pp_stdint.h ../../ppapi/c/pp_time.h $
+    ../../ppapi/c/pp_touch_point.h ../../ppapi/c/pp_var.h $
+    ../../ppapi/c/ppb.h ../../ppapi/c/ppb_audio.h $
+    ../../ppapi/c/ppb_audio_buffer.h ../../ppapi/c/ppb_audio_config.h $
+    ../../ppapi/c/ppb_audio_encoder.h ../../ppapi/c/ppb_compositor.h $
+    ../../ppapi/c/ppb_compositor_layer.h ../../ppapi/c/ppb_console.h $
+    ../../ppapi/c/ppb_core.h ../../ppapi/c/ppb_file_io.h $
+    ../../ppapi/c/ppb_file_ref.h ../../ppapi/c/ppb_file_system.h $
+    ../../ppapi/c/ppb_fullscreen.h ../../ppapi/c/ppb_gamepad.h $
+    ../../ppapi/c/ppb_graphics_2d.h ../../ppapi/c/ppb_graphics_3d.h $
+    ../../ppapi/c/ppb_host_resolver.h ../../ppapi/c/ppb_image_data.h $
+    ../../ppapi/c/ppb_input_event.h ../../ppapi/c/ppb_instance.h $
+    ../../ppapi/c/ppb_media_stream_audio_track.h $
+    ../../ppapi/c/ppb_media_stream_video_track.h $
+    ../../ppapi/c/ppb_messaging.h ../../ppapi/c/ppb_mouse_cursor.h $
+    ../../ppapi/c/ppb_mouse_lock.h ../../ppapi/c/ppb_net_address.h $
+    ../../ppapi/c/ppb_network_list.h ../../ppapi/c/ppb_network_monitor.h $
+    ../../ppapi/c/ppb_network_proxy.h ../../ppapi/c/ppb_opengles2.h $
+    ../../ppapi/c/ppb_tcp_socket.h $
+    ../../ppapi/c/ppb_text_input_controller.h $
+    ../../ppapi/c/ppb_udp_socket.h ../../ppapi/c/ppb_url_loader.h $
+    ../../ppapi/c/ppb_url_request_info.h $
+    ../../ppapi/c/ppb_url_response_info.h ../../ppapi/c/ppb_var.h $
+    ../../ppapi/c/ppb_var_array.h ../../ppapi/c/ppb_var_array_buffer.h $
+    ../../ppapi/c/ppb_var_dictionary.h ../../ppapi/c/ppb_video_decoder.h $
+    ../../ppapi/c/ppb_video_encoder.h ../../ppapi/c/ppb_video_frame.h $
+    ../../ppapi/c/ppb_websocket.h ../../ppapi/c/ppp.h $
+    ../../ppapi/c/ppp_graphics_3d.h ../../ppapi/c/ppp_input_event.h $
+    ../../ppapi/c/ppp_instance.h ../../ppapi/c/ppp_message_handler.h $
+    ../../ppapi/c/ppp_messaging.h ../../ppapi/c/ppp_mouse_lock.h $
+    ../../ppapi/c/private/pp_content_decryptor.h $
+    ../../ppapi/c/private/pp_file_handle.h $
+    ../../ppapi/c/private/pp_private_font_charset.h $
+    ../../ppapi/c/private/pp_video_capture_format.h $
+    ../../ppapi/c/private/pp_video_frame_private.h $
+    ../../ppapi/c/private/ppb_camera_capabilities_private.h $
+    ../../ppapi/c/private/ppb_camera_device_private.h $
+    ../../ppapi/c/private/ppb_content_decryptor_private.h $
+    ../../ppapi/c/private/ppb_display_color_profile_private.h $
+    ../../ppapi/c/private/ppb_ext_crx_file_system_private.h $
+    ../../ppapi/c/private/ppb_file_io_private.h $
+    ../../ppapi/c/private/ppb_find_private.h $
+    ../../ppapi/c/private/ppb_flash.h $
+    ../../ppapi/c/private/ppb_flash_clipboard.h $
+    ../../ppapi/c/private/ppb_flash_font_file.h $
+    ../../ppapi/c/private/ppb_flash_menu.h $
+    ../../ppapi/c/private/ppb_flash_message_loop.h $
+    ../../ppapi/c/private/ppb_host_resolver_private.h $
+    ../../ppapi/c/private/ppb_instance_private.h $
+    ../../ppapi/c/private/ppb_net_address_private.h $
+    ../../ppapi/c/private/ppb_output_protection_private.h $
+    ../../ppapi/c/private/ppb_pdf.h $
+    ../../ppapi/c/private/ppb_platform_verification_private.h $
+    ../../ppapi/c/private/ppb_proxy_private.h $
+    ../../ppapi/c/private/ppb_tcp_server_socket_private.h $
+    ../../ppapi/c/private/ppb_tcp_socket_private.h $
+    ../../ppapi/c/private/ppb_testing_private.h $
+    ../../ppapi/c/private/ppb_udp_socket_private.h $
+    ../../ppapi/c/private/ppb_uma_private.h $
+    ../../ppapi/c/private/ppb_video_destination_private.h $
+    ../../ppapi/c/private/ppb_video_source_private.h $
+    ../../ppapi/c/private/ppb_x509_certificate_private.h $
+    ../../ppapi/c/private/ppp_content_decryptor_private.h $
+    ../../ppapi/c/private/ppp_find_private.h $
+    ../../ppapi/c/private/ppp_instance_private.h $
+    ../../ppapi/c/trusted/ppb_browser_font_trusted.h $
+    ../../ppapi/c/trusted/ppb_url_loader_trusted.h $
+    ../../ppapi/cpp/array_output.h ../../ppapi/cpp/audio.h $
+    ../../ppapi/cpp/audio_buffer.h ../../ppapi/cpp/audio_config.h $
+    ../../ppapi/cpp/audio_encoder.h ../../ppapi/cpp/completion_callback.h $
+    ../../ppapi/cpp/compositor.h ../../ppapi/cpp/compositor_layer.h $
+    ../../ppapi/cpp/core.h ../../ppapi/cpp/dev/buffer_dev.h $
+    ../../ppapi/cpp/dev/device_ref_dev.h $
+    ../../ppapi/cpp/dev/file_chooser_dev.h $
+    ../../ppapi/cpp/dev/ime_input_event_dev.h $
+    ../../ppapi/cpp/dev/memory_dev.h ../../ppapi/cpp/dev/printing_dev.h $
+    ../../ppapi/cpp/dev/scriptable_object_deprecated.h $
+    ../../ppapi/cpp/dev/text_input_dev.h $
+    ../../ppapi/cpp/dev/truetype_font_dev.h $
+    ../../ppapi/cpp/dev/url_util_dev.h $
+    ../../ppapi/cpp/dev/video_decoder_dev.h ../../ppapi/cpp/dev/view_dev.h $
+    ../../ppapi/cpp/directory_entry.h ../../ppapi/cpp/file_io.h $
+    ../../ppapi/cpp/file_ref.h ../../ppapi/cpp/file_system.h $
+    ../../ppapi/cpp/fullscreen.h ../../ppapi/cpp/graphics_2d.h $
+    ../../ppapi/cpp/graphics_3d.h ../../ppapi/cpp/graphics_3d_client.h $
+    ../../ppapi/cpp/host_resolver.h ../../ppapi/cpp/image_data.h $
+    ../../ppapi/cpp/input_event.h ../../ppapi/cpp/instance.h $
+    ../../ppapi/cpp/instance_handle.h ../../ppapi/cpp/logging.h $
+    ../../ppapi/cpp/media_stream_audio_track.h $
+    ../../ppapi/cpp/media_stream_video_track.h $
+    ../../ppapi/cpp/message_handler.h ../../ppapi/cpp/message_loop.h $
+    ../../ppapi/cpp/module.h ../../ppapi/cpp/module_impl.h $
+    ../../ppapi/cpp/mouse_lock.h ../../ppapi/cpp/net_address.h $
+    ../../ppapi/cpp/network_list.h ../../ppapi/cpp/network_monitor.h $
+    ../../ppapi/cpp/network_proxy.h ../../ppapi/cpp/output_traits.h $
+    ../../ppapi/cpp/pass_ref.h ../../ppapi/cpp/point.h $
+    ../../ppapi/cpp/private/camera_capabilities_private.h $
+    ../../ppapi/cpp/private/camera_device_private.h $
+    ../../ppapi/cpp/private/content_decryptor_private.h $
+    ../../ppapi/cpp/private/file_io_private.h $
+    ../../ppapi/cpp/private/find_private.h $
+    ../../ppapi/cpp/private/flash_font_file.h $
+    ../../ppapi/cpp/private/flash_fullscreen.h $
+    ../../ppapi/cpp/private/host_resolver_private.h $
+    ../../ppapi/cpp/private/instance_private.h $
+    ../../ppapi/cpp/private/net_address_private.h $
+    ../../ppapi/cpp/private/output_protection_private.h $
+    ../../ppapi/cpp/private/pass_file_handle.h $
+    ../../ppapi/cpp/private/tcp_server_socket_private.h $
+    ../../ppapi/cpp/private/tcp_socket_private.h $
+    ../../ppapi/cpp/private/udp_socket_private.h $
+    ../../ppapi/cpp/private/var_private.h $
+    ../../ppapi/cpp/private/video_destination_private.h $
+    ../../ppapi/cpp/private/video_frame_private.h $
+    ../../ppapi/cpp/private/video_source_private.h $
+    ../../ppapi/cpp/private/x509_certificate_private.h $
+    ../../ppapi/cpp/rect.h ../../ppapi/cpp/resource.h $
+    ../../ppapi/cpp/size.h ../../ppapi/cpp/tcp_socket.h $
+    ../../ppapi/cpp/text_input_controller.h ../../ppapi/cpp/touch_point.h $
+    ../../ppapi/cpp/udp_socket.h ../../ppapi/cpp/url_loader.h $
+    ../../ppapi/cpp/url_request_info.h ../../ppapi/cpp/url_response_info.h $
+    ../../ppapi/cpp/var.h ../../ppapi/cpp/var_array.h $
+    ../../ppapi/cpp/var_array_buffer.h ../../ppapi/cpp/var_dictionary.h $
+    ../../ppapi/cpp/video_decoder.h ../../ppapi/cpp/video_encoder.h $
+    ../../ppapi/cpp/video_frame.h ../../ppapi/cpp/view.h $
+    ../../ppapi/cpp/websocket.h ../../ppapi/lib/gl/gles2/gl2ext_ppapi.c $
+    ../../ppapi/lib/gl/gles2/gl2ext_ppapi.h $
+    ../../ppapi/lib/gl/gles2/gles2.c ../../ppapi/lib/gl/include/GLES2/gl2.h $
+    ../../ppapi/lib/gl/include/GLES2/gl2ext.h $
+    ../../ppapi/lib/gl/include/GLES2/gl2platform.h $
+    ../../ppapi/lib/gl/include/KHR/khrplatform.h $
+    ../../ppapi/nacl_irt/public/irt_ppapi.h $
+    ../../ppapi/native_client/src/untrusted/irt_stub/thread_creator.h $
+    ../../ppapi/tests/all_c_includes.h ../../ppapi/tests/all_cpp_includes.h $
+    ../../ppapi/tests/arch_dependent_sizes_32.h $
+    ../../ppapi/tests/arch_dependent_sizes_64.h $
+    ../../ppapi/tests/pp_thread.h ../../ppapi/tests/test_audio.cc $
+    ../../ppapi/tests/test_audio.h ../../ppapi/tests/test_audio_config.cc $
+    ../../ppapi/tests/test_audio_config.h $
+    ../../ppapi/tests/test_audio_encoder.cc $
+    ../../ppapi/tests/test_audio_encoder.h $
+    ../../ppapi/tests/test_c_includes.c ../../ppapi/tests/test_case.cc $
+    ../../ppapi/tests/test_case.h ../../ppapi/tests/test_compositor.cc $
+    ../../ppapi/tests/test_compositor.h ../../ppapi/tests/test_console.cc $
+    ../../ppapi/tests/test_console.h ../../ppapi/tests/test_core.cc $
+    ../../ppapi/tests/test_core.h ../../ppapi/tests/test_cpp_includes.cc $
+    ../../ppapi/tests/test_cursor_control.cc $
+    ../../ppapi/tests/test_cursor_control.h ../../ppapi/tests/test_empty.cc $
+    ../../ppapi/tests/test_empty.h ../../ppapi/tests/test_file_io.cc $
+    ../../ppapi/tests/test_file_io.h ../../ppapi/tests/test_file_ref.cc $
+    ../../ppapi/tests/test_file_ref.h ../../ppapi/tests/test_file_system.cc $
+    ../../ppapi/tests/test_file_system.h $
+    ../../ppapi/tests/test_fullscreen.cc $
+    ../../ppapi/tests/test_fullscreen.h $
+    ../../ppapi/tests/test_graphics_2d.cc $
+    ../../ppapi/tests/test_graphics_2d.h $
+    ../../ppapi/tests/test_graphics_3d.cc $
+    ../../ppapi/tests/test_graphics_3d.h $
+    ../../ppapi/tests/test_host_resolver.cc $
+    ../../ppapi/tests/test_host_resolver.h $
+    ../../ppapi/tests/test_host_resolver_private.cc $
+    ../../ppapi/tests/test_host_resolver_private.h $
+    ../../ppapi/tests/test_host_resolver_private_disallowed.cc $
+    ../../ppapi/tests/test_host_resolver_private_disallowed.h $
+    ../../ppapi/tests/test_image_data.cc $
+    ../../ppapi/tests/test_image_data.h $
+    ../../ppapi/tests/test_ime_input_event.cc $
+    ../../ppapi/tests/test_ime_input_event.h $
+    ../../ppapi/tests/test_input_event.cc $
+    ../../ppapi/tests/test_input_event.h $
+    ../../ppapi/tests/test_media_stream_audio_track.cc $
+    ../../ppapi/tests/test_media_stream_audio_track.h $
+    ../../ppapi/tests/test_media_stream_video_track.cc $
+    ../../ppapi/tests/test_media_stream_video_track.h $
+    ../../ppapi/tests/test_memory.cc ../../ppapi/tests/test_memory.h $
+    ../../ppapi/tests/test_message_handler.cc $
+    ../../ppapi/tests/test_message_handler.h $
+    ../../ppapi/tests/test_message_loop.cc $
+    ../../ppapi/tests/test_message_loop.h $
+    ../../ppapi/tests/test_mouse_cursor.cc $
+    ../../ppapi/tests/test_mouse_cursor.h $
+    ../../ppapi/tests/test_mouse_lock.cc $
+    ../../ppapi/tests/test_mouse_lock.h $
+    ../../ppapi/tests/test_nacl_irt_stack_alignment.cc $
+    ../../ppapi/tests/test_nacl_irt_stack_alignment.h $
+    ../../ppapi/tests/test_net_address.cc $
+    ../../ppapi/tests/test_net_address.h $
+    ../../ppapi/tests/test_net_address_private_untrusted.cc $
+    ../../ppapi/tests/test_net_address_private_untrusted.h $
+    ../../ppapi/tests/test_network_monitor.cc $
+    ../../ppapi/tests/test_network_monitor.h $
+    ../../ppapi/tests/test_network_proxy.cc $
+    ../../ppapi/tests/test_network_proxy.h $
+    ../../ppapi/tests/test_output_protection_private.cc $
+    ../../ppapi/tests/test_output_protection_private.h $
+    ../../ppapi/tests/test_paint_aggregator.cc $
+    ../../ppapi/tests/test_paint_aggregator.h $
+    ../../ppapi/tests/test_post_message.cc $
+    ../../ppapi/tests/test_post_message.h $
+    ../../ppapi/tests/test_printing.cc ../../ppapi/tests/test_printing.h $
+    ../../ppapi/tests/test_struct_sizes.c $
+    ../../ppapi/tests/test_tcp_server_socket_private.cc $
+    ../../ppapi/tests/test_tcp_server_socket_private.h $
+    ../../ppapi/tests/test_tcp_server_socket_private_disallowed.cc $
+    ../../ppapi/tests/test_tcp_server_socket_private_disallowed.h $
+    ../../ppapi/tests/test_tcp_socket.cc $
+    ../../ppapi/tests/test_tcp_socket.h $
+    ../../ppapi/tests/test_tcp_socket_private.cc $
+    ../../ppapi/tests/test_tcp_socket_private.h $
+    ../../ppapi/tests/test_tcp_socket_private_disallowed.cc $
+    ../../ppapi/tests/test_tcp_socket_private_disallowed.h $
+    ../../ppapi/tests/test_test_internals.cc $
+    ../../ppapi/tests/test_test_internals.h $
+    ../../ppapi/tests/test_trace_event.cc $
+    ../../ppapi/tests/test_trace_event.h $
+    ../../ppapi/tests/test_truetype_font.cc $
+    ../../ppapi/tests/test_truetype_font.h $
+    ../../ppapi/tests/test_udp_socket.cc $
+    ../../ppapi/tests/test_udp_socket.h $
+    ../../ppapi/tests/test_udp_socket_private.cc $
+    ../../ppapi/tests/test_udp_socket_private.h $
+    ../../ppapi/tests/test_udp_socket_private_disallowed.cc $
+    ../../ppapi/tests/test_udp_socket_private_disallowed.h $
+    ../../ppapi/tests/test_uma.cc ../../ppapi/tests/test_uma.h $
+    ../../ppapi/tests/test_url_loader.cc $
+    ../../ppapi/tests/test_url_loader.h $
+    ../../ppapi/tests/test_url_request.cc $
+    ../../ppapi/tests/test_url_request.h ../../ppapi/tests/test_utils.cc $
+    ../../ppapi/tests/test_utils.h ../../ppapi/tests/test_var.cc $
+    ../../ppapi/tests/test_var.h ../../ppapi/tests/test_var_resource.cc $
+    ../../ppapi/tests/test_var_resource.h $
+    ../../ppapi/tests/test_video_decoder.cc $
+    ../../ppapi/tests/test_video_decoder.h $
+    ../../ppapi/tests/test_video_destination.cc $
+    ../../ppapi/tests/test_video_destination.h $
+    ../../ppapi/tests/test_video_encoder.cc $
+    ../../ppapi/tests/test_video_encoder.h $
+    ../../ppapi/tests/test_video_source.cc $
+    ../../ppapi/tests/test_video_source.h ../../ppapi/tests/test_view.cc $
+    ../../ppapi/tests/test_view.h ../../ppapi/tests/test_websocket.cc $
+    ../../ppapi/tests/test_websocket.h $
+    ../../ppapi/tests/testing_instance.cc $
+    ../../ppapi/tests/testing_instance.h $
+    ../../ppapi/utility/completion_callback_factory.h $
+    ../../ppapi/utility/completion_callback_factory_thread_traits.h $
+    ../../ppapi/utility/graphics/paint_aggregator.h $
+    ../../ppapi/utility/graphics/paint_manager.h $
+    ../../ppapi/utility/threading/lock.h $
+    ../../ppapi/utility/threading/simple_thread.h $
+    ../../ppapi/utility/websocket/websocket_api.h $
+    gen/tc_pnacl_newlib/lib/libppapi_cpp.a $
+    gen/tc_pnacl_newlib/lib/libppapi.a $
+    ../../out/gypfiles/ppapi/pnacl_newlib.ppapi_nacl_tests.source_list.gypcmd $
+    ../../native_client/toolchain/linux_x86/pnacl_newlib/pnacl_newlib.json $
+    || obj/ppapi/ppapi_nacl_tests.actions_depends.stamp
+
+rule $
+    ppapi_nacl_tests_target_translate_newlib_pexe_to_x86_32_nonsfi_nexe_7c7e3a74809a03cc997c0b1a439a0813
+  command = cd ../../ppapi; python ../native_client/build/build_nexe.py $
+      --root .. --product-dir ../out/Debug/xyz --config-name Debug -t $
+      ../native_client/toolchain/ --arch x86-32-nonsfi --build $
+      newlib_translate --name $
+      ../out/Debug/ppapi_nacl_tests_pnacl_newlib_x32_nonsfi.nexe $
+      "--link_flags=-O0  $
+      -Wl,-L../out/Debug/gen/tc_pnacl_translate/lib-x86-32-nonsfi" $
+      ../out/Debug/ppapi_nacl_tests_newlib.pexe
+  description = ACTION ppapi_nacl_tests: translate newlib pexe to $
+      x86-32-nonsfi nexe_7c7e3a74809a03cc997c0b1a439a0813
+  restat = 1
+
+build ppapi_nacl_tests_pnacl_newlib_x32_nonsfi.nexe: $
+    ppapi_nacl_tests_target_translate_newlib_pexe_to_x86_32_nonsfi_nexe_7c7e3a74809a03cc997c0b1a439a0813 $
+    ppapi_nacl_tests_newlib.pexe || $
+    obj/ppapi/ppapi_nacl_tests.actions_depends.stamp
+
+rule $
+    ppapi_nacl_tests_target_translate_newlib_pexe_to_x86_64_nexe_7c7e3a74809a03cc997c0b1a439a0813
+  command = cd ../../ppapi; python ../native_client/build/build_nexe.py $
+      --root .. --product-dir ../out/Debug/xyz --config-name Debug -t $
+      ../native_client/toolchain/ --arch x86-64 --build newlib_translate $
+      --name ../out/Debug/ppapi_nacl_tests_pnacl_newlib_x64.nexe $
+      "--link_flags=-O0  $
+      -Wl,-L../out/Debug/gen/tc_pnacl_translate/lib-x86-64" $
+      ../out/Debug/ppapi_nacl_tests_newlib.pexe
+  description = ACTION ppapi_nacl_tests: translate newlib pexe to x86-64 $
+      nexe_7c7e3a74809a03cc997c0b1a439a0813
+  restat = 1
+
+build ppapi_nacl_tests_pnacl_newlib_x64.nexe: $
+    ppapi_nacl_tests_target_translate_newlib_pexe_to_x86_64_nexe_7c7e3a74809a03cc997c0b1a439a0813 $
+    ppapi_nacl_tests_newlib.pexe || $
+    obj/ppapi/ppapi_nacl_tests.actions_depends.stamp
+
+rule $
+    ppapi_nacl_tests_target_build_newlib_x86_64_nexe_7c7e3a74809a03cc997c0b1a439a0813
+  command = cd ../../ppapi; python ../native_client/build/build_nexe.py $
+      --root .. --product-dir ../out/Debug/xyz --config-name Debug -t $
+      ../native_client/toolchain/ --strip-all --arch x86-64 --build $
+      newlib_nexe --name ../out/Debug/ppapi_nacl_tests_newlib_x64.nexe $
+      --objdir $
+      ../out/Debug/obj/ppapi/ppapi_nacl_tests.gen/newlib-x86-64/ppapi_nacl_tests $
+      "--include-dirs=../out/Debug/gen/tc_newlib/include .. lib/gl/include $
+      \"../out/Debug/gen\"" "--compile_flags=-m64 -O2 -Wall $
+      -fdiagnostics-show-option -Werror -DGL_GLEXT_PROTOTYPES " --gomadir $
+      "" "--defines=\"__STDC_LIMIT_MACROS=1\" \"__STDC_FORMAT_MACROS=1\" $
+      \"_GNU_SOURCE=1\" \"_POSIX_C_SOURCE=199506\" \"_XOPEN_SOURCE=600\" $
+      \"DYNAMIC_ANNOTATIONS_ENABLED=1\" $
+      \"DYNAMIC_ANNOTATIONS_PREFIX=NACL_\" \"NACL_BUILD_ARCH=x86\" $
+      GL_GLEXT_PROTOTYPES V8_DEPRECATION_WARNINGS \"CLD_VERSION=2\" $
+      \"_FILE_OFFSET_BITS=64\" CHROMIUM_BUILD $
+      \"CR_CLANG_REVISION=255169-1\" UI_COMPOSITOR_IMAGE_TRANSPORT $
+      \"USE_AURA=1\" \"USE_ASH=1\" \"USE_PANGO=1\" \"USE_CAIRO=1\" $
+      \"USE_DEFAULT_RENDER_THEME=1\" \"USE_LIBJPEG_TURBO=1\" \"USE_X11=1\" $
+      \"USE_CLIPBOARD_AURAX11=1\" ENABLE_ONE_CLICK_SIGNIN $
+      \"ENABLE_WEBRTC=1\" \"ENABLE_MEDIA_ROUTER=1\" ENABLE_PEPPER_CDMS $
+      ENABLE_CONFIGURATION_POLICY ENABLE_NOTIFICATIONS \"ENABLE_HIDPI=1\" $
+      \"ENABLE_TOPCHROME_MD=1\" USE_UDEV DONT_EMBED_BUILD_METADATA $
+      FIELDTRIAL_TESTING_ENABLED \"ENABLE_TASK_MANAGER=1\" $
+      \"ENABLE_EXTENSIONS=1\" \"ENABLE_PDF=1\" \"ENABLE_PLUGINS=1\" $
+      \"ENABLE_SESSION_SERVICE=1\" \"ENABLE_THEMES=1\" $
+      \"ENABLE_AUTOFILL_DIALOG=1\" \"ENABLE_BACKGROUND=1\" $
+      \"ENABLE_PRINTING=1\" \"ENABLE_BASIC_PRINTING=1\" $
+      \"ENABLE_PRINT_PREVIEW=1\" \"ENABLE_SPELLCHECK=1\" $
+      \"ENABLE_CAPTIVE_PORTAL_DETECTION=1\" \"ENABLE_APP_LIST=1\" $
+      \"ENABLE_SETTINGS_APP=1\" \"ENABLE_SUPERVISED_USERS=1\" $
+      \"ENABLE_MDNS=1\" \"ENABLE_SERVICE_DISCOVERY=1\" $
+      V8_USE_EXTERNAL_STARTUP_DATA FULL_SAFE_BROWSING SAFE_BROWSING_CSD $
+      SAFE_BROWSING_DB_LOCAL \"USE_LIBPCI=1\" \"USE_OPENSSL=1\" $
+      \"USE_OPENSSL_CERTS=1\"" $
+      "--link_flags=-B../out/Debug/gen/tc_newlib/lib64 $
+      -L../out/Debug/gen/tc_newlib/lib64 -lppapi_cpp -lppapi -pthread " $
+      "--source-list=../out/gypfiles/ppapi/newlib-x86-64.ppapi_nacl_tests.source_list.gypcmd"
+  description = ACTION ppapi_nacl_tests: build newlib x86-64 $
+      nexe_7c7e3a74809a03cc997c0b1a439a0813
+  restat = 1
+
+build ppapi_nacl_tests_newlib_x64.nexe: $
+    ppapi_nacl_tests_target_build_newlib_x86_64_nexe_7c7e3a74809a03cc997c0b1a439a0813 $
+    ../../native_client/build/build_nexe.py $
+    ../../native_client/build/build_nexe_tools.py $
+    ../../native_client/src/untrusted/irt/irt.h $
+    ../../ppapi/c/dev/deprecated_bool.h $
+    ../../ppapi/c/dev/pp_cursor_type_dev.h $
+    ../../ppapi/c/dev/pp_print_settings_dev.h $
+    ../../ppapi/c/dev/pp_video_dev.h ../../ppapi/c/dev/ppb_buffer_dev.h $
+    ../../ppapi/c/dev/ppb_char_set_dev.h ../../ppapi/c/dev/ppb_crypto_dev.h $
+    ../../ppapi/c/dev/ppb_cursor_control_dev.h $
+    ../../ppapi/c/dev/ppb_device_ref_dev.h $
+    ../../ppapi/c/dev/ppb_file_chooser_dev.h $
+    ../../ppapi/c/dev/ppb_ime_input_event_dev.h $
+    ../../ppapi/c/dev/ppb_memory_dev.h $
+    ../../ppapi/c/dev/ppb_opengles2ext_dev.h $
+    ../../ppapi/c/dev/ppb_printing_dev.h $
+    ../../ppapi/c/dev/ppb_text_input_dev.h $
+    ../../ppapi/c/dev/ppb_trace_event_dev.h $
+    ../../ppapi/c/dev/ppb_truetype_font_dev.h $
+    ../../ppapi/c/dev/ppb_url_util_dev.h $
+    ../../ppapi/c/dev/ppb_var_deprecated.h $
+    ../../ppapi/c/dev/ppb_video_decoder_dev.h $
+    ../../ppapi/c/dev/ppb_view_dev.h $
+    ../../ppapi/c/dev/ppp_class_deprecated.h $
+    ../../ppapi/c/dev/ppp_printing_dev.h $
+    ../../ppapi/c/dev/ppp_text_input_dev.h $
+    ../../ppapi/c/dev/ppp_video_decoder_dev.h $
+    ../../ppapi/c/pp_array_output.h ../../ppapi/c/pp_bool.h $
+    ../../ppapi/c/pp_codecs.h ../../ppapi/c/pp_completion_callback.h $
+    ../../ppapi/c/pp_directory_entry.h ../../ppapi/c/pp_errors.h $
+    ../../ppapi/c/pp_file_info.h ../../ppapi/c/pp_graphics_3d.h $
+    ../../ppapi/c/pp_input_event.h ../../ppapi/c/pp_instance.h $
+    ../../ppapi/c/pp_macros.h ../../ppapi/c/pp_module.h $
+    ../../ppapi/c/pp_point.h ../../ppapi/c/pp_rect.h $
+    ../../ppapi/c/pp_resource.h ../../ppapi/c/pp_size.h $
+    ../../ppapi/c/pp_stdint.h ../../ppapi/c/pp_time.h $
+    ../../ppapi/c/pp_touch_point.h ../../ppapi/c/pp_var.h $
+    ../../ppapi/c/ppb.h ../../ppapi/c/ppb_audio.h $
+    ../../ppapi/c/ppb_audio_buffer.h ../../ppapi/c/ppb_audio_config.h $
+    ../../ppapi/c/ppb_audio_encoder.h ../../ppapi/c/ppb_compositor.h $
+    ../../ppapi/c/ppb_compositor_layer.h ../../ppapi/c/ppb_console.h $
+    ../../ppapi/c/ppb_core.h ../../ppapi/c/ppb_file_io.h $
+    ../../ppapi/c/ppb_file_ref.h ../../ppapi/c/ppb_file_system.h $
+    ../../ppapi/c/ppb_fullscreen.h ../../ppapi/c/ppb_gamepad.h $
+    ../../ppapi/c/ppb_graphics_2d.h ../../ppapi/c/ppb_graphics_3d.h $
+    ../../ppapi/c/ppb_host_resolver.h ../../ppapi/c/ppb_image_data.h $
+    ../../ppapi/c/ppb_input_event.h ../../ppapi/c/ppb_instance.h $
+    ../../ppapi/c/ppb_media_stream_audio_track.h $
+    ../../ppapi/c/ppb_media_stream_video_track.h $
+    ../../ppapi/c/ppb_messaging.h ../../ppapi/c/ppb_mouse_cursor.h $
+    ../../ppapi/c/ppb_mouse_lock.h ../../ppapi/c/ppb_net_address.h $
+    ../../ppapi/c/ppb_network_list.h ../../ppapi/c/ppb_network_monitor.h $
+    ../../ppapi/c/ppb_network_proxy.h ../../ppapi/c/ppb_opengles2.h $
+    ../../ppapi/c/ppb_tcp_socket.h $
+    ../../ppapi/c/ppb_text_input_controller.h $
+    ../../ppapi/c/ppb_udp_socket.h ../../ppapi/c/ppb_url_loader.h $
+    ../../ppapi/c/ppb_url_request_info.h $
+    ../../ppapi/c/ppb_url_response_info.h ../../ppapi/c/ppb_var.h $
+    ../../ppapi/c/ppb_var_array.h ../../ppapi/c/ppb_var_array_buffer.h $
+    ../../ppapi/c/ppb_var_dictionary.h ../../ppapi/c/ppb_video_decoder.h $
+    ../../ppapi/c/ppb_video_encoder.h ../../ppapi/c/ppb_video_frame.h $
+    ../../ppapi/c/ppb_websocket.h ../../ppapi/c/ppp.h $
+    ../../ppapi/c/ppp_graphics_3d.h ../../ppapi/c/ppp_input_event.h $
+    ../../ppapi/c/ppp_instance.h ../../ppapi/c/ppp_message_handler.h $
+    ../../ppapi/c/ppp_messaging.h ../../ppapi/c/ppp_mouse_lock.h $
+    ../../ppapi/c/private/pp_content_decryptor.h $
+    ../../ppapi/c/private/pp_file_handle.h $
+    ../../ppapi/c/private/pp_private_font_charset.h $
+    ../../ppapi/c/private/pp_video_capture_format.h $
+    ../../ppapi/c/private/pp_video_frame_private.h $
+    ../../ppapi/c/private/ppb_camera_capabilities_private.h $
+    ../../ppapi/c/private/ppb_camera_device_private.h $
+    ../../ppapi/c/private/ppb_content_decryptor_private.h $
+    ../../ppapi/c/private/ppb_display_color_profile_private.h $
+    ../../ppapi/c/private/ppb_ext_crx_file_system_private.h $
+    ../../ppapi/c/private/ppb_file_io_private.h $
+    ../../ppapi/c/private/ppb_find_private.h $
+    ../../ppapi/c/private/ppb_flash.h $
+    ../../ppapi/c/private/ppb_flash_clipboard.h $
+    ../../ppapi/c/private/ppb_flash_font_file.h $
+    ../../ppapi/c/private/ppb_flash_menu.h $
+    ../../ppapi/c/private/ppb_flash_message_loop.h $
+    ../../ppapi/c/private/ppb_host_resolver_private.h $
+    ../../ppapi/c/private/ppb_instance_private.h $
+    ../../ppapi/c/private/ppb_net_address_private.h $
+    ../../ppapi/c/private/ppb_output_protection_private.h $
+    ../../ppapi/c/private/ppb_pdf.h $
+    ../../ppapi/c/private/ppb_platform_verification_private.h $
+    ../../ppapi/c/private/ppb_proxy_private.h $
+    ../../ppapi/c/private/ppb_tcp_server_socket_private.h $
+    ../../ppapi/c/private/ppb_tcp_socket_private.h $
+    ../../ppapi/c/private/ppb_testing_private.h $
+    ../../ppapi/c/private/ppb_udp_socket_private.h $
+    ../../ppapi/c/private/ppb_uma_private.h $
+    ../../ppapi/c/private/ppb_video_destination_private.h $
+    ../../ppapi/c/private/ppb_video_source_private.h $
+    ../../ppapi/c/private/ppb_x509_certificate_private.h $
+    ../../ppapi/c/private/ppp_content_decryptor_private.h $
+    ../../ppapi/c/private/ppp_find_private.h $
+    ../../ppapi/c/private/ppp_instance_private.h $
+    ../../ppapi/c/trusted/ppb_browser_font_trusted.h $
+    ../../ppapi/c/trusted/ppb_url_loader_trusted.h $
+    ../../ppapi/cpp/array_output.h ../../ppapi/cpp/audio.h $
+    ../../ppapi/cpp/audio_buffer.h ../../ppapi/cpp/audio_config.h $
+    ../../ppapi/cpp/audio_encoder.h ../../ppapi/cpp/completion_callback.h $
+    ../../ppapi/cpp/compositor.h ../../ppapi/cpp/compositor_layer.h $
+    ../../ppapi/cpp/core.h ../../ppapi/cpp/dev/buffer_dev.h $
+    ../../ppapi/cpp/dev/device_ref_dev.h $
+    ../../ppapi/cpp/dev/file_chooser_dev.h $
+    ../../ppapi/cpp/dev/ime_input_event_dev.h $
+    ../../ppapi/cpp/dev/memory_dev.h ../../ppapi/cpp/dev/printing_dev.h $
+    ../../ppapi/cpp/dev/scriptable_object_deprecated.h $
+    ../../ppapi/cpp/dev/text_input_dev.h $
+    ../../ppapi/cpp/dev/truetype_font_dev.h $
+    ../../ppapi/cpp/dev/url_util_dev.h $
+    ../../ppapi/cpp/dev/video_decoder_dev.h ../../ppapi/cpp/dev/view_dev.h $
+    ../../ppapi/cpp/directory_entry.h ../../ppapi/cpp/file_io.h $
+    ../../ppapi/cpp/file_ref.h ../../ppapi/cpp/file_system.h $
+    ../../ppapi/cpp/fullscreen.h ../../ppapi/cpp/graphics_2d.h $
+    ../../ppapi/cpp/graphics_3d.h ../../ppapi/cpp/graphics_3d_client.h $
+    ../../ppapi/cpp/host_resolver.h ../../ppapi/cpp/image_data.h $
+    ../../ppapi/cpp/input_event.h ../../ppapi/cpp/instance.h $
+    ../../ppapi/cpp/instance_handle.h ../../ppapi/cpp/logging.h $
+    ../../ppapi/cpp/media_stream_audio_track.h $
+    ../../ppapi/cpp/media_stream_video_track.h $
+    ../../ppapi/cpp/message_handler.h ../../ppapi/cpp/message_loop.h $
+    ../../ppapi/cpp/module.h ../../ppapi/cpp/module_impl.h $
+    ../../ppapi/cpp/mouse_lock.h ../../ppapi/cpp/net_address.h $
+    ../../ppapi/cpp/network_list.h ../../ppapi/cpp/network_monitor.h $
+    ../../ppapi/cpp/network_proxy.h ../../ppapi/cpp/output_traits.h $
+    ../../ppapi/cpp/pass_ref.h ../../ppapi/cpp/point.h $
+    ../../ppapi/cpp/private/camera_capabilities_private.h $
+    ../../ppapi/cpp/private/camera_device_private.h $
+    ../../ppapi/cpp/private/content_decryptor_private.h $
+    ../../ppapi/cpp/private/file_io_private.h $
+    ../../ppapi/cpp/private/find_private.h $
+    ../../ppapi/cpp/private/flash_font_file.h $
+    ../../ppapi/cpp/private/flash_fullscreen.h $
+    ../../ppapi/cpp/private/host_resolver_private.h $
+    ../../ppapi/cpp/private/instance_private.h $
+    ../../ppapi/cpp/private/net_address_private.h $
+    ../../ppapi/cpp/private/output_protection_private.h $
+    ../../ppapi/cpp/private/pass_file_handle.h $
+    ../../ppapi/cpp/private/tcp_server_socket_private.h $
+    ../../ppapi/cpp/private/tcp_socket_private.h $
+    ../../ppapi/cpp/private/udp_socket_private.h $
+    ../../ppapi/cpp/private/var_private.h $
+    ../../ppapi/cpp/private/video_destination_private.h $
+    ../../ppapi/cpp/private/video_frame_private.h $
+    ../../ppapi/cpp/private/video_source_private.h $
+    ../../ppapi/cpp/private/x509_certificate_private.h $
+    ../../ppapi/cpp/rect.h ../../ppapi/cpp/resource.h $
+    ../../ppapi/cpp/size.h ../../ppapi/cpp/tcp_socket.h $
+    ../../ppapi/cpp/text_input_controller.h ../../ppapi/cpp/touch_point.h $
+    ../../ppapi/cpp/udp_socket.h ../../ppapi/cpp/url_loader.h $
+    ../../ppapi/cpp/url_request_info.h ../../ppapi/cpp/url_response_info.h $
+    ../../ppapi/cpp/var.h ../../ppapi/cpp/var_array.h $
+    ../../ppapi/cpp/var_array_buffer.h ../../ppapi/cpp/var_dictionary.h $
+    ../../ppapi/cpp/video_decoder.h ../../ppapi/cpp/video_encoder.h $
+    ../../ppapi/cpp/video_frame.h ../../ppapi/cpp/view.h $
+    ../../ppapi/cpp/websocket.h ../../ppapi/lib/gl/gles2/gl2ext_ppapi.c $
+    ../../ppapi/lib/gl/gles2/gl2ext_ppapi.h $
+    ../../ppapi/lib/gl/gles2/gles2.c ../../ppapi/lib/gl/include/GLES2/gl2.h $
+    ../../ppapi/lib/gl/include/GLES2/gl2ext.h $
+    ../../ppapi/lib/gl/include/GLES2/gl2platform.h $
+    ../../ppapi/lib/gl/include/KHR/khrplatform.h $
+    ../../ppapi/nacl_irt/public/irt_ppapi.h $
+    ../../ppapi/native_client/src/untrusted/irt_stub/thread_creator.h $
+    ../../ppapi/tests/all_c_includes.h ../../ppapi/tests/all_cpp_includes.h $
+    ../../ppapi/tests/arch_dependent_sizes_32.h $
+    ../../ppapi/tests/arch_dependent_sizes_64.h $
+    ../../ppapi/tests/pp_thread.h ../../ppapi/tests/test_audio.cc $
+    ../../ppapi/tests/test_audio.h ../../ppapi/tests/test_audio_config.cc $
+    ../../ppapi/tests/test_audio_config.h $
+    ../../ppapi/tests/test_audio_encoder.cc $
+    ../../ppapi/tests/test_audio_encoder.h $
+    ../../ppapi/tests/test_c_includes.c ../../ppapi/tests/test_case.cc $
+    ../../ppapi/tests/test_case.h ../../ppapi/tests/test_compositor.cc $
+    ../../ppapi/tests/test_compositor.h ../../ppapi/tests/test_console.cc $
+    ../../ppapi/tests/test_console.h ../../ppapi/tests/test_core.cc $
+    ../../ppapi/tests/test_core.h ../../ppapi/tests/test_cpp_includes.cc $
+    ../../ppapi/tests/test_cursor_control.cc $
+    ../../ppapi/tests/test_cursor_control.h ../../ppapi/tests/test_empty.cc $
+    ../../ppapi/tests/test_empty.h ../../ppapi/tests/test_file_io.cc $
+    ../../ppapi/tests/test_file_io.h ../../ppapi/tests/test_file_ref.cc $
+    ../../ppapi/tests/test_file_ref.h ../../ppapi/tests/test_file_system.cc $
+    ../../ppapi/tests/test_file_system.h $
+    ../../ppapi/tests/test_fullscreen.cc $
+    ../../ppapi/tests/test_fullscreen.h $
+    ../../ppapi/tests/test_graphics_2d.cc $
+    ../../ppapi/tests/test_graphics_2d.h $
+    ../../ppapi/tests/test_graphics_3d.cc $
+    ../../ppapi/tests/test_graphics_3d.h $
+    ../../ppapi/tests/test_host_resolver.cc $
+    ../../ppapi/tests/test_host_resolver.h $
+    ../../ppapi/tests/test_host_resolver_private.cc $
+    ../../ppapi/tests/test_host_resolver_private.h $
+    ../../ppapi/tests/test_host_resolver_private_disallowed.cc $
+    ../../ppapi/tests/test_host_resolver_private_disallowed.h $
+    ../../ppapi/tests/test_image_data.cc $
+    ../../ppapi/tests/test_image_data.h $
+    ../../ppapi/tests/test_ime_input_event.cc $
+    ../../ppapi/tests/test_ime_input_event.h $
+    ../../ppapi/tests/test_input_event.cc $
+    ../../ppapi/tests/test_input_event.h $
+    ../../ppapi/tests/test_media_stream_audio_track.cc $
+    ../../ppapi/tests/test_media_stream_audio_track.h $
+    ../../ppapi/tests/test_media_stream_video_track.cc $
+    ../../ppapi/tests/test_media_stream_video_track.h $
+    ../../ppapi/tests/test_memory.cc ../../ppapi/tests/test_memory.h $
+    ../../ppapi/tests/test_message_handler.cc $
+    ../../ppapi/tests/test_message_handler.h $
+    ../../ppapi/tests/test_message_loop.cc $
+    ../../ppapi/tests/test_message_loop.h $
+    ../../ppapi/tests/test_mouse_cursor.cc $
+    ../../ppapi/tests/test_mouse_cursor.h $
+    ../../ppapi/tests/test_mouse_lock.cc $
+    ../../ppapi/tests/test_mouse_lock.h $
+    ../../ppapi/tests/test_nacl_irt_stack_alignment.cc $
+    ../../ppapi/tests/test_nacl_irt_stack_alignment.h $
+    ../../ppapi/tests/test_net_address.cc $
+    ../../ppapi/tests/test_net_address.h $
+    ../../ppapi/tests/test_net_address_private_untrusted.cc $
+    ../../ppapi/tests/test_net_address_private_untrusted.h $
+    ../../ppapi/tests/test_network_monitor.cc $
+    ../../ppapi/tests/test_network_monitor.h $
+    ../../ppapi/tests/test_network_proxy.cc $
+    ../../ppapi/tests/test_network_proxy.h $
+    ../../ppapi/tests/test_output_protection_private.cc $
+    ../../ppapi/tests/test_output_protection_private.h $
+    ../../ppapi/tests/test_paint_aggregator.cc $
+    ../../ppapi/tests/test_paint_aggregator.h $
+    ../../ppapi/tests/test_post_message.cc $
+    ../../ppapi/tests/test_post_message.h $
+    ../../ppapi/tests/test_printing.cc ../../ppapi/tests/test_printing.h $
+    ../../ppapi/tests/test_struct_sizes.c $
+    ../../ppapi/tests/test_tcp_server_socket_private.cc $
+    ../../ppapi/tests/test_tcp_server_socket_private.h $
+    ../../ppapi/tests/test_tcp_server_socket_private_disallowed.cc $
+    ../../ppapi/tests/test_tcp_server_socket_private_disallowed.h $
+    ../../ppapi/tests/test_tcp_socket.cc $
+    ../../ppapi/tests/test_tcp_socket.h $
+    ../../ppapi/tests/test_tcp_socket_private.cc $
+    ../../ppapi/tests/test_tcp_socket_private.h $
+    ../../ppapi/tests/test_tcp_socket_private_disallowed.cc $
+    ../../ppapi/tests/test_tcp_socket_private_disallowed.h $
+    ../../ppapi/tests/test_test_internals.cc $
+    ../../ppapi/tests/test_test_internals.h $
+    ../../ppapi/tests/test_trace_event.cc $
+    ../../ppapi/tests/test_trace_event.h $
+    ../../ppapi/tests/test_truetype_font.cc $
+    ../../ppapi/tests/test_truetype_font.h $
+    ../../ppapi/tests/test_udp_socket.cc $
+    ../../ppapi/tests/test_udp_socket.h $
+    ../../ppapi/tests/test_udp_socket_private.cc $
+    ../../ppapi/tests/test_udp_socket_private.h $
+    ../../ppapi/tests/test_udp_socket_private_disallowed.cc $
+    ../../ppapi/tests/test_udp_socket_private_disallowed.h $
+    ../../ppapi/tests/test_uma.cc ../../ppapi/tests/test_uma.h $
+    ../../ppapi/tests/test_url_loader.cc $
+    ../../ppapi/tests/test_url_loader.h $
+    ../../ppapi/tests/test_url_request.cc $
+    ../../ppapi/tests/test_url_request.h ../../ppapi/tests/test_utils.cc $
+    ../../ppapi/tests/test_utils.h ../../ppapi/tests/test_var.cc $
+    ../../ppapi/tests/test_var.h ../../ppapi/tests/test_var_resource.cc $
+    ../../ppapi/tests/test_var_resource.h $
+    ../../ppapi/tests/test_video_decoder.cc $
+    ../../ppapi/tests/test_video_decoder.h $
+    ../../ppapi/tests/test_video_destination.cc $
+    ../../ppapi/tests/test_video_destination.h $
+    ../../ppapi/tests/test_video_encoder.cc $
+    ../../ppapi/tests/test_video_encoder.h $
+    ../../ppapi/tests/test_video_source.cc $
+    ../../ppapi/tests/test_video_source.h ../../ppapi/tests/test_view.cc $
+    ../../ppapi/tests/test_view.h ../../ppapi/tests/test_websocket.cc $
+    ../../ppapi/tests/test_websocket.h $
+    ../../ppapi/tests/testing_instance.cc $
+    ../../ppapi/tests/testing_instance.h $
+    ../../ppapi/utility/completion_callback_factory.h $
+    ../../ppapi/utility/completion_callback_factory_thread_traits.h $
+    ../../ppapi/utility/graphics/paint_aggregator.h $
+    ../../ppapi/utility/graphics/paint_manager.h $
+    ../../ppapi/utility/threading/lock.h $
+    ../../ppapi/utility/threading/simple_thread.h $
+    ../../ppapi/utility/websocket/websocket_api.h $
+    gen/tc_newlib/lib64/libppapi_cpp.a gen/tc_newlib/lib64/libppapi.a $
+    ../../out/gypfiles/ppapi/newlib-x86-64.ppapi_nacl_tests.source_list.gypcmd $
+    ../../native_client/toolchain/linux_x86/nacl_x86_newlib/nacl_x86_newlib.json $
+    || obj/ppapi/ppapi_nacl_tests.actions_depends.stamp
+
+rule $
+    ppapi_nacl_tests_target_build_glibc_x86_64_nexe_7c7e3a74809a03cc997c0b1a439a0813
+  command = cd ../../ppapi; python ../native_client/build/build_nexe.py $
+      --root .. --product-dir ../out/Debug/xyz --config-name Debug -t $
+      ../native_client/toolchain/ --strip-all --arch x86-64 --build $
+      glibc_nexe --name ../out/Debug/ppapi_nacl_tests_glibc_x64.nexe $
+      --objdir $
+      ../out/Debug/obj/ppapi/ppapi_nacl_tests.gen/glibc-x86-64/ppapi_nacl_tests $
+      "--include-dirs=../out/Debug/gen/tc_glibc/include .. lib/gl/include $
+      \"../out/Debug/gen\"" "--compile_flags=-m64 -O2 -Wall $
+      -fdiagnostics-show-option -Werror -DGL_GLEXT_PROTOTYPES " --gomadir $
+      "" "--defines=\"__STDC_LIMIT_MACROS=1\" \"__STDC_FORMAT_MACROS=1\" $
+      \"_GNU_SOURCE=1\" \"_POSIX_C_SOURCE=199506\" \"_XOPEN_SOURCE=600\" $
+      \"DYNAMIC_ANNOTATIONS_ENABLED=1\" $
+      \"DYNAMIC_ANNOTATIONS_PREFIX=NACL_\" \"NACL_BUILD_ARCH=x86\" $
+      GL_GLEXT_PROTOTYPES V8_DEPRECATION_WARNINGS \"CLD_VERSION=2\" $
+      \"_FILE_OFFSET_BITS=64\" CHROMIUM_BUILD $
+      \"CR_CLANG_REVISION=255169-1\" UI_COMPOSITOR_IMAGE_TRANSPORT $
+      \"USE_AURA=1\" \"USE_ASH=1\" \"USE_PANGO=1\" \"USE_CAIRO=1\" $
+      \"USE_DEFAULT_RENDER_THEME=1\" \"USE_LIBJPEG_TURBO=1\" \"USE_X11=1\" $
+      \"USE_CLIPBOARD_AURAX11=1\" ENABLE_ONE_CLICK_SIGNIN $
+      \"ENABLE_WEBRTC=1\" \"ENABLE_MEDIA_ROUTER=1\" ENABLE_PEPPER_CDMS $
+      ENABLE_CONFIGURATION_POLICY ENABLE_NOTIFICATIONS \"ENABLE_HIDPI=1\" $
+      \"ENABLE_TOPCHROME_MD=1\" USE_UDEV DONT_EMBED_BUILD_METADATA $
+      FIELDTRIAL_TESTING_ENABLED \"ENABLE_TASK_MANAGER=1\" $
+      \"ENABLE_EXTENSIONS=1\" \"ENABLE_PDF=1\" \"ENABLE_PLUGINS=1\" $
+      \"ENABLE_SESSION_SERVICE=1\" \"ENABLE_THEMES=1\" $
+      \"ENABLE_AUTOFILL_DIALOG=1\" \"ENABLE_BACKGROUND=1\" $
+      \"ENABLE_PRINTING=1\" \"ENABLE_BASIC_PRINTING=1\" $
+      \"ENABLE_PRINT_PREVIEW=1\" \"ENABLE_SPELLCHECK=1\" $
+      \"ENABLE_CAPTIVE_PORTAL_DETECTION=1\" \"ENABLE_APP_LIST=1\" $
+      \"ENABLE_SETTINGS_APP=1\" \"ENABLE_SUPERVISED_USERS=1\" $
+      \"ENABLE_MDNS=1\" \"ENABLE_SERVICE_DISCOVERY=1\" $
+      V8_USE_EXTERNAL_STARTUP_DATA FULL_SAFE_BROWSING SAFE_BROWSING_CSD $
+      SAFE_BROWSING_DB_LOCAL \"USE_LIBPCI=1\" \"USE_OPENSSL=1\" $
+      \"USE_OPENSSL_CERTS=1\"" $
+      "--link_flags=-B../out/Debug/gen/tc_glibc/lib64 -lppapi_cpp -lppapi $
+      -pthread " $
+      "--source-list=../out/gypfiles/ppapi/glibc-x86-64.ppapi_nacl_tests.source_list.gypcmd"
+  description = ACTION ppapi_nacl_tests: build glibc x86-64 $
+      nexe_7c7e3a74809a03cc997c0b1a439a0813
+  restat = 1
+
+build ppapi_nacl_tests_glibc_x64.nexe: $
+    ppapi_nacl_tests_target_build_glibc_x86_64_nexe_7c7e3a74809a03cc997c0b1a439a0813 $
+    ../../native_client/build/build_nexe.py $
+    ../../native_client/build/build_nexe_tools.py $
+    ../../native_client/src/untrusted/irt/irt.h $
+    ../../ppapi/c/dev/deprecated_bool.h $
+    ../../ppapi/c/dev/pp_cursor_type_dev.h $
+    ../../ppapi/c/dev/pp_print_settings_dev.h $
+    ../../ppapi/c/dev/pp_video_dev.h ../../ppapi/c/dev/ppb_buffer_dev.h $
+    ../../ppapi/c/dev/ppb_char_set_dev.h ../../ppapi/c/dev/ppb_crypto_dev.h $
+    ../../ppapi/c/dev/ppb_cursor_control_dev.h $
+    ../../ppapi/c/dev/ppb_device_ref_dev.h $
+    ../../ppapi/c/dev/ppb_file_chooser_dev.h $
+    ../../ppapi/c/dev/ppb_ime_input_event_dev.h $
+    ../../ppapi/c/dev/ppb_memory_dev.h $
+    ../../ppapi/c/dev/ppb_opengles2ext_dev.h $
+    ../../ppapi/c/dev/ppb_printing_dev.h $
+    ../../ppapi/c/dev/ppb_text_input_dev.h $
+    ../../ppapi/c/dev/ppb_trace_event_dev.h $
+    ../../ppapi/c/dev/ppb_truetype_font_dev.h $
+    ../../ppapi/c/dev/ppb_url_util_dev.h $
+    ../../ppapi/c/dev/ppb_var_deprecated.h $
+    ../../ppapi/c/dev/ppb_video_decoder_dev.h $
+    ../../ppapi/c/dev/ppb_view_dev.h $
+    ../../ppapi/c/dev/ppp_class_deprecated.h $
+    ../../ppapi/c/dev/ppp_printing_dev.h $
+    ../../ppapi/c/dev/ppp_text_input_dev.h $
+    ../../ppapi/c/dev/ppp_video_decoder_dev.h $
+    ../../ppapi/c/pp_array_output.h ../../ppapi/c/pp_bool.h $
+    ../../ppapi/c/pp_codecs.h ../../ppapi/c/pp_completion_callback.h $
+    ../../ppapi/c/pp_directory_entry.h ../../ppapi/c/pp_errors.h $
+    ../../ppapi/c/pp_file_info.h ../../ppapi/c/pp_graphics_3d.h $
+    ../../ppapi/c/pp_input_event.h ../../ppapi/c/pp_instance.h $
+    ../../ppapi/c/pp_macros.h ../../ppapi/c/pp_module.h $
+    ../../ppapi/c/pp_point.h ../../ppapi/c/pp_rect.h $
+    ../../ppapi/c/pp_resource.h ../../ppapi/c/pp_size.h $
+    ../../ppapi/c/pp_stdint.h ../../ppapi/c/pp_time.h $
+    ../../ppapi/c/pp_touch_point.h ../../ppapi/c/pp_var.h $
+    ../../ppapi/c/ppb.h ../../ppapi/c/ppb_audio.h $
+    ../../ppapi/c/ppb_audio_buffer.h ../../ppapi/c/ppb_audio_config.h $
+    ../../ppapi/c/ppb_audio_encoder.h ../../ppapi/c/ppb_compositor.h $
+    ../../ppapi/c/ppb_compositor_layer.h ../../ppapi/c/ppb_console.h $
+    ../../ppapi/c/ppb_core.h ../../ppapi/c/ppb_file_io.h $
+    ../../ppapi/c/ppb_file_ref.h ../../ppapi/c/ppb_file_system.h $
+    ../../ppapi/c/ppb_fullscreen.h ../../ppapi/c/ppb_gamepad.h $
+    ../../ppapi/c/ppb_graphics_2d.h ../../ppapi/c/ppb_graphics_3d.h $
+    ../../ppapi/c/ppb_host_resolver.h ../../ppapi/c/ppb_image_data.h $
+    ../../ppapi/c/ppb_input_event.h ../../ppapi/c/ppb_instance.h $
+    ../../ppapi/c/ppb_media_stream_audio_track.h $
+    ../../ppapi/c/ppb_media_stream_video_track.h $
+    ../../ppapi/c/ppb_messaging.h ../../ppapi/c/ppb_mouse_cursor.h $
+    ../../ppapi/c/ppb_mouse_lock.h ../../ppapi/c/ppb_net_address.h $
+    ../../ppapi/c/ppb_network_list.h ../../ppapi/c/ppb_network_monitor.h $
+    ../../ppapi/c/ppb_network_proxy.h ../../ppapi/c/ppb_opengles2.h $
+    ../../ppapi/c/ppb_tcp_socket.h $
+    ../../ppapi/c/ppb_text_input_controller.h $
+    ../../ppapi/c/ppb_udp_socket.h ../../ppapi/c/ppb_url_loader.h $
+    ../../ppapi/c/ppb_url_request_info.h $
+    ../../ppapi/c/ppb_url_response_info.h ../../ppapi/c/ppb_var.h $
+    ../../ppapi/c/ppb_var_array.h ../../ppapi/c/ppb_var_array_buffer.h $
+    ../../ppapi/c/ppb_var_dictionary.h ../../ppapi/c/ppb_video_decoder.h $
+    ../../ppapi/c/ppb_video_encoder.h ../../ppapi/c/ppb_video_frame.h $
+    ../../ppapi/c/ppb_websocket.h ../../ppapi/c/ppp.h $
+    ../../ppapi/c/ppp_graphics_3d.h ../../ppapi/c/ppp_input_event.h $
+    ../../ppapi/c/ppp_instance.h ../../ppapi/c/ppp_message_handler.h $
+    ../../ppapi/c/ppp_messaging.h ../../ppapi/c/ppp_mouse_lock.h $
+    ../../ppapi/c/private/pp_content_decryptor.h $
+    ../../ppapi/c/private/pp_file_handle.h $
+    ../../ppapi/c/private/pp_private_font_charset.h $
+    ../../ppapi/c/private/pp_video_capture_format.h $
+    ../../ppapi/c/private/pp_video_frame_private.h $
+    ../../ppapi/c/private/ppb_camera_capabilities_private.h $
+    ../../ppapi/c/private/ppb_camera_device_private.h $
+    ../../ppapi/c/private/ppb_content_decryptor_private.h $
+    ../../ppapi/c/private/ppb_display_color_profile_private.h $
+    ../../ppapi/c/private/ppb_ext_crx_file_system_private.h $
+    ../../ppapi/c/private/ppb_file_io_private.h $
+    ../../ppapi/c/private/ppb_find_private.h $
+    ../../ppapi/c/private/ppb_flash.h $
+    ../../ppapi/c/private/ppb_flash_clipboard.h $
+    ../../ppapi/c/private/ppb_flash_font_file.h $
+    ../../ppapi/c/private/ppb_flash_menu.h $
+    ../../ppapi/c/private/ppb_flash_message_loop.h $
+    ../../ppapi/c/private/ppb_host_resolver_private.h $
+    ../../ppapi/c/private/ppb_instance_private.h $
+    ../../ppapi/c/private/ppb_net_address_private.h $
+    ../../ppapi/c/private/ppb_output_protection_private.h $
+    ../../ppapi/c/private/ppb_pdf.h $
+    ../../ppapi/c/private/ppb_platform_verification_private.h $
+    ../../ppapi/c/private/ppb_proxy_private.h $
+    ../../ppapi/c/private/ppb_tcp_server_socket_private.h $
+    ../../ppapi/c/private/ppb_tcp_socket_private.h $
+    ../../ppapi/c/private/ppb_testing_private.h $
+    ../../ppapi/c/private/ppb_udp_socket_private.h $
+    ../../ppapi/c/private/ppb_uma_private.h $
+    ../../ppapi/c/private/ppb_video_destination_private.h $
+    ../../ppapi/c/private/ppb_video_source_private.h $
+    ../../ppapi/c/private/ppb_x509_certificate_private.h $
+    ../../ppapi/c/private/ppp_content_decryptor_private.h $
+    ../../ppapi/c/private/ppp_find_private.h $
+    ../../ppapi/c/private/ppp_instance_private.h $
+    ../../ppapi/c/trusted/ppb_browser_font_trusted.h $
+    ../../ppapi/c/trusted/ppb_url_loader_trusted.h $
+    ../../ppapi/cpp/array_output.h ../../ppapi/cpp/audio.h $
+    ../../ppapi/cpp/audio_buffer.h ../../ppapi/cpp/audio_config.h $
+    ../../ppapi/cpp/audio_encoder.h ../../ppapi/cpp/completion_callback.h $
+    ../../ppapi/cpp/compositor.h ../../ppapi/cpp/compositor_layer.h $
+    ../../ppapi/cpp/core.h ../../ppapi/cpp/dev/buffer_dev.h $
+    ../../ppapi/cpp/dev/device_ref_dev.h $
+    ../../ppapi/cpp/dev/file_chooser_dev.h $
+    ../../ppapi/cpp/dev/ime_input_event_dev.h $
+    ../../ppapi/cpp/dev/memory_dev.h ../../ppapi/cpp/dev/printing_dev.h $
+    ../../ppapi/cpp/dev/scriptable_object_deprecated.h $
+    ../../ppapi/cpp/dev/text_input_dev.h $
+    ../../ppapi/cpp/dev/truetype_font_dev.h $
+    ../../ppapi/cpp/dev/url_util_dev.h $
+    ../../ppapi/cpp/dev/video_decoder_dev.h ../../ppapi/cpp/dev/view_dev.h $
+    ../../ppapi/cpp/directory_entry.h ../../ppapi/cpp/file_io.h $
+    ../../ppapi/cpp/file_ref.h ../../ppapi/cpp/file_system.h $
+    ../../ppapi/cpp/fullscreen.h ../../ppapi/cpp/graphics_2d.h $
+    ../../ppapi/cpp/graphics_3d.h ../../ppapi/cpp/graphics_3d_client.h $
+    ../../ppapi/cpp/host_resolver.h ../../ppapi/cpp/image_data.h $
+    ../../ppapi/cpp/input_event.h ../../ppapi/cpp/instance.h $
+    ../../ppapi/cpp/instance_handle.h ../../ppapi/cpp/logging.h $
+    ../../ppapi/cpp/media_stream_audio_track.h $
+    ../../ppapi/cpp/media_stream_video_track.h $
+    ../../ppapi/cpp/message_handler.h ../../ppapi/cpp/message_loop.h $
+    ../../ppapi/cpp/module.h ../../ppapi/cpp/module_impl.h $
+    ../../ppapi/cpp/mouse_lock.h ../../ppapi/cpp/net_address.h $
+    ../../ppapi/cpp/network_list.h ../../ppapi/cpp/network_monitor.h $
+    ../../ppapi/cpp/network_proxy.h ../../ppapi/cpp/output_traits.h $
+    ../../ppapi/cpp/pass_ref.h ../../ppapi/cpp/point.h $
+    ../../ppapi/cpp/private/camera_capabilities_private.h $
+    ../../ppapi/cpp/private/camera_device_private.h $
+    ../../ppapi/cpp/private/content_decryptor_private.h $
+    ../../ppapi/cpp/private/file_io_private.h $
+    ../../ppapi/cpp/private/find_private.h $
+    ../../ppapi/cpp/private/flash_font_file.h $
+    ../../ppapi/cpp/private/flash_fullscreen.h $
+    ../../ppapi/cpp/private/host_resolver_private.h $
+    ../../ppapi/cpp/private/instance_private.h $
+    ../../ppapi/cpp/private/net_address_private.h $
+    ../../ppapi/cpp/private/output_protection_private.h $
+    ../../ppapi/cpp/private/pass_file_handle.h $
+    ../../ppapi/cpp/private/tcp_server_socket_private.h $
+    ../../ppapi/cpp/private/tcp_socket_private.h $
+    ../../ppapi/cpp/private/udp_socket_private.h $
+    ../../ppapi/cpp/private/var_private.h $
+    ../../ppapi/cpp/private/video_destination_private.h $
+    ../../ppapi/cpp/private/video_frame_private.h $
+    ../../ppapi/cpp/private/video_source_private.h $
+    ../../ppapi/cpp/private/x509_certificate_private.h $
+    ../../ppapi/cpp/rect.h ../../ppapi/cpp/resource.h $
+    ../../ppapi/cpp/size.h ../../ppapi/cpp/tcp_socket.h $
+    ../../ppapi/cpp/text_input_controller.h ../../ppapi/cpp/touch_point.h $
+    ../../ppapi/cpp/udp_socket.h ../../ppapi/cpp/url_loader.h $
+    ../../ppapi/cpp/url_request_info.h ../../ppapi/cpp/url_response_info.h $
+    ../../ppapi/cpp/var.h ../../ppapi/cpp/var_array.h $
+    ../../ppapi/cpp/var_array_buffer.h ../../ppapi/cpp/var_dictionary.h $
+    ../../ppapi/cpp/video_decoder.h ../../ppapi/cpp/video_encoder.h $
+    ../../ppapi/cpp/video_frame.h ../../ppapi/cpp/view.h $
+    ../../ppapi/cpp/websocket.h ../../ppapi/lib/gl/gles2/gl2ext_ppapi.c $
+    ../../ppapi/lib/gl/gles2/gl2ext_ppapi.h $
+    ../../ppapi/lib/gl/gles2/gles2.c ../../ppapi/lib/gl/include/GLES2/gl2.h $
+    ../../ppapi/lib/gl/include/GLES2/gl2ext.h $
+    ../../ppapi/lib/gl/include/GLES2/gl2platform.h $
+    ../../ppapi/lib/gl/include/KHR/khrplatform.h $
+    ../../ppapi/nacl_irt/public/irt_ppapi.h $
+    ../../ppapi/native_client/src/untrusted/irt_stub/thread_creator.h $
+    ../../ppapi/tests/all_c_includes.h ../../ppapi/tests/all_cpp_includes.h $
+    ../../ppapi/tests/arch_dependent_sizes_32.h $
+    ../../ppapi/tests/arch_dependent_sizes_64.h $
+    ../../ppapi/tests/pp_thread.h ../../ppapi/tests/test_audio.cc $
+    ../../ppapi/tests/test_audio.h ../../ppapi/tests/test_audio_config.cc $
+    ../../ppapi/tests/test_audio_config.h $
+    ../../ppapi/tests/test_audio_encoder.cc $
+    ../../ppapi/tests/test_audio_encoder.h $
+    ../../ppapi/tests/test_c_includes.c ../../ppapi/tests/test_case.cc $
+    ../../ppapi/tests/test_case.h ../../ppapi/tests/test_compositor.cc $
+    ../../ppapi/tests/test_compositor.h ../../ppapi/tests/test_console.cc $
+    ../../ppapi/tests/test_console.h ../../ppapi/tests/test_core.cc $
+    ../../ppapi/tests/test_core.h ../../ppapi/tests/test_cpp_includes.cc $
+    ../../ppapi/tests/test_cursor_control.cc $
+    ../../ppapi/tests/test_cursor_control.h ../../ppapi/tests/test_empty.cc $
+    ../../ppapi/tests/test_empty.h ../../ppapi/tests/test_file_io.cc $
+    ../../ppapi/tests/test_file_io.h ../../ppapi/tests/test_file_ref.cc $
+    ../../ppapi/tests/test_file_ref.h ../../ppapi/tests/test_file_system.cc $
+    ../../ppapi/tests/test_file_system.h $
+    ../../ppapi/tests/test_fullscreen.cc $
+    ../../ppapi/tests/test_fullscreen.h $
+    ../../ppapi/tests/test_graphics_2d.cc $
+    ../../ppapi/tests/test_graphics_2d.h $
+    ../../ppapi/tests/test_graphics_3d.cc $
+    ../../ppapi/tests/test_graphics_3d.h $
+    ../../ppapi/tests/test_host_resolver.cc $
+    ../../ppapi/tests/test_host_resolver.h $
+    ../../ppapi/tests/test_host_resolver_private.cc $
+    ../../ppapi/tests/test_host_resolver_private.h $
+    ../../ppapi/tests/test_host_resolver_private_disallowed.cc $
+    ../../ppapi/tests/test_host_resolver_private_disallowed.h $
+    ../../ppapi/tests/test_image_data.cc $
+    ../../ppapi/tests/test_image_data.h $
+    ../../ppapi/tests/test_ime_input_event.cc $
+    ../../ppapi/tests/test_ime_input_event.h $
+    ../../ppapi/tests/test_input_event.cc $
+    ../../ppapi/tests/test_input_event.h $
+    ../../ppapi/tests/test_media_stream_audio_track.cc $
+    ../../ppapi/tests/test_media_stream_audio_track.h $
+    ../../ppapi/tests/test_media_stream_video_track.cc $
+    ../../ppapi/tests/test_media_stream_video_track.h $
+    ../../ppapi/tests/test_memory.cc ../../ppapi/tests/test_memory.h $
+    ../../ppapi/tests/test_message_handler.cc $
+    ../../ppapi/tests/test_message_handler.h $
+    ../../ppapi/tests/test_message_loop.cc $
+    ../../ppapi/tests/test_message_loop.h $
+    ../../ppapi/tests/test_mouse_cursor.cc $
+    ../../ppapi/tests/test_mouse_cursor.h $
+    ../../ppapi/tests/test_mouse_lock.cc $
+    ../../ppapi/tests/test_mouse_lock.h $
+    ../../ppapi/tests/test_nacl_irt_stack_alignment.cc $
+    ../../ppapi/tests/test_nacl_irt_stack_alignment.h $
+    ../../ppapi/tests/test_net_address.cc $
+    ../../ppapi/tests/test_net_address.h $
+    ../../ppapi/tests/test_net_address_private_untrusted.cc $
+    ../../ppapi/tests/test_net_address_private_untrusted.h $
+    ../../ppapi/tests/test_network_monitor.cc $
+    ../../ppapi/tests/test_network_monitor.h $
+    ../../ppapi/tests/test_network_proxy.cc $
+    ../../ppapi/tests/test_network_proxy.h $
+    ../../ppapi/tests/test_output_protection_private.cc $
+    ../../ppapi/tests/test_output_protection_private.h $
+    ../../ppapi/tests/test_paint_aggregator.cc $
+    ../../ppapi/tests/test_paint_aggregator.h $
+    ../../ppapi/tests/test_post_message.cc $
+    ../../ppapi/tests/test_post_message.h $
+    ../../ppapi/tests/test_printing.cc ../../ppapi/tests/test_printing.h $
+    ../../ppapi/tests/test_struct_sizes.c $
+    ../../ppapi/tests/test_tcp_server_socket_private.cc $
+    ../../ppapi/tests/test_tcp_server_socket_private.h $
+    ../../ppapi/tests/test_tcp_server_socket_private_disallowed.cc $
+    ../../ppapi/tests/test_tcp_server_socket_private_disallowed.h $
+    ../../ppapi/tests/test_tcp_socket.cc $
+    ../../ppapi/tests/test_tcp_socket.h $
+    ../../ppapi/tests/test_tcp_socket_private.cc $
+    ../../ppapi/tests/test_tcp_socket_private.h $
+    ../../ppapi/tests/test_tcp_socket_private_disallowed.cc $
+    ../../ppapi/tests/test_tcp_socket_private_disallowed.h $
+    ../../ppapi/tests/test_test_internals.cc $
+    ../../ppapi/tests/test_test_internals.h $
+    ../../ppapi/tests/test_trace_event.cc $
+    ../../ppapi/tests/test_trace_event.h $
+    ../../ppapi/tests/test_truetype_font.cc $
+    ../../ppapi/tests/test_truetype_font.h $
+    ../../ppapi/tests/test_udp_socket.cc $
+    ../../ppapi/tests/test_udp_socket.h $
+    ../../ppapi/tests/test_udp_socket_private.cc $
+    ../../ppapi/tests/test_udp_socket_private.h $
+    ../../ppapi/tests/test_udp_socket_private_disallowed.cc $
+    ../../ppapi/tests/test_udp_socket_private_disallowed.h $
+    ../../ppapi/tests/test_uma.cc ../../ppapi/tests/test_uma.h $
+    ../../ppapi/tests/test_url_loader.cc $
+    ../../ppapi/tests/test_url_loader.h $
+    ../../ppapi/tests/test_url_request.cc $
+    ../../ppapi/tests/test_url_request.h ../../ppapi/tests/test_utils.cc $
+    ../../ppapi/tests/test_utils.h ../../ppapi/tests/test_var.cc $
+    ../../ppapi/tests/test_var.h ../../ppapi/tests/test_var_resource.cc $
+    ../../ppapi/tests/test_var_resource.h $
+    ../../ppapi/tests/test_video_decoder.cc $
+    ../../ppapi/tests/test_video_decoder.h $
+    ../../ppapi/tests/test_video_destination.cc $
+    ../../ppapi/tests/test_video_destination.h $
+    ../../ppapi/tests/test_video_encoder.cc $
+    ../../ppapi/tests/test_video_encoder.h $
+    ../../ppapi/tests/test_video_source.cc $
+    ../../ppapi/tests/test_video_source.h ../../ppapi/tests/test_view.cc $
+    ../../ppapi/tests/test_view.h ../../ppapi/tests/test_websocket.cc $
+    ../../ppapi/tests/test_websocket.h $
+    ../../ppapi/tests/testing_instance.cc $
+    ../../ppapi/tests/testing_instance.h $
+    ../../ppapi/utility/completion_callback_factory.h $
+    ../../ppapi/utility/completion_callback_factory_thread_traits.h $
+    ../../ppapi/utility/graphics/paint_aggregator.h $
+    ../../ppapi/utility/graphics/paint_manager.h $
+    ../../ppapi/utility/threading/lock.h $
+    ../../ppapi/utility/threading/simple_thread.h $
+    ../../ppapi/utility/websocket/websocket_api.h $
+    gen/tc_glibc/lib64/libppapi_cpp.so gen/tc_glibc/lib64/libppapi.so $
+    ../../out/gypfiles/ppapi/glibc-x86-64.ppapi_nacl_tests.source_list.gypcmd $
+    ../../native_client/toolchain/linux_x86/nacl_x86_glibc/nacl_x86_glibc.json $
+    || obj/ppapi/ppapi_nacl_tests.actions_depends.stamp
+
+build obj/ppapi/ppapi_nacl_tests.actions_rules_copies.stamp: stamp $
+    ppapi_nacl_tests_glibc.nmf ppapi_nacl_tests_pnacl.nmf $
+    ppapi_nacl_tests_pnacl_nonsfi.nmf ppapi_nacl_tests_newlib.pexe $
+    ppapi_nacl_tests_newlib.pexe.debug $
+    ppapi_nacl_tests_pnacl_newlib_x32_nonsfi.nexe $
+    ppapi_nacl_tests_pnacl_newlib_x64.nexe ppapi_nacl_tests_newlib_x64.nexe $
+    ppapi_nacl_tests_glibc_x64.nexe
+

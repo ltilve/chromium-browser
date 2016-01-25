@@ -1,0 +1,232 @@
+rule ppapi_gles2_lib_target_build_newlib_plib_6cc5f08782890918c12c3426972ca9c8
+  command = cd ../../ppapi; python ../native_client/build/build_nexe.py $
+      --root .. --product-dir ../out/Release/xyz --config-name Release -t $
+      ../native_client/toolchain/ --arch pnacl --build newlib_plib --name $
+      ../out/Release/gen/tc_pnacl_newlib/lib/libppapi_gles2.a --objdir $
+      ../out/Release/obj/ppapi/ppapi_gles2_lib.gen/pnacl_newlib-pnacl/ppapi_gles2_lib $
+      "--include-dirs=../out/Release/gen/tc_pnacl_newlib/include .. $
+      lib/gl/include \"../out/Release/gen\"" "--compile_flags=-O2 -g -Wall $
+      -fdiagnostics-show-option -Werror  -Wno-unused-function $
+      -Wno-char-subscripts -Wno-c++11-extensions $
+      -Wno-unnamed-type-template-args -Wno-extra-semi $
+      -Wno-unused-private-field -Wno-char-subscripts -Wno-unused-function $
+      \"-std=gnu++11\" " --gomadir "" "--defines=\"__STDC_LIMIT_MACROS=1\" $
+      \"__STDC_FORMAT_MACROS=1\" \"_GNU_SOURCE=1\" $
+      \"_POSIX_C_SOURCE=199506\" \"_XOPEN_SOURCE=600\" $
+      \"DYNAMIC_ANNOTATIONS_ENABLED=1\" $
+      \"DYNAMIC_ANNOTATIONS_PREFIX=NACL_\" \"NACL_BUILD_ARCH=x86\" $
+      V8_DEPRECATION_WARNINGS \"CLD_VERSION=2\" \"_FILE_OFFSET_BITS=64\" $
+      CHROMIUM_BUILD \"CR_CLANG_REVISION=255169-1\" $
+      UI_COMPOSITOR_IMAGE_TRANSPORT \"USE_AURA=1\" \"USE_ASH=1\" $
+      \"USE_PANGO=1\" \"USE_CAIRO=1\" \"USE_DEFAULT_RENDER_THEME=1\" $
+      \"USE_LIBJPEG_TURBO=1\" \"USE_X11=1\" \"USE_CLIPBOARD_AURAX11=1\" $
+      ENABLE_ONE_CLICK_SIGNIN \"ENABLE_WEBRTC=1\" \"ENABLE_MEDIA_ROUTER=1\" $
+      ENABLE_PEPPER_CDMS ENABLE_CONFIGURATION_POLICY ENABLE_NOTIFICATIONS $
+      \"ENABLE_HIDPI=1\" \"ENABLE_TOPCHROME_MD=1\" USE_UDEV $
+      DONT_EMBED_BUILD_METADATA FIELDTRIAL_TESTING_ENABLED $
+      \"ENABLE_TASK_MANAGER=1\" \"ENABLE_EXTENSIONS=1\" \"ENABLE_PDF=1\" $
+      \"ENABLE_PLUGINS=1\" \"ENABLE_SESSION_SERVICE=1\" \"ENABLE_THEMES=1\" $
+      \"ENABLE_AUTOFILL_DIALOG=1\" \"ENABLE_BACKGROUND=1\" $
+      \"ENABLE_PRINTING=1\" \"ENABLE_BASIC_PRINTING=1\" $
+      \"ENABLE_PRINT_PREVIEW=1\" \"ENABLE_SPELLCHECK=1\" $
+      \"ENABLE_CAPTIVE_PORTAL_DETECTION=1\" \"ENABLE_APP_LIST=1\" $
+      \"ENABLE_SETTINGS_APP=1\" \"ENABLE_SUPERVISED_USERS=1\" $
+      \"ENABLE_MDNS=1\" \"ENABLE_SERVICE_DISCOVERY=1\" $
+      V8_USE_EXTERNAL_STARTUP_DATA FULL_SAFE_BROWSING SAFE_BROWSING_CSD $
+      SAFE_BROWSING_DB_LOCAL \"USE_LIBPCI=1\" \"USE_OPENSSL=1\" $
+      \"USE_OPENSSL_CERTS=1\"" $
+      "--link_flags=-B../out/Release/gen/tc_pnacl_newlib/lib  " $
+      "--source-list=../out/gypfiles/ppapi/pnacl_newlib.ppapi_gles2_lib.source_list.gypcmd"
+  description = ACTION ppapi_gles2_lib: build newlib $
+      plib_6cc5f08782890918c12c3426972ca9c8
+  restat = 1
+
+build gen/tc_pnacl_newlib/lib/libppapi_gles2.a: $
+    ppapi_gles2_lib_target_build_newlib_plib_6cc5f08782890918c12c3426972ca9c8 $
+    ../../native_client/build/build_nexe.py $
+    ../../native_client/build/build_nexe_tools.py $
+    ../../ppapi/c/dev/ppb_opengles2ext_dev.h ../../ppapi/c/pp_macros.h $
+    ../../ppapi/c/pp_resource.h ../../ppapi/c/pp_stdint.h $
+    ../../ppapi/c/ppb.h ../../ppapi/c/ppb_opengles2.h $
+    ../../ppapi/lib/gl/gles2/gl2ext_ppapi.c $
+    ../../ppapi/lib/gl/gles2/gl2ext_ppapi.h $
+    ../../ppapi/lib/gl/gles2/gles2.c ../../ppapi/lib/gl/include/GLES2/gl2.h $
+    ../../ppapi/lib/gl/include/GLES2/gl2ext.h $
+    ../../ppapi/lib/gl/include/GLES2/gl2platform.h $
+    ../../ppapi/lib/gl/include/KHR/khrplatform.h $
+    ../../out/gypfiles/ppapi/pnacl_newlib.ppapi_gles2_lib.source_list.gypcmd $
+    ../../native_client/toolchain/linux_x86/pnacl_newlib/pnacl_newlib.json
+
+rule $
+    ppapi_gles2_lib_target_build_newlib_x86_64_nlib_6cc5f08782890918c12c3426972ca9c8
+  command = cd ../../ppapi; python ../native_client/build/build_nexe.py $
+      --root .. --product-dir ../out/Release/xyz --config-name Release -t $
+      ../native_client/toolchain/ --arch x86-64 --build newlib_nlib --name $
+      ../out/Release/gen/tc_newlib/lib64/libppapi_gles2.a --objdir $
+      ../out/Release/obj/ppapi/ppapi_gles2_lib.gen/newlib-x86-64/ppapi_gles2_lib $
+      "--include-dirs=../out/Release/gen/tc_newlib/include .. $
+      lib/gl/include \"../out/Release/gen\"" "--compile_flags=-m64 -O2 -g $
+      -Wall -fdiagnostics-show-option -Werror " --gomadir "" $
+      "--defines=\"__STDC_LIMIT_MACROS=1\" \"__STDC_FORMAT_MACROS=1\" $
+      \"_GNU_SOURCE=1\" \"_POSIX_C_SOURCE=199506\" \"_XOPEN_SOURCE=600\" $
+      \"DYNAMIC_ANNOTATIONS_ENABLED=1\" $
+      \"DYNAMIC_ANNOTATIONS_PREFIX=NACL_\" \"NACL_BUILD_ARCH=x86\" $
+      V8_DEPRECATION_WARNINGS \"CLD_VERSION=2\" \"_FILE_OFFSET_BITS=64\" $
+      CHROMIUM_BUILD \"CR_CLANG_REVISION=255169-1\" $
+      UI_COMPOSITOR_IMAGE_TRANSPORT \"USE_AURA=1\" \"USE_ASH=1\" $
+      \"USE_PANGO=1\" \"USE_CAIRO=1\" \"USE_DEFAULT_RENDER_THEME=1\" $
+      \"USE_LIBJPEG_TURBO=1\" \"USE_X11=1\" \"USE_CLIPBOARD_AURAX11=1\" $
+      ENABLE_ONE_CLICK_SIGNIN \"ENABLE_WEBRTC=1\" \"ENABLE_MEDIA_ROUTER=1\" $
+      ENABLE_PEPPER_CDMS ENABLE_CONFIGURATION_POLICY ENABLE_NOTIFICATIONS $
+      \"ENABLE_HIDPI=1\" \"ENABLE_TOPCHROME_MD=1\" USE_UDEV $
+      DONT_EMBED_BUILD_METADATA FIELDTRIAL_TESTING_ENABLED $
+      \"ENABLE_TASK_MANAGER=1\" \"ENABLE_EXTENSIONS=1\" \"ENABLE_PDF=1\" $
+      \"ENABLE_PLUGINS=1\" \"ENABLE_SESSION_SERVICE=1\" \"ENABLE_THEMES=1\" $
+      \"ENABLE_AUTOFILL_DIALOG=1\" \"ENABLE_BACKGROUND=1\" $
+      \"ENABLE_PRINTING=1\" \"ENABLE_BASIC_PRINTING=1\" $
+      \"ENABLE_PRINT_PREVIEW=1\" \"ENABLE_SPELLCHECK=1\" $
+      \"ENABLE_CAPTIVE_PORTAL_DETECTION=1\" \"ENABLE_APP_LIST=1\" $
+      \"ENABLE_SETTINGS_APP=1\" \"ENABLE_SUPERVISED_USERS=1\" $
+      \"ENABLE_MDNS=1\" \"ENABLE_SERVICE_DISCOVERY=1\" $
+      V8_USE_EXTERNAL_STARTUP_DATA FULL_SAFE_BROWSING SAFE_BROWSING_CSD $
+      SAFE_BROWSING_DB_LOCAL \"USE_LIBPCI=1\" \"USE_OPENSSL=1\" $
+      \"USE_OPENSSL_CERTS=1\"" $
+      "--link_flags=-B../out/Release/gen/tc_newlib/lib64  " $
+      "--source-list=../out/gypfiles/ppapi/newlib-x86-64.ppapi_gles2_lib.source_list.gypcmd"
+  description = ACTION ppapi_gles2_lib: build newlib x86-64 $
+      nlib_6cc5f08782890918c12c3426972ca9c8
+  restat = 1
+
+build gen/tc_newlib/lib64/libppapi_gles2.a: $
+    ppapi_gles2_lib_target_build_newlib_x86_64_nlib_6cc5f08782890918c12c3426972ca9c8 $
+    ../../native_client/build/build_nexe.py $
+    ../../native_client/build/build_nexe_tools.py $
+    ../../ppapi/c/dev/ppb_opengles2ext_dev.h ../../ppapi/c/pp_macros.h $
+    ../../ppapi/c/pp_resource.h ../../ppapi/c/pp_stdint.h $
+    ../../ppapi/c/ppb.h ../../ppapi/c/ppb_opengles2.h $
+    ../../ppapi/lib/gl/gles2/gl2ext_ppapi.c $
+    ../../ppapi/lib/gl/gles2/gl2ext_ppapi.h $
+    ../../ppapi/lib/gl/gles2/gles2.c ../../ppapi/lib/gl/include/GLES2/gl2.h $
+    ../../ppapi/lib/gl/include/GLES2/gl2ext.h $
+    ../../ppapi/lib/gl/include/GLES2/gl2platform.h $
+    ../../ppapi/lib/gl/include/KHR/khrplatform.h $
+    ../../out/gypfiles/ppapi/newlib-x86-64.ppapi_gles2_lib.source_list.gypcmd $
+    ../../native_client/toolchain/linux_x86/nacl_x86_newlib/nacl_x86_newlib.json
+
+rule $
+    ppapi_gles2_lib_target_build_glibc_x86_64_nlib_6cc5f08782890918c12c3426972ca9c8
+  command = cd ../../ppapi; python ../native_client/build/build_nexe.py $
+      --root .. --product-dir ../out/Release/xyz --config-name Release -t $
+      ../native_client/toolchain/ --arch x86-64 --build glibc_nlib --name $
+      ../out/Release/gen/tc_glibc/lib64/libppapi_gles2.a --objdir $
+      ../out/Release/obj/ppapi/ppapi_gles2_lib.gen/glibc-x86-64/ppapi_gles2_lib $
+      "--include-dirs=../out/Release/gen/tc_glibc/include .. lib/gl/include $
+      \"../out/Release/gen\"" "--compile_flags=-m64 -O2 -g -Wall $
+      -fdiagnostics-show-option -Werror " --gomadir "" $
+      "--defines=\"__STDC_LIMIT_MACROS=1\" \"__STDC_FORMAT_MACROS=1\" $
+      \"_GNU_SOURCE=1\" \"_POSIX_C_SOURCE=199506\" \"_XOPEN_SOURCE=600\" $
+      \"DYNAMIC_ANNOTATIONS_ENABLED=1\" $
+      \"DYNAMIC_ANNOTATIONS_PREFIX=NACL_\" \"NACL_BUILD_ARCH=x86\" $
+      V8_DEPRECATION_WARNINGS \"CLD_VERSION=2\" \"_FILE_OFFSET_BITS=64\" $
+      CHROMIUM_BUILD \"CR_CLANG_REVISION=255169-1\" $
+      UI_COMPOSITOR_IMAGE_TRANSPORT \"USE_AURA=1\" \"USE_ASH=1\" $
+      \"USE_PANGO=1\" \"USE_CAIRO=1\" \"USE_DEFAULT_RENDER_THEME=1\" $
+      \"USE_LIBJPEG_TURBO=1\" \"USE_X11=1\" \"USE_CLIPBOARD_AURAX11=1\" $
+      ENABLE_ONE_CLICK_SIGNIN \"ENABLE_WEBRTC=1\" \"ENABLE_MEDIA_ROUTER=1\" $
+      ENABLE_PEPPER_CDMS ENABLE_CONFIGURATION_POLICY ENABLE_NOTIFICATIONS $
+      \"ENABLE_HIDPI=1\" \"ENABLE_TOPCHROME_MD=1\" USE_UDEV $
+      DONT_EMBED_BUILD_METADATA FIELDTRIAL_TESTING_ENABLED $
+      \"ENABLE_TASK_MANAGER=1\" \"ENABLE_EXTENSIONS=1\" \"ENABLE_PDF=1\" $
+      \"ENABLE_PLUGINS=1\" \"ENABLE_SESSION_SERVICE=1\" \"ENABLE_THEMES=1\" $
+      \"ENABLE_AUTOFILL_DIALOG=1\" \"ENABLE_BACKGROUND=1\" $
+      \"ENABLE_PRINTING=1\" \"ENABLE_BASIC_PRINTING=1\" $
+      \"ENABLE_PRINT_PREVIEW=1\" \"ENABLE_SPELLCHECK=1\" $
+      \"ENABLE_CAPTIVE_PORTAL_DETECTION=1\" \"ENABLE_APP_LIST=1\" $
+      \"ENABLE_SETTINGS_APP=1\" \"ENABLE_SUPERVISED_USERS=1\" $
+      \"ENABLE_MDNS=1\" \"ENABLE_SERVICE_DISCOVERY=1\" $
+      V8_USE_EXTERNAL_STARTUP_DATA FULL_SAFE_BROWSING SAFE_BROWSING_CSD $
+      SAFE_BROWSING_DB_LOCAL \"USE_LIBPCI=1\" \"USE_OPENSSL=1\" $
+      \"USE_OPENSSL_CERTS=1\"" $
+      "--link_flags=-B../out/Release/gen/tc_glibc/lib64  " $
+      "--source-list=../out/gypfiles/ppapi/glibc-x86-64.ppapi_gles2_lib.source_list.gypcmd"
+  description = ACTION ppapi_gles2_lib: build glibc x86-64 $
+      nlib_6cc5f08782890918c12c3426972ca9c8
+  restat = 1
+
+build gen/tc_glibc/lib64/libppapi_gles2.a: $
+    ppapi_gles2_lib_target_build_glibc_x86_64_nlib_6cc5f08782890918c12c3426972ca9c8 $
+    ../../native_client/build/build_nexe.py $
+    ../../native_client/build/build_nexe_tools.py $
+    ../../ppapi/c/dev/ppb_opengles2ext_dev.h ../../ppapi/c/pp_macros.h $
+    ../../ppapi/c/pp_resource.h ../../ppapi/c/pp_stdint.h $
+    ../../ppapi/c/ppb.h ../../ppapi/c/ppb_opengles2.h $
+    ../../ppapi/lib/gl/gles2/gl2ext_ppapi.c $
+    ../../ppapi/lib/gl/gles2/gl2ext_ppapi.h $
+    ../../ppapi/lib/gl/gles2/gles2.c ../../ppapi/lib/gl/include/GLES2/gl2.h $
+    ../../ppapi/lib/gl/include/GLES2/gl2ext.h $
+    ../../ppapi/lib/gl/include/GLES2/gl2platform.h $
+    ../../ppapi/lib/gl/include/KHR/khrplatform.h $
+    ../../out/gypfiles/ppapi/glibc-x86-64.ppapi_gles2_lib.source_list.gypcmd $
+    ../../native_client/toolchain/linux_x86/nacl_x86_glibc/nacl_x86_glibc.json
+
+rule $
+    ppapi_gles2_lib_target_build_glibc_x86_64_nso_6cc5f08782890918c12c3426972ca9c8
+  command = cd ../../ppapi; python ../native_client/build/build_nexe.py $
+      --root .. --product-dir ../out/Release/xyz --config-name Release -t $
+      ../native_client/toolchain/ --arch x86-64 --build glibc_nso --name $
+      ../out/Release/gen/tc_glibc/lib64/libppapi_gles2.so --objdir $
+      ../out/Release/obj/ppapi/ppapi_gles2_lib.gen/glibc-x86-64-so/ppapi_gles2_lib $
+      "--include-dirs=../out/Release/gen/tc_glibc/include .. lib/gl/include $
+      \"../out/Release/gen\"" "--compile_flags=-m64 -fPIC -O2 -g -Wall $
+      -fdiagnostics-show-option -Werror " --gomadir "" $
+      "--defines=\"__STDC_LIMIT_MACROS=1\" \"__STDC_FORMAT_MACROS=1\" $
+      \"_GNU_SOURCE=1\" \"_POSIX_C_SOURCE=199506\" \"_XOPEN_SOURCE=600\" $
+      \"DYNAMIC_ANNOTATIONS_ENABLED=1\" $
+      \"DYNAMIC_ANNOTATIONS_PREFIX=NACL_\" \"NACL_BUILD_ARCH=x86\" $
+      V8_DEPRECATION_WARNINGS \"CLD_VERSION=2\" \"_FILE_OFFSET_BITS=64\" $
+      CHROMIUM_BUILD \"CR_CLANG_REVISION=255169-1\" $
+      UI_COMPOSITOR_IMAGE_TRANSPORT \"USE_AURA=1\" \"USE_ASH=1\" $
+      \"USE_PANGO=1\" \"USE_CAIRO=1\" \"USE_DEFAULT_RENDER_THEME=1\" $
+      \"USE_LIBJPEG_TURBO=1\" \"USE_X11=1\" \"USE_CLIPBOARD_AURAX11=1\" $
+      ENABLE_ONE_CLICK_SIGNIN \"ENABLE_WEBRTC=1\" \"ENABLE_MEDIA_ROUTER=1\" $
+      ENABLE_PEPPER_CDMS ENABLE_CONFIGURATION_POLICY ENABLE_NOTIFICATIONS $
+      \"ENABLE_HIDPI=1\" \"ENABLE_TOPCHROME_MD=1\" USE_UDEV $
+      DONT_EMBED_BUILD_METADATA FIELDTRIAL_TESTING_ENABLED $
+      \"ENABLE_TASK_MANAGER=1\" \"ENABLE_EXTENSIONS=1\" \"ENABLE_PDF=1\" $
+      \"ENABLE_PLUGINS=1\" \"ENABLE_SESSION_SERVICE=1\" \"ENABLE_THEMES=1\" $
+      \"ENABLE_AUTOFILL_DIALOG=1\" \"ENABLE_BACKGROUND=1\" $
+      \"ENABLE_PRINTING=1\" \"ENABLE_BASIC_PRINTING=1\" $
+      \"ENABLE_PRINT_PREVIEW=1\" \"ENABLE_SPELLCHECK=1\" $
+      \"ENABLE_CAPTIVE_PORTAL_DETECTION=1\" \"ENABLE_APP_LIST=1\" $
+      \"ENABLE_SETTINGS_APP=1\" \"ENABLE_SUPERVISED_USERS=1\" $
+      \"ENABLE_MDNS=1\" \"ENABLE_SERVICE_DISCOVERY=1\" $
+      V8_USE_EXTERNAL_STARTUP_DATA FULL_SAFE_BROWSING SAFE_BROWSING_CSD $
+      SAFE_BROWSING_DB_LOCAL \"USE_LIBPCI=1\" \"USE_OPENSSL=1\" $
+      \"USE_OPENSSL_CERTS=1\"" $
+      "--link_flags=-B../out/Release/gen/tc_glibc/lib64  " $
+      "--source-list=../out/gypfiles/ppapi/glibc-x86-64-so.ppapi_gles2_lib.source_list.gypcmd"
+  description = ACTION ppapi_gles2_lib: build glibc x86-64 $
+      nso_6cc5f08782890918c12c3426972ca9c8
+  restat = 1
+
+build gen/tc_glibc/lib64/libppapi_gles2.so: $
+    ppapi_gles2_lib_target_build_glibc_x86_64_nso_6cc5f08782890918c12c3426972ca9c8 $
+    ../../native_client/build/build_nexe.py $
+    ../../native_client/build/build_nexe_tools.py $
+    ../../ppapi/c/dev/ppb_opengles2ext_dev.h ../../ppapi/c/pp_macros.h $
+    ../../ppapi/c/pp_resource.h ../../ppapi/c/pp_stdint.h $
+    ../../ppapi/c/ppb.h ../../ppapi/c/ppb_opengles2.h $
+    ../../ppapi/lib/gl/gles2/gl2ext_ppapi.c $
+    ../../ppapi/lib/gl/gles2/gl2ext_ppapi.h $
+    ../../ppapi/lib/gl/gles2/gles2.c ../../ppapi/lib/gl/include/GLES2/gl2.h $
+    ../../ppapi/lib/gl/include/GLES2/gl2ext.h $
+    ../../ppapi/lib/gl/include/GLES2/gl2platform.h $
+    ../../ppapi/lib/gl/include/KHR/khrplatform.h $
+    ../../out/gypfiles/ppapi/glibc-x86-64-so.ppapi_gles2_lib.source_list.gypcmd $
+    ../../native_client/toolchain/linux_x86/nacl_x86_glibc/nacl_x86_glibc.json
+
+build obj/ppapi/ppapi_gles2_lib.actions_rules_copies.stamp: stamp $
+    gen/tc_pnacl_newlib/lib/libppapi_gles2.a $
+    gen/tc_newlib/lib64/libppapi_gles2.a $
+    gen/tc_glibc/lib64/libppapi_gles2.a gen/tc_glibc/lib64/libppapi_gles2.so
+

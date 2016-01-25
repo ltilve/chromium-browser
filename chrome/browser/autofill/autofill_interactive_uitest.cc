@@ -23,7 +23,8 @@
 #include "chrome/browser/translate/translate_service.h"
 #include "chrome/browser/ui/browser_window.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
-#include "chrome/common/render_messages.h"
+#include "chrome/browser/ui/translate/translate_bubble_test_utils.h"
+#include "chrome/common/chrome_switches.h"
 #include "chrome/test/base/in_process_browser_test.h"
 #include "chrome/test/base/interactive_test_utils.h"
 #include "chrome/test/base/test_switches.h"
@@ -37,6 +38,7 @@
 #include "components/autofill/core/browser/validation.h"
 #include "components/infobars/core/infobar.h"
 #include "components/translate/core/browser/translate_infobar_delegate.h"
+#include "components/translate/core/browser/translate_manager.h"
 #include "content/public/browser/navigation_controller.h"
 #include "content/public/browser/notification_observer.h"
 #include "content/public/browser/notification_registrar.h"
@@ -46,6 +48,7 @@
 #include "content/public/browser/web_contents.h"
 #include "content/public/test/browser_test_utils.h"
 #include "content/public/test/test_renderer_host.h"
+#include "content/public/test/test_utils.h"
 #include "net/base/net_errors.h"
 #include "net/url_request/test_url_fetcher_factory.h"
 #include "net/url_request/url_request_status.h"
@@ -207,7 +210,7 @@ class AutofillInteractiveTest : public InProcessBrowserTest {
         "window.domAutomationController.send("
         "    document.getElementById('" + field_name + "').value);",
         &value));
-    EXPECT_EQ(expected_value, value);
+    EXPECT_EQ(expected_value, value) << "for field " << field_name;
   }
 
   void GetFieldBackgroundColor(const std::string& field_name,
@@ -448,7 +451,13 @@ IN_PROC_BROWSER_TEST_F(AutofillInteractiveTest, AutofillViaDownArrow) {
   ExpectFilledTestForm();
 }
 
-IN_PROC_BROWSER_TEST_F(AutofillInteractiveTest, AutofillSelectViaTab) {
+// Flaky on the official cros-trunk. crbug.com/516052
+#if defined(OFFICIAL_BUILD)
+#define MAYBE_AutofillSelectViaTab DISABLED_AutofillSelectViaTab
+#else
+#define MAYBE_AutofillSelectViaTab AutofillSelectViaTab
+#endif  // defined(OFFICIAL_BUILD)
+IN_PROC_BROWSER_TEST_F(AutofillInteractiveTest, MAYBE_AutofillSelectViaTab) {
   CreateTestProfile();
 
   // Load the test page.
@@ -473,7 +482,13 @@ IN_PROC_BROWSER_TEST_F(AutofillInteractiveTest, AutofillSelectViaTab) {
   ExpectFilledTestForm();
 }
 
-IN_PROC_BROWSER_TEST_F(AutofillInteractiveTest, AutofillViaClick) {
+// Flaky on the official cros-trunk. crbug.com/516052
+#if defined(OFFICIAL_BUILD)
+#define MAYBE_AutofillViaClick DISABLED_AutofillViaClick
+#else
+#define MAYBE_AutofillViaClick AutofillViaClick
+#endif  // defined(OFFICIAL_BUILD)
+IN_PROC_BROWSER_TEST_F(AutofillInteractiveTest, MAYBE_AutofillViaClick) {
   CreateTestProfile();
 
   // Load the test page.
@@ -1051,10 +1066,22 @@ IN_PROC_BROWSER_TEST_F(AutofillInteractiveTest, AutofillAfterReload) {
   TryBasicFormFill();
 }
 
-IN_PROC_BROWSER_TEST_F(AutofillInteractiveTest, AutofillAfterTranslate) {
-  // TODO(port): Test corresponding bubble translate UX: http://crbug.com/383235
-  if (TranslateService::IsTranslateBubbleEnabled())
-    return;
+// Test fails on Linux ASAN, see http://crbug.com/532737
+#if defined(ADDRESS_SANITIZER)
+#define MAYBE_AutofillAfterTranslate DISABLED_AutofillAfterTranslate
+#else
+#define MAYBE_AutofillAfterTranslate AutofillAfterTranslate
+#endif  // ADDRESS_SANITIZER
+IN_PROC_BROWSER_TEST_F(AutofillInteractiveTest, MAYBE_AutofillAfterTranslate) {
+// TODO(groby): Remove once the bubble is enabled by default everywhere.
+// http://crbug.com/507442
+#if defined(OS_MACOSX)
+  base::CommandLine::ForCurrentProcess()->AppendSwitch(
+      ::switches::kEnableTranslateNewUX);
+#endif
+  ASSERT_TRUE(TranslateService::IsTranslateBubbleEnabled());
+
+  translate::TranslateManager::SetIgnoreMissingKeyForTesting(true);
 
   CreateTestProfile();
 
@@ -1094,25 +1121,27 @@ IN_PROC_BROWSER_TEST_F(AutofillInteractiveTest, AutofillAfterTranslate) {
                "我々は重要な、興味深いものになるが、時折状況が発生するため苦労や痛みは"
                "彼にいくつかの素晴らしいを調達することができます。それから、いくつかの利");
 
-  content::WindowedNotificationObserver infobar_observer(
-      chrome::NOTIFICATION_TAB_CONTENTS_INFOBAR_ADDED,
-      content::NotificationService::AllSources());
+  // Set up an observer to be able to wait for the bubble to be shown.
+  content::Source<content::WebContents> source(GetWebContents());
+  content::WindowedNotificationObserver language_detected_signal(
+      chrome::NOTIFICATION_TAB_LANGUAGE_DETERMINED, source);
+
   ASSERT_NO_FATAL_FAILURE(
       ui_test_utils::NavigateToURL(browser(), url));
 
-  // Wait for the translation bar to appear and get it.
-  infobar_observer.Wait();
-  InfoBarService* infobar_service =
-      InfoBarService::FromWebContents(GetWebContents());
-  translate::TranslateInfoBarDelegate* delegate =
-      infobar_service->infobar_at(0)->delegate()->AsTranslateInfoBarDelegate();
-  ASSERT_TRUE(delegate);
-  EXPECT_EQ(translate::TRANSLATE_STEP_BEFORE_TRANSLATE,
-            delegate->translate_step());
+  // Wait for the translate bubble to appear.
+  language_detected_signal.Wait();
 
-  // Simulate translation button press.
-  delegate->Translate();
+  // Verify current translate step.
+  const TranslateBubbleModel* model =
+      translate::test_utils::GetCurrentModel(browser());
+  ASSERT_NE(nullptr, model);
+  EXPECT_EQ(TranslateBubbleModel::VIEW_STATE_BEFORE_TRANSLATE,
+            model->GetViewState());
 
+  translate::test_utils::PressTranslate(browser());
+
+  // Wait for translation.
   content::WindowedNotificationObserver translation_observer(
       chrome::NOTIFICATION_PAGE_TRANSLATED,
       content::NotificationService::AllSources());
@@ -1132,11 +1161,12 @@ IN_PROC_BROWSER_TEST_F(AutofillInteractiveTest, AutofillAfterTranslate) {
 // field, invoke the autofill popup list, select the first profile within the
 // list, and commit to the profile to populate the form.
 // Flakily times out on windows. http://crbug.com/390564
-#if defined(OS_WIN)
+// Flaky on the official cros-trunk crbug.com/516052
+#if defined(OS_WIN) || defined(OFFICIAL_BUILD)
 #define MAYBE_ComparePhoneNumbers DISABLED_ComparePhoneNumbers
 #else
 #define MAYBE_ComparePhoneNumbers ComparePhoneNumbers
-#endif
+#endif  // defined(OS_WIN) || defined(OFFICIAL_BUILD)
 IN_PROC_BROWSER_TEST_F(AutofillInteractiveTest, MAYBE_ComparePhoneNumbers) {
   ASSERT_TRUE(test_server()->Start());
 
@@ -1174,7 +1204,14 @@ IN_PROC_BROWSER_TEST_F(AutofillInteractiveTest, MAYBE_ComparePhoneNumbers) {
 }
 
 // Test that Autofill does not fill in read-only fields.
-IN_PROC_BROWSER_TEST_F(AutofillInteractiveTest, NoAutofillForReadOnlyFields) {
+// Flaky on the official cros-trunk. crbug.com/516052
+#if defined(OFFICIAL_BUILD)
+#define MAYBE_NoAutofillForReadOnlyFields DISABLED_NoAutofillForReadOnlyFields
+#else
+#define MAYBE_NoAutofillForReadOnlyFields NoAutofillForReadOnlyFields
+#endif  // defined(OFFICIAL_BUILD)
+IN_PROC_BROWSER_TEST_F(AutofillInteractiveTest,
+                       MAYBE_NoAutofillForReadOnlyFields) {
   ASSERT_TRUE(test_server()->Start());
 
   std::string addr_line1("1234 H St.");

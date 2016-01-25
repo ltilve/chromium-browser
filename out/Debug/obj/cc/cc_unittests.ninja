@@ -1,0 +1,866 @@
+build obj/cc/cc_unittests.actions_depends.stamp: stamp $
+    obj/base/libtest_support_base.a obj/gpu/command_buffer/libgles2_utils.a $
+    obj/gpu/gpu.actions_depends.stamp obj/gpu/libgpu_unittest_utils.a $
+    obj/media/libmedia.a obj/skia/skia.actions_depends.stamp $
+    obj/testing/libgmock.a obj/testing/libgtest.a $
+    obj/third_party/protobuf/libprotobuf_lite.a $
+    obj/ui/events/libevents_base.a obj/ui/gfx/libgfx.a $
+    obj/ui/gfx/libgfx_geometry.a obj/cc/libcc.a obj/cc/libcc_proto.a $
+    obj/cc/libcc_surfaces.a obj/cc/libcc_test_support.a $
+    obj/base/allocator/liballocator.a obj/base/libbase.a $
+    gen/base/debug/debugging_flags.h obj/base/libbase_static.a $
+    obj/third_party/modp_b64/libmodp_b64.a $
+    obj/base/third_party/dynamic_annotations/libdynamic_annotations.a $
+    obj/base/libsymbolize.a obj/base/libxdg_mime.a $
+    obj/third_party/libevent/libevent.a obj/base/libbase_i18n.a $
+    obj/third_party/icu/libicui18n.a obj/third_party/icu/libicuuc.a $
+    icudtl.dat icudtl.dat obj/third_party/libxml/libxml2.a $
+    obj/third_party/zlib/libchrome_zlib.a $
+    obj/third_party/zlib/libzlib_x86_simd.a $
+    obj/gpu/libcommand_buffer_client.a obj/gpu/libcommand_buffer_common.a $
+    obj/gpu/libcommand_buffer_service.a obj/gpu/libdisk_cache_proto.a $
+    obj/gpu/libgpu_config.a obj/third_party/re2/libre2.a $
+    obj/ui/gl/libgl_wrapper.a obj/skia/libskia_library.a $
+    obj/skia/libskia_opts.a obj/skia/libskia_opts_ssse3.a $
+    obj/skia/libskia_opts_sse41.a obj/skia/libskia_opts_sse42.a $
+    obj/skia/libskia_opts_avx.a obj/skia/libskia_opts_avx2.a $
+    obj/third_party/sfntly/libsfntly.a obj/skia/libskia_chrome.a $
+    obj/third_party/harfbuzz-ng/libharfbuzz-ng.a $
+    obj/third_party/libpng/libpng.a $
+    obj/third_party/libjpeg_turbo/libjpeg_turbo.a obj/ui/gfx/x/libgfx_x11.a $
+    obj/ui/events/platform/libevents_platform.a obj/build/linux/libpci.a $
+    obj/third_party/libXNVCtrl/libXNVCtrl.a obj/crypto/libcrcrypto.a $
+    obj/third_party/boringssl/libboringssl.a $
+    obj/third_party/boringssl/libboringssl.a $
+    obj/third_party/smhasher/libcityhash.a gen/angle/id/commit.h $
+    obj/third_party/angle/src/copy_scripts.actions_rules_copies.stamp $
+    obj/third_party/angle/src/libtranslator.a $
+    obj/third_party/angle/src/libtranslator_lib.a $
+    obj/third_party/angle/src/libpreprocessor.a $
+    obj/third_party/angle/src/libangle_common.a $
+    obj/gpu/libgles2_cmd_helper.a obj/gpu/libgpu_ipc.a obj/ipc/libipc.a $
+    obj/ui/gl/libgl_unittest_utils.a obj/third_party/libwebm/libwebm.a $
+    libyuv.a obj/third_party/opus/libopus.a $
+    obj/ui/events/libdom_keycode_converter.a obj/url/liburl_lib.a $
+    obj/media/libshared_memory_support.a obj/third_party/ffmpeg/libffmpeg.a $
+    obj/third_party/ffmpeg/libffmpeg_yasm.a $
+    obj/third_party/libvpx_new/libvpx_new.a $
+    obj/third_party/libvpx_new/libvpx_intrinsics_mmx.a $
+    obj/third_party/libvpx_new/libvpx_intrinsics_sse2.a $
+    obj/third_party/libvpx_new/libvpx_intrinsics_ssse3.a $
+    obj/third_party/libvpx_new/libvpx_intrinsics_sse4_1.a $
+    obj/third_party/libvpx_new/libvpx_intrinsics_avx.a $
+    obj/third_party/libvpx_new/libvpx_intrinsics_avx2.a $
+    obj/media/libmedia_asm.a obj/gpu/libgles2_c_lib.a $
+    obj/gpu/libgles2_implementation.a obj/gpu/libgl_in_process_context.a $
+    obj/gpu/skia_bindings/libgpu_skia_bindings.a $
+    obj/ui/gfx/libgfx_test_support.a obj/ui/gl/libgl_test_support.a $
+    obj/ui/platform_window/x11/libx11_window.a $
+    obj/ui/events/devices/libevents_devices.a obj/ui/events/libevents.a $
+    obj/ui/events/libgesture_detection.a $
+    obj/ui/events/platform/x11/libx11_events_platform.a
+
+build obj/cc/cc_unittests.compile_depends.stamp: stamp $
+    obj/gpu/gpu.compile_depends.stamp obj/gpu/gpu.compile_depends.stamp $
+    obj/media/media.actions_rules_copies.stamp $
+    obj/cc/cc.compile_depends.stamp $
+    obj/cc/cc_proto.actions_rules_copies.stamp $
+    obj/gpu/gpu.compile_depends.stamp obj/gpu/gpu.compile_depends.stamp $
+    gen/base/debug/debugging_flags.h gen/base/debug/debugging_flags.h $
+    icudtl.dat icudtl.dat icudtl.dat $
+    obj/gpu/command_buffer_service.compile_depends.stamp $
+    obj/gpu/disk_cache_proto.actions_rules_copies.stamp $
+    obj/build/linux/libpci.actions_rules_copies.stamp $
+    obj/third_party/libjpeg_turbo/libjpeg.actions_rules_copies.stamp $
+    obj/build/linux/libpci.actions_rules_copies.stamp gen/angle/id/commit.h $
+    obj/third_party/angle/src/copy_scripts.actions_rules_copies.stamp $
+    obj/third_party/ffmpeg/ffmpeg_yasm.actions_rules_copies.stamp $
+    obj/third_party/libvpx_new/libvpx_new.actions_rules_copies.stamp $
+    obj/media/media_asm.actions_rules_copies.stamp $
+    obj/gpu/gpu.compile_depends.stamp
+
+defines = -DV8_DEPRECATION_WARNINGS -DCLD_VERSION=2 -D_FILE_OFFSET_BITS=64 $
+    -DCHROMIUM_BUILD -DCR_CLANG_REVISION=255169-1 $
+    -DUI_COMPOSITOR_IMAGE_TRANSPORT -DUSE_AURA=1 -DUSE_ASH=1 -DUSE_PANGO=1 $
+    -DUSE_CAIRO=1 -DUSE_DEFAULT_RENDER_THEME=1 -DUSE_LIBJPEG_TURBO=1 $
+    -DUSE_X11=1 -DUSE_CLIPBOARD_AURAX11=1 -DENABLE_ONE_CLICK_SIGNIN $
+    -DENABLE_WEBRTC=1 -DENABLE_MEDIA_ROUTER=1 -DENABLE_PEPPER_CDMS $
+    -DENABLE_CONFIGURATION_POLICY -DENABLE_NOTIFICATIONS -DENABLE_HIDPI=1 $
+    -DENABLE_TOPCHROME_MD=1 -DUSE_UDEV -DDONT_EMBED_BUILD_METADATA $
+    -DFIELDTRIAL_TESTING_ENABLED -DENABLE_TASK_MANAGER=1 $
+    -DENABLE_EXTENSIONS=1 -DENABLE_PDF=1 -DENABLE_PLUGINS=1 $
+    -DENABLE_SESSION_SERVICE=1 -DENABLE_THEMES=1 -DENABLE_AUTOFILL_DIALOG=1 $
+    -DENABLE_BACKGROUND=1 -DENABLE_PRINTING=1 -DENABLE_BASIC_PRINTING=1 $
+    -DENABLE_PRINT_PREVIEW=1 -DENABLE_SPELLCHECK=1 $
+    -DENABLE_CAPTIVE_PORTAL_DETECTION=1 -DENABLE_APP_LIST=1 $
+    -DENABLE_SETTINGS_APP=1 -DENABLE_SUPERVISED_USERS=1 -DENABLE_MDNS=1 $
+    -DENABLE_SERVICE_DISCOVERY=1 -DV8_USE_EXTERNAL_STARTUP_DATA $
+    -DFULL_SAFE_BROWSING -DSAFE_BROWSING_CSD -DSAFE_BROWSING_DB_LOCAL $
+    -DGTEST_HAS_POSIX_RE=0 -DGTEST_LANG_CXX11=0 -DGL_GLEXT_PROTOTYPES $
+    -DSK_SUPPORT_GPU=1 -DSK_IGNORE_LINEONLY_AA_CONVEX_PATH_OPTS -DUNIT_TEST $
+    -DGTEST_HAS_RTTI=0 -DPROTOBUF_USE_DLLS -DGOOGLE_PROTOBUF_NO_RTTI $
+    -DGOOGLE_PROTOBUF_NO_STATIC_INITIALIZER -DU_USING_ICU_NAMESPACE=0 $
+    -DU_ENABLE_DYLOAD=0 -DU_STATIC_IMPLEMENTATION -DUSE_LIBPCI=1 $
+    -DUSE_OPENSSL=1 -DUSE_GLIB=1 -DUSE_NSS_CERTS=1 -D__STDC_CONSTANT_MACROS $
+    -D__STDC_FORMAT_MACROS -DDYNAMIC_ANNOTATIONS_ENABLED=1 $
+    -DWTF_USE_DYNAMIC_ANNOTATIONS=1 -D_DEBUG -D_GLIBCXX_DEBUG=1
+includes = -Igen -I../../third_party/khronos -I../../gpu -I../.. $
+    -I../../skia/config -Igen/angle -I../../third_party/opus/src/include $
+    -I../../third_party/skia/include/core $
+    -I../../third_party/skia/include/effects $
+    -I../../third_party/skia/include/pdf $
+    -I../../third_party/skia/include/gpu $
+    -I../../third_party/skia/include/lazy $
+    -I../../third_party/skia/include/pathops $
+    -I../../third_party/skia/include/pipe $
+    -I../../third_party/skia/include/ports $
+    -I../../third_party/skia/include/utils -I../../skia/ext $
+    -I../../testing/gmock/include -I../../testing/gtest/include $
+    -I../../third_party/protobuf -I../../third_party/protobuf/src $
+    -I../../third_party/icu/source/i18n $
+    -I../../third_party/icu/source/common -Igen/protoc_out
+cflags = -fstack-protector --param=ssp-buffer-size=4 -Werror -pthread $
+    -fno-strict-aliasing -Wall -Wno-unused-parameter $
+    -Wno-missing-field-initializers -fvisibility=hidden -pipe -fPIC $
+    -Wno-reserved-user-defined-literal -Xclang -load -Xclang $
+    /b/build/slave/publish_tarball/build/src/third_party/llvm-build/Release+Asserts/lib/libFindBadConstructs.so $
+    -Xclang -add-plugin -Xclang find-bad-constructs -Xclang $
+    -plugin-arg-find-bad-constructs -Xclang check-templates $
+    -fcolor-diagnostics $
+    -B/b/build/slave/publish_tarball/build/src/third_party/binutils/Linux_x64/Release/bin $
+    -Wheader-hygiene -Wno-char-subscripts $
+    -Wno-unneeded-internal-declaration -Wno-covered-switch-default $
+    -Wstring-conversion -Wno-c++11-narrowing -Wno-deprecated-register $
+    -Wno-inconsistent-missing-override -Wno-shift-negative-value $
+    -Wno-bitfield-width -pthread $
+    -I/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/include/glib-2.0 $
+    -I/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/lib/x86_64-linux-gnu/glib-2.0/include $
+    -m64 -march=x86-64 $
+    --sysroot=/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot $
+    -O0 -g -funwind-tables -gsplit-dwarf -Wno-undefined-bool-conversion $
+    -Wno-tautological-undefined-compare
+cflags_c = 
+cflags_cc = -fno-exceptions -fno-rtti -fno-threadsafe-statics $
+    -fvisibility-inlines-hidden -Wsign-compare -std=gnu++11
+arflags = 
+
+build obj/cc/test/cc_unittests.cc_test_suite.o: cxx $
+    ../../cc/test/cc_test_suite.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/test/cc_unittests.run_all_unittests.o: cxx $
+    ../../cc/test/run_all_unittests.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/animation/cc_unittests.animation_host_unittest.o: cxx $
+    ../../cc/animation/animation_host_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/animation/cc_unittests.animation_player_unittest.o: cxx $
+    ../../cc/animation/animation_player_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/animation/cc_unittests.animation_timeline_unittest.o: cxx $
+    ../../cc/animation/animation_timeline_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/animation/cc_unittests.animation_unittest.o: cxx $
+    ../../cc/animation/animation_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/animation/cc_unittests.element_animations_unittest.o: cxx $
+    ../../cc/animation/element_animations_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/animation/cc_unittests.keyframed_animation_curve_unittest.o: $
+    cxx ../../cc/animation/keyframed_animation_curve_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/animation/cc_unittests.layer_animation_controller_unittest.o: $
+    cxx ../../cc/animation/layer_animation_controller_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build $
+    obj/cc/animation/cc_unittests.scroll_offset_animation_curve_unittest.o: $
+    cxx ../../cc/animation/scroll_offset_animation_curve_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build $
+    obj/cc/animation/cc_unittests.scrollbar_animation_controller_linear_fade_unittest.o: $
+    cxx $
+    ../../cc/animation/scrollbar_animation_controller_linear_fade_unittest.cc $
+    || obj/cc/cc_unittests.compile_depends.stamp
+build $
+    obj/cc/animation/cc_unittests.scrollbar_animation_controller_thinning_unittest.o: $
+    cxx $
+    ../../cc/animation/scrollbar_animation_controller_thinning_unittest.cc $
+    || obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/animation/cc_unittests.transform_operations_unittest.o: cxx $
+    ../../cc/animation/transform_operations_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/base/cc_unittests.contiguous_container_unittest.o: cxx $
+    ../../cc/base/contiguous_container_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/base/cc_unittests.delayed_unique_notifier_unittest.o: cxx $
+    ../../cc/base/delayed_unique_notifier_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/base/cc_unittests.float_quad_unittest.o: cxx $
+    ../../cc/base/float_quad_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/base/cc_unittests.histograms_unittest.o: cxx $
+    ../../cc/base/histograms_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/base/cc_unittests.list_container_unittest.o: cxx $
+    ../../cc/base/list_container_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/base/cc_unittests.math_util_unittest.o: cxx $
+    ../../cc/base/math_util_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/base/cc_unittests.random_access_list_container_unittest.o: cxx $
+    ../../cc/base/random_access_list_container_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/base/cc_unittests.region_unittest.o: cxx $
+    ../../cc/base/region_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/base/cc_unittests.rolling_time_delta_history_unittest.o: cxx $
+    ../../cc/base/rolling_time_delta_history_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/base/cc_unittests.rtree_unittest.o: cxx $
+    ../../cc/base/rtree_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/base/cc_unittests.simple_enclosed_region_unittest.o: cxx $
+    ../../cc/base/simple_enclosed_region_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/base/cc_unittests.tiling_data_unittest.o: cxx $
+    ../../cc/base/tiling_data_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/base/cc_unittests.unique_notifier_unittest.o: cxx $
+    ../../cc/base/unique_notifier_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/debug/cc_unittests.frame_timing_tracker_unittest.o: cxx $
+    ../../cc/debug/frame_timing_tracker_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/debug/cc_unittests.layer_tree_debug_state_unittest.o: cxx $
+    ../../cc/debug/layer_tree_debug_state_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/debug/cc_unittests.micro_benchmark_controller_unittest.o: cxx $
+    ../../cc/debug/micro_benchmark_controller_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/debug/cc_unittests.rendering_stats_unittest.o: cxx $
+    ../../cc/debug/rendering_stats_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/input/cc_unittests.scroll_state_unittest.o: cxx $
+    ../../cc/input/scroll_state_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/input/cc_unittests.top_controls_manager_unittest.o: cxx $
+    ../../cc/input/top_controls_manager_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/layers/cc_unittests.delegated_frame_provider_unittest.o: cxx $
+    ../../cc/layers/delegated_frame_provider_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build $
+    obj/cc/layers/cc_unittests.delegated_frame_resource_collection_unittest.o: $
+    cxx ../../cc/layers/delegated_frame_resource_collection_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/layers/cc_unittests.delegated_renderer_layer_impl_unittest.o: $
+    cxx ../../cc/layers/delegated_renderer_layer_impl_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/layers/cc_unittests.delegated_renderer_layer_unittest.o: cxx $
+    ../../cc/layers/delegated_renderer_layer_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/layers/cc_unittests.heads_up_display_layer_impl_unittest.o: $
+    cxx ../../cc/layers/heads_up_display_layer_impl_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/layers/cc_unittests.heads_up_display_unittest.o: cxx $
+    ../../cc/layers/heads_up_display_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/layers/cc_unittests.io_surface_layer_impl_unittest.o: cxx $
+    ../../cc/layers/io_surface_layer_impl_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/layers/cc_unittests.layer_impl_unittest.o: cxx $
+    ../../cc/layers/layer_impl_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/layers/cc_unittests.layer_iterator_unittest.o: cxx $
+    ../../cc/layers/layer_iterator_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/layers/cc_unittests.layer_position_constraint_unittest.o: cxx $
+    ../../cc/layers/layer_position_constraint_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/layers/cc_unittests.layer_proto_converter_unittest.o: cxx $
+    ../../cc/layers/layer_proto_converter_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/layers/cc_unittests.layer_unittest.o: cxx $
+    ../../cc/layers/layer_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/layers/cc_unittests.layer_utils_unittest.o: cxx $
+    ../../cc/layers/layer_utils_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/layers/cc_unittests.nine_patch_layer_impl_unittest.o: cxx $
+    ../../cc/layers/nine_patch_layer_impl_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/layers/cc_unittests.nine_patch_layer_unittest.o: cxx $
+    ../../cc/layers/nine_patch_layer_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/layers/cc_unittests.painted_scrollbar_layer_impl_unittest.o: $
+    cxx ../../cc/layers/painted_scrollbar_layer_impl_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/layers/cc_unittests.painted_scrollbar_layer_unittest.o: cxx $
+    ../../cc/layers/painted_scrollbar_layer_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/layers/cc_unittests.picture_image_layer_impl_unittest.o: cxx $
+    ../../cc/layers/picture_image_layer_impl_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/layers/cc_unittests.picture_image_layer_unittest.o: cxx $
+    ../../cc/layers/picture_image_layer_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/layers/cc_unittests.picture_layer_impl_unittest.o: cxx $
+    ../../cc/layers/picture_layer_impl_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/layers/cc_unittests.picture_layer_unittest.o: cxx $
+    ../../cc/layers/picture_layer_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/layers/cc_unittests.render_surface_impl_unittest.o: cxx $
+    ../../cc/layers/render_surface_impl_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/layers/cc_unittests.render_surface_unittest.o: cxx $
+    ../../cc/layers/render_surface_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/layers/cc_unittests.scrollbar_layer_unittest.o: cxx $
+    ../../cc/layers/scrollbar_layer_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/layers/cc_unittests.solid_color_layer_impl_unittest.o: cxx $
+    ../../cc/layers/solid_color_layer_impl_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build $
+    obj/cc/layers/cc_unittests.solid_color_scrollbar_layer_impl_unittest.o: $
+    cxx ../../cc/layers/solid_color_scrollbar_layer_impl_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/layers/cc_unittests.surface_layer_impl_unittest.o: cxx $
+    ../../cc/layers/surface_layer_impl_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/layers/cc_unittests.surface_layer_unittest.o: cxx $
+    ../../cc/layers/surface_layer_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/layers/cc_unittests.texture_layer_impl_unittest.o: cxx $
+    ../../cc/layers/texture_layer_impl_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/layers/cc_unittests.texture_layer_unittest.o: cxx $
+    ../../cc/layers/texture_layer_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/layers/cc_unittests.ui_resource_layer_impl_unittest.o: cxx $
+    ../../cc/layers/ui_resource_layer_impl_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/layers/cc_unittests.ui_resource_layer_unittest.o: cxx $
+    ../../cc/layers/ui_resource_layer_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build $
+    obj/cc/layers/cc_unittests.video_frame_provider_client_impl_unittest.o: $
+    cxx ../../cc/layers/video_frame_provider_client_impl_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/layers/cc_unittests.video_layer_impl_unittest.o: cxx $
+    ../../cc/layers/video_layer_impl_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/output/cc_unittests.begin_frame_args_unittest.o: cxx $
+    ../../cc/output/begin_frame_args_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/output/cc_unittests.bsp_tree_unittest.o: cxx $
+    ../../cc/output/bsp_tree_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/output/cc_unittests.delegating_renderer_unittest.o: cxx $
+    ../../cc/output/delegating_renderer_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/output/cc_unittests.filter_operations_unittest.o: cxx $
+    ../../cc/output/filter_operations_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/output/cc_unittests.gl_renderer_unittest.o: cxx $
+    ../../cc/output/gl_renderer_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/output/cc_unittests.layer_quad_unittest.o: cxx $
+    ../../cc/output/layer_quad_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/output/cc_unittests.managed_memory_policy_unittest.o: cxx $
+    ../../cc/output/managed_memory_policy_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/output/cc_unittests.output_surface_unittest.o: cxx $
+    ../../cc/output/output_surface_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/output/cc_unittests.overlay_unittest.o: cxx $
+    ../../cc/output/overlay_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/output/cc_unittests.renderer_pixeltest.o: cxx $
+    ../../cc/output/renderer_pixeltest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/output/cc_unittests.renderer_settings_unittest.o: cxx $
+    ../../cc/output/renderer_settings_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/output/cc_unittests.renderer_unittest.o: cxx $
+    ../../cc/output/renderer_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/output/cc_unittests.shader_unittest.o: cxx $
+    ../../cc/output/shader_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/output/cc_unittests.software_renderer_unittest.o: cxx $
+    ../../cc/output/software_renderer_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/output/cc_unittests.texture_mailbox_deleter_unittest.o: cxx $
+    ../../cc/output/texture_mailbox_deleter_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/playback/cc_unittests.discardable_image_map_unittest.o: cxx $
+    ../../cc/playback/discardable_image_map_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/playback/cc_unittests.display_item_list_unittest.o: cxx $
+    ../../cc/playback/display_item_list_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/playback/cc_unittests.display_list_raster_source_unittest.o: $
+    cxx ../../cc/playback/display_list_raster_source_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build $
+    obj/cc/playback/cc_unittests.display_list_recording_source_unittest.o: $
+    cxx ../../cc/playback/display_list_recording_source_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/proto/cc_unittests.cc_conversions_unittest.o: cxx $
+    ../../cc/proto/cc_conversions_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/proto/cc_unittests.gfx_conversions_unittest.o: cxx $
+    ../../cc/proto/gfx_conversions_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/proto/cc_unittests.gpu_conversions_unittest.o: cxx $
+    ../../cc/proto/gpu_conversions_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/proto/cc_unittests.skia_conversions_unittest.o: cxx $
+    ../../cc/proto/skia_conversions_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/quads/cc_unittests.draw_polygon_unittest.o: cxx $
+    ../../cc/quads/draw_polygon_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/quads/cc_unittests.draw_quad_unittest.o: cxx $
+    ../../cc/quads/draw_quad_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/quads/cc_unittests.render_pass_unittest.o: cxx $
+    ../../cc/quads/render_pass_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/raster/cc_unittests.scoped_gpu_raster_unittest.o: cxx $
+    ../../cc/raster/scoped_gpu_raster_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build $
+    obj/cc/raster/cc_unittests.single_thread_task_graph_runner_unittest.o: $
+    cxx ../../cc/raster/single_thread_task_graph_runner_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/raster/cc_unittests.synchronous_task_graph_runner_unittest.o: $
+    cxx ../../cc/raster/synchronous_task_graph_runner_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/raster/cc_unittests.texture_compressor_etc1_unittest.o: cxx $
+    ../../cc/raster/texture_compressor_etc1_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/raster/cc_unittests.tile_task_worker_pool_unittest.o: cxx $
+    ../../cc/raster/tile_task_worker_pool_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/resources/cc_unittests.platform_color_unittest.o: cxx $
+    ../../cc/resources/platform_color_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/resources/cc_unittests.resource_pool_unittest.o: cxx $
+    ../../cc/resources/resource_pool_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/resources/cc_unittests.resource_provider_unittest.o: cxx $
+    ../../cc/resources/resource_provider_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/resources/cc_unittests.resource_util_unittest.o: cxx $
+    ../../cc/resources/resource_util_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/resources/cc_unittests.scoped_resource_unittest.o: cxx $
+    ../../cc/resources/scoped_resource_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/resources/cc_unittests.video_resource_updater_unittest.o: cxx $
+    ../../cc/resources/video_resource_updater_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/scheduler/cc_unittests.begin_frame_source_unittest.o: cxx $
+    ../../cc/scheduler/begin_frame_source_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/scheduler/cc_unittests.compositor_timing_history_unittest.o: $
+    cxx ../../cc/scheduler/compositor_timing_history_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/scheduler/cc_unittests.delay_based_time_source_unittest.o: cxx $
+    ../../cc/scheduler/delay_based_time_source_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/scheduler/cc_unittests.scheduler_state_machine_unittest.o: cxx $
+    ../../cc/scheduler/scheduler_state_machine_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/scheduler/cc_unittests.scheduler_unittest.o: cxx $
+    ../../cc/scheduler/scheduler_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/test/cc_unittests.begin_frame_source_test_unittest.o: cxx $
+    ../../cc/test/begin_frame_source_test_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/test/cc_unittests.layer_tree_json_parser_unittest.o: cxx $
+    ../../cc/test/layer_tree_json_parser_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/test/cc_unittests.mock_helper_unittest.o: cxx $
+    ../../cc/test/mock_helper_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/test/cc_unittests.ordered_simple_task_runner_unittest.o: cxx $
+    ../../cc/test/ordered_simple_task_runner_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/test/cc_unittests.test_web_graphics_context_3d_unittest.o: cxx $
+    ../../cc/test/test_web_graphics_context_3d_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/tiles/cc_unittests.picture_layer_tiling_set_unittest.o: cxx $
+    ../../cc/tiles/picture_layer_tiling_set_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/tiles/cc_unittests.picture_layer_tiling_unittest.o: cxx $
+    ../../cc/tiles/picture_layer_tiling_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/tiles/cc_unittests.tile_manager_unittest.o: cxx $
+    ../../cc/tiles/tile_manager_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/tiles/cc_unittests.tile_priority_unittest.o: cxx $
+    ../../cc/tiles/tile_priority_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/trees/cc_unittests.blocking_task_runner_unittest.o: cxx $
+    ../../cc/trees/blocking_task_runner_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/trees/cc_unittests.damage_tracker_unittest.o: cxx $
+    ../../cc/trees/damage_tracker_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/trees/cc_unittests.layer_tree_host_common_unittest.o: cxx $
+    ../../cc/trees/layer_tree_host_common_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/trees/cc_unittests.layer_tree_host_impl_unittest.o: cxx $
+    ../../cc/trees/layer_tree_host_impl_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/trees/cc_unittests.layer_tree_host_pixeltest_blending.o: cxx $
+    ../../cc/trees/layer_tree_host_pixeltest_blending.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/trees/cc_unittests.layer_tree_host_pixeltest_filters.o: cxx $
+    ../../cc/trees/layer_tree_host_pixeltest_filters.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/trees/cc_unittests.layer_tree_host_pixeltest_masks.o: cxx $
+    ../../cc/trees/layer_tree_host_pixeltest_masks.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/trees/cc_unittests.layer_tree_host_pixeltest_readback.o: cxx $
+    ../../cc/trees/layer_tree_host_pixeltest_readback.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/trees/cc_unittests.layer_tree_host_pixeltest_synchronous.o: $
+    cxx ../../cc/trees/layer_tree_host_pixeltest_synchronous.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/trees/cc_unittests.layer_tree_host_pixeltest_tiles.o: cxx $
+    ../../cc/trees/layer_tree_host_pixeltest_tiles.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/trees/cc_unittests.layer_tree_host_unittest.o: cxx $
+    ../../cc/trees/layer_tree_host_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/trees/cc_unittests.layer_tree_host_unittest_animation.o: cxx $
+    ../../cc/trees/layer_tree_host_unittest_animation.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build $
+    obj/cc/trees/cc_unittests.layer_tree_host_unittest_animation_timelines.o: $
+    cxx ../../cc/trees/layer_tree_host_unittest_animation_timelines.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/trees/cc_unittests.layer_tree_host_unittest_context.o: cxx $
+    ../../cc/trees/layer_tree_host_unittest_context.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/trees/cc_unittests.layer_tree_host_unittest_copyrequest.o: cxx $
+    ../../cc/trees/layer_tree_host_unittest_copyrequest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/trees/cc_unittests.layer_tree_host_unittest_damage.o: cxx $
+    ../../cc/trees/layer_tree_host_unittest_damage.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/trees/cc_unittests.layer_tree_host_unittest_delegated.o: cxx $
+    ../../cc/trees/layer_tree_host_unittest_delegated.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/trees/cc_unittests.layer_tree_host_unittest_occlusion.o: cxx $
+    ../../cc/trees/layer_tree_host_unittest_occlusion.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/trees/cc_unittests.layer_tree_host_unittest_picture.o: cxx $
+    ../../cc/trees/layer_tree_host_unittest_picture.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/trees/cc_unittests.layer_tree_host_unittest_proxy.o: cxx $
+    ../../cc/trees/layer_tree_host_unittest_proxy.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build $
+    obj/cc/trees/cc_unittests.layer_tree_host_unittest_record_gpu_histogram.o: $
+    cxx ../../cc/trees/layer_tree_host_unittest_record_gpu_histogram.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/trees/cc_unittests.layer_tree_host_unittest_scroll.o: cxx $
+    ../../cc/trees/layer_tree_host_unittest_scroll.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/trees/cc_unittests.layer_tree_host_unittest_video.o: cxx $
+    ../../cc/trees/layer_tree_host_unittest_video.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/trees/cc_unittests.layer_tree_impl_unittest.o: cxx $
+    ../../cc/trees/layer_tree_impl_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/trees/cc_unittests.layer_tree_settings_unittest.o: cxx $
+    ../../cc/trees/layer_tree_settings_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/trees/cc_unittests.occlusion_tracker_unittest.o: cxx $
+    ../../cc/trees/occlusion_tracker_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/trees/cc_unittests.occlusion_unittest.o: cxx $
+    ../../cc/trees/occlusion_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/trees/cc_unittests.property_tree_unittest.o: cxx $
+    ../../cc/trees/property_tree_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/trees/cc_unittests.threaded_channel_unittest.o: cxx $
+    ../../cc/trees/threaded_channel_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/trees/cc_unittests.tree_synchronizer_unittest.o: cxx $
+    ../../cc/trees/tree_synchronizer_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/surfaces/cc_unittests.display_unittest.o: cxx $
+    ../../cc/surfaces/display_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/surfaces/cc_unittests.display_scheduler_unittest.o: cxx $
+    ../../cc/surfaces/display_scheduler_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/surfaces/cc_unittests.surface_aggregator_unittest.o: cxx $
+    ../../cc/surfaces/surface_aggregator_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build $
+    obj/cc/surfaces/cc_unittests.surface_display_output_surface_unittest.o: $
+    cxx ../../cc/surfaces/surface_display_output_surface_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/surfaces/cc_unittests.surface_factory_unittest.o: cxx $
+    ../../cc/surfaces/surface_factory_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/surfaces/cc_unittests.surface_hittest_unittest.o: cxx $
+    ../../cc/surfaces/surface_hittest_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/surfaces/cc_unittests.surface_unittest.o: cxx $
+    ../../cc/surfaces/surface_unittest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+build obj/cc/surfaces/cc_unittests.surfaces_pixeltest.o: cxx $
+    ../../cc/surfaces/surfaces_pixeltest.cc || $
+    obj/cc/cc_unittests.compile_depends.stamp
+
+ldflags = -Wl,-z,now -Wl,-z,relro -Wl,--fatal-warnings -Wl,-z,defs -pthread $
+    -Wl,-z,noexecstack -fPIC -fuse-ld=gold $
+    -B/b/build/slave/publish_tarball/build/src/third_party/binutils/Linux_x64/Release/bin $
+    -Wl,--disable-new-dtags $
+    -Wl,-uhb_ft_face_create_cached,-uhb_glib_get_unicode_funcs $
+    -Wl,-uIsHeapProfilerRunning,-uProfilerStart $
+    -Wl,-u_Z21InitialMallocHook_NewPKvj,-u_Z22InitialMallocHook_MMapPKvS0_jiiix,-u_Z22InitialMallocHook_SbrkPKvi $
+    -Wl,-u_Z21InitialMallocHook_NewPKvm,-u_Z22InitialMallocHook_MMapPKvS0_miiil,-u_Z22InitialMallocHook_SbrkPKvl $
+    -Wl,-u_ZN15HeapLeakChecker12IgnoreObjectEPKv,-u_ZN15HeapLeakChecker14UnIgnoreObjectEPKv $
+    -m64 $
+    --sysroot=/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot $
+    -L/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/lib/x86_64-linux-gnu $
+    -Wl,-rpath-link=/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/lib/x86_64-linux-gnu $
+    -L/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/lib/x86_64-linux-gnu $
+    -Wl,-rpath-link=/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/lib/x86_64-linux-gnu $
+    -L/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/lib/gcc/x86_64-linux-gnu/4.6 $
+    -Wl,-rpath-link=/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/lib/gcc/x86_64-linux-gnu/4.6 $
+    -L/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/lib $
+    -Wl,-rpath-link=/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/lib $
+    -Wl,--detect-odr-violations -Wl,--icf=all
+libs =  -lrt -ldl -lgmodule-2.0 -lgobject-2.0 -lgthread-2.0 -lglib-2.0 -lm $
+    -lfontconfig -lfreetype -lpangocairo-1.0 -lcairo -lpangoft2-1.0 $
+    -lpango-1.0 -lX11 -lXi -lXcomposite -lXext -lnss3 -lnssutil3 -lsmime3 $
+    -lplds4 -lplc4 -lnspr4 -lasound -lz -lXdamage -lXfixes -lXtst
+build cc_unittests: link obj/cc/test/cc_unittests.cc_test_suite.o $
+    obj/cc/test/cc_unittests.run_all_unittests.o $
+    obj/cc/animation/cc_unittests.animation_host_unittest.o $
+    obj/cc/animation/cc_unittests.animation_player_unittest.o $
+    obj/cc/animation/cc_unittests.animation_timeline_unittest.o $
+    obj/cc/animation/cc_unittests.animation_unittest.o $
+    obj/cc/animation/cc_unittests.element_animations_unittest.o $
+    obj/cc/animation/cc_unittests.keyframed_animation_curve_unittest.o $
+    obj/cc/animation/cc_unittests.layer_animation_controller_unittest.o $
+    obj/cc/animation/cc_unittests.scroll_offset_animation_curve_unittest.o $
+    obj/cc/animation/cc_unittests.scrollbar_animation_controller_linear_fade_unittest.o $
+    obj/cc/animation/cc_unittests.scrollbar_animation_controller_thinning_unittest.o $
+    obj/cc/animation/cc_unittests.transform_operations_unittest.o $
+    obj/cc/base/cc_unittests.contiguous_container_unittest.o $
+    obj/cc/base/cc_unittests.delayed_unique_notifier_unittest.o $
+    obj/cc/base/cc_unittests.float_quad_unittest.o $
+    obj/cc/base/cc_unittests.histograms_unittest.o $
+    obj/cc/base/cc_unittests.list_container_unittest.o $
+    obj/cc/base/cc_unittests.math_util_unittest.o $
+    obj/cc/base/cc_unittests.random_access_list_container_unittest.o $
+    obj/cc/base/cc_unittests.region_unittest.o $
+    obj/cc/base/cc_unittests.rolling_time_delta_history_unittest.o $
+    obj/cc/base/cc_unittests.rtree_unittest.o $
+    obj/cc/base/cc_unittests.simple_enclosed_region_unittest.o $
+    obj/cc/base/cc_unittests.tiling_data_unittest.o $
+    obj/cc/base/cc_unittests.unique_notifier_unittest.o $
+    obj/cc/debug/cc_unittests.frame_timing_tracker_unittest.o $
+    obj/cc/debug/cc_unittests.layer_tree_debug_state_unittest.o $
+    obj/cc/debug/cc_unittests.micro_benchmark_controller_unittest.o $
+    obj/cc/debug/cc_unittests.rendering_stats_unittest.o $
+    obj/cc/input/cc_unittests.scroll_state_unittest.o $
+    obj/cc/input/cc_unittests.top_controls_manager_unittest.o $
+    obj/cc/layers/cc_unittests.delegated_frame_provider_unittest.o $
+    obj/cc/layers/cc_unittests.delegated_frame_resource_collection_unittest.o $
+    obj/cc/layers/cc_unittests.delegated_renderer_layer_impl_unittest.o $
+    obj/cc/layers/cc_unittests.delegated_renderer_layer_unittest.o $
+    obj/cc/layers/cc_unittests.heads_up_display_layer_impl_unittest.o $
+    obj/cc/layers/cc_unittests.heads_up_display_unittest.o $
+    obj/cc/layers/cc_unittests.io_surface_layer_impl_unittest.o $
+    obj/cc/layers/cc_unittests.layer_impl_unittest.o $
+    obj/cc/layers/cc_unittests.layer_iterator_unittest.o $
+    obj/cc/layers/cc_unittests.layer_position_constraint_unittest.o $
+    obj/cc/layers/cc_unittests.layer_proto_converter_unittest.o $
+    obj/cc/layers/cc_unittests.layer_unittest.o $
+    obj/cc/layers/cc_unittests.layer_utils_unittest.o $
+    obj/cc/layers/cc_unittests.nine_patch_layer_impl_unittest.o $
+    obj/cc/layers/cc_unittests.nine_patch_layer_unittest.o $
+    obj/cc/layers/cc_unittests.painted_scrollbar_layer_impl_unittest.o $
+    obj/cc/layers/cc_unittests.painted_scrollbar_layer_unittest.o $
+    obj/cc/layers/cc_unittests.picture_image_layer_impl_unittest.o $
+    obj/cc/layers/cc_unittests.picture_image_layer_unittest.o $
+    obj/cc/layers/cc_unittests.picture_layer_impl_unittest.o $
+    obj/cc/layers/cc_unittests.picture_layer_unittest.o $
+    obj/cc/layers/cc_unittests.render_surface_impl_unittest.o $
+    obj/cc/layers/cc_unittests.render_surface_unittest.o $
+    obj/cc/layers/cc_unittests.scrollbar_layer_unittest.o $
+    obj/cc/layers/cc_unittests.solid_color_layer_impl_unittest.o $
+    obj/cc/layers/cc_unittests.solid_color_scrollbar_layer_impl_unittest.o $
+    obj/cc/layers/cc_unittests.surface_layer_impl_unittest.o $
+    obj/cc/layers/cc_unittests.surface_layer_unittest.o $
+    obj/cc/layers/cc_unittests.texture_layer_impl_unittest.o $
+    obj/cc/layers/cc_unittests.texture_layer_unittest.o $
+    obj/cc/layers/cc_unittests.ui_resource_layer_impl_unittest.o $
+    obj/cc/layers/cc_unittests.ui_resource_layer_unittest.o $
+    obj/cc/layers/cc_unittests.video_frame_provider_client_impl_unittest.o $
+    obj/cc/layers/cc_unittests.video_layer_impl_unittest.o $
+    obj/cc/output/cc_unittests.begin_frame_args_unittest.o $
+    obj/cc/output/cc_unittests.bsp_tree_unittest.o $
+    obj/cc/output/cc_unittests.delegating_renderer_unittest.o $
+    obj/cc/output/cc_unittests.filter_operations_unittest.o $
+    obj/cc/output/cc_unittests.gl_renderer_unittest.o $
+    obj/cc/output/cc_unittests.layer_quad_unittest.o $
+    obj/cc/output/cc_unittests.managed_memory_policy_unittest.o $
+    obj/cc/output/cc_unittests.output_surface_unittest.o $
+    obj/cc/output/cc_unittests.overlay_unittest.o $
+    obj/cc/output/cc_unittests.renderer_pixeltest.o $
+    obj/cc/output/cc_unittests.renderer_settings_unittest.o $
+    obj/cc/output/cc_unittests.renderer_unittest.o $
+    obj/cc/output/cc_unittests.shader_unittest.o $
+    obj/cc/output/cc_unittests.software_renderer_unittest.o $
+    obj/cc/output/cc_unittests.texture_mailbox_deleter_unittest.o $
+    obj/cc/playback/cc_unittests.discardable_image_map_unittest.o $
+    obj/cc/playback/cc_unittests.display_item_list_unittest.o $
+    obj/cc/playback/cc_unittests.display_list_raster_source_unittest.o $
+    obj/cc/playback/cc_unittests.display_list_recording_source_unittest.o $
+    obj/cc/proto/cc_unittests.cc_conversions_unittest.o $
+    obj/cc/proto/cc_unittests.gfx_conversions_unittest.o $
+    obj/cc/proto/cc_unittests.gpu_conversions_unittest.o $
+    obj/cc/proto/cc_unittests.skia_conversions_unittest.o $
+    obj/cc/quads/cc_unittests.draw_polygon_unittest.o $
+    obj/cc/quads/cc_unittests.draw_quad_unittest.o $
+    obj/cc/quads/cc_unittests.render_pass_unittest.o $
+    obj/cc/raster/cc_unittests.scoped_gpu_raster_unittest.o $
+    obj/cc/raster/cc_unittests.single_thread_task_graph_runner_unittest.o $
+    obj/cc/raster/cc_unittests.synchronous_task_graph_runner_unittest.o $
+    obj/cc/raster/cc_unittests.texture_compressor_etc1_unittest.o $
+    obj/cc/raster/cc_unittests.tile_task_worker_pool_unittest.o $
+    obj/cc/resources/cc_unittests.platform_color_unittest.o $
+    obj/cc/resources/cc_unittests.resource_pool_unittest.o $
+    obj/cc/resources/cc_unittests.resource_provider_unittest.o $
+    obj/cc/resources/cc_unittests.resource_util_unittest.o $
+    obj/cc/resources/cc_unittests.scoped_resource_unittest.o $
+    obj/cc/resources/cc_unittests.video_resource_updater_unittest.o $
+    obj/cc/scheduler/cc_unittests.begin_frame_source_unittest.o $
+    obj/cc/scheduler/cc_unittests.compositor_timing_history_unittest.o $
+    obj/cc/scheduler/cc_unittests.delay_based_time_source_unittest.o $
+    obj/cc/scheduler/cc_unittests.scheduler_state_machine_unittest.o $
+    obj/cc/scheduler/cc_unittests.scheduler_unittest.o $
+    obj/cc/test/cc_unittests.begin_frame_source_test_unittest.o $
+    obj/cc/test/cc_unittests.layer_tree_json_parser_unittest.o $
+    obj/cc/test/cc_unittests.mock_helper_unittest.o $
+    obj/cc/test/cc_unittests.ordered_simple_task_runner_unittest.o $
+    obj/cc/test/cc_unittests.test_web_graphics_context_3d_unittest.o $
+    obj/cc/tiles/cc_unittests.picture_layer_tiling_set_unittest.o $
+    obj/cc/tiles/cc_unittests.picture_layer_tiling_unittest.o $
+    obj/cc/tiles/cc_unittests.tile_manager_unittest.o $
+    obj/cc/tiles/cc_unittests.tile_priority_unittest.o $
+    obj/cc/trees/cc_unittests.blocking_task_runner_unittest.o $
+    obj/cc/trees/cc_unittests.damage_tracker_unittest.o $
+    obj/cc/trees/cc_unittests.layer_tree_host_common_unittest.o $
+    obj/cc/trees/cc_unittests.layer_tree_host_impl_unittest.o $
+    obj/cc/trees/cc_unittests.layer_tree_host_pixeltest_blending.o $
+    obj/cc/trees/cc_unittests.layer_tree_host_pixeltest_filters.o $
+    obj/cc/trees/cc_unittests.layer_tree_host_pixeltest_masks.o $
+    obj/cc/trees/cc_unittests.layer_tree_host_pixeltest_readback.o $
+    obj/cc/trees/cc_unittests.layer_tree_host_pixeltest_synchronous.o $
+    obj/cc/trees/cc_unittests.layer_tree_host_pixeltest_tiles.o $
+    obj/cc/trees/cc_unittests.layer_tree_host_unittest.o $
+    obj/cc/trees/cc_unittests.layer_tree_host_unittest_animation.o $
+    obj/cc/trees/cc_unittests.layer_tree_host_unittest_animation_timelines.o $
+    obj/cc/trees/cc_unittests.layer_tree_host_unittest_context.o $
+    obj/cc/trees/cc_unittests.layer_tree_host_unittest_copyrequest.o $
+    obj/cc/trees/cc_unittests.layer_tree_host_unittest_damage.o $
+    obj/cc/trees/cc_unittests.layer_tree_host_unittest_delegated.o $
+    obj/cc/trees/cc_unittests.layer_tree_host_unittest_occlusion.o $
+    obj/cc/trees/cc_unittests.layer_tree_host_unittest_picture.o $
+    obj/cc/trees/cc_unittests.layer_tree_host_unittest_proxy.o $
+    obj/cc/trees/cc_unittests.layer_tree_host_unittest_record_gpu_histogram.o $
+    obj/cc/trees/cc_unittests.layer_tree_host_unittest_scroll.o $
+    obj/cc/trees/cc_unittests.layer_tree_host_unittest_video.o $
+    obj/cc/trees/cc_unittests.layer_tree_impl_unittest.o $
+    obj/cc/trees/cc_unittests.layer_tree_settings_unittest.o $
+    obj/cc/trees/cc_unittests.occlusion_tracker_unittest.o $
+    obj/cc/trees/cc_unittests.occlusion_unittest.o $
+    obj/cc/trees/cc_unittests.property_tree_unittest.o $
+    obj/cc/trees/cc_unittests.threaded_channel_unittest.o $
+    obj/cc/trees/cc_unittests.tree_synchronizer_unittest.o $
+    obj/cc/surfaces/cc_unittests.display_unittest.o $
+    obj/cc/surfaces/cc_unittests.display_scheduler_unittest.o $
+    obj/cc/surfaces/cc_unittests.surface_aggregator_unittest.o $
+    obj/cc/surfaces/cc_unittests.surface_display_output_surface_unittest.o $
+    obj/cc/surfaces/cc_unittests.surface_factory_unittest.o $
+    obj/cc/surfaces/cc_unittests.surface_hittest_unittest.o $
+    obj/cc/surfaces/cc_unittests.surface_unittest.o $
+    obj/cc/surfaces/cc_unittests.surfaces_pixeltest.o $
+    obj/base/libtest_support_base.a obj/gpu/command_buffer/libgles2_utils.a $
+    obj/gpu/libgpu_unittest_utils.a obj/media/libmedia.a $
+    obj/testing/libgmock.a obj/testing/libgtest.a $
+    obj/third_party/protobuf/libprotobuf_lite.a $
+    obj/ui/events/libevents_base.a obj/ui/gfx/libgfx.a $
+    obj/ui/gfx/libgfx_geometry.a obj/cc/libcc.a obj/cc/libcc_proto.a $
+    obj/cc/libcc_surfaces.a obj/cc/libcc_test_support.a $
+    obj/base/allocator/liballocator.a obj/base/libbase.a $
+    obj/base/libbase_static.a obj/third_party/modp_b64/libmodp_b64.a $
+    obj/base/third_party/dynamic_annotations/libdynamic_annotations.a $
+    obj/base/libsymbolize.a obj/base/libxdg_mime.a $
+    obj/third_party/libevent/libevent.a obj/base/libbase_i18n.a $
+    obj/third_party/icu/libicui18n.a obj/third_party/icu/libicuuc.a $
+    obj/third_party/libxml/libxml2.a obj/third_party/zlib/libchrome_zlib.a $
+    obj/third_party/zlib/libzlib_x86_simd.a $
+    obj/gpu/libcommand_buffer_client.a obj/gpu/libcommand_buffer_common.a $
+    obj/gpu/libcommand_buffer_service.a obj/gpu/libdisk_cache_proto.a $
+    obj/gpu/libgpu_config.a obj/third_party/re2/libre2.a $
+    obj/ui/gl/libgl_wrapper.a obj/skia/libskia_library.a $
+    obj/skia/libskia_opts.a obj/skia/libskia_opts_ssse3.a $
+    obj/skia/libskia_opts_sse41.a obj/skia/libskia_opts_sse42.a $
+    obj/skia/libskia_opts_avx.a obj/skia/libskia_opts_avx2.a $
+    obj/third_party/sfntly/libsfntly.a obj/skia/libskia_chrome.a $
+    obj/third_party/harfbuzz-ng/libharfbuzz-ng.a $
+    obj/third_party/libpng/libpng.a $
+    obj/third_party/libjpeg_turbo/libjpeg_turbo.a obj/ui/gfx/x/libgfx_x11.a $
+    obj/ui/events/platform/libevents_platform.a obj/build/linux/libpci.a $
+    obj/third_party/libXNVCtrl/libXNVCtrl.a obj/crypto/libcrcrypto.a $
+    obj/third_party/boringssl/libboringssl.a $
+    obj/third_party/smhasher/libcityhash.a $
+    obj/third_party/angle/src/libtranslator.a $
+    obj/third_party/angle/src/libtranslator_lib.a $
+    obj/third_party/angle/src/libpreprocessor.a $
+    obj/third_party/angle/src/libangle_common.a $
+    obj/gpu/libgles2_cmd_helper.a obj/gpu/libgpu_ipc.a obj/ipc/libipc.a $
+    obj/ui/gl/libgl_unittest_utils.a obj/third_party/libwebm/libwebm.a $
+    libyuv.a obj/third_party/opus/libopus.a $
+    obj/ui/events/libdom_keycode_converter.a obj/url/liburl_lib.a $
+    obj/media/libshared_memory_support.a obj/third_party/ffmpeg/libffmpeg.a $
+    obj/third_party/ffmpeg/libffmpeg_yasm.a $
+    obj/third_party/libvpx_new/libvpx_new.a $
+    obj/third_party/libvpx_new/libvpx_intrinsics_mmx.a $
+    obj/third_party/libvpx_new/libvpx_intrinsics_sse2.a $
+    obj/third_party/libvpx_new/libvpx_intrinsics_ssse3.a $
+    obj/third_party/libvpx_new/libvpx_intrinsics_sse4_1.a $
+    obj/third_party/libvpx_new/libvpx_intrinsics_avx.a $
+    obj/third_party/libvpx_new/libvpx_intrinsics_avx2.a $
+    obj/media/libmedia_asm.a obj/gpu/libgles2_c_lib.a $
+    obj/gpu/libgles2_implementation.a obj/gpu/libgl_in_process_context.a $
+    obj/gpu/skia_bindings/libgpu_skia_bindings.a $
+    obj/ui/gfx/libgfx_test_support.a obj/ui/gl/libgl_test_support.a $
+    obj/ui/platform_window/x11/libx11_window.a $
+    obj/ui/events/devices/libevents_devices.a obj/ui/events/libevents.a $
+    obj/ui/events/libgesture_detection.a $
+    obj/ui/events/platform/x11/libx11_events_platform.a | $
+    gen/base/debug/debugging_flags.h $
+    obj/third_party/angle/src/copy_scripts.actions_rules_copies.stamp $
+    gen/angle/id/commit.h obj/skia/skia.actions_depends.stamp $
+    obj/gpu/gpu.actions_depends.stamp icudtl.dat $
+    obj/third_party/boringssl/libboringssl.a || $
+    obj/cc/cc_unittests.actions_depends.stamp
+  ld = $ldxx

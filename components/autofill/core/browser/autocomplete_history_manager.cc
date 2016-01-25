@@ -108,15 +108,11 @@ void AutocompleteHistoryManager::OnGetAutocompleteSuggestions(
   }
 }
 
-void AutocompleteHistoryManager::OnFormSubmitted(const FormData& form) {
+void AutocompleteHistoryManager::OnWillSubmitForm(const FormData& form) {
   if (!autofill_client_->IsAutocompleteEnabled())
     return;
 
   if (driver_->IsOffTheRecord())
-    return;
-
-  // Don't save data that was submitted through JavaScript.
-  if (!form.user_submitted)
     return;
 
   // We put the following restriction on stored FormFields:
@@ -130,10 +126,12 @@ void AutocompleteHistoryManager::OnFormSubmitted(const FormData& form) {
   //    AutofillManager)
   std::vector<FormFieldData> values;
   for (const FormFieldData& field : form.fields) {
-    if (!field.value.empty() && !field.name.empty() && IsTextField(field) &&
+    if (!field.value.empty() &&
+        !field.name.empty() &&
+        IsTextField(field) &&
         field.should_autocomplete &&
-        !autofill::IsValidCreditCardNumber(field.value) &&
-        !autofill::IsSSN(field.value)) {
+        !IsValidCreditCardNumber(field.value) &&
+        !IsSSN(field.value)) {
       values.push_back(field);
     }
   }

@@ -1,0 +1,15 @@
+rule $
+    chrome_strings_map_target_generate_resources_map_7ef051f3c15cacef2a1ce88ace234b3c
+  command = cd ../../chrome; python $
+      browser/metrics/variations/generate_resources_map.py $
+      ../out/Release/gen/chrome/grit/generated_resources.h $
+      ../out/Release/gen/chrome/browser/metrics/variations/generated_resources_map.cc
+  description = ACTION Generating generated resources map.
+  restat = 1
+
+build gen/chrome/browser/metrics/variations/generated_resources_map.cc: $
+    chrome_strings_map_target_generate_resources_map_7ef051f3c15cacef2a1ce88ace234b3c $
+    ../../chrome/browser/metrics/variations/generate_resources_map.py $
+    gen/chrome/grit/generated_resources.h || $
+    obj/chrome/chrome_strings.actions_rules_copies.stamp
+

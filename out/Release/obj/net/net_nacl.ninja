@@ -1,0 +1,1096 @@
+build obj/net/net_nacl.actions_depends.stamp: stamp $
+    gen/tc_pnacl_newlib/lib/libcrypto_nacl.a $
+    obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a $
+    obj/third_party/protobuf/libprotobuf_lite.a $
+    gen/tc_pnacl_newlib/lib/liburl_nacl.a $
+    obj/net/net_derived_sources.actions_rules_copies.stamp $
+    obj/net/libnet_quic_proto.a $
+    obj/net/net_resources.actions_rules_copies.stamp
+
+build obj/net/net_nacl.compile_depends.stamp: stamp $
+    gen/tc_pnacl_newlib/lib/libcrypto_nacl.a $
+    obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a $
+    gen/tc_pnacl_newlib/lib/liburl_nacl.a $
+    obj/net/net_derived_sources.actions_rules_copies.stamp $
+    obj/net/net_quic_proto.actions_rules_copies.stamp $
+    obj/net/net_resources.actions_rules_copies.stamp
+
+rule net_nacl_target_build_newlib_plib_8a5080556ff0962be7d1015adc88a613
+  command = cd ../../net; python ../native_client/build/build_nexe.py $
+      --root .. --product-dir ../out/Release/xyz --config-name Release -t $
+      ../native_client/toolchain/ --arch pnacl --build newlib_plib --name $
+      ../out/Release/gen/tc_pnacl_newlib/lib/libnet_nacl.a --objdir $
+      ../out/Release/obj/net/net_nacl.gen/pnacl_newlib-pnacl/net_nacl $
+      "--include-dirs=../out/Release/gen/tc_pnacl_newlib/include .. $
+      \"../out/Release/gen\" ../native_client_sdk/src/libraries $
+      ../native_client_sdk/src/libraries/nacl_io/include $
+      ../native_client_sdk/src/libraries/third_party/newlib-extras $
+      ../third_party/boringssl/src/include ../third_party/protobuf $
+      ../third_party/protobuf/src ../third_party/icu/source/i18n $
+      ../third_party/icu/source/common \"../out/Release/gen/protoc_out\" $
+      .." "--compile_flags=-O2 -g -Wall -fdiagnostics-show-option -Werror  $
+      -Wno-unused-function -Wno-char-subscripts -Wno-c++11-extensions $
+      -Wno-unnamed-type-template-args -Wno-extra-semi $
+      -Wno-unused-private-field -Wno-char-subscripts -Wno-unused-function $
+      \"-std=gnu++11\" -Wno-bind-to-temporary-copy" --gomadir "" $
+      "--defines=\"__STDC_LIMIT_MACROS=1\" \"__STDC_FORMAT_MACROS=1\" $
+      \"_GNU_SOURCE=1\" \"_POSIX_C_SOURCE=199506\" \"_XOPEN_SOURCE=600\" $
+      \"DYNAMIC_ANNOTATIONS_ENABLED=1\" $
+      \"DYNAMIC_ANNOTATIONS_PREFIX=NACL_\" \"NACL_BUILD_ARCH=x86\" $
+      V8_DEPRECATION_WARNINGS \"CLD_VERSION=2\" \"_FILE_OFFSET_BITS=64\" $
+      CHROMIUM_BUILD \"CR_CLANG_REVISION=255169-1\" $
+      UI_COMPOSITOR_IMAGE_TRANSPORT \"USE_AURA=1\" \"USE_ASH=1\" $
+      \"USE_PANGO=1\" \"USE_CAIRO=1\" \"USE_DEFAULT_RENDER_THEME=1\" $
+      \"USE_LIBJPEG_TURBO=1\" \"USE_X11=1\" \"USE_CLIPBOARD_AURAX11=1\" $
+      ENABLE_ONE_CLICK_SIGNIN \"ENABLE_WEBRTC=1\" \"ENABLE_MEDIA_ROUTER=1\" $
+      ENABLE_PEPPER_CDMS ENABLE_CONFIGURATION_POLICY ENABLE_NOTIFICATIONS $
+      \"ENABLE_HIDPI=1\" \"ENABLE_TOPCHROME_MD=1\" USE_UDEV $
+      DONT_EMBED_BUILD_METADATA FIELDTRIAL_TESTING_ENABLED $
+      \"ENABLE_TASK_MANAGER=1\" \"ENABLE_EXTENSIONS=1\" \"ENABLE_PDF=1\" $
+      \"ENABLE_PLUGINS=1\" \"ENABLE_SESSION_SERVICE=1\" \"ENABLE_THEMES=1\" $
+      \"ENABLE_AUTOFILL_DIALOG=1\" \"ENABLE_BACKGROUND=1\" $
+      \"ENABLE_PRINTING=1\" \"ENABLE_BASIC_PRINTING=1\" $
+      \"ENABLE_PRINT_PREVIEW=1\" \"ENABLE_SPELLCHECK=1\" $
+      \"ENABLE_CAPTIVE_PORTAL_DETECTION=1\" \"ENABLE_APP_LIST=1\" $
+      \"ENABLE_SETTINGS_APP=1\" \"ENABLE_SUPERVISED_USERS=1\" $
+      \"ENABLE_MDNS=1\" \"ENABLE_SERVICE_DISCOVERY=1\" $
+      V8_USE_EXTERNAL_STARTUP_DATA FULL_SAFE_BROWSING SAFE_BROWSING_CSD $
+      SAFE_BROWSING_DB_LOCAL NET_IMPLEMENTATION PROTOBUF_USE_DLLS $
+      GOOGLE_PROTOBUF_NO_RTTI GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER $
+      \"U_USING_ICU_NAMESPACE=0\" \"U_ENABLE_DYLOAD=0\" $
+      U_STATIC_IMPLEMENTATION \"USE_LIBPCI=1\" \"USE_OPENSSL=1\" $
+      \"USE_OPENSSL_CERTS=1\" __STDC_CONSTANT_MACROS __STDC_FORMAT_MACROS" $
+      "--link_flags=-B../out/Release/gen/tc_pnacl_newlib/lib  " $
+      "--source-list=../out/gypfiles/net/pnacl_newlib.net_nacl.source_list.gypcmd"
+  description = ACTION net_nacl: build newlib $
+      plib_8a5080556ff0962be7d1015adc88a613
+  restat = 1
+
+build gen/tc_pnacl_newlib/lib/libnet_nacl.a: $
+    net_nacl_target_build_newlib_plib_8a5080556ff0962be7d1015adc88a613 $
+    ../../native_client/build/build_nexe.py $
+    ../../native_client/build/build_nexe_tools.py ../../base/at_exit.h $
+    ../../base/atomic_ref_count.h ../../base/atomicops.h $
+    ../../base/atomicops_internals_atomicword_compat.h $
+    ../../base/atomicops_internals_portable.h $
+    ../../base/atomicops_internals_x86_msvc.h ../../base/base64.h $
+    ../../base/base_export.h ../../base/basictypes.h ../../base/bind.h $
+    ../../base/bind_helpers.h ../../base/bind_internal.h $
+    ../../base/bind_internal_win.h ../../base/build_time.h $
+    ../../base/callback.h ../../base/callback_forward.h $
+    ../../base/callback_helpers.h ../../base/callback_internal.h $
+    ../../base/cancelable_callback.h ../../base/compiler_specific.h $
+    ../../base/containers/adapters.h ../../base/containers/hash_tables.h $
+    ../../base/containers/mru_cache.h ../../base/debug/alias.h $
+    ../../base/debug/debugger.h ../../base/debug/leak_annotations.h $
+    ../../base/debug/task_annotator.h ../../base/event_types.h $
+    ../../base/files/file.h ../../base/files/file_path.h $
+    ../../base/files/file_tracing.h ../../base/files/scoped_file.h $
+    ../../base/format_macros.h ../../base/gtest_prod_util.h $
+    ../../base/json/json_writer.h ../../base/json/string_escape.h $
+    ../../base/lazy_instance.h ../../base/location.h ../../base/logging.h $
+    ../../base/mac/scoped_cffiledescriptorref.h $
+    ../../base/mac/scoped_cftyperef.h ../../base/mac/scoped_typeref.h $
+    ../../base/macros.h ../../base/md5.h ../../base/memory/aligned_memory.h $
+    ../../base/memory/raw_scoped_refptr_mismatch_checker.h $
+    ../../base/memory/ref_counted.h ../../base/memory/scoped_policy.h $
+    ../../base/memory/scoped_ptr.h ../../base/memory/scoped_vector.h $
+    ../../base/memory/singleton.h ../../base/memory/weak_ptr.h $
+    ../../base/message_loop/incoming_task_queue.h $
+    ../../base/message_loop/message_loop.h $
+    ../../base/message_loop/message_loop_task_runner.h $
+    ../../base/message_loop/message_pump.h $
+    ../../base/message_loop/message_pump_dispatcher.h $
+    ../../base/message_loop/message_pump_io_ios.h $
+    ../../base/message_loop/message_pump_libevent.h $
+    ../../base/message_loop/message_pump_mac.h $
+    ../../base/message_loop/message_pump_win.h $
+    ../../base/message_loop/timer_slack.h $
+    ../../base/metrics/bucket_ranges.h ../../base/metrics/field_trial.h $
+    ../../base/metrics/histogram.h ../../base/metrics/histogram_base.h $
+    ../../base/metrics/histogram_macros.h $
+    ../../base/metrics/histogram_samples.h ../../base/metrics/sample_map.h $
+    ../../base/metrics/sparse_histogram.h ../../base/move.h $
+    ../../base/numerics/safe_conversions.h $
+    ../../base/numerics/safe_conversions_impl.h $
+    ../../base/numerics/safe_math.h ../../base/numerics/safe_math_impl.h $
+    ../../base/observer_list.h ../../base/observer_list_threadsafe.h $
+    ../../base/pending_task.h ../../base/pickle.h $
+    ../../base/process/process_handle.h $
+    ../../base/profiler/alternate_timer.h $
+    ../../base/profiler/scoped_profile.h $
+    ../../base/profiler/scoped_tracker.h ../../base/profiler/tracked_time.h $
+    ../../base/rand_util.h ../../base/scoped_generic.h $
+    ../../base/sequence_checker.h ../../base/sequence_checker_impl.h $
+    ../../base/sequenced_task_runner.h $
+    ../../base/sequenced_task_runner_helpers.h ../../base/sha1.h $
+    ../../base/single_thread_task_runner.h ../../base/stl_util.h $
+    ../../base/strings/string16.h $
+    ../../base/strings/string_number_conversions.h $
+    ../../base/strings/string_piece.h ../../base/strings/string_split.h $
+    ../../base/strings/string_tokenizer.h ../../base/strings/string_util.h $
+    ../../base/strings/string_util_posix.h $
+    ../../base/strings/string_util_win.h ../../base/strings/stringprintf.h $
+    ../../base/strings/utf_offset_string_conversions.h $
+    ../../base/strings/utf_string_conversion_utils.h $
+    ../../base/strings/utf_string_conversions.h $
+    ../../base/synchronization/lock.h $
+    ../../base/synchronization/lock_impl.h ../../base/sys_byteorder.h $
+    ../../base/task_runner.h ../../base/template_util.h $
+    ../../base/third_party/icu/icu_utf.h $
+    ../../base/thread_task_runner_handle.h $
+    ../../base/threading/non_thread_safe.h $
+    ../../base/threading/non_thread_safe_impl.h $
+    ../../base/threading/platform_thread.h $
+    ../../base/threading/sequenced_worker_pool.h $
+    ../../base/threading/thread_checker.h $
+    ../../base/threading/thread_checker_impl.h $
+    ../../base/threading/thread_collision_warner.h $
+    ../../base/threading/thread_local.h $
+    ../../base/threading/thread_local_storage.h $
+    ../../base/threading/thread_restrictions.h ../../base/time/clock.h $
+    ../../base/time/default_clock.h ../../base/time/time.h $
+    ../../base/tracked_objects.h ../../base/tracking_info.h $
+    ../../base/tuple.h ../../base/values.h ../../base/version.h $
+    ../../base/win/scoped_handle.h ../../base/win/windows_version.h $
+    ../../build/build_config.h ../../crypto/crypto_export.h $
+    ../../crypto/curve25519.h ../../crypto/ec_private_key.h $
+    ../../crypto/ec_signature_creator.h ../../crypto/hkdf.h $
+    ../../crypto/openssl_util.h ../../crypto/random.h $
+    ../../crypto/rsa_private_key.h ../../crypto/scoped_nss_types.h $
+    ../../crypto/scoped_openssl_types.h ../../crypto/secure_hash.h $
+    ../../crypto/sha2.h ../../crypto/signature_verifier.h $
+    ../../crypto/wincrypt_shim.h $
+    ../../native_client_sdk/src/libraries/nacl_io/include/sys/time.h $
+    ../../native_client_sdk/src/libraries/third_party/newlib-extras/netdb.h $
+    ../../native_client_sdk/src/libraries/third_party/newlib-extras/netinet/in.h $
+    ../../native_client_sdk/src/libraries/third_party/newlib-extras/netinet6/in6.h $
+    ../../native_client_sdk/src/libraries/third_party/newlib-extras/sys/socket.h $
+    ../../testing/gtest/include/gtest/gtest_prod.h $
+    ../../third_party/boringssl/src/include/openssl/aead.h $
+    ../../third_party/boringssl/src/include/openssl/asn1.h $
+    ../../third_party/boringssl/src/include/openssl/base.h $
+    ../../third_party/boringssl/src/include/openssl/base64.h $
+    ../../third_party/boringssl/src/include/openssl/bio.h $
+    ../../third_party/boringssl/src/include/openssl/bn.h $
+    ../../third_party/boringssl/src/include/openssl/buf.h $
+    ../../third_party/boringssl/src/include/openssl/bytestring.h $
+    ../../third_party/boringssl/src/include/openssl/cipher.h $
+    ../../third_party/boringssl/src/include/openssl/conf.h $
+    ../../third_party/boringssl/src/include/openssl/crypto.h $
+    ../../third_party/boringssl/src/include/openssl/dh.h $
+    ../../third_party/boringssl/src/include/openssl/digest.h $
+    ../../third_party/boringssl/src/include/openssl/dsa.h $
+    ../../third_party/boringssl/src/include/openssl/ec.h $
+    ../../third_party/boringssl/src/include/openssl/ec_key.h $
+    ../../third_party/boringssl/src/include/openssl/ecdh.h $
+    ../../third_party/boringssl/src/include/openssl/ecdsa.h $
+    ../../third_party/boringssl/src/include/openssl/engine.h $
+    ../../third_party/boringssl/src/include/openssl/err.h $
+    ../../third_party/boringssl/src/include/openssl/evp.h $
+    ../../third_party/boringssl/src/include/openssl/ex_data.h $
+    ../../third_party/boringssl/src/include/openssl/hmac.h $
+    ../../third_party/boringssl/src/include/openssl/lhash.h $
+    ../../third_party/boringssl/src/include/openssl/lhash_macros.h $
+    ../../third_party/boringssl/src/include/openssl/mem.h $
+    ../../third_party/boringssl/src/include/openssl/obj.h $
+    ../../third_party/boringssl/src/include/openssl/obj_mac.h $
+    ../../third_party/boringssl/src/include/openssl/opensslfeatures.h $
+    ../../third_party/boringssl/src/include/openssl/pem.h $
+    ../../third_party/boringssl/src/include/openssl/rsa.h $
+    ../../third_party/boringssl/src/include/openssl/sha.h $
+    ../../third_party/boringssl/src/include/openssl/ssl.h $
+    ../../third_party/boringssl/src/include/openssl/ssl3.h $
+    ../../third_party/boringssl/src/include/openssl/stack.h $
+    ../../third_party/boringssl/src/include/openssl/stack_macros.h $
+    ../../third_party/boringssl/src/include/openssl/thread.h $
+    ../../third_party/boringssl/src/include/openssl/tls1.h $
+    ../../third_party/boringssl/src/include/openssl/type_check.h $
+    ../../third_party/boringssl/src/include/openssl/x509.h $
+    ../../third_party/boringssl/src/include/openssl/x509_vfy.h $
+    ../../third_party/boringssl/src/include/openssl/x509v3.h $
+    ../../url/gurl.h ../../url/third_party/mozilla/url_parse.h $
+    ../../url/url_canon.h ../../url/url_canon_ip.h $
+    ../../url/url_canon_stdstring.h ../../url/url_constants.h $
+    ../../url/url_export.h ../../net/android/cert_verify_result_android.h $
+    ../../net/android/network_library.h ../../net/base/address_family.cc $
+    ../../net/base/address_family.h ../../net/base/address_list.cc $
+    ../../net/base/address_list.h ../../net/base/auth.cc $
+    ../../net/base/auth.h ../../net/base/completion_callback.h $
+    ../../net/base/connection_type_histograms.cc $
+    ../../net/base/connection_type_histograms.h $
+    ../../net/base/crypto_module.h ../../net/base/escape.cc $
+    ../../net/base/escape.h ../../net/base/expiring_cache.h $
+    ../../net/base/hash_value.cc ../../net/base/hash_value.h $
+    ../../net/base/host_port_pair.cc ../../net/base/host_port_pair.h $
+    ../../net/base/int128.h ../../net/base/io_buffer.cc $
+    ../../net/base/io_buffer.h ../../net/base/iovec.h $
+    ../../net/base/ip_address.cc ../../net/base/ip_address.h $
+    ../../net/base/ip_address_number.cc ../../net/base/ip_address_number.h $
+    ../../net/base/ip_endpoint.cc ../../net/base/ip_endpoint.h $
+    ../../net/base/linked_hash_map.h ../../net/base/load_flags.h $
+    ../../net/base/load_flags_list.h ../../net/base/load_states.h $
+    ../../net/base/load_states_list.h ../../net/base/load_timing_info.cc $
+    ../../net/base/load_timing_info.h $
+    ../../net/base/lookup_string_in_fixed_set.cc $
+    ../../net/base/lookup_string_in_fixed_set.h ../../net/base/mime_util.h $
+    ../../net/base/net_error_details.h ../../net/base/net_error_list.h $
+    ../../net/base/net_errors.cc ../../net/base/net_errors.h $
+    ../../net/base/net_errors_posix.cc ../../net/base/net_export.h $
+    ../../net/base/net_module.cc ../../net/base/net_module.h $
+    ../../net/base/net_string_util.h ../../net/base/net_util.cc $
+    ../../net/base/net_util.h ../../net/base/network_change_notifier.h $
+    ../../net/base/network_interfaces.cc $
+    ../../net/base/network_interfaces.h $
+    ../../net/base/network_interfaces_posix.cc $
+    ../../net/base/network_interfaces_posix.h $
+    ../../net/base/openssl_private_key_store.h $
+    ../../net/base/openssl_private_key_store_android.cc $
+    ../../net/base/openssl_private_key_store_memory.cc $
+    ../../net/base/port_util.cc ../../net/base/port_util.h $
+    ../../net/base/prioritized_dispatcher.h ../../net/base/priority_queue.h $
+    ../../net/base/privacy_mode.h ../../net/base/rand_callback.h $
+    ../../net/base/registry_controlled_domains/registry_controlled_domain.cc $
+    ../../net/base/registry_controlled_domains/registry_controlled_domain.h $
+    ../../net/base/request_priority.h $
+    ../../net/base/socket_performance_watcher.cc $
+    ../../net/base/socket_performance_watcher.h $
+    ../../net/base/socket_performance_watcher_factory.h $
+    ../../net/base/sys_addrinfo.h ../../net/base/url_util.cc $
+    ../../net/base/url_util.h ../../net/base/winsock_init.h $
+    ../../net/base/zap.cc ../../net/base/zap.h ../../net/cert/asn1_util.cc $
+    ../../net/cert/asn1_util.h ../../net/cert/cert_database.cc $
+    ../../net/cert/cert_database.h ../../net/cert/cert_database_openssl.cc $
+    ../../net/cert/cert_policy_enforcer.cc $
+    ../../net/cert/cert_policy_enforcer.h $
+    ../../net/cert/cert_status_flags.cc ../../net/cert/cert_status_flags.h $
+    ../../net/cert/cert_status_flags_list.h ../../net/cert/cert_type.h $
+    ../../net/cert/cert_verifier.cc ../../net/cert/cert_verifier.h $
+    ../../net/cert/cert_verify_proc.h ../../net/cert/cert_verify_result.cc $
+    ../../net/cert/cert_verify_result.h ../../net/cert/crl_set.cc $
+    ../../net/cert/crl_set.h ../../net/cert/ct_ev_whitelist.h $
+    ../../net/cert/ct_known_logs.cc ../../net/cert/ct_known_logs.h $
+    ../../net/cert/ct_known_logs_static.h ../../net/cert/ct_log_verifier.h $
+    ../../net/cert/ct_verifier.h ../../net/cert/ct_verify_result.cc $
+    ../../net/cert/ct_verify_result.h $
+    ../../net/cert/internal/certificate_policies.cc $
+    ../../net/cert/internal/certificate_policies.h $
+    ../../net/cert/internal/extended_key_usage.cc $
+    ../../net/cert/internal/extended_key_usage.h $
+    ../../net/cert/internal/name_constraints.cc $
+    ../../net/cert/internal/name_constraints.h $
+    ../../net/cert/internal/parse_certificate.cc $
+    ../../net/cert/internal/parse_certificate.h $
+    ../../net/cert/internal/signature_algorithm.cc $
+    ../../net/cert/internal/signature_algorithm.h $
+    ../../net/cert/internal/signature_policy.cc $
+    ../../net/cert/internal/signature_policy.h $
+    ../../net/cert/internal/verify_name_match.cc $
+    ../../net/cert/internal/verify_name_match.h $
+    ../../net/cert/internal/verify_signed_data.cc $
+    ../../net/cert/internal/verify_signed_data.h $
+    ../../net/cert/multi_threaded_cert_verifier.h $
+    ../../net/cert/pem_tokenizer.cc ../../net/cert/pem_tokenizer.h $
+    ../../net/cert/sct_status_flags.h $
+    ../../net/cert/sha256_legacy_support_win.cc $
+    ../../net/cert/sha256_legacy_support_win.h $
+    ../../net/cert/signed_certificate_timestamp.cc $
+    ../../net/cert/signed_certificate_timestamp.h $
+    ../../net/cert/signed_tree_head.h ../../net/cert/x509_cert_types.cc $
+    ../../net/cert/x509_cert_types.h ../../net/cert/x509_certificate.cc $
+    ../../net/cert/x509_certificate.h $
+    ../../net/cert/x509_certificate_net_log_param.cc $
+    ../../net/cert/x509_certificate_net_log_param.h $
+    ../../net/cert/x509_certificate_openssl.cc ../../net/cert/x509_util.cc $
+    ../../net/cert/x509_util.h ../../net/cert/x509_util_openssl.cc $
+    ../../net/cert/x509_util_openssl.h ../../net/cert_net/nss_ocsp.h $
+    ../../net/der/input.cc ../../net/der/input.h $
+    ../../net/der/parse_values.cc ../../net/der/parse_values.h $
+    ../../net/der/parser.cc ../../net/der/parser.h ../../net/der/tag.cc $
+    ../../net/der/tag.h ../../net/dns/dns_util.cc ../../net/dns/dns_util.h $
+    ../../net/dns/host_resolver.h $
+    ../../net/http/http_auth_challenge_tokenizer.cc $
+    ../../net/http/http_auth_challenge_tokenizer.h $
+    ../../net/http/http_auth_scheme.cc ../../net/http/http_auth_scheme.h $
+    ../../net/http/http_byte_range.cc ../../net/http/http_byte_range.h $
+    ../../net/http/http_content_disposition.h $
+    ../../net/http/http_log_util.cc ../../net/http/http_log_util.h $
+    ../../net/http/http_request_headers.cc $
+    ../../net/http/http_request_headers.h $
+    ../../net/http/http_request_info.h $
+    ../../net/http/http_response_headers.cc $
+    ../../net/http/http_response_headers.h $
+    ../../net/http/http_response_info.cc $
+    ../../net/http/http_response_info.h $
+    ../../net/http/http_security_headers.cc $
+    ../../net/http/http_security_headers.h $
+    ../../net/http/http_server_properties.h $
+    ../../net/http/http_status_line_validator.cc $
+    ../../net/http/http_status_line_validator.h ../../net/http/http_util.cc $
+    ../../net/http/http_util.h ../../net/http/http_util_icu.cc $
+    ../../net/http/http_vary_data.cc ../../net/http/http_vary_data.h $
+    ../../net/http/http_version.h $
+    ../../net/http/transport_security_state.cc $
+    ../../net/http/transport_security_state.h $
+    ../../net/http/transport_security_state_static.h $
+    ../../net/log/net_log.cc ../../net/log/net_log.h $
+    ../../net/log/net_log_capture_mode.cc $
+    ../../net/log/net_log_capture_mode.h $
+    ../../net/log/net_log_event_type_list.h $
+    ../../net/log/net_log_source_type_list.h $
+    ../../net/quic/congestion_control/cubic.cc $
+    ../../net/quic/congestion_control/cubic.h $
+    ../../net/quic/congestion_control/cubic_bytes.cc $
+    ../../net/quic/congestion_control/cubic_bytes.h $
+    ../../net/quic/congestion_control/general_loss_algorithm.cc $
+    ../../net/quic/congestion_control/general_loss_algorithm.h $
+    ../../net/quic/congestion_control/hybrid_slow_start.cc $
+    ../../net/quic/congestion_control/hybrid_slow_start.h $
+    ../../net/quic/congestion_control/loss_detection_interface.cc $
+    ../../net/quic/congestion_control/loss_detection_interface.h $
+    ../../net/quic/congestion_control/pacing_sender.cc $
+    ../../net/quic/congestion_control/pacing_sender.h $
+    ../../net/quic/congestion_control/prr_sender.cc $
+    ../../net/quic/congestion_control/prr_sender.h $
+    ../../net/quic/congestion_control/rtt_stats.cc $
+    ../../net/quic/congestion_control/rtt_stats.h $
+    ../../net/quic/congestion_control/send_algorithm_interface.cc $
+    ../../net/quic/congestion_control/send_algorithm_interface.h $
+    ../../net/quic/congestion_control/tcp_cubic_bytes_sender.cc $
+    ../../net/quic/congestion_control/tcp_cubic_bytes_sender.h $
+    ../../net/quic/congestion_control/tcp_cubic_sender.cc $
+    ../../net/quic/congestion_control/tcp_cubic_sender.h $
+    ../../net/quic/congestion_control/tcp_loss_algorithm.cc $
+    ../../net/quic/congestion_control/tcp_loss_algorithm.h $
+    ../../net/quic/congestion_control/time_loss_algorithm.cc $
+    ../../net/quic/congestion_control/time_loss_algorithm.h $
+    ../../net/quic/crypto/aead_base_decrypter.h $
+    ../../net/quic/crypto/aead_base_decrypter_openssl.cc $
+    ../../net/quic/crypto/aead_base_encrypter.h $
+    ../../net/quic/crypto/aead_base_encrypter_openssl.cc $
+    ../../net/quic/crypto/aes_128_gcm_12_decrypter.h $
+    ../../net/quic/crypto/aes_128_gcm_12_decrypter_openssl.cc $
+    ../../net/quic/crypto/aes_128_gcm_12_encrypter.h $
+    ../../net/quic/crypto/aes_128_gcm_12_encrypter_openssl.cc $
+    ../../net/quic/crypto/chacha20_poly1305_decrypter.h $
+    ../../net/quic/crypto/chacha20_poly1305_decrypter_openssl.cc $
+    ../../net/quic/crypto/chacha20_poly1305_encrypter.h $
+    ../../net/quic/crypto/chacha20_poly1305_encrypter_openssl.cc $
+    ../../net/quic/crypto/channel_id.cc ../../net/quic/crypto/channel_id.h $
+    ../../net/quic/crypto/channel_id_chromium.cc $
+    ../../net/quic/crypto/channel_id_chromium.h $
+    ../../net/quic/crypto/channel_id_openssl.cc $
+    ../../net/quic/crypto/common_cert_set.cc $
+    ../../net/quic/crypto/common_cert_set.h $
+    ../../net/quic/crypto/common_cert_set_1.c $
+    ../../net/quic/crypto/common_cert_set_1a.inc $
+    ../../net/quic/crypto/common_cert_set_1b.inc $
+    ../../net/quic/crypto/common_cert_set_2.c $
+    ../../net/quic/crypto/common_cert_set_2a.inc $
+    ../../net/quic/crypto/common_cert_set_2b.inc $
+    ../../net/quic/crypto/crypto_framer.cc $
+    ../../net/quic/crypto/crypto_framer.h $
+    ../../net/quic/crypto/crypto_handshake.cc $
+    ../../net/quic/crypto/crypto_handshake.h $
+    ../../net/quic/crypto/crypto_handshake_message.cc $
+    ../../net/quic/crypto/crypto_handshake_message.h $
+    ../../net/quic/crypto/crypto_protocol.h $
+    ../../net/quic/crypto/crypto_secret_boxer.cc $
+    ../../net/quic/crypto/crypto_secret_boxer.h $
+    ../../net/quic/crypto/crypto_server_config_protobuf.cc $
+    ../../net/quic/crypto/crypto_server_config_protobuf.h $
+    ../../net/quic/crypto/crypto_utils.cc $
+    ../../net/quic/crypto/crypto_utils.h $
+    ../../net/quic/crypto/curve25519_key_exchange.cc $
+    ../../net/quic/crypto/curve25519_key_exchange.h $
+    ../../net/quic/crypto/ephemeral_key_source.h $
+    ../../net/quic/crypto/key_exchange.h $
+    ../../net/quic/crypto/local_strike_register_client.cc $
+    ../../net/quic/crypto/local_strike_register_client.h $
+    ../../net/quic/crypto/null_decrypter.cc $
+    ../../net/quic/crypto/null_decrypter.h $
+    ../../net/quic/crypto/null_encrypter.cc $
+    ../../net/quic/crypto/null_encrypter.h $
+    ../../net/quic/crypto/p256_key_exchange.h $
+    ../../net/quic/crypto/p256_key_exchange_openssl.cc $
+    ../../net/quic/crypto/proof_source.h $
+    ../../net/quic/crypto/proof_verifier.h $
+    ../../net/quic/crypto/proof_verifier_chromium.cc $
+    ../../net/quic/crypto/proof_verifier_chromium.h $
+    ../../net/quic/crypto/properties_based_quic_server_info.cc $
+    ../../net/quic/crypto/properties_based_quic_server_info.h $
+    ../../net/quic/crypto/quic_crypto_client_config.h $
+    ../../net/quic/crypto/quic_decrypter.cc $
+    ../../net/quic/crypto/quic_decrypter.h $
+    ../../net/quic/crypto/quic_encrypter.cc $
+    ../../net/quic/crypto/quic_encrypter.h $
+    ../../net/quic/crypto/quic_random.cc $
+    ../../net/quic/crypto/quic_random.h $
+    ../../net/quic/crypto/quic_server_info.cc $
+    ../../net/quic/crypto/quic_server_info.h $
+    ../../net/quic/crypto/scoped_evp_aead_ctx.cc $
+    ../../net/quic/crypto/scoped_evp_aead_ctx.h $
+    ../../net/quic/crypto/strike_register.cc $
+    ../../net/quic/crypto/strike_register.h $
+    ../../net/quic/crypto/strike_register_client.h $
+    ../../net/quic/interval.h ../../net/quic/interval_set.h $
+    ../../net/quic/iovector.cc ../../net/quic/iovector.h $
+    ../../net/quic/p2p/quic_p2p_crypto_config.cc $
+    ../../net/quic/p2p/quic_p2p_crypto_config.h $
+    ../../net/quic/p2p/quic_p2p_crypto_stream.cc $
+    ../../net/quic/p2p/quic_p2p_crypto_stream.h $
+    ../../net/quic/p2p/quic_p2p_session.cc $
+    ../../net/quic/p2p/quic_p2p_session.h $
+    ../../net/quic/p2p/quic_p2p_stream.cc $
+    ../../net/quic/p2p/quic_p2p_stream.h ../../net/quic/port_suggester.cc $
+    ../../net/quic/port_suggester.h $
+    ../../net/quic/quic_ack_listener_interface.h $
+    ../../net/quic/quic_address_mismatch.cc $
+    ../../net/quic/quic_address_mismatch.h ../../net/quic/quic_alarm.cc $
+    ../../net/quic/quic_alarm.h ../../net/quic/quic_bandwidth.cc $
+    ../../net/quic/quic_bandwidth.h $
+    ../../net/quic/quic_blocked_writer_interface.h $
+    ../../net/quic/quic_client_session_base.h ../../net/quic/quic_clock.cc $
+    ../../net/quic/quic_clock.h ../../net/quic/quic_config.cc $
+    ../../net/quic/quic_config.h ../../net/quic/quic_connection.cc $
+    ../../net/quic/quic_connection.h $
+    ../../net/quic/quic_connection_helper.cc $
+    ../../net/quic/quic_connection_helper.h $
+    ../../net/quic/quic_connection_logger.cc $
+    ../../net/quic/quic_connection_logger.h $
+    ../../net/quic/quic_connection_stats.cc $
+    ../../net/quic/quic_connection_stats.h $
+    ../../net/quic/quic_crypto_client_stream.h $
+    ../../net/quic/quic_crypto_stream.cc $
+    ../../net/quic/quic_crypto_stream.h ../../net/quic/quic_data_reader.cc $
+    ../../net/quic/quic_data_reader.h ../../net/quic/quic_data_writer.cc $
+    ../../net/quic/quic_data_writer.h $
+    ../../net/quic/quic_default_packet_writer.cc $
+    ../../net/quic/quic_default_packet_writer.h $
+    ../../net/quic/quic_fec_group.cc ../../net/quic/quic_fec_group.h $
+    ../../net/quic/quic_fec_group_interface.cc $
+    ../../net/quic/quic_fec_group_interface.h ../../net/quic/quic_flags.cc $
+    ../../net/quic/quic_flags.h ../../net/quic/quic_flow_controller.cc $
+    ../../net/quic/quic_flow_controller.h ../../net/quic/quic_frame_list.cc $
+    ../../net/quic/quic_frame_list.h ../../net/quic/quic_framer.cc $
+    ../../net/quic/quic_framer.h ../../net/quic/quic_headers_stream.h $
+    ../../net/quic/quic_multipath_transmissions_map.cc $
+    ../../net/quic/quic_multipath_transmissions_map.h $
+    ../../net/quic/quic_packet_creator.cc $
+    ../../net/quic/quic_packet_creator.h $
+    ../../net/quic/quic_packet_generator.cc $
+    ../../net/quic/quic_packet_generator.h $
+    ../../net/quic/quic_packet_reader.cc $
+    ../../net/quic/quic_packet_reader.h ../../net/quic/quic_packet_writer.h $
+    ../../net/quic/quic_protocol.cc ../../net/quic/quic_protocol.h $
+    ../../net/quic/quic_received_packet_manager.cc $
+    ../../net/quic/quic_received_packet_manager.h $
+    ../../net/quic/quic_sent_entropy_manager.cc $
+    ../../net/quic/quic_sent_entropy_manager.h $
+    ../../net/quic/quic_sent_packet_manager.cc $
+    ../../net/quic/quic_sent_packet_manager.h $
+    ../../net/quic/quic_server_id.cc ../../net/quic/quic_server_id.h $
+    ../../net/quic/quic_session.cc ../../net/quic/quic_session.h $
+    ../../net/quic/quic_socket_address_coder.cc $
+    ../../net/quic/quic_socket_address_coder.h $
+    ../../net/quic/quic_spdy_session.h ../../net/quic/quic_spdy_stream.h $
+    ../../net/quic/quic_stream_sequencer.cc $
+    ../../net/quic/quic_stream_sequencer.h $
+    ../../net/quic/quic_stream_sequencer_buffer_interface.h $
+    ../../net/quic/quic_sustained_bandwidth_recorder.cc $
+    ../../net/quic/quic_sustained_bandwidth_recorder.h $
+    ../../net/quic/quic_time.cc ../../net/quic/quic_time.h $
+    ../../net/quic/quic_types.cc ../../net/quic/quic_types.h $
+    ../../net/quic/quic_unacked_packet_map.cc $
+    ../../net/quic/quic_unacked_packet_map.h ../../net/quic/quic_utils.cc $
+    ../../net/quic/quic_utils.h ../../net/quic/quic_utils_chromium.h $
+    ../../net/quic/quic_write_blocked_list.cc $
+    ../../net/quic/quic_write_blocked_list.h $
+    ../../net/quic/reliable_quic_stream.cc $
+    ../../net/quic/reliable_quic_stream.h $
+    ../../net/quic/stream_sequencer_buffer.cc $
+    ../../net/quic/stream_sequencer_buffer.h $
+    ../../net/socket/client_socket_handle.cc $
+    ../../net/socket/client_socket_handle.h $
+    ../../net/socket/client_socket_pool.h $
+    ../../net/socket/connection_attempts.h ../../net/socket/next_proto.cc $
+    ../../net/socket/next_proto.h ../../net/socket/socket.h $
+    ../../net/socket/ssl_client_socket.cc $
+    ../../net/socket/ssl_client_socket.h $
+    ../../net/socket/ssl_client_socket_openssl.cc $
+    ../../net/socket/ssl_client_socket_openssl.h $
+    ../../net/socket/ssl_socket.h ../../net/socket/stream_socket.h $
+    ../../net/spdy/hpack/hpack_constants.h $
+    ../../net/spdy/hpack/hpack_decoder.h $
+    ../../net/spdy/hpack/hpack_encoder.h ../../net/spdy/hpack/hpack_entry.h $
+    ../../net/spdy/hpack/hpack_header_table.h $
+    ../../net/spdy/hpack/hpack_huffman_table.h $
+    ../../net/spdy/hpack/hpack_input_stream.h $
+    ../../net/spdy/hpack/hpack_output_stream.h $
+    ../../net/spdy/spdy_alt_svc_wire_format.h $
+    ../../net/spdy/spdy_bitmasks.h ../../net/spdy/spdy_framer.h $
+    ../../net/spdy/spdy_header_block.h $
+    ../../net/spdy/spdy_headers_handler_interface.h $
+    ../../net/spdy/spdy_protocol.h ../../net/spdy/write_blocked_list.h $
+    ../../net/ssl/channel_id_service.cc ../../net/ssl/channel_id_service.h $
+    ../../net/ssl/channel_id_store.cc ../../net/ssl/channel_id_store.h $
+    ../../net/ssl/client_key_store.cc ../../net/ssl/client_key_store.h $
+    ../../net/ssl/default_channel_id_store.cc $
+    ../../net/ssl/default_channel_id_store.h $
+    ../../net/ssl/openssl_client_key_store.cc $
+    ../../net/ssl/openssl_client_key_store.h $
+    ../../net/ssl/openssl_ssl_util.cc ../../net/ssl/openssl_ssl_util.h $
+    ../../net/ssl/scoped_openssl_types.h $
+    ../../net/ssl/signed_certificate_timestamp_and_status.cc $
+    ../../net/ssl/signed_certificate_timestamp_and_status.h $
+    ../../net/ssl/ssl_cert_request_info.cc $
+    ../../net/ssl/ssl_cert_request_info.h $
+    ../../net/ssl/ssl_cipher_suite_names.cc $
+    ../../net/ssl/ssl_cipher_suite_names.h $
+    ../../net/ssl/ssl_client_auth_cache.cc $
+    ../../net/ssl/ssl_client_auth_cache.h $
+    ../../net/ssl/ssl_client_cert_type.h $
+    ../../net/ssl/ssl_client_session_cache_openssl.cc $
+    ../../net/ssl/ssl_client_session_cache_openssl.h $
+    ../../net/ssl/ssl_config.cc ../../net/ssl/ssl_config.h $
+    ../../net/ssl/ssl_config_service.cc ../../net/ssl/ssl_config_service.h $
+    ../../net/ssl/ssl_config_service_defaults.h $
+    ../../net/ssl/ssl_connection_status_flags.h $
+    ../../net/ssl/ssl_failure_state.h ../../net/ssl/ssl_info.cc $
+    ../../net/ssl/ssl_info.h ../../net/ssl/ssl_key_logger.h $
+    ../../net/ssl/ssl_private_key.h ../../net/ssl/ssl_server_config.cc $
+    ../../net/ssl/ssl_server_config.h $
+    ../../net/udp/datagram_client_socket.h ../../net/udp/datagram_socket.h $
+    ../../out/gypfiles/net/pnacl_newlib.net_nacl.source_list.gypcmd $
+    ../../native_client/toolchain/linux_x86/pnacl_newlib/pnacl_newlib.json $
+    || obj/net/net_nacl.actions_depends.stamp
+
+defines = -DV8_DEPRECATION_WARNINGS -DCLD_VERSION=2 -D_FILE_OFFSET_BITS=64 $
+    -DCHROMIUM_BUILD -DCR_CLANG_REVISION=255169-1 $
+    -DUI_COMPOSITOR_IMAGE_TRANSPORT -DUSE_AURA=1 -DUSE_ASH=1 -DUSE_PANGO=1 $
+    -DUSE_CAIRO=1 -DUSE_DEFAULT_RENDER_THEME=1 -DUSE_LIBJPEG_TURBO=1 $
+    -DUSE_X11=1 -DUSE_CLIPBOARD_AURAX11=1 -DENABLE_ONE_CLICK_SIGNIN $
+    -DENABLE_WEBRTC=1 -DENABLE_MEDIA_ROUTER=1 -DENABLE_PEPPER_CDMS $
+    -DENABLE_CONFIGURATION_POLICY -DENABLE_NOTIFICATIONS -DENABLE_HIDPI=1 $
+    -DENABLE_TOPCHROME_MD=1 -DUSE_UDEV -DDONT_EMBED_BUILD_METADATA $
+    -DFIELDTRIAL_TESTING_ENABLED -DENABLE_TASK_MANAGER=1 $
+    -DENABLE_EXTENSIONS=1 -DENABLE_PDF=1 -DENABLE_PLUGINS=1 $
+    -DENABLE_SESSION_SERVICE=1 -DENABLE_THEMES=1 -DENABLE_AUTOFILL_DIALOG=1 $
+    -DENABLE_BACKGROUND=1 -DENABLE_PRINTING=1 -DENABLE_BASIC_PRINTING=1 $
+    -DENABLE_PRINT_PREVIEW=1 -DENABLE_SPELLCHECK=1 $
+    -DENABLE_CAPTIVE_PORTAL_DETECTION=1 -DENABLE_APP_LIST=1 $
+    -DENABLE_SETTINGS_APP=1 -DENABLE_SUPERVISED_USERS=1 -DENABLE_MDNS=1 $
+    -DENABLE_SERVICE_DISCOVERY=1 -DV8_USE_EXTERNAL_STARTUP_DATA $
+    -DFULL_SAFE_BROWSING -DSAFE_BROWSING_CSD -DSAFE_BROWSING_DB_LOCAL $
+    -DNET_IMPLEMENTATION -DPROTOBUF_USE_DLLS -DGOOGLE_PROTOBUF_NO_RTTI $
+    -DGOOGLE_PROTOBUF_NO_STATIC_INITIALIZER -DU_USING_ICU_NAMESPACE=0 $
+    -DU_ENABLE_DYLOAD=0 -DU_STATIC_IMPLEMENTATION -DUSE_LIBPCI=1 $
+    -DUSE_OPENSSL=1 -DUSE_OPENSSL_CERTS=1 -D__STDC_CONSTANT_MACROS $
+    -D__STDC_FORMAT_MACROS -DNDEBUG -DNVALGRIND $
+    -DDYNAMIC_ANNOTATIONS_ENABLED=0
+includes = -Igen -I../../native_client_sdk/src/libraries $
+    -I../../native_client_sdk/src/libraries/nacl_io/include $
+    -I../../native_client_sdk/src/libraries/third_party/newlib-extras $
+    -I../../third_party/boringssl/src/include -I../../third_party/protobuf $
+    -I../../third_party/protobuf/src -I../../third_party/icu/source/i18n $
+    -I../../third_party/icu/source/common -Igen/protoc_out -I../..
+cflags = -fstack-protector --param=ssp-buffer-size=4 -Werror -pthread $
+    -fno-strict-aliasing -Wall -Wno-unused-parameter $
+    -Wno-missing-field-initializers -fvisibility=hidden -pipe -fPIC $
+    -Wno-reserved-user-defined-literal -Xclang -load -Xclang $
+    /b/build/slave/publish_tarball/build/src/third_party/llvm-build/Release+Asserts/lib/libFindBadConstructs.so $
+    -Xclang -add-plugin -Xclang find-bad-constructs -Xclang $
+    -plugin-arg-find-bad-constructs -Xclang check-templates $
+    -fcolor-diagnostics $
+    -B/b/build/slave/publish_tarball/build/src/third_party/binutils/Linux_x64/Release/bin $
+    -Wheader-hygiene -Wno-char-subscripts $
+    -Wno-unneeded-internal-declaration -Wno-covered-switch-default $
+    -Wstring-conversion -Wno-c++11-narrowing -Wno-deprecated-register $
+    -Wno-inconsistent-missing-override -Wno-shift-negative-value $
+    -Wno-bitfield-width -m64 -march=x86-64 $
+    --sysroot=/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot $
+    -O2 -fno-ident -fdata-sections -ffunction-sections -funwind-tables
+cflags_c = 
+cflags_cc = -fno-exceptions -fno-rtti -fno-threadsafe-statics $
+    -fvisibility-inlines-hidden -Wsign-compare -std=gnu++11
+arflags = 
+
+build obj/net/base/net_nacl.address_family.o: cxx $
+    ../../net/base/address_family.cc || gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/base/net_nacl.address_list.o: cxx $
+    ../../net/base/address_list.cc || gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/base/net_nacl.auth.o: cxx ../../net/base/auth.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/base/net_nacl.connection_type_histograms.o: cxx $
+    ../../net/base/connection_type_histograms.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/base/net_nacl.escape.o: cxx ../../net/base/escape.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/base/net_nacl.hash_value.o: cxx ../../net/base/hash_value.cc $
+    || gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/base/net_nacl.host_port_pair.o: cxx $
+    ../../net/base/host_port_pair.cc || gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/base/net_nacl.io_buffer.o: cxx ../../net/base/io_buffer.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/base/net_nacl.ip_address_number.o: cxx $
+    ../../net/base/ip_address_number.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/base/net_nacl.ip_address.o: cxx ../../net/base/ip_address.cc $
+    || gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/base/net_nacl.ip_endpoint.o: cxx $
+    ../../net/base/ip_endpoint.cc || gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/base/net_nacl.load_timing_info.o: cxx $
+    ../../net/base/load_timing_info.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/base/net_nacl.lookup_string_in_fixed_set.o: cxx $
+    ../../net/base/lookup_string_in_fixed_set.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/base/net_nacl.net_errors.o: cxx ../../net/base/net_errors.cc $
+    || gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/base/net_nacl.net_errors_posix.o: cxx $
+    ../../net/base/net_errors_posix.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/base/net_nacl.net_module.o: cxx ../../net/base/net_module.cc $
+    || gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/base/net_nacl.net_util.o: cxx ../../net/base/net_util.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/base/net_nacl.network_interfaces.o: cxx $
+    ../../net/base/network_interfaces.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/base/net_nacl.network_interfaces_posix.o: cxx $
+    ../../net/base/network_interfaces_posix.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/base/net_nacl.openssl_private_key_store_memory.o: cxx $
+    ../../net/base/openssl_private_key_store_memory.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/base/net_nacl.port_util.o: cxx ../../net/base/port_util.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build $
+    obj/net/base/registry_controlled_domains/net_nacl.registry_controlled_domain.o: $
+    cxx $
+    ../../net/base/registry_controlled_domains/registry_controlled_domain.cc $
+    || gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/base/net_nacl.socket_performance_watcher.o: cxx $
+    ../../net/base/socket_performance_watcher.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/base/net_nacl.url_util.o: cxx ../../net/base/url_util.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/base/net_nacl.zap.o: cxx ../../net/base/zap.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/cert/net_nacl.asn1_util.o: cxx ../../net/cert/asn1_util.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/cert/net_nacl.cert_database.o: cxx $
+    ../../net/cert/cert_database.cc || gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/cert/net_nacl.cert_database_openssl.o: cxx $
+    ../../net/cert/cert_database_openssl.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/cert/net_nacl.cert_policy_enforcer.o: cxx $
+    ../../net/cert/cert_policy_enforcer.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/cert/net_nacl.cert_status_flags.o: cxx $
+    ../../net/cert/cert_status_flags.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/cert/net_nacl.cert_verifier.o: cxx $
+    ../../net/cert/cert_verifier.cc || gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/cert/net_nacl.cert_verify_result.o: cxx $
+    ../../net/cert/cert_verify_result.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/cert/net_nacl.crl_set.o: cxx ../../net/cert/crl_set.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/cert/net_nacl.ct_known_logs.o: cxx $
+    ../../net/cert/ct_known_logs.cc || gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/cert/net_nacl.ct_verify_result.o: cxx $
+    ../../net/cert/ct_verify_result.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/cert/internal/net_nacl.certificate_policies.o: cxx $
+    ../../net/cert/internal/certificate_policies.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/cert/internal/net_nacl.extended_key_usage.o: cxx $
+    ../../net/cert/internal/extended_key_usage.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/cert/internal/net_nacl.name_constraints.o: cxx $
+    ../../net/cert/internal/name_constraints.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/cert/internal/net_nacl.parse_certificate.o: cxx $
+    ../../net/cert/internal/parse_certificate.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/cert/internal/net_nacl.signature_algorithm.o: cxx $
+    ../../net/cert/internal/signature_algorithm.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/cert/internal/net_nacl.signature_policy.o: cxx $
+    ../../net/cert/internal/signature_policy.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/cert/internal/net_nacl.verify_name_match.o: cxx $
+    ../../net/cert/internal/verify_name_match.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/cert/internal/net_nacl.verify_signed_data.o: cxx $
+    ../../net/cert/internal/verify_signed_data.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/cert/net_nacl.pem_tokenizer.o: cxx $
+    ../../net/cert/pem_tokenizer.cc || gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/cert/net_nacl.signed_certificate_timestamp.o: cxx $
+    ../../net/cert/signed_certificate_timestamp.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/cert/net_nacl.x509_cert_types.o: cxx $
+    ../../net/cert/x509_cert_types.cc || gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/cert/net_nacl.x509_certificate.o: cxx $
+    ../../net/cert/x509_certificate.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/cert/net_nacl.x509_certificate_net_log_param.o: cxx $
+    ../../net/cert/x509_certificate_net_log_param.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/cert/net_nacl.x509_certificate_openssl.o: cxx $
+    ../../net/cert/x509_certificate_openssl.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/cert/net_nacl.x509_util.o: cxx ../../net/cert/x509_util.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/cert/net_nacl.x509_util_openssl.o: cxx $
+    ../../net/cert/x509_util_openssl.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/der/net_nacl.input.o: cxx ../../net/der/input.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/der/net_nacl.parse_values.o: cxx $
+    ../../net/der/parse_values.cc || gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/der/net_nacl.parser.o: cxx ../../net/der/parser.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/der/net_nacl.tag.o: cxx ../../net/der/tag.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/dns/net_nacl.dns_util.o: cxx ../../net/dns/dns_util.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/http/net_nacl.http_auth_scheme.o: cxx $
+    ../../net/http/http_auth_scheme.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/http/net_nacl.http_auth_challenge_tokenizer.o: cxx $
+    ../../net/http/http_auth_challenge_tokenizer.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/http/net_nacl.http_byte_range.o: cxx $
+    ../../net/http/http_byte_range.cc || gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/http/net_nacl.http_log_util.o: cxx $
+    ../../net/http/http_log_util.cc || gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/http/net_nacl.http_request_headers.o: cxx $
+    ../../net/http/http_request_headers.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/http/net_nacl.http_response_headers.o: cxx $
+    ../../net/http/http_response_headers.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/http/net_nacl.http_response_info.o: cxx $
+    ../../net/http/http_response_info.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/http/net_nacl.http_security_headers.o: cxx $
+    ../../net/http/http_security_headers.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/http/net_nacl.http_status_line_validator.o: cxx $
+    ../../net/http/http_status_line_validator.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/http/net_nacl.http_util.o: cxx ../../net/http/http_util.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/http/net_nacl.http_util_icu.o: cxx $
+    ../../net/http/http_util_icu.cc || gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/http/net_nacl.http_vary_data.o: cxx $
+    ../../net/http/http_vary_data.cc || gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/http/net_nacl.transport_security_state.o: cxx $
+    ../../net/http/transport_security_state.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/log/net_nacl.net_log.o: cxx ../../net/log/net_log.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/log/net_nacl.net_log_capture_mode.o: cxx $
+    ../../net/log/net_log_capture_mode.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/socket/net_nacl.client_socket_handle.o: cxx $
+    ../../net/socket/client_socket_handle.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/socket/net_nacl.next_proto.o: cxx $
+    ../../net/socket/next_proto.cc || gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/socket/net_nacl.ssl_client_socket.o: cxx $
+    ../../net/socket/ssl_client_socket.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/socket/net_nacl.ssl_client_socket_openssl.o: cxx $
+    ../../net/socket/ssl_client_socket_openssl.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/ssl/net_nacl.channel_id_service.o: cxx $
+    ../../net/ssl/channel_id_service.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/ssl/net_nacl.channel_id_store.o: cxx $
+    ../../net/ssl/channel_id_store.cc || gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/ssl/net_nacl.client_key_store.o: cxx $
+    ../../net/ssl/client_key_store.cc || gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/ssl/net_nacl.default_channel_id_store.o: cxx $
+    ../../net/ssl/default_channel_id_store.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/ssl/net_nacl.openssl_client_key_store.o: cxx $
+    ../../net/ssl/openssl_client_key_store.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/ssl/net_nacl.openssl_ssl_util.o: cxx $
+    ../../net/ssl/openssl_ssl_util.cc || gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/ssl/net_nacl.signed_certificate_timestamp_and_status.o: cxx $
+    ../../net/ssl/signed_certificate_timestamp_and_status.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/ssl/net_nacl.ssl_cert_request_info.o: cxx $
+    ../../net/ssl/ssl_cert_request_info.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/ssl/net_nacl.ssl_cipher_suite_names.o: cxx $
+    ../../net/ssl/ssl_cipher_suite_names.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/ssl/net_nacl.ssl_client_auth_cache.o: cxx $
+    ../../net/ssl/ssl_client_auth_cache.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/ssl/net_nacl.ssl_client_session_cache_openssl.o: cxx $
+    ../../net/ssl/ssl_client_session_cache_openssl.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/ssl/net_nacl.ssl_config.o: cxx ../../net/ssl/ssl_config.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/ssl/net_nacl.ssl_config_service.o: cxx $
+    ../../net/ssl/ssl_config_service.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/ssl/net_nacl.ssl_info.o: cxx ../../net/ssl/ssl_info.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/ssl/net_nacl.ssl_server_config.o: cxx $
+    ../../net/ssl/ssl_server_config.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/quic/congestion_control/net_nacl.cubic.o: cxx $
+    ../../net/quic/congestion_control/cubic.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/quic/congestion_control/net_nacl.cubic_bytes.o: cxx $
+    ../../net/quic/congestion_control/cubic_bytes.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/quic/congestion_control/net_nacl.general_loss_algorithm.o: $
+    cxx ../../net/quic/congestion_control/general_loss_algorithm.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/quic/congestion_control/net_nacl.hybrid_slow_start.o: cxx $
+    ../../net/quic/congestion_control/hybrid_slow_start.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/quic/congestion_control/net_nacl.loss_detection_interface.o: $
+    cxx ../../net/quic/congestion_control/loss_detection_interface.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/quic/congestion_control/net_nacl.pacing_sender.o: cxx $
+    ../../net/quic/congestion_control/pacing_sender.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/quic/congestion_control/net_nacl.prr_sender.o: cxx $
+    ../../net/quic/congestion_control/prr_sender.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/quic/congestion_control/net_nacl.rtt_stats.o: cxx $
+    ../../net/quic/congestion_control/rtt_stats.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/quic/congestion_control/net_nacl.send_algorithm_interface.o: $
+    cxx ../../net/quic/congestion_control/send_algorithm_interface.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/quic/congestion_control/net_nacl.tcp_cubic_bytes_sender.o: $
+    cxx ../../net/quic/congestion_control/tcp_cubic_bytes_sender.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/quic/congestion_control/net_nacl.tcp_cubic_sender.o: cxx $
+    ../../net/quic/congestion_control/tcp_cubic_sender.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/quic/congestion_control/net_nacl.tcp_loss_algorithm.o: cxx $
+    ../../net/quic/congestion_control/tcp_loss_algorithm.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/quic/congestion_control/net_nacl.time_loss_algorithm.o: cxx $
+    ../../net/quic/congestion_control/time_loss_algorithm.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/quic/crypto/net_nacl.aead_base_decrypter_openssl.o: cxx $
+    ../../net/quic/crypto/aead_base_decrypter_openssl.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/quic/crypto/net_nacl.aead_base_encrypter_openssl.o: cxx $
+    ../../net/quic/crypto/aead_base_encrypter_openssl.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/quic/crypto/net_nacl.aes_128_gcm_12_decrypter_openssl.o: cxx $
+    ../../net/quic/crypto/aes_128_gcm_12_decrypter_openssl.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/quic/crypto/net_nacl.aes_128_gcm_12_encrypter_openssl.o: cxx $
+    ../../net/quic/crypto/aes_128_gcm_12_encrypter_openssl.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/quic/crypto/net_nacl.chacha20_poly1305_decrypter_openssl.o: $
+    cxx ../../net/quic/crypto/chacha20_poly1305_decrypter_openssl.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/quic/crypto/net_nacl.chacha20_poly1305_encrypter_openssl.o: $
+    cxx ../../net/quic/crypto/chacha20_poly1305_encrypter_openssl.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/quic/crypto/net_nacl.channel_id.o: cxx $
+    ../../net/quic/crypto/channel_id.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/quic/crypto/net_nacl.channel_id_chromium.o: cxx $
+    ../../net/quic/crypto/channel_id_chromium.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/quic/crypto/net_nacl.channel_id_openssl.o: cxx $
+    ../../net/quic/crypto/channel_id_openssl.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/quic/crypto/net_nacl.common_cert_set.o: cxx $
+    ../../net/quic/crypto/common_cert_set.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/quic/crypto/net_nacl.crypto_framer.o: cxx $
+    ../../net/quic/crypto/crypto_framer.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/quic/crypto/net_nacl.crypto_handshake.o: cxx $
+    ../../net/quic/crypto/crypto_handshake.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/quic/crypto/net_nacl.crypto_handshake_message.o: cxx $
+    ../../net/quic/crypto/crypto_handshake_message.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/quic/crypto/net_nacl.crypto_secret_boxer.o: cxx $
+    ../../net/quic/crypto/crypto_secret_boxer.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/quic/crypto/net_nacl.crypto_server_config_protobuf.o: cxx $
+    ../../net/quic/crypto/crypto_server_config_protobuf.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/quic/crypto/net_nacl.crypto_utils.o: cxx $
+    ../../net/quic/crypto/crypto_utils.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/quic/crypto/net_nacl.curve25519_key_exchange.o: cxx $
+    ../../net/quic/crypto/curve25519_key_exchange.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/quic/crypto/net_nacl.local_strike_register_client.o: cxx $
+    ../../net/quic/crypto/local_strike_register_client.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/quic/crypto/net_nacl.null_decrypter.o: cxx $
+    ../../net/quic/crypto/null_decrypter.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/quic/crypto/net_nacl.null_encrypter.o: cxx $
+    ../../net/quic/crypto/null_encrypter.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/quic/crypto/net_nacl.p256_key_exchange_openssl.o: cxx $
+    ../../net/quic/crypto/p256_key_exchange_openssl.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/quic/crypto/net_nacl.proof_verifier_chromium.o: cxx $
+    ../../net/quic/crypto/proof_verifier_chromium.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/quic/crypto/net_nacl.properties_based_quic_server_info.o: cxx $
+    ../../net/quic/crypto/properties_based_quic_server_info.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/quic/crypto/net_nacl.quic_decrypter.o: cxx $
+    ../../net/quic/crypto/quic_decrypter.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/quic/crypto/net_nacl.quic_encrypter.o: cxx $
+    ../../net/quic/crypto/quic_encrypter.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/quic/crypto/net_nacl.quic_random.o: cxx $
+    ../../net/quic/crypto/quic_random.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/quic/crypto/net_nacl.quic_server_info.o: cxx $
+    ../../net/quic/crypto/quic_server_info.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/quic/crypto/net_nacl.scoped_evp_aead_ctx.o: cxx $
+    ../../net/quic/crypto/scoped_evp_aead_ctx.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/quic/crypto/net_nacl.strike_register.o: cxx $
+    ../../net/quic/crypto/strike_register.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/quic/net_nacl.iovector.o: cxx ../../net/quic/iovector.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/quic/p2p/net_nacl.quic_p2p_crypto_config.o: cxx $
+    ../../net/quic/p2p/quic_p2p_crypto_config.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/quic/p2p/net_nacl.quic_p2p_crypto_stream.o: cxx $
+    ../../net/quic/p2p/quic_p2p_crypto_stream.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/quic/p2p/net_nacl.quic_p2p_session.o: cxx $
+    ../../net/quic/p2p/quic_p2p_session.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/quic/p2p/net_nacl.quic_p2p_stream.o: cxx $
+    ../../net/quic/p2p/quic_p2p_stream.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/quic/net_nacl.port_suggester.o: cxx $
+    ../../net/quic/port_suggester.cc || gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/quic/net_nacl.quic_address_mismatch.o: cxx $
+    ../../net/quic/quic_address_mismatch.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/quic/net_nacl.quic_alarm.o: cxx ../../net/quic/quic_alarm.cc $
+    || gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/quic/net_nacl.quic_bandwidth.o: cxx $
+    ../../net/quic/quic_bandwidth.cc || gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/quic/net_nacl.quic_clock.o: cxx ../../net/quic/quic_clock.cc $
+    || gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/quic/net_nacl.quic_config.o: cxx $
+    ../../net/quic/quic_config.cc || gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/quic/net_nacl.quic_connection.o: cxx $
+    ../../net/quic/quic_connection.cc || gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/quic/net_nacl.quic_connection_helper.o: cxx $
+    ../../net/quic/quic_connection_helper.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/quic/net_nacl.quic_connection_logger.o: cxx $
+    ../../net/quic/quic_connection_logger.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/quic/net_nacl.quic_connection_stats.o: cxx $
+    ../../net/quic/quic_connection_stats.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/quic/net_nacl.quic_crypto_stream.o: cxx $
+    ../../net/quic/quic_crypto_stream.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/quic/net_nacl.quic_data_reader.o: cxx $
+    ../../net/quic/quic_data_reader.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/quic/net_nacl.quic_data_writer.o: cxx $
+    ../../net/quic/quic_data_writer.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/quic/net_nacl.quic_default_packet_writer.o: cxx $
+    ../../net/quic/quic_default_packet_writer.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/quic/net_nacl.quic_fec_group.o: cxx $
+    ../../net/quic/quic_fec_group.cc || gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/quic/net_nacl.quic_fec_group_interface.o: cxx $
+    ../../net/quic/quic_fec_group_interface.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/quic/net_nacl.quic_flags.o: cxx ../../net/quic/quic_flags.cc $
+    || gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/quic/net_nacl.quic_flow_controller.o: cxx $
+    ../../net/quic/quic_flow_controller.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/quic/net_nacl.quic_frame_list.o: cxx $
+    ../../net/quic/quic_frame_list.cc || gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/quic/net_nacl.quic_framer.o: cxx $
+    ../../net/quic/quic_framer.cc || gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/quic/net_nacl.quic_multipath_transmissions_map.o: cxx $
+    ../../net/quic/quic_multipath_transmissions_map.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/quic/net_nacl.quic_packet_creator.o: cxx $
+    ../../net/quic/quic_packet_creator.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/quic/net_nacl.quic_packet_generator.o: cxx $
+    ../../net/quic/quic_packet_generator.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/quic/net_nacl.quic_packet_reader.o: cxx $
+    ../../net/quic/quic_packet_reader.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/quic/net_nacl.quic_protocol.o: cxx $
+    ../../net/quic/quic_protocol.cc || gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/quic/net_nacl.quic_received_packet_manager.o: cxx $
+    ../../net/quic/quic_received_packet_manager.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/quic/net_nacl.quic_sent_entropy_manager.o: cxx $
+    ../../net/quic/quic_sent_entropy_manager.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/quic/net_nacl.quic_sent_packet_manager.o: cxx $
+    ../../net/quic/quic_sent_packet_manager.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/quic/net_nacl.quic_server_id.o: cxx $
+    ../../net/quic/quic_server_id.cc || gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/quic/net_nacl.quic_session.o: cxx $
+    ../../net/quic/quic_session.cc || gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/quic/net_nacl.quic_socket_address_coder.o: cxx $
+    ../../net/quic/quic_socket_address_coder.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/quic/net_nacl.quic_stream_sequencer.o: cxx $
+    ../../net/quic/quic_stream_sequencer.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/quic/net_nacl.quic_sustained_bandwidth_recorder.o: cxx $
+    ../../net/quic/quic_sustained_bandwidth_recorder.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/quic/net_nacl.quic_time.o: cxx ../../net/quic/quic_time.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/quic/net_nacl.quic_types.o: cxx ../../net/quic/quic_types.cc $
+    || gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/quic/net_nacl.quic_unacked_packet_map.o: cxx $
+    ../../net/quic/quic_unacked_packet_map.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/quic/net_nacl.quic_utils.o: cxx ../../net/quic/quic_utils.cc $
+    || gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/quic/net_nacl.quic_write_blocked_list.o: cxx $
+    ../../net/quic/quic_write_blocked_list.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/quic/net_nacl.reliable_quic_stream.o: cxx $
+    ../../net/quic/reliable_quic_stream.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+build obj/net/quic/net_nacl.stream_sequencer_buffer.o: cxx $
+    ../../net/quic/stream_sequencer_buffer.cc || $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a
+

@@ -1,0 +1,8 @@
+build obj/build/gyp_all.actions_depends.stamp: stamp $
+    obj/build/both_gn_and_gyp.actions_depends.stamp $
+    obj/build/gyp_remaining.actions_depends.stamp
+
+build obj/build/gyp_all.compile_depends.stamp: stamp $
+    obj/build/both_gn_and_gyp.compile_depends.stamp $
+    obj/build/gyp_remaining.compile_depends.stamp
+

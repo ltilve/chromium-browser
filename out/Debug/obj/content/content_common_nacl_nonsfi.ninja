@@ -1,0 +1,130 @@
+rule $
+    content_common_nacl_nonsfi_target_build_nonsfi_helper_x86_32_nlib_2b990a8af86b0b04dd50680210fe514e
+  command = cd ../../content; python ../native_client/build/build_nexe.py $
+      --root .. --product-dir ../out/Debug/xyz --config-name Debug -t $
+      ../native_client/toolchain/ --arch x86-32-nonsfi --build $
+      newlib_nlib_pnacl --name $
+      ../out/Debug/gen/tc_nonsfi_helper/lib32/libcontent_common_nacl_nonsfi.a $
+      --objdir $
+      ../out/Debug/obj/content/content_common_nacl_nonsfi.gen/nonsfi_helper-x86-32-nonsfi/content_common_nacl_nonsfi $
+      "--include-dirs=../out/Debug/gen/tc_newlib/include $
+      ../native_client/src/public/linux_syscalls .. \"../out/Debug/gen\"" $
+      "--compile_flags=--target=i686-unknown-nacl $
+      --pnacl-bias=x86-32-nonsfi --pnacl-allow-translate $
+      --pnacl-allow-native -arch x86-32-nonsfi -O2 -g -Wall $
+      -fdiagnostics-show-option -Werror  -Wno-unused-function $
+      -Wno-char-subscripts -Wno-c++11-extensions $
+      -Wno-unnamed-type-template-args -Wno-extra-semi $
+      -Wno-unused-private-field -Wno-char-subscripts -Wno-unused-function $
+      \"-std=gnu++11\" " --gomadir "" "--defines=\"__STDC_LIMIT_MACROS=1\" $
+      \"__STDC_FORMAT_MACROS=1\" \"_GNU_SOURCE=1\" $
+      \"_POSIX_C_SOURCE=199506\" \"_XOPEN_SOURCE=600\" $
+      \"DYNAMIC_ANNOTATIONS_ENABLED=1\" $
+      \"DYNAMIC_ANNOTATIONS_PREFIX=NACL_\" \"NACL_BUILD_ARCH=x86\" $
+      V8_DEPRECATION_WARNINGS \"CLD_VERSION=2\" \"_FILE_OFFSET_BITS=64\" $
+      CHROMIUM_BUILD \"CR_CLANG_REVISION=255169-1\" $
+      UI_COMPOSITOR_IMAGE_TRANSPORT \"USE_AURA=1\" \"USE_ASH=1\" $
+      \"USE_PANGO=1\" \"USE_CAIRO=1\" \"USE_DEFAULT_RENDER_THEME=1\" $
+      \"USE_LIBJPEG_TURBO=1\" \"USE_X11=1\" \"USE_CLIPBOARD_AURAX11=1\" $
+      ENABLE_ONE_CLICK_SIGNIN \"ENABLE_WEBRTC=1\" \"ENABLE_MEDIA_ROUTER=1\" $
+      ENABLE_PEPPER_CDMS ENABLE_CONFIGURATION_POLICY ENABLE_NOTIFICATIONS $
+      \"ENABLE_HIDPI=1\" \"ENABLE_TOPCHROME_MD=1\" USE_UDEV $
+      DONT_EMBED_BUILD_METADATA FIELDTRIAL_TESTING_ENABLED $
+      \"ENABLE_TASK_MANAGER=1\" \"ENABLE_EXTENSIONS=1\" \"ENABLE_PDF=1\" $
+      \"ENABLE_PLUGINS=1\" \"ENABLE_SESSION_SERVICE=1\" \"ENABLE_THEMES=1\" $
+      \"ENABLE_AUTOFILL_DIALOG=1\" \"ENABLE_BACKGROUND=1\" $
+      \"ENABLE_PRINTING=1\" \"ENABLE_BASIC_PRINTING=1\" $
+      \"ENABLE_PRINT_PREVIEW=1\" \"ENABLE_SPELLCHECK=1\" $
+      \"ENABLE_CAPTIVE_PORTAL_DETECTION=1\" \"ENABLE_APP_LIST=1\" $
+      \"ENABLE_SETTINGS_APP=1\" \"ENABLE_SUPERVISED_USERS=1\" $
+      \"ENABLE_MDNS=1\" \"ENABLE_SERVICE_DISCOVERY=1\" $
+      V8_USE_EXTERNAL_STARTUP_DATA FULL_SAFE_BROWSING SAFE_BROWSING_CSD $
+      SAFE_BROWSING_DB_LOCAL \"USE_SECCOMP_BPF=1\" \"USE_LIBPCI=1\" $
+      \"USE_OPENSSL=1\" \"USE_OPENSSL_CERTS=1\" __STDC_CONSTANT_MACROS $
+      __STDC_FORMAT_MACROS" $
+      "--link_flags=-B../out/Debug/gen/tc_nonsfi_helper/lib32  " $
+      "--source-list=../out/gypfiles/content/nonsfi_helper-x86-32-nonsfi.content_common_nacl_nonsfi.source_list.gypcmd"
+  description = ACTION content_common_nacl_nonsfi: build nonsfi_helper $
+      x86-32 nlib_2b990a8af86b0b04dd50680210fe514e
+  restat = 1
+
+build gen/tc_nonsfi_helper/lib32/libcontent_common_nacl_nonsfi.a: $
+    content_common_nacl_nonsfi_target_build_nonsfi_helper_x86_32_nlib_2b990a8af86b0b04dd50680210fe514e $
+    ../../native_client/build/build_nexe.py $
+    ../../native_client/build/build_nexe_tools.py ../../base/at_exit.h $
+    ../../base/atomic_ref_count.h ../../base/atomicops.h $
+    ../../base/atomicops_internals_atomicword_compat.h $
+    ../../base/atomicops_internals_portable.h $
+    ../../base/atomicops_internals_x86_msvc.h ../../base/base_export.h $
+    ../../base/basictypes.h ../../base/bind_helpers.h ../../base/callback.h $
+    ../../base/callback_forward.h ../../base/callback_internal.h $
+    ../../base/command_line.h ../../base/compiler_specific.h $
+    ../../base/containers/hash_tables.h ../../base/debug/alias.h $
+    ../../base/debug/debugger.h ../../base/file_descriptor_posix.h $
+    ../../base/files/file.h ../../base/files/file_path.h $
+    ../../base/files/file_tracing.h ../../base/files/file_util.h $
+    ../../base/files/memory_mapped_file.h ../../base/files/scoped_file.h $
+    ../../base/gtest_prod_util.h ../../base/location.h ../../base/logging.h $
+    ../../base/macros.h ../../base/memory/aligned_memory.h $
+    ../../base/memory/ref_counted.h ../../base/memory/scoped_ptr.h $
+    ../../base/memory/shared_memory.h $
+    ../../base/memory/shared_memory_handle.h ../../base/memory/singleton.h $
+    ../../base/memory/weak_ptr.h ../../base/move.h $
+    ../../base/numerics/safe_conversions.h $
+    ../../base/numerics/safe_conversions_impl.h $
+    ../../base/numerics/safe_math.h ../../base/numerics/safe_math_impl.h $
+    ../../base/posix/eintr_wrapper.h ../../base/posix/global_descriptors.h $
+    ../../base/posix/unix_domain_socket_linux.h $
+    ../../base/process/process.h ../../base/process/process_handle.h $
+    ../../base/scoped_generic.h ../../base/sequence_checker.h $
+    ../../base/sequence_checker_impl.h ../../base/sequenced_task_runner.h $
+    ../../base/sequenced_task_runner_helpers.h $
+    ../../base/single_thread_task_runner.h ../../base/strings/string16.h $
+    ../../base/strings/string_piece.h ../../base/synchronization/lock.h $
+    ../../base/synchronization/lock_impl.h ../../base/task_runner.h $
+    ../../base/template_util.h ../../base/threading/platform_thread.h $
+    ../../base/threading/sequenced_worker_pool.h $
+    ../../base/threading/thread_checker_impl.h $
+    ../../base/threading/thread_collision_warner.h $
+    ../../base/threading/thread_restrictions.h ../../base/time/time.h $
+    ../../base/tuple.h ../../base/win/scoped_handle.h $
+    ../../build/build_config.h ../../ipc/ipc_descriptors.h $
+    ../../sandbox/linux/bpf_dsl/bpf_dsl.h $
+    ../../sandbox/linux/bpf_dsl/bpf_dsl_forward.h $
+    ../../sandbox/linux/bpf_dsl/codegen.h $
+    ../../sandbox/linux/bpf_dsl/cons.h ../../sandbox/linux/bpf_dsl/policy.h $
+    ../../sandbox/linux/bpf_dsl/trap_registry.h $
+    ../../sandbox/linux/seccomp-bpf-helpers/baseline_policy.h $
+    ../../sandbox/linux/seccomp-bpf-helpers/sigsys_handlers.h $
+    ../../sandbox/linux/seccomp-bpf-helpers/syscall_parameters_restrictions.h $
+    ../../sandbox/linux/seccomp-bpf-helpers/syscall_sets.h $
+    ../../sandbox/linux/seccomp-bpf/sandbox_bpf.h $
+    ../../sandbox/linux/system_headers/arm64_linux_syscalls.h $
+    ../../sandbox/linux/system_headers/arm_linux_syscalls.h $
+    ../../sandbox/linux/system_headers/linux_syscalls.h $
+    ../../sandbox/linux/system_headers/mips64_linux_syscalls.h $
+    ../../sandbox/linux/system_headers/mips_linux_syscalls.h $
+    ../../sandbox/linux/system_headers/x86_32_linux_syscalls.h $
+    ../../sandbox/linux/system_headers/x86_64_linux_syscalls.h $
+    ../../sandbox/sandbox_export.h $
+    ../../testing/gtest/include/gtest/gtest_prod.h ../../ui/gl/gl_export.h $
+    ../../ui/gl/gl_switches.h ../../content/common/content_export.h $
+    ../../content/common/sandbox_linux/bpf_cros_arm_gpu_policy_linux.h $
+    ../../content/common/sandbox_linux/bpf_gpu_policy_linux.h $
+    ../../content/common/sandbox_linux/bpf_ppapi_policy_linux.h $
+    ../../content/common/sandbox_linux/bpf_renderer_policy_linux.h $
+    ../../content/common/sandbox_linux/bpf_utility_policy_linux.h $
+    ../../content/common/sandbox_linux/sandbox_bpf_base_policy_linux.h $
+    ../../content/common/sandbox_linux/sandbox_init_linux.cc $
+    ../../content/common/sandbox_linux/sandbox_seccomp_bpf_linux.cc $
+    ../../content/common/sandbox_linux/sandbox_seccomp_bpf_linux.h $
+    ../../content/common/send_zygote_child_ping_linux.cc $
+    ../../content/common/zygote_commands_linux.h $
+    ../../content/public/common/content_switches.cc $
+    ../../content/public/common/content_switches.h $
+    ../../content/public/common/sandbox_init.h $
+    ../../content/public/common/send_zygote_child_ping_linux.h $
+    ../../out/gypfiles/content/nonsfi_helper-x86-32-nonsfi.content_common_nacl_nonsfi.source_list.gypcmd $
+    ../../native_client/toolchain/linux_x86/pnacl_newlib/pnacl_newlib.json $
+    || gen/tc_nonsfi_helper/lib32/libbase_nacl_nonsfi.a
+

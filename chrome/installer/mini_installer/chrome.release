@@ -24,6 +24,7 @@ chrome_child.dll: %(VersionDir)s\
 chrome_elf.dll: %(VersionDir)s\
 chrome_watcher.dll: %(VersionDir)s\
 d3dcompiler_47.dll: %(VersionDir)s\
+ffmpeg.dll: %(VersionDir)s\
 kasko.dll: %(VersionDir)s\
 icudt.dll: %(VersionDir)s\
 icudtl.dat: %(VersionDir)s\
@@ -71,4 +72,3 @@ PepperFlash\pepflashplayer.dll: %(VersionDir)s\PepperFlash\
 # packaged in this directory.
 Logo.png: %(VersionDir)s\VisualElements\
 SmallLogo.png: %(VersionDir)s\VisualElements\
-splash-620x300.png: %(VersionDir)s\VisualElements\

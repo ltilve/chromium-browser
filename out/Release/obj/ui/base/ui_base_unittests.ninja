@@ -1,0 +1,324 @@
+build obj/ui/base/ui_base_unittests.actions_depends.stamp: stamp $
+    obj/base/libbase.a obj/base/libtest_support_base.a obj/net/libnet.a $
+    obj/skia/skia.actions_depends.stamp obj/testing/libgmock.a $
+    obj/testing/libgtest.a obj/third_party/icu/libicui18n.a $
+    obj/third_party/icu/libicuuc.a obj/url/liburl_lib.a $
+    obj/ui/events/libevents_base.a obj/ui/gfx/libgfx_test_support.a $
+    obj/ui/resources/ui_resources.actions_rules_copies.stamp $
+    obj/ui/resources/ui_test_pak.actions_rules_copies.stamp $
+    obj/ui/strings/ui_strings.actions_rules_copies.stamp $
+    obj/ui/base/ime/libui_base_ime.a obj/ui/base/libui_base.a $
+    obj/ui/base/libui_base_test_support.a obj/base/allocator/liballocator.a $
+    xdisplaycheck obj/ui/events/platform/x11/libx11_events_platform.a $
+    obj/ui/gfx/x/libgfx_x11.a obj/ui/events/libevents.a $
+    obj/ui/events/libevents_test_support.a $
+    obj/ui/events/platform/libevents_platform.a $
+    gen/base/debug/debugging_flags.h obj/base/libbase_static.a $
+    obj/third_party/modp_b64/libmodp_b64.a $
+    obj/base/third_party/dynamic_annotations/libdynamic_annotations.a $
+    obj/base/libsymbolize.a obj/base/libxdg_mime.a $
+    obj/third_party/libevent/libevent.a obj/base/libbase_i18n.a icudtl.dat $
+    icudtl.dat obj/third_party/libxml/libxml2.a $
+    obj/third_party/zlib/libchrome_zlib.a $
+    obj/third_party/zlib/libzlib_x86_simd.a $
+    obj/third_party/protobuf/libprotobuf_lite.a obj/net/libnet_quic_proto.a $
+    obj/base/libbase_prefs.a obj/crypto/libcrcrypto.a $
+    obj/third_party/boringssl/libboringssl.a $
+    obj/third_party/boringssl/libboringssl.a obj/sdch/libsdch.a $
+    obj/net/net_derived_sources.actions_rules_copies.stamp $
+    obj/net/net_resources.actions_rules_copies.stamp $
+    obj/build/linux/libgio.a obj/skia/libskia_library.a $
+    obj/skia/libskia_opts.a obj/skia/libskia_opts_ssse3.a $
+    obj/skia/libskia_opts_sse41.a obj/skia/libskia_opts_sse42.a $
+    obj/skia/libskia_opts_avx.a obj/skia/libskia_opts_avx2.a $
+    obj/third_party/sfntly/libsfntly.a obj/skia/libskia_chrome.a $
+    obj/ui/gfx/libgfx.a obj/third_party/harfbuzz-ng/libharfbuzz-ng.a $
+    obj/third_party/libpng/libpng.a obj/ui/gfx/libgfx_geometry.a $
+    obj/third_party/libjpeg_turbo/libjpeg_turbo.a $
+    obj/ui/events/libdom_keycode_converter.a $
+    obj/ui/views/resources/views_resources.actions_rules_copies.stamp $
+    obj/ui/events/libgesture_detection.a $
+    obj/ui/events/devices/libevents_devices.a
+
+build obj/ui/base/ui_base_unittests.compile_depends.stamp: stamp $
+    gen/base/debug/debugging_flags.h obj/net/net.compile_depends.stamp $
+    icudtl.dat obj/ui/resources/ui_resources.actions_rules_copies.stamp $
+    obj/ui/resources/ui_test_pak.actions_rules_copies.stamp $
+    obj/ui/strings/ui_strings.actions_rules_copies.stamp $
+    obj/ui/base/ui_base.compile_depends.stamp $
+    gen/base/debug/debugging_flags.h icudtl.dat icudtl.dat $
+    obj/net/net_quic_proto.actions_rules_copies.stamp $
+    obj/net/net_derived_sources.actions_rules_copies.stamp $
+    obj/net/net_resources.actions_rules_copies.stamp $
+    obj/build/linux/gio.actions_rules_copies.stamp $
+    obj/third_party/libjpeg_turbo/libjpeg.actions_rules_copies.stamp $
+    obj/ui/views/resources/views_resources.actions_rules_copies.stamp
+
+defines = -DV8_DEPRECATION_WARNINGS -DCLD_VERSION=2 -D_FILE_OFFSET_BITS=64 $
+    -DCHROMIUM_BUILD -DCR_CLANG_REVISION=255169-1 $
+    -DUI_COMPOSITOR_IMAGE_TRANSPORT -DUSE_AURA=1 -DUSE_ASH=1 -DUSE_PANGO=1 $
+    -DUSE_CAIRO=1 -DUSE_DEFAULT_RENDER_THEME=1 -DUSE_LIBJPEG_TURBO=1 $
+    -DUSE_X11=1 -DUSE_CLIPBOARD_AURAX11=1 -DENABLE_ONE_CLICK_SIGNIN $
+    -DENABLE_WEBRTC=1 -DENABLE_MEDIA_ROUTER=1 -DENABLE_PEPPER_CDMS $
+    -DENABLE_CONFIGURATION_POLICY -DENABLE_NOTIFICATIONS -DENABLE_HIDPI=1 $
+    -DENABLE_TOPCHROME_MD=1 -DUSE_UDEV -DDONT_EMBED_BUILD_METADATA $
+    -DFIELDTRIAL_TESTING_ENABLED -DENABLE_TASK_MANAGER=1 $
+    -DENABLE_EXTENSIONS=1 -DENABLE_PDF=1 -DENABLE_PLUGINS=1 $
+    -DENABLE_SESSION_SERVICE=1 -DENABLE_THEMES=1 -DENABLE_AUTOFILL_DIALOG=1 $
+    -DENABLE_BACKGROUND=1 -DENABLE_PRINTING=1 -DENABLE_BASIC_PRINTING=1 $
+    -DENABLE_PRINT_PREVIEW=1 -DENABLE_SPELLCHECK=1 $
+    -DENABLE_CAPTIVE_PORTAL_DETECTION=1 -DENABLE_APP_LIST=1 $
+    -DENABLE_SETTINGS_APP=1 -DENABLE_SUPERVISED_USERS=1 -DENABLE_MDNS=1 $
+    -DENABLE_SERVICE_DISCOVERY=1 -DV8_USE_EXTERNAL_STARTUP_DATA $
+    -DFULL_SAFE_BROWSING -DSAFE_BROWSING_CSD -DSAFE_BROWSING_DB_LOCAL $
+    -DGTEST_HAS_POSIX_RE=0 -DGTEST_LANG_CXX11=0 -DSK_SUPPORT_GPU=1 $
+    -DSK_IGNORE_LINEONLY_AA_CONVEX_PATH_OPTS -DUNIT_TEST -DGTEST_HAS_RTTI=0 $
+    -DU_USING_ICU_NAMESPACE=0 -DU_ENABLE_DYLOAD=0 -DU_STATIC_IMPLEMENTATION $
+    -DUSE_LIBPCI=1 -DUSE_OPENSSL=1 -DUSE_GLIB=1 -DUSE_NSS_CERTS=1 $
+    -D__STDC_CONSTANT_MACROS -D__STDC_FORMAT_MACROS -DNDEBUG -DNVALGRIND $
+    -DDYNAMIC_ANNOTATIONS_ENABLED=0
+includes = -Igen -I../.. -I../../skia/config $
+    -I../../third_party/skia/include/core $
+    -I../../third_party/skia/include/effects $
+    -I../../third_party/skia/include/pdf $
+    -I../../third_party/skia/include/gpu $
+    -I../../third_party/skia/include/lazy $
+    -I../../third_party/skia/include/pathops $
+    -I../../third_party/skia/include/pipe $
+    -I../../third_party/skia/include/ports $
+    -I../../third_party/skia/include/utils -I../../skia/ext $
+    -I../../testing/gmock/include -I../../testing/gtest/include $
+    -I../../third_party/icu/source/i18n $
+    -I../../third_party/icu/source/common -Igen/ui/resources
+cflags = -fstack-protector --param=ssp-buffer-size=4 -Werror -pthread $
+    -fno-strict-aliasing -Wall -Wno-unused-parameter $
+    -Wno-missing-field-initializers -fvisibility=hidden -pipe -fPIC $
+    -Wno-reserved-user-defined-literal -Xclang -load -Xclang $
+    /b/build/slave/publish_tarball/build/src/third_party/llvm-build/Release+Asserts/lib/libFindBadConstructs.so $
+    -Xclang -add-plugin -Xclang find-bad-constructs -Xclang $
+    -plugin-arg-find-bad-constructs -Xclang check-templates $
+    -fcolor-diagnostics $
+    -B/b/build/slave/publish_tarball/build/src/third_party/binutils/Linux_x64/Release/bin $
+    -Wheader-hygiene -Wno-char-subscripts $
+    -Wno-unneeded-internal-declaration -Wno-covered-switch-default $
+    -Wstring-conversion -Wno-c++11-narrowing -Wno-deprecated-register $
+    -Wno-inconsistent-missing-override -Wno-shift-negative-value $
+    -Wno-bitfield-width -pthread $
+    -I/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/include/glib-2.0 $
+    -I/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/lib/x86_64-linux-gnu/glib-2.0/include $
+    -pthread $
+    -I/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/include/pango-1.0 $
+    -I/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/include/cairo $
+    -I/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/include/glib-2.0 $
+    -I/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/lib/x86_64-linux-gnu/glib-2.0/include $
+    -I/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/include/pixman-1 $
+    -I/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/include/freetype2 $
+    -I/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/include/libpng12 $
+    -m64 -march=x86-64 $
+    --sysroot=/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot $
+    -O2 -fno-ident -fdata-sections -ffunction-sections -funwind-tables
+cflags_c = 
+cflags_cc = -fno-exceptions -fno-rtti -fno-threadsafe-statics $
+    -fvisibility-inlines-hidden -Wsign-compare -std=gnu++11
+arflags = 
+
+build obj/ui/base/l10n/ui_base_unittests.l10n_util_unittest.o: cxx $
+    ../../ui/base/l10n/l10n_util_unittest.cc || $
+    obj/ui/base/ui_base_unittests.compile_depends.stamp
+build obj/ui/base/l10n/ui_base_unittests.time_format_unittest.o: cxx $
+    ../../ui/base/l10n/time_format_unittest.cc || $
+    obj/ui/base/ui_base_unittests.compile_depends.stamp
+build obj/ui/base/ui_base_unittests.layout_unittest.o: cxx $
+    ../../ui/base/layout_unittest.cc || $
+    obj/ui/base/ui_base_unittests.compile_depends.stamp
+build obj/ui/base/models/ui_base_unittests.tree_node_iterator_unittest.o: $
+    cxx ../../ui/base/models/tree_node_iterator_unittest.cc || $
+    obj/ui/base/ui_base_unittests.compile_depends.stamp
+build obj/ui/base/resource/ui_base_unittests.data_pack_literal.o: cxx $
+    ../../ui/base/resource/data_pack_literal.cc || $
+    obj/ui/base/ui_base_unittests.compile_depends.stamp
+build obj/ui/base/resource/ui_base_unittests.data_pack_unittest.o: cxx $
+    ../../ui/base/resource/data_pack_unittest.cc || $
+    obj/ui/base/ui_base_unittests.compile_depends.stamp
+build obj/ui/base/resource/ui_base_unittests.resource_bundle_unittest.o: $
+    cxx ../../ui/base/resource/resource_bundle_unittest.cc || $
+    obj/ui/base/ui_base_unittests.compile_depends.stamp
+build obj/ui/base/ui_base_unittests.template_expressions_unittest.o: cxx $
+    ../../ui/base/template_expressions_unittest.cc || $
+    obj/ui/base/ui_base_unittests.compile_depends.stamp
+build obj/ui/base/test/ui_base_unittests.run_all_unittests.o: cxx $
+    ../../ui/base/test/run_all_unittests.cc || $
+    obj/ui/base/ui_base_unittests.compile_depends.stamp
+build $
+    obj/ui/base/accelerators/ui_base_unittests.accelerator_manager_unittest.o: $
+    cxx ../../ui/base/accelerators/accelerator_manager_unittest.cc || $
+    obj/ui/base/ui_base_unittests.compile_depends.stamp
+build $
+    obj/ui/base/accelerators/ui_base_unittests.menu_label_accelerator_util_linux_unittest.o: $
+    cxx $
+    ../../ui/base/accelerators/menu_label_accelerator_util_linux_unittest.cc $
+    || obj/ui/base/ui_base_unittests.compile_depends.stamp
+build $
+    obj/ui/base/clipboard/ui_base_unittests.custom_data_helper_unittest.o: $
+    cxx ../../ui/base/clipboard/custom_data_helper_unittest.cc || $
+    obj/ui/base/ui_base_unittests.compile_depends.stamp
+build $
+    obj/ui/base/dragdrop/ui_base_unittests.os_exchange_data_provider_aurax11_unittest.o: $
+    cxx $
+    ../../ui/base/dragdrop/os_exchange_data_provider_aurax11_unittest.cc || $
+    obj/ui/base/ui_base_unittests.compile_depends.stamp
+build obj/ui/base/ime/ui_base_unittests.candidate_window_unittest.o: cxx $
+    ../../ui/base/ime/candidate_window_unittest.cc || $
+    obj/ui/base/ui_base_unittests.compile_depends.stamp
+build obj/ui/base/ime/ui_base_unittests.composition_text_unittest.o: cxx $
+    ../../ui/base/ime/composition_text_unittest.cc || $
+    obj/ui/base/ui_base_unittests.compile_depends.stamp
+build $
+    obj/ui/base/ime/ui_base_unittests.composition_text_util_pango_unittest.o: $
+    cxx ../../ui/base/ime/composition_text_util_pango_unittest.cc || $
+    obj/ui/base/ui_base_unittests.compile_depends.stamp
+build obj/ui/base/ime/ui_base_unittests.input_method_base_unittest.o: cxx $
+    ../../ui/base/ime/input_method_base_unittest.cc || $
+    obj/ui/base/ui_base_unittests.compile_depends.stamp
+build obj/ui/base/models/ui_base_unittests.list_model_unittest.o: cxx $
+    ../../ui/base/models/list_model_unittest.cc || $
+    obj/ui/base/ui_base_unittests.compile_depends.stamp
+build obj/ui/base/models/ui_base_unittests.list_selection_model_unittest.o: $
+    cxx ../../ui/base/models/list_selection_model_unittest.cc || $
+    obj/ui/base/ui_base_unittests.compile_depends.stamp
+build obj/ui/base/models/ui_base_unittests.tree_node_model_unittest.o: cxx $
+    ../../ui/base/models/tree_node_model_unittest.cc || $
+    obj/ui/base/ui_base_unittests.compile_depends.stamp
+build $
+    obj/ui/base/resource/material_design/ui_base_unittests.material_design_controller_unittest.o: $
+    cxx $
+    ../../ui/base/resource/material_design/material_design_controller_unittest.cc $
+    || obj/ui/base/ui_base_unittests.compile_depends.stamp
+build obj/ui/base/test/ui_base_unittests.test_clipboard_unittest.o: cxx $
+    ../../ui/base/test/test_clipboard_unittest.cc || $
+    obj/ui/base/ui_base_unittests.compile_depends.stamp
+build obj/ui/base/text/ui_base_unittests.bytes_formatting_unittest.o: cxx $
+    ../../ui/base/text/bytes_formatting_unittest.cc || $
+    obj/ui/base/ui_base_unittests.compile_depends.stamp
+build obj/ui/base/touch/ui_base_unittests.selection_bound_unittest.o: cxx $
+    ../../ui/base/touch/selection_bound_unittest.cc || $
+    obj/ui/base/ui_base_unittests.compile_depends.stamp
+build $
+    obj/ui/base/user_activity/ui_base_unittests.user_activity_detector_unittest.o: $
+    cxx ../../ui/base/user_activity/user_activity_detector_unittest.cc || $
+    obj/ui/base/ui_base_unittests.compile_depends.stamp
+build obj/ui/base/webui/ui_base_unittests.web_ui_util_unittest.o: cxx $
+    ../../ui/base/webui/web_ui_util_unittest.cc || $
+    obj/ui/base/ui_base_unittests.compile_depends.stamp
+build obj/ui/base/x/ui_base_unittests.selection_requestor_unittest.o: cxx $
+    ../../ui/base/x/selection_requestor_unittest.cc || $
+    obj/ui/base/ui_base_unittests.compile_depends.stamp
+build obj/ui/base/ime/ui_base_unittests.input_method_auralinux_unittest.o: $
+    cxx ../../ui/base/ime/input_method_auralinux_unittest.cc || $
+    obj/ui/base/ui_base_unittests.compile_depends.stamp
+build obj/ui/base/cursor/ui_base_unittests.cursor_loader_x11_unittest.o: $
+    cxx ../../ui/base/cursor/cursor_loader_x11_unittest.cc || $
+    obj/ui/base/ui_base_unittests.compile_depends.stamp
+build obj/ui/base/dragdrop/ui_base_unittests.os_exchange_data_unittest.o: $
+    cxx ../../ui/base/dragdrop/os_exchange_data_unittest.cc || $
+    obj/ui/base/ui_base_unittests.compile_depends.stamp
+
+ldflags = -Wl,-z,now -Wl,-z,relro -Wl,--fatal-warnings -Wl,-z,defs -pthread $
+    -Wl,-z,noexecstack -fPIC -fuse-ld=gold $
+    -B/b/build/slave/publish_tarball/build/src/third_party/binutils/Linux_x64/Release/bin $
+    -Wl,--disable-new-dtags -L. $
+    -Wl,-uhb_ft_face_create_cached,-uhb_glib_get_unicode_funcs $
+    -Wl,-uIsHeapProfilerRunning,-uProfilerStart $
+    -Wl,-u_Z21InitialMallocHook_NewPKvj,-u_Z22InitialMallocHook_MMapPKvS0_jiiix,-u_Z22InitialMallocHook_SbrkPKvi $
+    -Wl,-u_Z21InitialMallocHook_NewPKvm,-u_Z22InitialMallocHook_MMapPKvS0_miiil,-u_Z22InitialMallocHook_SbrkPKvl $
+    -Wl,-u_ZN15HeapLeakChecker12IgnoreObjectEPKv,-u_ZN15HeapLeakChecker14UnIgnoreObjectEPKv $
+    -m64 $
+    --sysroot=/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot $
+    -L/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/lib/x86_64-linux-gnu $
+    -Wl,-rpath-link=/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/lib/x86_64-linux-gnu $
+    -L/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/lib/x86_64-linux-gnu $
+    -Wl,-rpath-link=/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/lib/x86_64-linux-gnu $
+    -L/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/lib/gcc/x86_64-linux-gnu/4.6 $
+    -Wl,-rpath-link=/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/lib/gcc/x86_64-linux-gnu/4.6 $
+    -L/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/lib $
+    -Wl,-rpath-link=/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/lib $
+    -Wl,--detect-odr-violations -Wl,--icf=all -Wl,-O1 -Wl,--as-needed $
+    -Wl,--gc-sections
+libs =  -lrt -ldl -lgmodule-2.0 -lgobject-2.0 -lgthread-2.0 -lglib-2.0 -lm $
+    -lnss3 -lnssutil3 -lsmime3 -lplds4 -lplc4 -lnspr4 -lgconf-2 -lgio-2.0 $
+    -lresolv -lfontconfig -lfreetype -lpangocairo-1.0 -lcairo $
+    -lpangoft2-1.0 -lpango-1.0 -lX11 -lXi -lXcursor -lXext -lXfixes $
+    -lXrender -lXss
+build ui_base_unittests: link $
+    obj/ui/base/l10n/ui_base_unittests.l10n_util_unittest.o $
+    obj/ui/base/l10n/ui_base_unittests.time_format_unittest.o $
+    obj/ui/base/ui_base_unittests.layout_unittest.o $
+    obj/ui/base/models/ui_base_unittests.tree_node_iterator_unittest.o $
+    obj/ui/base/resource/ui_base_unittests.data_pack_literal.o $
+    obj/ui/base/resource/ui_base_unittests.data_pack_unittest.o $
+    obj/ui/base/resource/ui_base_unittests.resource_bundle_unittest.o $
+    obj/ui/base/ui_base_unittests.template_expressions_unittest.o $
+    obj/ui/base/test/ui_base_unittests.run_all_unittests.o $
+    obj/ui/base/accelerators/ui_base_unittests.accelerator_manager_unittest.o $
+    obj/ui/base/accelerators/ui_base_unittests.menu_label_accelerator_util_linux_unittest.o $
+    obj/ui/base/clipboard/ui_base_unittests.custom_data_helper_unittest.o $
+    obj/ui/base/dragdrop/ui_base_unittests.os_exchange_data_provider_aurax11_unittest.o $
+    obj/ui/base/ime/ui_base_unittests.candidate_window_unittest.o $
+    obj/ui/base/ime/ui_base_unittests.composition_text_unittest.o $
+    obj/ui/base/ime/ui_base_unittests.composition_text_util_pango_unittest.o $
+    obj/ui/base/ime/ui_base_unittests.input_method_base_unittest.o $
+    obj/ui/base/models/ui_base_unittests.list_model_unittest.o $
+    obj/ui/base/models/ui_base_unittests.list_selection_model_unittest.o $
+    obj/ui/base/models/ui_base_unittests.tree_node_model_unittest.o $
+    obj/ui/base/resource/material_design/ui_base_unittests.material_design_controller_unittest.o $
+    obj/ui/base/test/ui_base_unittests.test_clipboard_unittest.o $
+    obj/ui/base/text/ui_base_unittests.bytes_formatting_unittest.o $
+    obj/ui/base/touch/ui_base_unittests.selection_bound_unittest.o $
+    obj/ui/base/user_activity/ui_base_unittests.user_activity_detector_unittest.o $
+    obj/ui/base/webui/ui_base_unittests.web_ui_util_unittest.o $
+    obj/ui/base/x/ui_base_unittests.selection_requestor_unittest.o $
+    obj/ui/base/ime/ui_base_unittests.input_method_auralinux_unittest.o $
+    obj/ui/base/cursor/ui_base_unittests.cursor_loader_x11_unittest.o $
+    obj/ui/base/dragdrop/ui_base_unittests.os_exchange_data_unittest.o $
+    obj/base/libbase.a obj/base/libtest_support_base.a obj/net/libnet.a $
+    obj/testing/libgmock.a obj/testing/libgtest.a $
+    obj/third_party/icu/libicui18n.a obj/third_party/icu/libicuuc.a $
+    obj/url/liburl_lib.a obj/ui/events/libevents_base.a $
+    obj/ui/gfx/libgfx_test_support.a obj/ui/base/ime/libui_base_ime.a $
+    obj/ui/base/libui_base.a obj/ui/base/libui_base_test_support.a $
+    obj/base/allocator/liballocator.a $
+    obj/ui/events/platform/x11/libx11_events_platform.a $
+    obj/ui/gfx/x/libgfx_x11.a obj/ui/events/libevents.a $
+    obj/ui/events/libevents_test_support.a $
+    obj/ui/events/platform/libevents_platform.a obj/base/libbase_static.a $
+    obj/third_party/modp_b64/libmodp_b64.a $
+    obj/base/third_party/dynamic_annotations/libdynamic_annotations.a $
+    obj/base/libsymbolize.a obj/base/libxdg_mime.a $
+    obj/third_party/libevent/libevent.a obj/base/libbase_i18n.a $
+    obj/third_party/libxml/libxml2.a obj/third_party/zlib/libchrome_zlib.a $
+    obj/third_party/zlib/libzlib_x86_simd.a $
+    obj/third_party/protobuf/libprotobuf_lite.a obj/net/libnet_quic_proto.a $
+    obj/base/libbase_prefs.a obj/crypto/libcrcrypto.a $
+    obj/third_party/boringssl/libboringssl.a obj/sdch/libsdch.a $
+    obj/build/linux/libgio.a obj/skia/libskia_library.a $
+    obj/skia/libskia_opts.a obj/skia/libskia_opts_ssse3.a $
+    obj/skia/libskia_opts_sse41.a obj/skia/libskia_opts_sse42.a $
+    obj/skia/libskia_opts_avx.a obj/skia/libskia_opts_avx2.a $
+    obj/third_party/sfntly/libsfntly.a obj/skia/libskia_chrome.a $
+    obj/ui/gfx/libgfx.a obj/third_party/harfbuzz-ng/libharfbuzz-ng.a $
+    obj/third_party/libpng/libpng.a obj/ui/gfx/libgfx_geometry.a $
+    obj/third_party/libjpeg_turbo/libjpeg_turbo.a $
+    obj/ui/events/libdom_keycode_converter.a $
+    obj/ui/events/libgesture_detection.a $
+    obj/ui/events/devices/libevents_devices.a | $
+    gen/base/debug/debugging_flags.h obj/skia/skia.actions_depends.stamp $
+    obj/ui/resources/ui_resources.actions_rules_copies.stamp $
+    obj/net/net_derived_sources.actions_rules_copies.stamp xdisplaycheck $
+    icudtl.dat $
+    obj/ui/views/resources/views_resources.actions_rules_copies.stamp $
+    obj/net/net_resources.actions_rules_copies.stamp $
+    obj/ui/resources/ui_test_pak.actions_rules_copies.stamp $
+    obj/ui/strings/ui_strings.actions_rules_copies.stamp $
+    obj/third_party/boringssl/libboringssl.a || $
+    obj/ui/base/ui_base_unittests.actions_depends.stamp
+  ld = $ldxx

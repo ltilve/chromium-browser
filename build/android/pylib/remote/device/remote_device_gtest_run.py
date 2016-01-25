@@ -6,14 +6,12 @@
 
 import logging
 import os
-import sys
 import tempfile
 
 from pylib import constants
 from pylib.base import base_test_result
-from pylib.remote.device import appurify_sanitized
+from pylib.gtest import gtest_test_instance
 from pylib.remote.device import remote_device_test_run
-from pylib.remote.device import remote_device_helper
 
 
 _EXTRA_COMMAND_LINE_FILE = (
@@ -48,8 +46,12 @@ class RemoteDeviceGtestTestRun(remote_device_test_run.RemoteDeviceTestRun):
 
     dummy_app_path = os.path.join(
         constants.GetOutDirectory(), 'apks', 'remote_device_dummy.apk')
+
+    # pylint: disable=protected-access
     with tempfile.NamedTemporaryFile(suffix='.flags.txt') as flag_file:
-      env_vars = {}
+      env_vars = dict(self._test_instance.extras)
+      if gtest_test_instance.EXTRA_SHARD_NANO_TIMEOUT not in env_vars:
+        env_vars[gtest_test_instance.EXTRA_SHARD_NANO_TIMEOUT] = int(900e9)
       filter_string = self._test_instance._GenerateDisabledFilterString(None)
       if filter_string:
         flag_file.write('_ --gtest_filter=%s' % filter_string)
@@ -74,8 +76,6 @@ class RemoteDeviceGtestTestRun(remote_device_test_run.RemoteDeviceTestRun):
     results.AddResults(results_list)
     if self._env.only_output_failures:
       logging.info('See logcat for more results information.')
-    if not self._results['results']['pass']:
-      results.AddResult(base_test_result.BaseTestResult(
-          'Remote Service detected error.',
-          base_test_result.ResultType.FAIL))
+
+    self._DetectPlatformErrors(results)
     return results

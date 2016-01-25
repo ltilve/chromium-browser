@@ -4,10 +4,13 @@
 
 #include "chrome/browser/media/media_stream_devices_controller.h"
 
+#include "base/auto_reset.h"
+#include "base/callback_helpers.h"
 #include "base/metrics/histogram.h"
 #include "base/prefs/scoped_user_pref_update.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/values.h"
+#include "chrome/browser/content_settings/host_content_settings_map_factory.h"
 #include "chrome/browser/content_settings/tab_specific_content_settings.h"
 #include "chrome/browser/media/media_capture_devices_dispatcher.h"
 #include "chrome/browser/media/media_permission.h"
@@ -24,11 +27,16 @@
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/render_widget_host_view.h"
 #include "content/public/common/media_stream_request.h"
+#include "content/public/common/origin_util.h"
+#include "extensions/common/constants.h"
 #include "grit/theme_resources.h"
 #include "ui/base/l10n/l10n_util.h"
 
 #if defined(OS_ANDROID)
+#include <vector>
+
 #include "chrome/browser/android/preferences/pref_service_bridge.h"
+#include "chrome/browser/permissions/permission_update_infobar_delegate_android.h"
 #include "content/public/browser/android/content_view_core.h"
 #include "ui/android/window_android.h"
 #endif  // OS_ANDROID
@@ -69,7 +77,12 @@ MediaStreamDevicesController::MediaStreamDevicesController(
     const content::MediaResponseCallback& callback)
     : web_contents_(web_contents),
       request_(request),
-      callback_(callback) {
+      callback_(callback),
+      persist_permission_changes_(true) {
+  if (request_.request_type == content::MEDIA_OPEN_DEVICE) {
+    UMA_HISTOGRAM_BOOLEAN("Pepper.SecureOrigin.MediaStreamRequest",
+                          content::IsOriginSecure(request_.security_origin));
+  }
   profile_ = Profile::FromBrowserContext(web_contents->GetBrowserContext());
   content_settings_ = TabSpecificContentSettings::FromWebContents(web_contents);
 
@@ -84,6 +97,26 @@ MediaStreamDevicesController::MediaStreamDevicesController(
       old_video_setting_ == CONTENT_SETTING_ASK) {
     return;
   }
+
+#if defined(OS_ANDROID)
+  std::vector<ContentSettingsType> content_settings_types;
+  if (IsAllowedForAudio())
+    content_settings_types.push_back(CONTENT_SETTINGS_TYPE_MEDIASTREAM_MIC);
+
+  if (IsAllowedForVideo()) {
+    content_settings_types.push_back(
+        CONTENT_SETTINGS_TYPE_MEDIASTREAM_CAMERA);
+  }
+
+  // If the site had been previously granted the access to audio or video but
+  // Chrome is now missing the necessary permission, we need to show an infobar
+  // to resolve the difference.
+  if (!content_settings_types.empty() &&
+      PermissionUpdateInfoBarDelegate::ShouldShowPermissionInfobar(
+          web_contents, content_settings_types)) {
+    return;
+  }
+#endif
 
   // Otherwise we can run the callback immediately.
   RunCallback(old_audio_setting_, old_video_setting_, denial_reason);
@@ -106,6 +139,14 @@ void MediaStreamDevicesController::RegisterProfilePrefs(
   prefs->RegisterListPref(prefs::kAudioCaptureAllowedUrls);
 }
 
+bool MediaStreamDevicesController::IsAllowedForAudio() const {
+  return old_audio_setting_ == CONTENT_SETTING_ALLOW;
+}
+
+bool MediaStreamDevicesController::IsAllowedForVideo() const {
+  return old_video_setting_ == CONTENT_SETTING_ALLOW;
+}
+
 bool MediaStreamDevicesController::IsAskingForAudio() const {
   return old_audio_setting_ == CONTENT_SETTING_ASK;
 }
@@ -118,7 +159,17 @@ const std::string& MediaStreamDevicesController::GetSecurityOriginSpec() const {
   return request_.security_origin.spec();
 }
 
-int MediaStreamDevicesController::GetIconID() const {
+void MediaStreamDevicesController::ForcePermissionDeniedTemporarily() {
+  base::AutoReset<bool> persist_permissions(
+      &persist_permission_changes_, false);
+  UMA_HISTOGRAM_ENUMERATION("Media.DevicePermissionActions",
+                            kDeny, kPermissionActionsMax);
+  RunCallback(CONTENT_SETTING_BLOCK,
+              CONTENT_SETTING_BLOCK,
+              content::MEDIA_DEVICE_PERMISSION_DENIED);
+}
+
+int MediaStreamDevicesController::GetIconId() const {
   if (IsAskingForVideo())
     return IDR_INFOBAR_MEDIA_STREAM_CAMERA;
 
@@ -154,7 +205,7 @@ GURL MediaStreamDevicesController::GetRequestingHostname() const {
 
 void MediaStreamDevicesController::PermissionGranted() {
   GURL origin(GetSecurityOriginSpec());
-  if (origin.SchemeIsSecure()) {
+  if (content::IsOriginSecure(origin)) {
     UMA_HISTOGRAM_ENUMERATION("Media.DevicePermissionActions",
                               kAllowHttps, kPermissionActionsMax);
   } else {
@@ -281,16 +332,18 @@ content::MediaStreamDevices MediaStreamDevicesController::GetDevices(
   }  // switch
 
   if (audio_allowed) {
-    profile_->GetHostContentSettingsMap()->UpdateLastUsageByPattern(
-        ContentSettingsPattern::FromURLNoWildcard(request_.security_origin),
-        ContentSettingsPattern::Wildcard(),
-        CONTENT_SETTINGS_TYPE_MEDIASTREAM_MIC);
+    HostContentSettingsMapFactory::GetForProfile(profile_)
+        ->UpdateLastUsageByPattern(
+            ContentSettingsPattern::FromURLNoWildcard(request_.security_origin),
+            ContentSettingsPattern::Wildcard(),
+            CONTENT_SETTINGS_TYPE_MEDIASTREAM_MIC);
   }
   if (video_allowed) {
-    profile_->GetHostContentSettingsMap()->UpdateLastUsageByPattern(
-        ContentSettingsPattern::FromURLNoWildcard(request_.security_origin),
-        ContentSettingsPattern::Wildcard(),
-        CONTENT_SETTINGS_TYPE_MEDIASTREAM_CAMERA);
+    HostContentSettingsMapFactory::GetForProfile(profile_)
+        ->UpdateLastUsageByPattern(
+            ContentSettingsPattern::FromURLNoWildcard(request_.security_origin),
+            ContentSettingsPattern::Wildcard(),
+            CONTENT_SETTINGS_TYPE_MEDIASTREAM_CAMERA);
   }
 
   return devices;
@@ -300,8 +353,12 @@ void MediaStreamDevicesController::RunCallback(
     ContentSetting audio_setting,
     ContentSetting video_setting,
     content::MediaStreamRequestResult denial_reason) {
-  StorePermission(audio_setting, video_setting);
-  UpdateTabSpecificContentSettings(audio_setting, video_setting);
+  CHECK(!callback_.is_null());
+
+  if (persist_permission_changes_) {
+    StorePermission(audio_setting, video_setting);
+    UpdateTabSpecificContentSettings(audio_setting, video_setting);
+  }
 
   content::MediaStreamDevices devices =
       GetDevices(audio_setting, video_setting);
@@ -325,23 +382,22 @@ void MediaStreamDevicesController::RunCallback(
              ->GetMediaStreamCaptureIndicator()
              ->RegisterMediaStream(web_contents_, devices);
   }
-  content::MediaResponseCallback cb = callback_;
-  callback_.Reset();
-  cb.Run(devices, request_result, ui.Pass());
+  base::ResetAndReturn(&callback_).Run(devices, request_result, ui.Pass());
 }
 
 void MediaStreamDevicesController::StorePermission(
     ContentSetting new_audio_setting,
     ContentSetting new_video_setting) const {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-
   ContentSettingsPattern primary_pattern =
       ContentSettingsPattern::FromURLNoWildcard(request_.security_origin);
 
+  bool is_pepper_request = request_.request_type == content::MEDIA_OPEN_DEVICE;
+
   if (IsAskingForAudio() && new_audio_setting != CONTENT_SETTING_ASK) {
     if (ShouldPersistContentSetting(new_audio_setting, request_.security_origin,
-                                    request_.request_type)) {
-      profile_->GetHostContentSettingsMap()->SetContentSetting(
+                                    is_pepper_request)) {
+      HostContentSettingsMapFactory::GetForProfile(profile_)->SetContentSetting(
           primary_pattern, ContentSettingsPattern::Wildcard(),
           CONTENT_SETTINGS_TYPE_MEDIASTREAM_MIC, std::string(),
           new_audio_setting);
@@ -349,8 +405,8 @@ void MediaStreamDevicesController::StorePermission(
   }
   if (IsAskingForVideo() && new_video_setting != CONTENT_SETTING_ASK) {
     if (ShouldPersistContentSetting(new_video_setting, request_.security_origin,
-                                    request_.request_type)) {
-      profile_->GetHostContentSettingsMap()->SetContentSetting(
+                                    is_pepper_request)) {
+      HostContentSettingsMapFactory::GetForProfile(profile_)->SetContentSetting(
           primary_pattern, ContentSettingsPattern::Wildcard(),
           CONTENT_SETTINGS_TYPE_MEDIASTREAM_CAMERA, std::string(),
           new_video_setting);
@@ -423,10 +479,11 @@ ContentSetting MediaStreamDevicesController::GetContentSetting(
   }
 
   if (ContentTypeIsRequested(content_type, request)) {
-    MediaPermission permission(content_type, request.request_type,
-                               request.security_origin, requested_device_id,
-                               profile_);
-    return permission.GetPermissionStatus(denial_reason);
+    MediaPermission permission(
+        content_type, request.request_type, request.security_origin,
+        web_contents_->GetLastCommittedURL().GetOrigin(), profile_);
+    return permission.GetPermissionStatusWithDeviceRequired(requested_device_id,
+                                                            denial_reason);
   }
   // Return the default content setting if the device is not requested.
   return CONTENT_SETTING_DEFAULT;
@@ -441,10 +498,11 @@ ContentSetting MediaStreamDevicesController::GetNewSetting(
   ContentSetting result = old_setting;
   if (old_setting == CONTENT_SETTING_ASK) {
     if (user_decision == CONTENT_SETTING_ALLOW &&
-        IsUserAcceptAllowed(content_type))
+        IsUserAcceptAllowed(content_type)) {
       result = CONTENT_SETTING_ALLOW;
-    else if (user_decision == CONTENT_SETTING_BLOCK)
+    } else if (user_decision == CONTENT_SETTING_BLOCK) {
       result = CONTENT_SETTING_BLOCK;
+    }
   }
   return result;
 }

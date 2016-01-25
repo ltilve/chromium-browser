@@ -1,0 +1,19 @@
+rule $
+    nacl_bootstrap_raw_target_link_with_ld_bfd_e09a020b4c2666e7606b0d65fb954562
+  command = cd ../../native_client/src/trusted/service_runtime/linux; $
+      python ld_bfd.py --compiler g++ -m elf_x86_64 --build-id -static -z $
+      "max-page-size=0x1000" --defsym "RESERVE_TOP=0x0" $
+      "--script=nacl_bootstrap.x" -o $
+      ../../../../../out/Release/nacl_bootstrap_raw --whole-archive $
+      ../../../../../out/Release/gen/nacl_bootstrap/libnacl_bootstrap_lib.a $
+      --no-whole-archive
+  description = ACTION Linking nacl_bootstrap_raw
+  restat = 1
+
+build nacl_bootstrap_raw: $
+    nacl_bootstrap_raw_target_link_with_ld_bfd_e09a020b4c2666e7606b0d65fb954562 $
+    ../../native_client/src/trusted/service_runtime/linux/nacl_bootstrap.x $
+    gen/nacl_bootstrap/libnacl_bootstrap_lib.a $
+    ../../native_client/src/trusted/service_runtime/linux/ld_bfd.py || $
+    gen/nacl_bootstrap/libnacl_bootstrap_lib.a
+

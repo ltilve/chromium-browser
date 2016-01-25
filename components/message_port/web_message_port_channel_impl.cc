@@ -35,7 +35,7 @@ void WebMessagePortChannelImpl::CreatePair(
 
 WebMessagePortChannelImpl::WebMessagePortChannelImpl(
     mojo::ScopedMessagePipeHandle pipe)
-    : client_(nullptr), pipe_(pipe.Pass()) {
+    : client_(nullptr), pipe_(pipe.Pass()), handle_watcher_(13) {
   WaitForNextMessage();
 }
 
@@ -124,7 +124,15 @@ void WebMessagePortChannelImpl::WaitForNextMessage() {
 }
 
 void WebMessagePortChannelImpl::OnMessageAvailable(MojoResult result) {
+  // |result| can be MOJO_RESULT_ABORTED when the message loop shuts down, or
+  // MOJO_RESULT_FAILED_PRECONDITION when the end-of-file is reached.
+  if (result == MOJO_RESULT_ABORTED ||
+      result == MOJO_RESULT_FAILED_PRECONDITION)
+    return;
+
   DCHECK_EQ(MOJO_RESULT_OK, result);
+  if (!client_)
+    return;
   client_->messageAvailable();
   WaitForNextMessage();
 }

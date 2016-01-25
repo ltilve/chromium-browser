@@ -2,7 +2,7 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
-static_library("ui_zoom") {
+source_set("zoom") {
   sources = [
     "page_zoom.cc",
     "page_zoom.h",
@@ -23,5 +23,16 @@ static_library("ui_zoom") {
     "//ipc",
     "//net",
     "//url",
+  ]
+}
+
+source_set("unit_tests") {
+  testonly = true
+  sources = [
+    "page_zoom_unittests.cc",
+  ]
+  deps = [
+    ":zoom",
+    "//testing/gtest",
   ]
 }

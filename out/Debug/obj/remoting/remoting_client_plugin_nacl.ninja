@@ -1,0 +1,317 @@
+build obj/remoting/remoting_client_plugin_nacl.actions_depends.stamp: stamp $
+    gen/tc_pnacl_newlib/lib/libbase_i18n_nacl.a $
+    obj/base/base_nacl.actions_rules_copies.stamp $
+    gen/tc_pnacl_newlib/lib/libcrypto_nacl.a $
+    gen/tc_pnacl_newlib/lib/libjingle_glue_nacl.a $
+    obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a $
+    obj/ppapi/native_client/ppapi_lib.actions_rules_copies.stamp $
+    obj/ppapi/ppapi_cpp_lib.actions_rules_copies.stamp $
+    gen/tc_pnacl_newlib/lib/libexpat_nacl.a $
+    gen/tc_pnacl_newlib/lib/libicudata_nacl.a $
+    gen/tc_pnacl_newlib/lib/libicui18n_nacl.a $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a $
+    gen/tc_pnacl_newlib/lib/libyuv_nacl.a $
+    obj/third_party/modp_b64/modp_b64_nacl.actions_rules_copies.stamp $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a $
+    gen/tc_pnacl_newlib/lib/liburl_nacl.a $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a $
+    gen/tc_pnacl_newlib/lib/libremoting_proto_nacl.a $
+    gen/tc_pnacl_newlib/lib/libremoting_webrtc_nacl.a
+
+build obj/remoting/remoting_client_plugin_nacl.compile_depends.stamp: stamp $
+    gen/tc_pnacl_newlib/lib/libbase_i18n_nacl.a $
+    obj/base/base_nacl.actions_rules_copies.stamp $
+    gen/tc_pnacl_newlib/lib/libcrypto_nacl.a $
+    gen/tc_pnacl_newlib/lib/libjingle_glue_nacl.a $
+    obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a $
+    obj/ppapi/native_client/ppapi_lib.actions_rules_copies.stamp $
+    obj/ppapi/ppapi_cpp_lib.actions_rules_copies.stamp $
+    gen/tc_pnacl_newlib/lib/libexpat_nacl.a $
+    gen/tc_pnacl_newlib/lib/libicudata_nacl.a $
+    gen/tc_pnacl_newlib/lib/libicui18n_nacl.a $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a $
+    gen/tc_pnacl_newlib/lib/libyuv_nacl.a $
+    obj/third_party/modp_b64/modp_b64_nacl.actions_rules_copies.stamp $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a $
+    gen/tc_pnacl_newlib/lib/liburl_nacl.a $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a $
+    gen/tc_pnacl_newlib/lib/libremoting_proto_nacl.a $
+    gen/tc_pnacl_newlib/lib/libremoting_webrtc_nacl.a
+
+rule $
+    remoting_client_plugin_nacl_target_build_newlib_pexe_4f8c33cc066b5665c585dd3b650eeafd
+  command = cd ../../remoting; python ../native_client/build/build_nexe.py $
+      --root .. --product-dir ../out/Debug/xyz --config-name Debug -t $
+      ../native_client/toolchain/ --arch pnacl --build newlib_pexe --name $
+      ../out/Debug/remoting_client_plugin_newlib.pexe --objdir $
+      ../out/Debug/obj/remoting/remoting_client_plugin_nacl.gen/pnacl_newlib/remoting_client_plugin_nacl $
+      "--include-dirs=../out/Debug/gen/tc_pnacl_newlib/include .. $
+      \"../out/Debug/gen\" ../third_party/khronos ../gpu $
+      ../native_client_sdk/src/libraries $
+      ../native_client_sdk/src/libraries/nacl_io/include $
+      ../native_client_sdk/src/libraries/third_party/newlib-extras $
+      ../third_party/expat/files/lib ../third_party/icu/source/i18n $
+      ../third_party/icu/source/common ../third_party/libjingle/overrides $
+      ../third_party/libjingle/source ../third_party/webrtc_overrides $
+      ../third_party ../third_party/webrtc ../third_party/libyuv/include $
+      ../third_party/boringssl/src/include \"../out/Debug/gen/protoc_out\" $
+      ../third_party/protobuf ../third_party/protobuf/src" $
+      "--compile_flags=-O2 -g -Wall -fdiagnostics-show-option -Werror  $
+      -Wno-unused-function -Wno-char-subscripts -Wno-c++11-extensions $
+      -Wno-unnamed-type-template-args -Wno-extra-semi $
+      -Wno-unused-private-field -Wno-char-subscripts -Wno-unused-function $
+      \"-std=gnu++11\" " --gomadir "" "--defines=\"__STDC_LIMIT_MACROS=1\" $
+      \"__STDC_FORMAT_MACROS=1\" \"_GNU_SOURCE=1\" $
+      \"_POSIX_C_SOURCE=199506\" \"_XOPEN_SOURCE=600\" $
+      \"DYNAMIC_ANNOTATIONS_ENABLED=1\" $
+      \"DYNAMIC_ANNOTATIONS_PREFIX=NACL_\" \"NACL_BUILD_ARCH=x86\" $
+      V8_DEPRECATION_WARNINGS \"CLD_VERSION=2\" \"_FILE_OFFSET_BITS=64\" $
+      CHROMIUM_BUILD \"CR_CLANG_REVISION=255169-1\" $
+      UI_COMPOSITOR_IMAGE_TRANSPORT \"USE_AURA=1\" \"USE_ASH=1\" $
+      \"USE_PANGO=1\" \"USE_CAIRO=1\" \"USE_DEFAULT_RENDER_THEME=1\" $
+      \"USE_LIBJPEG_TURBO=1\" \"USE_X11=1\" \"USE_CLIPBOARD_AURAX11=1\" $
+      ENABLE_ONE_CLICK_SIGNIN \"ENABLE_WEBRTC=1\" \"ENABLE_MEDIA_ROUTER=1\" $
+      ENABLE_PEPPER_CDMS ENABLE_CONFIGURATION_POLICY ENABLE_NOTIFICATIONS $
+      \"ENABLE_HIDPI=1\" \"ENABLE_TOPCHROME_MD=1\" USE_UDEV $
+      DONT_EMBED_BUILD_METADATA FIELDTRIAL_TESTING_ENABLED $
+      \"ENABLE_TASK_MANAGER=1\" \"ENABLE_EXTENSIONS=1\" \"ENABLE_PDF=1\" $
+      \"ENABLE_PLUGINS=1\" \"ENABLE_SESSION_SERVICE=1\" \"ENABLE_THEMES=1\" $
+      \"ENABLE_AUTOFILL_DIALOG=1\" \"ENABLE_BACKGROUND=1\" $
+      \"ENABLE_PRINTING=1\" \"ENABLE_BASIC_PRINTING=1\" $
+      \"ENABLE_PRINT_PREVIEW=1\" \"ENABLE_SPELLCHECK=1\" $
+      \"ENABLE_CAPTIVE_PORTAL_DETECTION=1\" \"ENABLE_APP_LIST=1\" $
+      \"ENABLE_SETTINGS_APP=1\" \"ENABLE_SUPERVISED_USERS=1\" $
+      \"ENABLE_MDNS=1\" \"ENABLE_SERVICE_DISCOVERY=1\" $
+      V8_USE_EXTERNAL_STARTUP_DATA FULL_SAFE_BROWSING SAFE_BROWSING_CSD $
+      SAFE_BROWSING_DB_LOCAL XML_STATIC \"U_USING_ICU_NAMESPACE=0\" $
+      \"U_ENABLE_DYLOAD=0\" U_STATIC_IMPLEMENTATION EXPAT_RELATIVE_PATH $
+      FEATURE_ENABLE_SSL GTEST_RELATIVE_PATH NO_MAIN_THREAD_WRAPPING $
+      NO_SOUND_SYSTEM WEBRTC_POSIX SRTP_RELATIVE_PATH SSL_USE_OPENSSL $
+      USE_WEBRTC_DEV_BRANCH GOOGLE_PROTOBUF_NO_RTTI $
+      GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER \"USE_LIBPCI=1\" $
+      \"USE_OPENSSL=1\" \"USE_OPENSSL_CERTS=1\" __STDC_CONSTANT_MACROS $
+      __STDC_FORMAT_MACROS" $
+      "--link_flags=-B../out/Debug/gen/tc_pnacl_newlib/lib -O3 -lppapi_stub $
+      -lremoting_client_plugin_lib_nacl -lremoting_proto_nacl $
+      -ljingle_glue_nacl -lnet_nacl -lcrypto_nacl -lbase_i18n_nacl $
+      -lbase_nacl -lurl_nacl -lremoting_webrtc_nacl -lyuv_nacl -lvpx_nacl $
+      -ljingle_p2p_constants_nacl -ljingle_nacl -lexpat_nacl $
+      -lmodp_b64_nacl -lopus_nacl -lboringssl_nacl -licui18n_nacl $
+      -licuuc_nacl -licudata_nacl -lprotobuf_lite_nacl -lppapi_cpp $
+      -lpthread -lnacl_io" $
+      "--source-list=../out/gypfiles/remoting/pnacl_newlib.remoting_client_plugin_nacl.source_list.gypcmd"
+  description = ACTION remoting_client_plugin_nacl: build newlib $
+      pexe_4f8c33cc066b5665c585dd3b650eeafd
+  restat = 1
+
+build remoting_client_plugin_newlib.pexe $
+    remoting_client_plugin_newlib.pexe.debug: $
+    remoting_client_plugin_nacl_target_build_newlib_pexe_4f8c33cc066b5665c585dd3b650eeafd $
+    ../../native_client/build/build_nexe.py $
+    ../../native_client/build/build_nexe_tools.py ../../base/at_exit.h $
+    ../../base/atomic_ref_count.h ../../base/atomicops.h $
+    ../../base/atomicops_internals_atomicword_compat.h $
+    ../../base/atomicops_internals_portable.h $
+    ../../base/atomicops_internals_x86_msvc.h ../../base/base_export.h $
+    ../../base/basictypes.h ../../base/bind.h ../../base/bind_helpers.h $
+    ../../base/bind_internal.h ../../base/bind_internal_win.h $
+    ../../base/callback.h ../../base/callback_forward.h $
+    ../../base/callback_internal.h ../../base/compiler_specific.h $
+    ../../base/containers/hash_tables.h ../../base/debug/alias.h $
+    ../../base/debug/task_annotator.h ../../base/event_types.h $
+    ../../base/gtest_prod_util.h ../../base/location.h $
+    ../../base/mac/scoped_cffiledescriptorref.h $
+    ../../base/mac/scoped_cftyperef.h ../../base/mac/scoped_typeref.h $
+    ../../base/macros.h $
+    ../../base/memory/raw_scoped_refptr_mismatch_checker.h $
+    ../../base/memory/ref_counted.h ../../base/memory/scoped_policy.h $
+    ../../base/memory/scoped_ptr.h ../../base/memory/weak_ptr.h $
+    ../../base/message_loop/incoming_task_queue.h $
+    ../../base/message_loop/message_loop.h $
+    ../../base/message_loop/message_loop_task_runner.h $
+    ../../base/message_loop/message_pump.h $
+    ../../base/message_loop/message_pump_dispatcher.h $
+    ../../base/message_loop/message_pump_io_ios.h $
+    ../../base/message_loop/message_pump_libevent.h $
+    ../../base/message_loop/message_pump_mac.h $
+    ../../base/message_loop/message_pump_win.h $
+    ../../base/message_loop/timer_slack.h ../../base/move.h $
+    ../../base/numerics/safe_conversions.h $
+    ../../base/numerics/safe_conversions_impl.h $
+    ../../base/numerics/safe_math.h ../../base/numerics/safe_math_impl.h $
+    ../../base/observer_list.h ../../base/pending_task.h $
+    ../../base/profiler/tracked_time.h ../../base/sequence_checker.h $
+    ../../base/sequence_checker_impl.h ../../base/sequenced_task_runner.h $
+    ../../base/sequenced_task_runner_helpers.h $
+    ../../base/single_thread_task_runner.h ../../base/stl_util.h $
+    ../../base/strings/string16.h ../../base/strings/string_piece.h $
+    ../../base/synchronization/lock.h $
+    ../../base/synchronization/lock_impl.h $
+    ../../base/synchronization/waitable_event.h ../../base/task_runner.h $
+    ../../base/template_util.h ../../base/thread_task_runner_handle.h $
+    ../../base/threading/non_thread_safe.h $
+    ../../base/threading/non_thread_safe_impl.h $
+    ../../base/threading/platform_thread.h $
+    ../../base/threading/sequenced_worker_pool.h $
+    ../../base/threading/thread.h ../../base/threading/thread_checker.h $
+    ../../base/threading/thread_checker_impl.h $
+    ../../base/threading/thread_collision_warner.h ../../base/time/time.h $
+    ../../base/timer/timer.h ../../base/tracking_info.h ../../base/tuple.h $
+    ../../base/win/scoped_handle.h ../../build/build_config.h $
+    ../../native_client_sdk/src/libraries/nacl_io/include/sys/time.h $
+    ../../ppapi/c/pp_bool.h ../../ppapi/c/pp_completion_callback.h $
+    ../../ppapi/c/pp_instance.h ../../ppapi/c/pp_macros.h $
+    ../../ppapi/c/pp_module.h ../../ppapi/c/pp_point.h $
+    ../../ppapi/c/pp_rect.h ../../ppapi/c/pp_resource.h $
+    ../../ppapi/c/pp_size.h ../../ppapi/c/pp_stdint.h $
+    ../../ppapi/c/pp_time.h ../../ppapi/c/pp_var.h ../../ppapi/c/ppb.h $
+    ../../ppapi/c/ppb_console.h ../../ppapi/c/ppb_core.h $
+    ../../ppapi/c/ppb_text_input_controller.h ../../ppapi/cpp/core.h $
+    ../../ppapi/cpp/instance.h ../../ppapi/cpp/instance_handle.h $
+    ../../ppapi/cpp/logging.h ../../ppapi/cpp/module.h $
+    ../../ppapi/cpp/pass_ref.h ../../ppapi/cpp/point.h $
+    ../../ppapi/cpp/rect.h ../../ppapi/cpp/resource.h $
+    ../../ppapi/cpp/size.h ../../ppapi/cpp/text_input_controller.h $
+    ../../ppapi/cpp/var.h ../../ppapi/cpp/view.h $
+    ../../testing/gtest/include/gtest/gtest_prod.h $
+    ../../third_party/webrtc/base/constructormagic.h $
+    ../../third_party/webrtc/base/scoped_ptr.h $
+    ../../third_party/webrtc/base/template_util.h $
+    ../../third_party/webrtc/libjingle/xmllite/qname.h $
+    ../../third_party/webrtc/libjingle/xmllite/xmlelement.h $
+    ../../third_party/webrtc/modules/desktop_capture/desktop_geometry.h $
+    ../../third_party/webrtc/typedefs.h $
+    ../../ui/events/keycodes/dom/dom_code.h $
+    ../../ui/events/keycodes/dom/keycode_converter_data.inc $
+    ../../url/gurl.h ../../url/third_party/mozilla/url_parse.h $
+    ../../url/url_canon.h ../../url/url_canon_stdstring.h $
+    ../../url/url_constants.h ../../url/url_export.h $
+    ../../remoting/base/logging.h ../../remoting/base/rate_counter.h $
+    ../../remoting/base/running_average.h $
+    ../../remoting/client/client_context.h $
+    ../../remoting/client/client_user_interface.h $
+    ../../remoting/client/empty_cursor_filter.h $
+    ../../remoting/client/key_event_mapper.h $
+    ../../remoting/client/plugin/chromoting_instance.h $
+    ../../remoting/client/plugin/pepper_cursor_setter.h $
+    ../../remoting/client/plugin/pepper_input_handler.h $
+    ../../remoting/client/plugin/pepper_module.cc $
+    ../../remoting/client/plugin/pepper_video_renderer.h $
+    ../../remoting/client/touch_input_scaler.h $
+    ../../remoting/client/video_renderer.h $
+    ../../remoting/protocol/authentication_method.h $
+    ../../remoting/protocol/authenticator.h $
+    ../../remoting/protocol/client_stub.h $
+    ../../remoting/protocol/clipboard_stub.h $
+    ../../remoting/protocol/connection_to_host.h $
+    ../../remoting/protocol/cursor_shape_stub.h $
+    ../../remoting/protocol/errors.h $
+    ../../remoting/protocol/input_event_tracker.h $
+    ../../remoting/protocol/input_filter.h $
+    ../../remoting/protocol/input_stub.h $
+    ../../remoting/protocol/mouse_input_filter.h $
+    ../../remoting/protocol/negotiating_authenticator_base.h $
+    ../../remoting/protocol/negotiating_client_authenticator.h $
+    ../../remoting/protocol/performance_tracker.h $
+    ../../remoting/protocol/third_party_authenticator_base.h $
+    ../../remoting/protocol/third_party_client_authenticator.h $
+    gen/tc_pnacl_newlib/lib/libbase_i18n_nacl.a $
+    gen/tc_pnacl_newlib/lib/libbase_nacl.a $
+    gen/tc_pnacl_newlib/lib/libexpat_nacl.a $
+    gen/tc_pnacl_newlib/lib/libicudata_nacl.a $
+    gen/tc_pnacl_newlib/lib/libcrypto_nacl.a $
+    gen/tc_pnacl_newlib/lib/libicui18n_nacl.a $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a $
+    gen/tc_pnacl_newlib/lib/libjingle_p2p_constants_nacl.a $
+    gen/tc_pnacl_newlib/lib/libmodp_b64_nacl.a $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a $
+    gen/tc_pnacl_newlib/lib/libopus_nacl.a $
+    gen/tc_pnacl_newlib/lib/libppapi.a $
+    gen/tc_pnacl_newlib/lib/libppapi_cpp.a $
+    gen/tc_pnacl_newlib/lib/libprotobuf_lite_nacl.a $
+    gen/tc_pnacl_newlib/lib/libjingle_glue_nacl.a $
+    gen/tc_pnacl_newlib/lib/libnet_nacl.a $
+    gen/tc_pnacl_newlib/lib/libremoting_client_plugin_lib_nacl.a $
+    gen/tc_pnacl_newlib/lib/libremoting_proto_nacl.a $
+    gen/tc_pnacl_newlib/lib/libremoting_webrtc_nacl.a $
+    gen/tc_pnacl_newlib/lib/liburl_nacl.a $
+    gen/tc_pnacl_newlib/lib/libvpx_nacl.a $
+    gen/tc_pnacl_newlib/lib/libyuv_nacl.a $
+    ../../out/gypfiles/remoting/pnacl_newlib.remoting_client_plugin_nacl.source_list.gypcmd $
+    ../../native_client/toolchain/linux_x86/pnacl_newlib/pnacl_newlib.json $
+    || obj/remoting/remoting_client_plugin_nacl.actions_depends.stamp
+
+build obj/remoting/remoting_client_plugin_nacl.actions_rules_copies.stamp: $
+    stamp remoting_client_plugin_newlib.pexe $
+    remoting_client_plugin_newlib.pexe.debug
+
+defines = -DV8_DEPRECATION_WARNINGS -DCLD_VERSION=2 -D_FILE_OFFSET_BITS=64 $
+    -DCHROMIUM_BUILD -DCR_CLANG_REVISION=255169-1 $
+    -DUI_COMPOSITOR_IMAGE_TRANSPORT -DUSE_AURA=1 -DUSE_ASH=1 -DUSE_PANGO=1 $
+    -DUSE_CAIRO=1 -DUSE_DEFAULT_RENDER_THEME=1 -DUSE_LIBJPEG_TURBO=1 $
+    -DUSE_X11=1 -DUSE_CLIPBOARD_AURAX11=1 -DENABLE_ONE_CLICK_SIGNIN $
+    -DENABLE_WEBRTC=1 -DENABLE_MEDIA_ROUTER=1 -DENABLE_PEPPER_CDMS $
+    -DENABLE_CONFIGURATION_POLICY -DENABLE_NOTIFICATIONS -DENABLE_HIDPI=1 $
+    -DENABLE_TOPCHROME_MD=1 -DUSE_UDEV -DDONT_EMBED_BUILD_METADATA $
+    -DFIELDTRIAL_TESTING_ENABLED -DENABLE_TASK_MANAGER=1 $
+    -DENABLE_EXTENSIONS=1 -DENABLE_PDF=1 -DENABLE_PLUGINS=1 $
+    -DENABLE_SESSION_SERVICE=1 -DENABLE_THEMES=1 -DENABLE_AUTOFILL_DIALOG=1 $
+    -DENABLE_BACKGROUND=1 -DENABLE_PRINTING=1 -DENABLE_BASIC_PRINTING=1 $
+    -DENABLE_PRINT_PREVIEW=1 -DENABLE_SPELLCHECK=1 $
+    -DENABLE_CAPTIVE_PORTAL_DETECTION=1 -DENABLE_APP_LIST=1 $
+    -DENABLE_SETTINGS_APP=1 -DENABLE_SUPERVISED_USERS=1 -DENABLE_MDNS=1 $
+    -DENABLE_SERVICE_DISCOVERY=1 -DV8_USE_EXTERNAL_STARTUP_DATA $
+    -DFULL_SAFE_BROWSING -DSAFE_BROWSING_CSD -DSAFE_BROWSING_DB_LOCAL $
+    -DXML_STATIC -DU_USING_ICU_NAMESPACE=0 -DU_ENABLE_DYLOAD=0 $
+    -DU_STATIC_IMPLEMENTATION -DEXPAT_RELATIVE_PATH -DFEATURE_ENABLE_SSL $
+    -DGTEST_RELATIVE_PATH -DNO_MAIN_THREAD_WRAPPING -DNO_SOUND_SYSTEM $
+    -DWEBRTC_POSIX -DSRTP_RELATIVE_PATH -DSSL_USE_OPENSSL $
+    -DUSE_WEBRTC_DEV_BRANCH -DGOOGLE_PROTOBUF_NO_RTTI $
+    -DGOOGLE_PROTOBUF_NO_STATIC_INITIALIZER -DUSE_LIBPCI=1 -DUSE_OPENSSL=1 $
+    -DUSE_OPENSSL_CERTS=1 -D__STDC_CONSTANT_MACROS -D__STDC_FORMAT_MACROS $
+    -DDYNAMIC_ANNOTATIONS_ENABLED=1 -DWTF_USE_DYNAMIC_ANNOTATIONS=1 $
+    -D_DEBUG -D_GLIBCXX_DEBUG=1
+includes = -Igen -I../../third_party/khronos -I../../gpu $
+    -I../../native_client_sdk/src/libraries $
+    -I../../native_client_sdk/src/libraries/nacl_io/include $
+    -I../../native_client_sdk/src/libraries/third_party/newlib-extras $
+    -I../../third_party/expat/files/lib -I../../third_party/icu/source/i18n $
+    -I../../third_party/icu/source/common $
+    -I../../third_party/libjingle/overrides $
+    -I../../third_party/libjingle/source $
+    -I../../third_party/webrtc_overrides -I../../third_party $
+    -I../../third_party/webrtc -I../../third_party/libyuv/include $
+    -I../../third_party/boringssl/src/include -Igen/protoc_out $
+    -I../../third_party/protobuf -I../../third_party/protobuf/src
+cflags = -fstack-protector --param=ssp-buffer-size=4 -Werror -pthread $
+    -fno-strict-aliasing -Wall -Wno-unused-parameter $
+    -Wno-missing-field-initializers -fvisibility=hidden -pipe -fPIC $
+    -Wno-reserved-user-defined-literal -Xclang -load -Xclang $
+    /b/build/slave/publish_tarball/build/src/third_party/llvm-build/Release+Asserts/lib/libFindBadConstructs.so $
+    -Xclang -add-plugin -Xclang find-bad-constructs -Xclang $
+    -plugin-arg-find-bad-constructs -Xclang check-templates $
+    -fcolor-diagnostics $
+    -B/b/build/slave/publish_tarball/build/src/third_party/binutils/Linux_x64/Release/bin $
+    -Wheader-hygiene -Wno-char-subscripts $
+    -Wno-unneeded-internal-declaration -Wno-covered-switch-default $
+    -Wstring-conversion -Wno-c++11-narrowing -Wno-deprecated-register $
+    -Wno-inconsistent-missing-override -Wno-shift-negative-value $
+    -Wno-bitfield-width -m64 -march=x86-64 $
+    --sysroot=/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot $
+    -O0 -g -funwind-tables -gsplit-dwarf -Wno-undefined-bool-conversion $
+    -Wno-tautological-undefined-compare
+cflags_c = 
+cflags_cc = -fno-exceptions -fno-rtti -fno-threadsafe-statics $
+    -fvisibility-inlines-hidden -Wsign-compare -std=gnu++11
+arflags = 
+
+build $
+    obj/remoting/client/plugin/remoting_client_plugin_nacl.pepper_module.o: $
+    cxx ../../remoting/client/plugin/pepper_module.cc || $
+    obj/remoting/remoting_client_plugin_nacl.actions_rules_copies.stamp
+

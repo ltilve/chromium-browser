@@ -76,7 +76,7 @@ class SkTestRunnable : public SkRunnable {
 public:
     SkTestRunnable(const Test& test,
                    Status* status,
-                   GrContextFactory* grContextFactory = NULL)
+                   GrContextFactory* grContextFactory = nullptr)
         : fTest(test), fStatus(status), fGrContextFactory(grContextFactory) {}
 
   virtual void run() {
@@ -104,7 +104,7 @@ public:
       }
       fStatus->endTest(fTest.name, !reporter.fError, elapsed,
                        reporter.fTestCount);
-      SkDELETE(this);
+      delete this;
   }
 
 private:
@@ -153,7 +153,6 @@ int test_main() {
 #else
         header.append(" SK_RELEASE");
 #endif
-        header.appendf(" skia_arch_width=%d", (int)sizeof(void*) * 8);
         if (FLAGS_veryVerbose) {
             header.appendf("\n");
         }
@@ -190,11 +189,11 @@ int test_main() {
         } else if (test.needsGpu) {
             gpuTests.push_back(&test);
         } else {
-            cpuTests.add(SkNEW_ARGS(SkTestRunnable, (test, &status)));
+            cpuTests.add(new SkTestRunnable(test, &status));
         }
     }
 
-    GrContextFactory* grContextFactoryPtr = NULL;
+    GrContextFactory* grContextFactoryPtr = nullptr;
 #if SK_SUPPORT_GPU
     // Give GPU tests a context factory if that makes sense on this machine.
     GrContextFactory grContextFactory;
@@ -204,8 +203,7 @@ int test_main() {
 
     // Run GPU tests on this thread.
     for (int i = 0; i < gpuTests.count(); i++) {
-        SkNEW_ARGS(SkTestRunnable, (*gpuTests[i], &status, grContextFactoryPtr))
-                ->run();
+        (new SkTestRunnable(*gpuTests[i], &status, grContextFactoryPtr))->run();
     }
 
     // Block until threaded tests finish.

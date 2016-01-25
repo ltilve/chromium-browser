@@ -1,0 +1,10 @@
+build obj/third_party/WebKit/public/all_blink.actions_depends.stamp: stamp $
+    blink_heap_unittests blink_platform_unittests webkit_unit_tests $
+    wtf_unittests
+
+build obj/third_party/WebKit/public/all_blink.compile_depends.stamp: stamp $
+    obj/third_party/WebKit/Source/platform/blink_heap_unittests.compile_depends.stamp $
+    obj/third_party/WebKit/Source/platform/blink_platform_unittests.compile_depends.stamp $
+    obj/third_party/WebKit/Source/web/webkit_unit_tests.compile_depends.stamp $
+    obj/third_party/WebKit/Source/wtf/wtf_unittests.compile_depends.stamp
+

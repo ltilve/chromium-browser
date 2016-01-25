@@ -32,6 +32,7 @@
 
 #include "bindings/core/v8/ExceptionStatePlaceholder.h"
 #include "core/InputTypeNames.h"
+#include "core/dom/ClientRect.h"
 #include "core/dom/DOMTokenList.h"
 #include "core/dom/shadow/ShadowRoot.h"
 #include "core/events/MouseEvent.h"
@@ -45,15 +46,18 @@
 #include "core/layout/LayoutTheme.h"
 #include "core/layout/LayoutVideo.h"
 #include "platform/RuntimeEnabledFeatures.h"
+#include "public/platform/Platform.h"
 
 namespace blink {
 
 using namespace HTMLNames;
 
-// This is the duration from mediaControls.css
-static const double fadeOutDuration = 0.3;
+namespace {
 
-static bool isUserInteractionEvent(Event* event)
+// This is the duration from mediaControls.css
+const double fadeOutDuration = 0.3;
+
+bool isUserInteractionEvent(Event* event)
 {
     const AtomicString& type = event->type();
     return type == EventTypeNames::mousedown
@@ -65,20 +69,34 @@ static bool isUserInteractionEvent(Event* event)
 }
 
 // Sliders (the volume control and timeline) need to capture some additional events used when dragging the thumb.
-static bool isUserInteractionEventForSlider(Event* event)
+bool isUserInteractionEventForSlider(Event* event, LayoutObject* layoutObject)
 {
+    // It is unclear if this can be converted to isUserInteractionEvent(), since
+    // mouse* events seem to be eaten during a drag anyway.  crbug.com/516416 .
+    if (isUserInteractionEvent(event))
+        return true;
+
+    // Some events are only captured during a slider drag.
+    LayoutSlider* slider = toLayoutSlider(layoutObject);
+    if (slider && !slider->inDragMode())
+        return false;
+
     const AtomicString& type = event->type();
-    return type == EventTypeNames::mousedown
-        || type == EventTypeNames::mouseup
-        || type == EventTypeNames::click
-        || type == EventTypeNames::dblclick
-        || type == EventTypeNames::mouseover
+    return type == EventTypeNames::mouseover
         || type == EventTypeNames::mouseout
-        || type == EventTypeNames::mousemove
-        || event->isKeyboardEvent()
-        || event->isTouchEvent();
+        || type == EventTypeNames::mousemove;
 }
 
+Element* elementFromCenter(Element& element)
+{
+    ClientRect* clientRect = element.getBoundingClientRect();
+    int centerX = static_cast<int>((clientRect->left() + clientRect->right()) / 2);
+    int centerY = static_cast<int>((clientRect->top() + clientRect->bottom()) / 2);
+
+    return element.document().elementFromPoint(centerX , centerY);
+}
+
+} // anonymous namespace
 
 MediaControlPanelElement::MediaControlPanelElement(MediaControls& mediaControls)
     : MediaControlDivElement(mediaControls, MediaControlsPanel)
@@ -126,7 +144,7 @@ void MediaControlPanelElement::stopTimer()
 void MediaControlPanelElement::transitionTimerFired(Timer<MediaControlPanelElement>*)
 {
     if (!m_opaque)
-        hide();
+        setIsWanted(false);
 
     stopTimer();
 }
@@ -142,11 +160,11 @@ void MediaControlPanelElement::makeOpaque()
     if (m_opaque)
         return;
 
-    setInlineStyleProperty(CSSPropertyOpacity, 1.0, CSSPrimitiveValue::CSS_NUMBER);
+    setInlineStyleProperty(CSSPropertyOpacity, 1.0, CSSPrimitiveValue::UnitType::Number);
     m_opaque = true;
 
     if (m_isDisplayed) {
-        show();
+        setIsWanted(true);
         didBecomeVisible();
     }
 }
@@ -156,7 +174,7 @@ void MediaControlPanelElement::makeTransparent()
     if (!m_opaque)
         return;
 
-    setInlineStyleProperty(CSSPropertyOpacity, 0.0, CSSPrimitiveValue::CSS_NUMBER);
+    setInlineStyleProperty(CSSPropertyOpacity, 0.0, CSSPrimitiveValue::UnitType::Number);
 
     m_opaque = false;
     startTimer();
@@ -308,10 +326,7 @@ void MediaControlOverlayPlayButtonElement::defaultEventHandler(Event* event)
 
 void MediaControlOverlayPlayButtonElement::updateDisplayType()
 {
-    if (mediaElement().shouldShowControls() && mediaElement().togglePlayStateWillPlay())
-        show();
-    else
-        hide();
+    setIsWanted(mediaElement().shouldShowControls() && mediaElement().togglePlayStateWillPlay());
 }
 
 bool MediaControlOverlayPlayButtonElement::keepEventInNode(Event* event)
@@ -333,7 +348,7 @@ PassRefPtrWillBeRawPtr<MediaControlToggleClosedCaptionsButtonElement> MediaContr
     button->ensureUserAgentShadowRoot();
     button->setType(InputTypeNames::button);
     button->setShadowPseudoId(AtomicString("-webkit-media-controls-toggle-closed-captions-button", AtomicString::ConstructFromLiteral));
-    button->hide();
+    button->setIsWanted(false);
     return button.release();
 }
 
@@ -432,7 +447,7 @@ void MediaControlTimelineElement::setDuration(double duration)
 
 bool MediaControlTimelineElement::keepEventInNode(Event* event)
 {
-    return isUserInteractionEventForSlider(event);
+    return isUserInteractionEventForSlider(event, layoutObject());
 }
 
 // ----------------------------
@@ -495,7 +510,7 @@ void MediaControlVolumeSliderElement::setVolume(double volume)
 
 bool MediaControlVolumeSliderElement::keepEventInNode(Event* event)
 {
-    return isUserInteractionEventForSlider(event);
+    return isUserInteractionEventForSlider(event, layoutObject());
 }
 
 // ----------------------------
@@ -511,7 +526,7 @@ PassRefPtrWillBeRawPtr<MediaControlFullscreenButtonElement> MediaControlFullscre
     button->ensureUserAgentShadowRoot();
     button->setType(InputTypeNames::button);
     button->setShadowPseudoId(AtomicString("-webkit-media-controls-fullscreen-button", AtomicString::ConstructFromLiteral));
-    button->hide();
+    button->setIsWanted(false);
     return button.release();
 }
 
@@ -537,6 +552,8 @@ void MediaControlFullscreenButtonElement::setIsFullscreen(bool isFullscreen)
 MediaControlCastButtonElement::MediaControlCastButtonElement(MediaControls& mediaControls, bool isOverlayButton)
     : MediaControlInputElement(mediaControls, MediaCastOnButton), m_isOverlayButton(isOverlayButton)
 {
+    if (m_isOverlayButton)
+        recordMetrics(CastOverlayMetrics::Created);
     setIsPlayingRemotely(false);
 }
 
@@ -551,6 +568,10 @@ PassRefPtrWillBeRawPtr<MediaControlCastButtonElement> MediaControlCastButtonElem
 void MediaControlCastButtonElement::defaultEventHandler(Event* event)
 {
     if (event->type() == EventTypeNames::click) {
+        if (m_isOverlayButton && !m_clickUseCounted) {
+            m_clickUseCounted = true;
+            recordMetrics(CastOverlayMetrics::Clicked);
+        }
         if (mediaElement().isPlayingRemotely()) {
             mediaElement().requestRemotePlaybackControl();
         } else {
@@ -584,9 +605,32 @@ void MediaControlCastButtonElement::setIsPlayingRemotely(bool isPlayingRemotely)
     }
 }
 
+void MediaControlCastButtonElement::tryShowOverlay()
+{
+    ASSERT(m_isOverlayButton);
+
+    setIsWanted(true);
+    if (elementFromCenter(*this) != &mediaElement()) {
+        setIsWanted(false);
+        return;
+    }
+
+    ASSERT(isWanted());
+    if (!m_showUseCounted) {
+        m_showUseCounted = true;
+        recordMetrics(CastOverlayMetrics::Shown);
+    }
+}
+
 bool MediaControlCastButtonElement::keepEventInNode(Event* event)
 {
     return isUserInteractionEvent(event);
+}
+
+void MediaControlCastButtonElement::recordMetrics(CastOverlayMetrics metric)
+{
+    ASSERT(m_isOverlayButton);
+    Platform::current()->histogramEnumeration("Cast.Sender.Overlay", static_cast<int>(metric), static_cast<int>(CastOverlayMetrics::Count));
 }
 
 // ----------------------------

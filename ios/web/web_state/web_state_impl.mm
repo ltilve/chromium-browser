@@ -17,6 +17,8 @@
 #include "ios/web/public/web_state/credential.h"
 #include "ios/web/public/web_state/ui/crw_content_view.h"
 #include "ios/web/public/web_state/web_state_observer.h"
+#include "ios/web/public/web_state/web_state_policy_decider.h"
+#include "ios/web/web_state/global_web_state_event_tracker.h"
 #import "ios/web/web_state/ui/crw_web_controller.h"
 #import "ios/web/web_state/ui/crw_web_controller_container_view.h"
 #include "ios/web/web_state/web_state_facade_delegate.h"
@@ -33,6 +35,7 @@ WebStateImpl::WebStateImpl(BrowserState* browser_state)
       navigation_manager_(this, browser_state),
       interstitial_(nullptr),
       cache_mode_(net::RequestTracker::CACHE_NORMAL) {
+  GlobalWebStateEventTracker::GetInstance()->OnWebStateCreated(this);
 }
 
 WebStateImpl::~WebStateImpl() {
@@ -46,6 +49,9 @@ WebStateImpl::~WebStateImpl() {
 
   FOR_EACH_OBSERVER(WebStateObserver, observers_, WebStateDestroyed());
   FOR_EACH_OBSERVER(WebStateObserver, observers_, ResetWebState());
+  FOR_EACH_OBSERVER(WebStatePolicyDecider, policy_deciders_,
+                    WebStateDestroyed());
+  FOR_EACH_OBSERVER(WebStatePolicyDecider, policy_deciders_, ResetWebState());
   DCHECK(script_command_callbacks_.empty());
   if (request_tracker_.get())
     CloseRequestTracker();
@@ -59,6 +65,22 @@ void WebStateImpl::AddObserver(WebStateObserver* observer) {
 void WebStateImpl::RemoveObserver(WebStateObserver* observer) {
   DCHECK(observers_.HasObserver(observer));
   observers_.RemoveObserver(observer);
+}
+
+void WebStateImpl::AddPolicyDecider(WebStatePolicyDecider* decider) {
+  // Despite the name, ObserverList is actually generic, so it is used for
+  // deciders. This makes the call here odd looking, but it's really just
+  // managing the list, not setting observers on deciders.
+  DCHECK(!policy_deciders_.HasObserver(decider));
+  policy_deciders_.AddObserver(decider);
+}
+
+void WebStateImpl::RemovePolicyDecider(WebStatePolicyDecider* decider) {
+  // Despite the name, ObserverList is actually generic, so it is used for
+  // deciders. This makes the call here odd looking, but it's really just
+  // managing the list, not setting observers on deciders.
+  DCHECK(policy_deciders_.HasObserver(decider));
+  policy_deciders_.RemoveObserver(decider);
 }
 
 bool WebStateImpl::Configured() const {
@@ -82,6 +104,10 @@ WebStateImpl* WebStateImpl::CopyForSessionWindow() {
   WebStateImpl* copy = new WebStateImpl(GetBrowserState());
   copy->GetNavigationManagerImpl().CopyState(&navigation_manager_);
   return copy;
+}
+
+void WebStateImpl::OnNavigationCommitted(const GURL& url) {
+  UpdateHttpResponseHeaders(url);
 }
 
 void WebStateImpl::OnUrlHashChanged() {
@@ -109,7 +135,6 @@ bool WebStateImpl::OnScriptCommandReceived(const std::string& command,
 }
 
 void WebStateImpl::SetIsLoading(bool is_loading) {
-  DCHECK(Configured());
   if (is_loading == is_loading_)
     return;
 
@@ -129,7 +154,6 @@ bool WebStateImpl::IsLoading() const {
 }
 
 void WebStateImpl::OnPageLoaded(const GURL& url, bool load_success) {
-  UpdateHttpResponseHeaders(url);
   if (facade_delegate_)
     facade_delegate_->OnPageLoaded();
 
@@ -149,14 +173,6 @@ void WebStateImpl::OnFormActivityRegistered(const std::string& form_name,
   FOR_EACH_OBSERVER(WebStateObserver, observers_,
                     FormActivityRegistered(form_name, field_name, type, value,
                                            key_code, input_missing));
-}
-
-void WebStateImpl::OnAutocompleteRequested(const GURL& source_url,
-                                           const std::string& form_name,
-                                           bool user_initiated) {
-  FOR_EACH_OBSERVER(
-      WebStateObserver, observers_,
-      AutocompleteRequested(source_url, form_name, user_initiated));
 }
 
 void WebStateImpl::OnFaviconUrlUpdated(
@@ -295,6 +311,8 @@ void WebStateImpl::OnHttpResponseHeadersReceived(
   // Store the headers in a map until the page finishes loading, as we do not
   // know which URL corresponds to the main page yet.
   // Remove the hash (if any) as it is sometimes altered by in-page navigations.
+  // TODO(crbug/551677): Simplify all this logic once UIWebView is no longer
+  // supported.
   const GURL& url = GURLByRemovingRefFromGURL(resource_url);
   response_headers_map_[url] = response_headers;
 }
@@ -339,18 +357,6 @@ void WebStateImpl::ShowWebInterstitial(WebInterstitialImpl* interstitial) {
 
 void WebStateImpl::ClearTransientContentView() {
   if (interstitial_) {
-    CRWSessionController* sessionController =
-        navigation_manager_.GetSessionController();
-    web::NavigationItem* currentItem =
-        [sessionController.currentEntry navigationItem];
-    if (currentItem->IsUnsafe()) {
-      // The unsafe page should be removed from history, and, in fact,
-      // SafeBrowsingBlockingPage will do just that *provided* that it
-      // isn't the current page. So to make this happen, before removing the
-      // interstitial, have the session controller go back one page.
-      [sessionController goBack];
-    }
-    [sessionController discardNonCommittedEntries];
     // Store the currently displayed interstitial in a local variable and reset
     // |interstitial_| early.  This is to prevent an infinite loop, as
     // |DontProceed()| internally calls |ClearTransientContentView()|.
@@ -381,10 +387,34 @@ WebUIIOS* WebStateImpl::CreateWebUIIOS(const GURL& url) {
   return NULL;
 }
 
+void WebStateImpl::SetContentsMimeType(const std::string& mime_type) {
+  mime_type_ = mime_type;
+}
+
 void WebStateImpl::ExecuteJavaScriptAsync(const base::string16& javascript) {
   DCHECK(Configured());
   [web_controller_ evaluateJavaScript:base::SysUTF16ToNSString(javascript)
                   stringResultHandler:nil];
+}
+
+bool WebStateImpl::ShouldAllowRequest(NSURLRequest* request) {
+  base::ObserverListBase<WebStatePolicyDecider>::Iterator it(&policy_deciders_);
+  WebStatePolicyDecider* policy_decider = nullptr;
+  while ((policy_decider = it.GetNext()) != nullptr) {
+    if (!policy_decider->ShouldAllowRequest(request))
+      return false;
+  }
+  return true;
+}
+
+bool WebStateImpl::ShouldAllowResponse(NSURLResponse* response) {
+  base::ObserverListBase<WebStatePolicyDecider>::Iterator it(&policy_deciders_);
+  WebStatePolicyDecider* policy_decider = nullptr;
+  while ((policy_decider = it.GetNext()) != nullptr) {
+    if (!policy_decider->ShouldAllowResponse(response))
+      return false;
+  }
+  return true;
 }
 
 #pragma mark - RequestTracker management

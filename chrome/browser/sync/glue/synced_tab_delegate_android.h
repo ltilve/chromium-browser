@@ -14,6 +14,8 @@ class WebContents;
 }
 
 class TabAndroid;
+class TabContentsSyncedTabDelegate;
+
 namespace browser_sync {
 // On Android a tab can exist even without web contents.
 
@@ -41,7 +43,6 @@ class SyncedTabDelegateAndroid : public browser_sync::SyncedTabDelegate {
   content::WebContents* GetWebContents() const override;
   int GetSyncId() const override;
   void SetSyncId(int sync_id) override;
-  bool ShouldSync() const override;
 
   // Supervised user related methods.
 
@@ -58,6 +59,7 @@ class SyncedTabDelegateAndroid : public browser_sync::SyncedTabDelegate {
  private:
   content::WebContents* web_contents_;
   TabAndroid* tab_android_;
+  TabContentsSyncedTabDelegate* tab_contents_delegate_;
 
   DISALLOW_COPY_AND_ASSIGN(SyncedTabDelegateAndroid);
 };

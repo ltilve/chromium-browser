@@ -7,11 +7,13 @@
 #include "base/strings/stringprintf.h"
 #include "content/browser/frame_host/render_frame_host_impl.h"
 #include "content/common/frame_messages.h"
+#include "content/public/browser/navigation_handle.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/render_process_host.h"
 #include "content/public/browser/site_instance.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/browser/web_contents_observer.h"
+#include "net/base/net_errors.h"
 
 namespace content {
 
@@ -119,6 +121,56 @@ void WebContentsObserverSanityChecker::FrameDeleted(
   CHECK(!web_contents_destroyed_);
 }
 
+void WebContentsObserverSanityChecker::DidStartNavigation(
+    NavigationHandle* navigation_handle) {
+  CHECK(!NavigationIsOngoing(navigation_handle));
+
+  CHECK(navigation_handle->GetNetErrorCode() == net::OK);
+  CHECK(!navigation_handle->HasCommitted());
+  CHECK(!navigation_handle->IsErrorPage());
+  CHECK_EQ(navigation_handle->GetWebContents(), web_contents());
+
+  ongoing_navigations_.insert(navigation_handle);
+}
+
+void WebContentsObserverSanityChecker::DidRedirectNavigation(
+    NavigationHandle* navigation_handle) {
+  CHECK(NavigationIsOngoing(navigation_handle));
+
+  CHECK(navigation_handle->GetNetErrorCode() == net::OK);
+  CHECK(!navigation_handle->HasCommitted());
+  CHECK(!navigation_handle->IsErrorPage());
+  CHECK_EQ(navigation_handle->GetWebContents(), web_contents());
+}
+
+void WebContentsObserverSanityChecker::ReadyToCommitNavigation(
+    NavigationHandle* navigation_handle) {
+  CHECK(NavigationIsOngoing(navigation_handle));
+
+  CHECK(!navigation_handle->HasCommitted());
+  CHECK(navigation_handle->GetRenderFrameHost());
+  CHECK_EQ(navigation_handle->GetWebContents(), web_contents());
+  CHECK(navigation_handle->GetRenderFrameHost() != nullptr);
+}
+
+void WebContentsObserverSanityChecker::DidFinishNavigation(
+    NavigationHandle* navigation_handle) {
+  CHECK(NavigationIsOngoing(navigation_handle));
+
+  CHECK_IMPLIES(
+      navigation_handle->HasCommitted() && !navigation_handle->IsErrorPage(),
+      navigation_handle->GetNetErrorCode() == net::OK);
+  CHECK_IMPLIES(
+      navigation_handle->HasCommitted() && navigation_handle->IsErrorPage(),
+      navigation_handle->GetNetErrorCode() != net::OK);
+  CHECK_EQ(navigation_handle->GetWebContents(), web_contents());
+
+  CHECK_IMPLIES(navigation_handle->HasCommitted(),
+                navigation_handle->GetRenderFrameHost() != nullptr);
+
+  ongoing_navigations_.erase(navigation_handle);
+}
+
 void WebContentsObserverSanityChecker::DidStartProvisionalLoadForFrame(
     RenderFrameHost* render_frame_host,
     const GURL& validated_url,
@@ -220,6 +272,7 @@ bool WebContentsObserverSanityChecker::OnMessageReceived(
 void WebContentsObserverSanityChecker::WebContentsDestroyed() {
   CHECK(!web_contents_destroyed_);
   web_contents_destroyed_ = true;
+  CHECK(ongoing_navigations_.empty());
 }
 
 WebContentsObserverSanityChecker::WebContentsObserverSanityChecker(
@@ -264,6 +317,12 @@ std::string WebContentsObserverSanityChecker::Format(
       "(%d, %d -> %s)", render_frame_host->GetProcess()->GetID(),
       render_frame_host->GetRoutingID(),
       render_frame_host->GetSiteInstance()->GetSiteURL().spec().c_str());
+}
+
+bool WebContentsObserverSanityChecker::NavigationIsOngoing(
+    NavigationHandle* navigation_handle) {
+  auto it = ongoing_navigations_.find(navigation_handle);
+  return it != ongoing_navigations_.end();
 }
 
 }  // namespace content

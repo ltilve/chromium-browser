@@ -75,7 +75,7 @@ bool CookieSettings::IsCookieSessionOnly(const GURL& origin) const {
 
 void CookieSettings::GetCookieSettings(
     ContentSettingsForOneType* settings) const {
-  return host_content_settings_map_->GetSettingsForOneType(
+  host_content_settings_map_->GetSettingsForOneType(
       CONTENT_SETTINGS_TYPE_COOKIES, std::string(), settings);
 }
 
@@ -113,6 +113,17 @@ void CookieSettings::ResetCookieSetting(
       std::string(), CONTENT_SETTING_DEFAULT);
 }
 
+bool CookieSettings::IsStorageDurable(const GURL& origin) const {
+  // TODO(dgrogan): DCHECK somewhere that secondary doesn't get set for DURABLE.
+  // TODO(dgrogan): Should "resource_identifier" be something other than
+  // std::string()?
+  ContentSetting setting = host_content_settings_map_->GetContentSetting(
+      origin /*primary*/, origin /*secondary*/,
+      CONTENT_SETTINGS_TYPE_DURABLE_STORAGE,
+      std::string() /*resource_identifier*/);
+  return setting == CONTENT_SETTING_ALLOW;
+}
+
 void CookieSettings::ShutdownOnUIThread() {
   DCHECK(thread_checker_.CalledOnValidThread());
   pref_change_registrar_.RemoveAll();
@@ -122,9 +133,16 @@ ContentSetting CookieSettings::GetCookieSetting(const GURL& url,
                                                 const GURL& first_party_url,
                                                 bool setting_cookie,
                                                 SettingSource* source) const {
-  if (HostContentSettingsMap::ShouldAllowAllContent(
-          url, first_party_url, CONTENT_SETTINGS_TYPE_COOKIES))
+  // Auto-allow in extensions or for WebUI embedded in a secure origin.
+  if (url.SchemeIsCryptographic() && first_party_url.SchemeIs(kChromeUIScheme))
     return CONTENT_SETTING_ALLOW;
+
+#if defined(ENABLE_EXTENSIONS)
+  if (url.SchemeIs(kExtensionScheme) &&
+      first_party_url.SchemeIs(kExtensionScheme)) {
+    return CONTENT_SETTING_ALLOW;
+  }
+#endif
 
   // First get any host-specific settings.
   SettingInfo info;

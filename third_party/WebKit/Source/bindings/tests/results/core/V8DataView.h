@@ -15,11 +15,13 @@
 #include "bindings/core/v8/WrapperTypeInfo.h"
 #include "bindings/tests/idls/core/TestDataView.h"
 #include "core/CoreExport.h"
+#include "core/dom/FlexibleArrayBufferView.h"
 #include "platform/heap/Handle.h"
 
 namespace blink {
 
 class V8DataView {
+    STATIC_ONLY(V8DataView);
 public:
     CORE_EXPORT static bool hasInstance(v8::Local<v8::Value>, v8::Isolate*);
     CORE_EXPORT static TestDataView* toImpl(v8::Local<v8::Object> object);

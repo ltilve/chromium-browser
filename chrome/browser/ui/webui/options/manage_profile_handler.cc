@@ -91,7 +91,7 @@ void ManageProfileHandler::GetLocalizedValues(
     { "manageProfilesNameLabel", IDS_PROFILES_MANAGE_NAME_LABEL },
     { "manageProfilesIconLabel", IDS_PROFILES_MANAGE_ICON_LABEL },
     { "manageProfilesExistingSupervisedUser",
-        IDS_PROFILES_CREATE_EXISTING_SUPERVISED_USER_ERROR },
+        IDS_PROFILES_CREATE_EXISTING_LEGACY_SUPERVISED_USER_ERROR },
     { "manageProfilesSupervisedSignedInLabel",
         IDS_PROFILES_CREATE_SUPERVISED_SIGNED_IN_LABEL },
     { "manageProfilesSupervisedNotSignedIn",
@@ -99,13 +99,11 @@ void ManageProfileHandler::GetLocalizedValues(
     { "manageProfilesSupervisedAccountDetailsOutOfDate",
         IDS_PROFILES_CREATE_SUPERVISED_ACCOUNT_DETAILS_OUT_OF_DATE_LABEL },
     { "manageProfilesSupervisedSignInAgainLink",
-        IDS_PROFILES_CREATE_SUPERVISED_SIGN_IN_AGAIN_LINK },
+        IDS_PROFILES_GAIA_REAUTH_TITLE },
     { "manageProfilesConfirm", IDS_SAVE },
     { "deleteProfileTitle", IDS_PROFILES_DELETE_TITLE },
     { "deleteProfileOK", IDS_PROFILES_DELETE_OK_BUTTON_LABEL },
     { "deleteProfileMessage", IDS_PROFILES_DELETE_MESSAGE },
-    { "deleteSupervisedProfileAddendum",
-        IDS_PROFILES_DELETE_SUPERVISED_ADDENDUM },
     { "disconnectManagedProfileTitle",
         IDS_PROFILES_DISCONNECT_MANAGED_PROFILE_TITLE },
     { "disconnectManagedProfileOK",
@@ -117,15 +115,22 @@ void ManageProfileHandler::GetLocalizedValues(
     { "createProfileShortcutButton", IDS_PROFILES_CREATE_SHORTCUT_BUTTON },
     { "removeProfileShortcutButton", IDS_PROFILES_REMOVE_SHORTCUT_BUTTON },
     { "importExistingSupervisedUserLink",
-        IDS_PROFILES_IMPORT_EXISTING_SUPERVISED_USER_LINK },
+        IDS_IMPORT_EXISTING_LEGACY_SUPERVISED_USER_TITLE },
   };
 
   RegisterStrings(localized_strings, resources, arraysize(resources));
   RegisterTitle(localized_strings, "manageProfile", IDS_PROFILES_MANAGE_TITLE);
   RegisterTitle(localized_strings, "createProfile", IDS_PROFILES_CREATE_TITLE);
 
-  localized_strings->SetBoolean("newAvatarMenuEnabled",
-                                switches::IsNewAvatarMenu());
+  base::string16 supervised_user_dashboard_url =
+      base::ASCIIToUTF16(chrome::kLegacySupervisedUserManagementURL);
+  base::string16 supervised_user_dashboard_display =
+      base::ASCIIToUTF16(chrome::kLegacySupervisedUserManagementDisplayURL);
+  localized_strings->SetString("deleteSupervisedProfileAddendum",
+    l10n_util::GetStringFUTF16(IDS_PROFILES_DELETE_LEGACY_SUPERVISED_ADDENDUM,
+                               supervised_user_dashboard_url,
+                               supervised_user_dashboard_display));
+
   localized_strings->SetBoolean("profileShortcutsEnabled",
                                 ProfileShortcutManager::IsFeatureEnabled());
 
@@ -236,7 +241,7 @@ void ManageProfileHandler::GenerateSignedinUserSpecificStrings(
   DCHECK(profile);
   SigninManagerBase* manager = SigninManagerFactory::GetForProfile(profile);
   if (manager) {
-    username = manager->GetAuthenticatedUsername();
+    username = manager->GetAuthenticatedAccountInfo().email;
     // If there is no one logged in or if the profile name is empty then the
     // domain name is empty. This happens in browser tests.
     if (!username.empty()) {
@@ -489,7 +494,7 @@ void ManageProfileHandler::RequestCreateProfileUpdate(
   SigninManagerBase* manager =
       SigninManagerFactory::GetForProfile(profile);
   base::string16 username =
-      base::UTF8ToUTF16(manager->GetAuthenticatedUsername());
+      base::UTF8ToUTF16(manager->GetAuthenticatedAccountInfo().email);
   ProfileSyncService* service =
      ProfileSyncServiceFactory::GetForProfile(profile);
   GoogleServiceAuthError::State state = GoogleServiceAuthError::NONE;

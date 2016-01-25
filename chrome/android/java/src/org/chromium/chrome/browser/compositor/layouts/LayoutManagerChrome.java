@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import org.chromium.base.ObserverList;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.chrome.R;
-import org.chromium.chrome.browser.Tab;
 import org.chromium.chrome.browser.compositor.TitleCache;
 import org.chromium.chrome.browser.compositor.layouts.components.LayoutTab;
 import org.chromium.chrome.browser.compositor.layouts.components.VirtualView;
@@ -28,6 +27,7 @@ import org.chromium.chrome.browser.compositor.overlays.strip.StripLayoutHelperMa
 import org.chromium.chrome.browser.contextualsearch.ContextualSearchManagementDelegate;
 import org.chromium.chrome.browser.device.DeviceClassManager;
 import org.chromium.chrome.browser.fullscreen.FullscreenManager;
+import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.tabmodel.EmptyTabModelObserver;
 import org.chromium.chrome.browser.tabmodel.EmptyTabModelSelectorObserver;
 import org.chromium.chrome.browser.tabmodel.TabCreatorManager;
@@ -77,7 +77,7 @@ public class LayoutManagerChrome
     /** Responsible for building all incognito titles. */
     protected TitleBitmapFactory mIncognitoTitleBitmapFactory;
     /** Whether or not animations are enabled.  This can disable certain layouts or effects. */
-    protected boolean mEnableAnimations = true;
+    private boolean mEnableAnimations = true;
     private boolean mCreatingNtp;
     private final ObserverList<OverviewModeObserver> mOverviewModeObservers;
     private TabModelSelectorObserver mTabModelSelectorObserver;
@@ -676,6 +676,14 @@ public class LayoutManagerChrome
      */
     public void setEnableAnimations(boolean enabled) {
         mEnableAnimations = enabled;
+    }
+
+    /**
+     * @return Whether animations should be done for model changes.
+     */
+    @VisibleForTesting
+    public boolean animationsEnabled() {
+        return mEnableAnimations;
     }
 
     @Override

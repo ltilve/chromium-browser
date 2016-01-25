@@ -1,0 +1,1943 @@
+build obj/ppapi/ppapi_proxy_nacl.actions_depends.stamp: stamp $
+    obj/base/base_nacl.actions_rules_copies.stamp $
+    gen/tc_nonsfi_helper/lib32/libbase_nacl_nonsfi.a $
+    obj/components/tracing_nacl.actions_rules_copies.stamp $
+    obj/gpu/command_buffer/gles2_utils_nacl.actions_rules_copies.stamp $
+    obj/gpu/command_buffer_client_nacl.actions_rules_copies.stamp $
+    obj/gpu/command_buffer_common_nacl.actions_rules_copies.stamp $
+    obj/gpu/gles2_cmd_helper_nacl.actions_rules_copies.stamp $
+    obj/gpu/gles2_implementation_nacl.actions_rules_copies.stamp $
+    obj/gpu/gpu_ipc_nacl.actions_rules_copies.stamp $
+    gen/tc_irt/lib64/libipc_nacl.a $
+    gen/tc_nonsfi_helper/lib32/libipc_nacl_nonsfi.a $
+    obj/ppapi/ppapi_ipc_nacl.actions_rules_copies.stamp $
+    obj/ppapi/ppapi_shared_nacl.actions_rules_copies.stamp
+
+build obj/ppapi/ppapi_proxy_nacl.compile_depends.stamp: stamp $
+    obj/base/base_nacl.actions_rules_copies.stamp $
+    gen/tc_nonsfi_helper/lib32/libbase_nacl_nonsfi.a $
+    obj/components/tracing_nacl.actions_rules_copies.stamp $
+    obj/gpu/command_buffer/gles2_utils_nacl.actions_rules_copies.stamp $
+    obj/gpu/command_buffer_client_nacl.actions_rules_copies.stamp $
+    obj/gpu/command_buffer_common_nacl.actions_rules_copies.stamp $
+    obj/gpu/gles2_cmd_helper_nacl.actions_rules_copies.stamp $
+    obj/gpu/gles2_implementation_nacl.actions_rules_copies.stamp $
+    obj/gpu/gpu_ipc_nacl.actions_rules_copies.stamp $
+    gen/tc_irt/lib64/libipc_nacl.a $
+    gen/tc_nonsfi_helper/lib32/libipc_nacl_nonsfi.a $
+    obj/ppapi/ppapi_ipc_nacl.actions_rules_copies.stamp $
+    obj/ppapi/ppapi_shared_nacl.actions_rules_copies.stamp
+
+rule $
+    ppapi_proxy_nacl_target_build_irt_x86_64_nlib_b276fb3e03a58dc1ac9ac610f05f029e
+  command = cd ../../ppapi; python ../native_client/build/build_nexe.py $
+      --root .. --product-dir ../out/Debug/xyz --config-name Debug -t $
+      ../native_client/toolchain/ --arch x86-64 --build newlib_nlib_clang $
+      --name ../out/Debug/gen/tc_irt/lib64/libppapi_proxy_nacl.a --objdir $
+      ../out/Debug/obj/ppapi/ppapi_proxy_nacl.gen/irt-x86-64/ppapi_proxy_nacl $
+      "--include-dirs=../out/Debug/gen/tc_newlib/include .. $
+      \"../out/Debug/gen\" .. ../third_party/khronos ../gpu $
+      ../third_party/WebKit" "--compile_flags=-O2 -g -Wall $
+      -fdiagnostics-show-option -Werror  -Wno-unused-function $
+      -Wno-char-subscripts -Wno-c++11-extensions $
+      -Wno-unnamed-type-template-args -Wno-extra-semi $
+      -Wno-unused-private-field -Wno-char-subscripts -Wno-unused-function $
+      \"-std=gnu++11\"  -Os -fno-exceptions -ffunction-sections $
+      -fdata-sections -fasynchronous-unwind-tables -fomit-frame-pointer $
+      -integrated-as" --gomadir "" "--defines=\"__STDC_LIMIT_MACROS=1\" $
+      \"__STDC_FORMAT_MACROS=1\" \"_GNU_SOURCE=1\" $
+      \"_POSIX_C_SOURCE=199506\" \"_XOPEN_SOURCE=600\" $
+      \"DYNAMIC_ANNOTATIONS_ENABLED=1\" $
+      \"DYNAMIC_ANNOTATIONS_PREFIX=NACL_\" \"NACL_BUILD_ARCH=x86\" $
+      V8_DEPRECATION_WARNINGS \"CLD_VERSION=2\" \"_FILE_OFFSET_BITS=64\" $
+      CHROMIUM_BUILD \"CR_CLANG_REVISION=255169-1\" $
+      UI_COMPOSITOR_IMAGE_TRANSPORT \"USE_AURA=1\" \"USE_ASH=1\" $
+      \"USE_PANGO=1\" \"USE_CAIRO=1\" \"USE_DEFAULT_RENDER_THEME=1\" $
+      \"USE_LIBJPEG_TURBO=1\" \"USE_X11=1\" \"USE_CLIPBOARD_AURAX11=1\" $
+      ENABLE_ONE_CLICK_SIGNIN \"ENABLE_WEBRTC=1\" \"ENABLE_MEDIA_ROUTER=1\" $
+      ENABLE_PEPPER_CDMS ENABLE_CONFIGURATION_POLICY ENABLE_NOTIFICATIONS $
+      \"ENABLE_HIDPI=1\" \"ENABLE_TOPCHROME_MD=1\" USE_UDEV $
+      DONT_EMBED_BUILD_METADATA FIELDTRIAL_TESTING_ENABLED $
+      \"ENABLE_TASK_MANAGER=1\" \"ENABLE_EXTENSIONS=1\" \"ENABLE_PDF=1\" $
+      \"ENABLE_PLUGINS=1\" \"ENABLE_SESSION_SERVICE=1\" \"ENABLE_THEMES=1\" $
+      \"ENABLE_AUTOFILL_DIALOG=1\" \"ENABLE_BACKGROUND=1\" $
+      \"ENABLE_PRINTING=1\" \"ENABLE_BASIC_PRINTING=1\" $
+      \"ENABLE_PRINT_PREVIEW=1\" \"ENABLE_SPELLCHECK=1\" $
+      \"ENABLE_CAPTIVE_PORTAL_DETECTION=1\" \"ENABLE_APP_LIST=1\" $
+      \"ENABLE_SETTINGS_APP=1\" \"ENABLE_SUPERVISED_USERS=1\" $
+      \"ENABLE_MDNS=1\" \"ENABLE_SERVICE_DISCOVERY=1\" $
+      V8_USE_EXTERNAL_STARTUP_DATA FULL_SAFE_BROWSING SAFE_BROWSING_CSD $
+      SAFE_BROWSING_DB_LOCAL \"USE_LIBPCI=1\" \"USE_OPENSSL=1\" $
+      \"USE_OPENSSL_CERTS=1\" __STDC_CONSTANT_MACROS __STDC_FORMAT_MACROS $
+      PPAPI_PROXY_IMPLEMENTATION" $
+      "--link_flags=-B../out/Debug/gen/tc_irt/lib64   -Wl,--gc-sections $
+      -nodefaultlibs -lc++ -lm -lirt_browser -Wl,--start-group -lc -lnacl $
+      -lgcc -lgcc_eh -Wl,--end-group" $
+      "--source-list=../out/gypfiles/ppapi/irt-x86-64.ppapi_proxy_nacl.source_list.gypcmd"
+  description = ACTION ppapi_proxy_nacl: build irt x86-64 $
+      nlib_b276fb3e03a58dc1ac9ac610f05f029e
+  restat = 1
+
+build gen/tc_irt/lib64/libppapi_proxy_nacl.a: $
+    ppapi_proxy_nacl_target_build_irt_x86_64_nlib_b276fb3e03a58dc1ac9ac610f05f029e $
+    ../../native_client/build/build_nexe.py $
+    ../../native_client/build/build_nexe_tools.py ../../base/at_exit.h $
+    ../../base/atomic_ref_count.h ../../base/atomicops.h $
+    ../../base/atomicops_internals_atomicword_compat.h $
+    ../../base/atomicops_internals_portable.h $
+    ../../base/atomicops_internals_x86_msvc.h ../../base/base_export.h $
+    ../../base/basictypes.h ../../base/bind.h ../../base/bind_helpers.h $
+    ../../base/bind_internal.h ../../base/bind_internal_win.h $
+    ../../base/callback.h ../../base/callback_forward.h $
+    ../../base/callback_internal.h ../../base/command_line.h $
+    ../../base/compiler_specific.h ../../base/containers/hash_tables.h $
+    ../../base/containers/mru_cache.h $
+    ../../base/containers/scoped_ptr_hash_map.h $
+    ../../base/containers/small_map.h $
+    ../../base/containers/stack_container.h ../../base/debug/alias.h $
+    ../../base/debug/crash_logging.h ../../base/debug/debugger.h $
+    ../../base/debug/leak_annotations.h ../../base/debug/task_annotator.h $
+    ../../base/event_types.h ../../base/file_descriptor_posix.h $
+    ../../base/files/file.h ../../base/files/file_path.h $
+    ../../base/files/file_tracing.h ../../base/files/file_util.h $
+    ../../base/files/memory_mapped_file.h ../../base/files/scoped_file.h $
+    ../../base/format_macros.h ../../base/gtest_prod_util.h $
+    ../../base/hash.h ../../base/lazy_instance.h ../../base/location.h $
+    ../../base/logging.h ../../base/mac/scoped_cffiledescriptorref.h $
+    ../../base/mac/scoped_cftyperef.h ../../base/mac/scoped_typeref.h $
+    ../../base/macros.h ../../base/memory/aligned_memory.h $
+    ../../base/memory/linked_ptr.h ../../base/memory/manual_constructor.h $
+    ../../base/memory/raw_scoped_refptr_mismatch_checker.h $
+    ../../base/memory/ref_counted.h ../../base/memory/ref_counted_memory.h $
+    ../../base/memory/scoped_policy.h ../../base/memory/scoped_ptr.h $
+    ../../base/memory/scoped_vector.h ../../base/memory/shared_memory.h $
+    ../../base/memory/shared_memory_handle.h ../../base/memory/singleton.h $
+    ../../base/memory/weak_ptr.h $
+    ../../base/message_loop/incoming_task_queue.h $
+    ../../base/message_loop/message_loop.h $
+    ../../base/message_loop/message_loop_task_runner.h $
+    ../../base/message_loop/message_pump.h $
+    ../../base/message_loop/message_pump_dispatcher.h $
+    ../../base/message_loop/message_pump_io_ios.h $
+    ../../base/message_loop/message_pump_libevent.h $
+    ../../base/message_loop/message_pump_mac.h $
+    ../../base/message_loop/message_pump_win.h $
+    ../../base/message_loop/timer_slack.h $
+    ../../base/metrics/bucket_ranges.h ../../base/metrics/histogram.h $
+    ../../base/metrics/histogram_base.h $
+    ../../base/metrics/histogram_macros.h $
+    ../../base/metrics/histogram_samples.h ../../base/move.h $
+    ../../base/numerics/safe_conversions.h $
+    ../../base/numerics/safe_conversions_impl.h $
+    ../../base/numerics/safe_math.h ../../base/numerics/safe_math_impl.h $
+    ../../base/observer_list.h ../../base/pending_task.h $
+    ../../base/pickle.h ../../base/posix/eintr_wrapper.h $
+    ../../base/process/port_provider_mac.h ../../base/process/process.h $
+    ../../base/process/process_handle.h $
+    ../../base/process/process_metrics.h $
+    ../../base/profiler/alternate_timer.h $
+    ../../base/profiler/scoped_profile.h ../../base/profiler/tracked_time.h $
+    ../../base/scoped_generic.h ../../base/sequence_checker.h $
+    ../../base/sequence_checker_impl.h ../../base/sequenced_task_runner.h $
+    ../../base/sequenced_task_runner_helpers.h $
+    ../../base/single_thread_task_runner.h ../../base/stl_util.h $
+    ../../base/strings/string16.h $
+    ../../base/strings/string_number_conversions.h $
+    ../../base/strings/string_piece.h ../../base/strings/string_split.h $
+    ../../base/strings/string_util.h ../../base/strings/string_util_posix.h $
+    ../../base/strings/string_util_win.h ../../base/strings/stringprintf.h $
+    ../../base/strings/utf_string_conversions.h ../../base/sync_socket.h $
+    ../../base/synchronization/condition_variable.h $
+    ../../base/synchronization/lock.h $
+    ../../base/synchronization/lock_impl.h $
+    ../../base/synchronization/waitable_event.h $
+    ../../base/synchronization/waitable_event_watcher.h $
+    ../../base/task_runner.h ../../base/task_runner_util.h $
+    ../../base/template_util.h ../../base/thread_task_runner_handle.h $
+    ../../base/threading/non_thread_safe.h $
+    ../../base/threading/non_thread_safe_impl.h $
+    ../../base/threading/platform_thread.h $
+    ../../base/threading/sequenced_worker_pool.h $
+    ../../base/threading/simple_thread.h ../../base/threading/thread.h $
+    ../../base/threading/thread_checker.h $
+    ../../base/threading/thread_checker_impl.h $
+    ../../base/threading/thread_collision_warner.h $
+    ../../base/threading/thread_local.h $
+    ../../base/threading/thread_local_storage.h $
+    ../../base/threading/thread_restrictions.h ../../base/time/time.h $
+    ../../base/timer/timer.h $
+    ../../base/trace_event/common/trace_event_common.h $
+    ../../base/trace_event/memory_allocator_dump.h $
+    ../../base/trace_event/memory_allocator_dump_guid.h $
+    ../../base/trace_event/memory_dump_provider.h $
+    ../../base/trace_event/memory_dump_request_args.h $
+    ../../base/trace_event/trace_config.h $
+    ../../base/trace_event/trace_event.h $
+    ../../base/trace_event/trace_event_impl.h $
+    ../../base/trace_event/trace_event_memory_overhead.h $
+    ../../base/trace_event/trace_event_system_stats_monitor.h $
+    ../../base/trace_event/trace_log.h ../../base/tracked_objects.h $
+    ../../base/tracking_info.h ../../base/tuple.h ../../base/values.h $
+    ../../base/win/object_watcher.h ../../base/win/scoped_handle.h $
+    ../../build/build_config.h $
+    ../../components/tracing/child_trace_message_filter.h $
+    ../../components/tracing/tracing_export.h ../../gin/array_buffer.h $
+    ../../gin/converter.h ../../gin/gin_export.h $
+    ../../gin/public/isolate_holder.h $
+    ../../gin/public/v8_idle_task_runner.h ../../gin/public/v8_platform.h $
+    ../../gin/v8_initializer.h ../../gpu/GLES2/gl2chromium.h $
+    ../../gpu/GLES2/gl2chromium_autogen.h ../../gpu/GLES2/gl2extchromium.h $
+    ../../gpu/command_buffer/client/buffer_tracker.h $
+    ../../gpu/command_buffer/client/client_context_state.h $
+    ../../gpu/command_buffer/client/client_context_state_autogen.h $
+    ../../gpu/command_buffer/client/cmd_buffer_helper.h $
+    ../../gpu/command_buffer/client/context_support.h $
+    ../../gpu/command_buffer/client/fenced_allocator.h $
+    ../../gpu/command_buffer/client/gles2_c_lib_export.h $
+    ../../gpu/command_buffer/client/gles2_cmd_helper.h $
+    ../../gpu/command_buffer/client/gles2_cmd_helper_autogen.h $
+    ../../gpu/command_buffer/client/gles2_impl_export.h $
+    ../../gpu/command_buffer/client/gles2_implementation.h $
+    ../../gpu/command_buffer/client/gles2_implementation_autogen.h $
+    ../../gpu/command_buffer/client/gles2_interface.h $
+    ../../gpu/command_buffer/client/gles2_interface_autogen.h $
+    ../../gpu/command_buffer/client/gpu_control.h $
+    ../../gpu/command_buffer/client/mapped_memory.h $
+    ../../gpu/command_buffer/client/ref_counted.h $
+    ../../gpu/command_buffer/client/share_group.h $
+    ../../gpu/command_buffer/common/bitfield_helpers.h $
+    ../../gpu/command_buffer/common/buffer.h $
+    ../../gpu/command_buffer/common/capabilities.h $
+    ../../gpu/command_buffer/common/cmd_buffer_common.h $
+    ../../gpu/command_buffer/common/command_buffer.h $
+    ../../gpu/command_buffer/common/command_buffer_shared.h $
+    ../../gpu/command_buffer/common/constants.h $
+    ../../gpu/command_buffer/common/debug_marker_manager.h $
+    ../../gpu/command_buffer/common/gles2_cmd_format.h $
+    ../../gpu/command_buffer/common/gles2_cmd_format_autogen.h $
+    ../../gpu/command_buffer/common/gles2_cmd_ids.h $
+    ../../gpu/command_buffer/common/gles2_cmd_ids_autogen.h $
+    ../../gpu/command_buffer/common/gles2_cmd_utils.h $
+    ../../gpu/command_buffer/common/gles2_cmd_utils_autogen.h $
+    ../../gpu/command_buffer/common/gles2_utils_export.h $
+    ../../gpu/command_buffer/common/mailbox.h $
+    ../../gpu/command_buffer/common/sync_token.h ../../gpu/gpu_export.h $
+    ../../gpu/ipc/gpu_command_buffer_traits.h $
+    ../../gpu/ipc/gpu_command_buffer_traits_multi.h $
+    ../../ipc/attachment_broker.h ../../ipc/brokerable_attachment.h $
+    ../../ipc/ipc_channel.h ../../ipc/ipc_channel_handle.h $
+    ../../ipc/ipc_channel_posix.h ../../ipc/ipc_channel_proxy.h $
+    ../../ipc/ipc_channel_reader.h ../../ipc/ipc_endpoint.h $
+    ../../ipc/ipc_export.h ../../ipc/ipc_listener.h ../../ipc/ipc_logging.h $
+    ../../ipc/ipc_message.h ../../ipc/ipc_message_attachment.h $
+    ../../ipc/ipc_message_attachment_set.h ../../ipc/ipc_message_macros.h $
+    ../../ipc/ipc_message_start.h ../../ipc/ipc_message_utils.h $
+    ../../ipc/ipc_message_utils_impl.h ../../ipc/ipc_param_traits.h $
+    ../../ipc/ipc_platform_file.h ../../ipc/ipc_sender.h $
+    ../../ipc/ipc_sync_channel.h ../../ipc/ipc_sync_message.h $
+    ../../ipc/ipc_sync_message_filter.h ../../ipc/ipc_test_sink.h $
+    ../../ipc/message_filter.h ../../ipc/param_traits_macros.h $
+    ../../media/audio/audio_parameters.h ../../media/audio/point.h $
+    ../../media/base/audio_bus.h ../../media/base/channel_layout.h $
+    ../../media/base/limits.h ../../media/base/media_export.h $
+    ../../mojo/public/c/gles2/gles2_export.h $
+    ../../native_client/src/include/build_config.h $
+    ../../native_client/src/include/nacl_base.h $
+    ../../native_client/src/include/nacl_compiler_annotations.h $
+    ../../native_client/src/include/nacl_macros.h $
+    ../../native_client/src/include/portability.h $
+    ../../native_client/src/include/win/port_win.h $
+    ../../native_client/src/public/chrome_main.h $
+    ../../native_client/src/public/irt_core.h $
+    ../../native_client/src/shared/imc/nacl_imc_c.h $
+    ../../native_client/src/shared/platform/nacl_log.h $
+    ../../native_client/src/shared/srpc/nacl_srpc.h $
+    ../../native_client/src/third_party/valgrind/memcheck.h $
+    ../../native_client/src/third_party/valgrind/valgrind.h $
+    ../../native_client/src/trusted/service_runtime/include/bits/wordsize.h $
+    ../../native_client/src/trusted/service_runtime/include/machine/_types.h $
+    ../../native_client/src/trusted/service_runtime/include/sys/errno.h $
+    ../../native_client/src/trusted/service_runtime/include/sys/unistd.h $
+    ../../native_client/src/trusted/service_runtime/nacl_size_t.h $
+    ../../native_client/src/untrusted/irt/irt.h $
+    ../../native_client/src/untrusted/irt/irt_dev.h $
+    ../../skia/ext/platform_canvas.h ../../skia/ext/platform_surface.h $
+    ../../skia/ext/refptr.h ../../testing/gtest/include/gtest/gtest_prod.h $
+    ../../third_party/icu/source/i18n/unicode/usearch.h $
+    ../../third_party/khronos/GLES2/gl2.h $
+    ../../third_party/khronos/GLES2/gl2ext.h $
+    ../../third_party/khronos/GLES2/gl2platform.h $
+    ../../third_party/khronos/GLES3/gl3.h $
+    ../../third_party/khronos/GLES3/gl3platform.h $
+    ../../third_party/khronos/KHR/khrplatform.h $
+    ../../third_party/skia/include/core/SkBitmap.h $
+    ../../third_party/skia/include/core/SkCanvas.h $
+    ../../third_party/skia/include/core/SkColor.h $
+    ../../third_party/skia/include/core/SkColorTable.h $
+    ../../third_party/skia/include/core/SkDeque.h $
+    ../../third_party/skia/include/core/SkFilterQuality.h $
+    ../../third_party/skia/include/core/SkFixed.h $
+    ../../third_party/skia/include/core/SkFlattenable.h $
+    ../../third_party/skia/include/core/SkImageInfo.h $
+    ../../third_party/skia/include/core/SkMath.h $
+    ../../third_party/skia/include/core/SkMatrix.h $
+    ../../third_party/skia/include/core/SkPaint.h $
+    ../../third_party/skia/include/core/SkPixelRef.h $
+    ../../third_party/skia/include/core/SkPixmap.h $
+    ../../third_party/skia/include/core/SkPoint.h $
+    ../../third_party/skia/include/core/SkPostConfig.h $
+    ../../third_party/skia/include/core/SkPreConfig.h $
+    ../../third_party/skia/include/core/SkRect.h $
+    ../../third_party/skia/include/core/SkRefCnt.h $
+    ../../third_party/skia/include/core/SkRegion.h $
+    ../../third_party/skia/include/core/SkScalar.h $
+    ../../third_party/skia/include/core/SkSize.h $
+    ../../third_party/skia/include/core/SkString.h $
+    ../../third_party/skia/include/core/SkSurfaceProps.h $
+    ../../third_party/skia/include/core/SkTArray.h $
+    ../../third_party/skia/include/core/SkTDArray.h $
+    ../../third_party/skia/include/core/SkTypes.h $
+    ../../third_party/skia/include/core/SkXfermode.h $
+    ../../third_party/skia/include/private/SkAtomics.h $
+    ../../third_party/skia/include/private/SkFloatBits.h $
+    ../../third_party/skia/include/private/SkFloatingPoint.h $
+    ../../third_party/skia/include/private/SkMutex.h $
+    ../../third_party/skia/include/private/SkOncePtr.h $
+    ../../third_party/skia/include/private/SkSemaphore.h $
+    ../../third_party/skia/include/private/SkTLogic.h $
+    ../../third_party/skia/include/private/SkTemplates.h $
+    ../../third_party/skia/include/private/SkThreadID.h $
+    ../../third_party/skia/include/private/SkUniquePtr.h $
+    ../../third_party/skia/include/private/SkUtility.h $
+    ../../ui/gfx/geometry/point.h ../../ui/gfx/geometry/point3_f.h $
+    ../../ui/gfx/geometry/point_f.h ../../ui/gfx/geometry/vector2d.h $
+    ../../ui/gfx/geometry/vector2d_f.h ../../ui/gfx/geometry/vector3d_f.h $
+    ../../ui/gfx/gfx_export.h ../../ui/gfx/overlay_transform.h $
+    ../../ui/surface/surface_export.h ../../ui/surface/transport_dib.h $
+    ../../url/third_party/mozilla/url_parse.h ../../url/url_export.h $
+    ../../v8/include/v8-platform.h ../../v8/include/v8-version.h $
+    ../../v8/include/v8.h ../../v8/include/v8config.h $
+    ../../ppapi/c/dev/deprecated_bool.h $
+    ../../ppapi/c/dev/pp_cursor_type_dev.h $
+    ../../ppapi/c/dev/pp_print_settings_dev.h $
+    ../../ppapi/c/dev/pp_video_capture_dev.h $
+    ../../ppapi/c/dev/pp_video_dev.h $
+    ../../ppapi/c/dev/ppb_audio_input_dev.h $
+    ../../ppapi/c/dev/ppb_buffer_dev.h ../../ppapi/c/dev/ppb_char_set_dev.h $
+    ../../ppapi/c/dev/ppb_crypto_dev.h $
+    ../../ppapi/c/dev/ppb_cursor_control_dev.h $
+    ../../ppapi/c/dev/ppb_device_ref_dev.h $
+    ../../ppapi/c/dev/ppb_file_chooser_dev.h $
+    ../../ppapi/c/dev/ppb_font_dev.h $
+    ../../ppapi/c/dev/ppb_gles_chromium_texture_mapping_dev.h $
+    ../../ppapi/c/dev/ppb_ime_input_event_dev.h $
+    ../../ppapi/c/dev/ppb_memory_dev.h $
+    ../../ppapi/c/dev/ppb_opengles2ext_dev.h $
+    ../../ppapi/c/dev/ppb_printing_dev.h $
+    ../../ppapi/c/dev/ppb_text_input_dev.h $
+    ../../ppapi/c/dev/ppb_trace_event_dev.h $
+    ../../ppapi/c/dev/ppb_truetype_font_dev.h $
+    ../../ppapi/c/dev/ppb_url_util_dev.h $
+    ../../ppapi/c/dev/ppb_var_deprecated.h $
+    ../../ppapi/c/dev/ppb_video_capture_dev.h $
+    ../../ppapi/c/dev/ppb_video_decoder_dev.h $
+    ../../ppapi/c/dev/ppb_view_dev.h $
+    ../../ppapi/c/dev/ppp_class_deprecated.h $
+    ../../ppapi/c/dev/ppp_printing_dev.h $
+    ../../ppapi/c/dev/ppp_text_input_dev.h $
+    ../../ppapi/c/dev/ppp_video_capture_dev.h $
+    ../../ppapi/c/dev/ppp_video_decoder_dev.h $
+    ../../ppapi/c/pp_array_output.h ../../ppapi/c/pp_bool.h $
+    ../../ppapi/c/pp_codecs.h ../../ppapi/c/pp_completion_callback.h $
+    ../../ppapi/c/pp_directory_entry.h ../../ppapi/c/pp_errors.h $
+    ../../ppapi/c/pp_file_info.h ../../ppapi/c/pp_graphics_3d.h $
+    ../../ppapi/c/pp_instance.h ../../ppapi/c/pp_macros.h $
+    ../../ppapi/c/pp_module.h ../../ppapi/c/pp_point.h $
+    ../../ppapi/c/pp_rect.h ../../ppapi/c/pp_resource.h $
+    ../../ppapi/c/pp_size.h ../../ppapi/c/pp_stdint.h $
+    ../../ppapi/c/pp_time.h ../../ppapi/c/pp_touch_point.h $
+    ../../ppapi/c/pp_var.h ../../ppapi/c/ppb.h ../../ppapi/c/ppb_audio.h $
+    ../../ppapi/c/ppb_audio_buffer.h ../../ppapi/c/ppb_audio_config.h $
+    ../../ppapi/c/ppb_audio_encoder.h ../../ppapi/c/ppb_compositor.h $
+    ../../ppapi/c/ppb_compositor_layer.h ../../ppapi/c/ppb_console.h $
+    ../../ppapi/c/ppb_core.h ../../ppapi/c/ppb_file_io.h $
+    ../../ppapi/c/ppb_file_ref.h ../../ppapi/c/ppb_file_system.h $
+    ../../ppapi/c/ppb_fullscreen.h ../../ppapi/c/ppb_gamepad.h $
+    ../../ppapi/c/ppb_graphics_2d.h ../../ppapi/c/ppb_graphics_3d.h $
+    ../../ppapi/c/ppb_host_resolver.h ../../ppapi/c/ppb_image_data.h $
+    ../../ppapi/c/ppb_input_event.h ../../ppapi/c/ppb_instance.h $
+    ../../ppapi/c/ppb_media_stream_audio_track.h $
+    ../../ppapi/c/ppb_media_stream_video_track.h $
+    ../../ppapi/c/ppb_message_loop.h ../../ppapi/c/ppb_messaging.h $
+    ../../ppapi/c/ppb_mouse_cursor.h ../../ppapi/c/ppb_mouse_lock.h $
+    ../../ppapi/c/ppb_net_address.h ../../ppapi/c/ppb_network_list.h $
+    ../../ppapi/c/ppb_network_monitor.h ../../ppapi/c/ppb_network_proxy.h $
+    ../../ppapi/c/ppb_opengles2.h ../../ppapi/c/ppb_tcp_socket.h $
+    ../../ppapi/c/ppb_text_input_controller.h $
+    ../../ppapi/c/ppb_udp_socket.h ../../ppapi/c/ppb_url_loader.h $
+    ../../ppapi/c/ppb_url_request_info.h $
+    ../../ppapi/c/ppb_url_response_info.h ../../ppapi/c/ppb_var.h $
+    ../../ppapi/c/ppb_var_array.h ../../ppapi/c/ppb_var_array_buffer.h $
+    ../../ppapi/c/ppb_var_dictionary.h ../../ppapi/c/ppb_video_decoder.h $
+    ../../ppapi/c/ppb_video_encoder.h ../../ppapi/c/ppb_video_frame.h $
+    ../../ppapi/c/ppb_view.h ../../ppapi/c/ppb_websocket.h $
+    ../../ppapi/c/ppp.h ../../ppapi/c/ppp_graphics_3d.h $
+    ../../ppapi/c/ppp_input_event.h ../../ppapi/c/ppp_instance.h $
+    ../../ppapi/c/ppp_message_handler.h ../../ppapi/c/ppp_messaging.h $
+    ../../ppapi/c/ppp_mouse_lock.h $
+    ../../ppapi/c/private/pp_content_decryptor.h $
+    ../../ppapi/c/private/pp_file_handle.h $
+    ../../ppapi/c/private/pp_private_font_charset.h $
+    ../../ppapi/c/private/pp_video_capture_format.h $
+    ../../ppapi/c/private/pp_video_frame_private.h $
+    ../../ppapi/c/private/ppb_camera_capabilities_private.h $
+    ../../ppapi/c/private/ppb_camera_device_private.h $
+    ../../ppapi/c/private/ppb_content_decryptor_private.h $
+    ../../ppapi/c/private/ppb_ext_crx_file_system_private.h $
+    ../../ppapi/c/private/ppb_file_io_private.h $
+    ../../ppapi/c/private/ppb_file_ref_private.h $
+    ../../ppapi/c/private/ppb_find_private.h $
+    ../../ppapi/c/private/ppb_flash.h $
+    ../../ppapi/c/private/ppb_flash_clipboard.h $
+    ../../ppapi/c/private/ppb_flash_device_id.h $
+    ../../ppapi/c/private/ppb_flash_drm.h $
+    ../../ppapi/c/private/ppb_flash_file.h $
+    ../../ppapi/c/private/ppb_flash_font_file.h $
+    ../../ppapi/c/private/ppb_flash_fullscreen.h $
+    ../../ppapi/c/private/ppb_flash_menu.h $
+    ../../ppapi/c/private/ppb_flash_message_loop.h $
+    ../../ppapi/c/private/ppb_flash_print.h $
+    ../../ppapi/c/private/ppb_host_resolver_private.h $
+    ../../ppapi/c/private/ppb_instance_private.h $
+    ../../ppapi/c/private/ppb_isolated_file_system_private.h $
+    ../../ppapi/c/private/ppb_net_address_private.h $
+    ../../ppapi/c/private/ppb_output_protection_private.h $
+    ../../ppapi/c/private/ppb_pdf.h $
+    ../../ppapi/c/private/ppb_platform_verification_private.h $
+    ../../ppapi/c/private/ppb_proxy_private.h $
+    ../../ppapi/c/private/ppb_tcp_server_socket_private.h $
+    ../../ppapi/c/private/ppb_tcp_socket_private.h $
+    ../../ppapi/c/private/ppb_testing_private.h $
+    ../../ppapi/c/private/ppb_udp_socket_private.h $
+    ../../ppapi/c/private/ppb_uma_private.h $
+    ../../ppapi/c/private/ppb_video_destination_private.h $
+    ../../ppapi/c/private/ppb_video_source_private.h $
+    ../../ppapi/c/private/ppb_x509_certificate_private.h $
+    ../../ppapi/c/private/ppp_content_decryptor_private.h $
+    ../../ppapi/c/private/ppp_find_private.h $
+    ../../ppapi/c/private/ppp_flash_browser_operations.h $
+    ../../ppapi/c/private/ppp_instance_private.h $
+    ../../ppapi/c/private/ppp_pdf.h $
+    ../../ppapi/c/trusted/ppb_broker_trusted.h $
+    ../../ppapi/c/trusted/ppb_browser_font_trusted.h $
+    ../../ppapi/c/trusted/ppb_char_set_trusted.h $
+    ../../ppapi/c/trusted/ppb_file_chooser_trusted.h $
+    ../../ppapi/c/trusted/ppb_url_loader_trusted.h $
+    ../../ppapi/c/trusted/ppp_broker.h ../../ppapi/cpp/array_output.h $
+    ../../ppapi/cpp/completion_callback.h ../../ppapi/cpp/core.h $
+    ../../ppapi/cpp/instance_handle.h ../../ppapi/cpp/logging.h $
+    ../../ppapi/cpp/module.h ../../ppapi/cpp/output_traits.h $
+    ../../ppapi/cpp/pass_ref.h ../../ppapi/cpp/resource.h $
+    ../../ppapi/cpp/var.h ../../ppapi/nacl_irt/irt_interfaces.cc $
+    ../../ppapi/nacl_irt/irt_interfaces.h $
+    ../../ppapi/nacl_irt/irt_manifest.h $
+    ../../ppapi/nacl_irt/irt_pnacl_translator_compile.cc $
+    ../../ppapi/nacl_irt/irt_pnacl_translator_link.cc $
+    ../../ppapi/nacl_irt/irt_ppapi.cc ../../ppapi/nacl_irt/irt_ppapi.h $
+    ../../ppapi/nacl_irt/irt_start.cc $
+    ../../ppapi/nacl_irt/manifest_service.cc $
+    ../../ppapi/nacl_irt/manifest_service.h $
+    ../../ppapi/nacl_irt/plugin_startup.cc $
+    ../../ppapi/nacl_irt/plugin_startup.h $
+    ../../ppapi/nacl_irt/ppapi_dispatcher.cc $
+    ../../ppapi/nacl_irt/ppapi_dispatcher.h $
+    ../../ppapi/nacl_irt/public/irt_ppapi.h $
+    ../../ppapi/native_client/src/untrusted/pnacl_irt_shim/irt_shim_ppapi.h $
+    ../../ppapi/proxy/audio_buffer_resource.cc $
+    ../../ppapi/proxy/audio_buffer_resource.h $
+    ../../ppapi/proxy/audio_encoder_resource.cc $
+    ../../ppapi/proxy/audio_encoder_resource.h $
+    ../../ppapi/proxy/audio_input_resource.cc $
+    ../../ppapi/proxy/audio_input_resource.h $
+    ../../ppapi/proxy/broker_dispatcher.cc $
+    ../../ppapi/proxy/broker_dispatcher.h $
+    ../../ppapi/proxy/broker_resource.cc $
+    ../../ppapi/proxy/broker_resource.h $
+    ../../ppapi/proxy/browser_font_singleton_resource.cc $
+    ../../ppapi/proxy/browser_font_singleton_resource.h $
+    ../../ppapi/proxy/camera_capabilities_resource.cc $
+    ../../ppapi/proxy/camera_capabilities_resource.h $
+    ../../ppapi/proxy/camera_device_resource.cc $
+    ../../ppapi/proxy/camera_device_resource.h $
+    ../../ppapi/proxy/compositor_layer_resource.cc $
+    ../../ppapi/proxy/compositor_layer_resource.h $
+    ../../ppapi/proxy/compositor_resource.cc $
+    ../../ppapi/proxy/compositor_resource.h ../../ppapi/proxy/connection.h $
+    ../../ppapi/proxy/content_decryptor_private_serializer.h $
+    ../../ppapi/proxy/device_enumeration_resource_helper.cc $
+    ../../ppapi/proxy/device_enumeration_resource_helper.h $
+    ../../ppapi/proxy/dispatch_reply_message.h $
+    ../../ppapi/proxy/dispatcher.cc ../../ppapi/proxy/dispatcher.h $
+    ../../ppapi/proxy/enter_proxy.h ../../ppapi/proxy/error_conversion.cc $
+    ../../ppapi/proxy/error_conversion.h $
+    ../../ppapi/proxy/file_chooser_resource.cc $
+    ../../ppapi/proxy/file_chooser_resource.h $
+    ../../ppapi/proxy/file_io_resource.cc $
+    ../../ppapi/proxy/file_io_resource.h $
+    ../../ppapi/proxy/file_ref_resource.cc $
+    ../../ppapi/proxy/file_ref_resource.h $
+    ../../ppapi/proxy/file_system_resource.cc $
+    ../../ppapi/proxy/file_system_resource.h $
+    ../../ppapi/proxy/flash_clipboard_resource.cc $
+    ../../ppapi/proxy/flash_clipboard_resource.h $
+    ../../ppapi/proxy/flash_drm_resource.cc $
+    ../../ppapi/proxy/flash_drm_resource.h $
+    ../../ppapi/proxy/flash_file_resource.cc $
+    ../../ppapi/proxy/flash_file_resource.h $
+    ../../ppapi/proxy/flash_font_file_resource.cc $
+    ../../ppapi/proxy/flash_font_file_resource.h $
+    ../../ppapi/proxy/flash_fullscreen_resource.cc $
+    ../../ppapi/proxy/flash_fullscreen_resource.h $
+    ../../ppapi/proxy/flash_menu_resource.cc $
+    ../../ppapi/proxy/flash_menu_resource.h $
+    ../../ppapi/proxy/flash_resource.cc ../../ppapi/proxy/flash_resource.h $
+    ../../ppapi/proxy/gamepad_resource.cc $
+    ../../ppapi/proxy/gamepad_resource.h $
+    ../../ppapi/proxy/graphics_2d_resource.cc $
+    ../../ppapi/proxy/graphics_2d_resource.h $
+    ../../ppapi/proxy/host_dispatcher.cc $
+    ../../ppapi/proxy/host_dispatcher.h $
+    ../../ppapi/proxy/host_resolver_private_resource.cc $
+    ../../ppapi/proxy/host_resolver_private_resource.h $
+    ../../ppapi/proxy/host_resolver_resource.cc $
+    ../../ppapi/proxy/host_resolver_resource.h $
+    ../../ppapi/proxy/host_resolver_resource_base.cc $
+    ../../ppapi/proxy/host_resolver_resource_base.h $
+    ../../ppapi/proxy/host_var_serialization_rules.cc $
+    ../../ppapi/proxy/host_var_serialization_rules.h $
+    ../../ppapi/proxy/interface_list.cc ../../ppapi/proxy/interface_list.h $
+    ../../ppapi/proxy/interface_proxy.cc $
+    ../../ppapi/proxy/interface_proxy.h $
+    ../../ppapi/proxy/isolated_file_system_private_resource.cc $
+    ../../ppapi/proxy/isolated_file_system_private_resource.h $
+    ../../ppapi/proxy/locking_resource_releaser.h $
+    ../../ppapi/proxy/media_stream_audio_track_resource.cc $
+    ../../ppapi/proxy/media_stream_audio_track_resource.h $
+    ../../ppapi/proxy/media_stream_track_resource_base.cc $
+    ../../ppapi/proxy/media_stream_track_resource_base.h $
+    ../../ppapi/proxy/media_stream_video_track_resource.cc $
+    ../../ppapi/proxy/media_stream_video_track_resource.h $
+    ../../ppapi/proxy/message_handler.cc $
+    ../../ppapi/proxy/message_handler.h $
+    ../../ppapi/proxy/net_address_resource.cc $
+    ../../ppapi/proxy/net_address_resource.h $
+    ../../ppapi/proxy/network_list_resource.cc $
+    ../../ppapi/proxy/network_list_resource.h $
+    ../../ppapi/proxy/network_monitor_resource.cc $
+    ../../ppapi/proxy/network_monitor_resource.h $
+    ../../ppapi/proxy/network_proxy_resource.cc $
+    ../../ppapi/proxy/network_proxy_resource.h $
+    ../../ppapi/proxy/output_protection_resource.cc $
+    ../../ppapi/proxy/output_protection_resource.h $
+    ../../ppapi/proxy/pdf_resource.cc ../../ppapi/proxy/pdf_resource.h $
+    ../../ppapi/proxy/platform_verification_private_resource.cc $
+    ../../ppapi/proxy/platform_verification_private_resource.h $
+    ../../ppapi/proxy/plugin_array_buffer_var.cc $
+    ../../ppapi/proxy/plugin_array_buffer_var.h $
+    ../../ppapi/proxy/plugin_dispatcher.cc $
+    ../../ppapi/proxy/plugin_dispatcher.h $
+    ../../ppapi/proxy/plugin_globals.cc ../../ppapi/proxy/plugin_globals.h $
+    ../../ppapi/proxy/plugin_message_filter.cc $
+    ../../ppapi/proxy/plugin_message_filter.h $
+    ../../ppapi/proxy/plugin_proxy_delegate.h $
+    ../../ppapi/proxy/plugin_resource.cc $
+    ../../ppapi/proxy/plugin_resource.h $
+    ../../ppapi/proxy/plugin_resource_callback.h $
+    ../../ppapi/proxy/plugin_resource_tracker.cc $
+    ../../ppapi/proxy/plugin_resource_tracker.h $
+    ../../ppapi/proxy/plugin_resource_var.cc $
+    ../../ppapi/proxy/plugin_resource_var.h $
+    ../../ppapi/proxy/plugin_var_serialization_rules.cc $
+    ../../ppapi/proxy/plugin_var_serialization_rules.h $
+    ../../ppapi/proxy/plugin_var_tracker.cc $
+    ../../ppapi/proxy/plugin_var_tracker.h $
+    ../../ppapi/proxy/ppapi_command_buffer_proxy.cc $
+    ../../ppapi/proxy/ppapi_command_buffer_proxy.h $
+    ../../ppapi/proxy/ppapi_message_utils.h $
+    ../../ppapi/proxy/ppapi_messages.h $
+    ../../ppapi/proxy/ppapi_param_traits.h $
+    ../../ppapi/proxy/ppapi_proxy_export.h $
+    ../../ppapi/proxy/ppb_audio_proxy.cc $
+    ../../ppapi/proxy/ppb_audio_proxy.h $
+    ../../ppapi/proxy/ppb_broker_proxy.cc $
+    ../../ppapi/proxy/ppb_broker_proxy.h $
+    ../../ppapi/proxy/ppb_buffer_proxy.cc $
+    ../../ppapi/proxy/ppb_buffer_proxy.h $
+    ../../ppapi/proxy/ppb_core_proxy.cc ../../ppapi/proxy/ppb_core_proxy.h $
+    ../../ppapi/proxy/ppb_flash_message_loop_proxy.cc $
+    ../../ppapi/proxy/ppb_flash_message_loop_proxy.h $
+    ../../ppapi/proxy/ppb_graphics_3d_proxy.cc $
+    ../../ppapi/proxy/ppb_graphics_3d_proxy.h $
+    ../../ppapi/proxy/ppb_image_data_proxy.cc $
+    ../../ppapi/proxy/ppb_image_data_proxy.h $
+    ../../ppapi/proxy/ppb_instance_proxy.cc $
+    ../../ppapi/proxy/ppb_instance_proxy.h $
+    ../../ppapi/proxy/ppb_message_loop_proxy.cc $
+    ../../ppapi/proxy/ppb_message_loop_proxy.h $
+    ../../ppapi/proxy/ppb_testing_proxy.cc $
+    ../../ppapi/proxy/ppb_testing_proxy.h $
+    ../../ppapi/proxy/ppb_var_deprecated_proxy.cc $
+    ../../ppapi/proxy/ppb_var_deprecated_proxy.h $
+    ../../ppapi/proxy/ppb_video_decoder_proxy.cc $
+    ../../ppapi/proxy/ppb_video_decoder_proxy.h $
+    ../../ppapi/proxy/ppb_x509_certificate_private_proxy.cc $
+    ../../ppapi/proxy/ppb_x509_certificate_private_proxy.h $
+    ../../ppapi/proxy/ppp_class_proxy.cc $
+    ../../ppapi/proxy/ppp_class_proxy.h $
+    ../../ppapi/proxy/ppp_content_decryptor_private_proxy.cc $
+    ../../ppapi/proxy/ppp_content_decryptor_private_proxy.h $
+    ../../ppapi/proxy/ppp_find_proxy.cc ../../ppapi/proxy/ppp_find_proxy.h $
+    ../../ppapi/proxy/ppp_graphics_3d_proxy.cc $
+    ../../ppapi/proxy/ppp_graphics_3d_proxy.h $
+    ../../ppapi/proxy/ppp_input_event_proxy.cc $
+    ../../ppapi/proxy/ppp_input_event_proxy.h $
+    ../../ppapi/proxy/ppp_instance_private_proxy.cc $
+    ../../ppapi/proxy/ppp_instance_private_proxy.h $
+    ../../ppapi/proxy/ppp_instance_proxy.cc $
+    ../../ppapi/proxy/ppp_instance_proxy.h $
+    ../../ppapi/proxy/ppp_messaging_proxy.cc $
+    ../../ppapi/proxy/ppp_messaging_proxy.h $
+    ../../ppapi/proxy/ppp_mouse_lock_proxy.cc $
+    ../../ppapi/proxy/ppp_mouse_lock_proxy.h $
+    ../../ppapi/proxy/ppp_pdf_proxy.cc ../../ppapi/proxy/ppp_pdf_proxy.h $
+    ../../ppapi/proxy/ppp_printing_proxy.cc $
+    ../../ppapi/proxy/ppp_printing_proxy.h $
+    ../../ppapi/proxy/ppp_text_input_proxy.cc $
+    ../../ppapi/proxy/ppp_text_input_proxy.h $
+    ../../ppapi/proxy/ppp_video_decoder_proxy.cc $
+    ../../ppapi/proxy/ppp_video_decoder_proxy.h $
+    ../../ppapi/proxy/printing_resource.cc $
+    ../../ppapi/proxy/printing_resource.h $
+    ../../ppapi/proxy/proxy_array_output.cc $
+    ../../ppapi/proxy/proxy_array_output.h $
+    ../../ppapi/proxy/proxy_channel.cc ../../ppapi/proxy/proxy_channel.h $
+    ../../ppapi/proxy/proxy_completion_callback_factory.h $
+    ../../ppapi/proxy/proxy_module.cc ../../ppapi/proxy/proxy_module.h $
+    ../../ppapi/proxy/proxy_object_var.cc $
+    ../../ppapi/proxy/proxy_object_var.h ../../ppapi/proxy/raw_var_data.h $
+    ../../ppapi/proxy/resource_creation_proxy.cc $
+    ../../ppapi/proxy/resource_creation_proxy.h $
+    ../../ppapi/proxy/resource_message_filter.h $
+    ../../ppapi/proxy/resource_message_params.h $
+    ../../ppapi/proxy/resource_reply_thread_registrar.cc $
+    ../../ppapi/proxy/resource_reply_thread_registrar.h $
+    ../../ppapi/proxy/serialized_flash_menu.h $
+    ../../ppapi/proxy/serialized_handle.h $
+    ../../ppapi/proxy/serialized_structs.h $
+    ../../ppapi/proxy/serialized_var.h $
+    ../../ppapi/proxy/tcp_server_socket_private_resource.cc $
+    ../../ppapi/proxy/tcp_server_socket_private_resource.h $
+    ../../ppapi/proxy/tcp_socket_private_resource.cc $
+    ../../ppapi/proxy/tcp_socket_private_resource.h $
+    ../../ppapi/proxy/tcp_socket_resource.cc $
+    ../../ppapi/proxy/tcp_socket_resource.h $
+    ../../ppapi/proxy/tcp_socket_resource_base.cc $
+    ../../ppapi/proxy/tcp_socket_resource_base.h $
+    ../../ppapi/proxy/truetype_font_resource.cc $
+    ../../ppapi/proxy/truetype_font_resource.h $
+    ../../ppapi/proxy/truetype_font_singleton_resource.cc $
+    ../../ppapi/proxy/truetype_font_singleton_resource.h $
+    ../../ppapi/proxy/udp_socket_filter.cc $
+    ../../ppapi/proxy/udp_socket_filter.h $
+    ../../ppapi/proxy/udp_socket_private_resource.cc $
+    ../../ppapi/proxy/udp_socket_private_resource.h $
+    ../../ppapi/proxy/udp_socket_resource.cc $
+    ../../ppapi/proxy/udp_socket_resource.h $
+    ../../ppapi/proxy/udp_socket_resource_base.cc $
+    ../../ppapi/proxy/udp_socket_resource_base.h $
+    ../../ppapi/proxy/uma_private_resource.cc $
+    ../../ppapi/proxy/uma_private_resource.h $
+    ../../ppapi/proxy/url_loader_resource.cc $
+    ../../ppapi/proxy/url_loader_resource.h $
+    ../../ppapi/proxy/url_request_info_resource.cc $
+    ../../ppapi/proxy/url_request_info_resource.h $
+    ../../ppapi/proxy/url_response_info_resource.cc $
+    ../../ppapi/proxy/url_response_info_resource.h $
+    ../../ppapi/proxy/var_serialization_rules.h $
+    ../../ppapi/proxy/video_capture_resource.cc $
+    ../../ppapi/proxy/video_capture_resource.h $
+    ../../ppapi/proxy/video_decoder_constants.h $
+    ../../ppapi/proxy/video_decoder_resource.cc $
+    ../../ppapi/proxy/video_decoder_resource.h $
+    ../../ppapi/proxy/video_destination_resource.cc $
+    ../../ppapi/proxy/video_destination_resource.h $
+    ../../ppapi/proxy/video_encoder_resource.cc $
+    ../../ppapi/proxy/video_encoder_resource.h $
+    ../../ppapi/proxy/video_frame_resource.cc $
+    ../../ppapi/proxy/video_frame_resource.h $
+    ../../ppapi/proxy/video_source_resource.cc $
+    ../../ppapi/proxy/video_source_resource.h $
+    ../../ppapi/proxy/websocket_resource.cc $
+    ../../ppapi/proxy/websocket_resource.h ../../ppapi/shared_impl/api_id.h $
+    ../../ppapi/shared_impl/array_var.h $
+    ../../ppapi/shared_impl/array_writer.h $
+    ../../ppapi/shared_impl/callback_tracker.h $
+    ../../ppapi/shared_impl/compositor_layer_data.h $
+    ../../ppapi/shared_impl/dir_contents.h $
+    ../../ppapi/shared_impl/file_growth.h $
+    ../../ppapi/shared_impl/file_io_state_manager.h $
+    ../../ppapi/shared_impl/file_path.h $
+    ../../ppapi/shared_impl/file_ref_create_info.h $
+    ../../ppapi/shared_impl/file_ref_util.h $
+    ../../ppapi/shared_impl/file_system_util.h $
+    ../../ppapi/shared_impl/file_type_conversion.h $
+    ../../ppapi/shared_impl/flash_clipboard_format_registry.h $
+    ../../ppapi/shared_impl/host_resource.h $
+    ../../ppapi/shared_impl/media_stream_audio_track_shared.h $
+    ../../ppapi/shared_impl/media_stream_buffer.h $
+    ../../ppapi/shared_impl/media_stream_buffer_manager.h $
+    ../../ppapi/shared_impl/media_stream_video_track_shared.h $
+    ../../ppapi/shared_impl/platform_file.h $
+    ../../ppapi/shared_impl/ppapi_constants.h $
+    ../../ppapi/shared_impl/ppapi_globals.h $
+    ../../ppapi/shared_impl/ppapi_nacl_plugin_args.h $
+    ../../ppapi/shared_impl/ppapi_permissions.h $
+    ../../ppapi/shared_impl/ppapi_preferences.h $
+    ../../ppapi/shared_impl/ppapi_shared_export.h $
+    ../../ppapi/shared_impl/ppb_audio_config_shared.h $
+    ../../ppapi/shared_impl/ppb_audio_shared.h $
+    ../../ppapi/shared_impl/ppb_device_ref_shared.h $
+    ../../ppapi/shared_impl/ppb_gamepad_shared.h $
+    ../../ppapi/shared_impl/ppb_graphics_3d_shared.h $
+    ../../ppapi/shared_impl/ppb_image_data_shared.h $
+    ../../ppapi/shared_impl/ppb_input_event_shared.h $
+    ../../ppapi/shared_impl/ppb_instance_shared.h $
+    ../../ppapi/shared_impl/ppb_message_loop_shared.h $
+    ../../ppapi/shared_impl/ppb_opengles2_shared.h $
+    ../../ppapi/shared_impl/ppb_tcp_socket_shared.h $
+    ../../ppapi/shared_impl/ppb_url_util_shared.h $
+    ../../ppapi/shared_impl/ppb_var_shared.h $
+    ../../ppapi/shared_impl/ppb_video_decoder_shared.h $
+    ../../ppapi/shared_impl/ppb_view_shared.h $
+    ../../ppapi/shared_impl/ppp_flash_browser_operations_shared.h $
+    ../../ppapi/shared_impl/ppp_instance_combined.h $
+    ../../ppapi/shared_impl/private/net_address_private_impl.h $
+    ../../ppapi/shared_impl/private/ppb_x509_certificate_private_shared.h $
+    ../../ppapi/shared_impl/proxy_lock.h ../../ppapi/shared_impl/resource.h $
+    ../../ppapi/shared_impl/resource_tracker.h $
+    ../../ppapi/shared_impl/resource_var.h $
+    ../../ppapi/shared_impl/scoped_pp_resource.h $
+    ../../ppapi/shared_impl/scoped_pp_var.h $
+    ../../ppapi/shared_impl/singleton_resource_id.h $
+    ../../ppapi/shared_impl/socket_option_data.h $
+    ../../ppapi/shared_impl/thread_aware_callback.h $
+    ../../ppapi/shared_impl/time_conversion.h $
+    ../../ppapi/shared_impl/tracked_callback.h $
+    ../../ppapi/shared_impl/url_request_info_data.h $
+    ../../ppapi/shared_impl/url_response_info_data.h $
+    ../../ppapi/shared_impl/var.h ../../ppapi/shared_impl/var_tracker.h $
+    ../../ppapi/thunk/enter.h ../../ppapi/thunk/interfaces_postamble.h $
+    ../../ppapi/thunk/interfaces_ppb_private.h $
+    ../../ppapi/thunk/interfaces_ppb_private_flash.h $
+    ../../ppapi/thunk/interfaces_ppb_private_no_permissions.h $
+    ../../ppapi/thunk/interfaces_ppb_public_dev.h $
+    ../../ppapi/thunk/interfaces_ppb_public_dev_channel.h $
+    ../../ppapi/thunk/interfaces_ppb_public_stable.h $
+    ../../ppapi/thunk/interfaces_preamble.h $
+    ../../ppapi/thunk/ppapi_thunk_export.h $
+    ../../ppapi/thunk/ppb_audio_api.h $
+    ../../ppapi/thunk/ppb_audio_buffer_api.h $
+    ../../ppapi/thunk/ppb_audio_config_api.h $
+    ../../ppapi/thunk/ppb_audio_encoder_api.h $
+    ../../ppapi/thunk/ppb_audio_input_api.h $
+    ../../ppapi/thunk/ppb_broker_api.h $
+    ../../ppapi/thunk/ppb_browser_font_singleton_api.h $
+    ../../ppapi/thunk/ppb_buffer_api.h $
+    ../../ppapi/thunk/ppb_camera_capabilities_api.h $
+    ../../ppapi/thunk/ppb_camera_device_api.h $
+    ../../ppapi/thunk/ppb_compositor_api.h $
+    ../../ppapi/thunk/ppb_compositor_layer_api.h $
+    ../../ppapi/thunk/ppb_device_ref_api.h $
+    ../../ppapi/thunk/ppb_file_chooser_api.h $
+    ../../ppapi/thunk/ppb_file_io_api.h $
+    ../../ppapi/thunk/ppb_file_ref_api.h $
+    ../../ppapi/thunk/ppb_file_system_api.h $
+    ../../ppapi/thunk/ppb_flash_clipboard_api.h $
+    ../../ppapi/thunk/ppb_flash_drm_api.h $
+    ../../ppapi/thunk/ppb_flash_file_api.h $
+    ../../ppapi/thunk/ppb_flash_font_file_api.h $
+    ../../ppapi/thunk/ppb_flash_fullscreen_api.h $
+    ../../ppapi/thunk/ppb_flash_functions_api.h $
+    ../../ppapi/thunk/ppb_flash_menu_api.h $
+    ../../ppapi/thunk/ppb_flash_message_loop_api.h $
+    ../../ppapi/thunk/ppb_gamepad_api.h $
+    ../../ppapi/thunk/ppb_graphics_2d_api.h $
+    ../../ppapi/thunk/ppb_graphics_3d_api.h $
+    ../../ppapi/thunk/ppb_host_resolver_api.h $
+    ../../ppapi/thunk/ppb_host_resolver_private_api.h $
+    ../../ppapi/thunk/ppb_image_data_api.h $
+    ../../ppapi/thunk/ppb_input_event_api.h $
+    ../../ppapi/thunk/ppb_instance_api.h $
+    ../../ppapi/thunk/ppb_isolated_file_system_private_api.h $
+    ../../ppapi/thunk/ppb_media_stream_audio_track_api.h $
+    ../../ppapi/thunk/ppb_media_stream_video_track_api.h $
+    ../../ppapi/thunk/ppb_message_loop_api.h $
+    ../../ppapi/thunk/ppb_net_address_api.h $
+    ../../ppapi/thunk/ppb_network_list_api.h $
+    ../../ppapi/thunk/ppb_network_monitor_api.h $
+    ../../ppapi/thunk/ppb_network_proxy_api.h $
+    ../../ppapi/thunk/ppb_output_protection_api.h $
+    ../../ppapi/thunk/ppb_pdf_api.h $
+    ../../ppapi/thunk/ppb_platform_verification_api.h $
+    ../../ppapi/thunk/ppb_printing_api.h $
+    ../../ppapi/thunk/ppb_tcp_server_socket_private_api.h $
+    ../../ppapi/thunk/ppb_tcp_socket_api.h $
+    ../../ppapi/thunk/ppb_tcp_socket_private_api.h $
+    ../../ppapi/thunk/ppb_truetype_font_api.h $
+    ../../ppapi/thunk/ppb_truetype_font_singleton_api.h $
+    ../../ppapi/thunk/ppb_udp_socket_api.h $
+    ../../ppapi/thunk/ppb_udp_socket_private_api.h $
+    ../../ppapi/thunk/ppb_uma_singleton_api.h $
+    ../../ppapi/thunk/ppb_url_loader_api.h $
+    ../../ppapi/thunk/ppb_url_request_info_api.h $
+    ../../ppapi/thunk/ppb_url_response_info_api.h $
+    ../../ppapi/thunk/ppb_video_capture_api.h $
+    ../../ppapi/thunk/ppb_video_decoder_api.h $
+    ../../ppapi/thunk/ppb_video_decoder_dev_api.h $
+    ../../ppapi/thunk/ppb_video_destination_private_api.h $
+    ../../ppapi/thunk/ppb_video_encoder_api.h $
+    ../../ppapi/thunk/ppb_video_frame_api.h $
+    ../../ppapi/thunk/ppb_video_source_private_api.h $
+    ../../ppapi/thunk/ppb_view_api.h ../../ppapi/thunk/ppb_websocket_api.h $
+    ../../ppapi/thunk/ppb_x509_certificate_private_api.h $
+    ../../ppapi/thunk/resource_creation_api.h ../../ppapi/thunk/thunk.h $
+    ../../ppapi/utility/completion_callback_factory.h $
+    ../../ppapi/utility/completion_callback_factory_thread_traits.h $
+    ../../ppapi/utility/threading/lock.h $
+    ../../out/gypfiles/ppapi/irt-x86-64.ppapi_proxy_nacl.source_list.gypcmd $
+    ../../native_client/toolchain/linux_x86/pnacl_newlib/pnacl_newlib.json $
+    || obj/ppapi/ppapi_proxy_nacl.actions_depends.stamp
+
+rule $
+    ppapi_proxy_nacl_target_build_nonsfi_helper_x86_32_nlib_b276fb3e03a58dc1ac9ac610f05f029e
+  command = cd ../../ppapi; python ../native_client/build/build_nexe.py $
+      --root .. --product-dir ../out/Debug/xyz --config-name Debug -t $
+      ../native_client/toolchain/ --arch x86-32-nonsfi --build $
+      newlib_nlib_pnacl --name $
+      ../out/Debug/gen/tc_nonsfi_helper/lib32/libppapi_proxy_nacl.a $
+      --objdir $
+      ../out/Debug/obj/ppapi/ppapi_proxy_nacl.gen/nonsfi_helper-x86-32-nonsfi/ppapi_proxy_nacl $
+      "--include-dirs=../out/Debug/gen/tc_newlib/include $
+      ../native_client/src/public/linux_syscalls .. \"../out/Debug/gen\" .. $
+      ../third_party/khronos ../gpu ../third_party/WebKit" $
+      "--compile_flags=--target=i686-unknown-nacl $
+      --pnacl-bias=x86-32-nonsfi --pnacl-allow-translate $
+      --pnacl-allow-native -arch x86-32-nonsfi -O2 -g -Wall $
+      -fdiagnostics-show-option -Werror  -Wno-unused-function $
+      -Wno-char-subscripts -Wno-c++11-extensions $
+      -Wno-unnamed-type-template-args -Wno-extra-semi $
+      -Wno-unused-private-field -Wno-char-subscripts -Wno-unused-function $
+      \"-std=gnu++11\" " --gomadir "" "--defines=\"__STDC_LIMIT_MACROS=1\" $
+      \"__STDC_FORMAT_MACROS=1\" \"_GNU_SOURCE=1\" $
+      \"_POSIX_C_SOURCE=199506\" \"_XOPEN_SOURCE=600\" $
+      \"DYNAMIC_ANNOTATIONS_ENABLED=1\" $
+      \"DYNAMIC_ANNOTATIONS_PREFIX=NACL_\" \"NACL_BUILD_ARCH=x86\" $
+      V8_DEPRECATION_WARNINGS \"CLD_VERSION=2\" \"_FILE_OFFSET_BITS=64\" $
+      CHROMIUM_BUILD \"CR_CLANG_REVISION=255169-1\" $
+      UI_COMPOSITOR_IMAGE_TRANSPORT \"USE_AURA=1\" \"USE_ASH=1\" $
+      \"USE_PANGO=1\" \"USE_CAIRO=1\" \"USE_DEFAULT_RENDER_THEME=1\" $
+      \"USE_LIBJPEG_TURBO=1\" \"USE_X11=1\" \"USE_CLIPBOARD_AURAX11=1\" $
+      ENABLE_ONE_CLICK_SIGNIN \"ENABLE_WEBRTC=1\" \"ENABLE_MEDIA_ROUTER=1\" $
+      ENABLE_PEPPER_CDMS ENABLE_CONFIGURATION_POLICY ENABLE_NOTIFICATIONS $
+      \"ENABLE_HIDPI=1\" \"ENABLE_TOPCHROME_MD=1\" USE_UDEV $
+      DONT_EMBED_BUILD_METADATA FIELDTRIAL_TESTING_ENABLED $
+      \"ENABLE_TASK_MANAGER=1\" \"ENABLE_EXTENSIONS=1\" \"ENABLE_PDF=1\" $
+      \"ENABLE_PLUGINS=1\" \"ENABLE_SESSION_SERVICE=1\" \"ENABLE_THEMES=1\" $
+      \"ENABLE_AUTOFILL_DIALOG=1\" \"ENABLE_BACKGROUND=1\" $
+      \"ENABLE_PRINTING=1\" \"ENABLE_BASIC_PRINTING=1\" $
+      \"ENABLE_PRINT_PREVIEW=1\" \"ENABLE_SPELLCHECK=1\" $
+      \"ENABLE_CAPTIVE_PORTAL_DETECTION=1\" \"ENABLE_APP_LIST=1\" $
+      \"ENABLE_SETTINGS_APP=1\" \"ENABLE_SUPERVISED_USERS=1\" $
+      \"ENABLE_MDNS=1\" \"ENABLE_SERVICE_DISCOVERY=1\" $
+      V8_USE_EXTERNAL_STARTUP_DATA FULL_SAFE_BROWSING SAFE_BROWSING_CSD $
+      SAFE_BROWSING_DB_LOCAL \"USE_LIBPCI=1\" \"USE_OPENSSL=1\" $
+      \"USE_OPENSSL_CERTS=1\" __STDC_CONSTANT_MACROS __STDC_FORMAT_MACROS $
+      PPAPI_PROXY_IMPLEMENTATION" $
+      "--link_flags=-B../out/Debug/gen/tc_nonsfi_helper/lib32  " $
+      "--source-list=../out/gypfiles/ppapi/nonsfi_helper-x86-32-nonsfi.ppapi_proxy_nacl.source_list.gypcmd"
+  description = ACTION ppapi_proxy_nacl: build nonsfi_helper x86-32 $
+      nlib_b276fb3e03a58dc1ac9ac610f05f029e
+  restat = 1
+
+build gen/tc_nonsfi_helper/lib32/libppapi_proxy_nacl.a: $
+    ppapi_proxy_nacl_target_build_nonsfi_helper_x86_32_nlib_b276fb3e03a58dc1ac9ac610f05f029e $
+    ../../native_client/build/build_nexe.py $
+    ../../native_client/build/build_nexe_tools.py ../../base/at_exit.h $
+    ../../base/atomic_ref_count.h ../../base/atomicops.h $
+    ../../base/atomicops_internals_atomicword_compat.h $
+    ../../base/atomicops_internals_portable.h $
+    ../../base/atomicops_internals_x86_msvc.h ../../base/base_export.h $
+    ../../base/basictypes.h ../../base/bind.h ../../base/bind_helpers.h $
+    ../../base/bind_internal.h ../../base/bind_internal_win.h $
+    ../../base/callback.h ../../base/callback_forward.h $
+    ../../base/callback_internal.h ../../base/command_line.h $
+    ../../base/compiler_specific.h ../../base/containers/hash_tables.h $
+    ../../base/containers/mru_cache.h $
+    ../../base/containers/scoped_ptr_hash_map.h $
+    ../../base/containers/small_map.h $
+    ../../base/containers/stack_container.h ../../base/debug/alias.h $
+    ../../base/debug/crash_logging.h ../../base/debug/debugger.h $
+    ../../base/debug/leak_annotations.h ../../base/debug/task_annotator.h $
+    ../../base/event_types.h ../../base/file_descriptor_posix.h $
+    ../../base/files/file.h ../../base/files/file_path.h $
+    ../../base/files/file_tracing.h ../../base/files/file_util.h $
+    ../../base/files/memory_mapped_file.h ../../base/files/scoped_file.h $
+    ../../base/format_macros.h ../../base/gtest_prod_util.h $
+    ../../base/hash.h ../../base/lazy_instance.h ../../base/location.h $
+    ../../base/logging.h ../../base/mac/scoped_cffiledescriptorref.h $
+    ../../base/mac/scoped_cftyperef.h ../../base/mac/scoped_typeref.h $
+    ../../base/macros.h ../../base/memory/aligned_memory.h $
+    ../../base/memory/linked_ptr.h ../../base/memory/manual_constructor.h $
+    ../../base/memory/raw_scoped_refptr_mismatch_checker.h $
+    ../../base/memory/ref_counted.h ../../base/memory/ref_counted_memory.h $
+    ../../base/memory/scoped_policy.h ../../base/memory/scoped_ptr.h $
+    ../../base/memory/scoped_vector.h ../../base/memory/shared_memory.h $
+    ../../base/memory/shared_memory_handle.h ../../base/memory/singleton.h $
+    ../../base/memory/weak_ptr.h $
+    ../../base/message_loop/incoming_task_queue.h $
+    ../../base/message_loop/message_loop.h $
+    ../../base/message_loop/message_loop_task_runner.h $
+    ../../base/message_loop/message_pump.h $
+    ../../base/message_loop/message_pump_dispatcher.h $
+    ../../base/message_loop/message_pump_io_ios.h $
+    ../../base/message_loop/message_pump_libevent.h $
+    ../../base/message_loop/message_pump_mac.h $
+    ../../base/message_loop/message_pump_win.h $
+    ../../base/message_loop/timer_slack.h $
+    ../../base/metrics/bucket_ranges.h ../../base/metrics/histogram.h $
+    ../../base/metrics/histogram_base.h $
+    ../../base/metrics/histogram_macros.h $
+    ../../base/metrics/histogram_samples.h ../../base/move.h $
+    ../../base/numerics/safe_conversions.h $
+    ../../base/numerics/safe_conversions_impl.h $
+    ../../base/numerics/safe_math.h ../../base/numerics/safe_math_impl.h $
+    ../../base/observer_list.h ../../base/pending_task.h $
+    ../../base/pickle.h ../../base/posix/eintr_wrapper.h $
+    ../../base/process/port_provider_mac.h ../../base/process/process.h $
+    ../../base/process/process_handle.h $
+    ../../base/process/process_metrics.h $
+    ../../base/profiler/alternate_timer.h $
+    ../../base/profiler/scoped_profile.h ../../base/profiler/tracked_time.h $
+    ../../base/scoped_generic.h ../../base/sequence_checker.h $
+    ../../base/sequence_checker_impl.h ../../base/sequenced_task_runner.h $
+    ../../base/sequenced_task_runner_helpers.h $
+    ../../base/single_thread_task_runner.h ../../base/stl_util.h $
+    ../../base/strings/string16.h $
+    ../../base/strings/string_number_conversions.h $
+    ../../base/strings/string_piece.h ../../base/strings/string_split.h $
+    ../../base/strings/string_util.h ../../base/strings/string_util_posix.h $
+    ../../base/strings/string_util_win.h ../../base/strings/stringprintf.h $
+    ../../base/strings/utf_string_conversions.h ../../base/sync_socket.h $
+    ../../base/synchronization/condition_variable.h $
+    ../../base/synchronization/lock.h $
+    ../../base/synchronization/lock_impl.h $
+    ../../base/synchronization/waitable_event.h $
+    ../../base/synchronization/waitable_event_watcher.h $
+    ../../base/task_runner.h ../../base/task_runner_util.h $
+    ../../base/template_util.h ../../base/thread_task_runner_handle.h $
+    ../../base/threading/non_thread_safe.h $
+    ../../base/threading/non_thread_safe_impl.h $
+    ../../base/threading/platform_thread.h $
+    ../../base/threading/sequenced_worker_pool.h $
+    ../../base/threading/simple_thread.h ../../base/threading/thread.h $
+    ../../base/threading/thread_checker.h $
+    ../../base/threading/thread_checker_impl.h $
+    ../../base/threading/thread_collision_warner.h $
+    ../../base/threading/thread_local.h $
+    ../../base/threading/thread_local_storage.h $
+    ../../base/threading/thread_restrictions.h ../../base/time/time.h $
+    ../../base/timer/timer.h $
+    ../../base/trace_event/common/trace_event_common.h $
+    ../../base/trace_event/memory_allocator_dump.h $
+    ../../base/trace_event/memory_allocator_dump_guid.h $
+    ../../base/trace_event/memory_dump_provider.h $
+    ../../base/trace_event/memory_dump_request_args.h $
+    ../../base/trace_event/trace_config.h $
+    ../../base/trace_event/trace_event.h $
+    ../../base/trace_event/trace_event_impl.h $
+    ../../base/trace_event/trace_event_memory_overhead.h $
+    ../../base/trace_event/trace_event_system_stats_monitor.h $
+    ../../base/trace_event/trace_log.h ../../base/tracked_objects.h $
+    ../../base/tracking_info.h ../../base/tuple.h ../../base/values.h $
+    ../../base/win/object_watcher.h ../../base/win/scoped_handle.h $
+    ../../build/build_config.h $
+    ../../components/tracing/child_trace_message_filter.h $
+    ../../components/tracing/tracing_export.h ../../gin/array_buffer.h $
+    ../../gin/converter.h ../../gin/gin_export.h $
+    ../../gin/public/isolate_holder.h $
+    ../../gin/public/v8_idle_task_runner.h ../../gin/public/v8_platform.h $
+    ../../gin/v8_initializer.h ../../gpu/GLES2/gl2chromium.h $
+    ../../gpu/GLES2/gl2chromium_autogen.h ../../gpu/GLES2/gl2extchromium.h $
+    ../../gpu/command_buffer/client/buffer_tracker.h $
+    ../../gpu/command_buffer/client/client_context_state.h $
+    ../../gpu/command_buffer/client/client_context_state_autogen.h $
+    ../../gpu/command_buffer/client/cmd_buffer_helper.h $
+    ../../gpu/command_buffer/client/context_support.h $
+    ../../gpu/command_buffer/client/fenced_allocator.h $
+    ../../gpu/command_buffer/client/gles2_c_lib_export.h $
+    ../../gpu/command_buffer/client/gles2_cmd_helper.h $
+    ../../gpu/command_buffer/client/gles2_cmd_helper_autogen.h $
+    ../../gpu/command_buffer/client/gles2_impl_export.h $
+    ../../gpu/command_buffer/client/gles2_implementation.h $
+    ../../gpu/command_buffer/client/gles2_implementation_autogen.h $
+    ../../gpu/command_buffer/client/gles2_interface.h $
+    ../../gpu/command_buffer/client/gles2_interface_autogen.h $
+    ../../gpu/command_buffer/client/gpu_control.h $
+    ../../gpu/command_buffer/client/mapped_memory.h $
+    ../../gpu/command_buffer/client/ref_counted.h $
+    ../../gpu/command_buffer/client/share_group.h $
+    ../../gpu/command_buffer/common/bitfield_helpers.h $
+    ../../gpu/command_buffer/common/buffer.h $
+    ../../gpu/command_buffer/common/capabilities.h $
+    ../../gpu/command_buffer/common/cmd_buffer_common.h $
+    ../../gpu/command_buffer/common/command_buffer.h $
+    ../../gpu/command_buffer/common/command_buffer_shared.h $
+    ../../gpu/command_buffer/common/constants.h $
+    ../../gpu/command_buffer/common/debug_marker_manager.h $
+    ../../gpu/command_buffer/common/gles2_cmd_format.h $
+    ../../gpu/command_buffer/common/gles2_cmd_format_autogen.h $
+    ../../gpu/command_buffer/common/gles2_cmd_ids.h $
+    ../../gpu/command_buffer/common/gles2_cmd_ids_autogen.h $
+    ../../gpu/command_buffer/common/gles2_cmd_utils.h $
+    ../../gpu/command_buffer/common/gles2_cmd_utils_autogen.h $
+    ../../gpu/command_buffer/common/gles2_utils_export.h $
+    ../../gpu/command_buffer/common/mailbox.h $
+    ../../gpu/command_buffer/common/sync_token.h ../../gpu/gpu_export.h $
+    ../../gpu/ipc/gpu_command_buffer_traits.h $
+    ../../gpu/ipc/gpu_command_buffer_traits_multi.h $
+    ../../ipc/attachment_broker.h ../../ipc/brokerable_attachment.h $
+    ../../ipc/ipc_channel.h ../../ipc/ipc_channel_handle.h $
+    ../../ipc/ipc_channel_posix.h ../../ipc/ipc_channel_proxy.h $
+    ../../ipc/ipc_channel_reader.h ../../ipc/ipc_endpoint.h $
+    ../../ipc/ipc_export.h ../../ipc/ipc_listener.h ../../ipc/ipc_logging.h $
+    ../../ipc/ipc_message.h ../../ipc/ipc_message_attachment.h $
+    ../../ipc/ipc_message_attachment_set.h ../../ipc/ipc_message_macros.h $
+    ../../ipc/ipc_message_start.h ../../ipc/ipc_message_utils.h $
+    ../../ipc/ipc_message_utils_impl.h ../../ipc/ipc_param_traits.h $
+    ../../ipc/ipc_platform_file.h ../../ipc/ipc_sender.h $
+    ../../ipc/ipc_sync_channel.h ../../ipc/ipc_sync_message.h $
+    ../../ipc/ipc_sync_message_filter.h ../../ipc/ipc_test_sink.h $
+    ../../ipc/message_filter.h ../../ipc/param_traits_macros.h $
+    ../../media/audio/audio_parameters.h ../../media/audio/point.h $
+    ../../media/base/audio_bus.h ../../media/base/channel_layout.h $
+    ../../media/base/limits.h ../../media/base/media_export.h $
+    ../../mojo/public/c/gles2/gles2_export.h $
+    ../../native_client/src/include/build_config.h $
+    ../../native_client/src/include/nacl_base.h $
+    ../../native_client/src/include/nacl_compiler_annotations.h $
+    ../../native_client/src/include/nacl_macros.h $
+    ../../native_client/src/include/portability.h $
+    ../../native_client/src/include/win/port_win.h $
+    ../../native_client/src/public/chrome_main.h $
+    ../../native_client/src/public/irt_core.h $
+    ../../native_client/src/shared/imc/nacl_imc_c.h $
+    ../../native_client/src/shared/platform/nacl_log.h $
+    ../../native_client/src/shared/srpc/nacl_srpc.h $
+    ../../native_client/src/third_party/valgrind/memcheck.h $
+    ../../native_client/src/third_party/valgrind/valgrind.h $
+    ../../native_client/src/trusted/service_runtime/include/bits/wordsize.h $
+    ../../native_client/src/trusted/service_runtime/include/machine/_types.h $
+    ../../native_client/src/trusted/service_runtime/include/sys/errno.h $
+    ../../native_client/src/trusted/service_runtime/include/sys/unistd.h $
+    ../../native_client/src/trusted/service_runtime/nacl_size_t.h $
+    ../../native_client/src/untrusted/irt/irt.h $
+    ../../native_client/src/untrusted/irt/irt_dev.h $
+    ../../skia/ext/platform_canvas.h ../../skia/ext/platform_surface.h $
+    ../../skia/ext/refptr.h ../../testing/gtest/include/gtest/gtest_prod.h $
+    ../../third_party/icu/source/i18n/unicode/usearch.h $
+    ../../third_party/khronos/GLES2/gl2.h $
+    ../../third_party/khronos/GLES2/gl2ext.h $
+    ../../third_party/khronos/GLES2/gl2platform.h $
+    ../../third_party/khronos/GLES3/gl3.h $
+    ../../third_party/khronos/GLES3/gl3platform.h $
+    ../../third_party/khronos/KHR/khrplatform.h $
+    ../../third_party/skia/include/core/SkBitmap.h $
+    ../../third_party/skia/include/core/SkCanvas.h $
+    ../../third_party/skia/include/core/SkColor.h $
+    ../../third_party/skia/include/core/SkColorTable.h $
+    ../../third_party/skia/include/core/SkDeque.h $
+    ../../third_party/skia/include/core/SkFilterQuality.h $
+    ../../third_party/skia/include/core/SkFixed.h $
+    ../../third_party/skia/include/core/SkFlattenable.h $
+    ../../third_party/skia/include/core/SkImageInfo.h $
+    ../../third_party/skia/include/core/SkMath.h $
+    ../../third_party/skia/include/core/SkMatrix.h $
+    ../../third_party/skia/include/core/SkPaint.h $
+    ../../third_party/skia/include/core/SkPixelRef.h $
+    ../../third_party/skia/include/core/SkPixmap.h $
+    ../../third_party/skia/include/core/SkPoint.h $
+    ../../third_party/skia/include/core/SkPostConfig.h $
+    ../../third_party/skia/include/core/SkPreConfig.h $
+    ../../third_party/skia/include/core/SkRect.h $
+    ../../third_party/skia/include/core/SkRefCnt.h $
+    ../../third_party/skia/include/core/SkRegion.h $
+    ../../third_party/skia/include/core/SkScalar.h $
+    ../../third_party/skia/include/core/SkSize.h $
+    ../../third_party/skia/include/core/SkString.h $
+    ../../third_party/skia/include/core/SkSurfaceProps.h $
+    ../../third_party/skia/include/core/SkTArray.h $
+    ../../third_party/skia/include/core/SkTDArray.h $
+    ../../third_party/skia/include/core/SkTypes.h $
+    ../../third_party/skia/include/core/SkXfermode.h $
+    ../../third_party/skia/include/private/SkAtomics.h $
+    ../../third_party/skia/include/private/SkFloatBits.h $
+    ../../third_party/skia/include/private/SkFloatingPoint.h $
+    ../../third_party/skia/include/private/SkMutex.h $
+    ../../third_party/skia/include/private/SkOncePtr.h $
+    ../../third_party/skia/include/private/SkSemaphore.h $
+    ../../third_party/skia/include/private/SkTLogic.h $
+    ../../third_party/skia/include/private/SkTemplates.h $
+    ../../third_party/skia/include/private/SkThreadID.h $
+    ../../third_party/skia/include/private/SkUniquePtr.h $
+    ../../third_party/skia/include/private/SkUtility.h $
+    ../../ui/gfx/geometry/point.h ../../ui/gfx/geometry/point3_f.h $
+    ../../ui/gfx/geometry/point_f.h ../../ui/gfx/geometry/vector2d.h $
+    ../../ui/gfx/geometry/vector2d_f.h ../../ui/gfx/geometry/vector3d_f.h $
+    ../../ui/gfx/gfx_export.h ../../ui/gfx/overlay_transform.h $
+    ../../ui/surface/surface_export.h ../../ui/surface/transport_dib.h $
+    ../../url/third_party/mozilla/url_parse.h ../../url/url_export.h $
+    ../../v8/include/v8-platform.h ../../v8/include/v8-version.h $
+    ../../v8/include/v8.h ../../v8/include/v8config.h $
+    ../../ppapi/c/dev/deprecated_bool.h $
+    ../../ppapi/c/dev/pp_cursor_type_dev.h $
+    ../../ppapi/c/dev/pp_print_settings_dev.h $
+    ../../ppapi/c/dev/pp_video_capture_dev.h $
+    ../../ppapi/c/dev/pp_video_dev.h $
+    ../../ppapi/c/dev/ppb_audio_input_dev.h $
+    ../../ppapi/c/dev/ppb_buffer_dev.h ../../ppapi/c/dev/ppb_char_set_dev.h $
+    ../../ppapi/c/dev/ppb_crypto_dev.h $
+    ../../ppapi/c/dev/ppb_cursor_control_dev.h $
+    ../../ppapi/c/dev/ppb_device_ref_dev.h $
+    ../../ppapi/c/dev/ppb_file_chooser_dev.h $
+    ../../ppapi/c/dev/ppb_font_dev.h $
+    ../../ppapi/c/dev/ppb_gles_chromium_texture_mapping_dev.h $
+    ../../ppapi/c/dev/ppb_ime_input_event_dev.h $
+    ../../ppapi/c/dev/ppb_memory_dev.h $
+    ../../ppapi/c/dev/ppb_opengles2ext_dev.h $
+    ../../ppapi/c/dev/ppb_printing_dev.h $
+    ../../ppapi/c/dev/ppb_text_input_dev.h $
+    ../../ppapi/c/dev/ppb_trace_event_dev.h $
+    ../../ppapi/c/dev/ppb_truetype_font_dev.h $
+    ../../ppapi/c/dev/ppb_url_util_dev.h $
+    ../../ppapi/c/dev/ppb_var_deprecated.h $
+    ../../ppapi/c/dev/ppb_video_capture_dev.h $
+    ../../ppapi/c/dev/ppb_video_decoder_dev.h $
+    ../../ppapi/c/dev/ppb_view_dev.h $
+    ../../ppapi/c/dev/ppp_class_deprecated.h $
+    ../../ppapi/c/dev/ppp_printing_dev.h $
+    ../../ppapi/c/dev/ppp_text_input_dev.h $
+    ../../ppapi/c/dev/ppp_video_capture_dev.h $
+    ../../ppapi/c/dev/ppp_video_decoder_dev.h $
+    ../../ppapi/c/pp_array_output.h ../../ppapi/c/pp_bool.h $
+    ../../ppapi/c/pp_codecs.h ../../ppapi/c/pp_completion_callback.h $
+    ../../ppapi/c/pp_directory_entry.h ../../ppapi/c/pp_errors.h $
+    ../../ppapi/c/pp_file_info.h ../../ppapi/c/pp_graphics_3d.h $
+    ../../ppapi/c/pp_instance.h ../../ppapi/c/pp_macros.h $
+    ../../ppapi/c/pp_module.h ../../ppapi/c/pp_point.h $
+    ../../ppapi/c/pp_rect.h ../../ppapi/c/pp_resource.h $
+    ../../ppapi/c/pp_size.h ../../ppapi/c/pp_stdint.h $
+    ../../ppapi/c/pp_time.h ../../ppapi/c/pp_touch_point.h $
+    ../../ppapi/c/pp_var.h ../../ppapi/c/ppb.h ../../ppapi/c/ppb_audio.h $
+    ../../ppapi/c/ppb_audio_buffer.h ../../ppapi/c/ppb_audio_config.h $
+    ../../ppapi/c/ppb_audio_encoder.h ../../ppapi/c/ppb_compositor.h $
+    ../../ppapi/c/ppb_compositor_layer.h ../../ppapi/c/ppb_console.h $
+    ../../ppapi/c/ppb_core.h ../../ppapi/c/ppb_file_io.h $
+    ../../ppapi/c/ppb_file_ref.h ../../ppapi/c/ppb_file_system.h $
+    ../../ppapi/c/ppb_fullscreen.h ../../ppapi/c/ppb_gamepad.h $
+    ../../ppapi/c/ppb_graphics_2d.h ../../ppapi/c/ppb_graphics_3d.h $
+    ../../ppapi/c/ppb_host_resolver.h ../../ppapi/c/ppb_image_data.h $
+    ../../ppapi/c/ppb_input_event.h ../../ppapi/c/ppb_instance.h $
+    ../../ppapi/c/ppb_media_stream_audio_track.h $
+    ../../ppapi/c/ppb_media_stream_video_track.h $
+    ../../ppapi/c/ppb_message_loop.h ../../ppapi/c/ppb_messaging.h $
+    ../../ppapi/c/ppb_mouse_cursor.h ../../ppapi/c/ppb_mouse_lock.h $
+    ../../ppapi/c/ppb_net_address.h ../../ppapi/c/ppb_network_list.h $
+    ../../ppapi/c/ppb_network_monitor.h ../../ppapi/c/ppb_network_proxy.h $
+    ../../ppapi/c/ppb_opengles2.h ../../ppapi/c/ppb_tcp_socket.h $
+    ../../ppapi/c/ppb_text_input_controller.h $
+    ../../ppapi/c/ppb_udp_socket.h ../../ppapi/c/ppb_url_loader.h $
+    ../../ppapi/c/ppb_url_request_info.h $
+    ../../ppapi/c/ppb_url_response_info.h ../../ppapi/c/ppb_var.h $
+    ../../ppapi/c/ppb_var_array.h ../../ppapi/c/ppb_var_array_buffer.h $
+    ../../ppapi/c/ppb_var_dictionary.h ../../ppapi/c/ppb_video_decoder.h $
+    ../../ppapi/c/ppb_video_encoder.h ../../ppapi/c/ppb_video_frame.h $
+    ../../ppapi/c/ppb_view.h ../../ppapi/c/ppb_websocket.h $
+    ../../ppapi/c/ppp.h ../../ppapi/c/ppp_graphics_3d.h $
+    ../../ppapi/c/ppp_input_event.h ../../ppapi/c/ppp_instance.h $
+    ../../ppapi/c/ppp_message_handler.h ../../ppapi/c/ppp_messaging.h $
+    ../../ppapi/c/ppp_mouse_lock.h $
+    ../../ppapi/c/private/pp_content_decryptor.h $
+    ../../ppapi/c/private/pp_file_handle.h $
+    ../../ppapi/c/private/pp_private_font_charset.h $
+    ../../ppapi/c/private/pp_video_capture_format.h $
+    ../../ppapi/c/private/pp_video_frame_private.h $
+    ../../ppapi/c/private/ppb_camera_capabilities_private.h $
+    ../../ppapi/c/private/ppb_camera_device_private.h $
+    ../../ppapi/c/private/ppb_content_decryptor_private.h $
+    ../../ppapi/c/private/ppb_ext_crx_file_system_private.h $
+    ../../ppapi/c/private/ppb_file_io_private.h $
+    ../../ppapi/c/private/ppb_file_ref_private.h $
+    ../../ppapi/c/private/ppb_find_private.h $
+    ../../ppapi/c/private/ppb_flash.h $
+    ../../ppapi/c/private/ppb_flash_clipboard.h $
+    ../../ppapi/c/private/ppb_flash_device_id.h $
+    ../../ppapi/c/private/ppb_flash_drm.h $
+    ../../ppapi/c/private/ppb_flash_file.h $
+    ../../ppapi/c/private/ppb_flash_font_file.h $
+    ../../ppapi/c/private/ppb_flash_fullscreen.h $
+    ../../ppapi/c/private/ppb_flash_menu.h $
+    ../../ppapi/c/private/ppb_flash_message_loop.h $
+    ../../ppapi/c/private/ppb_flash_print.h $
+    ../../ppapi/c/private/ppb_host_resolver_private.h $
+    ../../ppapi/c/private/ppb_instance_private.h $
+    ../../ppapi/c/private/ppb_isolated_file_system_private.h $
+    ../../ppapi/c/private/ppb_net_address_private.h $
+    ../../ppapi/c/private/ppb_output_protection_private.h $
+    ../../ppapi/c/private/ppb_pdf.h $
+    ../../ppapi/c/private/ppb_platform_verification_private.h $
+    ../../ppapi/c/private/ppb_proxy_private.h $
+    ../../ppapi/c/private/ppb_tcp_server_socket_private.h $
+    ../../ppapi/c/private/ppb_tcp_socket_private.h $
+    ../../ppapi/c/private/ppb_testing_private.h $
+    ../../ppapi/c/private/ppb_udp_socket_private.h $
+    ../../ppapi/c/private/ppb_uma_private.h $
+    ../../ppapi/c/private/ppb_video_destination_private.h $
+    ../../ppapi/c/private/ppb_video_source_private.h $
+    ../../ppapi/c/private/ppb_x509_certificate_private.h $
+    ../../ppapi/c/private/ppp_content_decryptor_private.h $
+    ../../ppapi/c/private/ppp_find_private.h $
+    ../../ppapi/c/private/ppp_flash_browser_operations.h $
+    ../../ppapi/c/private/ppp_instance_private.h $
+    ../../ppapi/c/private/ppp_pdf.h $
+    ../../ppapi/c/trusted/ppb_broker_trusted.h $
+    ../../ppapi/c/trusted/ppb_browser_font_trusted.h $
+    ../../ppapi/c/trusted/ppb_char_set_trusted.h $
+    ../../ppapi/c/trusted/ppb_file_chooser_trusted.h $
+    ../../ppapi/c/trusted/ppb_url_loader_trusted.h $
+    ../../ppapi/c/trusted/ppp_broker.h ../../ppapi/cpp/array_output.h $
+    ../../ppapi/cpp/completion_callback.h ../../ppapi/cpp/core.h $
+    ../../ppapi/cpp/instance_handle.h ../../ppapi/cpp/logging.h $
+    ../../ppapi/cpp/module.h ../../ppapi/cpp/output_traits.h $
+    ../../ppapi/cpp/pass_ref.h ../../ppapi/cpp/resource.h $
+    ../../ppapi/cpp/var.h ../../ppapi/nacl_irt/irt_interfaces.cc $
+    ../../ppapi/nacl_irt/irt_interfaces.h $
+    ../../ppapi/nacl_irt/irt_manifest.h $
+    ../../ppapi/nacl_irt/irt_pnacl_translator_compile.cc $
+    ../../ppapi/nacl_irt/irt_pnacl_translator_link.cc $
+    ../../ppapi/nacl_irt/irt_ppapi.cc ../../ppapi/nacl_irt/irt_ppapi.h $
+    ../../ppapi/nacl_irt/irt_start.cc $
+    ../../ppapi/nacl_irt/manifest_service.cc $
+    ../../ppapi/nacl_irt/manifest_service.h $
+    ../../ppapi/nacl_irt/plugin_startup.cc $
+    ../../ppapi/nacl_irt/plugin_startup.h $
+    ../../ppapi/nacl_irt/ppapi_dispatcher.cc $
+    ../../ppapi/nacl_irt/ppapi_dispatcher.h $
+    ../../ppapi/nacl_irt/public/irt_ppapi.h $
+    ../../ppapi/native_client/src/untrusted/pnacl_irt_shim/irt_shim_ppapi.h $
+    ../../ppapi/proxy/audio_buffer_resource.cc $
+    ../../ppapi/proxy/audio_buffer_resource.h $
+    ../../ppapi/proxy/audio_encoder_resource.cc $
+    ../../ppapi/proxy/audio_encoder_resource.h $
+    ../../ppapi/proxy/audio_input_resource.cc $
+    ../../ppapi/proxy/audio_input_resource.h $
+    ../../ppapi/proxy/broker_dispatcher.cc $
+    ../../ppapi/proxy/broker_dispatcher.h $
+    ../../ppapi/proxy/broker_resource.cc $
+    ../../ppapi/proxy/broker_resource.h $
+    ../../ppapi/proxy/browser_font_singleton_resource.cc $
+    ../../ppapi/proxy/browser_font_singleton_resource.h $
+    ../../ppapi/proxy/camera_capabilities_resource.cc $
+    ../../ppapi/proxy/camera_capabilities_resource.h $
+    ../../ppapi/proxy/camera_device_resource.cc $
+    ../../ppapi/proxy/camera_device_resource.h $
+    ../../ppapi/proxy/compositor_layer_resource.cc $
+    ../../ppapi/proxy/compositor_layer_resource.h $
+    ../../ppapi/proxy/compositor_resource.cc $
+    ../../ppapi/proxy/compositor_resource.h ../../ppapi/proxy/connection.h $
+    ../../ppapi/proxy/content_decryptor_private_serializer.h $
+    ../../ppapi/proxy/device_enumeration_resource_helper.cc $
+    ../../ppapi/proxy/device_enumeration_resource_helper.h $
+    ../../ppapi/proxy/dispatch_reply_message.h $
+    ../../ppapi/proxy/dispatcher.cc ../../ppapi/proxy/dispatcher.h $
+    ../../ppapi/proxy/enter_proxy.h ../../ppapi/proxy/error_conversion.cc $
+    ../../ppapi/proxy/error_conversion.h $
+    ../../ppapi/proxy/file_chooser_resource.cc $
+    ../../ppapi/proxy/file_chooser_resource.h $
+    ../../ppapi/proxy/file_io_resource.cc $
+    ../../ppapi/proxy/file_io_resource.h $
+    ../../ppapi/proxy/file_ref_resource.cc $
+    ../../ppapi/proxy/file_ref_resource.h $
+    ../../ppapi/proxy/file_system_resource.cc $
+    ../../ppapi/proxy/file_system_resource.h $
+    ../../ppapi/proxy/flash_clipboard_resource.cc $
+    ../../ppapi/proxy/flash_clipboard_resource.h $
+    ../../ppapi/proxy/flash_drm_resource.cc $
+    ../../ppapi/proxy/flash_drm_resource.h $
+    ../../ppapi/proxy/flash_file_resource.cc $
+    ../../ppapi/proxy/flash_file_resource.h $
+    ../../ppapi/proxy/flash_font_file_resource.cc $
+    ../../ppapi/proxy/flash_font_file_resource.h $
+    ../../ppapi/proxy/flash_fullscreen_resource.cc $
+    ../../ppapi/proxy/flash_fullscreen_resource.h $
+    ../../ppapi/proxy/flash_menu_resource.cc $
+    ../../ppapi/proxy/flash_menu_resource.h $
+    ../../ppapi/proxy/flash_resource.cc ../../ppapi/proxy/flash_resource.h $
+    ../../ppapi/proxy/gamepad_resource.cc $
+    ../../ppapi/proxy/gamepad_resource.h $
+    ../../ppapi/proxy/graphics_2d_resource.cc $
+    ../../ppapi/proxy/graphics_2d_resource.h $
+    ../../ppapi/proxy/host_dispatcher.cc $
+    ../../ppapi/proxy/host_dispatcher.h $
+    ../../ppapi/proxy/host_resolver_private_resource.cc $
+    ../../ppapi/proxy/host_resolver_private_resource.h $
+    ../../ppapi/proxy/host_resolver_resource.cc $
+    ../../ppapi/proxy/host_resolver_resource.h $
+    ../../ppapi/proxy/host_resolver_resource_base.cc $
+    ../../ppapi/proxy/host_resolver_resource_base.h $
+    ../../ppapi/proxy/host_var_serialization_rules.cc $
+    ../../ppapi/proxy/host_var_serialization_rules.h $
+    ../../ppapi/proxy/interface_list.cc ../../ppapi/proxy/interface_list.h $
+    ../../ppapi/proxy/interface_proxy.cc $
+    ../../ppapi/proxy/interface_proxy.h $
+    ../../ppapi/proxy/isolated_file_system_private_resource.cc $
+    ../../ppapi/proxy/isolated_file_system_private_resource.h $
+    ../../ppapi/proxy/locking_resource_releaser.h $
+    ../../ppapi/proxy/media_stream_audio_track_resource.cc $
+    ../../ppapi/proxy/media_stream_audio_track_resource.h $
+    ../../ppapi/proxy/media_stream_track_resource_base.cc $
+    ../../ppapi/proxy/media_stream_track_resource_base.h $
+    ../../ppapi/proxy/media_stream_video_track_resource.cc $
+    ../../ppapi/proxy/media_stream_video_track_resource.h $
+    ../../ppapi/proxy/message_handler.cc $
+    ../../ppapi/proxy/message_handler.h $
+    ../../ppapi/proxy/net_address_resource.cc $
+    ../../ppapi/proxy/net_address_resource.h $
+    ../../ppapi/proxy/network_list_resource.cc $
+    ../../ppapi/proxy/network_list_resource.h $
+    ../../ppapi/proxy/network_monitor_resource.cc $
+    ../../ppapi/proxy/network_monitor_resource.h $
+    ../../ppapi/proxy/network_proxy_resource.cc $
+    ../../ppapi/proxy/network_proxy_resource.h $
+    ../../ppapi/proxy/output_protection_resource.cc $
+    ../../ppapi/proxy/output_protection_resource.h $
+    ../../ppapi/proxy/pdf_resource.cc ../../ppapi/proxy/pdf_resource.h $
+    ../../ppapi/proxy/platform_verification_private_resource.cc $
+    ../../ppapi/proxy/platform_verification_private_resource.h $
+    ../../ppapi/proxy/plugin_array_buffer_var.cc $
+    ../../ppapi/proxy/plugin_array_buffer_var.h $
+    ../../ppapi/proxy/plugin_dispatcher.cc $
+    ../../ppapi/proxy/plugin_dispatcher.h $
+    ../../ppapi/proxy/plugin_globals.cc ../../ppapi/proxy/plugin_globals.h $
+    ../../ppapi/proxy/plugin_message_filter.cc $
+    ../../ppapi/proxy/plugin_message_filter.h $
+    ../../ppapi/proxy/plugin_proxy_delegate.h $
+    ../../ppapi/proxy/plugin_resource.cc $
+    ../../ppapi/proxy/plugin_resource.h $
+    ../../ppapi/proxy/plugin_resource_callback.h $
+    ../../ppapi/proxy/plugin_resource_tracker.cc $
+    ../../ppapi/proxy/plugin_resource_tracker.h $
+    ../../ppapi/proxy/plugin_resource_var.cc $
+    ../../ppapi/proxy/plugin_resource_var.h $
+    ../../ppapi/proxy/plugin_var_serialization_rules.cc $
+    ../../ppapi/proxy/plugin_var_serialization_rules.h $
+    ../../ppapi/proxy/plugin_var_tracker.cc $
+    ../../ppapi/proxy/plugin_var_tracker.h $
+    ../../ppapi/proxy/ppapi_command_buffer_proxy.cc $
+    ../../ppapi/proxy/ppapi_command_buffer_proxy.h $
+    ../../ppapi/proxy/ppapi_message_utils.h $
+    ../../ppapi/proxy/ppapi_messages.h $
+    ../../ppapi/proxy/ppapi_param_traits.h $
+    ../../ppapi/proxy/ppapi_proxy_export.h $
+    ../../ppapi/proxy/ppb_audio_proxy.cc $
+    ../../ppapi/proxy/ppb_audio_proxy.h $
+    ../../ppapi/proxy/ppb_broker_proxy.cc $
+    ../../ppapi/proxy/ppb_broker_proxy.h $
+    ../../ppapi/proxy/ppb_buffer_proxy.cc $
+    ../../ppapi/proxy/ppb_buffer_proxy.h $
+    ../../ppapi/proxy/ppb_core_proxy.cc ../../ppapi/proxy/ppb_core_proxy.h $
+    ../../ppapi/proxy/ppb_flash_message_loop_proxy.cc $
+    ../../ppapi/proxy/ppb_flash_message_loop_proxy.h $
+    ../../ppapi/proxy/ppb_graphics_3d_proxy.cc $
+    ../../ppapi/proxy/ppb_graphics_3d_proxy.h $
+    ../../ppapi/proxy/ppb_image_data_proxy.cc $
+    ../../ppapi/proxy/ppb_image_data_proxy.h $
+    ../../ppapi/proxy/ppb_instance_proxy.cc $
+    ../../ppapi/proxy/ppb_instance_proxy.h $
+    ../../ppapi/proxy/ppb_message_loop_proxy.cc $
+    ../../ppapi/proxy/ppb_message_loop_proxy.h $
+    ../../ppapi/proxy/ppb_testing_proxy.cc $
+    ../../ppapi/proxy/ppb_testing_proxy.h $
+    ../../ppapi/proxy/ppb_var_deprecated_proxy.cc $
+    ../../ppapi/proxy/ppb_var_deprecated_proxy.h $
+    ../../ppapi/proxy/ppb_video_decoder_proxy.cc $
+    ../../ppapi/proxy/ppb_video_decoder_proxy.h $
+    ../../ppapi/proxy/ppb_x509_certificate_private_proxy.cc $
+    ../../ppapi/proxy/ppb_x509_certificate_private_proxy.h $
+    ../../ppapi/proxy/ppp_class_proxy.cc $
+    ../../ppapi/proxy/ppp_class_proxy.h $
+    ../../ppapi/proxy/ppp_content_decryptor_private_proxy.cc $
+    ../../ppapi/proxy/ppp_content_decryptor_private_proxy.h $
+    ../../ppapi/proxy/ppp_find_proxy.cc ../../ppapi/proxy/ppp_find_proxy.h $
+    ../../ppapi/proxy/ppp_graphics_3d_proxy.cc $
+    ../../ppapi/proxy/ppp_graphics_3d_proxy.h $
+    ../../ppapi/proxy/ppp_input_event_proxy.cc $
+    ../../ppapi/proxy/ppp_input_event_proxy.h $
+    ../../ppapi/proxy/ppp_instance_private_proxy.cc $
+    ../../ppapi/proxy/ppp_instance_private_proxy.h $
+    ../../ppapi/proxy/ppp_instance_proxy.cc $
+    ../../ppapi/proxy/ppp_instance_proxy.h $
+    ../../ppapi/proxy/ppp_messaging_proxy.cc $
+    ../../ppapi/proxy/ppp_messaging_proxy.h $
+    ../../ppapi/proxy/ppp_mouse_lock_proxy.cc $
+    ../../ppapi/proxy/ppp_mouse_lock_proxy.h $
+    ../../ppapi/proxy/ppp_pdf_proxy.cc ../../ppapi/proxy/ppp_pdf_proxy.h $
+    ../../ppapi/proxy/ppp_printing_proxy.cc $
+    ../../ppapi/proxy/ppp_printing_proxy.h $
+    ../../ppapi/proxy/ppp_text_input_proxy.cc $
+    ../../ppapi/proxy/ppp_text_input_proxy.h $
+    ../../ppapi/proxy/ppp_video_decoder_proxy.cc $
+    ../../ppapi/proxy/ppp_video_decoder_proxy.h $
+    ../../ppapi/proxy/printing_resource.cc $
+    ../../ppapi/proxy/printing_resource.h $
+    ../../ppapi/proxy/proxy_array_output.cc $
+    ../../ppapi/proxy/proxy_array_output.h $
+    ../../ppapi/proxy/proxy_channel.cc ../../ppapi/proxy/proxy_channel.h $
+    ../../ppapi/proxy/proxy_completion_callback_factory.h $
+    ../../ppapi/proxy/proxy_module.cc ../../ppapi/proxy/proxy_module.h $
+    ../../ppapi/proxy/proxy_object_var.cc $
+    ../../ppapi/proxy/proxy_object_var.h ../../ppapi/proxy/raw_var_data.h $
+    ../../ppapi/proxy/resource_creation_proxy.cc $
+    ../../ppapi/proxy/resource_creation_proxy.h $
+    ../../ppapi/proxy/resource_message_filter.h $
+    ../../ppapi/proxy/resource_message_params.h $
+    ../../ppapi/proxy/resource_reply_thread_registrar.cc $
+    ../../ppapi/proxy/resource_reply_thread_registrar.h $
+    ../../ppapi/proxy/serialized_flash_menu.h $
+    ../../ppapi/proxy/serialized_handle.h $
+    ../../ppapi/proxy/serialized_structs.h $
+    ../../ppapi/proxy/serialized_var.h $
+    ../../ppapi/proxy/tcp_server_socket_private_resource.cc $
+    ../../ppapi/proxy/tcp_server_socket_private_resource.h $
+    ../../ppapi/proxy/tcp_socket_private_resource.cc $
+    ../../ppapi/proxy/tcp_socket_private_resource.h $
+    ../../ppapi/proxy/tcp_socket_resource.cc $
+    ../../ppapi/proxy/tcp_socket_resource.h $
+    ../../ppapi/proxy/tcp_socket_resource_base.cc $
+    ../../ppapi/proxy/tcp_socket_resource_base.h $
+    ../../ppapi/proxy/truetype_font_resource.cc $
+    ../../ppapi/proxy/truetype_font_resource.h $
+    ../../ppapi/proxy/truetype_font_singleton_resource.cc $
+    ../../ppapi/proxy/truetype_font_singleton_resource.h $
+    ../../ppapi/proxy/udp_socket_filter.cc $
+    ../../ppapi/proxy/udp_socket_filter.h $
+    ../../ppapi/proxy/udp_socket_private_resource.cc $
+    ../../ppapi/proxy/udp_socket_private_resource.h $
+    ../../ppapi/proxy/udp_socket_resource.cc $
+    ../../ppapi/proxy/udp_socket_resource.h $
+    ../../ppapi/proxy/udp_socket_resource_base.cc $
+    ../../ppapi/proxy/udp_socket_resource_base.h $
+    ../../ppapi/proxy/uma_private_resource.cc $
+    ../../ppapi/proxy/uma_private_resource.h $
+    ../../ppapi/proxy/url_loader_resource.cc $
+    ../../ppapi/proxy/url_loader_resource.h $
+    ../../ppapi/proxy/url_request_info_resource.cc $
+    ../../ppapi/proxy/url_request_info_resource.h $
+    ../../ppapi/proxy/url_response_info_resource.cc $
+    ../../ppapi/proxy/url_response_info_resource.h $
+    ../../ppapi/proxy/var_serialization_rules.h $
+    ../../ppapi/proxy/video_capture_resource.cc $
+    ../../ppapi/proxy/video_capture_resource.h $
+    ../../ppapi/proxy/video_decoder_constants.h $
+    ../../ppapi/proxy/video_decoder_resource.cc $
+    ../../ppapi/proxy/video_decoder_resource.h $
+    ../../ppapi/proxy/video_destination_resource.cc $
+    ../../ppapi/proxy/video_destination_resource.h $
+    ../../ppapi/proxy/video_encoder_resource.cc $
+    ../../ppapi/proxy/video_encoder_resource.h $
+    ../../ppapi/proxy/video_frame_resource.cc $
+    ../../ppapi/proxy/video_frame_resource.h $
+    ../../ppapi/proxy/video_source_resource.cc $
+    ../../ppapi/proxy/video_source_resource.h $
+    ../../ppapi/proxy/websocket_resource.cc $
+    ../../ppapi/proxy/websocket_resource.h ../../ppapi/shared_impl/api_id.h $
+    ../../ppapi/shared_impl/array_var.h $
+    ../../ppapi/shared_impl/array_writer.h $
+    ../../ppapi/shared_impl/callback_tracker.h $
+    ../../ppapi/shared_impl/compositor_layer_data.h $
+    ../../ppapi/shared_impl/dir_contents.h $
+    ../../ppapi/shared_impl/file_growth.h $
+    ../../ppapi/shared_impl/file_io_state_manager.h $
+    ../../ppapi/shared_impl/file_path.h $
+    ../../ppapi/shared_impl/file_ref_create_info.h $
+    ../../ppapi/shared_impl/file_ref_util.h $
+    ../../ppapi/shared_impl/file_system_util.h $
+    ../../ppapi/shared_impl/file_type_conversion.h $
+    ../../ppapi/shared_impl/flash_clipboard_format_registry.h $
+    ../../ppapi/shared_impl/host_resource.h $
+    ../../ppapi/shared_impl/media_stream_audio_track_shared.h $
+    ../../ppapi/shared_impl/media_stream_buffer.h $
+    ../../ppapi/shared_impl/media_stream_buffer_manager.h $
+    ../../ppapi/shared_impl/media_stream_video_track_shared.h $
+    ../../ppapi/shared_impl/platform_file.h $
+    ../../ppapi/shared_impl/ppapi_constants.h $
+    ../../ppapi/shared_impl/ppapi_globals.h $
+    ../../ppapi/shared_impl/ppapi_nacl_plugin_args.h $
+    ../../ppapi/shared_impl/ppapi_permissions.h $
+    ../../ppapi/shared_impl/ppapi_preferences.h $
+    ../../ppapi/shared_impl/ppapi_shared_export.h $
+    ../../ppapi/shared_impl/ppb_audio_config_shared.h $
+    ../../ppapi/shared_impl/ppb_audio_shared.h $
+    ../../ppapi/shared_impl/ppb_device_ref_shared.h $
+    ../../ppapi/shared_impl/ppb_gamepad_shared.h $
+    ../../ppapi/shared_impl/ppb_graphics_3d_shared.h $
+    ../../ppapi/shared_impl/ppb_image_data_shared.h $
+    ../../ppapi/shared_impl/ppb_input_event_shared.h $
+    ../../ppapi/shared_impl/ppb_instance_shared.h $
+    ../../ppapi/shared_impl/ppb_message_loop_shared.h $
+    ../../ppapi/shared_impl/ppb_opengles2_shared.h $
+    ../../ppapi/shared_impl/ppb_tcp_socket_shared.h $
+    ../../ppapi/shared_impl/ppb_url_util_shared.h $
+    ../../ppapi/shared_impl/ppb_var_shared.h $
+    ../../ppapi/shared_impl/ppb_video_decoder_shared.h $
+    ../../ppapi/shared_impl/ppb_view_shared.h $
+    ../../ppapi/shared_impl/ppp_flash_browser_operations_shared.h $
+    ../../ppapi/shared_impl/ppp_instance_combined.h $
+    ../../ppapi/shared_impl/private/net_address_private_impl.h $
+    ../../ppapi/shared_impl/private/ppb_x509_certificate_private_shared.h $
+    ../../ppapi/shared_impl/proxy_lock.h ../../ppapi/shared_impl/resource.h $
+    ../../ppapi/shared_impl/resource_tracker.h $
+    ../../ppapi/shared_impl/resource_var.h $
+    ../../ppapi/shared_impl/scoped_pp_resource.h $
+    ../../ppapi/shared_impl/scoped_pp_var.h $
+    ../../ppapi/shared_impl/singleton_resource_id.h $
+    ../../ppapi/shared_impl/socket_option_data.h $
+    ../../ppapi/shared_impl/thread_aware_callback.h $
+    ../../ppapi/shared_impl/time_conversion.h $
+    ../../ppapi/shared_impl/tracked_callback.h $
+    ../../ppapi/shared_impl/url_request_info_data.h $
+    ../../ppapi/shared_impl/url_response_info_data.h $
+    ../../ppapi/shared_impl/var.h ../../ppapi/shared_impl/var_tracker.h $
+    ../../ppapi/thunk/enter.h ../../ppapi/thunk/interfaces_postamble.h $
+    ../../ppapi/thunk/interfaces_ppb_private.h $
+    ../../ppapi/thunk/interfaces_ppb_private_flash.h $
+    ../../ppapi/thunk/interfaces_ppb_private_no_permissions.h $
+    ../../ppapi/thunk/interfaces_ppb_public_dev.h $
+    ../../ppapi/thunk/interfaces_ppb_public_dev_channel.h $
+    ../../ppapi/thunk/interfaces_ppb_public_stable.h $
+    ../../ppapi/thunk/interfaces_preamble.h $
+    ../../ppapi/thunk/ppapi_thunk_export.h $
+    ../../ppapi/thunk/ppb_audio_api.h $
+    ../../ppapi/thunk/ppb_audio_buffer_api.h $
+    ../../ppapi/thunk/ppb_audio_config_api.h $
+    ../../ppapi/thunk/ppb_audio_encoder_api.h $
+    ../../ppapi/thunk/ppb_audio_input_api.h $
+    ../../ppapi/thunk/ppb_broker_api.h $
+    ../../ppapi/thunk/ppb_browser_font_singleton_api.h $
+    ../../ppapi/thunk/ppb_buffer_api.h $
+    ../../ppapi/thunk/ppb_camera_capabilities_api.h $
+    ../../ppapi/thunk/ppb_camera_device_api.h $
+    ../../ppapi/thunk/ppb_compositor_api.h $
+    ../../ppapi/thunk/ppb_compositor_layer_api.h $
+    ../../ppapi/thunk/ppb_device_ref_api.h $
+    ../../ppapi/thunk/ppb_file_chooser_api.h $
+    ../../ppapi/thunk/ppb_file_io_api.h $
+    ../../ppapi/thunk/ppb_file_ref_api.h $
+    ../../ppapi/thunk/ppb_file_system_api.h $
+    ../../ppapi/thunk/ppb_flash_clipboard_api.h $
+    ../../ppapi/thunk/ppb_flash_drm_api.h $
+    ../../ppapi/thunk/ppb_flash_file_api.h $
+    ../../ppapi/thunk/ppb_flash_font_file_api.h $
+    ../../ppapi/thunk/ppb_flash_fullscreen_api.h $
+    ../../ppapi/thunk/ppb_flash_functions_api.h $
+    ../../ppapi/thunk/ppb_flash_menu_api.h $
+    ../../ppapi/thunk/ppb_flash_message_loop_api.h $
+    ../../ppapi/thunk/ppb_gamepad_api.h $
+    ../../ppapi/thunk/ppb_graphics_2d_api.h $
+    ../../ppapi/thunk/ppb_graphics_3d_api.h $
+    ../../ppapi/thunk/ppb_host_resolver_api.h $
+    ../../ppapi/thunk/ppb_host_resolver_private_api.h $
+    ../../ppapi/thunk/ppb_image_data_api.h $
+    ../../ppapi/thunk/ppb_input_event_api.h $
+    ../../ppapi/thunk/ppb_instance_api.h $
+    ../../ppapi/thunk/ppb_isolated_file_system_private_api.h $
+    ../../ppapi/thunk/ppb_media_stream_audio_track_api.h $
+    ../../ppapi/thunk/ppb_media_stream_video_track_api.h $
+    ../../ppapi/thunk/ppb_message_loop_api.h $
+    ../../ppapi/thunk/ppb_net_address_api.h $
+    ../../ppapi/thunk/ppb_network_list_api.h $
+    ../../ppapi/thunk/ppb_network_monitor_api.h $
+    ../../ppapi/thunk/ppb_network_proxy_api.h $
+    ../../ppapi/thunk/ppb_output_protection_api.h $
+    ../../ppapi/thunk/ppb_pdf_api.h $
+    ../../ppapi/thunk/ppb_platform_verification_api.h $
+    ../../ppapi/thunk/ppb_printing_api.h $
+    ../../ppapi/thunk/ppb_tcp_server_socket_private_api.h $
+    ../../ppapi/thunk/ppb_tcp_socket_api.h $
+    ../../ppapi/thunk/ppb_tcp_socket_private_api.h $
+    ../../ppapi/thunk/ppb_truetype_font_api.h $
+    ../../ppapi/thunk/ppb_truetype_font_singleton_api.h $
+    ../../ppapi/thunk/ppb_udp_socket_api.h $
+    ../../ppapi/thunk/ppb_udp_socket_private_api.h $
+    ../../ppapi/thunk/ppb_uma_singleton_api.h $
+    ../../ppapi/thunk/ppb_url_loader_api.h $
+    ../../ppapi/thunk/ppb_url_request_info_api.h $
+    ../../ppapi/thunk/ppb_url_response_info_api.h $
+    ../../ppapi/thunk/ppb_video_capture_api.h $
+    ../../ppapi/thunk/ppb_video_decoder_api.h $
+    ../../ppapi/thunk/ppb_video_decoder_dev_api.h $
+    ../../ppapi/thunk/ppb_video_destination_private_api.h $
+    ../../ppapi/thunk/ppb_video_encoder_api.h $
+    ../../ppapi/thunk/ppb_video_frame_api.h $
+    ../../ppapi/thunk/ppb_video_source_private_api.h $
+    ../../ppapi/thunk/ppb_view_api.h ../../ppapi/thunk/ppb_websocket_api.h $
+    ../../ppapi/thunk/ppb_x509_certificate_private_api.h $
+    ../../ppapi/thunk/resource_creation_api.h ../../ppapi/thunk/thunk.h $
+    ../../ppapi/utility/completion_callback_factory.h $
+    ../../ppapi/utility/completion_callback_factory_thread_traits.h $
+    ../../ppapi/utility/threading/lock.h $
+    ../../out/gypfiles/ppapi/nonsfi_helper-x86-32-nonsfi.ppapi_proxy_nacl.source_list.gypcmd $
+    ../../native_client/toolchain/linux_x86/pnacl_newlib/pnacl_newlib.json $
+    || obj/ppapi/ppapi_proxy_nacl.actions_depends.stamp
+
+build obj/ppapi/ppapi_proxy_nacl.actions_rules_copies.stamp: stamp $
+    gen/tc_irt/lib64/libppapi_proxy_nacl.a $
+    gen/tc_nonsfi_helper/lib32/libppapi_proxy_nacl.a
+
+defines = -DV8_DEPRECATION_WARNINGS -DCLD_VERSION=2 -D_FILE_OFFSET_BITS=64 $
+    -DCHROMIUM_BUILD -DCR_CLANG_REVISION=255169-1 $
+    -DUI_COMPOSITOR_IMAGE_TRANSPORT -DUSE_AURA=1 -DUSE_ASH=1 -DUSE_PANGO=1 $
+    -DUSE_CAIRO=1 -DUSE_DEFAULT_RENDER_THEME=1 -DUSE_LIBJPEG_TURBO=1 $
+    -DUSE_X11=1 -DUSE_CLIPBOARD_AURAX11=1 -DENABLE_ONE_CLICK_SIGNIN $
+    -DENABLE_WEBRTC=1 -DENABLE_MEDIA_ROUTER=1 -DENABLE_PEPPER_CDMS $
+    -DENABLE_CONFIGURATION_POLICY -DENABLE_NOTIFICATIONS -DENABLE_HIDPI=1 $
+    -DENABLE_TOPCHROME_MD=1 -DUSE_UDEV -DDONT_EMBED_BUILD_METADATA $
+    -DFIELDTRIAL_TESTING_ENABLED -DENABLE_TASK_MANAGER=1 $
+    -DENABLE_EXTENSIONS=1 -DENABLE_PDF=1 -DENABLE_PLUGINS=1 $
+    -DENABLE_SESSION_SERVICE=1 -DENABLE_THEMES=1 -DENABLE_AUTOFILL_DIALOG=1 $
+    -DENABLE_BACKGROUND=1 -DENABLE_PRINTING=1 -DENABLE_BASIC_PRINTING=1 $
+    -DENABLE_PRINT_PREVIEW=1 -DENABLE_SPELLCHECK=1 $
+    -DENABLE_CAPTIVE_PORTAL_DETECTION=1 -DENABLE_APP_LIST=1 $
+    -DENABLE_SETTINGS_APP=1 -DENABLE_SUPERVISED_USERS=1 -DENABLE_MDNS=1 $
+    -DENABLE_SERVICE_DISCOVERY=1 -DV8_USE_EXTERNAL_STARTUP_DATA $
+    -DFULL_SAFE_BROWSING -DSAFE_BROWSING_CSD -DSAFE_BROWSING_DB_LOCAL $
+    -DUSE_LIBPCI=1 -DUSE_OPENSSL=1 -DUSE_OPENSSL_CERTS=1 $
+    -D__STDC_CONSTANT_MACROS -D__STDC_FORMAT_MACROS $
+    -DPPAPI_PROXY_IMPLEMENTATION -DDYNAMIC_ANNOTATIONS_ENABLED=1 $
+    -DWTF_USE_DYNAMIC_ANNOTATIONS=1 -D_DEBUG -D_GLIBCXX_DEBUG=1
+includes = -Igen -I../.. -I../../third_party/khronos -I../../gpu $
+    -I../../third_party/WebKit
+cflags = -fstack-protector --param=ssp-buffer-size=4 -Werror -pthread $
+    -fno-strict-aliasing -Wall -Wno-unused-parameter $
+    -Wno-missing-field-initializers -fvisibility=hidden -pipe -fPIC $
+    -Wno-reserved-user-defined-literal -Xclang -load -Xclang $
+    /b/build/slave/publish_tarball/build/src/third_party/llvm-build/Release+Asserts/lib/libFindBadConstructs.so $
+    -Xclang -add-plugin -Xclang find-bad-constructs -Xclang $
+    -plugin-arg-find-bad-constructs -Xclang check-templates $
+    -fcolor-diagnostics $
+    -B/b/build/slave/publish_tarball/build/src/third_party/binutils/Linux_x64/Release/bin $
+    -Wheader-hygiene -Wno-char-subscripts $
+    -Wno-unneeded-internal-declaration -Wno-covered-switch-default $
+    -Wstring-conversion -Wno-c++11-narrowing -Wno-deprecated-register $
+    -Wno-inconsistent-missing-override -Wno-shift-negative-value $
+    -Wno-bitfield-width -m64 -march=x86-64 $
+    --sysroot=/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot $
+    -O0 -g -funwind-tables -gsplit-dwarf -Wno-undefined-bool-conversion $
+    -Wno-tautological-undefined-compare
+cflags_c = 
+cflags_cc = -fno-exceptions -fno-rtti -fno-threadsafe-statics $
+    -fvisibility-inlines-hidden -Wsign-compare -std=gnu++11
+arflags = 
+
+build obj/ppapi/proxy/ppapi_proxy_nacl.audio_buffer_resource.o: cxx $
+    ../../ppapi/proxy/audio_buffer_resource.cc || $
+    obj/ppapi/ppapi_proxy_nacl.actions_rules_copies.stamp
+build obj/ppapi/proxy/ppapi_proxy_nacl.audio_encoder_resource.o: cxx $
+    ../../ppapi/proxy/audio_encoder_resource.cc || $
+    obj/ppapi/ppapi_proxy_nacl.actions_rules_copies.stamp
+build obj/ppapi/proxy/ppapi_proxy_nacl.broker_resource.o: cxx $
+    ../../ppapi/proxy/broker_resource.cc || $
+    obj/ppapi/ppapi_proxy_nacl.actions_rules_copies.stamp
+build obj/ppapi/proxy/ppapi_proxy_nacl.camera_capabilities_resource.o: cxx $
+    ../../ppapi/proxy/camera_capabilities_resource.cc || $
+    obj/ppapi/ppapi_proxy_nacl.actions_rules_copies.stamp
+build obj/ppapi/proxy/ppapi_proxy_nacl.camera_device_resource.o: cxx $
+    ../../ppapi/proxy/camera_device_resource.cc || $
+    obj/ppapi/ppapi_proxy_nacl.actions_rules_copies.stamp
+build obj/ppapi/proxy/ppapi_proxy_nacl.compositor_layer_resource.o: cxx $
+    ../../ppapi/proxy/compositor_layer_resource.cc || $
+    obj/ppapi/ppapi_proxy_nacl.actions_rules_copies.stamp
+build obj/ppapi/proxy/ppapi_proxy_nacl.compositor_resource.o: cxx $
+    ../../ppapi/proxy/compositor_resource.cc || $
+    obj/ppapi/ppapi_proxy_nacl.actions_rules_copies.stamp
+build obj/ppapi/proxy/ppapi_proxy_nacl.dispatcher.o: cxx $
+    ../../ppapi/proxy/dispatcher.cc || $
+    obj/ppapi/ppapi_proxy_nacl.actions_rules_copies.stamp
+build obj/ppapi/proxy/ppapi_proxy_nacl.error_conversion.o: cxx $
+    ../../ppapi/proxy/error_conversion.cc || $
+    obj/ppapi/ppapi_proxy_nacl.actions_rules_copies.stamp
+build obj/ppapi/proxy/ppapi_proxy_nacl.file_chooser_resource.o: cxx $
+    ../../ppapi/proxy/file_chooser_resource.cc || $
+    obj/ppapi/ppapi_proxy_nacl.actions_rules_copies.stamp
+build obj/ppapi/proxy/ppapi_proxy_nacl.file_io_resource.o: cxx $
+    ../../ppapi/proxy/file_io_resource.cc || $
+    obj/ppapi/ppapi_proxy_nacl.actions_rules_copies.stamp
+build obj/ppapi/proxy/ppapi_proxy_nacl.file_ref_resource.o: cxx $
+    ../../ppapi/proxy/file_ref_resource.cc || $
+    obj/ppapi/ppapi_proxy_nacl.actions_rules_copies.stamp
+build obj/ppapi/proxy/ppapi_proxy_nacl.file_system_resource.o: cxx $
+    ../../ppapi/proxy/file_system_resource.cc || $
+    obj/ppapi/ppapi_proxy_nacl.actions_rules_copies.stamp
+build obj/ppapi/proxy/ppapi_proxy_nacl.gamepad_resource.o: cxx $
+    ../../ppapi/proxy/gamepad_resource.cc || $
+    obj/ppapi/ppapi_proxy_nacl.actions_rules_copies.stamp
+build obj/ppapi/proxy/ppapi_proxy_nacl.graphics_2d_resource.o: cxx $
+    ../../ppapi/proxy/graphics_2d_resource.cc || $
+    obj/ppapi/ppapi_proxy_nacl.actions_rules_copies.stamp
+build obj/ppapi/proxy/ppapi_proxy_nacl.host_resolver_private_resource.o: $
+    cxx ../../ppapi/proxy/host_resolver_private_resource.cc || $
+    obj/ppapi/ppapi_proxy_nacl.actions_rules_copies.stamp
+build obj/ppapi/proxy/ppapi_proxy_nacl.host_resolver_resource.o: cxx $
+    ../../ppapi/proxy/host_resolver_resource.cc || $
+    obj/ppapi/ppapi_proxy_nacl.actions_rules_copies.stamp
+build obj/ppapi/proxy/ppapi_proxy_nacl.host_resolver_resource_base.o: cxx $
+    ../../ppapi/proxy/host_resolver_resource_base.cc || $
+    obj/ppapi/ppapi_proxy_nacl.actions_rules_copies.stamp
+build obj/ppapi/proxy/ppapi_proxy_nacl.interface_list.o: cxx $
+    ../../ppapi/proxy/interface_list.cc || $
+    obj/ppapi/ppapi_proxy_nacl.actions_rules_copies.stamp
+build obj/ppapi/proxy/ppapi_proxy_nacl.interface_proxy.o: cxx $
+    ../../ppapi/proxy/interface_proxy.cc || $
+    obj/ppapi/ppapi_proxy_nacl.actions_rules_copies.stamp
+build $
+    obj/ppapi/proxy/ppapi_proxy_nacl.isolated_file_system_private_resource.o: $
+    cxx ../../ppapi/proxy/isolated_file_system_private_resource.cc || $
+    obj/ppapi/ppapi_proxy_nacl.actions_rules_copies.stamp
+build obj/ppapi/proxy/ppapi_proxy_nacl.media_stream_audio_track_resource.o: $
+    cxx ../../ppapi/proxy/media_stream_audio_track_resource.cc || $
+    obj/ppapi/ppapi_proxy_nacl.actions_rules_copies.stamp
+build obj/ppapi/proxy/ppapi_proxy_nacl.media_stream_track_resource_base.o: $
+    cxx ../../ppapi/proxy/media_stream_track_resource_base.cc || $
+    obj/ppapi/ppapi_proxy_nacl.actions_rules_copies.stamp
+build obj/ppapi/proxy/ppapi_proxy_nacl.media_stream_video_track_resource.o: $
+    cxx ../../ppapi/proxy/media_stream_video_track_resource.cc || $
+    obj/ppapi/ppapi_proxy_nacl.actions_rules_copies.stamp
+build obj/ppapi/proxy/ppapi_proxy_nacl.message_handler.o: cxx $
+    ../../ppapi/proxy/message_handler.cc || $
+    obj/ppapi/ppapi_proxy_nacl.actions_rules_copies.stamp
+build obj/ppapi/proxy/ppapi_proxy_nacl.net_address_resource.o: cxx $
+    ../../ppapi/proxy/net_address_resource.cc || $
+    obj/ppapi/ppapi_proxy_nacl.actions_rules_copies.stamp
+build obj/ppapi/proxy/ppapi_proxy_nacl.network_list_resource.o: cxx $
+    ../../ppapi/proxy/network_list_resource.cc || $
+    obj/ppapi/ppapi_proxy_nacl.actions_rules_copies.stamp
+build obj/ppapi/proxy/ppapi_proxy_nacl.network_monitor_resource.o: cxx $
+    ../../ppapi/proxy/network_monitor_resource.cc || $
+    obj/ppapi/ppapi_proxy_nacl.actions_rules_copies.stamp
+build obj/ppapi/proxy/ppapi_proxy_nacl.network_proxy_resource.o: cxx $
+    ../../ppapi/proxy/network_proxy_resource.cc || $
+    obj/ppapi/ppapi_proxy_nacl.actions_rules_copies.stamp
+build obj/ppapi/proxy/ppapi_proxy_nacl.output_protection_resource.o: cxx $
+    ../../ppapi/proxy/output_protection_resource.cc || $
+    obj/ppapi/ppapi_proxy_nacl.actions_rules_copies.stamp
+build obj/ppapi/proxy/ppapi_proxy_nacl.plugin_array_buffer_var.o: cxx $
+    ../../ppapi/proxy/plugin_array_buffer_var.cc || $
+    obj/ppapi/ppapi_proxy_nacl.actions_rules_copies.stamp
+build obj/ppapi/proxy/ppapi_proxy_nacl.plugin_dispatcher.o: cxx $
+    ../../ppapi/proxy/plugin_dispatcher.cc || $
+    obj/ppapi/ppapi_proxy_nacl.actions_rules_copies.stamp
+build obj/ppapi/proxy/ppapi_proxy_nacl.plugin_globals.o: cxx $
+    ../../ppapi/proxy/plugin_globals.cc || $
+    obj/ppapi/ppapi_proxy_nacl.actions_rules_copies.stamp
+build obj/ppapi/proxy/ppapi_proxy_nacl.plugin_message_filter.o: cxx $
+    ../../ppapi/proxy/plugin_message_filter.cc || $
+    obj/ppapi/ppapi_proxy_nacl.actions_rules_copies.stamp
+build obj/ppapi/proxy/ppapi_proxy_nacl.plugin_resource.o: cxx $
+    ../../ppapi/proxy/plugin_resource.cc || $
+    obj/ppapi/ppapi_proxy_nacl.actions_rules_copies.stamp
+build obj/ppapi/proxy/ppapi_proxy_nacl.plugin_resource_tracker.o: cxx $
+    ../../ppapi/proxy/plugin_resource_tracker.cc || $
+    obj/ppapi/ppapi_proxy_nacl.actions_rules_copies.stamp
+build obj/ppapi/proxy/ppapi_proxy_nacl.plugin_resource_var.o: cxx $
+    ../../ppapi/proxy/plugin_resource_var.cc || $
+    obj/ppapi/ppapi_proxy_nacl.actions_rules_copies.stamp
+build obj/ppapi/proxy/ppapi_proxy_nacl.plugin_var_serialization_rules.o: $
+    cxx ../../ppapi/proxy/plugin_var_serialization_rules.cc || $
+    obj/ppapi/ppapi_proxy_nacl.actions_rules_copies.stamp
+build obj/ppapi/proxy/ppapi_proxy_nacl.plugin_var_tracker.o: cxx $
+    ../../ppapi/proxy/plugin_var_tracker.cc || $
+    obj/ppapi/ppapi_proxy_nacl.actions_rules_copies.stamp
+build obj/ppapi/proxy/ppapi_proxy_nacl.ppapi_command_buffer_proxy.o: cxx $
+    ../../ppapi/proxy/ppapi_command_buffer_proxy.cc || $
+    obj/ppapi/ppapi_proxy_nacl.actions_rules_copies.stamp
+build obj/ppapi/proxy/ppapi_proxy_nacl.ppb_audio_proxy.o: cxx $
+    ../../ppapi/proxy/ppb_audio_proxy.cc || $
+    obj/ppapi/ppapi_proxy_nacl.actions_rules_copies.stamp
+build obj/ppapi/proxy/ppapi_proxy_nacl.ppb_core_proxy.o: cxx $
+    ../../ppapi/proxy/ppb_core_proxy.cc || $
+    obj/ppapi/ppapi_proxy_nacl.actions_rules_copies.stamp
+build obj/ppapi/proxy/ppapi_proxy_nacl.ppb_graphics_3d_proxy.o: cxx $
+    ../../ppapi/proxy/ppb_graphics_3d_proxy.cc || $
+    obj/ppapi/ppapi_proxy_nacl.actions_rules_copies.stamp
+build obj/ppapi/proxy/ppapi_proxy_nacl.ppb_image_data_proxy.o: cxx $
+    ../../ppapi/proxy/ppb_image_data_proxy.cc || $
+    obj/ppapi/ppapi_proxy_nacl.actions_rules_copies.stamp
+build obj/ppapi/proxy/ppapi_proxy_nacl.ppb_instance_proxy.o: cxx $
+    ../../ppapi/proxy/ppb_instance_proxy.cc || $
+    obj/ppapi/ppapi_proxy_nacl.actions_rules_copies.stamp
+build obj/ppapi/proxy/ppapi_proxy_nacl.ppb_message_loop_proxy.o: cxx $
+    ../../ppapi/proxy/ppb_message_loop_proxy.cc || $
+    obj/ppapi/ppapi_proxy_nacl.actions_rules_copies.stamp
+build obj/ppapi/proxy/ppapi_proxy_nacl.ppb_testing_proxy.o: cxx $
+    ../../ppapi/proxy/ppb_testing_proxy.cc || $
+    obj/ppapi/ppapi_proxy_nacl.actions_rules_copies.stamp
+build $
+    obj/ppapi/proxy/ppapi_proxy_nacl.ppb_x509_certificate_private_proxy.o: $
+    cxx ../../ppapi/proxy/ppb_x509_certificate_private_proxy.cc || $
+    obj/ppapi/ppapi_proxy_nacl.actions_rules_copies.stamp
+build obj/ppapi/proxy/ppapi_proxy_nacl.ppp_class_proxy.o: cxx $
+    ../../ppapi/proxy/ppp_class_proxy.cc || $
+    obj/ppapi/ppapi_proxy_nacl.actions_rules_copies.stamp
+build obj/ppapi/proxy/ppapi_proxy_nacl.ppp_find_proxy.o: cxx $
+    ../../ppapi/proxy/ppp_find_proxy.cc || $
+    obj/ppapi/ppapi_proxy_nacl.actions_rules_copies.stamp
+build obj/ppapi/proxy/ppapi_proxy_nacl.ppp_graphics_3d_proxy.o: cxx $
+    ../../ppapi/proxy/ppp_graphics_3d_proxy.cc || $
+    obj/ppapi/ppapi_proxy_nacl.actions_rules_copies.stamp
+build obj/ppapi/proxy/ppapi_proxy_nacl.ppp_input_event_proxy.o: cxx $
+    ../../ppapi/proxy/ppp_input_event_proxy.cc || $
+    obj/ppapi/ppapi_proxy_nacl.actions_rules_copies.stamp
+build obj/ppapi/proxy/ppapi_proxy_nacl.ppp_instance_proxy.o: cxx $
+    ../../ppapi/proxy/ppp_instance_proxy.cc || $
+    obj/ppapi/ppapi_proxy_nacl.actions_rules_copies.stamp
+build obj/ppapi/proxy/ppapi_proxy_nacl.ppp_messaging_proxy.o: cxx $
+    ../../ppapi/proxy/ppp_messaging_proxy.cc || $
+    obj/ppapi/ppapi_proxy_nacl.actions_rules_copies.stamp
+build obj/ppapi/proxy/ppapi_proxy_nacl.ppp_mouse_lock_proxy.o: cxx $
+    ../../ppapi/proxy/ppp_mouse_lock_proxy.cc || $
+    obj/ppapi/ppapi_proxy_nacl.actions_rules_copies.stamp
+build obj/ppapi/proxy/ppapi_proxy_nacl.ppp_pdf_proxy.o: cxx $
+    ../../ppapi/proxy/ppp_pdf_proxy.cc || $
+    obj/ppapi/ppapi_proxy_nacl.actions_rules_copies.stamp
+build obj/ppapi/proxy/ppapi_proxy_nacl.ppp_printing_proxy.o: cxx $
+    ../../ppapi/proxy/ppp_printing_proxy.cc || $
+    obj/ppapi/ppapi_proxy_nacl.actions_rules_copies.stamp
+build obj/ppapi/proxy/ppapi_proxy_nacl.ppp_text_input_proxy.o: cxx $
+    ../../ppapi/proxy/ppp_text_input_proxy.cc || $
+    obj/ppapi/ppapi_proxy_nacl.actions_rules_copies.stamp
+build obj/ppapi/proxy/ppapi_proxy_nacl.printing_resource.o: cxx $
+    ../../ppapi/proxy/printing_resource.cc || $
+    obj/ppapi/ppapi_proxy_nacl.actions_rules_copies.stamp
+build obj/ppapi/proxy/ppapi_proxy_nacl.proxy_array_output.o: cxx $
+    ../../ppapi/proxy/proxy_array_output.cc || $
+    obj/ppapi/ppapi_proxy_nacl.actions_rules_copies.stamp
+build obj/ppapi/proxy/ppapi_proxy_nacl.proxy_channel.o: cxx $
+    ../../ppapi/proxy/proxy_channel.cc || $
+    obj/ppapi/ppapi_proxy_nacl.actions_rules_copies.stamp
+build obj/ppapi/proxy/ppapi_proxy_nacl.proxy_module.o: cxx $
+    ../../ppapi/proxy/proxy_module.cc || $
+    obj/ppapi/ppapi_proxy_nacl.actions_rules_copies.stamp
+build obj/ppapi/proxy/ppapi_proxy_nacl.proxy_object_var.o: cxx $
+    ../../ppapi/proxy/proxy_object_var.cc || $
+    obj/ppapi/ppapi_proxy_nacl.actions_rules_copies.stamp
+build obj/ppapi/proxy/ppapi_proxy_nacl.resource_creation_proxy.o: cxx $
+    ../../ppapi/proxy/resource_creation_proxy.cc || $
+    obj/ppapi/ppapi_proxy_nacl.actions_rules_copies.stamp
+build obj/ppapi/proxy/ppapi_proxy_nacl.resource_reply_thread_registrar.o: $
+    cxx ../../ppapi/proxy/resource_reply_thread_registrar.cc || $
+    obj/ppapi/ppapi_proxy_nacl.actions_rules_copies.stamp
+build $
+    obj/ppapi/proxy/ppapi_proxy_nacl.tcp_server_socket_private_resource.o: $
+    cxx ../../ppapi/proxy/tcp_server_socket_private_resource.cc || $
+    obj/ppapi/ppapi_proxy_nacl.actions_rules_copies.stamp
+build obj/ppapi/proxy/ppapi_proxy_nacl.tcp_socket_private_resource.o: cxx $
+    ../../ppapi/proxy/tcp_socket_private_resource.cc || $
+    obj/ppapi/ppapi_proxy_nacl.actions_rules_copies.stamp
+build obj/ppapi/proxy/ppapi_proxy_nacl.tcp_socket_resource.o: cxx $
+    ../../ppapi/proxy/tcp_socket_resource.cc || $
+    obj/ppapi/ppapi_proxy_nacl.actions_rules_copies.stamp
+build obj/ppapi/proxy/ppapi_proxy_nacl.tcp_socket_resource_base.o: cxx $
+    ../../ppapi/proxy/tcp_socket_resource_base.cc || $
+    obj/ppapi/ppapi_proxy_nacl.actions_rules_copies.stamp
+build obj/ppapi/proxy/ppapi_proxy_nacl.truetype_font_resource.o: cxx $
+    ../../ppapi/proxy/truetype_font_resource.cc || $
+    obj/ppapi/ppapi_proxy_nacl.actions_rules_copies.stamp
+build obj/ppapi/proxy/ppapi_proxy_nacl.truetype_font_singleton_resource.o: $
+    cxx ../../ppapi/proxy/truetype_font_singleton_resource.cc || $
+    obj/ppapi/ppapi_proxy_nacl.actions_rules_copies.stamp
+build obj/ppapi/proxy/ppapi_proxy_nacl.udp_socket_filter.o: cxx $
+    ../../ppapi/proxy/udp_socket_filter.cc || $
+    obj/ppapi/ppapi_proxy_nacl.actions_rules_copies.stamp
+build obj/ppapi/proxy/ppapi_proxy_nacl.udp_socket_private_resource.o: cxx $
+    ../../ppapi/proxy/udp_socket_private_resource.cc || $
+    obj/ppapi/ppapi_proxy_nacl.actions_rules_copies.stamp
+build obj/ppapi/proxy/ppapi_proxy_nacl.udp_socket_resource.o: cxx $
+    ../../ppapi/proxy/udp_socket_resource.cc || $
+    obj/ppapi/ppapi_proxy_nacl.actions_rules_copies.stamp
+build obj/ppapi/proxy/ppapi_proxy_nacl.udp_socket_resource_base.o: cxx $
+    ../../ppapi/proxy/udp_socket_resource_base.cc || $
+    obj/ppapi/ppapi_proxy_nacl.actions_rules_copies.stamp
+build obj/ppapi/proxy/ppapi_proxy_nacl.uma_private_resource.o: cxx $
+    ../../ppapi/proxy/uma_private_resource.cc || $
+    obj/ppapi/ppapi_proxy_nacl.actions_rules_copies.stamp
+build obj/ppapi/proxy/ppapi_proxy_nacl.url_loader_resource.o: cxx $
+    ../../ppapi/proxy/url_loader_resource.cc || $
+    obj/ppapi/ppapi_proxy_nacl.actions_rules_copies.stamp
+build obj/ppapi/proxy/ppapi_proxy_nacl.url_request_info_resource.o: cxx $
+    ../../ppapi/proxy/url_request_info_resource.cc || $
+    obj/ppapi/ppapi_proxy_nacl.actions_rules_copies.stamp
+build obj/ppapi/proxy/ppapi_proxy_nacl.url_response_info_resource.o: cxx $
+    ../../ppapi/proxy/url_response_info_resource.cc || $
+    obj/ppapi/ppapi_proxy_nacl.actions_rules_copies.stamp
+build obj/ppapi/proxy/ppapi_proxy_nacl.video_decoder_resource.o: cxx $
+    ../../ppapi/proxy/video_decoder_resource.cc || $
+    obj/ppapi/ppapi_proxy_nacl.actions_rules_copies.stamp
+build obj/ppapi/proxy/ppapi_proxy_nacl.video_destination_resource.o: cxx $
+    ../../ppapi/proxy/video_destination_resource.cc || $
+    obj/ppapi/ppapi_proxy_nacl.actions_rules_copies.stamp
+build obj/ppapi/proxy/ppapi_proxy_nacl.video_encoder_resource.o: cxx $
+    ../../ppapi/proxy/video_encoder_resource.cc || $
+    obj/ppapi/ppapi_proxy_nacl.actions_rules_copies.stamp
+build obj/ppapi/proxy/ppapi_proxy_nacl.video_frame_resource.o: cxx $
+    ../../ppapi/proxy/video_frame_resource.cc || $
+    obj/ppapi/ppapi_proxy_nacl.actions_rules_copies.stamp
+build obj/ppapi/proxy/ppapi_proxy_nacl.video_source_resource.o: cxx $
+    ../../ppapi/proxy/video_source_resource.cc || $
+    obj/ppapi/ppapi_proxy_nacl.actions_rules_copies.stamp
+build obj/ppapi/proxy/ppapi_proxy_nacl.websocket_resource.o: cxx $
+    ../../ppapi/proxy/websocket_resource.cc || $
+    obj/ppapi/ppapi_proxy_nacl.actions_rules_copies.stamp
+build obj/ppapi/nacl_irt/ppapi_proxy_nacl.irt_interfaces.o: cxx $
+    ../../ppapi/nacl_irt/irt_interfaces.cc || $
+    obj/ppapi/ppapi_proxy_nacl.actions_rules_copies.stamp
+build obj/ppapi/nacl_irt/ppapi_proxy_nacl.irt_pnacl_translator_compile.o: $
+    cxx ../../ppapi/nacl_irt/irt_pnacl_translator_compile.cc || $
+    obj/ppapi/ppapi_proxy_nacl.actions_rules_copies.stamp
+build obj/ppapi/nacl_irt/ppapi_proxy_nacl.irt_pnacl_translator_link.o: cxx $
+    ../../ppapi/nacl_irt/irt_pnacl_translator_link.cc || $
+    obj/ppapi/ppapi_proxy_nacl.actions_rules_copies.stamp
+build obj/ppapi/nacl_irt/ppapi_proxy_nacl.irt_ppapi.o: cxx $
+    ../../ppapi/nacl_irt/irt_ppapi.cc || $
+    obj/ppapi/ppapi_proxy_nacl.actions_rules_copies.stamp
+build obj/ppapi/nacl_irt/ppapi_proxy_nacl.irt_start.o: cxx $
+    ../../ppapi/nacl_irt/irt_start.cc || $
+    obj/ppapi/ppapi_proxy_nacl.actions_rules_copies.stamp
+build obj/ppapi/nacl_irt/ppapi_proxy_nacl.manifest_service.o: cxx $
+    ../../ppapi/nacl_irt/manifest_service.cc || $
+    obj/ppapi/ppapi_proxy_nacl.actions_rules_copies.stamp
+build obj/ppapi/nacl_irt/ppapi_proxy_nacl.plugin_startup.o: cxx $
+    ../../ppapi/nacl_irt/plugin_startup.cc || $
+    obj/ppapi/ppapi_proxy_nacl.actions_rules_copies.stamp
+build obj/ppapi/nacl_irt/ppapi_proxy_nacl.ppapi_dispatcher.o: cxx $
+    ../../ppapi/nacl_irt/ppapi_dispatcher.cc || $
+    obj/ppapi/ppapi_proxy_nacl.actions_rules_copies.stamp
+

@@ -1,0 +1,316 @@
+build $
+    obj/chrome/test/data/nacl/ppapi_crash_via_exit_call.actions_depends.stamp: $
+    stamp $
+    obj/native_client/src/untrusted/nacl/nacl_lib.actions_depends.stamp $
+    obj/native_client/src/untrusted/pthread/pthread_lib.actions_rules_copies.stamp $
+    obj/ppapi/ppapi_cpp_lib.actions_rules_copies.stamp $
+    obj/ppapi/native_client/ppapi_lib.actions_rules_copies.stamp $
+    obj/native_client/src/shared/platform/platform_lib.actions_rules_copies.stamp $
+    obj/native_client/src/shared/gio/gio_lib.actions_rules_copies.stamp $
+    obj/chrome/test/data/nacl/ppapi_test_lib.actions_rules_copies.stamp
+
+build $
+    obj/chrome/test/data/nacl/ppapi_crash_via_exit_call.compile_depends.stamp: $
+    stamp $
+    obj/native_client/src/untrusted/nacl/nacl_lib.compile_depends.stamp $
+    obj/native_client/src/untrusted/pthread/pthread_lib.actions_rules_copies.stamp $
+    obj/ppapi/ppapi_cpp_lib.actions_rules_copies.stamp $
+    obj/ppapi/native_client/ppapi_lib.actions_rules_copies.stamp $
+    obj/native_client/src/shared/platform/platform_lib.actions_rules_copies.stamp $
+    obj/native_client/src/shared/gio/gio_lib.actions_rules_copies.stamp $
+    obj/chrome/test/data/nacl/ppapi_test_lib.actions_rules_copies.stamp
+
+rule $
+    ppapi_crash_via_exit_call_target_Generate_NEWLIB_NMF_0e59df4be44d6eaba3c482117ad87a52
+  command = cd ../../chrome/test/data/nacl; python $
+      ../../../../native_client_sdk/src/tools/create_nmf.py $
+      --no-default-libpath $
+      "--objdump=../../../../native_client/toolchain/linux_x86/nacl_x86_glibc/bin/x86_64-nacl-objdump" $
+      "--output=../../../../out/Release/nacl_test_data/newlib/ppapi_crash_via_exit_call.nmf" $
+      ../../../../out/Release/nacl_test_data/newlib/ppapi_crash_via_exit_call_newlib_x86_64.nexe
+  description = ACTION ppapi_crash_via_exit_call: Generate NEWLIB $
+      NMF_0e59df4be44d6eaba3c482117ad87a52
+  restat = 1
+
+build nacl_test_data/newlib/ppapi_crash_via_exit_call.nmf: $
+    ppapi_crash_via_exit_call_target_Generate_NEWLIB_NMF_0e59df4be44d6eaba3c482117ad87a52 $
+    ../../native_client_sdk/src/tools/create_nmf.py $
+    nacl_test_data/newlib/ppapi_crash_via_exit_call_newlib_x86_64.nexe || $
+    obj/chrome/test/data/nacl/ppapi_crash_via_exit_call.actions_depends.stamp
+
+rule $
+    ppapi_crash_via_exit_call_target_Generate_GLIBC_NMF_and_copy_libs_0e59df4be44d6eaba3c482117ad87a52
+  command = cd ../../chrome/test/data/nacl; python $
+      ../../../../native_client_sdk/src/tools/create_nmf.py $
+      ../../../../out/Release/nacl_test_data/glibc/ppapi_crash_via_exit_call_glibc_x86_64.nexe $
+      --no-default-libpath $
+      "--objdump=../../../../native_client/toolchain/linux_x86/nacl_x86_glibc/bin/x86_64-nacl-objdump" $
+      "--output=../../../../out/Release/nacl_test_data/glibc/ppapi_crash_via_exit_call.nmf" $
+      "--path-prefix=ppapi_crash_via_exit_call_libs" $
+      "--stage-dependencies=../../../../out/Release/nacl_test_data/glibc" $
+      "--library-path=../../../../native_client/toolchain/linux_x86/nacl_x86_glibc/x86_64-nacl/lib" $
+      "--library-path=../../../../out/Release/gen/tc_glibc/lib64"
+  description = ACTION ppapi_crash_via_exit_call: Generate GLIBC NMF and $
+      copy libs_0e59df4be44d6eaba3c482117ad87a52
+  restat = 1
+
+build nacl_test_data/glibc/ppapi_crash_via_exit_call.nmf: $
+    ppapi_crash_via_exit_call_target_Generate_GLIBC_NMF_and_copy_libs_0e59df4be44d6eaba3c482117ad87a52 $
+    ../../native_client_sdk/src/tools/create_nmf.py $
+    nacl_test_data/glibc/ppapi_crash_via_exit_call_glibc_x86_64.nexe || $
+    obj/chrome/test/data/nacl/ppapi_crash_via_exit_call.actions_depends.stamp
+
+rule $
+    ppapi_crash_via_exit_call_target_Generate_PNACL_NEWLIB_NMF_0e59df4be44d6eaba3c482117ad87a52
+  command = cd ../../chrome/test/data/nacl; python $
+      ../../../../native_client_sdk/src/tools/create_nmf.py $
+      --no-default-libpath $
+      "--objdump=../../../../native_client/toolchain/linux_x86/nacl_x86_glibc/bin/x86_64-nacl-objdump" $
+      "--output=../../../../out/Release/nacl_test_data/pnacl/ppapi_crash_via_exit_call.nmf" $
+      ../../../../out/Release/nacl_test_data/pnacl/ppapi_crash_via_exit_call_newlib_pnacl.pexe
+  description = ACTION ppapi_crash_via_exit_call: Generate PNACL NEWLIB $
+      NMF_0e59df4be44d6eaba3c482117ad87a52
+  restat = 1
+
+build nacl_test_data/pnacl/ppapi_crash_via_exit_call.nmf: $
+    ppapi_crash_via_exit_call_target_Generate_PNACL_NEWLIB_NMF_0e59df4be44d6eaba3c482117ad87a52 $
+    ../../native_client_sdk/src/tools/create_nmf.py $
+    nacl_test_data/pnacl/ppapi_crash_via_exit_call_newlib_pnacl.pexe || $
+    obj/chrome/test/data/nacl/ppapi_crash_via_exit_call.actions_depends.stamp
+
+rule $
+    ppapi_crash_via_exit_call_target_build_newlib_pexe_0e59df4be44d6eaba3c482117ad87a52
+  command = cd ../../chrome/test/data/nacl; python $
+      ../../../../native_client/build/build_nexe.py --root ../../../.. $
+      --product-dir ../../../../out/Release/xyz --config-name Release -t $
+      ../../../../native_client/toolchain/ --strip-all --arch pnacl --build $
+      newlib_pexe --name $
+      ../../../../out/Release/nacl_test_data/pnacl/ppapi_crash_via_exit_call_newlib_pnacl.pexe $
+      --objdir $
+      ../../../../out/Release/obj/chrome/test/data/nacl/ppapi_crash_via_exit_call.gen/pnacl_newlib/ppapi_crash_via_exit_call $
+      "--include-dirs=../../../../out/Release/gen/tc_pnacl_newlib/include $
+      ../../../.. \"../../../../out/Release/gen\"" "--compile_flags=-O2 -g $
+      -Wall -fdiagnostics-show-option -Werror  -Wno-unused-function $
+      -Wno-char-subscripts -Wno-c++11-extensions $
+      -Wno-unnamed-type-template-args -Wno-extra-semi $
+      -Wno-unused-private-field -Wno-char-subscripts -Wno-unused-function $
+      \"-std=gnu++11\" " --gomadir "" "--defines=\"__STDC_LIMIT_MACROS=1\" $
+      \"__STDC_FORMAT_MACROS=1\" \"_GNU_SOURCE=1\" $
+      \"_POSIX_C_SOURCE=199506\" \"_XOPEN_SOURCE=600\" $
+      \"DYNAMIC_ANNOTATIONS_ENABLED=1\" $
+      \"DYNAMIC_ANNOTATIONS_PREFIX=NACL_\" \"NACL_BUILD_ARCH=x86\" $
+      V8_DEPRECATION_WARNINGS \"CLD_VERSION=2\" \"_FILE_OFFSET_BITS=64\" $
+      CHROMIUM_BUILD \"CR_CLANG_REVISION=255169-1\" $
+      UI_COMPOSITOR_IMAGE_TRANSPORT \"USE_AURA=1\" \"USE_ASH=1\" $
+      \"USE_PANGO=1\" \"USE_CAIRO=1\" \"USE_DEFAULT_RENDER_THEME=1\" $
+      \"USE_LIBJPEG_TURBO=1\" \"USE_X11=1\" \"USE_CLIPBOARD_AURAX11=1\" $
+      ENABLE_ONE_CLICK_SIGNIN \"ENABLE_WEBRTC=1\" \"ENABLE_MEDIA_ROUTER=1\" $
+      ENABLE_PEPPER_CDMS ENABLE_CONFIGURATION_POLICY ENABLE_NOTIFICATIONS $
+      \"ENABLE_HIDPI=1\" \"ENABLE_TOPCHROME_MD=1\" USE_UDEV $
+      DONT_EMBED_BUILD_METADATA FIELDTRIAL_TESTING_ENABLED $
+      \"ENABLE_TASK_MANAGER=1\" \"ENABLE_EXTENSIONS=1\" \"ENABLE_PDF=1\" $
+      \"ENABLE_PLUGINS=1\" \"ENABLE_SESSION_SERVICE=1\" \"ENABLE_THEMES=1\" $
+      \"ENABLE_AUTOFILL_DIALOG=1\" \"ENABLE_BACKGROUND=1\" $
+      \"ENABLE_PRINTING=1\" \"ENABLE_BASIC_PRINTING=1\" $
+      \"ENABLE_PRINT_PREVIEW=1\" \"ENABLE_SPELLCHECK=1\" $
+      \"ENABLE_CAPTIVE_PORTAL_DETECTION=1\" \"ENABLE_APP_LIST=1\" $
+      \"ENABLE_SETTINGS_APP=1\" \"ENABLE_SUPERVISED_USERS=1\" $
+      \"ENABLE_MDNS=1\" \"ENABLE_SERVICE_DISCOVERY=1\" $
+      V8_USE_EXTERNAL_STARTUP_DATA FULL_SAFE_BROWSING SAFE_BROWSING_CSD $
+      SAFE_BROWSING_DB_LOCAL \"USE_LIBPCI=1\" \"USE_OPENSSL=1\" $
+      \"USE_OPENSSL_CERTS=1\"" $
+      "--link_flags=-B../../../../out/Release/gen/tc_pnacl_newlib/lib $
+      -lppapi -lppapi_test_lib -lplatform -lgio -lppapi_cpp -lppapi $
+      -pthread -O3 " $
+      "--source-list=../../../../out/gypfiles/chrome/test/data/nacl/pnacl_newlib.ppapi_crash_via_exit_call.source_list.gypcmd"
+  description = ACTION ppapi_crash_via_exit_call: build newlib $
+      pexe_0e59df4be44d6eaba3c482117ad87a52
+  restat = 1
+
+build nacl_test_data/pnacl/ppapi_crash_via_exit_call_newlib_pnacl.pexe $
+    nacl_test_data/pnacl/ppapi_crash_via_exit_call_newlib_pnacl.pexe.debug: $
+    ppapi_crash_via_exit_call_target_build_newlib_pexe_0e59df4be44d6eaba3c482117ad87a52 $
+    ../../native_client/build/build_nexe.py $
+    ../../native_client/build/build_nexe_tools.py $
+    ../../native_client/src/include/build_config.h $
+    ../../native_client/src/include/nacl_base.h $
+    ../../native_client/src/include/nacl_compiler_annotations.h $
+    ../../native_client/src/include/nacl_macros.h $
+    ../../native_client/src/include/nacl_string.h $
+    ../../native_client/src/include/portability.h $
+    ../../native_client/src/include/win/port_win.h $
+    ../../native_client/src/shared/platform/nacl_check.h $
+    ../../native_client/src/shared/platform/nacl_log.h $
+    ../../native_client/src/third_party/valgrind/memcheck.h $
+    ../../native_client/src/third_party/valgrind/valgrind.h $
+    ../../native_client/src/trusted/service_runtime/include/bits/wordsize.h $
+    ../../ppapi/c/pp_bool.h ../../ppapi/c/pp_completion_callback.h $
+    ../../ppapi/c/pp_instance.h ../../ppapi/c/pp_macros.h $
+    ../../ppapi/c/pp_module.h ../../ppapi/c/pp_point.h $
+    ../../ppapi/c/pp_resource.h ../../ppapi/c/pp_size.h $
+    ../../ppapi/c/pp_stdint.h ../../ppapi/c/pp_var.h $
+    ../../ppapi/c/ppb_image_data.h $
+    ../../ppapi/native_client/tests/ppapi_test_lib/test_interface.h $
+    ../../chrome/test/data/nacl/crash/ppapi_crash_via_exit_call.cc $
+    ../../out/gypfiles/chrome/test/data/nacl/pnacl_newlib.ppapi_crash_via_exit_call.source_list.gypcmd $
+    ../../native_client/toolchain/linux_x86/pnacl_newlib/pnacl_newlib.json $
+    || $
+    obj/chrome/test/data/nacl/ppapi_crash_via_exit_call.actions_depends.stamp
+
+rule $
+    ppapi_crash_via_exit_call_target_build_newlib_x86_64_nexe_0e59df4be44d6eaba3c482117ad87a52
+  command = cd ../../chrome/test/data/nacl; python $
+      ../../../../native_client/build/build_nexe.py --root ../../../.. $
+      --product-dir ../../../../out/Release/xyz --config-name Release -t $
+      ../../../../native_client/toolchain/ --strip-all --arch x86-64 $
+      --build newlib_nexe --name $
+      ../../../../out/Release/nacl_test_data/newlib/ppapi_crash_via_exit_call_newlib_x86_64.nexe $
+      --objdir $
+      ../../../../out/Release/obj/chrome/test/data/nacl/ppapi_crash_via_exit_call.gen/newlib-x86-64/ppapi_crash_via_exit_call $
+      "--include-dirs=../../../../out/Release/gen/tc_newlib/include $
+      ../../../.. \"../../../../out/Release/gen\"" "--compile_flags=-m64 $
+      -O2 -g -Wall -fdiagnostics-show-option -Werror " --gomadir "" $
+      "--defines=\"__STDC_LIMIT_MACROS=1\" \"__STDC_FORMAT_MACROS=1\" $
+      \"_GNU_SOURCE=1\" \"_POSIX_C_SOURCE=199506\" \"_XOPEN_SOURCE=600\" $
+      \"DYNAMIC_ANNOTATIONS_ENABLED=1\" $
+      \"DYNAMIC_ANNOTATIONS_PREFIX=NACL_\" \"NACL_BUILD_ARCH=x86\" $
+      V8_DEPRECATION_WARNINGS \"CLD_VERSION=2\" \"_FILE_OFFSET_BITS=64\" $
+      CHROMIUM_BUILD \"CR_CLANG_REVISION=255169-1\" $
+      UI_COMPOSITOR_IMAGE_TRANSPORT \"USE_AURA=1\" \"USE_ASH=1\" $
+      \"USE_PANGO=1\" \"USE_CAIRO=1\" \"USE_DEFAULT_RENDER_THEME=1\" $
+      \"USE_LIBJPEG_TURBO=1\" \"USE_X11=1\" \"USE_CLIPBOARD_AURAX11=1\" $
+      ENABLE_ONE_CLICK_SIGNIN \"ENABLE_WEBRTC=1\" \"ENABLE_MEDIA_ROUTER=1\" $
+      ENABLE_PEPPER_CDMS ENABLE_CONFIGURATION_POLICY ENABLE_NOTIFICATIONS $
+      \"ENABLE_HIDPI=1\" \"ENABLE_TOPCHROME_MD=1\" USE_UDEV $
+      DONT_EMBED_BUILD_METADATA FIELDTRIAL_TESTING_ENABLED $
+      \"ENABLE_TASK_MANAGER=1\" \"ENABLE_EXTENSIONS=1\" \"ENABLE_PDF=1\" $
+      \"ENABLE_PLUGINS=1\" \"ENABLE_SESSION_SERVICE=1\" \"ENABLE_THEMES=1\" $
+      \"ENABLE_AUTOFILL_DIALOG=1\" \"ENABLE_BACKGROUND=1\" $
+      \"ENABLE_PRINTING=1\" \"ENABLE_BASIC_PRINTING=1\" $
+      \"ENABLE_PRINT_PREVIEW=1\" \"ENABLE_SPELLCHECK=1\" $
+      \"ENABLE_CAPTIVE_PORTAL_DETECTION=1\" \"ENABLE_APP_LIST=1\" $
+      \"ENABLE_SETTINGS_APP=1\" \"ENABLE_SUPERVISED_USERS=1\" $
+      \"ENABLE_MDNS=1\" \"ENABLE_SERVICE_DISCOVERY=1\" $
+      V8_USE_EXTERNAL_STARTUP_DATA FULL_SAFE_BROWSING SAFE_BROWSING_CSD $
+      SAFE_BROWSING_DB_LOCAL \"USE_LIBPCI=1\" \"USE_OPENSSL=1\" $
+      \"USE_OPENSSL_CERTS=1\"" $
+      "--link_flags=-B../../../../out/Release/gen/tc_newlib/lib64 $
+      -L../../../../out/Release/gen/tc_newlib/lib64 -lppapi $
+      -lppapi_test_lib -lplatform -lgio -lppapi_cpp -lppapi -pthread -O3 " $
+      "--source-list=../../../../out/gypfiles/chrome/test/data/nacl/newlib-x86-64.ppapi_crash_via_exit_call.source_list.gypcmd"
+  description = ACTION ppapi_crash_via_exit_call: build newlib x86-64 $
+      nexe_0e59df4be44d6eaba3c482117ad87a52
+  restat = 1
+
+build nacl_test_data/newlib/ppapi_crash_via_exit_call_newlib_x86_64.nexe: $
+    ppapi_crash_via_exit_call_target_build_newlib_x86_64_nexe_0e59df4be44d6eaba3c482117ad87a52 $
+    ../../native_client/build/build_nexe.py $
+    ../../native_client/build/build_nexe_tools.py $
+    ../../native_client/src/include/build_config.h $
+    ../../native_client/src/include/nacl_base.h $
+    ../../native_client/src/include/nacl_compiler_annotations.h $
+    ../../native_client/src/include/nacl_macros.h $
+    ../../native_client/src/include/nacl_string.h $
+    ../../native_client/src/include/portability.h $
+    ../../native_client/src/include/win/port_win.h $
+    ../../native_client/src/shared/platform/nacl_check.h $
+    ../../native_client/src/shared/platform/nacl_log.h $
+    ../../native_client/src/third_party/valgrind/memcheck.h $
+    ../../native_client/src/third_party/valgrind/valgrind.h $
+    ../../native_client/src/trusted/service_runtime/include/bits/wordsize.h $
+    ../../ppapi/c/pp_bool.h ../../ppapi/c/pp_completion_callback.h $
+    ../../ppapi/c/pp_instance.h ../../ppapi/c/pp_macros.h $
+    ../../ppapi/c/pp_module.h ../../ppapi/c/pp_point.h $
+    ../../ppapi/c/pp_resource.h ../../ppapi/c/pp_size.h $
+    ../../ppapi/c/pp_stdint.h ../../ppapi/c/pp_var.h $
+    ../../ppapi/c/ppb_image_data.h $
+    ../../ppapi/native_client/tests/ppapi_test_lib/test_interface.h $
+    ../../chrome/test/data/nacl/crash/ppapi_crash_via_exit_call.cc $
+    ../../out/gypfiles/chrome/test/data/nacl/newlib-x86-64.ppapi_crash_via_exit_call.source_list.gypcmd $
+    ../../native_client/toolchain/linux_x86/nacl_x86_newlib/nacl_x86_newlib.json $
+    || $
+    obj/chrome/test/data/nacl/ppapi_crash_via_exit_call.actions_depends.stamp
+
+rule $
+    ppapi_crash_via_exit_call_target_build_glibc_x86_64_nexe_0e59df4be44d6eaba3c482117ad87a52
+  command = cd ../../chrome/test/data/nacl; python $
+      ../../../../native_client/build/build_nexe.py --root ../../../.. $
+      --product-dir ../../../../out/Release/xyz --config-name Release -t $
+      ../../../../native_client/toolchain/ --strip-all --arch x86-64 $
+      --build glibc_nexe --name $
+      ../../../../out/Release/nacl_test_data/glibc/ppapi_crash_via_exit_call_glibc_x86_64.nexe $
+      --objdir $
+      ../../../../out/Release/obj/chrome/test/data/nacl/ppapi_crash_via_exit_call.gen/glibc-x86-64/ppapi_crash_via_exit_call $
+      "--include-dirs=../../../../out/Release/gen/tc_glibc/include $
+      ../../../.. \"../../../../out/Release/gen\"" "--compile_flags=-m64 $
+      -O2 -g -Wall -fdiagnostics-show-option -Werror " --gomadir "" $
+      "--defines=\"__STDC_LIMIT_MACROS=1\" \"__STDC_FORMAT_MACROS=1\" $
+      \"_GNU_SOURCE=1\" \"_POSIX_C_SOURCE=199506\" \"_XOPEN_SOURCE=600\" $
+      \"DYNAMIC_ANNOTATIONS_ENABLED=1\" $
+      \"DYNAMIC_ANNOTATIONS_PREFIX=NACL_\" \"NACL_BUILD_ARCH=x86\" $
+      V8_DEPRECATION_WARNINGS \"CLD_VERSION=2\" \"_FILE_OFFSET_BITS=64\" $
+      CHROMIUM_BUILD \"CR_CLANG_REVISION=255169-1\" $
+      UI_COMPOSITOR_IMAGE_TRANSPORT \"USE_AURA=1\" \"USE_ASH=1\" $
+      \"USE_PANGO=1\" \"USE_CAIRO=1\" \"USE_DEFAULT_RENDER_THEME=1\" $
+      \"USE_LIBJPEG_TURBO=1\" \"USE_X11=1\" \"USE_CLIPBOARD_AURAX11=1\" $
+      ENABLE_ONE_CLICK_SIGNIN \"ENABLE_WEBRTC=1\" \"ENABLE_MEDIA_ROUTER=1\" $
+      ENABLE_PEPPER_CDMS ENABLE_CONFIGURATION_POLICY ENABLE_NOTIFICATIONS $
+      \"ENABLE_HIDPI=1\" \"ENABLE_TOPCHROME_MD=1\" USE_UDEV $
+      DONT_EMBED_BUILD_METADATA FIELDTRIAL_TESTING_ENABLED $
+      \"ENABLE_TASK_MANAGER=1\" \"ENABLE_EXTENSIONS=1\" \"ENABLE_PDF=1\" $
+      \"ENABLE_PLUGINS=1\" \"ENABLE_SESSION_SERVICE=1\" \"ENABLE_THEMES=1\" $
+      \"ENABLE_AUTOFILL_DIALOG=1\" \"ENABLE_BACKGROUND=1\" $
+      \"ENABLE_PRINTING=1\" \"ENABLE_BASIC_PRINTING=1\" $
+      \"ENABLE_PRINT_PREVIEW=1\" \"ENABLE_SPELLCHECK=1\" $
+      \"ENABLE_CAPTIVE_PORTAL_DETECTION=1\" \"ENABLE_APP_LIST=1\" $
+      \"ENABLE_SETTINGS_APP=1\" \"ENABLE_SUPERVISED_USERS=1\" $
+      \"ENABLE_MDNS=1\" \"ENABLE_SERVICE_DISCOVERY=1\" $
+      V8_USE_EXTERNAL_STARTUP_DATA FULL_SAFE_BROWSING SAFE_BROWSING_CSD $
+      SAFE_BROWSING_DB_LOCAL \"USE_LIBPCI=1\" \"USE_OPENSSL=1\" $
+      \"USE_OPENSSL_CERTS=1\"" $
+      "--link_flags=-B../../../../out/Release/gen/tc_glibc/lib64 -lppapi $
+      -lppapi_test_lib -lplatform -lgio -lppapi_cpp -lppapi -pthread -O3 " $
+      "--source-list=../../../../out/gypfiles/chrome/test/data/nacl/glibc-x86-64.ppapi_crash_via_exit_call.source_list.gypcmd"
+  description = ACTION ppapi_crash_via_exit_call: build glibc x86-64 $
+      nexe_0e59df4be44d6eaba3c482117ad87a52
+  restat = 1
+
+build nacl_test_data/glibc/ppapi_crash_via_exit_call_glibc_x86_64.nexe: $
+    ppapi_crash_via_exit_call_target_build_glibc_x86_64_nexe_0e59df4be44d6eaba3c482117ad87a52 $
+    ../../native_client/build/build_nexe.py $
+    ../../native_client/build/build_nexe_tools.py $
+    ../../native_client/src/include/build_config.h $
+    ../../native_client/src/include/nacl_base.h $
+    ../../native_client/src/include/nacl_compiler_annotations.h $
+    ../../native_client/src/include/nacl_macros.h $
+    ../../native_client/src/include/nacl_string.h $
+    ../../native_client/src/include/portability.h $
+    ../../native_client/src/include/win/port_win.h $
+    ../../native_client/src/shared/platform/nacl_check.h $
+    ../../native_client/src/shared/platform/nacl_log.h $
+    ../../native_client/src/third_party/valgrind/memcheck.h $
+    ../../native_client/src/third_party/valgrind/valgrind.h $
+    ../../native_client/src/trusted/service_runtime/include/bits/wordsize.h $
+    ../../ppapi/c/pp_bool.h ../../ppapi/c/pp_completion_callback.h $
+    ../../ppapi/c/pp_instance.h ../../ppapi/c/pp_macros.h $
+    ../../ppapi/c/pp_module.h ../../ppapi/c/pp_point.h $
+    ../../ppapi/c/pp_resource.h ../../ppapi/c/pp_size.h $
+    ../../ppapi/c/pp_stdint.h ../../ppapi/c/pp_var.h $
+    ../../ppapi/c/ppb_image_data.h $
+    ../../ppapi/native_client/tests/ppapi_test_lib/test_interface.h $
+    ../../chrome/test/data/nacl/crash/ppapi_crash_via_exit_call.cc $
+    ../../out/gypfiles/chrome/test/data/nacl/glibc-x86-64.ppapi_crash_via_exit_call.source_list.gypcmd $
+    ../../native_client/toolchain/linux_x86/nacl_x86_glibc/nacl_x86_glibc.json $
+    || $
+    obj/chrome/test/data/nacl/ppapi_crash_via_exit_call.actions_depends.stamp
+
+build $
+    obj/chrome/test/data/nacl/ppapi_crash_via_exit_call.actions_rules_copies.stamp: $
+    stamp nacl_test_data/newlib/ppapi_crash_via_exit_call.nmf $
+    nacl_test_data/glibc/ppapi_crash_via_exit_call.nmf $
+    nacl_test_data/pnacl/ppapi_crash_via_exit_call.nmf $
+    nacl_test_data/pnacl/ppapi_crash_via_exit_call_newlib_pnacl.pexe $
+    nacl_test_data/pnacl/ppapi_crash_via_exit_call_newlib_pnacl.pexe.debug $
+    nacl_test_data/newlib/ppapi_crash_via_exit_call_newlib_x86_64.nexe $
+    nacl_test_data/glibc/ppapi_crash_via_exit_call_glibc_x86_64.nexe
+

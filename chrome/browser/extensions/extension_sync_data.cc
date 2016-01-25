@@ -153,8 +153,8 @@ scoped_ptr<ExtensionSyncData> ExtensionSyncData::CreateFromSyncChange(
   if (!data.get())
     return nullptr;
 
-  data->set_uninstalled(sync_change.change_type() ==
-                        syncer::SyncChange::ACTION_DELETE);
+  if (sync_change.change_type() == syncer::SyncChange::ACTION_DELETE)
+    data->uninstalled_ = true;
   return data.Pass();
 }
 
@@ -202,7 +202,7 @@ void ExtensionSyncData::ToAppSpecifics(sync_pb::AppSpecifics* specifics) const {
       static_cast<sync_pb::AppSpecifics::LaunchType>(launch_type_);
 
   // The corresponding validation of this value during processing of an
-  // AppSyncData is in ExtensionSyncService::ProcessAppSyncData.
+  // ExtensionSyncData is in ExtensionSyncService::ApplySyncData.
   if (launch_type_ >= LAUNCH_TYPE_FIRST && launch_type_ < NUM_LAUNCH_TYPES &&
       sync_pb::AppSpecifics_LaunchType_IsValid(sync_launch_type)) {
     specifics->set_launch_type(sync_launch_type);
@@ -315,10 +315,6 @@ bool ExtensionSyncData::PopulateFromAppSpecifics(
   }
 
   return true;
-}
-
-void ExtensionSyncData::set_uninstalled(bool uninstalled) {
-  uninstalled_ = uninstalled;
 }
 
 bool ExtensionSyncData::PopulateFromSyncData(

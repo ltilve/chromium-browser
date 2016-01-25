@@ -1,0 +1,14 @@
+rule $
+    sync_driver_features_target_buildflag_header_b0f6b84c0fac89221f6aa82dd210c179
+  command = cd ../../components; python ../build/write_buildflag_header.py $
+      --output components/sync_driver/sync_driver_features.h --rulename $
+      sync_driver_features --gen-dir ../out/Debug/gen --definitions $
+      ../out/gypfiles/components/sync_driver_features_buildflag_header.rsp
+  description = ACTION Generating build header.
+  restat = 1
+
+build gen/components/sync_driver/sync_driver_features.h: $
+    sync_driver_features_target_buildflag_header_b0f6b84c0fac89221f6aa82dd210c179 $
+    ../../build/write_buildflag_header.py $
+    ../../out/gypfiles/components/sync_driver_features_buildflag_header.rsp
+

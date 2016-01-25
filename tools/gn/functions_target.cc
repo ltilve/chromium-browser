@@ -9,6 +9,7 @@
 #include "tools/gn/parse_tree.h"
 #include "tools/gn/scope.h"
 #include "tools/gn/target_generator.h"
+#include "tools/gn/template.h"
 #include "tools/gn/value.h"
 #include "tools/gn/variables.h"
 
@@ -30,6 +31,10 @@ Value ExecuteGenericTarget(const char* target_type,
                            const std::vector<Value>& args,
                            BlockNode* block,
                            Err* err) {
+  NonNestableBlock non_nestable(scope, function, "target");
+  if (!non_nestable.Enter(err))
+    return Value();
+
   if (!EnsureNotProcessingImport(function, scope, err) ||
       !EnsureNotProcessingBuildConfig(function, scope, err))
     return Value();
@@ -122,7 +127,7 @@ const char kAction_Help[] =
     "\n"
     "Variables\n"
     "\n"
-    "  args, data, data_deps, depfile, deps, outputs*, script*,\n"
+    "  args, console, data, data_deps, depfile, deps, outputs*, script*,\n"
     "  inputs, sources\n"
     "  * = required\n"
     "\n"
@@ -193,7 +198,7 @@ const char kActionForEach_Help[] =
     "\n"
     "Variables\n"
     "\n"
-    "  args, data, data_deps, depfile, deps, outputs*, script*,\n"
+    "  args, console, data, data_deps, depfile, deps, outputs*, script*,\n"
     "  inputs, sources*\n"
     "  * = required\n"
     "\n"
@@ -247,15 +252,16 @@ const char kCopy_Help[] =
     "  reference the output or generated intermediate file directories,\n"
     "  respectively.\n"
     "\n"
-    "  Both \"sources\" and \"outputs\" must be specified. Sources can\n"
+    "  Both \"sources\" and \"outputs\" must be specified. Sources can "
+    "include\n"
     "  as many files as you want, but there can only be one item in the\n"
     "  outputs list (plural is used for the name for consistency with\n"
     "  other target types).\n"
     "\n"
     "  If there is more than one source file, your output name should specify\n"
-    "  a mapping from each source files to output file names using source\n"
+    "  a mapping from each source file to an output file name using source\n"
     "  expansion (see \"gn help source_expansion\"). The placeholders will\n"
-    "  will look like \"{{source_name_part}}\", for example.\n"
+    "  look like \"{{source_name_part}}\", for example.\n"
     "\n"
     "Examples\n"
     "\n"
@@ -454,6 +460,70 @@ Value RunStaticLibrary(Scope* scope,
                        BlockNode* block,
                        Err* err) {
   return ExecuteGenericTarget(functions::kStaticLibrary, scope, function, args,
+                              block, err);
+}
+
+// target ---------------------------------------------------------------------
+
+const char kTarget[] = "target";
+const char kTarget_HelpShort[] =
+    "target: Declare an target with the given programmatic type.";
+const char kTarget_Help[] =
+    "target: Declare an target with the given programmatic type.\n"
+    "\n"
+    "  target(target_type_string, target_name_string) { ... }\n"
+    "\n"
+    "  The target() function is a way to invoke a built-in target or template\n"
+    "  with a type determined at runtime. This is useful for cases where the\n"
+    "  type of a target might not be known statically.\n"
+    "\n"
+    "  Only templates and built-in target functions are supported for the\n"
+    "  target_type_string parameter. Arbitrary functions, configs, and\n"
+    "  toolchains are not supported.\n"
+    "\n"
+    "  The call:\n"
+    "    target(\"source_set\", \"doom_melon\") {\n"
+    "  Is equivalent to:\n"
+    "    source_set(\"doom_melon\") {\n"
+    "\n"
+    "Example\n"
+    "\n"
+    "  if (foo_build_as_shared) {\n"
+    "    my_type = \"shared_library\"\n"
+    "  } else {\n"
+    "    my_type = \"source_set\"\n"
+    "  }\n"
+    "\n"
+    "  target(my_type, \"foo\") {\n"
+    "    ...\n"
+    "  }\n";
+Value RunTarget(Scope* scope,
+                const FunctionCallNode* function,
+                const std::vector<Value>& args,
+                BlockNode* block,
+                Err* err) {
+  if (args.size() != 2) {
+    *err = Err(function, "Expected two arguments.",
+               "Dude, try \"gn help target\".");
+    return Value();
+  }
+
+  // The first argument must be a string (the target type). Don't type-check
+  // the second argument since the target-specific function will do that.
+  if (!args[0].VerifyTypeIs(Value::STRING, err))
+    return Value();
+  const std::string& target_type = args[0].string_value();
+
+  // The rest of the args are passed to the function.
+  std::vector<Value> sub_args(args.begin() + 1, args.end());
+
+  // Run a template if it is one.
+  const Template* templ = scope->GetTemplate(target_type);
+  if (templ)
+    return templ->Invoke(scope, function, sub_args, block, err);
+
+  // Otherwise, assume the target is a built-in target type.
+  return ExecuteGenericTarget(target_type.c_str(), scope, function, sub_args,
                               block, err);
 }
 

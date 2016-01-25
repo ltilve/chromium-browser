@@ -44,8 +44,10 @@ enum WebAXEvent {
     WebAXEventBlur,
     WebAXEventCheckedStateChanged,
     WebAXEventChildrenChanged,
+    WebAXEventDocumentSelectionChanged,
     WebAXEventFocus,
     WebAXEventHide,
+    WebAXEventHover,
     WebAXEventInvalidStatusChanged,
     WebAXEventLayoutComplete,
     WebAXEventLiveRegionChanged,
@@ -277,6 +279,7 @@ enum WebAXTextStyle {
 // because on some platforms this determines how the accessible name
 // is exposed.
 enum WebAXNameFrom {
+    WebAXNameFromUninitialized = -1,
     WebAXNameFromAttribute = 0,
     WebAXNameFromContents,
     WebAXNameFromPlaceholder,

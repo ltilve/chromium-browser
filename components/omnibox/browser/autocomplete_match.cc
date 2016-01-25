@@ -17,8 +17,8 @@
 #include "components/omnibox/browser/suggestion_answer.h"
 #include "components/search_engines/template_url.h"
 #include "components/search_engines/template_url_service.h"
+#include "components/url_formatter/url_formatter.h"
 #include "grit/components_scaled_resources.h"
-#include "net/base/net_util.h"
 
 namespace {
 
@@ -42,9 +42,9 @@ bool WordMatchesURLContent(
   size_t prefix_length =
       url.scheme().length() + strlen(url::kStandardSchemeSeparator);
   DCHECK_GE(url.spec().length(), prefix_length);
-  const base::string16& formatted_url = net::FormatUrl(
-      url, languages, net::kFormatUrlOmitNothing, net::UnescapeRule::NORMAL,
-      NULL, NULL, &prefix_length);
+  const base::string16& formatted_url = url_formatter::FormatUrl(
+      url, languages, url_formatter::kFormatUrlOmitNothing,
+      net::UnescapeRule::NORMAL, nullptr, nullptr, &prefix_length);
   if (prefix_length == base::string16::npos)
     return false;
   const base::string16& formatted_url_without_scheme =
@@ -188,6 +188,7 @@ int AutocompleteMatch::TypeToIcon(Type type) {
       IDR_OMNIBOX_HTTP,           // BOOKMARK_TITLE
       IDR_OMNIBOX_HTTP,           // NAVSUGGEST_PERSONALIZED
       IDR_OMNIBOX_CALCULATOR,     // CALCULATOR
+      IDR_OMNIBOX_HTTP,           // CLIPBOARD
   };
 #else
   static const int kIcons[] = {
@@ -210,6 +211,7 @@ int AutocompleteMatch::TypeToIcon(Type type) {
       IDR_OMNIBOX_HTTP,           // BOOKMARK_TITLE
       IDR_OMNIBOX_HTTP,           // NAVSUGGEST_PERSONALIZED
       IDR_OMNIBOX_CALCULATOR,     // CALCULATOR
+      IDR_OMNIBOX_HTTP,           // CLIPBOARD
   };
 #endif
   static_assert(arraysize(kIcons) == AutocompleteMatchType::NUM_TYPES,
@@ -321,8 +323,9 @@ std::string AutocompleteMatch::ClassificationsToString(
   for (size_t i = 0; i < classifications.size(); ++i) {
     if (i)
       serialized_classifications += ',';
-    serialized_classifications += base::IntToString(classifications[i].offset) +
-        ',' + base::IntToString(classifications[i].style);
+    serialized_classifications +=
+        base::SizeTToString(classifications[i].offset) + ',' +
+        base::IntToString(classifications[i].style);
   }
   return serialized_classifications;
 }
@@ -460,21 +463,6 @@ GURL AutocompleteMatch::GURLToStrippedGURL(
   std::string host = stripped_destination_url.host();
   if (host.compare(0, prefix_len, prefix) == 0) {
     replacements.SetHostStr(base::StringPiece(host).substr(prefix_len));
-    needs_replacement = true;
-  }
-
-  // Remove any trailing slash (if it's not a lone slash), or add a slash (to
-  // make a lone slash) if the path is empty.  (We can't unconditionally
-  // remove even lone slashes because for some schemes the path must consist
-  // of at least a slash.)
-  const std::string& path = stripped_destination_url.path();
-  if ((path.length() > 1) && (path[path.length() - 1] == '/')) {
-    replacements.SetPathStr(
-        base::StringPiece(path).substr(0, path.length() - 1));
-    needs_replacement = true;
-  } else if (path.empty()) {
-    static const char slash[] = "/";
-    replacements.SetPathStr(base::StringPiece(slash));
     needs_replacement = true;
   }
 

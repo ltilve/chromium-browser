@@ -1,0 +1,94 @@
+defines = -DPNG_PREFIX -DPNGPREFIX_H -DPNG_USE_READ_MACROS $
+    -DV8_DEPRECATION_WARNINGS -DCLD_VERSION=2 -D_FILE_OFFSET_BITS=64 $
+    -DPDF_ENABLE_V8 -DCHROMIUM_BUILD -DCR_CLANG_REVISION=255169-1 $
+    -DUI_COMPOSITOR_IMAGE_TRANSPORT -DUSE_AURA=1 -DUSE_ASH=1 -DUSE_PANGO=1 $
+    -DUSE_CAIRO=1 -DUSE_DEFAULT_RENDER_THEME=1 -DUSE_LIBJPEG_TURBO=1 $
+    -DUSE_X11=1 -DUSE_CLIPBOARD_AURAX11=1 -DENABLE_ONE_CLICK_SIGNIN $
+    -DENABLE_WEBRTC=1 -DENABLE_MEDIA_ROUTER=1 -DENABLE_PEPPER_CDMS $
+    -DENABLE_CONFIGURATION_POLICY -DENABLE_NOTIFICATIONS -DENABLE_HIDPI=1 $
+    -DENABLE_TOPCHROME_MD=1 -DUSE_UDEV -DDONT_EMBED_BUILD_METADATA $
+    -DFIELDTRIAL_TESTING_ENABLED -DENABLE_TASK_MANAGER=1 $
+    -DENABLE_EXTENSIONS=1 -DENABLE_PDF=1 -DENABLE_PLUGINS=1 $
+    -DENABLE_SESSION_SERVICE=1 -DENABLE_THEMES=1 -DENABLE_AUTOFILL_DIALOG=1 $
+    -DENABLE_BACKGROUND=1 -DENABLE_PRINTING=1 -DENABLE_BASIC_PRINTING=1 $
+    -DENABLE_PRINT_PREVIEW=1 -DENABLE_SPELLCHECK=1 $
+    -DENABLE_CAPTIVE_PORTAL_DETECTION=1 -DENABLE_APP_LIST=1 $
+    -DENABLE_SETTINGS_APP=1 -DENABLE_SUPERVISED_USERS=1 -DENABLE_MDNS=1 $
+    -DENABLE_SERVICE_DISCOVERY=1 -DV8_USE_EXTERNAL_STARTUP_DATA $
+    -DFULL_SAFE_BROWSING -DSAFE_BROWSING_CSD -DSAFE_BROWSING_DB_LOCAL $
+    -DUSE_LIBPCI=1 -DUSE_OPENSSL=1 -DUSE_GLIB=1 -DUSE_NSS_CERTS=1 $
+    -DDYNAMIC_ANNOTATIONS_ENABLED=1 -DWTF_USE_DYNAMIC_ANNOTATIONS=1 $
+    -D_DEBUG -D_GLIBCXX_DEBUG=1
+includes = -I../.. -I../../third_party/pdfium -Igen -I../../v8 $
+    -I../../v8/include $
+    -I../../third_party/pdfium/core/src/fxcodec/fx_zlib/include
+cflags = -fstack-protector --param=ssp-buffer-size=4 -Werror -pthread $
+    -fno-strict-aliasing -Wno-unused-parameter $
+    -Wno-missing-field-initializers -fvisibility=hidden -pipe -fPIC $
+    -Wno-reserved-user-defined-literal -Xclang -load -Xclang $
+    /b/build/slave/publish_tarball/build/src/third_party/llvm-build/Release+Asserts/lib/libFindBadConstructs.so $
+    -Xclang -add-plugin -Xclang find-bad-constructs -Xclang $
+    -plugin-arg-find-bad-constructs -Xclang check-templates $
+    -fcolor-diagnostics $
+    -B/b/build/slave/publish_tarball/build/src/third_party/binutils/Linux_x64/Release/bin $
+    -Wheader-hygiene -Wno-char-subscripts $
+    -Wno-unneeded-internal-declaration -Wno-covered-switch-default $
+    -Wstring-conversion -Wno-c++11-narrowing -Wno-deprecated-register $
+    -Wno-inconsistent-missing-override -Wno-shift-negative-value $
+    -Wno-bitfield-width -Wno-unused-variable -Wno-format -Wno-unused-result $
+    -m64 -march=x86-64 $
+    --sysroot=/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot $
+    -O0 -g -funwind-tables -gsplit-dwarf -Wno-undefined-bool-conversion $
+    -Wno-tautological-undefined-compare
+cflags_c = 
+cflags_cc = -fno-exceptions -fno-rtti -fno-threadsafe-statics $
+    -fvisibility-inlines-hidden -std=gnu++11 -Wno-deprecated
+arflags = 
+
+build obj/third_party/pdfium/samples/fx_lpng/src/fx_lpng.fx_png.o: cc $
+    ../../third_party/pdfium/samples/fx_lpng/src/fx_png.c
+build obj/third_party/pdfium/samples/fx_lpng/src/fx_lpng.fx_pngerror.o: cc $
+    ../../third_party/pdfium/samples/fx_lpng/src/fx_pngerror.c
+build obj/third_party/pdfium/samples/fx_lpng/src/fx_lpng.fx_pngget.o: cc $
+    ../../third_party/pdfium/samples/fx_lpng/src/fx_pngget.c
+build obj/third_party/pdfium/samples/fx_lpng/src/fx_lpng.fx_pngmem.o: cc $
+    ../../third_party/pdfium/samples/fx_lpng/src/fx_pngmem.c
+build obj/third_party/pdfium/samples/fx_lpng/src/fx_lpng.fx_pngpread.o: cc $
+    ../../third_party/pdfium/samples/fx_lpng/src/fx_pngpread.c
+build obj/third_party/pdfium/samples/fx_lpng/src/fx_lpng.fx_pngread.o: cc $
+    ../../third_party/pdfium/samples/fx_lpng/src/fx_pngread.c
+build obj/third_party/pdfium/samples/fx_lpng/src/fx_lpng.fx_pngrio.o: cc $
+    ../../third_party/pdfium/samples/fx_lpng/src/fx_pngrio.c
+build obj/third_party/pdfium/samples/fx_lpng/src/fx_lpng.fx_pngrtran.o: cc $
+    ../../third_party/pdfium/samples/fx_lpng/src/fx_pngrtran.c
+build obj/third_party/pdfium/samples/fx_lpng/src/fx_lpng.fx_pngrutil.o: cc $
+    ../../third_party/pdfium/samples/fx_lpng/src/fx_pngrutil.c
+build obj/third_party/pdfium/samples/fx_lpng/src/fx_lpng.fx_pngset.o: cc $
+    ../../third_party/pdfium/samples/fx_lpng/src/fx_pngset.c
+build obj/third_party/pdfium/samples/fx_lpng/src/fx_lpng.fx_pngtrans.o: cc $
+    ../../third_party/pdfium/samples/fx_lpng/src/fx_pngtrans.c
+build obj/third_party/pdfium/samples/fx_lpng/src/fx_lpng.fx_pngwio.o: cc $
+    ../../third_party/pdfium/samples/fx_lpng/src/fx_pngwio.c
+build obj/third_party/pdfium/samples/fx_lpng/src/fx_lpng.fx_pngwrite.o: cc $
+    ../../third_party/pdfium/samples/fx_lpng/src/fx_pngwrite.c
+build obj/third_party/pdfium/samples/fx_lpng/src/fx_lpng.fx_pngwtran.o: cc $
+    ../../third_party/pdfium/samples/fx_lpng/src/fx_pngwtran.c
+build obj/third_party/pdfium/samples/fx_lpng/src/fx_lpng.fx_pngwutil.o: cc $
+    ../../third_party/pdfium/samples/fx_lpng/src/fx_pngwutil.c
+
+build obj/third_party/pdfium/samples/libfx_lpng.a: alink_thin $
+    obj/third_party/pdfium/samples/fx_lpng/src/fx_lpng.fx_png.o $
+    obj/third_party/pdfium/samples/fx_lpng/src/fx_lpng.fx_pngerror.o $
+    obj/third_party/pdfium/samples/fx_lpng/src/fx_lpng.fx_pngget.o $
+    obj/third_party/pdfium/samples/fx_lpng/src/fx_lpng.fx_pngmem.o $
+    obj/third_party/pdfium/samples/fx_lpng/src/fx_lpng.fx_pngpread.o $
+    obj/third_party/pdfium/samples/fx_lpng/src/fx_lpng.fx_pngread.o $
+    obj/third_party/pdfium/samples/fx_lpng/src/fx_lpng.fx_pngrio.o $
+    obj/third_party/pdfium/samples/fx_lpng/src/fx_lpng.fx_pngrtran.o $
+    obj/third_party/pdfium/samples/fx_lpng/src/fx_lpng.fx_pngrutil.o $
+    obj/third_party/pdfium/samples/fx_lpng/src/fx_lpng.fx_pngset.o $
+    obj/third_party/pdfium/samples/fx_lpng/src/fx_lpng.fx_pngtrans.o $
+    obj/third_party/pdfium/samples/fx_lpng/src/fx_lpng.fx_pngwio.o $
+    obj/third_party/pdfium/samples/fx_lpng/src/fx_lpng.fx_pngwrite.o $
+    obj/third_party/pdfium/samples/fx_lpng/src/fx_lpng.fx_pngwtran.o $
+    obj/third_party/pdfium/samples/fx_lpng/src/fx_lpng.fx_pngwutil.o

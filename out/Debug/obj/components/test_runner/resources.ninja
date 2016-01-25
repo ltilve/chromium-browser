@@ -1,0 +1,10 @@
+build AHEM____.TTF: copy $
+    ../../components/test_runner/resources/fonts/AHEM____.TTF
+build fonts.conf: copy ../../components/test_runner/resources/fonts/fonts.conf
+build GardinerModBug.ttf: copy $
+    ../../third_party/gardiner_mod/GardinerModBug.ttf
+build GardinerModCat.ttf: copy $
+    ../../third_party/gardiner_mod/GardinerModCat.ttf
+build obj/components/test_runner/resources.actions_rules_copies.stamp: $
+    stamp AHEM____.TTF fonts.conf GardinerModBug.ttf GardinerModCat.ttf
+

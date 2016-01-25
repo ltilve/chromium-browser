@@ -13,8 +13,10 @@ import android.view.MotionEvent;
 import android.view.ViewConfiguration;
 
 import org.chromium.base.test.util.Feature;
+import org.chromium.chrome.browser.compositor.bottombar.OverlayPanelContent;
 import org.chromium.chrome.browser.compositor.bottombar.contextualsearch.ContextualSearchPanel;
 import org.chromium.chrome.browser.compositor.eventfilter.MockEventFilterHost;
+import org.chromium.chrome.browser.compositor.layouts.LayoutUpdateHost;
 import org.chromium.chrome.browser.compositor.layouts.eventfilter.ContextualSearchEventFilter;
 import org.chromium.chrome.browser.compositor.layouts.eventfilter.EventFilterHost;
 import org.chromium.chrome.browser.compositor.layouts.eventfilter.GestureHandler;
@@ -27,6 +29,9 @@ public class ContextualSearchEventFilterTest extends InstrumentationTestCase
 
     private static final float SEARCH_PANEL_ALMOST_MAXIMIZED_OFFSET_Y_DP = 50.f;
     private static final float SEARCH_BAR_HEIGHT_DP = 100.f;
+
+    private static final float LAYOUT_WIDTH_DP = 600.f;
+    private static final float LAYOUT_HEIGHT_DP = 800.f;
 
     private float mTouchSlopDp;
     private float mDpToPx;
@@ -117,6 +122,37 @@ public class ContextualSearchEventFilterTest extends InstrumentationTestCase
     }
 
     // --------------------------------------------------------------------------------------------
+    // MockContextualSearchPanel
+    // --------------------------------------------------------------------------------------------
+
+    /**
+     * MockContextualSearchPanel stops creation of ContentViewCores.
+     */
+    public static class MockContextualSearchPanel extends ContextualSearchPanel {
+
+        public MockContextualSearchPanel(Context context, LayoutUpdateHost updateHost) {
+            super(context, updateHost);
+        }
+
+        @Override
+        public OverlayPanelContent createNewOverlayPanelContent() {
+            return new MockOverlayPanelContent();
+        }
+
+        /**
+         * Override creation and destruction of the ContentViewCore as they rely on native methods.
+         */
+        private static class MockOverlayPanelContent extends OverlayPanelContent {
+            public MockOverlayPanelContent() {
+                super(null, null, null);
+            }
+
+            @Override
+            public void removeLastHistoryEntry(String url, long timeInMs) {}
+        }
+    }
+
+    // --------------------------------------------------------------------------------------------
     // Test Suite
     // --------------------------------------------------------------------------------------------
 
@@ -130,11 +166,17 @@ public class ContextualSearchEventFilterTest extends InstrumentationTestCase
         mTouchSlopDp = ViewConfiguration.get(context).getScaledTouchSlop() / mDpToPx;
 
         EventFilterHost eventFilterHost = new MockEventFilterHostWrapper(context);
-        mContextualSearchPanel = new ContextualSearchPanel(context, null);
+        mContextualSearchPanel = new MockContextualSearchPanel(context, null);
         mEventFilter = new ContextualSearchEventFilterWrapper(context, eventFilterHost, this,
                 mContextualSearchPanel);
 
         mContextualSearchPanel.setSearchBarHeightForTesting(SEARCH_BAR_HEIGHT_DP);
+        mContextualSearchPanel.setHeightForTesting(LAYOUT_HEIGHT_DP);
+        mContextualSearchPanel.setIsFullscreenSizePanelForTesting(true);
+
+        // NOTE(pedrosimonetti): This should be called after calling the method
+        // setIsFullscreenSizePanelForTesting(), otherwise it will crash the test.
+        mContextualSearchPanel.onSizeChanged(LAYOUT_WIDTH_DP, LAYOUT_HEIGHT_DP, false);
 
         setSearchContentViewVerticalScroll(0);
 
@@ -408,7 +450,7 @@ public class ContextualSearchEventFilterTest extends InstrumentationTestCase
     // --------------------------------------------------------------------------------------------
 
     @Override
-    public void onDown(float x, float y) {}
+    public void onDown(float x, float y, boolean fromMouse, int buttons) {}
 
     @Override
     public void onUpOrCancel() {}
@@ -419,7 +461,7 @@ public class ContextualSearchEventFilterTest extends InstrumentationTestCase
     }
 
     @Override
-    public void click(float x, float y) {
+    public void click(float x, float y, boolean fromMouse, int buttons) {
         mWasTapDetectedOnSearchPanel = true;
     }
 

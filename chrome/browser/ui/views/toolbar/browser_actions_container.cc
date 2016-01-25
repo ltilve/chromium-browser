@@ -14,6 +14,7 @@
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/browser/ui/toolbar/toolbar_action_view_controller.h"
 #include "chrome/browser/ui/toolbar/toolbar_actions_bar.h"
+#include "chrome/browser/ui/toolbar/toolbar_actions_model.h"
 #include "chrome/browser/ui/view_ids.h"
 #include "chrome/browser/ui/views/extensions/browser_action_drag_data.h"
 #include "chrome/browser/ui/views/extensions/extension_message_bubble_view.h"
@@ -122,9 +123,8 @@ BrowserActionsContainer::~BrowserActionsContainer() {
   // always have cleared the active bubble by now.
   DCHECK(!active_bubble_);
 
-  FOR_EACH_OBSERVER(BrowserActionsContainerObserver,
-                    observers_,
-                    OnBrowserActionsContainerDestroyed());
+  FOR_EACH_OBSERVER(BrowserActionsContainerObserver, observers_,
+                    OnBrowserActionsContainerDestroyed(this));
 
   toolbar_actions_bar_->DeleteActions();
   // All views should be removed as part of ToolbarActionsBar::DeleteActions().
@@ -139,7 +139,7 @@ void BrowserActionsContainer::Init() {
   container_width_ = toolbar_actions_bar_->GetPreferredSize().width();
 }
 
-const std::string& BrowserActionsContainer::GetIdAt(size_t index) const {
+std::string BrowserActionsContainer::GetIdAt(size_t index) const {
   return toolbar_action_views_[index]->view_controller()->GetId();
 }
 
@@ -187,6 +187,7 @@ bool BrowserActionsContainer::ShownInsideMenu() const {
 }
 
 void BrowserActionsContainer::OnToolbarActionViewDragDone() {
+  toolbar_actions_bar_->OnDragEnded();
   FOR_EACH_OBSERVER(BrowserActionsContainerObserver,
                     observers_,
                     OnBrowserActionDragDone());
@@ -199,6 +200,21 @@ views::MenuButton* BrowserActionsContainer::GetOverflowReferenceView() {
       static_cast<views::MenuButton*>(chevron_) :
       static_cast<views::MenuButton*>(BrowserView::GetBrowserViewForBrowser(
           browser_)->toolbar()->app_menu());
+}
+
+void BrowserActionsContainer::OnMouseEnteredToolbarActionView() {
+  if (!shown_bubble_ && !toolbar_action_views_.empty() &&
+      ExtensionToolbarIconSurfacingBubbleDelegate::ShouldShowForProfile(
+          browser_->profile())) {
+    ExtensionToolbarIconSurfacingBubble* bubble =
+        new ExtensionToolbarIconSurfacingBubble(
+            this,
+            make_scoped_ptr(new ExtensionToolbarIconSurfacingBubbleDelegate(
+                browser_->profile())));
+    views::BubbleDelegateView::CreateBubble(bubble);
+    bubble->Show();
+  }
+  shown_bubble_ = true;
 }
 
 void BrowserActionsContainer::AddViewForAction(
@@ -288,8 +304,11 @@ void BrowserActionsContainer::SetChevronVisibility(bool visible) {
     chevron_->SetVisible(visible);
 }
 
-int BrowserActionsContainer::GetWidth() const {
-  return container_width_;
+int BrowserActionsContainer::GetWidth(GetWidthTime get_width_time) const {
+  return get_width_time == GET_WIDTH_AFTER_ANIMATION &&
+                 animation_target_size_ > 0
+             ? animation_target_size_
+             : width();
 }
 
 bool BrowserActionsContainer::IsAnimating() const {
@@ -305,14 +324,6 @@ int BrowserActionsContainer::GetChevronWidth() const {
   return chevron_ ? chevron_->GetPreferredSize().width() + kChevronSpacing : 0;
 }
 
-void BrowserActionsContainer::OnOverflowedActionWantsToRunChanged(
-    bool overflowed_action_wants_to_run) {
-  DCHECK(!in_overflow_mode());
-  BrowserView::GetBrowserViewForBrowser(browser_)->toolbar()->
-      app_menu()->SetOverflowedToolbarActionWantsToRun(
-          overflowed_action_wants_to_run);
-}
-
 void BrowserActionsContainer::ShowExtensionMessageBubble(
     scoped_ptr<extensions::ExtensionMessageBubbleController> controller,
     ToolbarActionViewController* anchor_action) {
@@ -323,8 +334,6 @@ void BrowserActionsContainer::ShowExtensionMessageBubble(
       static_cast<views::View*>(GetViewForId(anchor_action->GetId())) :
       BrowserView::GetBrowserViewForBrowser(browser_)->toolbar()->app_menu();
 
-  extensions::ExtensionMessageBubbleController* weak_controller =
-      controller.get();
   extensions::ExtensionMessageBubbleView* bubble =
       new extensions::ExtensionMessageBubbleView(
           reference_view,
@@ -333,7 +342,7 @@ void BrowserActionsContainer::ShowExtensionMessageBubble(
   views::BubbleDelegateView::CreateBubble(bubble);
   active_bubble_ = bubble;
   active_bubble_->GetWidget()->AddObserver(this);
-  weak_controller->Show(bubble);
+  bubble->Show();
 }
 
 void BrowserActionsContainer::OnWidgetClosing(views::Widget* widget) {
@@ -399,13 +408,15 @@ void BrowserActionsContainer::Layout() {
   if (resize_area_)
     resize_area_->SetBounds(0, 0, platform_settings().item_spacing, height());
 
+  // The range of visible icons, from start_index (inclusive) to end_index
+  // (exclusive).
+  size_t start_index = toolbar_actions_bar_->GetStartIndexInBounds();
+  size_t end_index = toolbar_actions_bar_->GetEndIndexInBounds();
+
   // If the icons don't all fit, show the chevron (unless suppressed).
-  int max_x = GetPreferredSize().width();
-  if (toolbar_actions_bar_->IconCountToWidth(-1) > max_x &&
-      !suppress_chevron_ && chevron_) {
+  if (chevron_ && !suppress_chevron_ && toolbar_actions_bar_->NeedsOverflow()) {
     chevron_->SetVisible(true);
     gfx::Size chevron_size(chevron_->GetPreferredSize());
-    max_x -= chevron_size.width() + kChevronSpacing;
     chevron_->SetBounds(
         width() - ToolbarView::kStandardSpacing - chevron_size.width(),
         0,
@@ -415,23 +426,6 @@ void BrowserActionsContainer::Layout() {
     chevron_->SetVisible(false);
   }
 
-  // The range of visible icons, from start_index (inclusive) to end_index
-  // (exclusive).
-  size_t start_index = in_overflow_mode() ?
-      toolbar_action_views_.size() - toolbar_actions_bar_->GetIconCount() : 0u;
-  // For the main container's last visible icon, we calculate how many icons we
-  // can display with the given width. We add an extra item_spacing because the
-  // last icon doesn't need padding, but we want it to divide easily.
-  size_t end_index = in_overflow_mode() ?
-      toolbar_action_views_.size() :
-      (max_x - platform_settings().left_padding -
-          platform_settings().right_padding +
-          platform_settings().item_spacing) /
-          ToolbarActionsBar::IconWidth(true);
-  // The maximum length for one row of icons.
-  size_t row_length = in_overflow_mode() ?
-      platform_settings().icons_per_overflow_menu_row : end_index;
-
   // Now draw the icons for the actions in the available space. Once all the
   // variables are in place, the layout works equally well for the main and
   // overflow container.
@@ -440,32 +434,14 @@ void BrowserActionsContainer::Layout() {
     if (i < start_index || i >= end_index) {
       view->SetVisible(false);
     } else {
-      size_t relative_index = i - start_index;
-      size_t index_in_row = relative_index % row_length;
-      size_t row_index = relative_index / row_length;
-      view->SetBounds(platform_settings().left_padding +
-                          index_in_row * ToolbarActionsBar::IconWidth(true),
-                      row_index * ToolbarActionsBar::IconHeight(),
-                      ToolbarActionsBar::IconWidth(false),
-                      ToolbarActionsBar::IconHeight());
+      view->SetBoundsRect(toolbar_actions_bar_->GetFrameForIndex(i));
       view->SetVisible(true);
     }
   }
 }
 
 void BrowserActionsContainer::OnMouseEntered(const ui::MouseEvent& event) {
-  if (!shown_bubble_ && !toolbar_action_views_.empty() &&
-      ExtensionToolbarIconSurfacingBubbleDelegate::ShouldShowForProfile(
-          browser_->profile())) {
-    ExtensionToolbarIconSurfacingBubble* bubble =
-        new ExtensionToolbarIconSurfacingBubble(
-            toolbar_action_views_[0],
-            make_scoped_ptr(new ExtensionToolbarIconSurfacingBubbleDelegate(
-                browser_->profile())));
-    views::BubbleDelegateView::CreateBubble(bubble);
-    bubble->Show();
-  }
-  shown_bubble_ = true;
+  OnMouseEnteredToolbarActionView();
 }
 
 bool BrowserActionsContainer::GetDropFormats(
@@ -608,6 +584,7 @@ void BrowserActionsContainer::GetAccessibleState(
 void BrowserActionsContainer::WriteDragDataForView(View* sender,
                                                    const gfx::Point& press_pt,
                                                    OSExchangeData* data) {
+  toolbar_actions_bar_->OnDragStarted();
   DCHECK(data);
 
   ToolbarActionViews::iterator iter = std::find(toolbar_action_views_.begin(),
@@ -640,7 +617,22 @@ bool BrowserActionsContainer::CanStartDragForView(View* sender,
 }
 
 void BrowserActionsContainer::OnResize(int resize_amount, bool done_resizing) {
+  // We don't allow resize while the toolbar is highlighting a subset of
+  // actions, since this is a temporary and entirely browser-driven sequence in
+  // order to warn the user about potentially dangerous items.
+  // We also don't allow resize when the bar is already animating, since we
+  // don't want two competing size changes.
+  if (toolbar_actions_bar_->is_highlighting() || animating())
+    return;
+
   if (!done_resizing) {
+    // If this is the start of the resize gesture, then set |container_width_|
+    // to be the current width. It might not have been if the container was
+    // shrunk to give room to the omnibox, but to adjust the size, it needs to
+    // be accurate.
+    if (!resize_amount_)
+      container_width_ = width();
+
     resize_amount_ = resize_amount;
     Redraw(false);
     return;
@@ -699,10 +691,14 @@ void BrowserActionsContainer::OnPaint(gfx::Canvas* canvas) {
   // If the views haven't been initialized yet, wait for the next call to
   // paint (one will be triggered by entering highlight mode).
   if (toolbar_actions_bar_->is_highlighting() &&
-      !toolbar_action_views_.empty() &&
-      highlight_painter_) {
-    views::Painter::PaintPainterAt(
-        canvas, highlight_painter_.get(), GetLocalBounds());
+      !toolbar_action_views_.empty() && !in_overflow_mode()) {
+    ToolbarActionsModel::HighlightType highlight_type =
+        toolbar_actions_bar_->highlight_type();
+    views::Painter* painter =
+        highlight_type == ToolbarActionsModel::HIGHLIGHT_INFO
+            ? info_highlight_painter_.get()
+            : warning_highlight_painter_.get();
+    views::Painter::PaintPainterAt(canvas, painter, GetLocalBounds());
   }
 
   // TODO(sky/glen): Instead of using a drop indicator, animate the icons while
@@ -783,8 +779,12 @@ void BrowserActionsContainer::LoadImages() {
                        *tp->GetImageSkiaNamed(IDR_BROWSER_ACTIONS_OVERFLOW));
   }
 
-  const int kImages[] = IMAGE_GRID(IDR_DEVELOPER_MODE_HIGHLIGHT);
-  highlight_painter_.reset(views::Painter::CreateImageGridPainter(kImages));
+  const int kInfoImages[] = IMAGE_GRID(IDR_TOOLBAR_ACTION_HIGHLIGHT);
+  info_highlight_painter_.reset(
+      views::Painter::CreateImageGridPainter(kInfoImages));
+  const int kWarningImages[] = IMAGE_GRID(IDR_DEVELOPER_MODE_HIGHLIGHT);
+  warning_highlight_painter_.reset(
+      views::Painter::CreateImageGridPainter(kWarningImages));
 }
 
 void BrowserActionsContainer::ClearActiveBubble(views::Widget* widget) {

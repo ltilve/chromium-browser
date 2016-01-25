@@ -11,10 +11,12 @@
 #include <vector>
 
 #include "base/compiler_specific.h"
+#include "base/gtest_prod_util.h"
 #include "base/memory/scoped_ptr.h"
 #include "base/strings/string16.h"
 #include "content/public/renderer/content_renderer_client.h"
 #include "ipc/ipc_channel_proxy.h"
+#include "v8/include/v8.h"
 
 class ChromeExtensionsDispatcherDelegate;
 class ChromeRenderProcessObserver;
@@ -22,7 +24,6 @@ class ChromeRenderProcessObserver;
 class ChromePDFPrintClient;
 #endif
 class PrescientNetworkingDispatcher;
-class SearchBouncer;
 #if defined(ENABLE_SPELLCHECK)
 class SpellCheck;
 class SpellCheckProvider;
@@ -45,6 +46,7 @@ class Extension;
 class ExtensionSet;
 class ExtensionsGuestViewContainerDispatcher;
 class RendererPermissionsPolicyDelegate;
+class ResourceRequestPolicy;
 }
 
 namespace prerender {
@@ -89,10 +91,6 @@ class ChromeContentRendererClient : public content::ContentRendererClient {
                             blink::WebLocalFrame* frame,
                             const blink::WebPluginParams& params,
                             blink::WebPlugin** plugin) override;
-  scoped_ptr<blink::WebPluginPlaceholder> CreatePluginPlaceholder(
-      content::RenderFrame* render_frame,
-      blink::WebLocalFrame* frame,
-      const blink::WebPluginParams& params) override;
   blink::WebPlugin* CreatePluginReplacement(
       content::RenderFrame* render_frame,
       const base::FilePath& plugin_path) override;
@@ -106,8 +104,10 @@ class ChromeContentRendererClient : public content::ContentRendererClient {
                                  std::string* error_html,
                                  base::string16* error_description) override;
   void DeferMediaLoad(content::RenderFrame* render_frame,
+                      bool has_played_media_before,
                       const base::Closure& closure) override;
   bool RunIdleHandlerWhenWidgetsHidden() override;
+  bool AllowTimerSuspensionWhenProcessBackgrounded() override;
   bool AllowPopup() override;
   bool ShouldFork(blink::WebLocalFrame* frame,
                   const GURL& url,
@@ -154,7 +154,13 @@ class ChromeContentRendererClient : public content::ContentRendererClient {
   void AddImageContextMenuProperties(
       const blink::WebURLResponse& response,
       std::map<std::string, std::string>* properties) override;
-
+  void DidInitializeServiceWorkerContextOnWorkerThread(
+      v8::Local<v8::Context> context,
+      const GURL& url) override;
+  void WillDestroyServiceWorkerContextOnWorkerThread(
+      v8::Local<v8::Context> context,
+      const GURL& url) override;
+  bool ShouldEnforceWebRTCRoutingPreferences() override;
 #if defined(ENABLE_EXTENSIONS)
   // Takes ownership.
   void SetExtensionDispatcherForTest(
@@ -198,7 +204,6 @@ class ChromeContentRendererClient : public content::ContentRendererClient {
   // extension app's extent.
   bool CrossesExtensionExtents(blink::WebLocalFrame* frame,
                                const GURL& new_url,
-                               const extensions::ExtensionSet& extensions,
                                bool is_extension_url,
                                bool is_initial_navigation);
 #endif
@@ -228,6 +233,7 @@ class ChromeContentRendererClient : public content::ContentRendererClient {
       permissions_policy_delegate_;
   scoped_ptr<extensions::ExtensionsGuestViewContainerDispatcher>
       guest_view_container_dispatcher_;
+  scoped_ptr<extensions::ResourceRequestPolicy> resource_request_policy_;
 #endif
 
   scoped_ptr<network_hints::PrescientNetworkingDispatcher>
@@ -243,7 +249,6 @@ class ChromeContentRendererClient : public content::ContentRendererClient {
 #if defined(ENABLE_WEBRTC)
   scoped_refptr<WebRtcLoggingMessageFilter> webrtc_logging_message_filter_;
 #endif
-  scoped_ptr<SearchBouncer> search_bouncer_;
 #if defined(ENABLE_PRINT_PREVIEW)
   scoped_ptr<ChromePDFPrintClient> pdf_print_client_;
 #endif

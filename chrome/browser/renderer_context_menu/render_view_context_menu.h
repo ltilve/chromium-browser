@@ -72,9 +72,17 @@ class RenderViewContextMenu : public RenderViewContextMenuBase {
  protected:
   Profile* GetProfile();
 
+  // Returns a (possibly truncated) version of the current selection text
+  // suitable for putting in the title of a menu item.
+  base::string16 PrintableSelectionText();
+
+  // Helper function to escape "&" as "&&".
+  void EscapeAmpersands(base::string16* text);
+
 #if defined(ENABLE_EXTENSIONS)
   extensions::ContextMenuMatcher extension_items_;
 #endif
+  void RecordUsedItem(int id) override;
 
  private:
   friend class RenderViewContextMenuTest;
@@ -94,7 +102,6 @@ class RenderViewContextMenu : public RenderViewContextMenuBase {
   // RenderViewContextMenuBase:
   void InitMenu() override;
   void RecordShownItem(int id) override;
-  void RecordUsedItem(int id) override;
 #if defined(ENABLE_PLUGINS)
   void HandleAuthorizeAllPlugins() override;
 #endif
@@ -112,14 +119,14 @@ class RenderViewContextMenu : public RenderViewContextMenuBase {
   void AppendAudioItems();
   void AppendCanvasItems();
   void AppendVideoItems();
-  void AppendMediaItems();
   void AppendPluginItems();
   void AppendPageItems();
-  void AppendFrameItems();
   void AppendCopyItem();
   void AppendPrintItem();
+  void AppendMediaRouterItem();
   void AppendRotationItems();
   void AppendEditableItems();
+  void AppendLanguageSettings();
   void AppendSearchProvider();
 #if defined(ENABLE_EXTENSIONS)
   void AppendAllExtensionItems();
@@ -128,7 +135,6 @@ class RenderViewContextMenu : public RenderViewContextMenuBase {
   void AppendPrintPreviewItems();
   void AppendSearchWebForImageItems();
   void AppendSpellingSuggestionsSubMenu();
-  void AppendSpellcheckOptionsSubMenu();
   void AppendProtocolHandlerSubMenu();
   void AppendPasswordItems();
 
@@ -158,10 +164,6 @@ class RenderViewContextMenu : public RenderViewContextMenuBase {
   // on URL.
   ProtocolHandlerRegistry::ProtocolHandlerList GetHandlersForLinkUrl();
 
-  // Returns a (possibly truncated) version of the current selection text
-  // suitable or putting in the title of a menu item.
-  base::string16 PrintableSelectionText();
-
   // The destination URL to use if the user tries to search for or navigate to
   // a text selection.
   GURL selection_navigation_url_;
@@ -171,9 +173,6 @@ class RenderViewContextMenu : public RenderViewContextMenuBase {
 
   // An observer that handles spelling-menu items.
   scoped_ptr<SpellingMenuObserver> spelling_menu_observer_;
-
-  // An observer that handles a 'spell-checker options' submenu.
-  scoped_ptr<SpellCheckerSubMenuObserver> spellchecker_submenu_observer_;
 
 #if defined(ENABLE_PRINT_PREVIEW)
   // An observer that disables menu items when print preview is active.

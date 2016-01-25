@@ -111,9 +111,6 @@ goog.require('__crWeb.message');
         // The following condition is true if the iframe is in a different
         // domain; no further information is accessible.
         if (typeof(currentElement.contentWindow.document) == 'undefined') {
-          invokeOnHost_({
-              'command': 'window.error',
-              'message': 'iframe contentWindow.document is not accessible.'});
           return currentElement;
         }
         var framePosition = getPositionInWindow(currentElement);
@@ -434,6 +431,19 @@ goog.require('__crWeb.message');
     return anchor.href;
   };
 
+  // Tracks whether user is in the middle of scrolling/dragging. If user is
+  // scrolling, ignore window.scrollTo() until user stops scrolling.
+  var webViewScrollViewIsDragging_ = false;
+  __gCrWeb['setWebViewScrollViewIsDragging'] = function(state) {
+    webViewScrollViewIsDragging_ = state;
+  };
+  var originalWindowScrollTo = window.scrollTo;
+  window.scrollTo = function(x, y) {
+    if (webViewScrollViewIsDragging_)
+      return;
+    originalWindowScrollTo(x, y);
+  };
+
   // Intercept window.close calls.
   window.close = function() {
     invokeOnHost_({'command': 'window.close.self'});
@@ -648,12 +658,4 @@ goog.require('__crWeb.message');
   };
 
   __gCrWeb.core.documentInject();
-
-  // Form prototype loaded with event to supply Autocomplete API
-  // functionality.
-  HTMLFormElement.prototype.requestAutocomplete = function() {
-    invokeOnHost_(
-         {'command': 'form.requestAutocomplete',
-         'formName': __gCrWeb.common.getFormIdentifier(this)});
-  };
 }());  // End of anonymous object

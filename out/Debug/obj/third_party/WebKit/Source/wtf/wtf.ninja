@@ -1,0 +1,237 @@
+defines = -DV8_DEPRECATION_WARNINGS -DCLD_VERSION=2 -D_FILE_OFFSET_BITS=64 $
+    -DCHROMIUM_BUILD -DCR_CLANG_REVISION=255169-1 $
+    -DUI_COMPOSITOR_IMAGE_TRANSPORT -DUSE_AURA=1 -DUSE_ASH=1 -DUSE_PANGO=1 $
+    -DUSE_CAIRO=1 -DUSE_DEFAULT_RENDER_THEME=1 -DUSE_LIBJPEG_TURBO=1 $
+    -DUSE_X11=1 -DUSE_CLIPBOARD_AURAX11=1 -DENABLE_ONE_CLICK_SIGNIN $
+    -DENABLE_WEBRTC=1 -DENABLE_MEDIA_ROUTER=1 -DENABLE_PEPPER_CDMS $
+    -DENABLE_CONFIGURATION_POLICY -DENABLE_NOTIFICATIONS -DENABLE_HIDPI=1 $
+    -DENABLE_TOPCHROME_MD=1 -DUSE_UDEV -DDONT_EMBED_BUILD_METADATA $
+    -DFIELDTRIAL_TESTING_ENABLED -DENABLE_TASK_MANAGER=1 $
+    -DENABLE_EXTENSIONS=1 -DENABLE_PDF=1 -DENABLE_PLUGINS=1 $
+    -DENABLE_SESSION_SERVICE=1 -DENABLE_THEMES=1 -DENABLE_AUTOFILL_DIALOG=1 $
+    -DENABLE_BACKGROUND=1 -DENABLE_PRINTING=1 -DENABLE_BASIC_PRINTING=1 $
+    -DENABLE_PRINT_PREVIEW=1 -DENABLE_SPELLCHECK=1 $
+    -DENABLE_CAPTIVE_PORTAL_DETECTION=1 -DENABLE_APP_LIST=1 $
+    -DENABLE_SETTINGS_APP=1 -DENABLE_SUPERVISED_USERS=1 -DENABLE_MDNS=1 $
+    -DENABLE_SERVICE_DISCOVERY=1 -DV8_USE_EXTERNAL_STARTUP_DATA $
+    -DFULL_SAFE_BROWSING -DSAFE_BROWSING_CSD -DSAFE_BROWSING_DB_LOCAL $
+    -DWTF_IMPLEMENTATION=1 -DENABLE_LAYOUT_UNIT_IN_INLINE_BOXES=0 $
+    -DWTF_USE_CONCATENATED_IMPULSE_RESPONSES=1 $
+    -DENABLE_INPUT_MULTIPLE_FIELDS_UI=1 -DENABLE_WEB_AUDIO=1 $
+    -DWTF_USE_WEBAUDIO_FFMPEG=1 -DWTF_USE_DEFAULT_RENDER_THEME=1 $
+    -DU_USING_ICU_NAMESPACE=0 -DU_ENABLE_DYLOAD=0 -DU_STATIC_IMPLEMENTATION $
+    -DUSE_LIBPCI=1 -DUSE_OPENSSL=1 -DUSE_GLIB=1 -DUSE_NSS_CERTS=1 $
+    -D__STDC_CONSTANT_MACROS -D__STDC_FORMAT_MACROS $
+    -DDYNAMIC_ANNOTATIONS_ENABLED=1 -DWTF_USE_DYNAMIC_ANNOTATIONS=1 $
+    -D_DEBUG -D_GLIBCXX_DEBUG=1
+includes = -Igen -I../../third_party/WebKit/Source $
+    -I../../third_party/WebKit -I../.. -I../../third_party/icu/source/i18n $
+    -I../../third_party/icu/source/common
+cflags = -fstack-protector --param=ssp-buffer-size=4 -Werror -pthread $
+    -fno-strict-aliasing -Wall -Wno-unused-parameter $
+    -Wno-missing-field-initializers -fvisibility=hidden -pipe -fPIC $
+    -Wno-reserved-user-defined-literal -Xclang -load -Xclang $
+    /b/build/slave/publish_tarball/build/src/third_party/llvm-build/Release+Asserts/lib/libFindBadConstructs.so $
+    -Xclang -add-plugin -Xclang find-bad-constructs -Xclang $
+    -plugin-arg-find-bad-constructs -Xclang check-templates $
+    -fcolor-diagnostics $
+    -B/b/build/slave/publish_tarball/build/src/third_party/binutils/Linux_x64/Release/bin $
+    -Wheader-hygiene -Wno-char-subscripts $
+    -Wno-unneeded-internal-declaration -Wno-covered-switch-default $
+    -Wstring-conversion -Wno-c++11-narrowing -Wno-deprecated-register $
+    -Wno-inconsistent-missing-override -Wno-shift-negative-value $
+    -Wno-bitfield-width -Wglobal-constructors -Xclang -load -Xclang $
+    /b/build/slave/publish_tarball/build/src/third_party/llvm-build/Release+Asserts/lib/libBlinkGCPlugin.so $
+    -Xclang -add-plugin -Xclang blink-gc-plugin -pthread $
+    -I/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/include/glib-2.0 $
+    -I/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/lib/x86_64-linux-gnu/glib-2.0/include $
+    -m64 -march=x86-64 $
+    --sysroot=/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot $
+    -O0 -g -funwind-tables -gsplit-dwarf -Wno-undefined-bool-conversion $
+    -Wno-tautological-undefined-compare
+cflags_c = 
+cflags_cc = -Wno-c++0x-compat -fno-exceptions -fno-rtti $
+    -fno-threadsafe-statics -fvisibility-inlines-hidden -Wsign-compare $
+    -std=gnu++11 -Wno-c++0x-compat
+arflags = 
+
+build obj/third_party/WebKit/Source/wtf/wtf.ASCIICType.o: cxx $
+    ../../third_party/WebKit/Source/wtf/ASCIICType.cpp
+build obj/third_party/WebKit/Source/wtf/wtf.AddressSpaceRandomization.o: $
+    cxx ../../third_party/WebKit/Source/wtf/AddressSpaceRandomization.cpp
+build obj/third_party/WebKit/Source/wtf/wtf.ArrayBuffer.o: cxx $
+    ../../third_party/WebKit/Source/wtf/ArrayBuffer.cpp
+build obj/third_party/WebKit/Source/wtf/wtf.ArrayBufferBuilder.o: cxx $
+    ../../third_party/WebKit/Source/wtf/ArrayBufferBuilder.cpp
+build obj/third_party/WebKit/Source/wtf/wtf.ArrayBufferContents.o: cxx $
+    ../../third_party/WebKit/Source/wtf/ArrayBufferContents.cpp
+build obj/third_party/WebKit/Source/wtf/wtf.ArrayBufferView.o: cxx $
+    ../../third_party/WebKit/Source/wtf/ArrayBufferView.cpp
+build obj/third_party/WebKit/Source/wtf/wtf.ArrayPiece.o: cxx $
+    ../../third_party/WebKit/Source/wtf/ArrayPiece.cpp
+build obj/third_party/WebKit/Source/wtf/wtf.Assertions.o: cxx $
+    ../../third_party/WebKit/Source/wtf/Assertions.cpp
+build obj/third_party/WebKit/Source/wtf/wtf.BitVector.o: cxx $
+    ../../third_party/WebKit/Source/wtf/BitVector.cpp
+build $
+    obj/third_party/WebKit/Source/wtf/wtf.CryptographicallyRandomNumber.o: $
+    cxx ../../third_party/WebKit/Source/wtf/CryptographicallyRandomNumber.cpp
+build obj/third_party/WebKit/Source/wtf/wtf.CurrentTime.o: cxx $
+    ../../third_party/WebKit/Source/wtf/CurrentTime.cpp
+build obj/third_party/WebKit/Source/wtf/wtf.DataLog.o: cxx $
+    ../../third_party/WebKit/Source/wtf/DataLog.cpp
+build obj/third_party/WebKit/Source/wtf/wtf.DateMath.o: cxx $
+    ../../third_party/WebKit/Source/wtf/DateMath.cpp
+build obj/third_party/WebKit/Source/wtf/wtf.DynamicAnnotations.o: cxx $
+    ../../third_party/WebKit/Source/wtf/DynamicAnnotations.cpp
+build obj/third_party/WebKit/Source/wtf/wtf.FilePrintStream.o: cxx $
+    ../../third_party/WebKit/Source/wtf/FilePrintStream.cpp
+build obj/third_party/WebKit/Source/wtf/wtf.HashTable.o: cxx $
+    ../../third_party/WebKit/Source/wtf/HashTable.cpp
+build obj/third_party/WebKit/Source/wtf/wtf.InstanceCounter.o: cxx $
+    ../../third_party/WebKit/Source/wtf/InstanceCounter.cpp
+build obj/third_party/WebKit/Source/wtf/wtf.MainThread.o: cxx $
+    ../../third_party/WebKit/Source/wtf/MainThread.cpp
+build obj/third_party/WebKit/Source/wtf/wtf.PageAllocator.o: cxx $
+    ../../third_party/WebKit/Source/wtf/PageAllocator.cpp
+build obj/third_party/WebKit/Source/wtf/wtf.PartitionAlloc.o: cxx $
+    ../../third_party/WebKit/Source/wtf/PartitionAlloc.cpp
+build obj/third_party/WebKit/Source/wtf/wtf.PartitionAllocator.o: cxx $
+    ../../third_party/WebKit/Source/wtf/PartitionAllocator.cpp
+build obj/third_party/WebKit/Source/wtf/wtf.Partitions.o: cxx $
+    ../../third_party/WebKit/Source/wtf/Partitions.cpp
+build obj/third_party/WebKit/Source/wtf/wtf.PrintStream.o: cxx $
+    ../../third_party/WebKit/Source/wtf/PrintStream.cpp
+build obj/third_party/WebKit/Source/wtf/wtf.RefCountedLeakCounter.o: cxx $
+    ../../third_party/WebKit/Source/wtf/RefCountedLeakCounter.cpp
+build obj/third_party/WebKit/Source/wtf/wtf.SizeLimits.o: cxx $
+    ../../third_party/WebKit/Source/wtf/SizeLimits.cpp
+build obj/third_party/WebKit/Source/wtf/wtf.SpinLock.o: cxx $
+    ../../third_party/WebKit/Source/wtf/SpinLock.cpp
+build obj/third_party/WebKit/Source/wtf/wtf.ThreadingPthreads.o: cxx $
+    ../../third_party/WebKit/Source/wtf/ThreadingPthreads.cpp
+build obj/third_party/WebKit/Source/wtf/wtf.TypeTraits.o: cxx $
+    ../../third_party/WebKit/Source/wtf/TypeTraits.cpp
+build obj/third_party/WebKit/Source/wtf/wtf.WTF.o: cxx $
+    ../../third_party/WebKit/Source/wtf/WTF.cpp
+build obj/third_party/WebKit/Source/wtf/wtf.WTFThreadData.o: cxx $
+    ../../third_party/WebKit/Source/wtf/WTFThreadData.cpp
+build obj/third_party/WebKit/Source/wtf/wtf.dtoa.o: cxx $
+    ../../third_party/WebKit/Source/wtf/dtoa.cpp
+build obj/third_party/WebKit/Source/wtf/dtoa/wtf.bignum-dtoa.o: cxx $
+    ../../third_party/WebKit/Source/wtf/dtoa/bignum-dtoa.cc
+build obj/third_party/WebKit/Source/wtf/dtoa/wtf.bignum.o: cxx $
+    ../../third_party/WebKit/Source/wtf/dtoa/bignum.cc
+build obj/third_party/WebKit/Source/wtf/dtoa/wtf.cached-powers.o: cxx $
+    ../../third_party/WebKit/Source/wtf/dtoa/cached-powers.cc
+build obj/third_party/WebKit/Source/wtf/dtoa/wtf.diy-fp.o: cxx $
+    ../../third_party/WebKit/Source/wtf/dtoa/diy-fp.cc
+build obj/third_party/WebKit/Source/wtf/dtoa/wtf.double-conversion.o: cxx $
+    ../../third_party/WebKit/Source/wtf/dtoa/double-conversion.cc
+build obj/third_party/WebKit/Source/wtf/dtoa/wtf.fast-dtoa.o: cxx $
+    ../../third_party/WebKit/Source/wtf/dtoa/fast-dtoa.cc
+build obj/third_party/WebKit/Source/wtf/dtoa/wtf.fixed-dtoa.o: cxx $
+    ../../third_party/WebKit/Source/wtf/dtoa/fixed-dtoa.cc
+build obj/third_party/WebKit/Source/wtf/dtoa/wtf.strtod.o: cxx $
+    ../../third_party/WebKit/Source/wtf/dtoa/strtod.cc
+build obj/third_party/WebKit/Source/wtf/text/wtf.AtomicString.o: cxx $
+    ../../third_party/WebKit/Source/wtf/text/AtomicString.cpp
+build obj/third_party/WebKit/Source/wtf/text/wtf.Base64.o: cxx $
+    ../../third_party/WebKit/Source/wtf/text/Base64.cpp
+build obj/third_party/WebKit/Source/wtf/text/wtf.CString.o: cxx $
+    ../../third_party/WebKit/Source/wtf/text/CString.cpp
+build obj/third_party/WebKit/Source/wtf/text/wtf.StringBuilder.o: cxx $
+    ../../third_party/WebKit/Source/wtf/text/StringBuilder.cpp
+build obj/third_party/WebKit/Source/wtf/text/wtf.StringConcatenate.o: cxx $
+    ../../third_party/WebKit/Source/wtf/text/StringConcatenate.cpp
+build obj/third_party/WebKit/Source/wtf/text/wtf.StringImpl.o: cxx $
+    ../../third_party/WebKit/Source/wtf/text/StringImpl.cpp
+build obj/third_party/WebKit/Source/wtf/text/wtf.StringStatics.o: cxx $
+    ../../third_party/WebKit/Source/wtf/text/StringStatics.cpp
+build obj/third_party/WebKit/Source/wtf/text/wtf.TextCodec.o: cxx $
+    ../../third_party/WebKit/Source/wtf/text/TextCodec.cpp
+build obj/third_party/WebKit/Source/wtf/text/wtf.TextCodecICU.o: cxx $
+    ../../third_party/WebKit/Source/wtf/text/TextCodecICU.cpp
+build obj/third_party/WebKit/Source/wtf/text/wtf.TextCodecLatin1.o: cxx $
+    ../../third_party/WebKit/Source/wtf/text/TextCodecLatin1.cpp
+build obj/third_party/WebKit/Source/wtf/text/wtf.TextCodecReplacement.o: $
+    cxx ../../third_party/WebKit/Source/wtf/text/TextCodecReplacement.cpp
+build obj/third_party/WebKit/Source/wtf/text/wtf.TextCodecUTF16.o: cxx $
+    ../../third_party/WebKit/Source/wtf/text/TextCodecUTF16.cpp
+build obj/third_party/WebKit/Source/wtf/text/wtf.TextCodecUTF8.o: cxx $
+    ../../third_party/WebKit/Source/wtf/text/TextCodecUTF8.cpp
+build obj/third_party/WebKit/Source/wtf/text/wtf.TextCodecUserDefined.o: $
+    cxx ../../third_party/WebKit/Source/wtf/text/TextCodecUserDefined.cpp
+build obj/third_party/WebKit/Source/wtf/text/wtf.TextEncoding.o: cxx $
+    ../../third_party/WebKit/Source/wtf/text/TextEncoding.cpp
+build obj/third_party/WebKit/Source/wtf/text/wtf.TextEncodingRegistry.o: $
+    cxx ../../third_party/WebKit/Source/wtf/text/TextEncodingRegistry.cpp
+build obj/third_party/WebKit/Source/wtf/text/wtf.TextPosition.o: cxx $
+    ../../third_party/WebKit/Source/wtf/text/TextPosition.cpp
+build obj/third_party/WebKit/Source/wtf/text/wtf.UTF8.o: cxx $
+    ../../third_party/WebKit/Source/wtf/text/UTF8.cpp
+build obj/third_party/WebKit/Source/wtf/text/wtf.WTFString.o: cxx $
+    ../../third_party/WebKit/Source/wtf/text/WTFString.cpp
+build obj/third_party/WebKit/Source/wtf/text/icu/wtf.CollatorICU.o: cxx $
+    ../../third_party/WebKit/Source/wtf/text/icu/CollatorICU.cpp
+
+build obj/third_party/WebKit/Source/wtf/libwtf.a: alink_thin $
+    obj/third_party/WebKit/Source/wtf/wtf.ASCIICType.o $
+    obj/third_party/WebKit/Source/wtf/wtf.AddressSpaceRandomization.o $
+    obj/third_party/WebKit/Source/wtf/wtf.ArrayBuffer.o $
+    obj/third_party/WebKit/Source/wtf/wtf.ArrayBufferBuilder.o $
+    obj/third_party/WebKit/Source/wtf/wtf.ArrayBufferContents.o $
+    obj/third_party/WebKit/Source/wtf/wtf.ArrayBufferView.o $
+    obj/third_party/WebKit/Source/wtf/wtf.ArrayPiece.o $
+    obj/third_party/WebKit/Source/wtf/wtf.Assertions.o $
+    obj/third_party/WebKit/Source/wtf/wtf.BitVector.o $
+    obj/third_party/WebKit/Source/wtf/wtf.CryptographicallyRandomNumber.o $
+    obj/third_party/WebKit/Source/wtf/wtf.CurrentTime.o $
+    obj/third_party/WebKit/Source/wtf/wtf.DataLog.o $
+    obj/third_party/WebKit/Source/wtf/wtf.DateMath.o $
+    obj/third_party/WebKit/Source/wtf/wtf.DynamicAnnotations.o $
+    obj/third_party/WebKit/Source/wtf/wtf.FilePrintStream.o $
+    obj/third_party/WebKit/Source/wtf/wtf.HashTable.o $
+    obj/third_party/WebKit/Source/wtf/wtf.InstanceCounter.o $
+    obj/third_party/WebKit/Source/wtf/wtf.MainThread.o $
+    obj/third_party/WebKit/Source/wtf/wtf.PageAllocator.o $
+    obj/third_party/WebKit/Source/wtf/wtf.PartitionAlloc.o $
+    obj/third_party/WebKit/Source/wtf/wtf.PartitionAllocator.o $
+    obj/third_party/WebKit/Source/wtf/wtf.Partitions.o $
+    obj/third_party/WebKit/Source/wtf/wtf.PrintStream.o $
+    obj/third_party/WebKit/Source/wtf/wtf.RefCountedLeakCounter.o $
+    obj/third_party/WebKit/Source/wtf/wtf.SizeLimits.o $
+    obj/third_party/WebKit/Source/wtf/wtf.SpinLock.o $
+    obj/third_party/WebKit/Source/wtf/wtf.ThreadingPthreads.o $
+    obj/third_party/WebKit/Source/wtf/wtf.TypeTraits.o $
+    obj/third_party/WebKit/Source/wtf/wtf.WTF.o $
+    obj/third_party/WebKit/Source/wtf/wtf.WTFThreadData.o $
+    obj/third_party/WebKit/Source/wtf/wtf.dtoa.o $
+    obj/third_party/WebKit/Source/wtf/dtoa/wtf.bignum-dtoa.o $
+    obj/third_party/WebKit/Source/wtf/dtoa/wtf.bignum.o $
+    obj/third_party/WebKit/Source/wtf/dtoa/wtf.cached-powers.o $
+    obj/third_party/WebKit/Source/wtf/dtoa/wtf.diy-fp.o $
+    obj/third_party/WebKit/Source/wtf/dtoa/wtf.double-conversion.o $
+    obj/third_party/WebKit/Source/wtf/dtoa/wtf.fast-dtoa.o $
+    obj/third_party/WebKit/Source/wtf/dtoa/wtf.fixed-dtoa.o $
+    obj/third_party/WebKit/Source/wtf/dtoa/wtf.strtod.o $
+    obj/third_party/WebKit/Source/wtf/text/wtf.AtomicString.o $
+    obj/third_party/WebKit/Source/wtf/text/wtf.Base64.o $
+    obj/third_party/WebKit/Source/wtf/text/wtf.CString.o $
+    obj/third_party/WebKit/Source/wtf/text/wtf.StringBuilder.o $
+    obj/third_party/WebKit/Source/wtf/text/wtf.StringConcatenate.o $
+    obj/third_party/WebKit/Source/wtf/text/wtf.StringImpl.o $
+    obj/third_party/WebKit/Source/wtf/text/wtf.StringStatics.o $
+    obj/third_party/WebKit/Source/wtf/text/wtf.TextCodec.o $
+    obj/third_party/WebKit/Source/wtf/text/wtf.TextCodecICU.o $
+    obj/third_party/WebKit/Source/wtf/text/wtf.TextCodecLatin1.o $
+    obj/third_party/WebKit/Source/wtf/text/wtf.TextCodecReplacement.o $
+    obj/third_party/WebKit/Source/wtf/text/wtf.TextCodecUTF16.o $
+    obj/third_party/WebKit/Source/wtf/text/wtf.TextCodecUTF8.o $
+    obj/third_party/WebKit/Source/wtf/text/wtf.TextCodecUserDefined.o $
+    obj/third_party/WebKit/Source/wtf/text/wtf.TextEncoding.o $
+    obj/third_party/WebKit/Source/wtf/text/wtf.TextEncodingRegistry.o $
+    obj/third_party/WebKit/Source/wtf/text/wtf.TextPosition.o $
+    obj/third_party/WebKit/Source/wtf/text/wtf.UTF8.o $
+    obj/third_party/WebKit/Source/wtf/text/wtf.WTFString.o $
+    obj/third_party/WebKit/Source/wtf/text/icu/wtf.CollatorICU.o

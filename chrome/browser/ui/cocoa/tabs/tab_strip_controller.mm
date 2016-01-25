@@ -19,15 +19,15 @@
 #include "chrome/app/chrome_command_ids.h"
 #include "chrome/browser/autocomplete/autocomplete_classifier_factory.h"
 #include "chrome/browser/extensions/tab_helper.h"
-#include "chrome/browser/favicon/favicon_helper.h"
+#include "chrome/browser/favicon/favicon_utils.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/profiles/profile_manager.h"
 #include "chrome/browser/themes/theme_service.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_navigator.h"
+#include "chrome/browser/ui/browser_navigator_params.h"
 #include "chrome/browser/ui/browser_tabstrip.h"
 #import "chrome/browser/ui/cocoa/browser_window_controller.h"
-#import "chrome/browser/ui/cocoa/constrained_window/constrained_window_sheet_controller.h"
 #include "chrome/browser/ui/cocoa/drag_util.h"
 #import "chrome/browser/ui/cocoa/image_button_cell.h"
 #import "chrome/browser/ui/cocoa/new_tab_button.h"
@@ -51,7 +51,7 @@
 #include "components/metrics/proto/omnibox_event.pb.h"
 #include "components/omnibox/browser/autocomplete_classifier.h"
 #include "components/omnibox/browser/autocomplete_match.h"
-#include "components/url_fixer/url_fixer.h"
+#include "components/url_formatter/url_fixer.h"
 #include "components/web_modal/web_contents_modal_dialog_manager.h"
 #include "content/public/browser/navigation_controller.h"
 #include "content/public/browser/user_metrics.h"
@@ -66,7 +66,7 @@
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/base/theme_provider.h"
 #include "ui/gfx/image/image.h"
-#include "ui/gfx/mac/scoped_ns_disable_screen_updates.h"
+#include "ui/gfx/mac/scoped_cocoa_disable_screen_updates.h"
 #include "ui/resources/grit/ui_resources.h"
 
 using base::UserMetricsAction;
@@ -251,6 +251,39 @@ NSImage* Overlay(NSImage* ground, NSImage* overlay, CGFloat alpha) {
 - (void)setNewTabButtonHoverState:(BOOL)showHover;
 - (void)themeDidChangeNotification:(NSNotification*)notification;
 - (void)setNewTabImages;
+@end
+
+// A simple view class that contains the traffic light buttons. This class
+// ensures that the buttons display the icons when the mouse hovers over
+// them by overriding the _mouseInGroup method.
+@interface CustomWindowControlsView : NSView {
+ @private
+  BOOL mouseInside_;
+}
+
+// Overrides the undocumented NSView method: _mouseInGroup. When the traffic
+// light buttons are drawn, they call _mouseInGroup from the superview. If
+// _mouseInGroup returns YES, the buttons will draw themselves with the icons
+// inside.
+- (BOOL)_mouseInGroup:(NSButton*)button;
+- (void)setMouseInside:(BOOL)isInside;
+
+@end
+
+@implementation CustomWindowControlsView
+
+- (void)setMouseInside:(BOOL)isInside {
+  if (mouseInside_ != isInside) {
+    mouseInside_ = isInside;
+    for (NSButton* button : [self subviews])
+      [button setNeedsDisplay];
+  }
+}
+
+- (BOOL)_mouseInGroup:(NSButton*)button {
+  return mouseInside_;
+}
+
 @end
 
 // A simple view class that prevents the Window Server from dragging the area
@@ -614,7 +647,7 @@ NSImage* Overlay(NSImage* ground, NSImage* overlay, CGFloat alpha) {
   TabContentsController* controller = [tabContentsArray_ objectAtIndex:index];
 
   // Make sure we do not draw any transient arrangements of views.
-  gfx::ScopedNSDisableScreenUpdates ns_disabler;
+  gfx::ScopedCocoaDisableScreenUpdates cocoa_disabler;
   // Make sure that any layers that move are not animated to their new
   // positions.
   ScopedCAActionDisabler ca_disabler;
@@ -653,12 +686,6 @@ NSImage* Overlay(NSImage* ground, NSImage* overlay, CGFloat alpha) {
 
   // It also restores content autoresizing properties.
   [controller ensureContentsVisible];
-
-  NSWindow* parentWindow = [switchView_ window];
-  ConstrainedWindowSheetController* sheetController =
-      [ConstrainedWindowSheetController
-          controllerForParentWindow:parentWindow];
-  [sheetController parentViewDidBecomeActive:newView];
 }
 
 // Create a new tab view and set its cell correctly so it draws the way we want
@@ -833,8 +860,8 @@ NSImage* Overlay(NSImage* ground, NSImage* overlay, CGFloat alpha) {
   if (!tabStripModel_->ContainsIndex(index))
     return;
   WebContents* contents = tabStripModel_->GetWebContentsAt(index);
-  chrome::SetTabAudioMuted(contents, !chrome::IsTabAudioMuted(contents),
-                           chrome::kMutedToggleCauseUser);
+  chrome::SetTabAudioMuted(contents, !contents->IsAudioMuted(),
+                           TAB_MUTED_REASON_AUDIO_INDICATOR, std::string());
 }
 
 // Called when the user closes a tab. Asks the model to close the tab. |sender|
@@ -1863,6 +1890,8 @@ NSImage* Overlay(NSImage* ground, NSImage* overlay, CGFloat alpha) {
     mouseInside_ = YES;
     [self setTabTrackingAreasEnabled:YES];
     [self mouseMoved:event];
+  } else if ([area isEqual:customWindowControlsTrackingArea_]) {
+    [customWindowControls_ setMouseInside:YES];
   }
 }
 
@@ -1883,6 +1912,8 @@ NSImage* Overlay(NSImage* ground, NSImage* overlay, CGFloat alpha) {
     // Since this would result in the new tab button incorrectly staying in the
     // hover state, disable the hover image on every mouse exit.
     [self setNewTabButtonHoverState:NO];
+  } else if ([area isEqual:customWindowControlsTrackingArea_]) {
+    [customWindowControls_ setMouseInside:NO];
   }
 }
 
@@ -2093,8 +2124,12 @@ NSImage* Overlay(NSImage* ground, NSImage* overlay, CGFloat alpha) {
     NOTIMPLEMENTED();
 
   // Get the first URL and fix it up.
-  GURL url(GURL(url_fixer::FixupURL(
+  GURL url(GURL(url_formatter::FixupURL(
       base::SysNSStringToUTF8([urls objectAtIndex:0]), std::string())));
+
+  // If the URL isn't valid, don't bother.
+  if (!url.is_valid())
+    return;
 
   [self openURL:&url inView:view at:point];
 }
@@ -2201,7 +2236,8 @@ NSImage* Overlay(NSImage* ground, NSImage* overlay, CGFloat alpha) {
     // Make the container view.
     CGFloat height = NSHeight([tabStripView_ frame]);
     NSRect frame = NSMakeRect(0, 0, [self leftIndentForControls], height);
-    customWindowControls_.reset([[NSView alloc] initWithFrame:frame]);
+    customWindowControls_.reset(
+        [[CustomWindowControlsView alloc] initWithFrame:frame]);
     [customWindowControls_
         setAutoresizingMask:NSViewMaxXMargin | NSViewHeightSizable];
 
@@ -2232,6 +2268,14 @@ NSImage* Overlay(NSImage* ground, NSImage* overlay, CGFloat alpha) {
                           forStyleMask:styleMask];
     [customWindowControls_ addSubview:zoomButton];
     [zoomButton setFrameOrigin:NSMakePoint(zoomButtonX, buttonY)];
+
+    customWindowControlsTrackingArea_.reset([[CrTrackingArea alloc]
+        initWithRect:[customWindowControls_ bounds]
+             options:(NSTrackingMouseEnteredAndExited | NSTrackingActiveAlways)
+               owner:self
+            userInfo:nil]);
+    [customWindowControls_
+        addTrackingArea:customWindowControlsTrackingArea_.get()];
   }
 
   if (![permanentSubviews_ containsObject:customWindowControls_]) {
@@ -2244,6 +2288,7 @@ NSImage* Overlay(NSImage* ground, NSImage* overlay, CGFloat alpha) {
   if (customWindowControls_)
     [permanentSubviews_ removeObject:customWindowControls_];
   [self regenerateSubviewList];
+  [customWindowControls_ setMouseInside:NO];
 }
 
 - (void)themeDidChangeNotification:(NSNotification*)notification {

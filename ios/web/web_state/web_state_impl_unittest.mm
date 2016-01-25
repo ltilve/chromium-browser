@@ -8,17 +8,54 @@
 #include "base/values.h"
 #include "ios/web/public/load_committed_details.h"
 #include "ios/web/public/test/test_browser_state.h"
+#include "ios/web/public/web_state/global_web_state_observer.h"
 #include "ios/web/public/web_state/web_state_observer.h"
+#include "ios/web/public/web_state/web_state_policy_decider.h"
+#include "ios/web/web_state/global_web_state_event_tracker.h"
 #include "ios/web/web_state/web_state_impl.h"
 #include "net/http/http_response_headers.h"
 #include "net/http/http_util.h"
+#include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "testing/gtest_mac.h"
 #include "testing/platform_test.h"
 #include "url/gurl.h"
 
+using testing::_;
+using testing::Assign;
+using testing::AtMost;
+using testing::DoAll;
+using testing::Return;
+
 namespace web {
 namespace {
+
+// Test observer to check that the GlobalWebStateObserver methods are called as
+// expected.
+class TestGlobalWebStateObserver : public GlobalWebStateObserver {
+ public:
+  TestGlobalWebStateObserver()
+      : GlobalWebStateObserver(),
+        did_start_loading_called_(false),
+        did_stop_loading_called_(false) {}
+
+  // Methods returning true if the corresponding GlobalWebStateObserver method
+  // has been called.
+  bool did_start_loading_called() const { return did_start_loading_called_; }
+  bool did_stop_loading_called() const { return did_stop_loading_called_; }
+
+ private:
+  // GlobalWebStateObserver implementation:
+  void WebStateDidStartLoading(WebState* web_state) override {
+    did_start_loading_called_ = true;
+  }
+  void WebStateDidStopLoading(WebState* web_state) override {
+    did_stop_loading_called_ = true;
+  }
+
+  bool did_start_loading_called_;
+  bool did_stop_loading_called_;
+};
 
 // Test observer to check that the WebStateObserver methods are called as
 // expected.
@@ -72,6 +109,19 @@ class TestWebStateObserver : public WebStateObserver {
   bool url_hash_changed_called_;
   bool history_state_changed_called_;
   bool web_state_destroyed_called_;
+};
+
+// Test decider to check that the WebStatePolicyDecider methods are called as
+// expected.
+class MockWebStatePolicyDecider : public WebStatePolicyDecider {
+ public:
+  explicit MockWebStatePolicyDecider(WebState* web_state)
+      : WebStatePolicyDecider(web_state) {}
+  virtual ~MockWebStatePolicyDecider() {}
+
+  MOCK_METHOD1(ShouldAllowRequest, bool(NSURLRequest* request));
+  MOCK_METHOD1(ShouldAllowResponse, bool(NSURLResponse* response));
+  MOCK_METHOD0(WebStateDestroyed, void());
 };
 
 // Creates and returns an HttpResponseHeader using the string representation.
@@ -132,7 +182,8 @@ TEST_F(WebStateTest, ResponseHeaders) {
   web_state_->OnHttpResponseHeadersReceived(real_headers.get(), real_url);
   web_state_->OnHttpResponseHeadersReceived(frame_headers.get(), frame_url);
   // Include a hash to be sure it's handled correctly.
-  web_state_->OnPageLoaded(GURL(real_url.spec() + std::string("#baz")), true);
+  web_state_->OnNavigationCommitted(
+      GURL(real_url.spec() + std::string("#baz")));
 
   // Verify that the right header set was kept.
   EXPECT_TRUE(
@@ -158,14 +209,14 @@ TEST_F(WebStateTest, ResponseHeaderClearing) {
   EXPECT_EQ(NULL, web_state_->GetHttpResponseHeaders());
 
   // There should be headers and parsed values after loading.
-  web_state_->OnPageLoaded(url, true);
+  web_state_->OnNavigationCommitted(url);
   EXPECT_TRUE(web_state_->GetHttpResponseHeaders()->HasHeader("Content-Type"));
   EXPECT_NE("", web_state_->GetContentsMimeType());
   EXPECT_NE("", web_state_->GetContentLanguageHeader());
 
   // ... but not after loading another page, nor should there be specific
   // parsed values.
-  web_state_->OnPageLoaded(GURL("http://elsewhere.com/"), true);
+  web_state_->OnNavigationCommitted(GURL("http://elsewhere.com/"));
   EXPECT_EQ(NULL, web_state_->GetHttpResponseHeaders());
   EXPECT_EQ("", web_state_->GetContentsMimeType());
   EXPECT_EQ("", web_state_->GetContentLanguageHeader());
@@ -210,6 +261,75 @@ TEST_F(WebStateTest, ObserverTest) {
   EXPECT_TRUE(observer->web_state_destroyed_called());
 
   EXPECT_EQ(nullptr, observer->web_state());
+}
+
+// Verifies that GlobalWebStateObservers are called when expected.
+TEST_F(WebStateTest, GlobalObserverTest) {
+  scoped_ptr<TestGlobalWebStateObserver> observer(
+      new TestGlobalWebStateObserver());
+
+  // Test that WebStateDidStartLoading() is called.
+  EXPECT_FALSE(observer->did_start_loading_called());
+  web_state_->SetIsLoading(true);
+  EXPECT_TRUE(observer->did_start_loading_called());
+
+  // Test that WebStateDidStopLoading() is called.
+  EXPECT_FALSE(observer->did_stop_loading_called());
+  web_state_->SetIsLoading(false);
+  EXPECT_TRUE(observer->did_stop_loading_called());
+}
+
+// Verifies that policy deciders are correctly called by the web state.
+TEST_F(WebStateTest, PolicyDeciderTest) {
+  MockWebStatePolicyDecider decider(web_state_.get());
+  MockWebStatePolicyDecider decider2(web_state_.get());
+  EXPECT_EQ(web_state_.get(), decider.web_state());
+
+  // Test that ShouldAllowRequest() is called.
+  EXPECT_CALL(decider, ShouldAllowRequest(_)).Times(1).WillOnce(Return(true));
+  EXPECT_CALL(decider2, ShouldAllowRequest(_)).Times(1).WillOnce(Return(true));
+  EXPECT_TRUE(web_state_->ShouldAllowRequest(nil));
+
+  // Test that ShouldAllowRequest() is stopping on negative answer. Only one
+  // one the decider should be called.
+  {
+    bool decider_called = false;
+    bool decider2_called = false;
+    EXPECT_CALL(decider, ShouldAllowRequest(_))
+        .Times(AtMost(1))
+        .WillOnce(DoAll(Assign(&decider_called, true), Return(false)));
+    EXPECT_CALL(decider2, ShouldAllowRequest(_))
+        .Times(AtMost(1))
+        .WillOnce(DoAll(Assign(&decider2_called, true), Return(false)));
+    EXPECT_FALSE(web_state_->ShouldAllowRequest(nil));
+    EXPECT_FALSE(decider_called && decider2_called);
+  }
+
+  // Test that ShouldAllowResponse() is called.
+  EXPECT_CALL(decider, ShouldAllowResponse(_)).Times(1).WillOnce(Return(true));
+  EXPECT_CALL(decider2, ShouldAllowResponse(_)).Times(1).WillOnce(Return(true));
+  EXPECT_TRUE(web_state_->ShouldAllowResponse(nil));
+
+  // Test that ShouldAllowResponse() is stopping on negative answer. Only one
+  // one the decider should be called.
+  {
+    bool decider_called = false;
+    bool decider2_called = false;
+    EXPECT_CALL(decider, ShouldAllowResponse(_))
+        .Times(AtMost(1))
+        .WillOnce(DoAll(Assign(&decider_called, true), Return(false)));
+    EXPECT_CALL(decider2, ShouldAllowResponse(_))
+        .Times(AtMost(1))
+        .WillOnce(DoAll(Assign(&decider2_called, true), Return(false)));
+    EXPECT_FALSE(web_state_->ShouldAllowResponse(nil));
+    EXPECT_FALSE(decider_called && decider2_called);
+  }
+
+  // Test that WebStateDestroyed() is called.
+  EXPECT_CALL(decider, WebStateDestroyed()).Times(1);
+  EXPECT_CALL(decider2, WebStateDestroyed()).Times(1);
+  web_state_.reset();
+  EXPECT_EQ(nullptr, decider.web_state());
 }
 
 // Tests that script command callbacks are called correctly.

@@ -10,11 +10,18 @@
 #include "base/memory/ref_counted.h"
 #include "ios/web/public/browser_state.h"
 
-class HostContentSettingsMap;
 class PrefService;
 
 namespace base {
 class SequencedTaskRunner;
+}
+
+namespace syncable_prefs {
+class PrefServiceSyncable;
+}
+
+namespace web {
+class WebUIIOS;
 }
 
 namespace ios {
@@ -27,6 +34,9 @@ class ChromeBrowserState : public web::BrowserState {
   // Returns the ChromeBrowserState corresponding to the given BrowserState.
   static ChromeBrowserState* FromBrowserState(BrowserState* browser_state);
 
+  // Returns the ChromeBrowserState corresponding to the given WebUIIOS.
+  static ChromeBrowserState* FromWebUIIOS(web::WebUIIOS* web_ui);
+
   // Returns sequenced task runner where browser state dependent I/O
   // operations should be performed.
   virtual scoped_refptr<base::SequencedTaskRunner> GetIOTaskRunner() = 0;
@@ -34,6 +44,12 @@ class ChromeBrowserState : public web::BrowserState {
   // Returns the original "recording" ChromeBrowserState. This method returns
   // |this| if the ChromeBrowserState is not incognito.
   virtual ChromeBrowserState* GetOriginalChromeBrowserState() = 0;
+
+  // Returns true if the ChromeBrowserState is off-the-record or if the
+  // associated off-the-record browser state has been created.
+  // Calling this method does not create the off-the-record browser state if it
+  // does not already exist.
+  virtual bool HasOffTheRecordChromeBrowserState() const = 0;
 
   // Returns the incognito version of this ChromeBrowserState. The returned
   // ChromeBrowserState instance is owned by this ChromeBrowserState instance.
@@ -48,8 +64,9 @@ class ChromeBrowserState : public web::BrowserState {
   // Retrieves a pointer to the PrefService that manages the preferences.
   virtual PrefService* GetPrefs() = 0;
 
-  // Returns the Hostname <-> Content settings map for the ChromeBrowserState.
-  virtual HostContentSettingsMap* GetHostContentSettingsMap() = 0;
+  // Retrieves a pointer to the PrefService that manages the preferences as
+  // a syncable_prefs::PrefServiceSyncable.
+  virtual syncable_prefs::PrefServiceSyncable* GetSyncablePrefs() = 0;
 
  protected:
   ChromeBrowserState() {}

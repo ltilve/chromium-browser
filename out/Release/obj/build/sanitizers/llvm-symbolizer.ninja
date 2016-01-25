@@ -1,0 +1,2 @@
+build llvm-symbolizer: copy $
+    ../../third_party/llvm-build/Release+Asserts/bin/llvm-symbolizer

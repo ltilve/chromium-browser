@@ -7,16 +7,23 @@
 #include "base/basictypes.h"
 #include "base/bind.h"
 #include "base/bind_helpers.h"
+#include "base/command_line.h"
+#include "base/metrics/histogram_macros.h"
+#include "base/metrics/sparse_histogram.h"
 #include "base/prefs/pref_service.h"
 #include "base/strings/string16.h"
 #include "base/values.h"
 #include "chrome/app/chrome_command_ids.h"
 #include "chrome/browser/browser_process.h"
+#include "chrome/browser/browsing_data/browsing_data_counter.h"
 #include "chrome/browser/browsing_data/browsing_data_helper.h"
 #include "chrome/browser/browsing_data/browsing_data_remover.h"
+#include "chrome/browser/browsing_data/passwords_counter.h"
 #include "chrome/browser/prefs/incognito_mode_prefs.h"
 #include "chrome/browser/profiles/profile.h"
+#include "chrome/browser/sync/profile_sync_service_factory.h"
 #include "chrome/browser/ui/accelerator_utils.h"
+#include "chrome/common/chrome_switches.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/grit/generated_resources.h"
 #include "chrome/grit/locale_settings.h"
@@ -28,19 +35,34 @@
 #include "ui/events/keycodes/keyboard_codes.h"
 
 namespace {
+
 const char kClearBrowsingDataLearnMoreUrl[] =
     "https://support.google.com/chrome/?p=settings_clear_browsing_data";
+
+bool AreCountersEnabled() {
+  return base::CommandLine::ForCurrentProcess()->HasSwitch(
+      switches::kEnableClearBrowsingDataCounters);
 }
+
+bool IsSupportStringSimplified() {
+  return base::CommandLine::ForCurrentProcess()->HasSwitch(
+      switches::kSimpleClearBrowsingDataSupportString);
+}
+
+}  // namespace
 
 namespace options {
 
 ClearBrowserDataHandler::ClearBrowserDataHandler()
-    : remover_(NULL) {
+    : remover_(nullptr),
+      sync_service_(nullptr) {
 }
 
 ClearBrowserDataHandler::~ClearBrowserDataHandler() {
   if (remover_)
     remover_->RemoveObserver(this);
+  if (sync_service_)
+    sync_service_->RemoveObserver(this);
 }
 
 void ClearBrowserDataHandler::InitializeHandler() {
@@ -53,15 +75,36 @@ void ClearBrowserDataHandler::InitializeHandler() {
       prefs,
       base::Bind(&ClearBrowserDataHandler::OnBrowsingHistoryPrefChanged,
                  base::Unretained(this)));
+
+  if (AreCountersEnabled()) {
+    AddCounter(
+        make_scoped_ptr(new PasswordsCounter()), IDS_DEL_PASSWORDS_COUNTER);
+    // TODO(msramek): Add counters for browsing history and cache.
+  }
+
+  if (IsSupportStringSimplified()) {
+    sync_service_ =
+        ProfileSyncServiceFactory::GetForProfile(Profile::FromWebUI(web_ui()));
+    if (sync_service_)
+      sync_service_->AddObserver(this);
+  }
 }
 
 void ClearBrowserDataHandler::InitializePage() {
+  web_ui()->CallJavascriptFunction(
+      "ClearBrowserDataOverlay.createFooter",
+      base::FundamentalValue(IsSupportStringSimplified()),
+      base::FundamentalValue(sync_service_ && sync_service_->IsSyncActive()));
   UpdateInfoBannerVisibility();
   OnBrowsingHistoryPrefChanged();
   bool removal_in_progress = !!remover_;
   web_ui()->CallJavascriptFunction("ClearBrowserDataOverlay.setClearing",
                                    base::FundamentalValue(removal_in_progress));
 
+  for (BrowsingDataCounter* counter : counters_) {
+    DCHECK(AreCountersEnabled());
+    counter->Restart();
+  }
   web_ui()->CallJavascriptFunction(
       "ClearBrowserDataOverlay.markInitializationComplete");
 }
@@ -95,8 +138,10 @@ void ClearBrowserDataHandler::GetLocalizedValues(
 
   static OptionsStringResource resources[] = {
     { "clearBrowserDataLabel", IDS_CLEAR_BROWSING_DATA_LABEL },
-    { "contentSettingsAndSearchEnginesRemain",
-      IDS_CLEAR_BROWSING_DATA_SOME_STUFF_REMAINS },
+    { "clearBrowserDataSyncWarning", IDS_CLEAR_BROWSING_DATA_SYNCED_DELETION },
+    { "clearBrowserDataSupportString", IsSupportStringSimplified()
+        ? IDS_CLEAR_BROWSING_DATA_SOME_STUFF_REMAINS_SIMPLE
+        : IDS_CLEAR_BROWSING_DATA_SOME_STUFF_REMAINS },
     { "deleteBrowsingHistoryCheckbox", IDS_DEL_BROWSING_HISTORY_CHKBOX },
     { "deleteDownloadHistoryCheckbox", IDS_DEL_DOWNLOAD_HISTORY_CHKBOX },
     { "deleteCacheCheckbox", IDS_DEL_CACHE_CHKBOX },
@@ -197,6 +242,41 @@ void ClearBrowserDataHandler::HandleClearBrowserData(
     origin_mask |= BrowsingDataHelper::PROTECTED_WEB;
   }
 
+  // Record the deletion of cookies and cache.
+  BrowsingDataRemover::CookieOrCacheDeletionChoice choice =
+      BrowsingDataRemover::NEITHER_COOKIES_NOR_CACHE;
+  if (prefs->GetBoolean(prefs::kDeleteCookies)) {
+    choice = prefs->GetBoolean(prefs::kDeleteCache)
+        ? BrowsingDataRemover::BOTH_COOKIES_AND_CACHE
+        : BrowsingDataRemover::ONLY_COOKIES;
+  } else if (prefs->GetBoolean(prefs::kDeleteCache)) {
+    choice = BrowsingDataRemover::ONLY_CACHE;
+  }
+  UMA_HISTOGRAM_ENUMERATION(
+      "History.ClearBrowsingData.UserDeletedCookieOrCacheFromDialog",
+      choice, BrowsingDataRemover::MAX_CHOICE_VALUE);
+
+  // Record the circumstances under which passwords are deleted.
+  if (prefs->GetBoolean(prefs::kDeletePasswords)) {
+    static const char* other_types[] = {
+        prefs::kDeleteBrowsingHistory,
+        prefs::kDeleteDownloadHistory,
+        prefs::kDeleteCache,
+        prefs::kDeleteCookies,
+        prefs::kDeleteFormData,
+        prefs::kDeleteHostedAppsData,
+        prefs::kDeauthorizeContentLicenses,
+    };
+    static size_t num_other_types = arraysize(other_types);
+    int checked_other_types = std::count_if(
+        other_types,
+        other_types + num_other_types,
+        [prefs](const std::string& pref) { return prefs->GetBoolean(pref); });
+    UMA_HISTOGRAM_SPARSE_SLOWLY(
+        "History.ClearBrowsingData.PasswordsDeletion.AdditionalDatatypesCount",
+        checked_other_types);
+  }
+
   // BrowsingDataRemover deletes itself when done.
   int period_selected = prefs->GetInteger(prefs::kDeleteTimePeriod);
   remover_ = BrowsingDataRemover::CreateForPeriod(profile,
@@ -222,6 +302,40 @@ void ClearBrowserDataHandler::OnBrowsingHistoryPrefChanged() {
   web_ui()->CallJavascriptFunction(
       "ClearBrowserDataOverlay.setAllowDeletingHistory",
       base::FundamentalValue(*allow_deleting_browser_history_));
+}
+
+void ClearBrowserDataHandler::AddCounter(
+    scoped_ptr<BrowsingDataCounter> counter, int text_grd_id) {
+  DCHECK(AreCountersEnabled());
+
+  counter->Init(
+      Profile::FromWebUI(web_ui()),
+      base::Bind(&ClearBrowserDataHandler::UpdateCounterText,
+                 base::Unretained(this),
+                 counter->GetPrefName(),
+                 text_grd_id));
+  counters_.push_back(counter.Pass());
+}
+
+void ClearBrowserDataHandler::UpdateCounterText(const std::string& pref_name,
+                                                int text_grd_id,
+                                                bool finished,
+                                                uint32 count) {
+  DCHECK(AreCountersEnabled());
+  base::string16 text = finished
+      ? l10n_util::GetPluralStringFUTF16(text_grd_id, count)
+      : l10n_util::GetStringUTF16(IDS_CLEAR_BROWSING_DATA_CALCULATING);
+
+  web_ui()->CallJavascriptFunction(
+      "ClearBrowserDataOverlay.updateCounter",
+      base::StringValue(pref_name),
+      base::StringValue(text));
+}
+
+void ClearBrowserDataHandler::OnStateChanged() {
+  web_ui()->CallJavascriptFunction(
+      "ClearBrowserDataOverlay.updateSyncWarning",
+      base::FundamentalValue(sync_service_ && sync_service_->IsSyncActive()));
 }
 
 }  // namespace options

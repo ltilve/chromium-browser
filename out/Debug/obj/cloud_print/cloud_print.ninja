@@ -1,0 +1,13 @@
+build obj/cloud_print/cloud_print.actions_depends.stamp: stamp $
+    obj/cloud_print/gcp20/prototype/libgcp20_device_lib.a gcp20_device $
+    gcp20_device_unittests $
+    obj/cloud_print/service/service_resources.actions_rules_copies.stamp $
+    obj/cloud_print/service/libcloud_print_service_lib.a
+
+build obj/cloud_print/cloud_print.compile_depends.stamp: stamp $
+    gen/cloud_print/version.h $
+    obj/cloud_print/gcp20/prototype/gcp20_device.compile_depends.stamp $
+    obj/cloud_print/gcp20/prototype/gcp20_device_unittests.compile_depends.stamp $
+    obj/cloud_print/service/service_resources.actions_rules_copies.stamp $
+    obj/cloud_print/service/service_resources.actions_rules_copies.stamp
+

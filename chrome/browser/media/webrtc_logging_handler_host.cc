@@ -22,10 +22,11 @@
 #include "chrome/browser/media/webrtc_log_uploader.h"
 #include "chrome/browser/media/webrtc_rtp_dump_handler.h"
 #include "chrome/browser/profiles/profile.h"
+#include "chrome/common/channel_info.h"
 #include "chrome/common/chrome_switches.h"
-#include "chrome/common/chrome_version_info.h"
 #include "chrome/common/media/webrtc_logging_messages.h"
 #include "chromeos/settings/cros_settings_names.h"
+#include "components/version_info/version_info.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/content_browser_client.h"
 #include "content/public/browser/gpu_data_manager.h"
@@ -573,9 +574,8 @@ void WebRtcLoggingHandlerHost::LogInitialInfoOnIOThread(
   }
 
   // Chrome version
-  chrome::VersionInfo version_info;
-  LogToCircularBuffer("Chrome version: " + version_info.Version() + " " +
-                      chrome::VersionInfo::GetVersionStringModifier());
+  LogToCircularBuffer("Chrome version: " + version_info::GetVersionNumber() +
+                      " " + chrome::GetChannelString());
 
   // OS
   LogToCircularBuffer(base::SysInfo::OperatingSystemName() + " " +
@@ -615,8 +615,8 @@ void WebRtcLoggingHandlerHost::LogInitialInfoOnIOThread(
   LogToCircularBuffer(
       "Gpu: machine-model-name=" + gpu_info.machine_model_name +
       ", machine-model-version=" + gpu_info.machine_model_version +
-      ", vendor-id=" + IntToString(gpu_info.gpu.vendor_id) +
-      ", device-id=" + IntToString(gpu_info.gpu.device_id) +
+      ", vendor-id=" + base::UintToString(gpu_info.gpu.vendor_id) +
+      ", device-id=" + base::UintToString(gpu_info.gpu.device_id) +
       ", driver-vendor=" + gpu_info.driver_vendor +
       ", driver-version=" + gpu_info.driver_version);
   LogToCircularBuffer(
@@ -625,7 +625,7 @@ void WebRtcLoggingHandlerHost::LogInitialInfoOnIOThread(
       ", gl-version=" + gpu_info.gl_version);
 
   // Network interfaces
-  LogToCircularBuffer("Discovered " + IntToString(network_list.size()) +
+  LogToCircularBuffer("Discovered " + base::SizeTToString(network_list.size()) +
                       " network interfaces:");
   for (net::NetworkInterfaceList::const_iterator it = network_list.begin();
        it != network_list.end(); ++it) {

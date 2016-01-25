@@ -5,8 +5,6 @@
 #ifndef IOS_CHROME_BROWSER_EXPERIMENTAL_FLAGS_H_
 #define IOS_CHROME_BROWSER_EXPERIMENTAL_FLAGS_H_
 
-#include <stdlib.h>
-
 // This file can be empty. Its purpose is to contain the relatively short lived
 // declarations required for experimental flags.
 
@@ -15,18 +13,31 @@ namespace experimental_flags {
 // Whether background crash report upload should generate a local notification.
 bool IsAlertOnBackgroundUploadEnabled();
 
+// Whether external URL request blocking from subframes is enabled.
+bool IsExternalURLBlockingEnabled();
+
 // Whether the new bookmark collection experience is enabled.
 bool IsBookmarkCollectionEnabled();
 
 // Whether to extract salient images from pages at load time if bookmarked.
 bool IsBookmarkImageFetchingOnVisitEnabled();
 
+// Sets whether or not the field trial for WKWebView should be enabled. This
+// must be called at most once, and before IsWKWebViewEnabled. If this is never
+// called, IsWKWebViewEnabled will assume ineligibility.
+// Note that an explicit command line flag will ignore this setting; it controls
+// only whether the trial state will be checked in the default state.
+void SetWKWebViewTrialEligibility(bool eligible);
+
 // Whether the app uses WKWebView instead of UIWebView.
+// The returned value will not change within a given session.
 bool IsWKWebViewEnabled();
 
-// Returns the size in MB of the memory wedge to insert during a cold start.
-// If 0, no memory wedge should be inserted.
-size_t MemoryWedgeSizeInMB();
+// Whether keyboard commands are supported.
+bool AreKeyboardCommandsEnabled();
+
+// Whether viewing and copying passwords is enabled.
+bool IsViewCopyPasswordsEnabled();
 
 }  // namespace experimental_flags
 

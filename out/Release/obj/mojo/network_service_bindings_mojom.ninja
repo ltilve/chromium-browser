@@ -1,0 +1,272 @@
+build obj/mojo/network_service_bindings_mojom.actions_depends.stamp: stamp $
+    obj/base/libbase.a $
+    obj/third_party/mojo/mojo_interface_bindings_mojom.actions_rules_copies.stamp
+
+build obj/mojo/network_service_bindings_mojom.compile_depends.stamp: stamp $
+    gen/base/debug/debugging_flags.h $
+    obj/third_party/mojo/mojo_interface_bindings_mojom.actions_rules_copies.stamp
+
+rule $
+    network_service_bindings_mojom_target_network_service_bindings_mojom_mojom_bindings_stamp_87a84aebf8da578bf8bc85ad2d186b9b
+  command = cd ../../mojo; python ../build/rmdir_and_stamp.py $
+      ../out/Release/java_mojo/network_service_bindings_mojom/src $
+      ../out/Release/java_mojo/network_service_bindings_mojom/network_service_bindings_mojom.stamp
+  description = ACTION network_service_bindings_mojom: $
+      network_service_bindings_mojom_mojom_bindings_stamp_87a84aebf8da578bf8bc85ad2d186b9b
+  restat = 1
+
+build $
+    java_mojo/network_service_bindings_mojom/network_service_bindings_mojom.stamp: $
+    network_service_bindings_mojom_target_network_service_bindings_mojom_mojom_bindings_stamp_87a84aebf8da578bf8bc85ad2d186b9b $
+    ../../mojo/services/network/public/interfaces/cookie_store.mojom $
+    ../../mojo/services/network/public/interfaces/http_connection.mojom $
+    ../../mojo/services/network/public/interfaces/http_message.mojom $
+    ../../mojo/services/network/public/interfaces/http_server.mojom $
+    ../../mojo/services/network/public/interfaces/net_address.mojom $
+    ../../mojo/services/network/public/interfaces/network_error.mojom $
+    ../../mojo/services/network/public/interfaces/network_service.mojom $
+    ../../mojo/services/network/public/interfaces/tcp_bound_socket.mojom $
+    ../../mojo/services/network/public/interfaces/tcp_connected_socket.mojom $
+    ../../mojo/services/network/public/interfaces/tcp_server_socket.mojom $
+    ../../mojo/services/network/public/interfaces/udp_socket.mojom $
+    ../../mojo/services/network/public/interfaces/url_loader.mojom $
+    ../../mojo/services/network/public/interfaces/url_loader_factory.mojom $
+    ../../mojo/services/network/public/interfaces/web_socket.mojom $
+    ../../mojo/services/network/public/interfaces/web_socket_factory.mojom $
+    || obj/mojo/network_service_bindings_mojom.actions_depends.stamp
+
+rule $
+    network_service_bindings_mojom_target_network_service_bindings_mojom_mojom_bindings_generator_87a84aebf8da578bf8bc85ad2d186b9b
+  command = cd ../../mojo; python $
+      ../mojo/public/tools/bindings/mojom_bindings_generator.py $
+      services/network/public/interfaces/cookie_store.mojom $
+      services/network/public/interfaces/http_connection.mojom $
+      services/network/public/interfaces/http_message.mojom $
+      services/network/public/interfaces/http_server.mojom $
+      services/network/public/interfaces/net_address.mojom $
+      services/network/public/interfaces/network_error.mojom $
+      services/network/public/interfaces/network_service.mojom $
+      services/network/public/interfaces/tcp_bound_socket.mojom $
+      services/network/public/interfaces/tcp_connected_socket.mojom $
+      services/network/public/interfaces/tcp_server_socket.mojom $
+      services/network/public/interfaces/udp_socket.mojom $
+      services/network/public/interfaces/url_loader.mojom $
+      services/network/public/interfaces/url_loader_factory.mojom $
+      services/network/public/interfaces/web_socket.mojom $
+      services/network/public/interfaces/web_socket_factory.mojom $
+      --use_bundled_pylibs -d .. -I.. -I../mojo/services -I../mojo/services $
+      -o ../out/Release/gen $
+      "--java_output_directory=../out/Release/java_mojo/network_service_bindings_mojom/src"
+  description = ACTION Generating Mojo bindings from $
+      services/network/public/interfaces/cookie_store.mojom $
+      services/network/public/interfaces/http_connection.mojom $
+      services/network/public/interfaces/http_message.mojom $
+      services/network/public/interfaces/http_server.mojom $
+      services/network/public/interfaces/net_address.mojom $
+      services/network/public/interfaces/network_error.mojom $
+      services/network/public/interfaces/network_service.mojom $
+      services/network/public/interfaces/tcp_bound_socket.mojom $
+      services/network/public/interfaces/tcp_connected_socket.mojom $
+      services/network/public/interfaces/tcp_server_socket.mojom $
+      services/network/public/interfaces/udp_socket.mojom $
+      services/network/public/interfaces/url_loader.mojom $
+      services/network/public/interfaces/url_loader_factory.mojom $
+      services/network/public/interfaces/web_socket.mojom $
+      services/network/public/interfaces/web_socket_factory.mojom
+  restat = 1
+
+build gen/mojo/services/network/public/interfaces/cookie_store.mojom.cc $
+    gen/mojo/services/network/public/interfaces/cookie_store.mojom.h $
+    gen/mojo/services/network/public/interfaces/cookie_store.mojom-internal.h $
+    gen/mojo/services/network/public/interfaces/cookie_store.mojom.js $
+    gen/mojo/services/network/public/interfaces/http_connection.mojom.cc $
+    gen/mojo/services/network/public/interfaces/http_connection.mojom.h $
+    gen/mojo/services/network/public/interfaces/http_connection.mojom-internal.h $
+    gen/mojo/services/network/public/interfaces/http_connection.mojom.js $
+    gen/mojo/services/network/public/interfaces/http_message.mojom.cc $
+    gen/mojo/services/network/public/interfaces/http_message.mojom.h $
+    gen/mojo/services/network/public/interfaces/http_message.mojom-internal.h $
+    gen/mojo/services/network/public/interfaces/http_message.mojom.js $
+    gen/mojo/services/network/public/interfaces/http_server.mojom.cc $
+    gen/mojo/services/network/public/interfaces/http_server.mojom.h $
+    gen/mojo/services/network/public/interfaces/http_server.mojom-internal.h $
+    gen/mojo/services/network/public/interfaces/http_server.mojom.js $
+    gen/mojo/services/network/public/interfaces/net_address.mojom.cc $
+    gen/mojo/services/network/public/interfaces/net_address.mojom.h $
+    gen/mojo/services/network/public/interfaces/net_address.mojom-internal.h $
+    gen/mojo/services/network/public/interfaces/net_address.mojom.js $
+    gen/mojo/services/network/public/interfaces/network_error.mojom.cc $
+    gen/mojo/services/network/public/interfaces/network_error.mojom.h $
+    gen/mojo/services/network/public/interfaces/network_error.mojom-internal.h $
+    gen/mojo/services/network/public/interfaces/network_error.mojom.js $
+    gen/mojo/services/network/public/interfaces/network_service.mojom.cc $
+    gen/mojo/services/network/public/interfaces/network_service.mojom.h $
+    gen/mojo/services/network/public/interfaces/network_service.mojom-internal.h $
+    gen/mojo/services/network/public/interfaces/network_service.mojom.js $
+    gen/mojo/services/network/public/interfaces/tcp_bound_socket.mojom.cc $
+    gen/mojo/services/network/public/interfaces/tcp_bound_socket.mojom.h $
+    gen/mojo/services/network/public/interfaces/tcp_bound_socket.mojom-internal.h $
+    gen/mojo/services/network/public/interfaces/tcp_bound_socket.mojom.js $
+    gen/mojo/services/network/public/interfaces/tcp_connected_socket.mojom.cc $
+    gen/mojo/services/network/public/interfaces/tcp_connected_socket.mojom.h $
+    gen/mojo/services/network/public/interfaces/tcp_connected_socket.mojom-internal.h $
+    gen/mojo/services/network/public/interfaces/tcp_connected_socket.mojom.js $
+    gen/mojo/services/network/public/interfaces/tcp_server_socket.mojom.cc $
+    gen/mojo/services/network/public/interfaces/tcp_server_socket.mojom.h $
+    gen/mojo/services/network/public/interfaces/tcp_server_socket.mojom-internal.h $
+    gen/mojo/services/network/public/interfaces/tcp_server_socket.mojom.js $
+    gen/mojo/services/network/public/interfaces/udp_socket.mojom.cc $
+    gen/mojo/services/network/public/interfaces/udp_socket.mojom.h $
+    gen/mojo/services/network/public/interfaces/udp_socket.mojom-internal.h $
+    gen/mojo/services/network/public/interfaces/udp_socket.mojom.js $
+    gen/mojo/services/network/public/interfaces/url_loader.mojom.cc $
+    gen/mojo/services/network/public/interfaces/url_loader.mojom.h $
+    gen/mojo/services/network/public/interfaces/url_loader.mojom-internal.h $
+    gen/mojo/services/network/public/interfaces/url_loader.mojom.js $
+    gen/mojo/services/network/public/interfaces/url_loader_factory.mojom.cc $
+    gen/mojo/services/network/public/interfaces/url_loader_factory.mojom.h $
+    gen/mojo/services/network/public/interfaces/url_loader_factory.mojom-internal.h $
+    gen/mojo/services/network/public/interfaces/url_loader_factory.mojom.js $
+    gen/mojo/services/network/public/interfaces/web_socket.mojom.cc $
+    gen/mojo/services/network/public/interfaces/web_socket.mojom.h $
+    gen/mojo/services/network/public/interfaces/web_socket.mojom-internal.h $
+    gen/mojo/services/network/public/interfaces/web_socket.mojom.js $
+    gen/mojo/services/network/public/interfaces/web_socket_factory.mojom.cc $
+    gen/mojo/services/network/public/interfaces/web_socket_factory.mojom.h $
+    gen/mojo/services/network/public/interfaces/web_socket_factory.mojom-internal.h $
+    gen/mojo/services/network/public/interfaces/web_socket_factory.mojom.js: $
+    network_service_bindings_mojom_target_network_service_bindings_mojom_mojom_bindings_generator_87a84aebf8da578bf8bc85ad2d186b9b $
+    ../../mojo/public/tools/bindings/mojom_bindings_generator.py $
+    ../../mojo/public/tools/bindings/generators/cpp_templates/enum_macros.tmpl $
+    ../../mojo/public/tools/bindings/generators/cpp_templates/interface_declaration.tmpl $
+    ../../mojo/public/tools/bindings/generators/cpp_templates/interface_definition.tmpl $
+    ../../mojo/public/tools/bindings/generators/cpp_templates/interface_macros.tmpl $
+    ../../mojo/public/tools/bindings/generators/cpp_templates/interface_proxy_declaration.tmpl $
+    ../../mojo/public/tools/bindings/generators/cpp_templates/interface_request_validator_declaration.tmpl $
+    ../../mojo/public/tools/bindings/generators/cpp_templates/interface_response_validator_declaration.tmpl $
+    ../../mojo/public/tools/bindings/generators/cpp_templates/interface_stub_declaration.tmpl $
+    ../../mojo/public/tools/bindings/generators/cpp_templates/module.cc.tmpl $
+    ../../mojo/public/tools/bindings/generators/cpp_templates/module.h.tmpl $
+    ../../mojo/public/tools/bindings/generators/cpp_templates/module-internal.h.tmpl $
+    ../../mojo/public/tools/bindings/generators/cpp_templates/struct_declaration.tmpl $
+    ../../mojo/public/tools/bindings/generators/cpp_templates/struct_definition.tmpl $
+    ../../mojo/public/tools/bindings/generators/cpp_templates/struct_macros.tmpl $
+    ../../mojo/public/tools/bindings/generators/cpp_templates/struct_serialization_definition.tmpl $
+    ../../mojo/public/tools/bindings/generators/cpp_templates/wrapper_class_declaration.tmpl $
+    ../../mojo/public/tools/bindings/generators/cpp_templates/wrapper_class_definition.tmpl $
+    ../../mojo/public/tools/bindings/generators/java_templates/constant_definition.tmpl $
+    ../../mojo/public/tools/bindings/generators/java_templates/constants.java.tmpl $
+    ../../mojo/public/tools/bindings/generators/java_templates/data_types_definition.tmpl $
+    ../../mojo/public/tools/bindings/generators/java_templates/enum_definition.tmpl $
+    ../../mojo/public/tools/bindings/generators/java_templates/enum.java.tmpl $
+    ../../mojo/public/tools/bindings/generators/java_templates/header.java.tmpl $
+    ../../mojo/public/tools/bindings/generators/java_templates/interface_definition.tmpl $
+    ../../mojo/public/tools/bindings/generators/java_templates/interface_internal.java.tmpl $
+    ../../mojo/public/tools/bindings/generators/java_templates/interface.java.tmpl $
+    ../../mojo/public/tools/bindings/generators/java_templates/struct.java.tmpl $
+    ../../mojo/public/tools/bindings/generators/java_templates/union.java.tmpl $
+    ../../mojo/public/tools/bindings/generators/js_templates/enum_definition.tmpl $
+    ../../mojo/public/tools/bindings/generators/js_templates/interface_definition.tmpl $
+    ../../mojo/public/tools/bindings/generators/js_templates/module_definition.tmpl $
+    ../../mojo/public/tools/bindings/generators/js_templates/module.amd.tmpl $
+    ../../mojo/public/tools/bindings/generators/js_templates/struct_definition.tmpl $
+    ../../mojo/public/tools/bindings/generators/js_templates/union_definition.tmpl $
+    ../../mojo/public/tools/bindings/generators/js_templates/validation_macros.tmpl $
+    ../../mojo/public/tools/bindings/generators/mojom_cpp_generator.py $
+    ../../mojo/public/tools/bindings/generators/mojom_java_generator.py $
+    ../../mojo/public/tools/bindings/generators/mojom_js_generator.py $
+    ../../mojo/public/tools/bindings/pylib/mojom/__init__.py $
+    ../../mojo/public/tools/bindings/pylib/mojom/error.py $
+    ../../mojo/public/tools/bindings/pylib/mojom/generate/__init__.py $
+    ../../mojo/public/tools/bindings/pylib/mojom/generate/data.py $
+    ../../mojo/public/tools/bindings/pylib/mojom/generate/generator.py $
+    ../../mojo/public/tools/bindings/pylib/mojom/generate/module.py $
+    ../../mojo/public/tools/bindings/pylib/mojom/generate/pack.py $
+    ../../mojo/public/tools/bindings/pylib/mojom/generate/template_expander.py $
+    ../../mojo/public/tools/bindings/pylib/mojom/parse/__init__.py $
+    ../../mojo/public/tools/bindings/pylib/mojom/parse/ast.py $
+    ../../mojo/public/tools/bindings/pylib/mojom/parse/lexer.py $
+    ../../mojo/public/tools/bindings/pylib/mojom/parse/parser.py $
+    ../../mojo/public/tools/bindings/pylib/mojom/parse/translate.py $
+    ../../mojo/services/network/public/interfaces/cookie_store.mojom $
+    ../../mojo/services/network/public/interfaces/http_connection.mojom $
+    ../../mojo/services/network/public/interfaces/http_message.mojom $
+    ../../mojo/services/network/public/interfaces/http_server.mojom $
+    ../../mojo/services/network/public/interfaces/net_address.mojom $
+    ../../mojo/services/network/public/interfaces/network_error.mojom $
+    ../../mojo/services/network/public/interfaces/network_service.mojom $
+    ../../mojo/services/network/public/interfaces/tcp_bound_socket.mojom $
+    ../../mojo/services/network/public/interfaces/tcp_connected_socket.mojom $
+    ../../mojo/services/network/public/interfaces/tcp_server_socket.mojom $
+    ../../mojo/services/network/public/interfaces/udp_socket.mojom $
+    ../../mojo/services/network/public/interfaces/url_loader.mojom $
+    ../../mojo/services/network/public/interfaces/url_loader_factory.mojom $
+    ../../mojo/services/network/public/interfaces/web_socket.mojom $
+    ../../mojo/services/network/public/interfaces/web_socket_factory.mojom $
+    java_mojo/network_service_bindings_mojom/network_service_bindings_mojom.stamp $
+    || obj/mojo/network_service_bindings_mojom.actions_depends.stamp
+
+build obj/mojo/network_service_bindings_mojom.actions_rules_copies.stamp: $
+    stamp $
+    java_mojo/network_service_bindings_mojom/network_service_bindings_mojom.stamp $
+    gen/mojo/services/network/public/interfaces/cookie_store.mojom.cc $
+    gen/mojo/services/network/public/interfaces/cookie_store.mojom.h $
+    gen/mojo/services/network/public/interfaces/cookie_store.mojom-internal.h $
+    gen/mojo/services/network/public/interfaces/cookie_store.mojom.js $
+    gen/mojo/services/network/public/interfaces/http_connection.mojom.cc $
+    gen/mojo/services/network/public/interfaces/http_connection.mojom.h $
+    gen/mojo/services/network/public/interfaces/http_connection.mojom-internal.h $
+    gen/mojo/services/network/public/interfaces/http_connection.mojom.js $
+    gen/mojo/services/network/public/interfaces/http_message.mojom.cc $
+    gen/mojo/services/network/public/interfaces/http_message.mojom.h $
+    gen/mojo/services/network/public/interfaces/http_message.mojom-internal.h $
+    gen/mojo/services/network/public/interfaces/http_message.mojom.js $
+    gen/mojo/services/network/public/interfaces/http_server.mojom.cc $
+    gen/mojo/services/network/public/interfaces/http_server.mojom.h $
+    gen/mojo/services/network/public/interfaces/http_server.mojom-internal.h $
+    gen/mojo/services/network/public/interfaces/http_server.mojom.js $
+    gen/mojo/services/network/public/interfaces/net_address.mojom.cc $
+    gen/mojo/services/network/public/interfaces/net_address.mojom.h $
+    gen/mojo/services/network/public/interfaces/net_address.mojom-internal.h $
+    gen/mojo/services/network/public/interfaces/net_address.mojom.js $
+    gen/mojo/services/network/public/interfaces/network_error.mojom.cc $
+    gen/mojo/services/network/public/interfaces/network_error.mojom.h $
+    gen/mojo/services/network/public/interfaces/network_error.mojom-internal.h $
+    gen/mojo/services/network/public/interfaces/network_error.mojom.js $
+    gen/mojo/services/network/public/interfaces/network_service.mojom.cc $
+    gen/mojo/services/network/public/interfaces/network_service.mojom.h $
+    gen/mojo/services/network/public/interfaces/network_service.mojom-internal.h $
+    gen/mojo/services/network/public/interfaces/network_service.mojom.js $
+    gen/mojo/services/network/public/interfaces/tcp_bound_socket.mojom.cc $
+    gen/mojo/services/network/public/interfaces/tcp_bound_socket.mojom.h $
+    gen/mojo/services/network/public/interfaces/tcp_bound_socket.mojom-internal.h $
+    gen/mojo/services/network/public/interfaces/tcp_bound_socket.mojom.js $
+    gen/mojo/services/network/public/interfaces/tcp_connected_socket.mojom.cc $
+    gen/mojo/services/network/public/interfaces/tcp_connected_socket.mojom.h $
+    gen/mojo/services/network/public/interfaces/tcp_connected_socket.mojom-internal.h $
+    gen/mojo/services/network/public/interfaces/tcp_connected_socket.mojom.js $
+    gen/mojo/services/network/public/interfaces/tcp_server_socket.mojom.cc $
+    gen/mojo/services/network/public/interfaces/tcp_server_socket.mojom.h $
+    gen/mojo/services/network/public/interfaces/tcp_server_socket.mojom-internal.h $
+    gen/mojo/services/network/public/interfaces/tcp_server_socket.mojom.js $
+    gen/mojo/services/network/public/interfaces/udp_socket.mojom.cc $
+    gen/mojo/services/network/public/interfaces/udp_socket.mojom.h $
+    gen/mojo/services/network/public/interfaces/udp_socket.mojom-internal.h $
+    gen/mojo/services/network/public/interfaces/udp_socket.mojom.js $
+    gen/mojo/services/network/public/interfaces/url_loader.mojom.cc $
+    gen/mojo/services/network/public/interfaces/url_loader.mojom.h $
+    gen/mojo/services/network/public/interfaces/url_loader.mojom-internal.h $
+    gen/mojo/services/network/public/interfaces/url_loader.mojom.js $
+    gen/mojo/services/network/public/interfaces/url_loader_factory.mojom.cc $
+    gen/mojo/services/network/public/interfaces/url_loader_factory.mojom.h $
+    gen/mojo/services/network/public/interfaces/url_loader_factory.mojom-internal.h $
+    gen/mojo/services/network/public/interfaces/url_loader_factory.mojom.js $
+    gen/mojo/services/network/public/interfaces/web_socket.mojom.cc $
+    gen/mojo/services/network/public/interfaces/web_socket.mojom.h $
+    gen/mojo/services/network/public/interfaces/web_socket.mojom-internal.h $
+    gen/mojo/services/network/public/interfaces/web_socket.mojom.js $
+    gen/mojo/services/network/public/interfaces/web_socket_factory.mojom.cc $
+    gen/mojo/services/network/public/interfaces/web_socket_factory.mojom.h $
+    gen/mojo/services/network/public/interfaces/web_socket_factory.mojom-internal.h $
+    gen/mojo/services/network/public/interfaces/web_socket_factory.mojom.js
+

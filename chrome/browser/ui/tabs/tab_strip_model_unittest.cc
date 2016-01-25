@@ -19,6 +19,7 @@
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_tabstrip.h"
+#include "chrome/browser/ui/tabs/tab_discard_state.h"
 #include "chrome/browser/ui/tabs/tab_strip_model_delegate.h"
 #include "chrome/browser/ui/tabs/tab_strip_model_order_controller.h"
 #include "chrome/browser/ui/tabs/test_tab_strip_model_delegate.h"
@@ -26,18 +27,19 @@
 #include "chrome/common/url_constants.h"
 #include "chrome/test/base/chrome_render_view_host_test_harness.h"
 #include "chrome/test/base/testing_profile.h"
-#include "components/web_modal/popup_manager.h"
 #include "components/web_modal/web_contents_modal_dialog_manager.h"
 #include "content/public/browser/navigation_controller.h"
 #include "content/public/browser/navigation_entry.h"
 #include "content/public/browser/render_process_host.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/browser/web_contents_observer.h"
+#include "content/public/test/web_contents_tester.h"
 #include "extensions/common/extension.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 using content::SiteInstance;
 using content::WebContents;
+using content::WebContentsTester;
 using extensions::Extension;
 
 namespace {
@@ -246,11 +248,11 @@ class TabStripModelTest : public ChromeRenderViewHostTestHarness {
       model->SetTabPinned(i, true);
 
     ui::ListSelectionModel selection_model;
-    std::vector<std::string> selection;
-    base::SplitStringAlongWhitespace(selected_tabs, &selection);
-    for (size_t i = 0; i < selection.size(); ++i) {
+    for (const base::StringPiece& sel : base::SplitStringPiece(
+             selected_tabs, base::kWhitespaceASCII,
+             base::TRIM_WHITESPACE, base::SPLIT_WANT_NONEMPTY)) {
       int value;
-      ASSERT_TRUE(base::StringToInt(selection[i], &value));
+      ASSERT_TRUE(base::StringToInt(sel, &value));
       selection_model.AddIndexToSelection(value);
     }
     selection_model.set_active(selection_model.selected_indices()[0]);
@@ -2140,8 +2142,8 @@ TEST_F(TabStripModelTest, DiscardWebContentsAt) {
   // Discard one of the tabs.
   WebContents* null_contents1 = tabstrip.DiscardWebContentsAt(0);
   ASSERT_EQ(2, tabstrip.count());
-  EXPECT_TRUE(tabstrip.IsTabDiscarded(0));
-  EXPECT_FALSE(tabstrip.IsTabDiscarded(1));
+  EXPECT_TRUE(TabDiscardState::IsDiscarded(tabstrip.GetWebContentsAt(0)));
+  EXPECT_FALSE(TabDiscardState::IsDiscarded(tabstrip.GetWebContentsAt(1)));
   ASSERT_EQ(null_contents1, tabstrip.GetWebContentsAt(0));
   ASSERT_EQ(contents2, tabstrip.GetWebContentsAt(1));
   ASSERT_EQ(1, tabstrip_observer.GetStateCount());
@@ -2153,8 +2155,8 @@ TEST_F(TabStripModelTest, DiscardWebContentsAt) {
   // Discard the same tab again.
   WebContents* null_contents2 = tabstrip.DiscardWebContentsAt(0);
   ASSERT_EQ(2, tabstrip.count());
-  EXPECT_TRUE(tabstrip.IsTabDiscarded(0));
-  EXPECT_FALSE(tabstrip.IsTabDiscarded(1));
+  EXPECT_TRUE(TabDiscardState::IsDiscarded(tabstrip.GetWebContentsAt(0)));
+  EXPECT_FALSE(TabDiscardState::IsDiscarded(tabstrip.GetWebContentsAt(1)));
   ASSERT_EQ(null_contents2, tabstrip.GetWebContentsAt(0));
   ASSERT_EQ(contents2, tabstrip.GetWebContentsAt(1));
   ASSERT_EQ(1, tabstrip_observer.GetStateCount());
@@ -2166,14 +2168,63 @@ TEST_F(TabStripModelTest, DiscardWebContentsAt) {
   // Activating the tab should clear its discard state.
   tabstrip.ActivateTabAt(0, true /* user_gesture */);
   ASSERT_EQ(2, tabstrip.count());
-  EXPECT_FALSE(tabstrip.IsTabDiscarded(0));
-  EXPECT_FALSE(tabstrip.IsTabDiscarded(1));
+  EXPECT_FALSE(TabDiscardState::IsDiscarded(tabstrip.GetWebContentsAt(0)));
+  EXPECT_FALSE(TabDiscardState::IsDiscarded(tabstrip.GetWebContentsAt(1)));
 
   // Don't discard active tab.
   tabstrip.DiscardWebContentsAt(0);
   ASSERT_EQ(2, tabstrip.count());
-  EXPECT_FALSE(tabstrip.IsTabDiscarded(0));
-  EXPECT_FALSE(tabstrip.IsTabDiscarded(1));
+  EXPECT_FALSE(TabDiscardState::IsDiscarded(tabstrip.GetWebContentsAt(0)));
+  EXPECT_FALSE(TabDiscardState::IsDiscarded(tabstrip.GetWebContentsAt(1)));
+
+  tabstrip.CloseAllTabs();
+}
+
+// Makes sure that reloading a discarded tab without activating it unmarks the
+// tab as discarded so it won't reload on activation.
+TEST_F(TabStripModelTest, ReloadDiscardedTabContextMenu) {
+  TabStripDummyDelegate delegate;
+  TabStripModel tabstrip(&delegate, profile());
+
+  // Create 2 tabs because the active tab cannot be discarded.
+  tabstrip.AppendWebContents(CreateWebContents(), true);
+  content::WebContents* test_contents =
+      WebContentsTester::CreateTestWebContents(browser_context(), nullptr);
+  tabstrip.AppendWebContents(test_contents, false);  // Opened in background.
+
+  // Navigate to a web page. This is necessary to set a current entry in memory
+  // so the reload can happen.
+  WebContentsTester::For(test_contents)
+      ->NavigateAndCommit(GURL("chrome://newtab"));
+  EXPECT_FALSE(TabDiscardState::IsDiscarded(tabstrip.GetWebContentsAt(1)));
+
+  tabstrip.DiscardWebContentsAt(1);
+  EXPECT_TRUE(TabDiscardState::IsDiscarded(tabstrip.GetWebContentsAt(1)));
+
+  tabstrip.GetWebContentsAt(1)->GetController().Reload(false);
+  EXPECT_FALSE(TabDiscardState::IsDiscarded(tabstrip.GetWebContentsAt(1)));
+
+  tabstrip.CloseAllTabs();
+}
+
+// Makes sure that the last active time property is saved even though the tab is
+// discarded.
+TEST_F(TabStripModelTest, DiscardedTabKeepsLastActiveTime) {
+  TabStripDummyDelegate delegate;
+  TabStripModel tabstrip(&delegate, profile());
+
+  tabstrip.AppendWebContents(CreateWebContents(), true);
+  WebContents* test_contents = CreateWebContents();
+  tabstrip.AppendWebContents(test_contents, false);
+
+  // Simulate an old inactive tab about to get discarded.
+  base::TimeTicks new_last_active_time =
+      base::TimeTicks::Now() - base::TimeDelta::FromMinutes(35);
+  test_contents->SetLastActiveTime(new_last_active_time);
+  EXPECT_EQ(new_last_active_time, test_contents->GetLastActiveTime());
+
+  WebContents* null_contents = tabstrip.DiscardWebContentsAt(1);
+  EXPECT_EQ(new_last_active_time, null_contents->GetLastActiveTime());
 
   tabstrip.CloseAllTabs();
 }
@@ -2527,8 +2578,6 @@ TEST_F(TabStripModelTest, TabBlockedState) {
   // Setup a SingleWebContentsDialogManager for tab |contents2|.
   web_modal::WebContentsModalDialogManager* modal_dialog_manager =
       web_modal::WebContentsModalDialogManager::FromWebContents(contents2);
-  web_modal::PopupManager popup_manager(NULL);
-  popup_manager.RegisterWith(contents2);
 
   // Show a dialog that blocks tab |contents2|.
   // DummySingleWebContentsDialogManager doesn't care about the

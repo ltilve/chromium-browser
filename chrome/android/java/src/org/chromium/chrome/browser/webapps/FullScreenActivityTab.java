@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -19,15 +20,16 @@ import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeActivity;
 import org.chromium.chrome.browser.IntentHandler;
 import org.chromium.chrome.browser.ShortcutHelper;
-import org.chromium.chrome.browser.Tab;
 import org.chromium.chrome.browser.TabState;
-import org.chromium.chrome.browser.TabUma.TabCreationState;
 import org.chromium.chrome.browser.UrlUtilities;
 import org.chromium.chrome.browser.compositor.layouts.content.TabContentManager;
 import org.chromium.chrome.browser.contextmenu.ContextMenuHelper;
 import org.chromium.chrome.browser.contextmenu.ContextMenuParams;
 import org.chromium.chrome.browser.contextmenu.ContextMenuPopulator;
 import org.chromium.chrome.browser.tab.ChromeTab;
+import org.chromium.chrome.browser.tab.Tab;
+import org.chromium.chrome.browser.tab.TabUma.TabCreationState;
+import org.chromium.chrome.browser.tab.TabWebContentsDelegateAndroid;
 import org.chromium.chrome.browser.tabmodel.TabModel.TabLaunchType;
 import org.chromium.content_public.browser.LoadUrlParams;
 import org.chromium.content_public.browser.WebContents;
@@ -141,6 +143,9 @@ public class FullScreenActivityTab extends ChromeTab {
         File tabFile = getTabFile(activityDirectory, getId());
 
         FileOutputStream foutput = null;
+        // Temporarily allowing disk access while fixing. TODO: http://crbug.com/525781
+        StrictMode.ThreadPolicy oldPolicy = StrictMode.allowThreadDiskReads();
+        StrictMode.allowThreadDiskWrites();
         try {
             foutput = new FileOutputStream(tabFile);
             TabState.saveState(foutput, getState(), false);
@@ -150,6 +155,7 @@ public class FullScreenActivityTab extends ChromeTab {
             Log.e(TAG, "Failed to save out tab state.", exception);
         } finally {
             StreamUtil.closeQuietly(foutput);
+            StrictMode.setThreadPolicy(oldPolicy);
         }
     }
 
@@ -226,7 +232,7 @@ public class FullScreenActivityTab extends ChromeTab {
             @Override
             public boolean onItemSelected(ContextMenuHelper helper, ContextMenuParams params,
                     int itemId) {
-                if (itemId == org.chromium.chrome.R.id.contextmenu_copy_link_address_text) {
+                if (itemId == org.chromium.chrome.R.id.contextmenu_copy_link_address) {
                     String url = params.getUnfilteredLinkUrl();
                     mClipboard.setText(url, url);
                     return true;
@@ -269,7 +275,7 @@ public class FullScreenActivityTab extends ChromeTab {
             @Override
             public void buildContextMenu(ContextMenu menu, Context context,
                     ContextMenuParams params) {
-                menu.add(Menu.NONE, org.chromium.chrome.R.id.contextmenu_copy_link_address_text,
+                menu.add(Menu.NONE, org.chromium.chrome.R.id.contextmenu_copy_link_address,
                         Menu.NONE, org.chromium.chrome.R.string.contextmenu_copy_link_address);
 
                 String linkText = params.getLinkText();
@@ -303,31 +309,32 @@ public class FullScreenActivityTab extends ChromeTab {
 
     @Override
     protected FullScreenTabWebContentsDelegateAndroid createWebContentsDelegate() {
-        return new FullScreenTabWebContentsDelegateAndroid();
+        return new FullScreenTabWebContentsDelegateAndroid(this, mActivity);
     }
 
-    private class FullScreenTabWebContentsDelegateAndroid
-            extends TabChromeWebContentsDelegateAndroidImpl {
+    private class FullScreenTabWebContentsDelegateAndroid extends TabWebContentsDelegateAndroid {
+        public FullScreenTabWebContentsDelegateAndroid(Tab tab, ChromeActivity activity) {
+            super(tab, activity);
+        }
+
         @Override
         public void activateContents() {
             if (!(mActivity instanceof WebappActivity)) return;
 
-            WebappInfo webAppInfo = ((WebappActivity) mActivity).getWebappInfo();
-            String url = webAppInfo.uri().toString();
+            WebappInfo webappInfo = ((WebappActivity) mActivity).getWebappInfo();
+            String url = webappInfo.uri().toString();
 
+            // Create an Intent that will be fired toward the WebappLauncherActivity, which in turn
+            // will fire an Intent to launch the correct WebappActivity.  On L+ this could probably
+            // be changed to call AppTask.moveToFront(), but for backwards compatibility we relaunch
+            // it the hard way.
             Intent intent = new Intent();
             intent.setAction(WebappLauncherActivity.ACTION_START_WEBAPP);
             intent.setPackage(mActivity.getPackageName());
+            webappInfo.setWebappIntentExtras(intent);
 
-            intent.putExtra(ShortcutHelper.EXTRA_ICON, webAppInfo.getEncodedIcon());
-            intent.putExtra(ShortcutHelper.EXTRA_ID, webAppInfo.id());
-            intent.putExtra(ShortcutHelper.EXTRA_URL, url);
-            intent.putExtra(ShortcutHelper.EXTRA_TITLE, webAppInfo.title());
-            intent.putExtra(ShortcutHelper.EXTRA_ORIENTATION, webAppInfo.orientation());
             intent.putExtra(ShortcutHelper.EXTRA_MAC, ShortcutHelper.getEncodedMac(mActivity, url));
-            intent.putExtra(ShortcutHelper.EXTRA_SOURCE, webAppInfo.source());
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
             getApplicationContext().startActivity(intent);
         }
     }

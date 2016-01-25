@@ -30,28 +30,30 @@
       ],
     },
     {
-      'target_name': 'freetype',
+      'target_name': 'fx_freetype',
       'type': 'static_library',
       'defines': [
         'FT2_BUILD_LIBRARY',
       ],
       'include_dirs': [
          'freetype/include',
+         'freetype/include/freetype',
       ],
       'sources': [
-        'freetype/include/freetype.h',
+        'freetype/include/freetype/freetype.h',
+        'freetype/include/freetype/ftmm.h',
+        'freetype/include/freetype/ftotval.h',
+        'freetype/include/freetype/ftoutln.h',
+        'freetype/include/freetype/internal/freetype/ftobjs.h',
+        'freetype/include/freetype/internal/freetype/ftstream.h',
+        'freetype/include/freetype/internal/freetype/tttypes.h',
+        'freetype/include/freetype/tttables.h',
         'freetype/include/ft2build.h',
-        'freetype/include/ftmm.h',
-        'freetype/include/ftotval.h',
-        'freetype/include/ftoutln.h',
-        'freetype/include/tttables.h',
-        'freetype/include/internal/ftobjs.h',
-        'freetype/include/internal/ftstream.h',
-        'freetype/include/internal/tttypes.h',
         'freetype/src/cff/cffobjs.h',
         'freetype/src/cff/cfftypes.h',
         'freetype/src/cff/cff.c',
         'freetype/src/base/ftbase.c',
+        'freetype/src/base/ftbase.h',
         'freetype/src/base/ftbitmap.c',
         'freetype/src/base/ftglyph.c',
         'freetype/src/base/ftinit.c',
@@ -68,6 +70,13 @@
         'freetype/src/type1/type1.c',
         'freetype/src/cid/type1cid.c',
       ],
+      'variables': {
+        'clang_warning_flags': [
+          # open_face_PS_from_sfnt_stream() and open_face_from_buffer() in
+          # ftbase.h are unused.
+          '-Wno-unused-function',
+        ],
+      },
     },
     {
       'target_name': 'fx_agg',
@@ -95,6 +104,12 @@
           'cflags': [ '-Wno-extra', ],
         }],
       ],
+      'variables': {
+        'clang_warning_flags': [
+          # calc_butt_cap() in agg_vcgen_stroke.cpp is unused.
+          '-Wno-unused-function',
+        ],
+      },
     },
     {
       'target_name': 'fx_lcms2',
@@ -140,6 +155,8 @@
       'variables': {
         'clang_warning_flags': [
           '-Wno-missing-braces',
+          # FindPrev() in cmsplugin.c is unused.
+          '-Wno-unused-function',
         ],
       },
     },
@@ -265,11 +282,12 @@
         'base/logging.h',
         'base/macros.h',
         'base/nonstd_unique_ptr.h',
-        'base/template_util.h',
         'base/numerics/safe_conversions.h',
         'base/numerics/safe_conversions_impl.h',
         'base/numerics/safe_math.h',
         'base/numerics/safe_math_impl.h',
+        'base/stl_util.h',
+        'base/template_util.h',
       ],
     },
   ],

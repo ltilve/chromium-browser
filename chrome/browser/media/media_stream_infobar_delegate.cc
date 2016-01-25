@@ -13,6 +13,7 @@
 #include "components/google/core/browser/google_util.h"
 #include "components/infobars/core/infobar.h"
 #include "content/public/browser/web_contents.h"
+#include "content/public/common/origin_util.h"
 #include "grit/components_strings.h"
 #include "grit/theme_resources.h"
 #include "ui/base/l10n/l10n_util.h"
@@ -36,12 +37,7 @@ MediaStreamInfoBarDelegate::~MediaStreamInfoBarDelegate() {
 // static
 bool MediaStreamInfoBarDelegate::Create(
     content::WebContents* web_contents,
-    const content::MediaStreamRequest& request,
-    const content::MediaResponseCallback& callback) {
-  scoped_ptr<MediaStreamDevicesController> controller(
-      new MediaStreamDevicesController(web_contents, request, callback));
-  if (!controller->IsAskingForAudio() && !controller->IsAskingForVideo())
-    return false;
+    scoped_ptr<MediaStreamDevicesController> controller) {
 
   InfoBarService* infobar_service =
       InfoBarService::FromWebContents(web_contents);
@@ -87,7 +83,7 @@ MediaStreamInfoBarDelegate::GetInfoBarType() const {
   return PAGE_ACTION_TYPE;
 }
 
-int MediaStreamInfoBarDelegate::GetIconID() const {
+int MediaStreamInfoBarDelegate::GetIconId() const {
   return controller_->IsAskingForVideo() ? IDR_INFOBAR_MEDIA_STREAM_CAMERA
                                          : IDR_INFOBAR_MEDIA_STREAM_MIC;
 }
@@ -123,7 +119,7 @@ base::string16 MediaStreamInfoBarDelegate::GetButtonLabel(
 
 bool MediaStreamInfoBarDelegate::Accept() {
   GURL origin(controller_->GetSecurityOriginSpec());
-  if (origin.SchemeIsSecure()) {
+  if (content::IsOriginSecure(origin)) {
     UMA_HISTOGRAM_ENUMERATION("Media.DevicePermissionActions",
                               kAllowHttps, kPermissionActionsMax);
   } else {
@@ -142,17 +138,9 @@ bool MediaStreamInfoBarDelegate::Cancel() {
 }
 
 base::string16 MediaStreamInfoBarDelegate::GetLinkText() const {
-  return l10n_util::GetStringUTF16(IDS_LEARN_MORE);
+  return base::string16();
 }
 
-bool MediaStreamInfoBarDelegate::LinkClicked(
-    WindowOpenDisposition disposition) {
-  InfoBarService::WebContentsFromInfoBar(infobar())->OpenURL(
-      content::OpenURLParams(
-          GURL(chrome::kMediaAccessLearnMoreUrl),
-          content::Referrer(),
-          (disposition == CURRENT_TAB) ? NEW_FOREGROUND_TAB : disposition,
-          ui::PAGE_TRANSITION_LINK, false));
-
-  return false;  // Do not dismiss the info bar.
+GURL MediaStreamInfoBarDelegate::GetLinkURL() const {
+  return GURL(chrome::kMediaAccessLearnMoreUrl);
 }

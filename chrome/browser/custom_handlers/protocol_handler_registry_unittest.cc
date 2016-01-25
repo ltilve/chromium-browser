@@ -11,12 +11,12 @@
 #include "base/strings/utf_string_conversions.h"
 #include "base/synchronization/waitable_event.h"
 #include "chrome/browser/chrome_notification_types.h"
-#include "chrome/browser/prefs/pref_service_syncable.h"
 #include "chrome/common/custom_handlers/protocol_handler.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/test/base/testing_browser_process.h"
 #include "chrome/test/base/testing_profile.h"
 #include "components/pref_registry/pref_registry_syncable.h"
+#include "components/syncable_prefs/pref_service_syncable.h"
 #include "content/public/browser/notification_observer.h"
 #include "content/public/browser/notification_registrar.h"
 #include "content/public/browser/notification_source.h"
@@ -226,15 +226,24 @@ class FakeProtocolClientWorker
  private:
   ~FakeProtocolClientWorker() override {}
 
-  ShellIntegration::DefaultWebClientState CheckIsDefault() override {
-    if (force_failure_) {
-      return ShellIntegration::NOT_DEFAULT;
-    } else {
-      return ShellIntegration::IS_DEFAULT;
-    }
+  void CheckIsDefault() override {
+    ShellIntegration::DefaultWebClientState state =
+        ShellIntegration::IS_DEFAULT;
+    if (force_failure_)
+      state = ShellIntegration::NOT_DEFAULT;
+
+    BrowserThread::PostTask(
+        BrowserThread::UI, FROM_HERE,
+        base::Bind(&FakeProtocolClientWorker::OnCheckIsDefaultComplete, this,
+                   state));
   }
 
-  bool SetAsDefault(bool interactive_permitted) override { return true; }
+  void SetAsDefault(bool interactive_permitted) override {
+    BrowserThread::PostTask(
+        BrowserThread::UI, FROM_HERE,
+        base::Bind(&FakeProtocolClientWorker::OnSetAsDefaultAttemptComplete,
+                   this, AttemptResult::SUCCESS));
+  }
 
  private:
   bool force_failure_;

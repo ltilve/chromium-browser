@@ -17,10 +17,10 @@
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/media/webrtc_log_list.h"
 #include "chrome/browser/profiles/profile.h"
-#include "chrome/browser/upload_list.h"
-#include "chrome/common/chrome_version_info.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/grit/generated_resources.h"
+#include "components/upload_list/upload_list.h"
+#include "components/version_info/version_info.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/browser/web_ui.h"
 #include "content/public/browser/web_ui_data_source.h"
@@ -47,8 +47,6 @@ content::WebUIDataSource* CreateWebRtcLogsUIHTMLSource() {
                              IDS_WEBRTC_LOGS_LOG_HEADER_FORMAT);
   source->AddLocalizedString("webrtcLogLocalFileLabelFormat",
                              IDS_WEBRTC_LOGS_LOG_LOCAL_FILE_LABEL_FORMAT);
-  source->AddLocalizedString("webrtcLogLocalFileFormat",
-                             IDS_WEBRTC_LOGS_LOG_LOCAL_FILE_FORMAT);
   source->AddLocalizedString("noLocalLogFileMessage",
                              IDS_WEBRTC_LOGS_NO_LOCAL_LOG_FILE_MESSAGE);
   source->AddLocalizedString("webrtcLogUploadTimeFormat",
@@ -175,8 +173,7 @@ void WebRtcLogsDOMHandler::UpdateUI() {
     upload_list.Append(upload);
   }
 
-  const chrome::VersionInfo version_info;
-  base::StringValue version(version_info.Version());
+  base::StringValue version(version_info::GetVersionNumber());
 
   web_ui()->CallJavascriptFunction("updateWebRtcLogsList", upload_list,
                                    version);

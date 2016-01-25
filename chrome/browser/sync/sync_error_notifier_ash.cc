@@ -21,7 +21,6 @@
 #include "chrome/grit/chromium_strings.h"
 #include "chrome/grit/generated_resources.h"
 #include "grit/theme_resources.h"
-#include "third_party/WebKit/public/web/WebTextDirection.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/message_center/notification.h"
@@ -171,15 +170,12 @@ void SyncErrorNotifier::OnErrorChanged() {
   // Add a new notification.
   Notification notification(
       message_center::NOTIFICATION_TYPE_SIMPLE,
-      GURL(notification_id_),
       l10n_util::GetStringUTF16(IDS_SYNC_ERROR_BUBBLE_VIEW_TITLE),
       l10n_util::GetStringUTF16(IDS_SYNC_PASSPHRASE_ERROR_BUBBLE_VIEW_MESSAGE),
       ui::ResourceBundle::GetSharedInstance().GetImageNamed(
           IDR_NOTIFICATION_ALERT),
       notifier_id,
       base::string16(),  // display_source
-      notification_id_,
-      data,
-      delegate);
+      GURL(notification_id_), notification_id_, data, delegate);
   notification_ui_manager->Add(notification, profile_);
 }

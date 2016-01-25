@@ -1,0 +1,102 @@
+defines = -DV8_DEPRECATION_WARNINGS -DCLD_VERSION=2 -D_FILE_OFFSET_BITS=64 $
+    -DCHROMIUM_BUILD -DCR_CLANG_REVISION=255169-1 $
+    -DUI_COMPOSITOR_IMAGE_TRANSPORT -DUSE_AURA=1 -DUSE_ASH=1 -DUSE_PANGO=1 $
+    -DUSE_CAIRO=1 -DUSE_DEFAULT_RENDER_THEME=1 -DUSE_LIBJPEG_TURBO=1 $
+    -DUSE_X11=1 -DUSE_CLIPBOARD_AURAX11=1 -DENABLE_ONE_CLICK_SIGNIN $
+    -DENABLE_WEBRTC=1 -DENABLE_MEDIA_ROUTER=1 -DENABLE_PEPPER_CDMS $
+    -DENABLE_CONFIGURATION_POLICY -DENABLE_NOTIFICATIONS -DENABLE_HIDPI=1 $
+    -DENABLE_TOPCHROME_MD=1 -DUSE_UDEV -DDONT_EMBED_BUILD_METADATA $
+    -DFIELDTRIAL_TESTING_ENABLED -DENABLE_TASK_MANAGER=1 $
+    -DENABLE_EXTENSIONS=1 -DENABLE_PDF=1 -DENABLE_PLUGINS=1 $
+    -DENABLE_SESSION_SERVICE=1 -DENABLE_THEMES=1 -DENABLE_AUTOFILL_DIALOG=1 $
+    -DENABLE_BACKGROUND=1 -DENABLE_PRINTING=1 -DENABLE_BASIC_PRINTING=1 $
+    -DENABLE_PRINT_PREVIEW=1 -DENABLE_SPELLCHECK=1 $
+    -DENABLE_CAPTIVE_PORTAL_DETECTION=1 -DENABLE_APP_LIST=1 $
+    -DENABLE_SETTINGS_APP=1 -DENABLE_SUPERVISED_USERS=1 -DENABLE_MDNS=1 $
+    -DENABLE_SERVICE_DISCOVERY=1 -DV8_USE_EXTERNAL_STARTUP_DATA $
+    -DFULL_SAFE_BROWSING -DSAFE_BROWSING_CSD -DSAFE_BROWSING_DB_LOCAL $
+    -DUSE_LIBPCI=1 -DUSE_OPENSSL=1 -DUSE_GLIB=1 -DUSE_NSS_CERTS=1 $
+    -D__STDC_CONSTANT_MACROS -D__STDC_FORMAT_MACROS -DIPC_IMPLEMENTATION $
+    -DNDEBUG -DNVALGRIND -DDYNAMIC_ANNOTATIONS_ENABLED=0
+includes = -Igen -I../..
+cflags = -fstack-protector --param=ssp-buffer-size=4 -Werror -pthread $
+    -fno-strict-aliasing -Wall -Wno-unused-parameter $
+    -Wno-missing-field-initializers -fvisibility=hidden -pipe -fPIC $
+    -Wno-reserved-user-defined-literal -Xclang -load -Xclang $
+    /b/build/slave/publish_tarball/build/src/third_party/llvm-build/Release+Asserts/lib/libFindBadConstructs.so $
+    -Xclang -add-plugin -Xclang find-bad-constructs -Xclang $
+    -plugin-arg-find-bad-constructs -Xclang check-templates $
+    -fcolor-diagnostics $
+    -B/b/build/slave/publish_tarball/build/src/third_party/binutils/Linux_x64/Release/bin $
+    -Wheader-hygiene -Wno-char-subscripts $
+    -Wno-unneeded-internal-declaration -Wno-covered-switch-default $
+    -Wstring-conversion -Wno-c++11-narrowing -Wno-deprecated-register $
+    -Wno-inconsistent-missing-override -Wno-shift-negative-value $
+    -Wno-bitfield-width -pthread $
+    -I/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/include/glib-2.0 $
+    -I/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/lib/x86_64-linux-gnu/glib-2.0/include $
+    -m64 -march=x86-64 $
+    --sysroot=/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot $
+    -O2 -fno-ident -fdata-sections -ffunction-sections -funwind-tables
+cflags_c = 
+cflags_cc = -fno-exceptions -fno-rtti -fno-threadsafe-statics $
+    -fvisibility-inlines-hidden -Wsign-compare -std=gnu++11
+arflags = 
+
+build obj/ipc/ipc.attachment_broker.o: cxx ../../ipc/attachment_broker.cc
+build obj/ipc/ipc.attachment_broker_privileged.o: cxx $
+    ../../ipc/attachment_broker_privileged.cc
+build obj/ipc/ipc.attachment_broker_unprivileged.o: cxx $
+    ../../ipc/attachment_broker_unprivileged.cc
+build obj/ipc/ipc.brokerable_attachment.o: cxx $
+    ../../ipc/brokerable_attachment.cc
+build obj/ipc/ipc.ipc_channel.o: cxx ../../ipc/ipc_channel.cc
+build obj/ipc/ipc.ipc_channel_factory.o: cxx ../../ipc/ipc_channel_factory.cc
+build obj/ipc/ipc.ipc_channel_common.o: cxx ../../ipc/ipc_channel_common.cc
+build obj/ipc/ipc.ipc_channel_posix.o: cxx ../../ipc/ipc_channel_posix.cc
+build obj/ipc/ipc.ipc_channel_proxy.o: cxx ../../ipc/ipc_channel_proxy.cc
+build obj/ipc/ipc.ipc_channel_reader.o: cxx ../../ipc/ipc_channel_reader.cc
+build obj/ipc/ipc.ipc_endpoint.o: cxx ../../ipc/ipc_endpoint.cc
+build obj/ipc/ipc.ipc_logging.o: cxx ../../ipc/ipc_logging.cc
+build obj/ipc/ipc.ipc_message.o: cxx ../../ipc/ipc_message.cc
+build obj/ipc/ipc.ipc_message_attachment.o: cxx $
+    ../../ipc/ipc_message_attachment.cc
+build obj/ipc/ipc.ipc_message_attachment_set.o: cxx $
+    ../../ipc/ipc_message_attachment_set.cc
+build obj/ipc/ipc.ipc_message_generator.o: cxx $
+    ../../ipc/ipc_message_generator.cc
+build obj/ipc/ipc.ipc_message_utils.o: cxx ../../ipc/ipc_message_utils.cc
+build obj/ipc/ipc.ipc_platform_file.o: cxx ../../ipc/ipc_platform_file.cc
+build obj/ipc/ipc.ipc_platform_file_attachment_posix.o: cxx $
+    ../../ipc/ipc_platform_file_attachment_posix.cc
+build obj/ipc/ipc.ipc_switches.o: cxx ../../ipc/ipc_switches.cc
+build obj/ipc/ipc.ipc_sync_channel.o: cxx ../../ipc/ipc_sync_channel.cc
+build obj/ipc/ipc.ipc_sync_message.o: cxx ../../ipc/ipc_sync_message.cc
+build obj/ipc/ipc.ipc_sync_message_filter.o: cxx $
+    ../../ipc/ipc_sync_message_filter.cc
+build obj/ipc/ipc.message_filter.o: cxx ../../ipc/message_filter.cc
+build obj/ipc/ipc.message_filter_router.o: cxx $
+    ../../ipc/message_filter_router.cc
+build obj/ipc/ipc.placeholder_brokerable_attachment.o: cxx $
+    ../../ipc/placeholder_brokerable_attachment.cc
+build obj/ipc/ipc.unix_domain_socket_util.o: cxx $
+    ../../ipc/unix_domain_socket_util.cc
+
+build obj/ipc/libipc.a: alink_thin obj/ipc/ipc.attachment_broker.o $
+    obj/ipc/ipc.attachment_broker_privileged.o $
+    obj/ipc/ipc.attachment_broker_unprivileged.o $
+    obj/ipc/ipc.brokerable_attachment.o obj/ipc/ipc.ipc_channel.o $
+    obj/ipc/ipc.ipc_channel_factory.o obj/ipc/ipc.ipc_channel_common.o $
+    obj/ipc/ipc.ipc_channel_posix.o obj/ipc/ipc.ipc_channel_proxy.o $
+    obj/ipc/ipc.ipc_channel_reader.o obj/ipc/ipc.ipc_endpoint.o $
+    obj/ipc/ipc.ipc_logging.o obj/ipc/ipc.ipc_message.o $
+    obj/ipc/ipc.ipc_message_attachment.o $
+    obj/ipc/ipc.ipc_message_attachment_set.o $
+    obj/ipc/ipc.ipc_message_generator.o obj/ipc/ipc.ipc_message_utils.o $
+    obj/ipc/ipc.ipc_platform_file.o $
+    obj/ipc/ipc.ipc_platform_file_attachment_posix.o $
+    obj/ipc/ipc.ipc_switches.o obj/ipc/ipc.ipc_sync_channel.o $
+    obj/ipc/ipc.ipc_sync_message.o obj/ipc/ipc.ipc_sync_message_filter.o $
+    obj/ipc/ipc.message_filter.o obj/ipc/ipc.message_filter_router.o $
+    obj/ipc/ipc.placeholder_brokerable_attachment.o $
+    obj/ipc/ipc.unix_domain_socket_util.o

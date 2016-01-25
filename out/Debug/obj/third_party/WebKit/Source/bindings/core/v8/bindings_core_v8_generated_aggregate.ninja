@@ -1,0 +1,73 @@
+rule $
+    bindings_core_v8_generated_aggregate_target_generate_aggregate_bindings_core_v8_1a03a9f06fd7b48b8d2a9d94416b02c7
+  command = cd ../../third_party/WebKit/Source/bindings/core/v8; python $
+      ../../scripts/aggregate_generated_bindings.py core $
+      ../../../../../../out/gypfiles/third_party/WebKit/Source/bindings/core/v8/core_idl_files_list.tmp $
+      -- $
+      ../../../../../../out/Debug/gen/blink/bindings/core/v8/V8GeneratedCoreBindings01.cpp $
+      ../../../../../../out/Debug/gen/blink/bindings/core/v8/V8GeneratedCoreBindings02.cpp $
+      ../../../../../../out/Debug/gen/blink/bindings/core/v8/V8GeneratedCoreBindings03.cpp $
+      ../../../../../../out/Debug/gen/blink/bindings/core/v8/V8GeneratedCoreBindings04.cpp $
+      ../../../../../../out/Debug/gen/blink/bindings/core/v8/V8GeneratedCoreBindings05.cpp $
+      ../../../../../../out/Debug/gen/blink/bindings/core/v8/V8GeneratedCoreBindings06.cpp $
+      ../../../../../../out/Debug/gen/blink/bindings/core/v8/V8GeneratedCoreBindings07.cpp $
+      ../../../../../../out/Debug/gen/blink/bindings/core/v8/V8GeneratedCoreBindings08.cpp $
+      ../../../../../../out/Debug/gen/blink/bindings/core/v8/V8GeneratedCoreBindings09.cpp $
+      ../../../../../../out/Debug/gen/blink/bindings/core/v8/V8GeneratedCoreBindings10.cpp $
+      ../../../../../../out/Debug/gen/blink/bindings/core/v8/V8GeneratedCoreBindings11.cpp $
+      ../../../../../../out/Debug/gen/blink/bindings/core/v8/V8GeneratedCoreBindings12.cpp $
+      ../../../../../../out/Debug/gen/blink/bindings/core/v8/V8GeneratedCoreBindings13.cpp $
+      ../../../../../../out/Debug/gen/blink/bindings/core/v8/V8GeneratedCoreBindings14.cpp $
+      ../../../../../../out/Debug/gen/blink/bindings/core/v8/V8GeneratedCoreBindings15.cpp $
+      ../../../../../../out/Debug/gen/blink/bindings/core/v8/V8GeneratedCoreBindings16.cpp $
+      ../../../../../../out/Debug/gen/blink/bindings/core/v8/V8GeneratedCoreBindings17.cpp $
+      ../../../../../../out/Debug/gen/blink/bindings/core/v8/V8GeneratedCoreBindings18.cpp $
+      ../../../../../../out/Debug/gen/blink/bindings/core/v8/V8GeneratedCoreBindings19.cpp
+  description = ACTION Generating aggregate generated core V8 bindings files
+  restat = 1
+
+build gen/blink/bindings/core/v8/V8GeneratedCoreBindings01.cpp $
+    gen/blink/bindings/core/v8/V8GeneratedCoreBindings02.cpp $
+    gen/blink/bindings/core/v8/V8GeneratedCoreBindings03.cpp $
+    gen/blink/bindings/core/v8/V8GeneratedCoreBindings04.cpp $
+    gen/blink/bindings/core/v8/V8GeneratedCoreBindings05.cpp $
+    gen/blink/bindings/core/v8/V8GeneratedCoreBindings06.cpp $
+    gen/blink/bindings/core/v8/V8GeneratedCoreBindings07.cpp $
+    gen/blink/bindings/core/v8/V8GeneratedCoreBindings08.cpp $
+    gen/blink/bindings/core/v8/V8GeneratedCoreBindings09.cpp $
+    gen/blink/bindings/core/v8/V8GeneratedCoreBindings10.cpp $
+    gen/blink/bindings/core/v8/V8GeneratedCoreBindings11.cpp $
+    gen/blink/bindings/core/v8/V8GeneratedCoreBindings12.cpp $
+    gen/blink/bindings/core/v8/V8GeneratedCoreBindings13.cpp $
+    gen/blink/bindings/core/v8/V8GeneratedCoreBindings14.cpp $
+    gen/blink/bindings/core/v8/V8GeneratedCoreBindings15.cpp $
+    gen/blink/bindings/core/v8/V8GeneratedCoreBindings16.cpp $
+    gen/blink/bindings/core/v8/V8GeneratedCoreBindings17.cpp $
+    gen/blink/bindings/core/v8/V8GeneratedCoreBindings18.cpp $
+    gen/blink/bindings/core/v8/V8GeneratedCoreBindings19.cpp: $
+    bindings_core_v8_generated_aggregate_target_generate_aggregate_bindings_core_v8_1a03a9f06fd7b48b8d2a9d94416b02c7 $
+    ../../third_party/WebKit/Source/bindings/scripts/aggregate_generated_bindings.py $
+    ../../out/gypfiles/third_party/WebKit/Source/bindings/core/v8/core_idl_files_list.tmp
+
+build $
+    obj/third_party/WebKit/Source/bindings/core/v8/bindings_core_v8_generated_aggregate.actions_rules_copies.stamp: $
+    stamp gen/blink/bindings/core/v8/V8GeneratedCoreBindings01.cpp $
+    gen/blink/bindings/core/v8/V8GeneratedCoreBindings02.cpp $
+    gen/blink/bindings/core/v8/V8GeneratedCoreBindings03.cpp $
+    gen/blink/bindings/core/v8/V8GeneratedCoreBindings04.cpp $
+    gen/blink/bindings/core/v8/V8GeneratedCoreBindings05.cpp $
+    gen/blink/bindings/core/v8/V8GeneratedCoreBindings06.cpp $
+    gen/blink/bindings/core/v8/V8GeneratedCoreBindings07.cpp $
+    gen/blink/bindings/core/v8/V8GeneratedCoreBindings08.cpp $
+    gen/blink/bindings/core/v8/V8GeneratedCoreBindings09.cpp $
+    gen/blink/bindings/core/v8/V8GeneratedCoreBindings10.cpp $
+    gen/blink/bindings/core/v8/V8GeneratedCoreBindings11.cpp $
+    gen/blink/bindings/core/v8/V8GeneratedCoreBindings12.cpp $
+    gen/blink/bindings/core/v8/V8GeneratedCoreBindings13.cpp $
+    gen/blink/bindings/core/v8/V8GeneratedCoreBindings14.cpp $
+    gen/blink/bindings/core/v8/V8GeneratedCoreBindings15.cpp $
+    gen/blink/bindings/core/v8/V8GeneratedCoreBindings16.cpp $
+    gen/blink/bindings/core/v8/V8GeneratedCoreBindings17.cpp $
+    gen/blink/bindings/core/v8/V8GeneratedCoreBindings18.cpp $
+    gen/blink/bindings/core/v8/V8GeneratedCoreBindings19.cpp
+

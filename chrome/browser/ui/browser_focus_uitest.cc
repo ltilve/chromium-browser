@@ -12,14 +12,12 @@
 #include "chrome/browser/chrome_notification_types.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_commands.h"
+#include "chrome/browser/ui/browser_navigator_params.h"
 #include "chrome/browser/ui/browser_tabstrip.h"
 #include "chrome/browser/ui/browser_window.h"
 #include "chrome/browser/ui/chrome_pages.h"
 #include "chrome/browser/ui/find_bar/find_bar_host_unittest_util.h"
 #include "chrome/browser/ui/location_bar/location_bar.h"
-#include "chrome/browser/ui/omnibox/omnibox_edit_controller.h"
-#include "chrome/browser/ui/omnibox/omnibox_edit_model.h"
-#include "chrome/browser/ui/omnibox/omnibox_view.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/browser/ui/view_ids.h"
 #include "chrome/common/chrome_paths.h"
@@ -27,6 +25,9 @@
 #include "chrome/test/base/in_process_browser_test.h"
 #include "chrome/test/base/interactive_test_utils.h"
 #include "chrome/test/base/ui_test_utils.h"
+#include "components/omnibox/browser/omnibox_edit_controller.h"
+#include "components/omnibox/browser/omnibox_edit_model.h"
+#include "components/omnibox/browser/omnibox_view.h"
 #include "content/public/browser/interstitial_page.h"
 #include "content/public/browser/interstitial_page_delegate.h"
 #include "content/public/browser/notification_service.h"
@@ -67,10 +68,10 @@ const char kTypicalPage[] = "/focus/typical_page.html";
 
 class BrowserFocusTest : public InProcessBrowserTest {
  public:
-   // InProcessBrowserTest overrides:
+  // InProcessBrowserTest overrides:
   void SetUpOnMainThread() override {
      ASSERT_TRUE(embedded_test_server()->InitializeAndWaitUntilReady());
-   }
+  }
 
   bool IsViewFocused(ViewID vid) {
     return ui_test_utils::IsViewFocused(browser(), vid);
@@ -188,8 +189,9 @@ class TestInterstitialPage : public content::InterstitialPageDelegate {
   DISALLOW_COPY_AND_ASSIGN(TestInterstitialPage);
 };
 
-// Flaky on mac. http://crbug.com/67301.
-#if defined(OS_MACOSX)
+// Flaky on Mac (http://crbug.com/67301) and Windows
+// (http://crbug.com/523255).
+#if defined(OS_MACOSX) || defined(OS_WIN)
 #define MAYBE_ClickingMovesFocus DISABLED_ClickingMovesFocus
 #else
 #define MAYBE_ClickingMovesFocus ClickingMovesFocus
@@ -438,7 +440,8 @@ IN_PROC_BROWSER_TEST_F(BrowserFocusTest, MAYBE_FocusTraversal) {
 
 // Test forward and reverse focus traversal while an interstitial is showing.
 // Disabled, see http://crbug.com/60973
-IN_PROC_BROWSER_TEST_F(BrowserFocusTest, DISABLED_FocusTraversalOnInterstitial) {
+IN_PROC_BROWSER_TEST_F(BrowserFocusTest,
+                       DISABLED_FocusTraversalOnInterstitial) {
   ASSERT_TRUE(ui_test_utils::BringBrowserWindowToFront(browser()));
   const GURL url = embedded_test_server()->GetURL(kSimplePage);
   ui_test_utils::NavigateToURL(browser(), url);
@@ -477,7 +480,8 @@ IN_PROC_BROWSER_TEST_F(BrowserFocusTest, InterstitialFocus) {
 }
 
 // Test that find-in-page UI can request focus, even when it is already open.
-#if defined(OS_MACOSX)
+// flaky on Windows - http://crbug.com/523255
+#if defined(OS_MACOSX) || defined(OS_WIN)
 #define MAYBE_FindFocusTest DISABLED_FindFocusTest
 #else
 #define MAYBE_FindFocusTest FindFocusTest

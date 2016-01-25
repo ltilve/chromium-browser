@@ -1,0 +1,14 @@
+build obj/build/chromium_builder_asan.actions_depends.stamp: stamp chrome $
+    content_shell hpack_fuzz_wrapper dns_fuzz_stub filter_fuzz_stub d8 $
+    pdfium_test llvm-symbolizer
+
+build obj/build/chromium_builder_asan.compile_depends.stamp: stamp $
+    obj/chrome/chrome_initial.actions_rules_copies.stamp $
+    obj/content/content_shell.compile_depends.stamp $
+    obj/net/hpack_fuzz_wrapper.compile_depends.stamp $
+    obj/net/dns_fuzz_stub.compile_depends.stamp $
+    obj/skia/filter_fuzz_stub.compile_depends.stamp $
+    obj/v8/src/d8.compile_depends.stamp $
+    obj/third_party/pdfium/samples/pdfium_test.compile_depends.stamp $
+    llvm-symbolizer
+

@@ -1,0 +1,195 @@
+defines = -DV8_DEPRECATION_WARNINGS -DCLD_VERSION=2 -D_FILE_OFFSET_BITS=64 $
+    -DCHROMIUM_BUILD -DCR_CLANG_REVISION=255169-1 $
+    -DUI_COMPOSITOR_IMAGE_TRANSPORT -DUSE_AURA=1 -DUSE_ASH=1 -DUSE_PANGO=1 $
+    -DUSE_CAIRO=1 -DUSE_DEFAULT_RENDER_THEME=1 -DUSE_LIBJPEG_TURBO=1 $
+    -DUSE_X11=1 -DUSE_CLIPBOARD_AURAX11=1 -DENABLE_ONE_CLICK_SIGNIN $
+    -DENABLE_WEBRTC=1 -DENABLE_MEDIA_ROUTER=1 -DENABLE_PEPPER_CDMS $
+    -DENABLE_CONFIGURATION_POLICY -DENABLE_NOTIFICATIONS -DENABLE_HIDPI=1 $
+    -DENABLE_TOPCHROME_MD=1 -DUSE_UDEV -DDONT_EMBED_BUILD_METADATA $
+    -DFIELDTRIAL_TESTING_ENABLED -DENABLE_TASK_MANAGER=1 $
+    -DENABLE_EXTENSIONS=1 -DENABLE_PDF=1 -DENABLE_PLUGINS=1 $
+    -DENABLE_SESSION_SERVICE=1 -DENABLE_THEMES=1 -DENABLE_AUTOFILL_DIALOG=1 $
+    -DENABLE_BACKGROUND=1 -DENABLE_PRINTING=1 -DENABLE_BASIC_PRINTING=1 $
+    -DENABLE_PRINT_PREVIEW=1 -DENABLE_SPELLCHECK=1 $
+    -DENABLE_CAPTIVE_PORTAL_DETECTION=1 -DENABLE_APP_LIST=1 $
+    -DENABLE_SETTINGS_APP=1 -DENABLE_SUPERVISED_USERS=1 -DENABLE_MDNS=1 $
+    -DENABLE_SERVICE_DISCOVERY=1 -DV8_USE_EXTERNAL_STARTUP_DATA $
+    -DFULL_SAFE_BROWSING -DSAFE_BROWSING_CSD -DSAFE_BROWSING_DB_LOCAL $
+    -DPROTOBUF_USE_DLLS -DGOOGLE_PROTOBUF_NO_RTTI $
+    -DGOOGLE_PROTOBUF_NO_STATIC_INITIALIZER -DUSE_LIBPCI=1 -DUSE_OPENSSL=1 $
+    -DUSE_GLIB=1 -DUSE_NSS_CERTS=1 -D__STDC_CONSTANT_MACROS $
+    -D__STDC_FORMAT_MACROS -DDYNAMIC_ANNOTATIONS_ENABLED=1 $
+    -DWTF_USE_DYNAMIC_ANNOTATIONS=1 -D_DEBUG -D_GLIBCXX_DEBUG=1
+includes = -Igen -I../../third_party/cacheinvalidation/overrides $
+    -I../../third_party/cacheinvalidation/src -I../.. $
+    -I../../third_party/cacheinvalidation/google/cacheinvalidation $
+    -Igen/protoc_out -I../../third_party/protobuf $
+    -I../../third_party/protobuf/src
+cflags = -fstack-protector --param=ssp-buffer-size=4 -Werror -pthread $
+    -fno-strict-aliasing -Wall -Wno-unused-parameter $
+    -Wno-missing-field-initializers -fvisibility=hidden -pipe -fPIC $
+    -Wno-reserved-user-defined-literal -Xclang -load -Xclang $
+    /b/build/slave/publish_tarball/build/src/third_party/llvm-build/Release+Asserts/lib/libFindBadConstructs.so $
+    -Xclang -add-plugin -Xclang find-bad-constructs -Xclang $
+    -plugin-arg-find-bad-constructs -Xclang check-templates $
+    -fcolor-diagnostics $
+    -B/b/build/slave/publish_tarball/build/src/third_party/binutils/Linux_x64/Release/bin $
+    -Wheader-hygiene -Wno-char-subscripts $
+    -Wno-unneeded-internal-declaration -Wno-covered-switch-default $
+    -Wstring-conversion -Wno-c++11-narrowing -Wno-deprecated-register $
+    -Wno-inconsistent-missing-override -Wno-shift-negative-value $
+    -Wno-bitfield-width -pthread $
+    -I/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/include/glib-2.0 $
+    -I/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/lib/x86_64-linux-gnu/glib-2.0/include $
+    -m64 -march=x86-64 $
+    --sysroot=/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot $
+    -O0 -g -funwind-tables -gsplit-dwarf -Wno-undefined-bool-conversion $
+    -Wno-tautological-undefined-compare
+cflags_c = 
+cflags_cc = -fno-exceptions -fno-rtti -fno-threadsafe-statics $
+    -fvisibility-inlines-hidden -Wsign-compare -std=gnu++11
+arflags = 
+
+build $
+    obj/third_party/cacheinvalidation/overrides/google/cacheinvalidation/deps/cacheinvalidation.random.o: $
+    cxx $
+    ../../third_party/cacheinvalidation/overrides/google/cacheinvalidation/deps/random.cc $
+    || $
+    obj/third_party/cacheinvalidation/cacheinvalidation_proto_cpp.actions_rules_copies.stamp
+build $
+    obj/third_party/cacheinvalidation/src/google/cacheinvalidation/impl/cacheinvalidation.basic-system-resources.o: $
+    cxx $
+    ../../third_party/cacheinvalidation/src/google/cacheinvalidation/impl/basic-system-resources.cc $
+    || $
+    obj/third_party/cacheinvalidation/cacheinvalidation_proto_cpp.actions_rules_copies.stamp
+build $
+    obj/third_party/cacheinvalidation/src/google/cacheinvalidation/impl/cacheinvalidation.checking-invalidation-listener.o: $
+    cxx $
+    ../../third_party/cacheinvalidation/src/google/cacheinvalidation/impl/checking-invalidation-listener.cc $
+    || $
+    obj/third_party/cacheinvalidation/cacheinvalidation_proto_cpp.actions_rules_copies.stamp
+build $
+    obj/third_party/cacheinvalidation/src/google/cacheinvalidation/impl/cacheinvalidation.constants.o: $
+    cxx $
+    ../../third_party/cacheinvalidation/src/google/cacheinvalidation/impl/constants.cc $
+    || $
+    obj/third_party/cacheinvalidation/cacheinvalidation_proto_cpp.actions_rules_copies.stamp
+build $
+    obj/third_party/cacheinvalidation/src/google/cacheinvalidation/impl/cacheinvalidation.exponential-backoff-delay-generator.o: $
+    cxx $
+    ../../third_party/cacheinvalidation/src/google/cacheinvalidation/impl/exponential-backoff-delay-generator.cc $
+    || $
+    obj/third_party/cacheinvalidation/cacheinvalidation_proto_cpp.actions_rules_copies.stamp
+build $
+    obj/third_party/cacheinvalidation/src/google/cacheinvalidation/impl/cacheinvalidation.invalidation-client-core.o: $
+    cxx $
+    ../../third_party/cacheinvalidation/src/google/cacheinvalidation/impl/invalidation-client-core.cc $
+    || $
+    obj/third_party/cacheinvalidation/cacheinvalidation_proto_cpp.actions_rules_copies.stamp
+build $
+    obj/third_party/cacheinvalidation/src/google/cacheinvalidation/impl/cacheinvalidation.invalidation-client-factory.o: $
+    cxx $
+    ../../third_party/cacheinvalidation/src/google/cacheinvalidation/impl/invalidation-client-factory.cc $
+    || $
+    obj/third_party/cacheinvalidation/cacheinvalidation_proto_cpp.actions_rules_copies.stamp
+build $
+    obj/third_party/cacheinvalidation/src/google/cacheinvalidation/impl/cacheinvalidation.invalidation-client-impl.o: $
+    cxx $
+    ../../third_party/cacheinvalidation/src/google/cacheinvalidation/impl/invalidation-client-impl.cc $
+    || $
+    obj/third_party/cacheinvalidation/cacheinvalidation_proto_cpp.actions_rules_copies.stamp
+build $
+    obj/third_party/cacheinvalidation/src/google/cacheinvalidation/impl/cacheinvalidation.object-id-digest-utils.o: $
+    cxx $
+    ../../third_party/cacheinvalidation/src/google/cacheinvalidation/impl/object-id-digest-utils.cc $
+    || $
+    obj/third_party/cacheinvalidation/cacheinvalidation_proto_cpp.actions_rules_copies.stamp
+build $
+    obj/third_party/cacheinvalidation/src/google/cacheinvalidation/impl/cacheinvalidation.persistence-utils.o: $
+    cxx $
+    ../../third_party/cacheinvalidation/src/google/cacheinvalidation/impl/persistence-utils.cc $
+    || $
+    obj/third_party/cacheinvalidation/cacheinvalidation_proto_cpp.actions_rules_copies.stamp
+build $
+    obj/third_party/cacheinvalidation/src/google/cacheinvalidation/impl/cacheinvalidation.proto-converter.o: $
+    cxx $
+    ../../third_party/cacheinvalidation/src/google/cacheinvalidation/impl/proto-converter.cc $
+    || $
+    obj/third_party/cacheinvalidation/cacheinvalidation_proto_cpp.actions_rules_copies.stamp
+build $
+    obj/third_party/cacheinvalidation/src/google/cacheinvalidation/impl/cacheinvalidation.proto-helpers.o: $
+    cxx $
+    ../../third_party/cacheinvalidation/src/google/cacheinvalidation/impl/proto-helpers.cc $
+    || $
+    obj/third_party/cacheinvalidation/cacheinvalidation_proto_cpp.actions_rules_copies.stamp
+build $
+    obj/third_party/cacheinvalidation/src/google/cacheinvalidation/impl/cacheinvalidation.protocol-handler.o: $
+    cxx $
+    ../../third_party/cacheinvalidation/src/google/cacheinvalidation/impl/protocol-handler.cc $
+    || $
+    obj/third_party/cacheinvalidation/cacheinvalidation_proto_cpp.actions_rules_copies.stamp
+build $
+    obj/third_party/cacheinvalidation/src/google/cacheinvalidation/impl/cacheinvalidation.recurring-task.o: $
+    cxx $
+    ../../third_party/cacheinvalidation/src/google/cacheinvalidation/impl/recurring-task.cc $
+    || $
+    obj/third_party/cacheinvalidation/cacheinvalidation_proto_cpp.actions_rules_copies.stamp
+build $
+    obj/third_party/cacheinvalidation/src/google/cacheinvalidation/impl/cacheinvalidation.registration-manager.o: $
+    cxx $
+    ../../third_party/cacheinvalidation/src/google/cacheinvalidation/impl/registration-manager.cc $
+    || $
+    obj/third_party/cacheinvalidation/cacheinvalidation_proto_cpp.actions_rules_copies.stamp
+build $
+    obj/third_party/cacheinvalidation/src/google/cacheinvalidation/impl/cacheinvalidation.safe-storage.o: $
+    cxx $
+    ../../third_party/cacheinvalidation/src/google/cacheinvalidation/impl/safe-storage.cc $
+    || $
+    obj/third_party/cacheinvalidation/cacheinvalidation_proto_cpp.actions_rules_copies.stamp
+build $
+    obj/third_party/cacheinvalidation/src/google/cacheinvalidation/impl/cacheinvalidation.simple-registration-store.o: $
+    cxx $
+    ../../third_party/cacheinvalidation/src/google/cacheinvalidation/impl/simple-registration-store.cc $
+    || $
+    obj/third_party/cacheinvalidation/cacheinvalidation_proto_cpp.actions_rules_copies.stamp
+build $
+    obj/third_party/cacheinvalidation/src/google/cacheinvalidation/impl/cacheinvalidation.statistics.o: $
+    cxx $
+    ../../third_party/cacheinvalidation/src/google/cacheinvalidation/impl/statistics.cc $
+    || $
+    obj/third_party/cacheinvalidation/cacheinvalidation_proto_cpp.actions_rules_copies.stamp
+build $
+    obj/third_party/cacheinvalidation/src/google/cacheinvalidation/impl/cacheinvalidation.throttle.o: $
+    cxx $
+    ../../third_party/cacheinvalidation/src/google/cacheinvalidation/impl/throttle.cc $
+    || $
+    obj/third_party/cacheinvalidation/cacheinvalidation_proto_cpp.actions_rules_copies.stamp
+build $
+    obj/third_party/cacheinvalidation/src/google/cacheinvalidation/impl/cacheinvalidation.ticl-message-validator.o: $
+    cxx $
+    ../../third_party/cacheinvalidation/src/google/cacheinvalidation/impl/ticl-message-validator.cc $
+    || $
+    obj/third_party/cacheinvalidation/cacheinvalidation_proto_cpp.actions_rules_copies.stamp
+
+build obj/third_party/cacheinvalidation/libcacheinvalidation.a: alink_thin $
+    obj/third_party/cacheinvalidation/overrides/google/cacheinvalidation/deps/cacheinvalidation.random.o $
+    obj/third_party/cacheinvalidation/src/google/cacheinvalidation/impl/cacheinvalidation.basic-system-resources.o $
+    obj/third_party/cacheinvalidation/src/google/cacheinvalidation/impl/cacheinvalidation.checking-invalidation-listener.o $
+    obj/third_party/cacheinvalidation/src/google/cacheinvalidation/impl/cacheinvalidation.constants.o $
+    obj/third_party/cacheinvalidation/src/google/cacheinvalidation/impl/cacheinvalidation.exponential-backoff-delay-generator.o $
+    obj/third_party/cacheinvalidation/src/google/cacheinvalidation/impl/cacheinvalidation.invalidation-client-core.o $
+    obj/third_party/cacheinvalidation/src/google/cacheinvalidation/impl/cacheinvalidation.invalidation-client-factory.o $
+    obj/third_party/cacheinvalidation/src/google/cacheinvalidation/impl/cacheinvalidation.invalidation-client-impl.o $
+    obj/third_party/cacheinvalidation/src/google/cacheinvalidation/impl/cacheinvalidation.object-id-digest-utils.o $
+    obj/third_party/cacheinvalidation/src/google/cacheinvalidation/impl/cacheinvalidation.persistence-utils.o $
+    obj/third_party/cacheinvalidation/src/google/cacheinvalidation/impl/cacheinvalidation.proto-converter.o $
+    obj/third_party/cacheinvalidation/src/google/cacheinvalidation/impl/cacheinvalidation.proto-helpers.o $
+    obj/third_party/cacheinvalidation/src/google/cacheinvalidation/impl/cacheinvalidation.protocol-handler.o $
+    obj/third_party/cacheinvalidation/src/google/cacheinvalidation/impl/cacheinvalidation.recurring-task.o $
+    obj/third_party/cacheinvalidation/src/google/cacheinvalidation/impl/cacheinvalidation.registration-manager.o $
+    obj/third_party/cacheinvalidation/src/google/cacheinvalidation/impl/cacheinvalidation.safe-storage.o $
+    obj/third_party/cacheinvalidation/src/google/cacheinvalidation/impl/cacheinvalidation.simple-registration-store.o $
+    obj/third_party/cacheinvalidation/src/google/cacheinvalidation/impl/cacheinvalidation.statistics.o $
+    obj/third_party/cacheinvalidation/src/google/cacheinvalidation/impl/cacheinvalidation.throttle.o $
+    obj/third_party/cacheinvalidation/src/google/cacheinvalidation/impl/cacheinvalidation.ticl-message-validator.o $
+    || obj/third_party/cacheinvalidation/libcacheinvalidation_proto_cpp.a

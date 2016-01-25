@@ -7,7 +7,9 @@
 
 namespace switches {
 
-// Intentionally empty in case Android WebView needs switches in the future.
+extern const char kDisablePageVisibility[];
+extern const char kUseInProcCommandBuffer[];
+extern const char kWebViewSandboxedRenderer[];
 
 }  // namespace switches
 

@@ -24,7 +24,6 @@ import org.chromium.chrome.browser.signin.SigninManager.SignInFlowObserver;
 import org.chromium.chrome.browser.sync.ProfileSyncService;
 import org.chromium.chrome.browser.sync.SyncController;
 import org.chromium.sync.AndroidSyncSettings;
-import org.chromium.sync.internal_api.pub.base.ModelType;
 import org.chromium.sync.signin.AccountManagerHelper;
 import org.chromium.sync.signin.ChromeSigninController;
 
@@ -108,6 +107,8 @@ public class SigninHelper {
 
     private final SigninManager mSigninManager;
 
+    private final AccountTrackerService mAccountTrackerService;
+
     private final OAuth2TokenService mOAuth2TokenService;
 
     private final SyncController mSyncController;
@@ -123,14 +124,20 @@ public class SigninHelper {
 
     private SigninHelper(Context context) {
         mContext = context;
-        mProfileSyncService = ProfileSyncService.get(mContext);
+        mProfileSyncService = ProfileSyncService.get();
         mSigninManager = SigninManager.get(mContext);
+        mAccountTrackerService = AccountTrackerService.get(mContext);
         mOAuth2TokenService = OAuth2TokenService.getForProfile(Profile.getLastUsedProfile());
         mSyncController = SyncController.get(context);
         mChromeSigninController = ChromeSigninController.get(mContext);
     }
 
     public void validateAccountSettings(boolean accountsChanged) {
+        if (accountsChanged) {
+            // Account details have changed so inform AccountTrackerService refresh itself.
+            mAccountTrackerService.forceRefresh();
+        }
+
         Account syncAccount = mChromeSigninController.getSignedInUser();
         if (syncAccount == null) {
             if (SigninManager.getAndroidSigninPromoExperimentGroup() < 0) return;
@@ -174,7 +181,7 @@ public class SigninHelper {
         }
 
         // Always check for account deleted.
-        if (!accountExists(syncAccount)) {
+        if (!accountExists(mContext, syncAccount)) {
             // It is possible that Chrome got to this point without account
             // rename notification. Let us signout before doing a rename.
             // updateAccountRenameData(mContext, new SystemAccountChangeEventChecker());
@@ -233,7 +240,7 @@ public class SigninHelper {
 
         // Before signing out, remember the current sync state and data types.
         final boolean isSyncWanted = AndroidSyncSettings.isChromeSyncEnabled(mContext);
-        final Set<ModelType> dataTypes = mProfileSyncService.getPreferredDataTypes();
+        final Set<Integer> dataTypes = mProfileSyncService.getPreferredDataTypes();
 
         // TODO(acleung): Deal with passphrase or just prompt user to re-enter it?
 
@@ -253,7 +260,7 @@ public class SigninHelper {
 
     private void performResignin(String newName,
                                  final boolean isSyncWanted,
-                                 final Set<ModelType> dataTypes) {
+                                 final Set<Integer> dataTypes) {
         // This is the correct account now.
         final Account account = AccountManagerHelper.createAccountFromName(newName);
 
@@ -277,8 +284,8 @@ public class SigninHelper {
         });
     }
 
-    private boolean accountExists(Account account) {
-        Account[] accounts = AccountManagerHelper.get(mContext).getGoogleAccounts();
+    private static boolean accountExists(Context context, Account account) {
+        Account[] accounts = AccountManagerHelper.get(context).getGoogleAccounts();
         for (Account a : accounts) {
             if (a.equals(account)) {
                 return true;
@@ -345,7 +352,8 @@ public class SigninHelper {
         int newIndex = eventIndex;
 
         try {
-            outerLoop: while (true) {
+        outerLoop:
+            while (true) {
                 List<String> nameChanges = checker.getAccountChangeEvents(context,
                         newIndex, newName);
 
@@ -354,8 +362,12 @@ public class SigninHelper {
                         // We have found a rename event of the current account.
                         // We need to check if that account is further renamed.
                         newName = name;
-                        newIndex = 0; // Start from the beginning of the new account.
-                        continue outerLoop;
+                        if (!accountExists(context, AccountManagerHelper.get(context)
+                                                            .createAccountFromName(newName))) {
+                            newIndex = 0; // Start from the beginning of the new account.
+                            continue outerLoop;
+                        }
+                        break;
                     }
                 }
 

@@ -16,7 +16,7 @@
 #include "chrome/browser/spellchecker/feedback_sender.h"
 #include "chrome/browser/spellchecker/spellcheck_factory.h"
 #include "chrome/browser/spellchecker/spellcheck_host_metrics.h"
-#include "chrome/browser/spellchecker/spellcheck_platform_mac.h"
+#include "chrome/browser/spellchecker/spellcheck_platform.h"
 #include "chrome/browser/spellchecker/spellcheck_service.h"
 #include "chrome/browser/spellchecker/spelling_service_client.h"
 #include "chrome/browser/ui/confirm_bubble.h"
@@ -34,6 +34,8 @@
 #include "ui/gfx/geometry/rect.h"
 
 using content::BrowserThread;
+
+const int kMaxSpellingSuggestions = 3;
 
 SpellingMenuObserver::SpellingMenuObserver(RenderViewContextMenuProxy* proxy)
     : proxy_(proxy),
@@ -79,7 +81,9 @@ void SpellingMenuObserver::InitMenu(const content::ContextMenuParams& params) {
     proxy_->AddSeparator();
 
   // Append Dictionary spell check suggestions.
-  for (size_t i = 0; i < params.dictionary_suggestions.size() &&
+  int length = std::min(kMaxSpellingSuggestions,
+                        static_cast<int>(params.dictionary_suggestions.size()));
+  for (int i = 0; i < length &&
        IDC_SPELLCHECK_SUGGESTION_0 + i <= IDC_SPELLCHECK_SUGGESTION_LAST;
        ++i) {
     proxy_->AddMenuItem(IDC_SPELLCHECK_SUGGESTION_0 + static_cast<int>(i),
@@ -146,17 +150,7 @@ void SpellingMenuObserver::InitMenu(const content::ContextMenuParams& params) {
     }
   }
 
-  if (params.dictionary_suggestions.empty()) {
-    proxy_->AddMenuItem(
-        IDC_CONTENT_CONTEXT_NO_SPELLING_SUGGESTIONS,
-        l10n_util::GetStringUTF16(IDS_CONTENT_CONTEXT_NO_SPELLING_SUGGESTIONS));
-    bool use_spelling_service = SpellingServiceClient::IsAvailable(
-        browser_context, SpellingServiceClient::SPELLCHECK);
-    if (use_suggestions || use_spelling_service)
-      proxy_->AddSeparator();
-  } else {
-    proxy_->AddSeparator();
-
+  if (!params.dictionary_suggestions.empty()) {
     // |spellcheck_service| can be null when the suggested word is
     // provided by Web SpellCheck API.
     SpellcheckService* spellcheck_service =
@@ -171,11 +165,9 @@ void SpellingMenuObserver::InitMenu(const content::ContextMenuParams& params) {
   proxy_->AddMenuItem(IDC_SPELLCHECK_ADD_TO_DICTIONARY,
       l10n_util::GetStringUTF16(IDS_CONTENT_CONTEXT_ADD_TO_DICTIONARY));
 
-  if (!chrome::spellcheck_common::IsMultilingualSpellcheckEnabled()) {
-    proxy_->AddCheckItem(
-        IDC_CONTENT_CONTEXT_SPELLING_TOGGLE,
-        l10n_util::GetStringUTF16(IDS_CONTENT_CONTEXT_SPELLING_ASK_GOOGLE));
-  }
+  proxy_->AddCheckItem(
+      IDC_CONTENT_CONTEXT_SPELLING_TOGGLE,
+      l10n_util::GetStringUTF16(IDS_CONTENT_CONTEXT_SPELLING_ASK_GOOGLE));
 
   const base::CommandLine* command_line =
       base::CommandLine::ForCurrentProcess();
@@ -211,8 +203,7 @@ bool SpellingMenuObserver::IsCommandIdChecked(int command_id) {
 
   if (command_id == IDC_CONTENT_CONTEXT_SPELLING_TOGGLE)
     return integrate_spelling_service_.GetValue() &&
-           !profile->IsOffTheRecord() &&
-           !chrome::spellcheck_common::IsMultilingualSpellcheckEnabled();
+           !profile->IsOffTheRecord();
   if (command_id == IDC_CONTENT_CONTEXT_AUTOCORRECT_SPELLING_TOGGLE)
     return autocorrect_spelling_.GetValue() && !profile->IsOffTheRecord();
   return false;
@@ -238,8 +229,7 @@ bool SpellingMenuObserver::IsCommandIdEnabled(int command_id) {
 
     case IDC_CONTENT_CONTEXT_SPELLING_TOGGLE:
       return integrate_spelling_service_.IsUserModifiable() &&
-             !profile->IsOffTheRecord() &&
-             !chrome::spellcheck_common::IsMultilingualSpellcheckEnabled();
+             !profile->IsOffTheRecord();
 
     case IDC_CONTENT_CONTEXT_AUTOCORRECT_SPELLING_TOGGLE:
       return integrate_spelling_service_.IsUserModifiable() &&
@@ -296,8 +286,8 @@ void SpellingMenuObserver::ExecuteCommand(int command_id) {
         spellcheck->GetFeedbackSender()->AddedToDictionary(misspelling_hash_);
       }
     }
-#if defined(OS_MACOSX)
-    spellcheck_mac::AddWord(misspelled_word_);
+#if defined(USE_BROWSER_SPELLCHECKER)
+    spellcheck_platform::AddWord(misspelled_word_);
 #endif
   }
 

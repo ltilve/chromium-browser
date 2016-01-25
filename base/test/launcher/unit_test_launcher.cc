@@ -4,6 +4,7 @@
 
 #include "base/test/launcher/unit_test_launcher.h"
 
+#include "base/base_switches.h"
 #include "base/bind.h"
 #include "base/callback_helpers.h"
 #include "base/command_line.h"
@@ -95,7 +96,7 @@ class DefaultUnitTestPlatformDelegate : public UnitTestPlatformDelegate {
 
  private:
   // UnitTestPlatformDelegate:
-  bool GetTests(std::vector<SplitTestName>* output) override {
+  bool GetTests(std::vector<TestIdentifier>* output) override {
     *output = GetCompiledInTests();
     return true;
   }
@@ -180,6 +181,8 @@ int LaunchUnitTestsInternal(const RunTestSuiteCallback& run_test_suite,
   if (CommandLine::ForCurrentProcess()->HasSwitch(kGTestHelpFlag) ||
       CommandLine::ForCurrentProcess()->HasSwitch(kGTestListTestsFlag) ||
       CommandLine::ForCurrentProcess()->HasSwitch(kSingleProcessTestsFlag) ||
+      CommandLine::ForCurrentProcess()->HasSwitch(
+          switches::kTestChildProcess) ||
       force_single_process) {
     return run_test_suite.Run();
   }
@@ -537,7 +540,7 @@ UnitTestLauncherDelegate::~UnitTestLauncherDelegate() {
   DCHECK(thread_checker_.CalledOnValidThread());
 }
 
-bool UnitTestLauncherDelegate::GetTests(std::vector<SplitTestName>* output) {
+bool UnitTestLauncherDelegate::GetTests(std::vector<TestIdentifier>* output) {
   DCHECK(thread_checker_.CalledOnValidThread());
   return platform_delegate_->GetTests(output);
 }

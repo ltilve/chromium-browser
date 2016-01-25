@@ -1,0 +1,12 @@
+build obj/build/chromium_swarm_tests.actions_depends.stamp: stamp $
+    base_unittests.isolated content_browsertests.isolated $
+    content_unittests.isolated net_unittests.isolated $
+    browser_tests.isolated interactive_ui_tests.isolated $
+    sync_integration_tests.isolated unit_tests.isolated
+
+build obj/build/chromium_swarm_tests.compile_depends.stamp: stamp $
+    base_unittests.isolated content_browsertests.isolated $
+    content_unittests.isolated net_unittests.isolated $
+    browser_tests.isolated interactive_ui_tests.isolated $
+    sync_integration_tests.isolated unit_tests.isolated
+

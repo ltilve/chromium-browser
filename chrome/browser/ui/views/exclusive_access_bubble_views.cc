@@ -21,6 +21,7 @@
 #include "ui/gfx/animation/slide_animation.h"
 #include "ui/gfx/canvas.h"
 #include "ui/gfx/screen.h"
+#include "ui/native_theme/native_theme.h"
 #include "ui/strings/grit/ui_strings.h"
 #include "ui/views/bubble/bubble_border.h"
 #include "ui/views/controls/button/label_button.h"
@@ -131,9 +132,17 @@ ExclusiveAccessBubbleViews::ExclusiveAccessView::ExclusiveAccessView(
       message_label_(nullptr),
       button_view_(nullptr),
       browser_fullscreen_exit_accelerator_(accelerator) {
-  scoped_ptr<views::BubbleBorder> bubble_border(
-      new views::BubbleBorder(views::BubbleBorder::NONE,
-                              views::BubbleBorder::BIG_SHADOW, SK_ColorWHITE));
+  views::BubbleBorder::Shadow shadow_type = views::BubbleBorder::BIG_SHADOW;
+#if defined(OS_LINUX)
+  // Use a smaller shadow on Linux (including ChromeOS) as the shadow assets can
+  // overlap each other in a fullscreen notification bubble.
+  // See http://crbug.com/462983.
+  shadow_type = views::BubbleBorder::SMALL_SHADOW;
+#endif
+  ui::NativeTheme* theme = ui::NativeTheme::instance();
+  scoped_ptr<views::BubbleBorder> bubble_border(new views::BubbleBorder(
+      views::BubbleBorder::NONE, shadow_type,
+      theme->GetSystemColor(ui::NativeTheme::kColorId_BubbleBackground)));
   set_background(new views::BubbleBackground(bubble_border.get()));
   SetBorder(bubble_border.Pass());
   SetFocusable(false);
@@ -266,7 +275,11 @@ ExclusiveAccessBubbleViews::ExclusiveAccessBubbleViews(
       popup_(nullptr),
       animation_(new gfx::SlideAnimation(this)),
       animated_attribute_(ANIMATED_ATTRIBUTE_BOUNDS) {
-  animation_->Reset(1);
+  // With the simplified fullscreen UI flag, initially hide the bubble;
+  // otherwise, initially show it.
+  double initial_value =
+      ExclusiveAccessManager::IsSimplifiedFullscreenUIEnabled() ? 0 : 1;
+  animation_->Reset(initial_value);
 
   // Create the contents view.
   ui::Accelerator accelerator(ui::VKEY_UNKNOWN, ui::EF_NONE);
@@ -287,17 +300,18 @@ ExclusiveAccessBubbleViews::ExclusiveAccessBubbleViews(
   params.ownership = views::Widget::InitParams::WIDGET_OWNS_NATIVE_WIDGET;
   params.parent =
       bubble_view_context_->GetBubbleAssociatedWidget()->GetNativeView();
-  params.bounds = GetPopupRect(false);
   popup_->Init(params);
-  gfx::Size size = GetPopupRect(true).size();
   popup_->SetContentsView(view_);
+  gfx::Size size = GetPopupRect(true).size();
+  popup_->SetBounds(GetPopupRect(false));
   // We set layout manager to nullptr to prevent the widget from sizing its
   // contents to the same size as itself. This prevents the widget contents from
   // shrinking while we animate the height of the popup to give the impression
   // that it is sliding off the top of the screen.
   popup_->GetRootView()->SetLayoutManager(nullptr);
   view_->SetBounds(0, 0, size.width(), size.height());
-  popup_->ShowInactive();  // This does not activate the popup.
+  if (!ExclusiveAccessManager::IsSimplifiedFullscreenUIEnabled())
+    popup_->ShowInactive();  // This does not activate the popup.
 
   popup_->AddObserver(this);
 
@@ -464,13 +478,15 @@ gfx::Rect ExclusiveAccessBubbleViews::GetPopupRect(
     top_container_bottom =
         bubble_view_context_->GetTopContainerBoundsInScreen().bottom();
   }
-  int y = top_container_bottom + kPopupTopPx;
+  // |desired_top| is the top of the bubble area including the shadow.
+  int desired_top = kPopupTopPx - view_->border()->GetInsets().top();
+  int y = top_container_bottom + desired_top;
 
   if (!ignore_animation_state &&
       animated_attribute_ == ANIMATED_ATTRIBUTE_BOUNDS) {
-    int total_height = size.height() + kPopupTopPx;
+    int total_height = size.height() + desired_top;
     int popup_bottom = animation_->CurrentValueBetween(total_height, 0);
-    int y_offset = std::min(popup_bottom, kPopupTopPx);
+    int y_offset = std::min(popup_bottom, desired_top);
     size.set_height(size.height() - popup_bottom + y_offset);
     y -= y_offset;
   }

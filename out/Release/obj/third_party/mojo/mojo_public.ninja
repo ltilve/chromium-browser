@@ -1,0 +1,7 @@
+build obj/third_party/mojo/mojo_public.actions_depends.stamp: stamp $
+    obj/third_party/mojo/libmojo_js_bindings.a $
+    obj/third_party/mojo/libmojo_public_test_interfaces.a $
+    obj/third_party/mojo/libmojo_public_test_utils.a $
+    obj/third_party/mojo/libmojo_system.a $
+    obj/third_party/mojo/libmojo_utility.a
+

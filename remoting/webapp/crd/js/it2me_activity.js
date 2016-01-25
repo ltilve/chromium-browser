@@ -26,7 +26,7 @@ remoting.It2MeActivity = function() {
 
   var form = document.getElementById('access-code-form');
   /** @private */
-  this.accessCodeDialog_ = new remoting.InputDialog(
+  this.accessCodeDialog_ = remoting.modalDialogFactory.createInputDialog(
     remoting.AppMode.CLIENT_UNCONNECTED,
     form,
     form.querySelector('#access-code-entry'),
@@ -34,6 +34,9 @@ remoting.It2MeActivity = function() {
 
   /** @private {remoting.DesktopRemotingActivity} */
   this.desktopActivity_ = null;
+  /** @private {remoting.SessionLogger} */
+  this.logger_ = null;
+
 };
 
 remoting.It2MeActivity.prototype.dispose = function() {
@@ -44,7 +47,13 @@ remoting.It2MeActivity.prototype.dispose = function() {
 remoting.It2MeActivity.prototype.start = function() {
   var that = this;
 
-  this.desktopActivity_ = new remoting.DesktopRemotingActivity(this);
+  this.logger_ = this.createLogger_();
+  this.logger_.logSessionStateChange(
+      remoting.ChromotingEvent.SessionState.STARTED,
+      remoting.ChromotingEvent.ConnectionError.NONE);
+
+  this.desktopActivity_ =
+      new remoting.DesktopRemotingActivity(this, this.logger_);
 
   this.accessCodeDialog_.show().then(function(/** string */ accessCode) {
     that.desktopActivity_.getConnectingDialog().show();
@@ -57,11 +66,22 @@ remoting.It2MeActivity.prototype.start = function() {
     if (error.hasTag(remoting.Error.Tag.CANCELLED)) {
       remoting.setMode(remoting.AppMode.HOME);
     } else {
-      var errorDiv = document.getElementById('connect-error-message');
-      l10n.localizeElementFromTag(errorDiv, error.getTag());
-      remoting.setMode(remoting.AppMode.CLIENT_CONNECT_FAILED_IT2ME);
+      that.showErrorMessage_(error);
     }
   }));
+};
+
+
+/**
+ * @return {!remoting.SessionLogger}
+ * @private
+ */
+remoting.It2MeActivity.prototype.createLogger_ = function() {
+  var Event = remoting.ChromotingEvent;
+  var logger = remoting.SessionLogger.createForClient();
+  logger.setEntryPoint(Event.SessionEntryPoint.CONNECT_BUTTON);
+  logger.setLogEntryMode(Event.Mode.IT2ME);
+  return logger;
 };
 
 remoting.It2MeActivity.prototype.stop = function() {
@@ -149,7 +169,7 @@ remoting.It2MeActivity.prototype.verifyAccessCode_ = function(accessCode) {
  */
 remoting.It2MeActivity.prototype.connect_ = function(host) {
   this.desktopActivity_.start(
-      host, new remoting.CredentialsProvider({ accessCode: this.passCode_ }));
+      host, new remoting.CredentialsProvider({accessCode: this.passCode_}));
 };
 
 })();

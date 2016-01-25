@@ -1,0 +1,315 @@
+build obj/components/nacl_loader_unittests.actions_depends.stamp: stamp $
+    obj/components/libnacl.a obj/base/libtest_support_base.a $
+    obj/ipc/libtest_support_ipc.a obj/testing/libgtest.a obj/base/libbase.a $
+    gen/base/debug/debugging_flags.h obj/base/libbase_static.a $
+    obj/third_party/modp_b64/libmodp_b64.a $
+    obj/base/third_party/dynamic_annotations/libdynamic_annotations.a $
+    obj/base/libsymbolize.a obj/base/libxdg_mime.a $
+    obj/third_party/libevent/libevent.a obj/crypto/libcrcrypto.a $
+    obj/third_party/boringssl/libboringssl.a $
+    obj/third_party/boringssl/libboringssl.a obj/ipc/libipc.a $
+    obj/native_client/src/trusted/service_runtime/libsel.a $
+    obj/native_client/src/trusted/service_runtime/libsel.a $
+    obj/native_client/src/trusted/service_runtime/libenv_cleanser.a $
+    obj/native_client/src/trusted/service_runtime/libnacl_error_code.a $
+    obj/native_client/src/shared/gio/libgio.a $
+    obj/native_client/src/shared/platform/libplatform.a $
+    obj/native_client/src/shared/srpc/libnonnacl_srpc.a $
+    obj/native_client/src/trusted/debug_stub/libdebug_stub.a $
+    obj/native_client/src/trusted/desc/libnrd_xfer.a $
+    obj/native_client/src/trusted/desc/libdesc_wrapper.a $
+    obj/native_client/src/shared/imc/libimc.a $
+    obj/native_client/src/trusted/nacl_base/libnacl_base.a $
+    obj/native_client/src/trusted/fault_injection/libnacl_fault_inject.a $
+    obj/native_client/src/trusted/interval_multiset/libnacl_interval.a $
+    obj/native_client/src/trusted/perf_counter/libnacl_perf_counter.a $
+    obj/native_client/src/trusted/platform_qualify/libplatform_qual_lib.a $
+    obj/native_client/src/trusted/cpu_features/libcpu_features.a $
+    obj/native_client/src/trusted/simple_service/libsimple_service.a $
+    obj/native_client/src/trusted/threading/libthread_interface.a $
+    obj/native_client/src/trusted/validator/libvalidation_cache.a $
+    obj/native_client/src/trusted/validator/libvalidators.a $
+    obj/native_client/src/trusted/service_runtime/arch/x86/libservice_runtime_x86_common.a $
+    obj/native_client/src/trusted/validator_ragel/libdfa_validate_x86_64.a $
+    obj/native_client/src/trusted/service_runtime/arch/x86_64/libservice_runtime_x86_64.a $
+    obj/native_client/src/trusted/validator_x86/libnccopy_x86_64.a $
+    obj/native_client/src/trusted/service_runtime/libnacl_signal.a $
+    obj/ppapi/libppapi_ipc.a obj/gpu/libgpu_ipc.a $
+    obj/gpu/libcommand_buffer_common.a $
+    obj/gpu/command_buffer/libgles2_utils.a $
+    obj/skia/skia.actions_depends.stamp obj/skia/libskia_library.a $
+    obj/skia/libskia_opts.a obj/skia/libskia_opts_ssse3.a $
+    obj/skia/libskia_opts_sse41.a obj/skia/libskia_opts_sse42.a $
+    obj/skia/libskia_opts_avx.a obj/skia/libskia_opts_avx2.a $
+    obj/third_party/zlib/libchrome_zlib.a $
+    obj/third_party/zlib/libzlib_x86_simd.a $
+    obj/third_party/sfntly/libsfntly.a obj/third_party/icu/libicuuc.a $
+    icudtl.dat icudtl.dat obj/skia/libskia_chrome.a $
+    obj/ppapi/libppapi_shared.a obj/base/libbase_i18n.a $
+    obj/third_party/icu/libicui18n.a obj/gpu/libcommand_buffer_client.a $
+    obj/gpu/libgles2_implementation.a obj/ui/gfx/libgfx_geometry.a $
+    obj/ui/gl/libgl_wrapper.a obj/ui/gfx/libgfx.a $
+    obj/third_party/harfbuzz-ng/libharfbuzz-ng.a $
+    obj/third_party/libpng/libpng.a $
+    obj/third_party/libjpeg_turbo/libjpeg_turbo.a obj/ui/gfx/x/libgfx_x11.a $
+    obj/ui/events/platform/libevents_platform.a $
+    obj/gpu/libgles2_cmd_helper.a obj/media/libshared_memory_support.a $
+    obj/ui/surface/libsurface.a obj/ui/base/libui_base.a obj/net/libnet.a $
+    obj/third_party/protobuf/libprotobuf_lite.a obj/url/liburl_lib.a $
+    obj/net/libnet_quic_proto.a obj/base/libbase_prefs.a obj/sdch/libsdch.a $
+    obj/net/net_derived_sources.actions_rules_copies.stamp $
+    obj/net/net_resources.actions_rules_copies.stamp $
+    obj/build/linux/libgio.a obj/ui/events/libevents.a $
+    obj/ui/events/libdom_keycode_converter.a obj/ui/events/libevents_base.a $
+    obj/ui/events/libgesture_detection.a $
+    obj/ui/events/devices/libevents_devices.a $
+    obj/ui/resources/ui_resources.actions_rules_copies.stamp $
+    obj/ui/strings/ui_strings.actions_rules_copies.stamp $
+    obj/ui/events/platform/x11/libx11_events_platform.a $
+    nacl_irt_x86_64.nexe $
+    obj/ppapi/native_client/src/untrusted/pnacl_irt_shim/irt.actions_rules_copies.stamp $
+    obj/ppapi/ppapi_proxy_nacl.actions_rules_copies.stamp $
+    obj/base/base_nacl.actions_rules_copies.stamp $
+    gen/tc_nonsfi_helper/lib32/libbase_nacl_nonsfi.a $
+    gen/tc_nonsfi_helper/lib32/libevent_nacl_nonsfi.a $
+    obj/components/tracing_nacl.actions_rules_copies.stamp $
+    gen/tc_irt/lib64/libipc_nacl.a $
+    gen/tc_nonsfi_helper/lib32/libipc_nacl_nonsfi.a $
+    obj/gpu/command_buffer/gles2_utils_nacl.actions_rules_copies.stamp $
+    obj/gpu/command_buffer_client_nacl.actions_rules_copies.stamp $
+    obj/gpu/command_buffer_common_nacl.actions_rules_copies.stamp $
+    obj/gpu/gles2_cmd_helper_nacl.actions_rules_copies.stamp $
+    obj/gpu/gles2_implementation_nacl.actions_rules_copies.stamp $
+    obj/gpu/gpu_ipc_nacl.actions_rules_copies.stamp $
+    obj/ppapi/ppapi_ipc_nacl.actions_rules_copies.stamp $
+    obj/ppapi/ppapi_shared_nacl.actions_rules_copies.stamp $
+    obj/media/shared_memory_support_nacl.actions_rules_copies.stamp $
+    obj/native_client/src/untrusted/irt/irt_browser_lib.actions_rules_copies.stamp $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp $
+    obj/native_client/src/shared/srpc/srpc_lib.actions_rules_copies.stamp $
+    obj/native_client/src/shared/platform/platform_lib.actions_rules_copies.stamp $
+    obj/native_client/src/untrusted/nacl/imc_syscalls_lib.actions_rules_copies.stamp $
+    obj/native_client/src/shared/gio/gio_lib.actions_rules_copies.stamp $
+    obj/ppapi/native_client/src/untrusted/pnacl_support_extension/pnacl_support_extension.actions_rules_copies.stamp $
+    obj/ppapi/native_client/src/untrusted/pnacl_irt_shim/browser.actions_rules_copies.stamp $
+    obj/testing/libgmock.a obj/third_party/libxml/libxml2.a
+
+build obj/components/nacl_loader_unittests.compile_depends.stamp: stamp $
+    obj/components/nacl.compile_depends.stamp $
+    gen/base/debug/debugging_flags.h gen/base/debug/debugging_flags.h $
+    icudtl.dat icudtl.dat icudtl.dat $
+    obj/third_party/libjpeg_turbo/libjpeg.actions_rules_copies.stamp $
+    obj/ui/base/ui_base.compile_depends.stamp $
+    obj/net/net.compile_depends.stamp $
+    obj/net/net_quic_proto.actions_rules_copies.stamp $
+    obj/net/net_derived_sources.actions_rules_copies.stamp $
+    obj/net/net_resources.actions_rules_copies.stamp $
+    obj/build/linux/gio.actions_rules_copies.stamp $
+    obj/ui/resources/ui_resources.actions_rules_copies.stamp $
+    obj/ui/strings/ui_strings.actions_rules_copies.stamp $
+    nacl_irt_x86_64.nexe $
+    obj/ppapi/native_client/src/untrusted/pnacl_irt_shim/irt.actions_rules_copies.stamp $
+    obj/ppapi/ppapi_proxy_nacl.actions_rules_copies.stamp $
+    obj/base/base_nacl.actions_rules_copies.stamp $
+    gen/tc_nonsfi_helper/lib32/libbase_nacl_nonsfi.a $
+    gen/tc_nonsfi_helper/lib32/libevent_nacl_nonsfi.a $
+    obj/components/tracing_nacl.actions_rules_copies.stamp $
+    gen/tc_irt/lib64/libipc_nacl.a $
+    gen/tc_nonsfi_helper/lib32/libipc_nacl_nonsfi.a $
+    obj/gpu/command_buffer/gles2_utils_nacl.actions_rules_copies.stamp $
+    obj/gpu/command_buffer_client_nacl.actions_rules_copies.stamp $
+    obj/gpu/command_buffer_common_nacl.actions_rules_copies.stamp $
+    obj/gpu/gles2_cmd_helper_nacl.actions_rules_copies.stamp $
+    obj/gpu/gles2_implementation_nacl.actions_rules_copies.stamp $
+    obj/gpu/gpu_ipc_nacl.actions_rules_copies.stamp $
+    obj/ppapi/ppapi_ipc_nacl.actions_rules_copies.stamp $
+    obj/ppapi/ppapi_shared_nacl.actions_rules_copies.stamp $
+    obj/media/shared_memory_support_nacl.actions_rules_copies.stamp $
+    obj/native_client/src/untrusted/irt/irt_browser_lib.actions_rules_copies.stamp $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp $
+    obj/native_client/src/shared/srpc/srpc_lib.actions_rules_copies.stamp $
+    obj/native_client/src/shared/platform/platform_lib.actions_rules_copies.stamp $
+    obj/native_client/src/untrusted/nacl/imc_syscalls_lib.actions_rules_copies.stamp $
+    obj/native_client/src/shared/gio/gio_lib.actions_rules_copies.stamp $
+    obj/ppapi/native_client/src/untrusted/pnacl_support_extension/pnacl_support_extension.actions_rules_copies.stamp $
+    obj/ppapi/native_client/src/untrusted/pnacl_irt_shim/browser.actions_rules_copies.stamp
+
+defines = -DV8_DEPRECATION_WARNINGS -DCLD_VERSION=2 -D_FILE_OFFSET_BITS=64 $
+    -DCHROMIUM_BUILD -DCR_CLANG_REVISION=255169-1 $
+    -DUI_COMPOSITOR_IMAGE_TRANSPORT -DUSE_AURA=1 -DUSE_ASH=1 -DUSE_PANGO=1 $
+    -DUSE_CAIRO=1 -DUSE_DEFAULT_RENDER_THEME=1 -DUSE_LIBJPEG_TURBO=1 $
+    -DUSE_X11=1 -DUSE_CLIPBOARD_AURAX11=1 -DENABLE_ONE_CLICK_SIGNIN $
+    -DENABLE_WEBRTC=1 -DENABLE_MEDIA_ROUTER=1 -DENABLE_PEPPER_CDMS $
+    -DENABLE_CONFIGURATION_POLICY -DENABLE_NOTIFICATIONS -DENABLE_HIDPI=1 $
+    -DENABLE_TOPCHROME_MD=1 -DUSE_UDEV -DDONT_EMBED_BUILD_METADATA $
+    -DFIELDTRIAL_TESTING_ENABLED -DENABLE_TASK_MANAGER=1 $
+    -DENABLE_EXTENSIONS=1 -DENABLE_PDF=1 -DENABLE_PLUGINS=1 $
+    -DENABLE_SESSION_SERVICE=1 -DENABLE_THEMES=1 -DENABLE_AUTOFILL_DIALOG=1 $
+    -DENABLE_BACKGROUND=1 -DENABLE_PRINTING=1 -DENABLE_BASIC_PRINTING=1 $
+    -DENABLE_PRINT_PREVIEW=1 -DENABLE_SPELLCHECK=1 $
+    -DENABLE_CAPTIVE_PORTAL_DETECTION=1 -DENABLE_APP_LIST=1 $
+    -DENABLE_SETTINGS_APP=1 -DENABLE_SUPERVISED_USERS=1 -DENABLE_MDNS=1 $
+    -DENABLE_SERVICE_DISCOVERY=1 -DV8_USE_EXTERNAL_STARTUP_DATA $
+    -DFULL_SAFE_BROWSING -DSAFE_BROWSING_CSD -DSAFE_BROWSING_DB_LOCAL $
+    -DGL_GLEXT_PROTOTYPES -DGTEST_HAS_POSIX_RE=0 -DGTEST_LANG_CXX11=0 $
+    -DUNIT_TEST -DGTEST_HAS_RTTI=0 -DUSE_LIBPCI=1 -DUSE_OPENSSL=1 $
+    -DUSE_GLIB=1 -DUSE_NSS_CERTS=1 -D__STDC_CONSTANT_MACROS $
+    -D__STDC_FORMAT_MACROS -DNDEBUG -DNVALGRIND $
+    -DDYNAMIC_ANNOTATIONS_ENABLED=0
+includes = -Igen -I../../third_party/khronos -I../../gpu -I../.. $
+    -I../../skia/config -I../../testing/gtest/include
+cflags = -fstack-protector --param=ssp-buffer-size=4 -Werror -pthread $
+    -fno-strict-aliasing -Wall -Wno-unused-parameter $
+    -Wno-missing-field-initializers -fvisibility=hidden -pipe -fPIC $
+    -Wno-reserved-user-defined-literal -Xclang -load -Xclang $
+    /b/build/slave/publish_tarball/build/src/third_party/llvm-build/Release+Asserts/lib/libFindBadConstructs.so $
+    -Xclang -add-plugin -Xclang find-bad-constructs -Xclang $
+    -plugin-arg-find-bad-constructs -Xclang check-templates $
+    -fcolor-diagnostics $
+    -B/b/build/slave/publish_tarball/build/src/third_party/binutils/Linux_x64/Release/bin $
+    -Wheader-hygiene -Wno-char-subscripts $
+    -Wno-unneeded-internal-declaration -Wno-covered-switch-default $
+    -Wstring-conversion -Wno-c++11-narrowing -Wno-deprecated-register $
+    -Wno-inconsistent-missing-override -Wno-shift-negative-value $
+    -Wno-bitfield-width -pthread $
+    -I/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/include/glib-2.0 $
+    -I/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/lib/x86_64-linux-gnu/glib-2.0/include $
+    -m64 -march=x86-64 $
+    --sysroot=/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot $
+    -O2 -fno-ident -fdata-sections -ffunction-sections -funwind-tables
+cflags_c = 
+cflags_cc = -fno-exceptions -fno-rtti -fno-threadsafe-statics $
+    -fvisibility-inlines-hidden -Wsign-compare -std=gnu++11
+arflags = 
+
+build $
+    obj/components/nacl/loader/nacl_loader_unittests.nacl_ipc_adapter_unittest.o: $
+    cxx ../../components/nacl/loader/nacl_ipc_adapter_unittest.cc || $
+    obj/components/nacl_loader_unittests.compile_depends.stamp
+build $
+    obj/components/nacl/loader/nacl_loader_unittests.nacl_validation_query_unittest.o: $
+    cxx ../../components/nacl/loader/nacl_validation_query_unittest.cc || $
+    obj/components/nacl_loader_unittests.compile_depends.stamp
+build obj/components/nacl/loader/nacl_loader_unittests.run_all_unittests.o: $
+    cxx ../../components/nacl/loader/run_all_unittests.cc || $
+    obj/components/nacl_loader_unittests.compile_depends.stamp
+
+ldflags = -Wl,-z,now -Wl,-z,relro -Wl,--fatal-warnings -Wl,-z,defs -pthread $
+    -Wl,-z,noexecstack -fPIC -fuse-ld=gold $
+    -B/b/build/slave/publish_tarball/build/src/third_party/binutils/Linux_x64/Release/bin $
+    -Wl,--disable-new-dtags -L. $
+    -Wl,-uhb_ft_face_create_cached,-uhb_glib_get_unicode_funcs -m64 $
+    --sysroot=/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot $
+    -L/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/lib/x86_64-linux-gnu $
+    -Wl,-rpath-link=/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/lib/x86_64-linux-gnu $
+    -L/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/lib/x86_64-linux-gnu $
+    -Wl,-rpath-link=/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/lib/x86_64-linux-gnu $
+    -L/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/lib/gcc/x86_64-linux-gnu/4.6 $
+    -Wl,-rpath-link=/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/lib/gcc/x86_64-linux-gnu/4.6 $
+    -L/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/lib $
+    -Wl,-rpath-link=/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/lib $
+    -Wl,--detect-odr-violations -Wl,--icf=all -Wl,-O1 -Wl,--as-needed $
+    -Wl,--gc-sections
+libs =  -lrt -ldl -lgmodule-2.0 -lgobject-2.0 -lgthread-2.0 -lglib-2.0 $
+    -lnss3 -lnssutil3 -lsmime3 -lplds4 -lplc4 -lnspr4 -lfontconfig $
+    -lfreetype -lpangocairo-1.0 -lcairo -lpangoft2-1.0 -lpango-1.0 -lX11 $
+    -lXi -lXcomposite -lXext -lgconf-2 -lgio-2.0 -lresolv -lXcursor $
+    -lXfixes -lXrender -lXss -lm
+build nacl_loader_unittests: link $
+    obj/components/nacl/loader/nacl_loader_unittests.nacl_ipc_adapter_unittest.o $
+    obj/components/nacl/loader/nacl_loader_unittests.nacl_validation_query_unittest.o $
+    obj/components/nacl/loader/nacl_loader_unittests.run_all_unittests.o $
+    obj/components/libnacl.a obj/base/libtest_support_base.a $
+    obj/ipc/libtest_support_ipc.a obj/testing/libgtest.a obj/base/libbase.a $
+    obj/base/libbase_static.a obj/third_party/modp_b64/libmodp_b64.a $
+    obj/base/third_party/dynamic_annotations/libdynamic_annotations.a $
+    obj/base/libsymbolize.a obj/base/libxdg_mime.a $
+    obj/third_party/libevent/libevent.a obj/crypto/libcrcrypto.a $
+    obj/third_party/boringssl/libboringssl.a obj/ipc/libipc.a $
+    obj/native_client/src/trusted/service_runtime/libsel.a $
+    obj/native_client/src/trusted/service_runtime/libenv_cleanser.a $
+    obj/native_client/src/trusted/service_runtime/libnacl_error_code.a $
+    obj/native_client/src/shared/gio/libgio.a $
+    obj/native_client/src/shared/platform/libplatform.a $
+    obj/native_client/src/shared/srpc/libnonnacl_srpc.a $
+    obj/native_client/src/trusted/debug_stub/libdebug_stub.a $
+    obj/native_client/src/trusted/desc/libnrd_xfer.a $
+    obj/native_client/src/trusted/desc/libdesc_wrapper.a $
+    obj/native_client/src/shared/imc/libimc.a $
+    obj/native_client/src/trusted/nacl_base/libnacl_base.a $
+    obj/native_client/src/trusted/fault_injection/libnacl_fault_inject.a $
+    obj/native_client/src/trusted/interval_multiset/libnacl_interval.a $
+    obj/native_client/src/trusted/perf_counter/libnacl_perf_counter.a $
+    obj/native_client/src/trusted/platform_qualify/libplatform_qual_lib.a $
+    obj/native_client/src/trusted/cpu_features/libcpu_features.a $
+    obj/native_client/src/trusted/simple_service/libsimple_service.a $
+    obj/native_client/src/trusted/threading/libthread_interface.a $
+    obj/native_client/src/trusted/validator/libvalidation_cache.a $
+    obj/native_client/src/trusted/validator/libvalidators.a $
+    obj/native_client/src/trusted/service_runtime/arch/x86/libservice_runtime_x86_common.a $
+    obj/native_client/src/trusted/validator_ragel/libdfa_validate_x86_64.a $
+    obj/native_client/src/trusted/service_runtime/arch/x86_64/libservice_runtime_x86_64.a $
+    obj/native_client/src/trusted/validator_x86/libnccopy_x86_64.a $
+    obj/native_client/src/trusted/service_runtime/libnacl_signal.a $
+    obj/ppapi/libppapi_ipc.a obj/gpu/libgpu_ipc.a $
+    obj/gpu/libcommand_buffer_common.a $
+    obj/gpu/command_buffer/libgles2_utils.a obj/skia/libskia_library.a $
+    obj/skia/libskia_opts.a obj/skia/libskia_opts_ssse3.a $
+    obj/skia/libskia_opts_sse41.a obj/skia/libskia_opts_sse42.a $
+    obj/skia/libskia_opts_avx.a obj/skia/libskia_opts_avx2.a $
+    obj/third_party/zlib/libchrome_zlib.a $
+    obj/third_party/zlib/libzlib_x86_simd.a $
+    obj/third_party/sfntly/libsfntly.a obj/third_party/icu/libicuuc.a $
+    obj/skia/libskia_chrome.a obj/ppapi/libppapi_shared.a $
+    obj/base/libbase_i18n.a obj/third_party/icu/libicui18n.a $
+    obj/gpu/libcommand_buffer_client.a obj/gpu/libgles2_implementation.a $
+    obj/ui/gfx/libgfx_geometry.a obj/ui/gl/libgl_wrapper.a $
+    obj/ui/gfx/libgfx.a obj/third_party/harfbuzz-ng/libharfbuzz-ng.a $
+    obj/third_party/libpng/libpng.a $
+    obj/third_party/libjpeg_turbo/libjpeg_turbo.a obj/ui/gfx/x/libgfx_x11.a $
+    obj/ui/events/platform/libevents_platform.a $
+    obj/gpu/libgles2_cmd_helper.a obj/media/libshared_memory_support.a $
+    obj/ui/surface/libsurface.a obj/ui/base/libui_base.a obj/net/libnet.a $
+    obj/third_party/protobuf/libprotobuf_lite.a obj/url/liburl_lib.a $
+    obj/net/libnet_quic_proto.a obj/base/libbase_prefs.a obj/sdch/libsdch.a $
+    obj/build/linux/libgio.a obj/ui/events/libevents.a $
+    obj/ui/events/libdom_keycode_converter.a obj/ui/events/libevents_base.a $
+    obj/ui/events/libgesture_detection.a $
+    obj/ui/events/devices/libevents_devices.a $
+    obj/ui/events/platform/x11/libx11_events_platform.a $
+    obj/testing/libgmock.a obj/third_party/libxml/libxml2.a | $
+    gen/tc_nonsfi_helper/lib32/libipc_nacl_nonsfi.a $
+    obj/native_client/src/untrusted/nacl/imc_syscalls_lib.actions_rules_copies.stamp $
+    obj/third_party/boringssl/libboringssl.a $
+    obj/ppapi/native_client/src/untrusted/pnacl_irt_shim/irt.actions_rules_copies.stamp $
+    obj/gpu/command_buffer_client_nacl.actions_rules_copies.stamp $
+    icudtl.dat obj/ppapi/ppapi_shared_nacl.actions_rules_copies.stamp $
+    obj/native_client/src/shared/srpc/srpc_lib.actions_rules_copies.stamp $
+    obj/components/tracing_nacl.actions_rules_copies.stamp $
+    obj/gpu/command_buffer_common_nacl.actions_rules_copies.stamp $
+    obj/ppapi/native_client/src/untrusted/pnacl_support_extension/pnacl_support_extension.actions_rules_copies.stamp $
+    obj/skia/skia.actions_depends.stamp $
+    obj/gpu/command_buffer/gles2_utils_nacl.actions_rules_copies.stamp $
+    obj/ppapi/ppapi_ipc_nacl.actions_rules_copies.stamp $
+    obj/base/base_nacl.actions_rules_copies.stamp $
+    obj/ppapi/native_client/src/untrusted/pnacl_irt_shim/browser.actions_rules_copies.stamp $
+    obj/native_client/src/shared/gio/gio_lib.actions_rules_copies.stamp $
+    obj/ui/resources/ui_resources.actions_rules_copies.stamp $
+    obj/net/net_derived_sources.actions_rules_copies.stamp $
+    obj/ui/strings/ui_strings.actions_rules_copies.stamp $
+    obj/ppapi/ppapi_proxy_nacl.actions_rules_copies.stamp $
+    obj/gpu/gles2_implementation_nacl.actions_rules_copies.stamp $
+    obj/net/net_resources.actions_rules_copies.stamp $
+    obj/native_client/src/shared/platform/platform_lib.actions_rules_copies.stamp $
+    gen/tc_irt/lib64/libipc_nacl.a nacl_irt_x86_64.nexe $
+    gen/base/debug/debugging_flags.h $
+    obj/gpu/gpu_ipc_nacl.actions_rules_copies.stamp $
+    obj/native_client/src/untrusted/irt/irt_browser_lib.actions_rules_copies.stamp $
+    gen/tc_nonsfi_helper/lib32/libevent_nacl_nonsfi.a $
+    obj/gpu/gles2_cmd_helper_nacl.actions_rules_copies.stamp $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp $
+    obj/media/shared_memory_support_nacl.actions_rules_copies.stamp $
+    obj/native_client/src/trusted/service_runtime/libsel.a $
+    gen/tc_nonsfi_helper/lib32/libbase_nacl_nonsfi.a || $
+    obj/components/nacl_loader_unittests.actions_depends.stamp
+  ld = $ldxx

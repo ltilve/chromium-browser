@@ -30,6 +30,14 @@
 #include "components/autofill/core/browser/wallet/real_pan_wallet_client.h"
 #include "components/autofill/core/common/form_data.h"
 
+// This define protects some debugging code (see DumpAutofillData). This
+// is here to make it easier to delete this code when the test is complete,
+// and to prevent adding the code on mobile where there is no desktop (the
+// debug dump file is written to the desktop) or command-line flags to enable.
+#if defined(OS_WIN) || defined(OS_MACOSX) || defined(OS_LINUX)
+#define ENABLE_FORM_DEBUG_DUMP
+#endif
+
 class ChromeUIWebViewWebTest;
 class ChromeWKWebViewWebTest;
 
@@ -73,10 +81,6 @@ class AutofillManager : public AutofillDownloadManager::Observer,
   // Registers our Enable/Disable Autofill pref.
   static void RegisterProfilePrefs(user_prefs::PrefRegistrySyncable* registry);
 
-#if defined(OS_MACOSX) && !defined(OS_IOS)
-  static void MigrateUserPrefs(PrefService* prefs);
-#endif  // defined(OS_MACOSX) && !defined(OS_IOS)
-
   AutofillManager(AutofillDriver* driver,
                   AutofillClient* client,
                   const std::string& app_locale,
@@ -87,25 +91,6 @@ class AutofillManager : public AutofillDownloadManager::Observer,
   void SetExternalDelegate(AutofillExternalDelegate* delegate);
 
   void ShowAutofillSettings();
-
-#if defined(OS_MACOSX) && !defined(OS_IOS)
-  // Whether the |field| should show an entry to prompt the user to give Chrome
-  // access to the user's address book.
-  bool ShouldShowAccessAddressBookSuggestion(const FormData& form,
-                                             const FormFieldData& field);
-
-  // If Chrome has not prompted for access to the user's address book, the
-  // method prompts the user for permission and blocks the process. Otherwise,
-  // this method has no effect. The return value reflects whether the user was
-  // prompted with a modal dialog.
-  bool AccessAddressBook();
-
-  // The access Address Book prompt was shown for a form.
-  void ShowedAccessAddressBookPrompt();
-
-  // The number of times that the access address book prompt was shown.
-  int AccessAddressBookPromptCount();
-#endif  // defined(OS_MACOSX) && !defined(OS_IOS)
 
   // Whether the |field| should show an entry to scan a credit card.
   virtual bool ShouldShowScanCreditCard(const FormData& form,
@@ -161,6 +146,11 @@ class AutofillManager : public AutofillDownloadManager::Observer,
   void OnFormsSeen(const std::vector<FormData>& forms,
                    const base::TimeTicks& timestamp);
 
+  // IMPORTANT: On iOS, this method is called when the form is submitted,
+  // immediately before OnFormSubmitted() is called. Do not assume that
+  // OnWillSubmitForm() will run before the form submits.
+  // TODO(mathp): Revisit this and use a single method to track form submission.
+  //
   // Processes the about-to-be-submitted |form|, uploading the possible field
   // types for the submitted fields to the crowdsourcing server. Returns false
   // if this form is not relevant for Autofill.
@@ -189,12 +179,22 @@ class AutofillManager : public AutofillDownloadManager::Observer,
   //   - This function will only label the first <input type="password"> field
   //     as |password_type|. Other fields will stay unlabeled, as they
   //     should have been labeled during the upload for OnFormSubmitted().
+  //   - If the |username_field| attribute is nonempty, we will additionally
+  //     label the field with that name as the username field.
   //   - This function does not assume that |form| is being uploaded during
   //     the same browsing session as it was originally submitted (as we may
   //     not have the necessary information to classify the form at that time)
   //     so it bypasses the cache and doesn't log the same quality UMA metrics.
+  // |login_form_signature| may be empty. It is non-empty when the user fills
+  // and submits a login form using a generated password. In this case,
+  // |login_form_signature| should be set to the submitted form's signature.
+  // Note that in this case, |form.FormSignature()| gives the signature for the
+  // registration form on which the password was generated, rather than the
+  // submitted form's signature.
   virtual bool UploadPasswordForm(const FormData& form,
-                                  const ServerFieldType& pasword_type);
+                                  const base::string16& username_field,
+                                  const ServerFieldType& pasword_type,
+                                  const std::string& login_form_signature);
 
   // Resets cache.
   virtual void Reset();
@@ -238,6 +238,11 @@ class AutofillManager : public AutofillDownloadManager::Observer,
   // Exposed for testing.
   AutofillExternalDelegate* external_delegate() {
     return external_delegate_;
+  }
+
+  // Exposed for testing.
+  void set_download_manager(AutofillDownloadManager* manager) {
+    download_manager_.reset(manager);
   }
 
  private:
@@ -361,11 +366,10 @@ class AutofillManager : public AutofillDownloadManager::Observer,
   // Shared code to determine if |form| should be uploaded.
   bool ShouldUploadForm(const FormStructure& form);
 
-#if defined(OS_MACOSX) && !defined(OS_IOS)
-  // Emits a UMA metric indicating whether the accepted Autofill suggestion is
-  // from the Mac Address Book.
-  void EmitIsFromAddressBookMetric(int unique_id);
-#endif  // defined(OS_MACOSX) && !defined(OS_IOS)
+#ifdef ENABLE_FORM_DEBUG_DUMP
+  // Dumps the cached forms to a file on disk.
+  void DumpAutofillData(bool imported_cc) const;
+#endif
 
   // Provides driver-level context to the shared code of the component. Must
   // outlive this object.
@@ -433,6 +437,13 @@ class AutofillManager : public AutofillDownloadManager::Observer,
   // Masked copies of recently unmasked cards, to help avoid double-asking to
   // save the card (in the prompt and in the infobar after submit).
   std::vector<CreditCard> recently_unmasked_cards_;
+
+#ifdef ENABLE_FORM_DEBUG_DUMP
+  // The last few autofilled forms (key/value pairs) submitted, for debugging.
+  // TODO(brettw) this should be removed. See DumpAutofillData.
+  std::vector<std::map<std::string, base::string16>>
+      recently_autofilled_forms_;
+#endif
 
   // Suggestion backend ID to ID mapping. We keep two maps to convert back and
   // forth. These should be used only by BackendIDToInt and IntToBackendID.

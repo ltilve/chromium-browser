@@ -1,0 +1,130 @@
+rule net_derived_sources_target_dafsa_e756cc91bcd4a8db238e4c25f7324008
+  command = cd ../../net; python tools/dafsa/make_dafsa.py "${source}" $
+      "../out/Debug/gen/net/${dirname}/${root}-inc.cc"
+  description = RULE net_derived_sources: $
+      dafsa_e756cc91bcd4a8db238e4c25f7324008 ${source}
+  restat = 1
+
+build gen/net/base/registry_controlled_domains/effective_tld_names-inc.cc: $
+    net_derived_sources_target_dafsa_e756cc91bcd4a8db238e4c25f7324008 $
+    ../../net/base/registry_controlled_domains/effective_tld_names.gperf | $
+    ../../net/tools/dafsa/make_dafsa.py
+  source = base/registry_controlled_domains/effective_tld_names.gperf
+  dirname = base/registry_controlled_domains
+  root = effective_tld_names
+build $
+    gen/net/base/registry_controlled_domains/effective_tld_names_unittest1-inc.cc: $
+    net_derived_sources_target_dafsa_e756cc91bcd4a8db238e4c25f7324008 $
+    ../../net/base/registry_controlled_domains/effective_tld_names_unittest1.gperf $
+    | ../../net/tools/dafsa/make_dafsa.py
+  source = $
+      base/registry_controlled_domains/effective_tld_names_unittest1.gperf
+  dirname = base/registry_controlled_domains
+  root = effective_tld_names_unittest1
+build $
+    gen/net/base/registry_controlled_domains/effective_tld_names_unittest2-inc.cc: $
+    net_derived_sources_target_dafsa_e756cc91bcd4a8db238e4c25f7324008 $
+    ../../net/base/registry_controlled_domains/effective_tld_names_unittest2.gperf $
+    | ../../net/tools/dafsa/make_dafsa.py
+  source = $
+      base/registry_controlled_domains/effective_tld_names_unittest2.gperf
+  dirname = base/registry_controlled_domains
+  root = effective_tld_names_unittest2
+build $
+    gen/net/base/registry_controlled_domains/effective_tld_names_unittest3-inc.cc: $
+    net_derived_sources_target_dafsa_e756cc91bcd4a8db238e4c25f7324008 $
+    ../../net/base/registry_controlled_domains/effective_tld_names_unittest3.gperf $
+    | ../../net/tools/dafsa/make_dafsa.py
+  source = $
+      base/registry_controlled_domains/effective_tld_names_unittest3.gperf
+  dirname = base/registry_controlled_domains
+  root = effective_tld_names_unittest3
+build $
+    gen/net/base/registry_controlled_domains/effective_tld_names_unittest4-inc.cc: $
+    net_derived_sources_target_dafsa_e756cc91bcd4a8db238e4c25f7324008 $
+    ../../net/base/registry_controlled_domains/effective_tld_names_unittest4.gperf $
+    | ../../net/tools/dafsa/make_dafsa.py
+  source = $
+      base/registry_controlled_domains/effective_tld_names_unittest4.gperf
+  dirname = base/registry_controlled_domains
+  root = effective_tld_names_unittest4
+build $
+    gen/net/base/registry_controlled_domains/effective_tld_names_unittest5-inc.cc: $
+    net_derived_sources_target_dafsa_e756cc91bcd4a8db238e4c25f7324008 $
+    ../../net/base/registry_controlled_domains/effective_tld_names_unittest5.gperf $
+    | ../../net/tools/dafsa/make_dafsa.py
+  source = $
+      base/registry_controlled_domains/effective_tld_names_unittest5.gperf
+  dirname = base/registry_controlled_domains
+  root = effective_tld_names_unittest5
+build $
+    gen/net/base/registry_controlled_domains/effective_tld_names_unittest6-inc.cc: $
+    net_derived_sources_target_dafsa_e756cc91bcd4a8db238e4c25f7324008 $
+    ../../net/base/registry_controlled_domains/effective_tld_names_unittest6.gperf $
+    | ../../net/tools/dafsa/make_dafsa.py
+  source = $
+      base/registry_controlled_domains/effective_tld_names_unittest6.gperf
+  dirname = base/registry_controlled_domains
+  root = effective_tld_names_unittest6
+build gen/net/base/stale_while_revalidate_experiment_domains-inc.cc: $
+    net_derived_sources_target_dafsa_e756cc91bcd4a8db238e4c25f7324008 $
+    ../../net/base/stale_while_revalidate_experiment_domains.gperf | $
+    ../../net/tools/dafsa/make_dafsa.py
+  source = base/stale_while_revalidate_experiment_domains.gperf
+  dirname = base
+  root = stale_while_revalidate_experiment_domains
+build obj/net/net_derived_sources.actions_rules_copies.stamp: stamp $
+    gen/net/base/registry_controlled_domains/effective_tld_names-inc.cc $
+    gen/net/base/registry_controlled_domains/effective_tld_names_unittest1-inc.cc $
+    gen/net/base/registry_controlled_domains/effective_tld_names_unittest2-inc.cc $
+    gen/net/base/registry_controlled_domains/effective_tld_names_unittest3-inc.cc $
+    gen/net/base/registry_controlled_domains/effective_tld_names_unittest4-inc.cc $
+    gen/net/base/registry_controlled_domains/effective_tld_names_unittest5-inc.cc $
+    gen/net/base/registry_controlled_domains/effective_tld_names_unittest6-inc.cc $
+    gen/net/base/stale_while_revalidate_experiment_domains-inc.cc
+
+defines = -DV8_DEPRECATION_WARNINGS -DCLD_VERSION=2 -D_FILE_OFFSET_BITS=64 $
+    -DCHROMIUM_BUILD -DCR_CLANG_REVISION=255169-1 $
+    -DUI_COMPOSITOR_IMAGE_TRANSPORT -DUSE_AURA=1 -DUSE_ASH=1 -DUSE_PANGO=1 $
+    -DUSE_CAIRO=1 -DUSE_DEFAULT_RENDER_THEME=1 -DUSE_LIBJPEG_TURBO=1 $
+    -DUSE_X11=1 -DUSE_CLIPBOARD_AURAX11=1 -DENABLE_ONE_CLICK_SIGNIN $
+    -DENABLE_WEBRTC=1 -DENABLE_MEDIA_ROUTER=1 -DENABLE_PEPPER_CDMS $
+    -DENABLE_CONFIGURATION_POLICY -DENABLE_NOTIFICATIONS -DENABLE_HIDPI=1 $
+    -DENABLE_TOPCHROME_MD=1 -DUSE_UDEV -DDONT_EMBED_BUILD_METADATA $
+    -DFIELDTRIAL_TESTING_ENABLED -DENABLE_TASK_MANAGER=1 $
+    -DENABLE_EXTENSIONS=1 -DENABLE_PDF=1 -DENABLE_PLUGINS=1 $
+    -DENABLE_SESSION_SERVICE=1 -DENABLE_THEMES=1 -DENABLE_AUTOFILL_DIALOG=1 $
+    -DENABLE_BACKGROUND=1 -DENABLE_PRINTING=1 -DENABLE_BASIC_PRINTING=1 $
+    -DENABLE_PRINT_PREVIEW=1 -DENABLE_SPELLCHECK=1 $
+    -DENABLE_CAPTIVE_PORTAL_DETECTION=1 -DENABLE_APP_LIST=1 $
+    -DENABLE_SETTINGS_APP=1 -DENABLE_SUPERVISED_USERS=1 -DENABLE_MDNS=1 $
+    -DENABLE_SERVICE_DISCOVERY=1 -DV8_USE_EXTERNAL_STARTUP_DATA $
+    -DFULL_SAFE_BROWSING -DSAFE_BROWSING_CSD -DSAFE_BROWSING_DB_LOCAL $
+    -DUSE_LIBPCI=1 -DUSE_OPENSSL=1 -DUSE_GLIB=1 -DUSE_NSS_CERTS=1 $
+    -D__STDC_CONSTANT_MACROS -D__STDC_FORMAT_MACROS $
+    -DDYNAMIC_ANNOTATIONS_ENABLED=1 -DWTF_USE_DYNAMIC_ANNOTATIONS=1 $
+    -D_DEBUG -D_GLIBCXX_DEBUG=1
+includes = -Igen
+cflags = -fstack-protector --param=ssp-buffer-size=4 -Werror -pthread $
+    -fno-strict-aliasing -Wall -Wno-unused-parameter $
+    -Wno-missing-field-initializers -fvisibility=hidden -pipe -fPIC $
+    -Wno-reserved-user-defined-literal -Xclang -load -Xclang $
+    /b/build/slave/publish_tarball/build/src/third_party/llvm-build/Release+Asserts/lib/libFindBadConstructs.so $
+    -Xclang -add-plugin -Xclang find-bad-constructs -Xclang $
+    -plugin-arg-find-bad-constructs -Xclang check-templates $
+    -fcolor-diagnostics $
+    -B/b/build/slave/publish_tarball/build/src/third_party/binutils/Linux_x64/Release/bin $
+    -Wheader-hygiene -Wno-char-subscripts $
+    -Wno-unneeded-internal-declaration -Wno-covered-switch-default $
+    -Wstring-conversion -Wno-c++11-narrowing -Wno-deprecated-register $
+    -Wno-inconsistent-missing-override -Wno-shift-negative-value $
+    -Wno-bitfield-width -m64 -march=x86-64 $
+    --sysroot=/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot $
+    -O0 -g -funwind-tables -gsplit-dwarf -Wno-undefined-bool-conversion $
+    -Wno-tautological-undefined-compare
+cflags_c = 
+cflags_cc = -fno-exceptions -fno-rtti -fno-threadsafe-statics $
+    -fvisibility-inlines-hidden -Wsign-compare -std=gnu++11
+arflags = 
+
+

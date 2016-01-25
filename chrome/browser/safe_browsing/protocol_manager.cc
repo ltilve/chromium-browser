@@ -7,20 +7,24 @@
 #include "base/environment.h"
 #include "base/logging.h"
 #include "base/memory/scoped_vector.h"
-#include "base/metrics/histogram.h"
+#include "base/metrics/histogram_macros.h"
+#include "base/metrics/sparse_histogram.h"
 #include "base/profiler/scoped_tracker.h"
 #include "base/rand_util.h"
 #include "base/stl_util.h"
+#include "base/strings/string_number_conversions.h"
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
 #include "base/timer/timer.h"
 #include "chrome/browser/safe_browsing/protocol_parser.h"
-#include "chrome/common/chrome_version_info.h"
 #include "chrome/common/env_vars.h"
+#include "components/variations/variations_associated_data.h"
 #include "google_apis/google_api_keys.h"
 #include "net/base/escape.h"
 #include "net/base/load_flags.h"
 #include "net/base/net_errors.h"
+#include "net/http/http_response_headers.h"
+#include "net/http/http_status_code.h"
 #include "net/url_request/url_fetcher.h"
 #include "net/url_request/url_request_context_getter.h"
 #include "net/url_request/url_request_status.h"
@@ -55,6 +59,22 @@ void RecordUpdateResult(UpdateResult result) {
   UMA_HISTOGRAM_ENUMERATION("SB2.UpdateResult", result, UPDATE_RESULT_MAX);
 }
 
+const char kSBUpdateFrequencyFinchExperiment[] = "SafeBrowsingUpdateFrequency";
+const char kSBUpdateFrequencyFinchParam[] = "NextUpdateIntervalInMinutes";
+
+// This will be used for experimenting on a small subset of the population to
+// better estimate the benefit of updating the safe browsing hashes more
+// frequently.
+base::TimeDelta GetNextUpdateIntervalFromFinch() {
+  std::string num_str = variations::GetVariationParamValue(
+      kSBUpdateFrequencyFinchExperiment, kSBUpdateFrequencyFinchParam);
+  int finch_next_update_interval_minutes = 0;
+  if (!base::StringToInt(num_str, &finch_next_update_interval_minutes)) {
+    finch_next_update_interval_minutes = 0;  // Defaults to 0.
+  }
+  return base::TimeDelta::FromMinutes(finch_next_update_interval_minutes);
+}
+
 }  // namespace
 
 // Minimum time, in seconds, from start up before we must issue an update query.
@@ -68,6 +88,8 @@ static const int kSbMaxUpdateWaitSec = 30;
 
 // Maximum back off multiplier.
 static const size_t kSbMaxBackOff = 8;
+
+const char kUmaHashResponseMetricName[] = "SB2.GetHashResponseOrErrorCode";
 
 // The default SBProtocolManagerFactory.
 class SBProtocolManagerFactoryImpl : public SBProtocolManagerFactory {
@@ -118,7 +140,6 @@ SafeBrowsingProtocolManager::SafeBrowsingProtocolManager(
       next_update_interval_(base::TimeDelta::FromSeconds(
           base::RandInt(kSbTimerStartIntervalSecMin,
                         kSbTimerStartIntervalSecMax))),
-      update_state_(FIRST_REQUEST),
       chunk_pending_to_write_(false),
       version_(config.version),
       update_size_(0),
@@ -159,6 +180,13 @@ void SafeBrowsingProtocolManager::RecordGetHashResult(
   }
 }
 
+void SafeBrowsingProtocolManager::RecordHttpResponseOrErrorCode(
+    const char* metric_name, const net::URLRequestStatus& status,
+    int response_code) {
+  UMA_HISTOGRAM_SPARSE_SLOWLY(
+      metric_name, status.is_success() ? response_code : status.error());
+}
+
 bool SafeBrowsingProtocolManager::IsUpdateScheduled() const {
   return update_timer_.IsRunning();
 }
@@ -176,7 +204,8 @@ SafeBrowsingProtocolManager::~SafeBrowsingProtocolManager() {
 void SafeBrowsingProtocolManager::GetFullHash(
     const std::vector<SBPrefix>& prefixes,
     FullHashCallback callback,
-    bool is_download) {
+    bool is_download,
+    bool is_extended_reporting) {
   DCHECK(CalledOnValidThread());
   // If we are in GetHash backoff, we need to check if we're past the next
   // allowed time. If we are, we can proceed with the request. If not, we are
@@ -187,7 +216,7 @@ void SafeBrowsingProtocolManager::GetFullHash(
     callback.Run(full_hashes, base::TimeDelta());
     return;
   }
-  GURL gethash_url = GetHashUrl();
+  GURL gethash_url = GetHashUrl(is_extended_reporting);
   net::URLFetcher* fetcher =
       net::URLFetcher::Create(url_fetcher_id_++, gethash_url,
                               net::URLFetcher::POST, this).release();
@@ -236,18 +265,22 @@ void SafeBrowsingProtocolManager::OnURLFetchComplete(
   scoped_ptr<const net::URLFetcher> fetcher;
 
   HashRequests::iterator it = hash_requests_.find(source);
+  int response_code = source->GetResponseCode();
+  net::URLRequestStatus status = source->GetStatus();
+  RecordHttpResponseOrErrorCode(
+      kUmaHashResponseMetricName, status, response_code);
   if (it != hash_requests_.end()) {
     // GetHash response.
     fetcher.reset(it->first);
     const FullHashDetails& details = it->second;
     std::vector<SBFullHashResult> full_hashes;
     base::TimeDelta cache_lifetime;
-    if (source->GetStatus().is_success() &&
-        (source->GetResponseCode() == 200 ||
-         source->GetResponseCode() == 204)) {
-      // For tracking our GetHash false positive (204) rate, compared to real
-      // (200) responses.
-      if (source->GetResponseCode() == 200)
+    if (status.is_success() &&
+        (response_code == net::HTTP_OK ||
+         response_code == net::HTTP_NO_CONTENT)) {
+      // For tracking our GetHash false positive (net::HTTP_NO_CONTENT) rate,
+      // compared to real (net::HTTP_OK) responses.
+      if (response_code == net::HTTP_OK)
         RecordGetHashResult(details.is_download, GET_HASH_STATUS_200);
       else
         RecordGetHashResult(details.is_download, GET_HASH_STATUS_204);
@@ -265,14 +298,14 @@ void SafeBrowsingProtocolManager::OnURLFetchComplete(
       }
     } else {
       HandleGetHashError(Time::Now());
-      if (source->GetStatus().status() == net::URLRequestStatus::FAILED) {
+      if (status.status() == net::URLRequestStatus::FAILED) {
         RecordGetHashResult(details.is_download, GET_HASH_NETWORK_ERROR);
         DVLOG(1) << "SafeBrowsing GetHash request for: " << source->GetURL()
-                 << " failed with error: " << source->GetStatus().error();
+                 << " failed with error: " << status.error();
       } else {
         RecordGetHashResult(details.is_download, GET_HASH_HTTP_ERROR);
         DVLOG(1) << "SafeBrowsing GetHash request for: " << source->GetURL()
-                 << " failed with error: " << source->GetResponseCode();
+                 << " failed with error: " << response_code;
       }
     }
 
@@ -298,8 +331,7 @@ void SafeBrowsingProtocolManager::OnURLFetchComplete(
       timeout_timer_.Stop();
     }
 
-    net::URLRequestStatus status = source->GetStatus();
-    if (status.is_success() && source->GetResponseCode() == 200) {
+    if (status.is_success() && response_code == net::HTTP_OK) {
       // We have data from the SafeBrowsing service.
       std::string data;
       source->GetResponseAsString(&data);
@@ -345,10 +377,10 @@ void SafeBrowsingProtocolManager::OnURLFetchComplete(
     } else {
       if (status.status() == net::URLRequestStatus::FAILED) {
         DVLOG(1) << "SafeBrowsing request for: " << source->GetURL()
-                 << " failed with error: " << source->GetStatus().error();
+                 << " failed with error: " << status.error();
       } else {
         DVLOG(1) << "SafeBrowsing request for: " << source->GetURL()
-                 << " failed with error: " << source->GetResponseCode();
+                 << " failed with error: " << response_code;
       }
       if (request_type_ == CHUNK_REQUEST) {
         // The SafeBrowsing service error, or very bad response code: back off.
@@ -398,22 +430,19 @@ bool SafeBrowsingProtocolManager::HandleServiceResponse(
         return false;
       }
 
-      base::TimeDelta next_update_interval =
-          base::TimeDelta::FromSeconds(next_update_sec);
-      last_update_ = Time::Now();
-
-      if (update_state_ == FIRST_REQUEST)
-        update_state_ = SECOND_REQUEST;
-      else if (update_state_ == SECOND_REQUEST)
-        update_state_ = NORMAL_REQUEST;
-
       // New time for the next update.
-      if (next_update_interval > base::TimeDelta()) {
-        next_update_interval_ = next_update_interval;
-      } else if (update_state_ == SECOND_REQUEST) {
-        next_update_interval_ = base::TimeDelta::FromSeconds(
-            base::RandInt(15, 45));
+      base::TimeDelta finch_next_update_interval =
+          GetNextUpdateIntervalFromFinch();
+      if (finch_next_update_interval > base::TimeDelta()) {
+          next_update_interval_ = finch_next_update_interval;
+      } else {
+        base::TimeDelta next_update_interval =
+            base::TimeDelta::FromSeconds(next_update_sec);
+        if (next_update_interval > base::TimeDelta()) {
+          next_update_interval_ = next_update_interval;
+        }
       }
+      last_update_ = Time::Now();
 
       // New chunks to download.
       if (!chunk_urls.empty()) {
@@ -603,7 +632,9 @@ void SafeBrowsingProtocolManager::IssueChunkRequest() {
 }
 
 void SafeBrowsingProtocolManager::OnGetChunksComplete(
-    const std::vector<SBListChunkRanges>& lists, bool database_error) {
+    const std::vector<SBListChunkRanges>& lists,
+    bool database_error,
+    bool is_extended_reporting) {
   DCHECK(CalledOnValidThread());
   DCHECK_EQ(request_type_, UPDATE_REQUEST);
   DCHECK(update_list_data_.empty());
@@ -644,7 +675,7 @@ void SafeBrowsingProtocolManager::OnGetChunksComplete(
   // deletion of such databases.  http://crbug.com/120219
   UMA_HISTOGRAM_COUNTS("SB2.UpdateRequestSize", update_list_data_.size());
 
-  GURL update_url = UpdateUrl();
+  GURL update_url = UpdateUrl(is_extended_reporting);
   request_ = net::URLFetcher::Create(url_fetcher_id_++, update_url,
                                      net::URLFetcher::POST, this);
   request_->SetLoadFlags(net::LOAD_DISABLE_CACHE);
@@ -723,9 +754,10 @@ void SafeBrowsingProtocolManager::UpdateFinished(bool success, bool back_off) {
   ScheduleNextUpdate(back_off);
 }
 
-GURL SafeBrowsingProtocolManager::UpdateUrl() const {
+GURL SafeBrowsingProtocolManager::UpdateUrl(bool is_extended_reporting) const {
   std::string url = SafeBrowsingProtocolManagerHelper::ComposeUrl(
-      url_prefix_, "downloads", client_name_, version_, additional_query_);
+      url_prefix_, "downloads", client_name_, version_, additional_query_,
+      is_extended_reporting);
   return GURL(url);
 }
 
@@ -740,9 +772,10 @@ GURL SafeBrowsingProtocolManager::BackupUpdateUrl(
   return GURL(url);
 }
 
-GURL SafeBrowsingProtocolManager::GetHashUrl() const {
+GURL SafeBrowsingProtocolManager::GetHashUrl(bool is_extended_reporting) const {
   std::string url = SafeBrowsingProtocolManagerHelper::ComposeUrl(
-      url_prefix_, "gethash", client_name_, version_, additional_query_);
+      url_prefix_, "gethash", client_name_, version_, additional_query_,
+      is_extended_reporting);
   return GURL(url);
 }
 

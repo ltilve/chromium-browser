@@ -113,8 +113,8 @@ void TargetGenerator::GenerateTarget(Scope* scope,
                                     Target::STATIC_LIBRARY, err);
     generator.Run();
   } else {
-    *err = Err(function_call, "Not a known output type",
-               "I am very confused.");
+    *err = Err(function_call, "Not a known target type",
+               "I am very confused by the target type \"" + output_type + "\"");
   }
 
   if (err->has_error())
@@ -183,17 +183,11 @@ bool TargetGenerator::FillDependentConfigs() {
   if (!FillGenericConfigs(variables::kAllDependentConfigs,
                           &target_->all_dependent_configs()))
     return false;
+
   if (!FillGenericConfigs(variables::kPublicConfigs,
                           &target_->public_configs()))
     return false;
 
-  // "public_configs" was previously named "direct_dependent_configs", fall
-  // back to that if public_configs was undefined.
-  if (!scope_->GetValue(variables::kPublicConfigs, false)) {
-    if (!FillGenericConfigs("direct_dependent_configs",
-                            &target_->public_configs()))
-      return false;
-  }
   return true;
 }
 

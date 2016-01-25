@@ -119,7 +119,6 @@ class ProtocolPerfTest
 
   // VideoRenderer interface.
   void OnSessionConfig(const protocol::SessionConfig& config) override {}
-  ChromotingStats* GetStats() override { return nullptr; }
   protocol::VideoStub* GetVideoStub() override { return this; }
 
   // protocol::VideoStub interface.
@@ -240,6 +239,7 @@ class ProtocolPerfTest
 
     scoped_ptr<protocol::SessionManager> session_manager(
         new protocol::JingleSessionManager(host_transport_factory.Pass()));
+    session_manager->set_protocol_config(protocol_config_->Clone());
 
     // Encoder runs on a separate thread, main thread is used for everything
     // else.
@@ -277,7 +277,6 @@ class ProtocolPerfTest
     host_->SetAuthenticatorFactory(auth_factory.Pass());
 
     host_->AddStatusObserver(this);
-    host_->set_protocol_config(protocol_config_->Clone());
     host_->Start(kHostOwner);
 
     message_loop_.PostTask(FROM_HERE,
@@ -321,10 +320,9 @@ class ProtocolPerfTest
             auth_methods));
     client_.reset(
         new ChromotingClient(client_context_.get(), this, this, nullptr));
-    client_->SetProtocolConfigForTests(protocol_config_->Clone());
-    client_->Start(
-        client_signaling_.get(), client_authenticator.Pass(),
-        client_transport_factory.Pass(), kHostJid, std::string());
+    client_->set_protocol_config(protocol_config_->Clone());
+    client_->Start(client_signaling_.get(), client_authenticator.Pass(),
+                   client_transport_factory.Pass(), kHostJid, std::string());
   }
 
   void FetchPin(

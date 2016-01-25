@@ -44,7 +44,8 @@ function verifyEvent(assert, index, expected) {
   var event = /** @type {Object} */ (logWriterSpy.getCall(index).args[0]);
 
   for (var key in expected) {
-    assert.equal(event[key], expected[key], 'Verifying ChromotingEvent.' + key);
+    assert.deepEqual(event[key], expected[key],
+                     'Verifying ChromotingEvent.' + key);
   }
 }
 
@@ -80,10 +81,12 @@ QUnit.test('logClientSessionStateChange()', function(assert){
   logger.setLogEntryMode(Event.Mode.ME2ME);
   logger.setConnectionType('stun');
   logger.setHostVersion('host_version');
+  logger.setHostOs(remoting.ChromotingEvent.Os.OTHER);
+  logger.setHostOsVersion('host_os_version');
 
   logger.logClientSessionStateChange(
       remoting.ClientSession.State.FAILED,
-      new remoting.Error(remoting.Error.Tag.HOST_IS_OFFLINE));
+      new remoting.Error(remoting.Error.Tag.HOST_IS_OFFLINE), null);
   var sessionId = logger.getSessionId();
 
   assert.ok(sessionId !== null);
@@ -101,7 +104,51 @@ QUnit.test('logClientSessionStateChange()', function(assert){
     mode: Event.Mode.ME2ME,
     connection_type: Event.ConnectionType.STUN,
     host_version: 'host_version',
+    host_os: remoting.ChromotingEvent.Os.OTHER,
+    host_os_version: 'host_os_version',
     session_id: sessionId
+  });
+});
+
+QUnit.test('logClientSessionStateChange() should handle XMPP error',
+    function(assert){
+  var Event = remoting.ChromotingEvent;
+
+  logger = new remoting.SessionLogger(Event.Role.CLIENT, logWriter);
+  logger.setLogEntryMode(Event.Mode.ME2ME);
+  logger.setConnectionType('stun');
+  logger.setHostVersion('host_version');
+  logger.setHostOs(remoting.ChromotingEvent.Os.OTHER);
+  logger.setHostOsVersion('host_os_version');
+
+  var xmppError = new remoting.ChromotingEvent.XmppError('<fake-stanza/>');
+
+  logger.logClientSessionStateChange(
+      remoting.ClientSession.State.FAILED,
+      new remoting.Error(remoting.Error.Tag.HOST_IS_OFFLINE), xmppError);
+  var sessionId = logger.getSessionId();
+
+  assert.ok(sessionId !== null);
+
+  verifyEvent(assert, 0, {
+    type: Event.Type.SESSION_STATE,
+    session_state: Event.SessionState.CONNECTION_FAILED,
+    connection_error: Event.ConnectionError.HOST_OFFLINE,
+    os: Event.Os.MAC,
+    os_version: '10.9.5',
+    cpu: 'Intel',
+    browser_version: '43.0.2357.81',
+    application_id: 'extensionId',
+    role: Event.Role.CLIENT,
+    mode: Event.Mode.ME2ME,
+    connection_type: Event.ConnectionType.STUN,
+    host_version: 'host_version',
+    host_os: remoting.ChromotingEvent.Os.OTHER,
+    host_os_version: 'host_os_version',
+    session_id: sessionId,
+    xmpp_error: {
+      raw_stanza: '<fake-stanza/>'
+    }
   });
 });
 
@@ -115,6 +162,8 @@ QUnit.test('logClientSessionStateChange() should handle sessionId change.',
   logger.setLogEntryMode(Event.Mode.ME2ME);
   logger.setConnectionType('relay');
   logger.setHostVersion('host_version');
+  logger.setHostOs(remoting.ChromotingEvent.Os.OTHER);
+  logger.setHostOsVersion('host_os_version');
   var oldSessionId = logger.getSessionId();
 
   // Expires the session id.
@@ -122,7 +171,7 @@ QUnit.test('logClientSessionStateChange() should handle sessionId change.',
 
   // Logs the event.
   logger.logClientSessionStateChange(
-      remoting.ClientSession.State.AUTHENTICATED, remoting.Error.none());
+      remoting.ClientSession.State.AUTHENTICATED, remoting.Error.none(), null);
 
   var newSessionId = logger.getSessionId();
   verifyEvent(assert, 0, {
@@ -136,7 +185,9 @@ QUnit.test('logClientSessionStateChange() should handle sessionId change.',
     role: Event.Role.CLIENT,
     mode: Event.Mode.ME2ME,
     connection_type: Event.ConnectionType.RELAY,
-    host_version: 'host_version'
+    host_version: 'host_version',
+    host_os: remoting.ChromotingEvent.Os.OTHER,
+    host_os_version: 'host_os_version'
   });
 
   verifyEvent(assert, 1, {
@@ -150,7 +201,9 @@ QUnit.test('logClientSessionStateChange() should handle sessionId change.',
     role: Event.Role.CLIENT,
     mode: Event.Mode.ME2ME,
     connection_type: Event.ConnectionType.RELAY,
-    host_version: 'host_version'
+    host_version: 'host_version',
+    host_os: remoting.ChromotingEvent.Os.OTHER,
+    host_os_version: 'host_os_version'
   });
 
   verifyEvent(assert, 2, {
@@ -166,6 +219,8 @@ QUnit.test('logClientSessionStateChange() should handle sessionId change.',
     mode: Event.Mode.ME2ME,
     connection_type: Event.ConnectionType.RELAY,
     host_version: 'host_version',
+    host_os: remoting.ChromotingEvent.Os.OTHER,
+    host_os_version: 'host_os_version',
     session_id: newSessionId
   });
 });
@@ -180,12 +235,14 @@ QUnit.test('logClientSessionStateChange() should log session_duration.',
   logger.setLogEntryMode(Event.Mode.ME2ME);
   logger.setConnectionType('direct');
   logger.setHostVersion('host_version');
+  logger.setHostOs(remoting.ChromotingEvent.Os.OTHER);
+  logger.setHostOsVersion('host_os_version');
   logger.setAuthTotalTime(1000);
   clock.tick(2500);
 
   // Logs the event.
   logger.logClientSessionStateChange(
-      remoting.ClientSession.State.CONNECTED, remoting.Error.none());
+      remoting.ClientSession.State.CONNECTED, remoting.Error.none(), null);
 
   verifyEvent(assert, 0, {
     type: Event.Type.SESSION_STATE,
@@ -200,6 +257,8 @@ QUnit.test('logClientSessionStateChange() should log session_duration.',
     mode: Event.Mode.ME2ME,
     connection_type: Event.ConnectionType.DIRECT,
     host_version: 'host_version',
+    host_os: remoting.ChromotingEvent.Os.OTHER,
+    host_os_version: 'host_os_version',
     session_id: logger.getSessionId(),
     session_duration: 1.5
   });
@@ -214,6 +273,8 @@ QUnit.test('logStatistics()', function(assert) {
   logger.setLogEntryMode(Event.Mode.LGAPP);
   logger.setConnectionType('direct');
   logger.setHostVersion('host_version');
+  logger.setHostOs(remoting.ChromotingEvent.Os.OTHER);
+  logger.setHostOsVersion('host_os_version');
 
   // Log the statistics.
   logger.logStatistics({
@@ -258,6 +319,8 @@ QUnit.test('logStatistics()', function(assert) {
     mode: Event.Mode.LGAPP,
     connection_type: Event.ConnectionType.DIRECT,
     host_version: 'host_version',
+    host_os: remoting.ChromotingEvent.Os.OTHER,
+    host_os_version: 'host_os_version',
     session_id: logger.getSessionId(),
     video_bandwidth: 2.0,
     capture_latency: 2.0,

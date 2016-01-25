@@ -1,0 +1,298 @@
+build obj/components/sync_driver.actions_depends.stamp: stamp $
+    obj/sync/sync.actions_depends.stamp obj/sync/libsync_proto.a $
+    obj/third_party/cacheinvalidation/libcacheinvalidation_proto_cpp.a $
+    gen/components/sync_driver/sync_driver_features.h $
+    obj/components/libpolicy.a $
+    obj/components/policy_component.actions_depends.stamp
+
+build obj/components/sync_driver.compile_depends.stamp: stamp $
+    obj/sync/sync.compile_depends.stamp $
+    obj/sync/sync_proto.actions_rules_copies.stamp $
+    obj/third_party/cacheinvalidation/cacheinvalidation_proto_cpp.actions_rules_copies.stamp $
+    gen/components/sync_driver/sync_driver_features.h $
+    obj/components/policy.compile_depends.stamp $
+    obj/components/policy_component.compile_depends.stamp
+
+defines = -DV8_DEPRECATION_WARNINGS -DCLD_VERSION=2 -D_FILE_OFFSET_BITS=64 $
+    -DCHROMIUM_BUILD -DCR_CLANG_REVISION=255169-1 $
+    -DUI_COMPOSITOR_IMAGE_TRANSPORT -DUSE_AURA=1 -DUSE_ASH=1 -DUSE_PANGO=1 $
+    -DUSE_CAIRO=1 -DUSE_DEFAULT_RENDER_THEME=1 -DUSE_LIBJPEG_TURBO=1 $
+    -DUSE_X11=1 -DUSE_CLIPBOARD_AURAX11=1 -DENABLE_ONE_CLICK_SIGNIN $
+    -DENABLE_WEBRTC=1 -DENABLE_MEDIA_ROUTER=1 -DENABLE_PEPPER_CDMS $
+    -DENABLE_CONFIGURATION_POLICY -DENABLE_NOTIFICATIONS -DENABLE_HIDPI=1 $
+    -DENABLE_TOPCHROME_MD=1 -DUSE_UDEV -DDONT_EMBED_BUILD_METADATA $
+    -DFIELDTRIAL_TESTING_ENABLED -DENABLE_TASK_MANAGER=1 $
+    -DENABLE_EXTENSIONS=1 -DENABLE_PDF=1 -DENABLE_PLUGINS=1 $
+    -DENABLE_SESSION_SERVICE=1 -DENABLE_THEMES=1 -DENABLE_AUTOFILL_DIALOG=1 $
+    -DENABLE_BACKGROUND=1 -DENABLE_PRINTING=1 -DENABLE_BASIC_PRINTING=1 $
+    -DENABLE_PRINT_PREVIEW=1 -DENABLE_SPELLCHECK=1 $
+    -DENABLE_CAPTIVE_PORTAL_DETECTION=1 -DENABLE_APP_LIST=1 $
+    -DENABLE_SETTINGS_APP=1 -DENABLE_SUPERVISED_USERS=1 -DENABLE_MDNS=1 $
+    -DENABLE_SERVICE_DISCOVERY=1 -DV8_USE_EXTERNAL_STARTUP_DATA $
+    -DFULL_SAFE_BROWSING -DSAFE_BROWSING_CSD -DSAFE_BROWSING_DB_LOCAL $
+    -DGL_GLEXT_PROTOTYPES -DMOJO_USE_SYSTEM_IMPL -DTOOLKIT_VIEWS=1 $
+    -DPROTOBUF_USE_DLLS -DGOOGLE_PROTOBUF_NO_RTTI $
+    -DGOOGLE_PROTOBUF_NO_STATIC_INITIALIZER -DUSE_LIBPCI=1 -DUSE_OPENSSL=1 $
+    -DUSE_GLIB=1 -DUSE_NSS_CERTS=1 -D__STDC_CONSTANT_MACROS $
+    -D__STDC_FORMAT_MACROS -DDYNAMIC_ANNOTATIONS_ENABLED=1 $
+    -DWTF_USE_DYNAMIC_ANNOTATIONS=1 -D_DEBUG -D_GLIBCXX_DEBUG=1
+includes = -Igen -I../.. -I../../skia/config -I../../third_party/khronos $
+    -I../../gpu -Igen/angle -I../../third_party/WebKit/Source $
+    -Igen/protoc_out -I../../third_party/protobuf $
+    -I../../third_party/protobuf/src $
+    -I../../third_party/cacheinvalidation/overrides $
+    -I../../third_party/cacheinvalidation/src $
+    -I../../third_party/cacheinvalidation/google/cacheinvalidation $
+    -Igen/policy
+cflags = -fstack-protector --param=ssp-buffer-size=4 -Werror -pthread $
+    -fno-strict-aliasing -Wall -Wno-unused-parameter $
+    -Wno-missing-field-initializers -fvisibility=hidden -pipe -fPIC $
+    -Wno-reserved-user-defined-literal -Xclang -load -Xclang $
+    /b/build/slave/publish_tarball/build/src/third_party/llvm-build/Release+Asserts/lib/libFindBadConstructs.so $
+    -Xclang -add-plugin -Xclang find-bad-constructs -Xclang $
+    -plugin-arg-find-bad-constructs -Xclang check-templates $
+    -fcolor-diagnostics $
+    -B/b/build/slave/publish_tarball/build/src/third_party/binutils/Linux_x64/Release/bin $
+    -Wheader-hygiene -Wno-char-subscripts $
+    -Wno-unneeded-internal-declaration -Wno-covered-switch-default $
+    -Wstring-conversion -Wno-c++11-narrowing -Wno-deprecated-register $
+    -Wno-inconsistent-missing-override -Wno-shift-negative-value $
+    -Wno-bitfield-width -pthread $
+    -I/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/include/glib-2.0 $
+    -I/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/lib/x86_64-linux-gnu/glib-2.0/include $
+    -m64 -march=x86-64 $
+    --sysroot=/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot $
+    -O0 -g -funwind-tables -gsplit-dwarf -Wno-undefined-bool-conversion $
+    -Wno-tautological-undefined-compare
+cflags_c = 
+cflags_cc = -fno-exceptions -fno-rtti -fno-threadsafe-statics $
+    -fvisibility-inlines-hidden -Wsign-compare -std=gnu++11
+arflags = 
+
+build obj/components/sync_driver/sync_driver.about_sync_util.o: cxx $
+    ../../components/sync_driver/about_sync_util.cc || $
+    obj/components/sync_driver.compile_depends.stamp
+build $
+    obj/components/sync_driver/sync_driver.backend_data_type_configurer.o: $
+    cxx ../../components/sync_driver/backend_data_type_configurer.cc || $
+    obj/components/sync_driver.compile_depends.stamp
+build obj/components/sync_driver/sync_driver.backend_migrator.o: cxx $
+    ../../components/sync_driver/backend_migrator.cc || $
+    obj/components/sync_driver.compile_depends.stamp
+build obj/components/sync_driver/sync_driver.backup_rollback_controller.o: $
+    cxx ../../components/sync_driver/backup_rollback_controller.cc || $
+    obj/components/sync_driver.compile_depends.stamp
+build obj/components/sync_driver/sync_driver.change_processor.o: cxx $
+    ../../components/sync_driver/change_processor.cc || $
+    obj/components/sync_driver.compile_depends.stamp
+build obj/components/sync_driver/sync_driver.data_type_controller.o: cxx $
+    ../../components/sync_driver/data_type_controller.cc || $
+    obj/components/sync_driver.compile_depends.stamp
+build $
+    obj/components/sync_driver/sync_driver.data_type_encryption_handler.o: $
+    cxx ../../components/sync_driver/data_type_encryption_handler.cc || $
+    obj/components/sync_driver.compile_depends.stamp
+build obj/components/sync_driver/sync_driver.data_type_manager.o: cxx $
+    ../../components/sync_driver/data_type_manager.cc || $
+    obj/components/sync_driver.compile_depends.stamp
+build obj/components/sync_driver/sync_driver.data_type_manager_impl.o: cxx $
+    ../../components/sync_driver/data_type_manager_impl.cc || $
+    obj/components/sync_driver.compile_depends.stamp
+build obj/components/sync_driver/sync_driver.data_type_status_table.o: cxx $
+    ../../components/sync_driver/data_type_status_table.cc || $
+    obj/components/sync_driver.compile_depends.stamp
+build obj/components/sync_driver/sync_driver.device_info.o: cxx $
+    ../../components/sync_driver/device_info.cc || $
+    obj/components/sync_driver.compile_depends.stamp
+build $
+    obj/components/sync_driver/sync_driver.device_info_data_type_controller.o: $
+    cxx ../../components/sync_driver/device_info_data_type_controller.cc || $
+    obj/components/sync_driver.compile_depends.stamp
+build obj/components/sync_driver/sync_driver.device_info_service.o: cxx $
+    ../../components/sync_driver/device_info_service.cc || $
+    obj/components/sync_driver.compile_depends.stamp
+build obj/components/sync_driver/sync_driver.device_info_sync_service.o: $
+    cxx ../../components/sync_driver/device_info_sync_service.cc || $
+    obj/components/sync_driver.compile_depends.stamp
+build $
+    obj/components/sync_driver/sync_driver.directory_data_type_controller.o: $
+    cxx ../../components/sync_driver/directory_data_type_controller.cc || $
+    obj/components/sync_driver.compile_depends.stamp
+build $
+    obj/components/sync_driver/sync_driver.frontend_data_type_controller.o: $
+    cxx ../../components/sync_driver/frontend_data_type_controller.cc || $
+    obj/components/sync_driver.compile_depends.stamp
+build obj/components/sync_driver/sync_driver.generic_change_processor.o: $
+    cxx ../../components/sync_driver/generic_change_processor.cc || $
+    obj/components/sync_driver.compile_depends.stamp
+build $
+    obj/components/sync_driver/sync_driver.generic_change_processor_factory.o: $
+    cxx ../../components/sync_driver/generic_change_processor_factory.cc || $
+    obj/components/sync_driver.compile_depends.stamp
+build $
+    obj/components/sync_driver/glue/sync_driver.browser_thread_model_worker.o: $
+    cxx ../../components/sync_driver/glue/browser_thread_model_worker.cc || $
+    obj/components/sync_driver.compile_depends.stamp
+build $
+    obj/components/sync_driver/glue/sync_driver.chrome_report_unrecoverable_error.o: $
+    cxx $
+    ../../components/sync_driver/glue/chrome_report_unrecoverable_error.cc $
+    || obj/components/sync_driver.compile_depends.stamp
+build obj/components/sync_driver/glue/sync_driver.sync_backend_host.o: cxx $
+    ../../components/sync_driver/glue/sync_backend_host.cc || $
+    obj/components/sync_driver.compile_depends.stamp
+build obj/components/sync_driver/glue/sync_driver.sync_backend_host_core.o: $
+    cxx ../../components/sync_driver/glue/sync_backend_host_core.cc || $
+    obj/components/sync_driver.compile_depends.stamp
+build obj/components/sync_driver/glue/sync_driver.sync_backend_host_impl.o: $
+    cxx ../../components/sync_driver/glue/sync_backend_host_impl.cc || $
+    obj/components/sync_driver.compile_depends.stamp
+build obj/components/sync_driver/glue/sync_driver.sync_backend_registrar.o: $
+    cxx ../../components/sync_driver/glue/sync_backend_registrar.cc || $
+    obj/components/sync_driver.compile_depends.stamp
+build obj/components/sync_driver/glue/sync_driver.ui_model_worker.o: cxx $
+    ../../components/sync_driver/glue/ui_model_worker.cc || $
+    obj/components/sync_driver.compile_depends.stamp
+build obj/components/sync_driver/sync_driver.invalidation_adapter.o: cxx $
+    ../../components/sync_driver/invalidation_adapter.cc || $
+    obj/components/sync_driver.compile_depends.stamp
+build obj/components/sync_driver/sync_driver.invalidation_helper.o: cxx $
+    ../../components/sync_driver/invalidation_helper.cc || $
+    obj/components/sync_driver.compile_depends.stamp
+build $
+    obj/components/sync_driver/sync_driver.local_device_info_provider_impl.o: $
+    cxx ../../components/sync_driver/local_device_info_provider_impl.cc || $
+    obj/components/sync_driver.compile_depends.stamp
+build obj/components/sync_driver/sync_driver.model_association_manager.o: $
+    cxx ../../components/sync_driver/model_association_manager.cc || $
+    obj/components/sync_driver.compile_depends.stamp
+build $
+    obj/components/sync_driver/sync_driver.non_blocking_data_type_controller.o: $
+    cxx ../../components/sync_driver/non_blocking_data_type_controller.cc $
+    || obj/components/sync_driver.compile_depends.stamp
+build $
+    obj/components/sync_driver/sync_driver.non_frontend_data_type_controller.o: $
+    cxx ../../components/sync_driver/non_frontend_data_type_controller.cc $
+    || obj/components/sync_driver.compile_depends.stamp
+build obj/components/sync_driver/sync_driver.non_ui_data_type_controller.o: $
+    cxx ../../components/sync_driver/non_ui_data_type_controller.cc || $
+    obj/components/sync_driver.compile_depends.stamp
+build obj/components/sync_driver/sync_driver.pref_names.o: cxx $
+    ../../components/sync_driver/pref_names.cc || $
+    obj/components/sync_driver.compile_depends.stamp
+build obj/components/sync_driver/sync_driver.profile_sync_auth_provider.o: $
+    cxx ../../components/sync_driver/profile_sync_auth_provider.cc || $
+    obj/components/sync_driver.compile_depends.stamp
+build obj/components/sync_driver/sync_driver.protocol_event_observer.o: cxx $
+    ../../components/sync_driver/protocol_event_observer.cc || $
+    obj/components/sync_driver.compile_depends.stamp
+build obj/components/sync_driver/sync_driver.proxy_data_type_controller.o: $
+    cxx ../../components/sync_driver/proxy_data_type_controller.cc || $
+    obj/components/sync_driver.compile_depends.stamp
+build obj/components/sync_driver/sync_driver.shared_change_processor.o: cxx $
+    ../../components/sync_driver/shared_change_processor.cc || $
+    obj/components/sync_driver.compile_depends.stamp
+build obj/components/sync_driver/sync_driver.shared_change_processor_ref.o: $
+    cxx ../../components/sync_driver/shared_change_processor_ref.cc || $
+    obj/components/sync_driver.compile_depends.stamp
+build obj/components/sync_driver/sync_driver.signin_manager_wrapper.o: cxx $
+    ../../components/sync_driver/signin_manager_wrapper.cc || $
+    obj/components/sync_driver.compile_depends.stamp
+build obj/components/sync_driver/sync_driver.startup_controller.o: cxx $
+    ../../components/sync_driver/startup_controller.cc || $
+    obj/components/sync_driver.compile_depends.stamp
+build obj/components/sync_driver/sync_driver.sync_client.o: cxx $
+    ../../components/sync_driver/sync_client.cc || $
+    obj/components/sync_driver.compile_depends.stamp
+build obj/components/sync_driver/sync_driver.sync_driver_switches.o: cxx $
+    ../../components/sync_driver/sync_driver_switches.cc || $
+    obj/components/sync_driver.compile_depends.stamp
+build obj/components/sync_driver/sync_driver.sync_error_controller.o: cxx $
+    ../../components/sync_driver/sync_error_controller.cc || $
+    obj/components/sync_driver.compile_depends.stamp
+build obj/components/sync_driver/sync_driver.sync_frontend.o: cxx $
+    ../../components/sync_driver/sync_frontend.cc || $
+    obj/components/sync_driver.compile_depends.stamp
+build obj/components/sync_driver/sync_driver.sync_prefs.o: cxx $
+    ../../components/sync_driver/sync_prefs.cc || $
+    obj/components/sync_driver.compile_depends.stamp
+build obj/components/sync_driver/sync_driver.sync_service.o: cxx $
+    ../../components/sync_driver/sync_service.cc || $
+    obj/components/sync_driver.compile_depends.stamp
+build obj/components/sync_driver/sync_driver.sync_service_observer.o: cxx $
+    ../../components/sync_driver/sync_service_observer.cc || $
+    obj/components/sync_driver.compile_depends.stamp
+build obj/components/sync_driver/sync_driver.sync_service_utils.o: cxx $
+    ../../components/sync_driver/sync_service_utils.cc || $
+    obj/components/sync_driver.compile_depends.stamp
+build obj/components/sync_driver/sync_driver.sync_stopped_reporter.o: cxx $
+    ../../components/sync_driver/sync_stopped_reporter.cc || $
+    obj/components/sync_driver.compile_depends.stamp
+build obj/components/sync_driver/sync_driver.sync_util.o: cxx $
+    ../../components/sync_driver/sync_util.cc || $
+    obj/components/sync_driver.compile_depends.stamp
+build obj/components/sync_driver/sync_driver.system_encryptor.o: cxx $
+    ../../components/sync_driver/system_encryptor.cc || $
+    obj/components/sync_driver.compile_depends.stamp
+build obj/components/sync_driver/sync_driver.ui_data_type_controller.o: cxx $
+    ../../components/sync_driver/ui_data_type_controller.cc || $
+    obj/components/sync_driver.compile_depends.stamp
+build obj/components/sync_driver/sync_driver.sync_policy_handler.o: cxx $
+    ../../components/sync_driver/sync_policy_handler.cc || $
+    obj/components/sync_driver.compile_depends.stamp
+
+build obj/components/libsync_driver.a: alink_thin $
+    obj/components/sync_driver/sync_driver.about_sync_util.o $
+    obj/components/sync_driver/sync_driver.backend_data_type_configurer.o $
+    obj/components/sync_driver/sync_driver.backend_migrator.o $
+    obj/components/sync_driver/sync_driver.backup_rollback_controller.o $
+    obj/components/sync_driver/sync_driver.change_processor.o $
+    obj/components/sync_driver/sync_driver.data_type_controller.o $
+    obj/components/sync_driver/sync_driver.data_type_encryption_handler.o $
+    obj/components/sync_driver/sync_driver.data_type_manager.o $
+    obj/components/sync_driver/sync_driver.data_type_manager_impl.o $
+    obj/components/sync_driver/sync_driver.data_type_status_table.o $
+    obj/components/sync_driver/sync_driver.device_info.o $
+    obj/components/sync_driver/sync_driver.device_info_data_type_controller.o $
+    obj/components/sync_driver/sync_driver.device_info_service.o $
+    obj/components/sync_driver/sync_driver.device_info_sync_service.o $
+    obj/components/sync_driver/sync_driver.directory_data_type_controller.o $
+    obj/components/sync_driver/sync_driver.frontend_data_type_controller.o $
+    obj/components/sync_driver/sync_driver.generic_change_processor.o $
+    obj/components/sync_driver/sync_driver.generic_change_processor_factory.o $
+    obj/components/sync_driver/glue/sync_driver.browser_thread_model_worker.o $
+    obj/components/sync_driver/glue/sync_driver.chrome_report_unrecoverable_error.o $
+    obj/components/sync_driver/glue/sync_driver.sync_backend_host.o $
+    obj/components/sync_driver/glue/sync_driver.sync_backend_host_core.o $
+    obj/components/sync_driver/glue/sync_driver.sync_backend_host_impl.o $
+    obj/components/sync_driver/glue/sync_driver.sync_backend_registrar.o $
+    obj/components/sync_driver/glue/sync_driver.ui_model_worker.o $
+    obj/components/sync_driver/sync_driver.invalidation_adapter.o $
+    obj/components/sync_driver/sync_driver.invalidation_helper.o $
+    obj/components/sync_driver/sync_driver.local_device_info_provider_impl.o $
+    obj/components/sync_driver/sync_driver.model_association_manager.o $
+    obj/components/sync_driver/sync_driver.non_blocking_data_type_controller.o $
+    obj/components/sync_driver/sync_driver.non_frontend_data_type_controller.o $
+    obj/components/sync_driver/sync_driver.non_ui_data_type_controller.o $
+    obj/components/sync_driver/sync_driver.pref_names.o $
+    obj/components/sync_driver/sync_driver.profile_sync_auth_provider.o $
+    obj/components/sync_driver/sync_driver.protocol_event_observer.o $
+    obj/components/sync_driver/sync_driver.proxy_data_type_controller.o $
+    obj/components/sync_driver/sync_driver.shared_change_processor.o $
+    obj/components/sync_driver/sync_driver.shared_change_processor_ref.o $
+    obj/components/sync_driver/sync_driver.signin_manager_wrapper.o $
+    obj/components/sync_driver/sync_driver.startup_controller.o $
+    obj/components/sync_driver/sync_driver.sync_client.o $
+    obj/components/sync_driver/sync_driver.sync_driver_switches.o $
+    obj/components/sync_driver/sync_driver.sync_error_controller.o $
+    obj/components/sync_driver/sync_driver.sync_frontend.o $
+    obj/components/sync_driver/sync_driver.sync_prefs.o $
+    obj/components/sync_driver/sync_driver.sync_service.o $
+    obj/components/sync_driver/sync_driver.sync_service_observer.o $
+    obj/components/sync_driver/sync_driver.sync_service_utils.o $
+    obj/components/sync_driver/sync_driver.sync_stopped_reporter.o $
+    obj/components/sync_driver/sync_driver.sync_util.o $
+    obj/components/sync_driver/sync_driver.system_encryptor.o $
+    obj/components/sync_driver/sync_driver.ui_data_type_controller.o $
+    obj/components/sync_driver/sync_driver.sync_policy_handler.o || $
+    obj/components/sync_driver.actions_depends.stamp

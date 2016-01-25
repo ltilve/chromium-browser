@@ -30,8 +30,8 @@
 <head>
 <meta charset="utf-8">
 <link rel="stylesheet" href="../../resources/js-test-style.css"/>
-<script src="../../resources/js-test-pre.js"></script>
-<script src="../../resources/webgl-test-utils.js"></script>
+<script src="../../js/js-test-pre.js"></script>
+<script src="../../js/webgl-test-utils.js"></script>
 </head>
 <body>
 <div id="description"></div>
@@ -77,6 +77,9 @@ array = new ArrayBuffer(64);
 gl.bufferSubData(gl.ARRAY_BUFFER, -10, array);
 wtu.glErrorShouldBe(gl, gl.INVALID_VALUE);
 
+gl.bufferSubData(gl.ARRAY_BUFFER, 65, array);
+wtu.glErrorShouldBe(gl, gl.INVALID_VALUE, "buffer overflow");
+
 gl.bufferSubData(gl.ARRAY_BUFFER, -10, new Float32Array(8));
 wtu.glErrorShouldBe(gl, gl.INVALID_VALUE);
 
@@ -89,6 +92,6 @@ wtu.glErrorShouldBe(gl, gl.NO_ERROR);
 var successfullyParsed = true;
 </script>
 
-<script src="../../resources/js-test-post.js"></script>
+<script src="../../js/js-test-post.js"></script>
 </body>
 </html>

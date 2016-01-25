@@ -14,6 +14,7 @@
 #include "base/path_service.h"
 #include "build/build_config.h"
 #include "cc/base/switches.h"
+#include "content/common/content_constants_internal.h"
 #include "content/public/browser/browser_main_runner.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/common/url_constants.h"
@@ -56,7 +57,7 @@
 
 #if defined(OS_MACOSX)
 #include "base/mac/os_crash_dumps.h"
-#include "components/crash/app/breakpad_mac.h"
+#include "components/crash/content/app/breakpad_mac.h"
 #include "content/shell/app/paths_mac.h"
 #include "content/shell/app/shell_main_delegate_mac.h"
 #endif  // OS_MACOSX
@@ -65,12 +66,12 @@
 #include <initguid.h>
 #include <windows.h>
 #include "base/logging_win.h"
-#include "components/crash/app/breakpad_win.h"
+#include "components/crash/content/app/breakpad_win.h"
 #include "content/shell/common/v8_breakpad_support_win.h"
 #endif
 
 #if defined(OS_POSIX) && !defined(OS_MACOSX)
-#include "components/crash/app/breakpad_linux.h"
+#include "components/crash/content/app/breakpad_linux.h"
 #endif
 
 namespace {
@@ -120,12 +121,6 @@ ShellMainDelegate::~ShellMainDelegate() {
 bool ShellMainDelegate::BasicStartupComplete(int* exit_code) {
   base::CommandLine& command_line = *base::CommandLine::ForCurrentProcess();
 
-  // "dump-render-tree" has been renamed to "run-layout-test", but the old
-  // flag name is still used in some places, so this check will remain until
-  // it is phased out entirely.
-  if (command_line.HasSwitch(switches::kDumpRenderTree))
-    command_line.AppendSwitch(switches::kRunLayoutTest);
-
 #if defined(OS_WIN)
   // Enable trace control and transport through event tracing for Windows.
   logging::LogEventProvider::Initialize(kContentShellProviderName);
@@ -167,10 +162,8 @@ bool ShellMainDelegate::BasicStartupComplete(int* exit_code) {
     command_line.AppendSwitchASCII(switches::kTouchEvents,
                                    switches::kTouchEventsEnabled);
     command_line.AppendSwitchASCII(switches::kForceDeviceScaleFactor, "1.0");
-#if defined(OS_ANDROID)
     command_line.AppendSwitch(
         switches::kDisableGestureRequirementForMediaPlayback);
-#endif
 
     if (!command_line.HasSwitch(switches::kStableReleaseMode)) {
       command_line.AppendSwitch(
@@ -191,9 +184,7 @@ bool ShellMainDelegate::BasicStartupComplete(int* exit_code) {
     command_line.AppendSwitch(switches::kEnableInbandTextTracks);
     command_line.AppendSwitch(switches::kMuteAudio);
 
-    // TODO: crbug.com/311404 Make layout tests work w/ delegated renderer.
-    command_line.AppendSwitch(switches::kDisableDelegatedRenderer);
-    command_line.AppendSwitch(cc::switches::kCompositeToMailbox);
+    command_line.AppendSwitch(cc::switches::kEnablePropertyTreeVerification);
 
     command_line.AppendSwitch(switches::kEnablePreciseMemoryInfo);
 
@@ -266,6 +257,10 @@ int ShellMainDelegate::RunProcess(
   // on the ShellMainDelegate class because of different object lifetime.
   scoped_ptr<BrowserMainRunner> browser_runner_;
 #endif
+
+  base::trace_event::TraceLog::GetInstance()->SetProcessName("Browser");
+  base::trace_event::TraceLog::GetInstance()->SetProcessSortIndex(
+      kTraceEventBrowserProcessSortIndex);
 
   browser_runner_.reset(BrowserMainRunner::Create());
   base::CommandLine& command_line = *base::CommandLine::ForCurrentProcess();

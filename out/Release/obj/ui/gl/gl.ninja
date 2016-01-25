@@ -1,0 +1,160 @@
+defines = -DV8_DEPRECATION_WARNINGS -DCLD_VERSION=2 -D_FILE_OFFSET_BITS=64 $
+    -DCHROMIUM_BUILD -DCR_CLANG_REVISION=255169-1 $
+    -DUI_COMPOSITOR_IMAGE_TRANSPORT -DUSE_AURA=1 -DUSE_ASH=1 -DUSE_PANGO=1 $
+    -DUSE_CAIRO=1 -DUSE_DEFAULT_RENDER_THEME=1 -DUSE_LIBJPEG_TURBO=1 $
+    -DUSE_X11=1 -DUSE_CLIPBOARD_AURAX11=1 -DENABLE_ONE_CLICK_SIGNIN $
+    -DENABLE_WEBRTC=1 -DENABLE_MEDIA_ROUTER=1 -DENABLE_PEPPER_CDMS $
+    -DENABLE_CONFIGURATION_POLICY -DENABLE_NOTIFICATIONS -DENABLE_HIDPI=1 $
+    -DENABLE_TOPCHROME_MD=1 -DUSE_UDEV -DDONT_EMBED_BUILD_METADATA $
+    -DFIELDTRIAL_TESTING_ENABLED -DENABLE_TASK_MANAGER=1 $
+    -DENABLE_EXTENSIONS=1 -DENABLE_PDF=1 -DENABLE_PLUGINS=1 $
+    -DENABLE_SESSION_SERVICE=1 -DENABLE_THEMES=1 -DENABLE_AUTOFILL_DIALOG=1 $
+    -DENABLE_BACKGROUND=1 -DENABLE_PRINTING=1 -DENABLE_BASIC_PRINTING=1 $
+    -DENABLE_PRINT_PREVIEW=1 -DENABLE_SPELLCHECK=1 $
+    -DENABLE_CAPTIVE_PORTAL_DETECTION=1 -DENABLE_APP_LIST=1 $
+    -DENABLE_SETTINGS_APP=1 -DENABLE_SUPERVISED_USERS=1 -DENABLE_MDNS=1 $
+    -DENABLE_SERVICE_DISCOVERY=1 -DV8_USE_EXTERNAL_STARTUP_DATA $
+    -DFULL_SAFE_BROWSING -DSAFE_BROWSING_CSD -DSAFE_BROWSING_DB_LOCAL $
+    -DGL_IMPLEMENTATION -DSK_SUPPORT_GPU=1 $
+    -DSK_IGNORE_LINEONLY_AA_CONVEX_PATH_OPTS -DU_USING_ICU_NAMESPACE=0 $
+    -DU_ENABLE_DYLOAD=0 -DU_STATIC_IMPLEMENTATION -DUSE_LIBPCI=1 $
+    -DUSE_OPENSSL=1 -DUSE_GLIB=1 -DUSE_NSS_CERTS=1 -D__STDC_CONSTANT_MACROS $
+    -D__STDC_FORMAT_MACROS -DNDEBUG -DNVALGRIND $
+    -DDYNAMIC_ANNOTATIONS_ENABLED=0
+includes = -Igen -I../../third_party/swiftshader/include $
+    -I../../third_party/khronos -I../../gpu -I../.. -I../../skia/config $
+    -I../../third_party/skia/include/core $
+    -I../../third_party/skia/include/effects $
+    -I../../third_party/skia/include/pdf $
+    -I../../third_party/skia/include/gpu $
+    -I../../third_party/skia/include/lazy $
+    -I../../third_party/skia/include/pathops $
+    -I../../third_party/skia/include/pipe $
+    -I../../third_party/skia/include/ports $
+    -I../../third_party/skia/include/utils -I../../skia/ext $
+    -I../../third_party/mesa/src/include $
+    -I../../third_party/icu/source/i18n -I../../third_party/icu/source/common
+cflags = -fstack-protector --param=ssp-buffer-size=4 -Werror -pthread $
+    -fno-strict-aliasing -Wall -Wno-unused-parameter $
+    -Wno-missing-field-initializers -fvisibility=hidden -pipe -fPIC $
+    -Wno-reserved-user-defined-literal -Xclang -load -Xclang $
+    /b/build/slave/publish_tarball/build/src/third_party/llvm-build/Release+Asserts/lib/libFindBadConstructs.so $
+    -Xclang -add-plugin -Xclang find-bad-constructs -Xclang $
+    -plugin-arg-find-bad-constructs -Xclang check-templates $
+    -fcolor-diagnostics $
+    -B/b/build/slave/publish_tarball/build/src/third_party/binutils/Linux_x64/Release/bin $
+    -Wheader-hygiene -Wno-char-subscripts $
+    -Wno-unneeded-internal-declaration -Wno-covered-switch-default $
+    -Wstring-conversion -Wno-c++11-narrowing -Wno-deprecated-register $
+    -Wno-inconsistent-missing-override -Wno-shift-negative-value $
+    -Wno-bitfield-width -pthread $
+    -I/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/include/glib-2.0 $
+    -I/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/lib/x86_64-linux-gnu/glib-2.0/include $
+    -m64 -march=x86-64 $
+    --sysroot=/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot $
+    -O2 -fno-ident -fdata-sections -ffunction-sections -funwind-tables
+cflags_c = 
+cflags_cc = -fno-exceptions -fno-rtti -fno-threadsafe-statics $
+    -fvisibility-inlines-hidden -Wsign-compare -std=gnu++11
+arflags = 
+
+build obj/ui/gl/gl.gl_bindings.o: cxx ../../ui/gl/gl_bindings.cc
+build obj/ui/gl/gl.gl_bindings_autogen_gl.o: cxx $
+    ../../ui/gl/gl_bindings_autogen_gl.cc
+build obj/ui/gl/gl.gl_bindings_autogen_osmesa.o: cxx $
+    ../../ui/gl/gl_bindings_autogen_osmesa.cc
+build obj/ui/gl/gl.gl_bindings_skia_in_process.o: cxx $
+    ../../ui/gl/gl_bindings_skia_in_process.cc
+build obj/ui/gl/gl.gl_context.o: cxx ../../ui/gl/gl_context.cc
+build obj/ui/gl/gl.gl_context_osmesa.o: cxx ../../ui/gl/gl_context_osmesa.cc
+build obj/ui/gl/gl.gl_context_stub.o: cxx ../../ui/gl/gl_context_stub.cc
+build obj/ui/gl/gl.gl_context_stub_with_extensions.o: cxx $
+    ../../ui/gl/gl_context_stub_with_extensions.cc
+build obj/ui/gl/gl.gl_context_x11.o: cxx ../../ui/gl/gl_context_x11.cc
+build obj/ui/gl/gl.gl_enums.o: cxx ../../ui/gl/gl_enums.cc
+build obj/ui/gl/gl.gl_fence.o: cxx ../../ui/gl/gl_fence.cc
+build obj/ui/gl/gl.gl_fence_arb.o: cxx ../../ui/gl/gl_fence_arb.cc
+build obj/ui/gl/gl.gl_fence_nv.o: cxx ../../ui/gl/gl_fence_nv.cc
+build obj/ui/gl/gl.gl_gl_api_implementation.o: cxx $
+    ../../ui/gl/gl_gl_api_implementation.cc
+build obj/ui/gl/gl.gl_helper.o: cxx ../../ui/gl/gl_helper.cc
+build obj/ui/gl/gl.gl_image_memory.o: cxx ../../ui/gl/gl_image_memory.cc
+build obj/ui/gl/gl.gl_image_ref_counted_memory.o: cxx $
+    ../../ui/gl/gl_image_ref_counted_memory.cc
+build obj/ui/gl/gl.gl_image_shared_memory.o: cxx $
+    ../../ui/gl/gl_image_shared_memory.cc
+build obj/ui/gl/gl.gl_image_stub.o: cxx ../../ui/gl/gl_image_stub.cc
+build obj/ui/gl/gl.gl_implementation.o: cxx ../../ui/gl/gl_implementation.cc
+build obj/ui/gl/gl.gl_implementation_x11.o: cxx $
+    ../../ui/gl/gl_implementation_x11.cc
+build obj/ui/gl/gl.gl_osmesa_api_implementation.o: cxx $
+    ../../ui/gl/gl_osmesa_api_implementation.cc
+build obj/ui/gl/gl.gl_share_group.o: cxx ../../ui/gl/gl_share_group.cc
+build obj/ui/gl/gl.gl_state_restorer.o: cxx ../../ui/gl/gl_state_restorer.cc
+build obj/ui/gl/gl.gl_surface.o: cxx ../../ui/gl/gl_surface.cc
+build obj/ui/gl/gl.gl_surface_osmesa.o: cxx ../../ui/gl/gl_surface_osmesa.cc
+build obj/ui/gl/gl.gl_surface_overlay.o: cxx ../../ui/gl/gl_surface_overlay.cc
+build obj/ui/gl/gl.gl_surface_stub.o: cxx ../../ui/gl/gl_surface_stub.cc
+build obj/ui/gl/gl.gl_surface_x11.o: cxx ../../ui/gl/gl_surface_x11.cc
+build obj/ui/gl/gl.gl_switches.o: cxx ../../ui/gl/gl_switches.cc
+build obj/ui/gl/gl.gl_version_info.o: cxx ../../ui/gl/gl_version_info.cc
+build obj/ui/gl/gl.gpu_switching_manager.o: cxx $
+    ../../ui/gl/gpu_switching_manager.cc
+build obj/ui/gl/gl.gpu_timing.o: cxx ../../ui/gl/gpu_timing.cc
+build obj/ui/gl/gl.scoped_api.o: cxx ../../ui/gl/scoped_api.cc
+build obj/ui/gl/gl.scoped_binders.o: cxx ../../ui/gl/scoped_binders.cc
+build obj/ui/gl/gl.scoped_make_current.o: cxx $
+    ../../ui/gl/scoped_make_current.cc
+build obj/ui/gl/gl.sync_control_vsync_provider.o: cxx $
+    ../../ui/gl/sync_control_vsync_provider.cc
+build obj/ui/gl/gl.trace_util.o: cxx ../../ui/gl/trace_util.cc
+build obj/ui/gl/gl.egl_util.o: cxx ../../ui/gl/egl_util.cc
+build obj/ui/gl/gl.gl_bindings_autogen_egl.o: cxx $
+    ../../ui/gl/gl_bindings_autogen_egl.cc
+build obj/ui/gl/gl.gl_context_egl.o: cxx ../../ui/gl/gl_context_egl.cc
+build obj/ui/gl/gl.gl_egl_api_implementation.o: cxx $
+    ../../ui/gl/gl_egl_api_implementation.cc
+build obj/ui/gl/gl.gl_fence_egl.o: cxx ../../ui/gl/gl_fence_egl.cc
+build obj/ui/gl/gl.gl_image_egl.o: cxx ../../ui/gl/gl_image_egl.cc
+build obj/ui/gl/gl.gl_surface_egl.o: cxx ../../ui/gl/gl_surface_egl.cc
+build obj/ui/gl/gl.gl_implementation_osmesa.o: cxx $
+    ../../ui/gl/gl_implementation_osmesa.cc
+build obj/ui/gl/gl.gl_bindings_autogen_glx.o: cxx $
+    ../../ui/gl/gl_bindings_autogen_glx.cc
+build obj/ui/gl/gl.gl_context_glx.o: cxx ../../ui/gl/gl_context_glx.cc
+build obj/ui/gl/gl.gl_glx_api_implementation.o: cxx $
+    ../../ui/gl/gl_glx_api_implementation.cc
+build obj/ui/gl/gl.gl_image_glx.o: cxx ../../ui/gl/gl_image_glx.cc
+build obj/ui/gl/gl.gl_surface_egl_x11.o: cxx ../../ui/gl/gl_surface_egl_x11.cc
+build obj/ui/gl/gl.gl_surface_glx.o: cxx ../../ui/gl/gl_surface_glx.cc
+
+build obj/ui/gl/libgl_wrapper.a: alink_thin obj/ui/gl/gl.gl_bindings.o $
+    obj/ui/gl/gl.gl_bindings_autogen_gl.o $
+    obj/ui/gl/gl.gl_bindings_autogen_osmesa.o $
+    obj/ui/gl/gl.gl_bindings_skia_in_process.o obj/ui/gl/gl.gl_context.o $
+    obj/ui/gl/gl.gl_context_osmesa.o obj/ui/gl/gl.gl_context_stub.o $
+    obj/ui/gl/gl.gl_context_stub_with_extensions.o $
+    obj/ui/gl/gl.gl_context_x11.o obj/ui/gl/gl.gl_enums.o $
+    obj/ui/gl/gl.gl_fence.o obj/ui/gl/gl.gl_fence_arb.o $
+    obj/ui/gl/gl.gl_fence_nv.o obj/ui/gl/gl.gl_gl_api_implementation.o $
+    obj/ui/gl/gl.gl_helper.o obj/ui/gl/gl.gl_image_memory.o $
+    obj/ui/gl/gl.gl_image_ref_counted_memory.o $
+    obj/ui/gl/gl.gl_image_shared_memory.o obj/ui/gl/gl.gl_image_stub.o $
+    obj/ui/gl/gl.gl_implementation.o obj/ui/gl/gl.gl_implementation_x11.o $
+    obj/ui/gl/gl.gl_osmesa_api_implementation.o $
+    obj/ui/gl/gl.gl_share_group.o obj/ui/gl/gl.gl_state_restorer.o $
+    obj/ui/gl/gl.gl_surface.o obj/ui/gl/gl.gl_surface_osmesa.o $
+    obj/ui/gl/gl.gl_surface_overlay.o obj/ui/gl/gl.gl_surface_stub.o $
+    obj/ui/gl/gl.gl_surface_x11.o obj/ui/gl/gl.gl_switches.o $
+    obj/ui/gl/gl.gl_version_info.o obj/ui/gl/gl.gpu_switching_manager.o $
+    obj/ui/gl/gl.gpu_timing.o obj/ui/gl/gl.scoped_api.o $
+    obj/ui/gl/gl.scoped_binders.o obj/ui/gl/gl.scoped_make_current.o $
+    obj/ui/gl/gl.sync_control_vsync_provider.o obj/ui/gl/gl.trace_util.o $
+    obj/ui/gl/gl.egl_util.o obj/ui/gl/gl.gl_bindings_autogen_egl.o $
+    obj/ui/gl/gl.gl_context_egl.o obj/ui/gl/gl.gl_egl_api_implementation.o $
+    obj/ui/gl/gl.gl_fence_egl.o obj/ui/gl/gl.gl_image_egl.o $
+    obj/ui/gl/gl.gl_surface_egl.o obj/ui/gl/gl.gl_implementation_osmesa.o $
+    obj/ui/gl/gl.gl_bindings_autogen_glx.o obj/ui/gl/gl.gl_context_glx.o $
+    obj/ui/gl/gl.gl_glx_api_implementation.o obj/ui/gl/gl.gl_image_glx.o $
+    obj/ui/gl/gl.gl_surface_egl_x11.o obj/ui/gl/gl.gl_surface_glx.o || $
+    obj/skia/skia.actions_depends.stamp

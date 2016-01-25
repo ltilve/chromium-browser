@@ -1,0 +1,201 @@
+build obj/ui/message_center/message_center.actions_depends.stamp: stamp $
+    obj/skia/skia.actions_depends.stamp $
+    obj/ui/resources/ui_resources.actions_rules_copies.stamp $
+    obj/ui/strings/ui_strings.actions_rules_copies.stamp $
+    obj/ui/accessibility/libax_gen.a
+
+build obj/ui/message_center/message_center.compile_depends.stamp: stamp $
+    obj/ui/resources/ui_resources.actions_rules_copies.stamp $
+    obj/ui/strings/ui_strings.actions_rules_copies.stamp $
+    obj/ui/accessibility/ax_gen.actions_rules_copies.stamp
+
+defines = -DV8_DEPRECATION_WARNINGS -DCLD_VERSION=2 -D_FILE_OFFSET_BITS=64 $
+    -DCHROMIUM_BUILD -DCR_CLANG_REVISION=255169-1 $
+    -DUI_COMPOSITOR_IMAGE_TRANSPORT -DUSE_AURA=1 -DUSE_ASH=1 -DUSE_PANGO=1 $
+    -DUSE_CAIRO=1 -DUSE_DEFAULT_RENDER_THEME=1 -DUSE_LIBJPEG_TURBO=1 $
+    -DUSE_X11=1 -DUSE_CLIPBOARD_AURAX11=1 -DENABLE_ONE_CLICK_SIGNIN $
+    -DENABLE_WEBRTC=1 -DENABLE_MEDIA_ROUTER=1 -DENABLE_PEPPER_CDMS $
+    -DENABLE_CONFIGURATION_POLICY -DENABLE_NOTIFICATIONS -DENABLE_HIDPI=1 $
+    -DENABLE_TOPCHROME_MD=1 -DUSE_UDEV -DDONT_EMBED_BUILD_METADATA $
+    -DFIELDTRIAL_TESTING_ENABLED -DENABLE_TASK_MANAGER=1 $
+    -DENABLE_EXTENSIONS=1 -DENABLE_PDF=1 -DENABLE_PLUGINS=1 $
+    -DENABLE_SESSION_SERVICE=1 -DENABLE_THEMES=1 -DENABLE_AUTOFILL_DIALOG=1 $
+    -DENABLE_BACKGROUND=1 -DENABLE_PRINTING=1 -DENABLE_BASIC_PRINTING=1 $
+    -DENABLE_PRINT_PREVIEW=1 -DENABLE_SPELLCHECK=1 $
+    -DENABLE_CAPTIVE_PORTAL_DETECTION=1 -DENABLE_APP_LIST=1 $
+    -DENABLE_SETTINGS_APP=1 -DENABLE_SUPERVISED_USERS=1 -DENABLE_MDNS=1 $
+    -DENABLE_SERVICE_DISCOVERY=1 -DV8_USE_EXTERNAL_STARTUP_DATA $
+    -DFULL_SAFE_BROWSING -DSAFE_BROWSING_CSD -DSAFE_BROWSING_DB_LOCAL $
+    -DMESSAGE_CENTER_IMPLEMENTATION -DGL_GLEXT_PROTOTYPES -DTOOLKIT_VIEWS=1 $
+    -DU_USING_ICU_NAMESPACE=0 -DU_ENABLE_DYLOAD=0 -DU_STATIC_IMPLEMENTATION $
+    -DSK_SUPPORT_GPU=1 -DSK_IGNORE_LINEONLY_AA_CONVEX_PATH_OPTS $
+    -DUSE_LIBPCI=1 -DUSE_OPENSSL=1 -DUSE_GLIB=1 -DUSE_NSS_CERTS=1 $
+    -D__STDC_CONSTANT_MACROS -D__STDC_FORMAT_MACROS -DNDEBUG -DNVALGRIND $
+    -DDYNAMIC_ANNOTATIONS_ENABLED=0
+includes = -Igen -I../.. -I../../skia/config -I../../third_party/khronos $
+    -I../../gpu -Igen/angle -I../../third_party/icu/source/common $
+    -I../../third_party/icu/source/i18n $
+    -I../../third_party/skia/include/core $
+    -I../../third_party/skia/include/effects $
+    -I../../third_party/skia/include/pdf $
+    -I../../third_party/skia/include/gpu $
+    -I../../third_party/skia/include/lazy $
+    -I../../third_party/skia/include/pathops $
+    -I../../third_party/skia/include/pipe $
+    -I../../third_party/skia/include/ports $
+    -I../../third_party/skia/include/utils -I../../skia/ext $
+    -Igen/ui/resources -Igen/ui/views/resources
+cflags = -fstack-protector --param=ssp-buffer-size=4 -Werror -pthread $
+    -fno-strict-aliasing -Wall -Wno-unused-parameter $
+    -Wno-missing-field-initializers -fvisibility=hidden -pipe -fPIC $
+    -Wno-reserved-user-defined-literal -Xclang -load -Xclang $
+    /b/build/slave/publish_tarball/build/src/third_party/llvm-build/Release+Asserts/lib/libFindBadConstructs.so $
+    -Xclang -add-plugin -Xclang find-bad-constructs -Xclang $
+    -plugin-arg-find-bad-constructs -Xclang check-templates $
+    -fcolor-diagnostics $
+    -B/b/build/slave/publish_tarball/build/src/third_party/binutils/Linux_x64/Release/bin $
+    -Wheader-hygiene -Wno-char-subscripts $
+    -Wno-unneeded-internal-declaration -Wno-covered-switch-default $
+    -Wstring-conversion -Wno-c++11-narrowing -Wno-deprecated-register $
+    -Wno-inconsistent-missing-override -Wno-shift-negative-value $
+    -Wno-bitfield-width -pthread $
+    -I/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/include/glib-2.0 $
+    -I/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/lib/x86_64-linux-gnu/glib-2.0/include $
+    -m64 -march=x86-64 $
+    --sysroot=/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot $
+    -O2 -fno-ident -fdata-sections -ffunction-sections -funwind-tables
+cflags_c = 
+cflags_cc = -fno-exceptions -fno-rtti -fno-threadsafe-statics $
+    -fvisibility-inlines-hidden -Wsign-compare -std=gnu++11
+arflags = 
+
+build obj/ui/message_center/message_center.message_center.o: cxx $
+    ../../ui/message_center/message_center.cc || $
+    obj/ui/message_center/message_center.compile_depends.stamp
+build obj/ui/message_center/message_center.message_center_impl.o: cxx $
+    ../../ui/message_center/message_center_impl.cc || $
+    obj/ui/message_center/message_center.compile_depends.stamp
+build obj/ui/message_center/message_center.message_center_style.o: cxx $
+    ../../ui/message_center/message_center_style.cc || $
+    obj/ui/message_center/message_center.compile_depends.stamp
+build obj/ui/message_center/message_center.message_center_switches.o: cxx $
+    ../../ui/message_center/message_center_switches.cc || $
+    obj/ui/message_center/message_center.compile_depends.stamp
+build obj/ui/message_center/message_center.message_center_tray.o: cxx $
+    ../../ui/message_center/message_center_tray.cc || $
+    obj/ui/message_center/message_center.compile_depends.stamp
+build obj/ui/message_center/message_center.notification.o: cxx $
+    ../../ui/message_center/notification.cc || $
+    obj/ui/message_center/message_center.compile_depends.stamp
+build obj/ui/message_center/message_center.notification_blocker.o: cxx $
+    ../../ui/message_center/notification_blocker.cc || $
+    obj/ui/message_center/message_center.compile_depends.stamp
+build obj/ui/message_center/message_center.notification_delegate.o: cxx $
+    ../../ui/message_center/notification_delegate.cc || $
+    obj/ui/message_center/message_center.compile_depends.stamp
+build obj/ui/message_center/message_center.notification_list.o: cxx $
+    ../../ui/message_center/notification_list.cc || $
+    obj/ui/message_center/message_center.compile_depends.stamp
+build obj/ui/message_center/message_center.notification_types.o: cxx $
+    ../../ui/message_center/notification_types.cc || $
+    obj/ui/message_center/message_center.compile_depends.stamp
+build obj/ui/message_center/message_center.notifier_settings.o: cxx $
+    ../../ui/message_center/notifier_settings.cc || $
+    obj/ui/message_center/message_center.compile_depends.stamp
+build obj/ui/message_center/message_center.popup_timer.o: cxx $
+    ../../ui/message_center/popup_timer.cc || $
+    obj/ui/message_center/message_center.compile_depends.stamp
+build obj/ui/message_center/views/message_center.bounded_label.o: cxx $
+    ../../ui/message_center/views/bounded_label.cc || $
+    obj/ui/message_center/message_center.compile_depends.stamp
+build $
+    obj/ui/message_center/views/message_center.desktop_popup_alignment_delegate.o: $
+    cxx ../../ui/message_center/views/desktop_popup_alignment_delegate.cc $
+    || obj/ui/message_center/message_center.compile_depends.stamp
+build obj/ui/message_center/views/message_center.message_bubble_base.o: cxx $
+    ../../ui/message_center/views/message_bubble_base.cc || $
+    obj/ui/message_center/message_center.compile_depends.stamp
+build obj/ui/message_center/views/message_center.message_center_bubble.o: $
+    cxx ../../ui/message_center/views/message_center_bubble.cc || $
+    obj/ui/message_center/message_center.compile_depends.stamp
+build $
+    obj/ui/message_center/views/message_center.message_center_button_bar.o: $
+    cxx ../../ui/message_center/views/message_center_button_bar.cc || $
+    obj/ui/message_center/message_center.compile_depends.stamp
+build obj/ui/message_center/views/message_center.message_center_view.o: cxx $
+    ../../ui/message_center/views/message_center_view.cc || $
+    obj/ui/message_center/message_center.compile_depends.stamp
+build obj/ui/message_center/views/message_center.message_list_view.o: cxx $
+    ../../ui/message_center/views/message_list_view.cc || $
+    obj/ui/message_center/message_center.compile_depends.stamp
+build $
+    obj/ui/message_center/views/message_center.message_popup_collection.o: $
+    cxx ../../ui/message_center/views/message_popup_collection.cc || $
+    obj/ui/message_center/message_center.compile_depends.stamp
+build obj/ui/message_center/views/message_center.message_view.o: cxx $
+    ../../ui/message_center/views/message_view.cc || $
+    obj/ui/message_center/message_center.compile_depends.stamp
+build $
+    obj/ui/message_center/views/message_center.message_view_context_menu_controller.o: $
+    cxx $
+    ../../ui/message_center/views/message_view_context_menu_controller.cc $
+    || obj/ui/message_center/message_center.compile_depends.stamp
+build obj/ui/message_center/views/message_center.notification_button.o: cxx $
+    ../../ui/message_center/views/notification_button.cc || $
+    obj/ui/message_center/message_center.compile_depends.stamp
+build $
+    obj/ui/message_center/views/message_center.notification_progress_bar.o: $
+    cxx ../../ui/message_center/views/notification_progress_bar.cc || $
+    obj/ui/message_center/message_center.compile_depends.stamp
+build obj/ui/message_center/views/message_center.notification_view.o: cxx $
+    ../../ui/message_center/views/notification_view.cc || $
+    obj/ui/message_center/message_center.compile_depends.stamp
+build obj/ui/message_center/views/message_center.notifier_settings_view.o: $
+    cxx ../../ui/message_center/views/notifier_settings_view.cc || $
+    obj/ui/message_center/message_center.compile_depends.stamp
+build obj/ui/message_center/views/message_center.padded_button.o: cxx $
+    ../../ui/message_center/views/padded_button.cc || $
+    obj/ui/message_center/message_center.compile_depends.stamp
+build $
+    obj/ui/message_center/views/message_center.popup_alignment_delegate.o: $
+    cxx ../../ui/message_center/views/popup_alignment_delegate.cc || $
+    obj/ui/message_center/message_center.compile_depends.stamp
+build obj/ui/message_center/views/message_center.proportional_image_view.o: $
+    cxx ../../ui/message_center/views/proportional_image_view.cc || $
+    obj/ui/message_center/message_center.compile_depends.stamp
+build obj/ui/message_center/views/message_center.toast_contents_view.o: cxx $
+    ../../ui/message_center/views/toast_contents_view.cc || $
+    obj/ui/message_center/message_center.compile_depends.stamp
+
+build obj/ui/message_center/libmessage_center.a: alink_thin $
+    obj/ui/message_center/message_center.message_center.o $
+    obj/ui/message_center/message_center.message_center_impl.o $
+    obj/ui/message_center/message_center.message_center_style.o $
+    obj/ui/message_center/message_center.message_center_switches.o $
+    obj/ui/message_center/message_center.message_center_tray.o $
+    obj/ui/message_center/message_center.notification.o $
+    obj/ui/message_center/message_center.notification_blocker.o $
+    obj/ui/message_center/message_center.notification_delegate.o $
+    obj/ui/message_center/message_center.notification_list.o $
+    obj/ui/message_center/message_center.notification_types.o $
+    obj/ui/message_center/message_center.notifier_settings.o $
+    obj/ui/message_center/message_center.popup_timer.o $
+    obj/ui/message_center/views/message_center.bounded_label.o $
+    obj/ui/message_center/views/message_center.desktop_popup_alignment_delegate.o $
+    obj/ui/message_center/views/message_center.message_bubble_base.o $
+    obj/ui/message_center/views/message_center.message_center_bubble.o $
+    obj/ui/message_center/views/message_center.message_center_button_bar.o $
+    obj/ui/message_center/views/message_center.message_center_view.o $
+    obj/ui/message_center/views/message_center.message_list_view.o $
+    obj/ui/message_center/views/message_center.message_popup_collection.o $
+    obj/ui/message_center/views/message_center.message_view.o $
+    obj/ui/message_center/views/message_center.message_view_context_menu_controller.o $
+    obj/ui/message_center/views/message_center.notification_button.o $
+    obj/ui/message_center/views/message_center.notification_progress_bar.o $
+    obj/ui/message_center/views/message_center.notification_view.o $
+    obj/ui/message_center/views/message_center.notifier_settings_view.o $
+    obj/ui/message_center/views/message_center.padded_button.o $
+    obj/ui/message_center/views/message_center.popup_alignment_delegate.o $
+    obj/ui/message_center/views/message_center.proportional_image_view.o $
+    obj/ui/message_center/views/message_center.toast_contents_view.o || $
+    obj/ui/message_center/message_center.actions_depends.stamp

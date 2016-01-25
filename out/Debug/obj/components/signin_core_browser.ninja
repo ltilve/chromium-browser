@@ -1,0 +1,212 @@
+build obj/components/signin_core_browser.actions_depends.stamp: stamp $
+    obj/third_party/cacheinvalidation/libcacheinvalidation_proto_cpp.a $
+    obj/components/libcomponent_metrics_proto.a
+
+build obj/components/signin_core_browser.compile_depends.stamp: stamp $
+    obj/third_party/cacheinvalidation/cacheinvalidation_proto_cpp.actions_rules_copies.stamp $
+    obj/components/component_metrics_proto.actions_rules_copies.stamp
+
+defines = -DV8_DEPRECATION_WARNINGS -DCLD_VERSION=2 -D_FILE_OFFSET_BITS=64 $
+    -DCHROMIUM_BUILD -DCR_CLANG_REVISION=255169-1 $
+    -DUI_COMPOSITOR_IMAGE_TRANSPORT -DUSE_AURA=1 -DUSE_ASH=1 -DUSE_PANGO=1 $
+    -DUSE_CAIRO=1 -DUSE_DEFAULT_RENDER_THEME=1 -DUSE_LIBJPEG_TURBO=1 $
+    -DUSE_X11=1 -DUSE_CLIPBOARD_AURAX11=1 -DENABLE_ONE_CLICK_SIGNIN $
+    -DENABLE_WEBRTC=1 -DENABLE_MEDIA_ROUTER=1 -DENABLE_PEPPER_CDMS $
+    -DENABLE_CONFIGURATION_POLICY -DENABLE_NOTIFICATIONS -DENABLE_HIDPI=1 $
+    -DENABLE_TOPCHROME_MD=1 -DUSE_UDEV -DDONT_EMBED_BUILD_METADATA $
+    -DFIELDTRIAL_TESTING_ENABLED -DENABLE_TASK_MANAGER=1 $
+    -DENABLE_EXTENSIONS=1 -DENABLE_PDF=1 -DENABLE_PLUGINS=1 $
+    -DENABLE_SESSION_SERVICE=1 -DENABLE_THEMES=1 -DENABLE_AUTOFILL_DIALOG=1 $
+    -DENABLE_BACKGROUND=1 -DENABLE_PRINTING=1 -DENABLE_BASIC_PRINTING=1 $
+    -DENABLE_PRINT_PREVIEW=1 -DENABLE_SPELLCHECK=1 $
+    -DENABLE_CAPTIVE_PORTAL_DETECTION=1 -DENABLE_APP_LIST=1 $
+    -DENABLE_SETTINGS_APP=1 -DENABLE_SUPERVISED_USERS=1 -DENABLE_MDNS=1 $
+    -DENABLE_SERVICE_DISCOVERY=1 -DV8_USE_EXTERNAL_STARTUP_DATA $
+    -DFULL_SAFE_BROWSING -DSAFE_BROWSING_CSD -DSAFE_BROWSING_DB_LOCAL $
+    -DGL_GLEXT_PROTOTYPES -DMOJO_USE_SYSTEM_IMPL -DPROTOBUF_USE_DLLS $
+    -DGOOGLE_PROTOBUF_NO_RTTI -DGOOGLE_PROTOBUF_NO_STATIC_INITIALIZER $
+    -DU_USING_ICU_NAMESPACE=0 -DU_ENABLE_DYLOAD=0 -DU_STATIC_IMPLEMENTATION $
+    -DUSE_LIBPCI=1 -DUSE_OPENSSL=1 -DUSE_GLIB=1 -DUSE_NSS_CERTS=1 $
+    -D__STDC_CONSTANT_MACROS -D__STDC_FORMAT_MACROS $
+    -DDYNAMIC_ANNOTATIONS_ENABLED=1 -DWTF_USE_DYNAMIC_ANNOTATIONS=1 $
+    -D_DEBUG -D_GLIBCXX_DEBUG=1
+includes = -Igen -I../.. -I../../skia/config -I../../third_party/khronos $
+    -I../../gpu -Igen/angle -I../../third_party/WebKit/Source $
+    -I../../third_party/cacheinvalidation/google/cacheinvalidation $
+    -Igen/protoc_out -I../../third_party/protobuf $
+    -I../../third_party/protobuf/src -I../../third_party/icu/source/i18n $
+    -I../../third_party/icu/source/common $
+    -I../../third_party/cacheinvalidation/overrides $
+    -I../../third_party/cacheinvalidation/src
+cflags = -fstack-protector --param=ssp-buffer-size=4 -Werror -pthread $
+    -fno-strict-aliasing -Wall -Wno-unused-parameter $
+    -Wno-missing-field-initializers -fvisibility=hidden -pipe -fPIC $
+    -Wno-reserved-user-defined-literal -Xclang -load -Xclang $
+    /b/build/slave/publish_tarball/build/src/third_party/llvm-build/Release+Asserts/lib/libFindBadConstructs.so $
+    -Xclang -add-plugin -Xclang find-bad-constructs -Xclang $
+    -plugin-arg-find-bad-constructs -Xclang check-templates $
+    -fcolor-diagnostics $
+    -B/b/build/slave/publish_tarball/build/src/third_party/binutils/Linux_x64/Release/bin $
+    -Wheader-hygiene -Wno-char-subscripts $
+    -Wno-unneeded-internal-declaration -Wno-covered-switch-default $
+    -Wstring-conversion -Wno-c++11-narrowing -Wno-deprecated-register $
+    -Wno-inconsistent-missing-override -Wno-shift-negative-value $
+    -Wno-bitfield-width -pthread $
+    -I/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/include/glib-2.0 $
+    -I/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/lib/x86_64-linux-gnu/glib-2.0/include $
+    -I/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/include/nss $
+    -I/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/include/nspr $
+    -Wno-header-guard -m64 -march=x86-64 $
+    --sysroot=/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot $
+    -O0 -g -funwind-tables -gsplit-dwarf -Wno-undefined-bool-conversion $
+    -Wno-tautological-undefined-compare
+cflags_c = 
+cflags_cc = -fno-exceptions -fno-rtti -fno-threadsafe-statics $
+    -fvisibility-inlines-hidden -Wsign-compare -std=gnu++11
+arflags = 
+
+build $
+    obj/components/signin/core/browser/signin_core_browser.about_signin_internals.o: $
+    cxx ../../components/signin/core/browser/about_signin_internals.cc || $
+    obj/components/signin_core_browser.compile_depends.stamp
+build $
+    obj/components/signin/core/browser/signin_core_browser.account_fetcher_service.o: $
+    cxx ../../components/signin/core/browser/account_fetcher_service.cc || $
+    obj/components/signin_core_browser.compile_depends.stamp
+build $
+    obj/components/signin/core/browser/signin_core_browser.account_info.o: $
+    cxx ../../components/signin/core/browser/account_info.cc || $
+    obj/components/signin_core_browser.compile_depends.stamp
+build $
+    obj/components/signin/core/browser/signin_core_browser.account_info_fetcher.o: $
+    cxx ../../components/signin/core/browser/account_info_fetcher.cc || $
+    obj/components/signin_core_browser.compile_depends.stamp
+build $
+    obj/components/signin/core/browser/signin_core_browser.account_reconcilor.o: $
+    cxx ../../components/signin/core/browser/account_reconcilor.cc || $
+    obj/components/signin_core_browser.compile_depends.stamp
+build $
+    obj/components/signin/core/browser/signin_core_browser.account_tracker_service.o: $
+    cxx ../../components/signin/core/browser/account_tracker_service.cc || $
+    obj/components/signin_core_browser.compile_depends.stamp
+build $
+    obj/components/signin/core/browser/signin_core_browser.child_account_info_fetcher.o: $
+    cxx ../../components/signin/core/browser/child_account_info_fetcher.cc $
+    || obj/components/signin_core_browser.compile_depends.stamp
+build $
+    obj/components/signin/core/browser/signin_core_browser.child_account_info_fetcher_impl.o: $
+    cxx $
+    ../../components/signin/core/browser/child_account_info_fetcher_impl.cc $
+    || obj/components/signin_core_browser.compile_depends.stamp
+build $
+    obj/components/signin/core/browser/signin_core_browser.device_activity_fetcher.o: $
+    cxx ../../components/signin/core/browser/device_activity_fetcher.cc || $
+    obj/components/signin_core_browser.compile_depends.stamp
+build $
+    obj/components/signin/core/browser/signin_core_browser.gaia_cookie_manager_service.o: $
+    cxx ../../components/signin/core/browser/gaia_cookie_manager_service.cc $
+    || obj/components/signin_core_browser.compile_depends.stamp
+build $
+    obj/components/signin/core/browser/signin_core_browser.profile_identity_provider.o: $
+    cxx ../../components/signin/core/browser/profile_identity_provider.cc $
+    || obj/components/signin_core_browser.compile_depends.stamp
+build $
+    obj/components/signin/core/browser/signin_core_browser.profile_oauth2_token_service.o: $
+    cxx $
+    ../../components/signin/core/browser/profile_oauth2_token_service.cc || $
+    obj/components/signin_core_browser.compile_depends.stamp
+build $
+    obj/components/signin/core/browser/signin_core_browser.refresh_token_annotation_request.o: $
+    cxx $
+    ../../components/signin/core/browser/refresh_token_annotation_request.cc $
+    || obj/components/signin_core_browser.compile_depends.stamp
+build $
+    obj/components/signin/core/browser/signin_core_browser.signin_client.o: $
+    cxx ../../components/signin/core/browser/signin_client.cc || $
+    obj/components/signin_core_browser.compile_depends.stamp
+build $
+    obj/components/signin/core/browser/signin_core_browser.signin_cookie_changed_subscription.o: $
+    cxx $
+    ../../components/signin/core/browser/signin_cookie_changed_subscription.cc $
+    || obj/components/signin_core_browser.compile_depends.stamp
+build $
+    obj/components/signin/core/browser/signin_core_browser.signin_error_controller.o: $
+    cxx ../../components/signin/core/browser/signin_error_controller.cc || $
+    obj/components/signin_core_browser.compile_depends.stamp
+build $
+    obj/components/signin/core/browser/signin_core_browser.signin_header_helper.o: $
+    cxx ../../components/signin/core/browser/signin_header_helper.cc || $
+    obj/components/signin_core_browser.compile_depends.stamp
+build $
+    obj/components/signin/core/browser/signin_core_browser.signin_internals_util.o: $
+    cxx ../../components/signin/core/browser/signin_internals_util.cc || $
+    obj/components/signin_core_browser.compile_depends.stamp
+build $
+    obj/components/signin/core/browser/signin_core_browser.signin_manager.o: $
+    cxx ../../components/signin/core/browser/signin_manager.cc || $
+    obj/components/signin_core_browser.compile_depends.stamp
+build $
+    obj/components/signin/core/browser/signin_core_browser.signin_manager_base.o: $
+    cxx ../../components/signin/core/browser/signin_manager_base.cc || $
+    obj/components/signin_core_browser.compile_depends.stamp
+build $
+    obj/components/signin/core/browser/signin_core_browser.signin_metrics.o: $
+    cxx ../../components/signin/core/browser/signin_metrics.cc || $
+    obj/components/signin_core_browser.compile_depends.stamp
+build $
+    obj/components/signin/core/browser/signin_core_browser.signin_status_metrics_provider.o: $
+    cxx $
+    ../../components/signin/core/browser/signin_status_metrics_provider.cc $
+    || obj/components/signin_core_browser.compile_depends.stamp
+build $
+    obj/components/signin/core/browser/signin_core_browser.signin_status_metrics_provider_base.o: $
+    cxx $
+    ../../components/signin/core/browser/signin_status_metrics_provider_base.cc $
+    || obj/components/signin_core_browser.compile_depends.stamp
+build $
+    obj/components/signin/core/browser/signin_core_browser.signin_status_metrics_provider_delegate.o: $
+    cxx $
+    ../../components/signin/core/browser/signin_status_metrics_provider_delegate.cc $
+    || obj/components/signin_core_browser.compile_depends.stamp
+build $
+    obj/components/signin/core/browser/signin_core_browser.signin_tracker.o: $
+    cxx ../../components/signin/core/browser/signin_tracker.cc || $
+    obj/components/signin_core_browser.compile_depends.stamp
+build $
+    obj/components/signin/core/browser/webdata/signin_core_browser.token_service_table.o: $
+    cxx ../../components/signin/core/browser/webdata/token_service_table.cc $
+    || obj/components/signin_core_browser.compile_depends.stamp
+build $
+    obj/components/signin/core/browser/webdata/signin_core_browser.token_web_data.o: $
+    cxx ../../components/signin/core/browser/webdata/token_web_data.cc || $
+    obj/components/signin_core_browser.compile_depends.stamp
+
+build obj/components/libsignin_core_browser.a: alink_thin $
+    obj/components/signin/core/browser/signin_core_browser.about_signin_internals.o $
+    obj/components/signin/core/browser/signin_core_browser.account_fetcher_service.o $
+    obj/components/signin/core/browser/signin_core_browser.account_info.o $
+    obj/components/signin/core/browser/signin_core_browser.account_info_fetcher.o $
+    obj/components/signin/core/browser/signin_core_browser.account_reconcilor.o $
+    obj/components/signin/core/browser/signin_core_browser.account_tracker_service.o $
+    obj/components/signin/core/browser/signin_core_browser.child_account_info_fetcher.o $
+    obj/components/signin/core/browser/signin_core_browser.child_account_info_fetcher_impl.o $
+    obj/components/signin/core/browser/signin_core_browser.device_activity_fetcher.o $
+    obj/components/signin/core/browser/signin_core_browser.gaia_cookie_manager_service.o $
+    obj/components/signin/core/browser/signin_core_browser.profile_identity_provider.o $
+    obj/components/signin/core/browser/signin_core_browser.profile_oauth2_token_service.o $
+    obj/components/signin/core/browser/signin_core_browser.refresh_token_annotation_request.o $
+    obj/components/signin/core/browser/signin_core_browser.signin_client.o $
+    obj/components/signin/core/browser/signin_core_browser.signin_cookie_changed_subscription.o $
+    obj/components/signin/core/browser/signin_core_browser.signin_error_controller.o $
+    obj/components/signin/core/browser/signin_core_browser.signin_header_helper.o $
+    obj/components/signin/core/browser/signin_core_browser.signin_internals_util.o $
+    obj/components/signin/core/browser/signin_core_browser.signin_manager.o $
+    obj/components/signin/core/browser/signin_core_browser.signin_manager_base.o $
+    obj/components/signin/core/browser/signin_core_browser.signin_metrics.o $
+    obj/components/signin/core/browser/signin_core_browser.signin_status_metrics_provider.o $
+    obj/components/signin/core/browser/signin_core_browser.signin_status_metrics_provider_base.o $
+    obj/components/signin/core/browser/signin_core_browser.signin_status_metrics_provider_delegate.o $
+    obj/components/signin/core/browser/signin_core_browser.signin_tracker.o $
+    obj/components/signin/core/browser/webdata/signin_core_browser.token_service_table.o $
+    obj/components/signin/core/browser/webdata/signin_core_browser.token_web_data.o $
+    || obj/components/signin_core_browser.actions_depends.stamp

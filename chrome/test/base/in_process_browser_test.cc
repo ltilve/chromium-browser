@@ -4,6 +4,7 @@
 
 #include "chrome/test/base/in_process_browser_test.h"
 
+#include "ash/ash_switches.h"
 #include "base/auto_reset.h"
 #include "base/basictypes.h"
 #include "base/bind.h"
@@ -18,17 +19,21 @@
 #include "base/test/test_file_util.h"
 #include "base/thread_task_runner_handle.h"
 #include "base/threading/non_thread_safe.h"
+#include "chrome/browser/after_startup_task_utils.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/chrome_notification_types.h"
+#include "chrome/browser/devtools/devtools_window.h"
 #include "chrome/browser/lifetime/application_lifetime.h"
 #include "chrome/browser/net/net_error_tab_helper.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/profiles/profile_manager.h"
 #include "chrome/browser/ui/browser.h"
+#include "chrome/browser/ui/browser_commands.h"
 #include "chrome/browser/ui/browser_finder.h"
 #include "chrome/browser/ui/browser_list.h"
 #include "chrome/browser/ui/browser_list_observer.h"
 #include "chrome/browser/ui/browser_navigator.h"
+#include "chrome/browser/ui/browser_navigator_params.h"
 #include "chrome/browser/ui/browser_tabstrip.h"
 #include "chrome/browser/ui/browser_window.h"
 #include "chrome/browser/ui/host_desktop.h"
@@ -45,6 +50,7 @@
 #include "chrome/test/base/testing_browser_process.h"
 #include "components/google/core/browser/google_util.h"
 #include "components/os_crypt/os_crypt.h"
+#include "content/public/browser/devtools_agent_host.h"
 #include "content/public/browser/notification_service.h"
 #include "content/public/browser/notification_types.h"
 #include "content/public/test/browser_test_utils.h"
@@ -229,6 +235,12 @@ void InProcessBrowserTest::SetUp() {
   base::CreateDirectory(log_dir);
   // Disable IME extension loading to avoid many browser tests failures.
   chromeos::input_method::DisableExtensionLoading();
+  if (!command_line->HasSwitch(ash::switches::kAshHostWindowBounds)) {
+    // Adjusting window location & size so that the ash desktop window fits
+    // inside the Xvfb'x defualt resolution.
+    command_line->AppendSwitchASCII(ash::switches::kAshHostWindowBounds,
+                                    "0+0-1280x800");
+  }
 #endif  // defined(OS_CHROMEOS)
 
 #if defined(OS_MACOSX)
@@ -440,6 +452,26 @@ bool InProcessBrowserTest::SetUpUserDataDirectory() {
   return true;
 }
 
+#if !defined(OS_MACOSX)
+void InProcessBrowserTest::OpenDevToolsWindow(
+    content::WebContents* web_contents) {
+  ASSERT_FALSE(content::DevToolsAgentHost::HasFor(web_contents));
+  DevToolsWindow::OpenDevToolsWindow(web_contents);
+  ASSERT_TRUE(content::DevToolsAgentHost::HasFor(web_contents));
+}
+
+Browser* InProcessBrowserTest::OpenURLOffTheRecord(Profile* profile,
+                                                   const GURL& url) {
+  chrome::HostDesktopType active_desktop = chrome::GetActiveDesktop();
+  chrome::OpenURLOffTheRecord(profile, url, active_desktop);
+  Browser* browser = chrome::FindTabbedBrowser(
+      profile->GetOffTheRecordProfile(), false, active_desktop);
+  content::TestNavigationObserver observer(
+      browser->tab_strip_model()->GetActiveWebContents());
+  observer.Wait();
+  return browser;
+}
+
 // Creates a browser with a single tab (about:blank), waits for the tab to
 // finish loading and shows the browser.
 Browser* InProcessBrowserTest::CreateBrowser(Profile* profile) {
@@ -476,6 +508,7 @@ Browser* InProcessBrowserTest::CreateBrowserForApp(
   AddBlankTabAndShow(browser);
   return browser;
 }
+#endif  // !defined(OS_MACOSX)
 
 void InProcessBrowserTest::AddBlankTabAndShow(Browser* browser) {
   content::WindowedNotificationObserver observer(
@@ -513,6 +546,8 @@ base::CommandLine InProcessBrowserTest::GetCommandLineForRelaunch() {
 #endif
 
 void InProcessBrowserTest::RunTestOnMainThreadLoop() {
+  AfterStartupTaskUtils::SetBrowserStartupIsComplete();
+
   // Pump startup related events.
   content::RunAllPendingInMessageLoop();
 

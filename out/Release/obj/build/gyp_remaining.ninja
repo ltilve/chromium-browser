@@ -1,0 +1,74 @@
+build obj/build/gyp_remaining.actions_depends.stamp: stamp $
+    obj/remoting/ar_sample_app.actions_rules_copies.stamp $
+    base_unittests.isolated cc_unittests.isolated browser_tests.isolated $
+    chrome.isolated interactive_ui_tests.isolated $
+    sync_integration_tests.isolated unit_tests.isolated $
+    components_browsertests.isolated components_unittests.isolated $
+    content_browsertests.isolated content_unittests.isolated $
+    courgette_unittests.isolated crypto_unittests.isolated $
+    gcm_unit_tests.isolated google_apis_unittests.isolated $
+    gpu_unittests.isolated media_blink_unittests.isolated $
+    cast_unittests.isolated media_unittests.isolated $
+    midi_unittests.isolated net_unittests.isolated $
+    printing_unittests.isolated remoting_unittests.isolated $
+    skia_unittests.isolated sql_unittests.isolated sync_unit_tests.isolated $
+    blink_heap_unittests.isolated blink_platform_unittests.isolated $
+    webkit_unit_tests.isolated wtf_unittests.isolated $
+    cacheinvalidation_unittests.isolated $
+    mojo_public_bindings_unittests.isolated $
+    mojo_public_environment_unittests.isolated $
+    mojo_public_system_unittests.isolated $
+    mojo_public_utility_unittests.isolated gn_unittests.isolated $
+    accessibility_unittests.isolated app_list_unittests.isolated $
+    compositor_unittests.isolated events_unittests.isolated $
+    message_center_unittests.isolated url_unittests.isolated $
+    sandbox_linux_unittests.isolated display_unittests.isolated $
+    ipc_tests.isolated gl_unittests.isolated $
+    ui_touch_selection_unittests.isolated ash_unittests.isolated $
+    aura_unittests.isolated wm_unittests.isolated jingle_unittests.isolated $
+    nacl_loader_unittests.isolated boringssl_ecdsa_test boringssl_bn_test $
+    boringssl_pqueue_test boringssl_digest_test boringssl_cipher_test $
+    boringssl_hkdf_test boringssl_constant_time_test boringssl_thread_test $
+    boringssl_base64_test boringssl_gcm_test boringssl_bytestring_test $
+    boringssl_evp_test boringssl_dsa_test boringssl_rsa_test $
+    boringssl_hmac_test boringssl_aead_test boringssl_ssl_test $
+    boringssl_err_test boringssl_lhash_test boringssl_pbkdf_test $
+    boringssl_dh_test boringssl_pkcs12_test boringssl_example_mul $
+    boringssl_ec_test boringssl_bio_test boringssl_pkcs7_test $
+    boringssl_unittests net/docs ar_sample_test_driver frame_analyzer $
+    rgba_to_i420_converter
+
+build obj/build/gyp_remaining.compile_depends.stamp: stamp $
+    obj/remoting/ar_sample_app.actions_rules_copies.stamp $
+    base_unittests.isolated cc_unittests.isolated browser_tests.isolated $
+    chrome.isolated interactive_ui_tests.isolated $
+    sync_integration_tests.isolated unit_tests.isolated $
+    components_browsertests.isolated components_unittests.isolated $
+    content_browsertests.isolated content_unittests.isolated $
+    courgette_unittests.isolated crypto_unittests.isolated $
+    gcm_unit_tests.isolated google_apis_unittests.isolated $
+    gpu_unittests.isolated media_blink_unittests.isolated $
+    cast_unittests.isolated media_unittests.isolated $
+    midi_unittests.isolated net_unittests.isolated $
+    printing_unittests.isolated remoting_unittests.isolated $
+    skia_unittests.isolated sql_unittests.isolated sync_unit_tests.isolated $
+    blink_heap_unittests.isolated blink_platform_unittests.isolated $
+    webkit_unit_tests.isolated wtf_unittests.isolated $
+    cacheinvalidation_unittests.isolated $
+    mojo_public_bindings_unittests.isolated $
+    mojo_public_environment_unittests.isolated $
+    mojo_public_system_unittests.isolated $
+    mojo_public_utility_unittests.isolated gn_unittests.isolated $
+    accessibility_unittests.isolated app_list_unittests.isolated $
+    compositor_unittests.isolated events_unittests.isolated $
+    message_center_unittests.isolated url_unittests.isolated $
+    sandbox_linux_unittests.isolated display_unittests.isolated $
+    ipc_tests.isolated gl_unittests.isolated $
+    ui_touch_selection_unittests.isolated ash_unittests.isolated $
+    aura_unittests.isolated wm_unittests.isolated jingle_unittests.isolated $
+    nacl_loader_unittests.isolated $
+    obj/third_party/boringssl/boringssl_unittests.compile_depends.stamp $
+    net/docs obj/remoting/ar_sample_test_driver.compile_depends.stamp $
+    obj/third_party/webrtc/tools/frame_analyzer.compile_depends.stamp $
+    obj/third_party/webrtc/tools/rgba_to_i420_converter.compile_depends.stamp
+

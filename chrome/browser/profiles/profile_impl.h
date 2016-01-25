@@ -23,7 +23,7 @@
 
 class NetPrefObserver;
 class PrefService;
-class PrefServiceSyncable;
+
 class ShortcutsBackend;
 class SSLConfigServiceManager;
 class TrackedPreferenceValidationDelegate;
@@ -53,6 +53,10 @@ namespace policy {
 class CloudPolicyManager;
 class ProfilePolicyConnector;
 class SchemaRegistryService;
+}
+
+namespace syncable_prefs {
+class PrefServiceSyncable;
 }
 
 namespace user_prefs {
@@ -101,17 +105,16 @@ class ProfileImpl : public Profile {
   void DestroyOffTheRecordProfile() override;
   bool HasOffTheRecordProfile() override;
   Profile* GetOriginalProfile() override;
-  bool IsSupervised() override;
-  bool IsChild() override;
-  bool IsLegacySupervised() override;
+  bool IsSupervised() const override;
+  bool IsChild() const override;
+  bool IsLegacySupervised() const override;
   ExtensionSpecialStoragePolicy* GetExtensionSpecialStoragePolicy() override;
   PrefService* GetPrefs() override;
   const PrefService* GetPrefs() const override;
-  chrome::ChromeZoomLevelPrefs* GetZoomLevelPrefs() override;
+  ChromeZoomLevelPrefs* GetZoomLevelPrefs() override;
   PrefService* GetOffTheRecordPrefs() override;
   net::URLRequestContextGetter* GetRequestContextForExtensions() override;
   net::SSLConfigService* GetSSLConfigService() override;
-  HostContentSettingsMap* GetHostContentSettingsMap() override;
   bool IsSameProfile(Profile* profile) override;
   base::Time GetStartTime() const override;
   net::URLRequestContextGetter* CreateRequestContext(
@@ -125,7 +128,8 @@ class ProfileImpl : public Profile {
   base::FilePath last_selected_directory() override;
   void set_last_selected_directory(const base::FilePath& path) override;
   chrome_browser_net::Predictor* GetNetworkPredictor() override;
-  DevToolsNetworkController* GetDevToolsNetworkController() override;
+  DevToolsNetworkControllerHandle* GetDevToolsNetworkControllerHandle()
+      override;
   void ClearNetworkingHistorySince(base::Time time,
                                    const base::Closure& completion) override;
   GURL GetHomePage() override;
@@ -223,8 +227,8 @@ class ProfileImpl : public Profile {
   // |net_pref_observer_|, |io_data_| and others store pointers to |prefs_| and
   // shall be destructed first.
   scoped_refptr<user_prefs::PrefRegistrySyncable> pref_registry_;
-  scoped_ptr<PrefServiceSyncable> prefs_;
-  scoped_ptr<PrefServiceSyncable> otr_prefs_;
+  scoped_ptr<syncable_prefs::PrefServiceSyncable> prefs_;
+  scoped_ptr<syncable_prefs::PrefServiceSyncable> otr_prefs_;
   ProfileImplIOData::Handle io_data_;
 #if defined(ENABLE_EXTENSIONS)
   scoped_refptr<ExtensionSpecialStoragePolicy>
@@ -232,7 +236,6 @@ class ProfileImpl : public Profile {
 #endif
   scoped_ptr<NetPrefObserver> net_pref_observer_;
   scoped_ptr<SSLConfigServiceManager> ssl_config_service_manager_;
-  scoped_refptr<HostContentSettingsMap> host_content_settings_map_;
   scoped_refptr<ShortcutsBackend> shortcuts_backend_;
 
   // Exit type the last time the profile was opened. This is set only once from
@@ -240,7 +243,7 @@ class ProfileImpl : public Profile {
   ExitType last_session_exit_type_;
 
 #if defined(ENABLE_SESSION_SERVICE)
-  base::OneShotTimer<ProfileImpl> create_session_service_timer_;
+  base::OneShotTimer create_session_service_timer_;
 #endif
 
   scoped_ptr<Profile> off_the_record_profile_;

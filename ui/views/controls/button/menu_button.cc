@@ -90,7 +90,7 @@ MenuButton::~MenuButton() {
 ////////////////////////////////////////////////////////////////////////////////
 
 bool MenuButton::Activate() {
-  SetState(STATE_PRESSED);
+  PressedLock pressed_lock(this);
   if (listener_) {
     gfx::Rect lb = GetLocalBounds();
 
@@ -173,7 +173,8 @@ const char* MenuButton::GetClassName() const {
 }
 
 bool MenuButton::OnMousePressed(const ui::MouseEvent& event) {
-  RequestFocus();
+  if (request_focus_on_press())
+    RequestFocus();
   if (state() != STATE_DISABLED && ShouldEnterPushedState(event) &&
       HitTestPoint(event.location())) {
     TimeDelta delta = TimeTicks::Now() - menu_closed_time_;
@@ -218,10 +219,12 @@ void MenuButton::OnGestureEvent(ui::GestureEvent* event) {
     if (switches::IsTouchFeedbackEnabled()) {
       if (event->type() == ui::ET_GESTURE_TAP_DOWN) {
         event->SetHandled();
-        SetState(Button::STATE_HOVERED);
+        if (pressed_lock_count_ == 0)
+          SetState(Button::STATE_HOVERED);
       } else if (state() == Button::STATE_HOVERED &&
                  (event->type() == ui::ET_GESTURE_TAP_CANCEL ||
-                  event->type() == ui::ET_GESTURE_END)) {
+                  event->type() == ui::ET_GESTURE_END) &&
+                 pressed_lock_count_ == 0) {
         SetState(Button::STATE_NORMAL);
       }
     }

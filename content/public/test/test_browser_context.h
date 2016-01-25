@@ -8,13 +8,13 @@
 #include "base/compiler_specific.h"
 #include "base/files/file_path.h"
 #include "base/files/scoped_temp_dir.h"
-#include "base/gtest_prod_util.h"
 #include "base/memory/ref_counted.h"
 #include "base/memory/scoped_ptr.h"
 #include "content/public/browser/browser_context.h"
 
 namespace content {
 class MockResourceContext;
+class MockSSLHostStateDelegate;
 class ZoomLevelDelegate;
 
 class TestBrowserContext : public BrowserContext {
@@ -50,13 +50,11 @@ class TestBrowserContext : public BrowserContext {
   PermissionManager* GetPermissionManager() override;
 
  private:
-  FRIEND_TEST_ALL_PREFIXES(DOMStorageTest, SessionOnly);
-  FRIEND_TEST_ALL_PREFIXES(DOMStorageTest, SaveSessionState);
-
   scoped_refptr<net::URLRequestContextGetter> request_context_;
   scoped_ptr<MockResourceContext> resource_context_;
   base::ScopedTempDir browser_context_dir_;
   scoped_refptr<storage::SpecialStoragePolicy> special_storage_policy_;
+  scoped_ptr<MockSSLHostStateDelegate> ssl_host_state_delegate_;
 
   DISALLOW_COPY_AND_ASSIGN(TestBrowserContext);
 };

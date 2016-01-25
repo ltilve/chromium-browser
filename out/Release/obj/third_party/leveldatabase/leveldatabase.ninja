@@ -1,0 +1,169 @@
+defines = -DLEVELDB_PLATFORM_CHROMIUM=1 -DV8_DEPRECATION_WARNINGS $
+    -DCLD_VERSION=2 -D_FILE_OFFSET_BITS=64 -DCHROMIUM_BUILD $
+    -DCR_CLANG_REVISION=255169-1 -DUI_COMPOSITOR_IMAGE_TRANSPORT $
+    -DUSE_AURA=1 -DUSE_ASH=1 -DUSE_PANGO=1 -DUSE_CAIRO=1 $
+    -DUSE_DEFAULT_RENDER_THEME=1 -DUSE_LIBJPEG_TURBO=1 -DUSE_X11=1 $
+    -DUSE_CLIPBOARD_AURAX11=1 -DENABLE_ONE_CLICK_SIGNIN -DENABLE_WEBRTC=1 $
+    -DENABLE_MEDIA_ROUTER=1 -DENABLE_PEPPER_CDMS $
+    -DENABLE_CONFIGURATION_POLICY -DENABLE_NOTIFICATIONS -DENABLE_HIDPI=1 $
+    -DENABLE_TOPCHROME_MD=1 -DUSE_UDEV -DDONT_EMBED_BUILD_METADATA $
+    -DFIELDTRIAL_TESTING_ENABLED -DENABLE_TASK_MANAGER=1 $
+    -DENABLE_EXTENSIONS=1 -DENABLE_PDF=1 -DENABLE_PLUGINS=1 $
+    -DENABLE_SESSION_SERVICE=1 -DENABLE_THEMES=1 -DENABLE_AUTOFILL_DIALOG=1 $
+    -DENABLE_BACKGROUND=1 -DENABLE_PRINTING=1 -DENABLE_BASIC_PRINTING=1 $
+    -DENABLE_PRINT_PREVIEW=1 -DENABLE_SPELLCHECK=1 $
+    -DENABLE_CAPTIVE_PORTAL_DETECTION=1 -DENABLE_APP_LIST=1 $
+    -DENABLE_SETTINGS_APP=1 -DENABLE_SUPERVISED_USERS=1 -DENABLE_MDNS=1 $
+    -DENABLE_SERVICE_DISCOVERY=1 -DV8_USE_EXTERNAL_STARTUP_DATA $
+    -DFULL_SAFE_BROWSING -DSAFE_BROWSING_CSD -DSAFE_BROWSING_DB_LOCAL $
+    -DUSE_LIBPCI=1 -DUSE_OPENSSL=1 -DUSE_GLIB=1 -DUSE_NSS_CERTS=1 -DNDEBUG $
+    -DNVALGRIND -DDYNAMIC_ANNOTATIONS_ENABLED=0
+includes = -I../../third_party/leveldatabase $
+    -I../../third_party/leveldatabase/src $
+    -I../../third_party/leveldatabase/src/include -Igen -I../.. $
+    -I../../third_party/re2 -I../../third_party/snappy/linux $
+    -I../../third_party/snappy/src
+cflags = -fstack-protector --param=ssp-buffer-size=4 -Werror -pthread $
+    -fno-strict-aliasing -Wno-unused-parameter $
+    -Wno-missing-field-initializers -fvisibility=hidden -pipe -fPIC $
+    -Wno-reserved-user-defined-literal -Xclang -load -Xclang $
+    /b/build/slave/publish_tarball/build/src/third_party/llvm-build/Release+Asserts/lib/libFindBadConstructs.so $
+    -Xclang -add-plugin -Xclang find-bad-constructs -Xclang $
+    -plugin-arg-find-bad-constructs -Xclang check-templates $
+    -fcolor-diagnostics $
+    -B/b/build/slave/publish_tarball/build/src/third_party/binutils/Linux_x64/Release/bin $
+    -Wheader-hygiene -Wno-char-subscripts $
+    -Wno-unneeded-internal-declaration -Wno-covered-switch-default $
+    -Wstring-conversion -Wno-c++11-narrowing -Wno-deprecated-register $
+    -Wno-inconsistent-missing-override -Wno-shift-negative-value $
+    -Wno-bitfield-width -Wno-unused-variable -pthread $
+    -I/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/include/glib-2.0 $
+    -I/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/lib/x86_64-linux-gnu/glib-2.0/include $
+    -Wno-format -Wno-unused-result -m64 -march=x86-64 $
+    --sysroot=/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot $
+    -O2 -fno-ident -fdata-sections -ffunction-sections -funwind-tables
+cflags_c = 
+cflags_cc = -fno-exceptions -fno-rtti -fno-threadsafe-statics $
+    -fvisibility-inlines-hidden -std=gnu++11 -Wno-deprecated
+arflags = 
+
+build obj/third_party/leveldatabase/leveldatabase.env_chromium.o: cxx $
+    ../../third_party/leveldatabase/env_chromium.cc
+build obj/third_party/leveldatabase/port/leveldatabase.port_chromium.o: cxx $
+    ../../third_party/leveldatabase/port/port_chromium.cc
+build obj/third_party/leveldatabase/src/db/leveldatabase.builder.o: cxx $
+    ../../third_party/leveldatabase/src/db/builder.cc
+build obj/third_party/leveldatabase/src/db/leveldatabase.db_impl.o: cxx $
+    ../../third_party/leveldatabase/src/db/db_impl.cc
+build obj/third_party/leveldatabase/src/db/leveldatabase.db_iter.o: cxx $
+    ../../third_party/leveldatabase/src/db/db_iter.cc
+build obj/third_party/leveldatabase/src/db/leveldatabase.dbformat.o: cxx $
+    ../../third_party/leveldatabase/src/db/dbformat.cc
+build obj/third_party/leveldatabase/src/db/leveldatabase.dumpfile.o: cxx $
+    ../../third_party/leveldatabase/src/db/dumpfile.cc
+build obj/third_party/leveldatabase/src/db/leveldatabase.filename.o: cxx $
+    ../../third_party/leveldatabase/src/db/filename.cc
+build obj/third_party/leveldatabase/src/db/leveldatabase.log_reader.o: cxx $
+    ../../third_party/leveldatabase/src/db/log_reader.cc
+build obj/third_party/leveldatabase/src/db/leveldatabase.log_writer.o: cxx $
+    ../../third_party/leveldatabase/src/db/log_writer.cc
+build obj/third_party/leveldatabase/src/db/leveldatabase.memtable.o: cxx $
+    ../../third_party/leveldatabase/src/db/memtable.cc
+build obj/third_party/leveldatabase/src/db/leveldatabase.repair.o: cxx $
+    ../../third_party/leveldatabase/src/db/repair.cc
+build obj/third_party/leveldatabase/src/db/leveldatabase.table_cache.o: cxx $
+    ../../third_party/leveldatabase/src/db/table_cache.cc
+build obj/third_party/leveldatabase/src/db/leveldatabase.version_edit.o: $
+    cxx ../../third_party/leveldatabase/src/db/version_edit.cc
+build obj/third_party/leveldatabase/src/db/leveldatabase.version_set.o: cxx $
+    ../../third_party/leveldatabase/src/db/version_set.cc
+build obj/third_party/leveldatabase/src/db/leveldatabase.write_batch.o: cxx $
+    ../../third_party/leveldatabase/src/db/write_batch.cc
+build $
+    obj/third_party/leveldatabase/src/helpers/memenv/leveldatabase.memenv.o: $
+    cxx ../../third_party/leveldatabase/src/helpers/memenv/memenv.cc
+build obj/third_party/leveldatabase/src/table/leveldatabase.block.o: cxx $
+    ../../third_party/leveldatabase/src/table/block.cc
+build $
+    obj/third_party/leveldatabase/src/table/leveldatabase.block_builder.o: $
+    cxx ../../third_party/leveldatabase/src/table/block_builder.cc
+build obj/third_party/leveldatabase/src/table/leveldatabase.filter_block.o: $
+    cxx ../../third_party/leveldatabase/src/table/filter_block.cc
+build obj/third_party/leveldatabase/src/table/leveldatabase.format.o: cxx $
+    ../../third_party/leveldatabase/src/table/format.cc
+build obj/third_party/leveldatabase/src/table/leveldatabase.iterator.o: cxx $
+    ../../third_party/leveldatabase/src/table/iterator.cc
+build obj/third_party/leveldatabase/src/table/leveldatabase.merger.o: cxx $
+    ../../third_party/leveldatabase/src/table/merger.cc
+build obj/third_party/leveldatabase/src/table/leveldatabase.table.o: cxx $
+    ../../third_party/leveldatabase/src/table/table.cc
+build $
+    obj/third_party/leveldatabase/src/table/leveldatabase.table_builder.o: $
+    cxx ../../third_party/leveldatabase/src/table/table_builder.cc
+build $
+    obj/third_party/leveldatabase/src/table/leveldatabase.two_level_iterator.o: $
+    cxx ../../third_party/leveldatabase/src/table/two_level_iterator.cc
+build obj/third_party/leveldatabase/src/util/leveldatabase.arena.o: cxx $
+    ../../third_party/leveldatabase/src/util/arena.cc
+build obj/third_party/leveldatabase/src/util/leveldatabase.bloom.o: cxx $
+    ../../third_party/leveldatabase/src/util/bloom.cc
+build obj/third_party/leveldatabase/src/util/leveldatabase.cache.o: cxx $
+    ../../third_party/leveldatabase/src/util/cache.cc
+build obj/third_party/leveldatabase/src/util/leveldatabase.coding.o: cxx $
+    ../../third_party/leveldatabase/src/util/coding.cc
+build obj/third_party/leveldatabase/src/util/leveldatabase.comparator.o: $
+    cxx ../../third_party/leveldatabase/src/util/comparator.cc
+build obj/third_party/leveldatabase/src/util/leveldatabase.crc32c.o: cxx $
+    ../../third_party/leveldatabase/src/util/crc32c.cc
+build obj/third_party/leveldatabase/src/util/leveldatabase.env.o: cxx $
+    ../../third_party/leveldatabase/src/util/env.cc
+build obj/third_party/leveldatabase/src/util/leveldatabase.filter_policy.o: $
+    cxx ../../third_party/leveldatabase/src/util/filter_policy.cc
+build obj/third_party/leveldatabase/src/util/leveldatabase.hash.o: cxx $
+    ../../third_party/leveldatabase/src/util/hash.cc
+build obj/third_party/leveldatabase/src/util/leveldatabase.logging.o: cxx $
+    ../../third_party/leveldatabase/src/util/logging.cc
+build obj/third_party/leveldatabase/src/util/leveldatabase.options.o: cxx $
+    ../../third_party/leveldatabase/src/util/options.cc
+build obj/third_party/leveldatabase/src/util/leveldatabase.status.o: cxx $
+    ../../third_party/leveldatabase/src/util/status.cc
+
+build obj/third_party/leveldatabase/libleveldatabase.a: alink_thin $
+    obj/third_party/leveldatabase/leveldatabase.env_chromium.o $
+    obj/third_party/leveldatabase/port/leveldatabase.port_chromium.o $
+    obj/third_party/leveldatabase/src/db/leveldatabase.builder.o $
+    obj/third_party/leveldatabase/src/db/leveldatabase.db_impl.o $
+    obj/third_party/leveldatabase/src/db/leveldatabase.db_iter.o $
+    obj/third_party/leveldatabase/src/db/leveldatabase.dbformat.o $
+    obj/third_party/leveldatabase/src/db/leveldatabase.dumpfile.o $
+    obj/third_party/leveldatabase/src/db/leveldatabase.filename.o $
+    obj/third_party/leveldatabase/src/db/leveldatabase.log_reader.o $
+    obj/third_party/leveldatabase/src/db/leveldatabase.log_writer.o $
+    obj/third_party/leveldatabase/src/db/leveldatabase.memtable.o $
+    obj/third_party/leveldatabase/src/db/leveldatabase.repair.o $
+    obj/third_party/leveldatabase/src/db/leveldatabase.table_cache.o $
+    obj/third_party/leveldatabase/src/db/leveldatabase.version_edit.o $
+    obj/third_party/leveldatabase/src/db/leveldatabase.version_set.o $
+    obj/third_party/leveldatabase/src/db/leveldatabase.write_batch.o $
+    obj/third_party/leveldatabase/src/helpers/memenv/leveldatabase.memenv.o $
+    obj/third_party/leveldatabase/src/table/leveldatabase.block.o $
+    obj/third_party/leveldatabase/src/table/leveldatabase.block_builder.o $
+    obj/third_party/leveldatabase/src/table/leveldatabase.filter_block.o $
+    obj/third_party/leveldatabase/src/table/leveldatabase.format.o $
+    obj/third_party/leveldatabase/src/table/leveldatabase.iterator.o $
+    obj/third_party/leveldatabase/src/table/leveldatabase.merger.o $
+    obj/third_party/leveldatabase/src/table/leveldatabase.table.o $
+    obj/third_party/leveldatabase/src/table/leveldatabase.table_builder.o $
+    obj/third_party/leveldatabase/src/table/leveldatabase.two_level_iterator.o $
+    obj/third_party/leveldatabase/src/util/leveldatabase.arena.o $
+    obj/third_party/leveldatabase/src/util/leveldatabase.bloom.o $
+    obj/third_party/leveldatabase/src/util/leveldatabase.cache.o $
+    obj/third_party/leveldatabase/src/util/leveldatabase.coding.o $
+    obj/third_party/leveldatabase/src/util/leveldatabase.comparator.o $
+    obj/third_party/leveldatabase/src/util/leveldatabase.crc32c.o $
+    obj/third_party/leveldatabase/src/util/leveldatabase.env.o $
+    obj/third_party/leveldatabase/src/util/leveldatabase.filter_policy.o $
+    obj/third_party/leveldatabase/src/util/leveldatabase.hash.o $
+    obj/third_party/leveldatabase/src/util/leveldatabase.logging.o $
+    obj/third_party/leveldatabase/src/util/leveldatabase.options.o $
+    obj/third_party/leveldatabase/src/util/leveldatabase.status.o

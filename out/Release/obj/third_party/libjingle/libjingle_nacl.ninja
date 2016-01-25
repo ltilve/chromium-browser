@@ -1,0 +1,912 @@
+build obj/third_party/libjingle/libjingle_nacl.actions_depends.stamp: stamp $
+    obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp $
+    gen/tc_pnacl_newlib/lib/libexpat_nacl.a $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a $
+    obj/third_party/libjingle/libjingle_p2p_constants_nacl.actions_rules_copies.stamp
+
+build obj/third_party/libjingle/libjingle_nacl.compile_depends.stamp: stamp $
+    obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp $
+    gen/tc_pnacl_newlib/lib/libexpat_nacl.a $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a $
+    obj/third_party/libjingle/libjingle_p2p_constants_nacl.actions_rules_copies.stamp
+
+rule libjingle_nacl_target_build_newlib_plib_78e1f9b1be72e81c34e3824d19eab430
+  command = cd ../../third_party/libjingle; python $
+      ../../native_client/build/build_nexe.py --root ../.. --product-dir $
+      ../../out/Release/xyz --config-name Release -t $
+      ../../native_client/toolchain/ --arch pnacl --build newlib_plib $
+      --name ../../out/Release/gen/tc_pnacl_newlib/lib/libjingle_nacl.a $
+      --objdir $
+      ../../out/Release/obj/third_party/libjingle/libjingle_nacl.gen/pnacl_newlib-pnacl/libjingle_nacl $
+      "--include-dirs=../../out/Release/gen/tc_pnacl_newlib/include ../.. $
+      \"../../out/Release/gen\" ./source ../ $
+      ../../native_client_sdk/src/libraries $
+      ../../native_client_sdk/src/libraries/nacl_io/include $
+      ../../native_client_sdk/src/libraries/third_party/newlib-extras $
+      ../expat/files/lib ../boringssl/src/include" "--compile_flags=-O2 -g $
+      -Wall -fdiagnostics-show-option -Werror  -Wno-unused-function $
+      -Wno-char-subscripts -Wno-c++11-extensions $
+      -Wno-unnamed-type-template-args -Wno-extra-semi $
+      -Wno-unused-private-field -Wno-char-subscripts -Wno-unused-function $
+      \"-std=gnu++11\" " --gomadir "" "--defines=\"__STDC_LIMIT_MACROS=1\" $
+      \"__STDC_FORMAT_MACROS=1\" \"_GNU_SOURCE=1\" $
+      \"_POSIX_C_SOURCE=199506\" \"_XOPEN_SOURCE=600\" $
+      \"DYNAMIC_ANNOTATIONS_ENABLED=1\" $
+      \"DYNAMIC_ANNOTATIONS_PREFIX=NACL_\" \"NACL_BUILD_ARCH=x86\" $
+      V8_DEPRECATION_WARNINGS \"CLD_VERSION=2\" \"_FILE_OFFSET_BITS=64\" $
+      CHROMIUM_BUILD \"CR_CLANG_REVISION=255169-1\" $
+      UI_COMPOSITOR_IMAGE_TRANSPORT \"USE_AURA=1\" \"USE_ASH=1\" $
+      \"USE_PANGO=1\" \"USE_CAIRO=1\" \"USE_DEFAULT_RENDER_THEME=1\" $
+      \"USE_LIBJPEG_TURBO=1\" \"USE_X11=1\" \"USE_CLIPBOARD_AURAX11=1\" $
+      ENABLE_ONE_CLICK_SIGNIN \"ENABLE_WEBRTC=1\" \"ENABLE_MEDIA_ROUTER=1\" $
+      ENABLE_PEPPER_CDMS ENABLE_CONFIGURATION_POLICY ENABLE_NOTIFICATIONS $
+      \"ENABLE_HIDPI=1\" \"ENABLE_TOPCHROME_MD=1\" USE_UDEV $
+      DONT_EMBED_BUILD_METADATA FIELDTRIAL_TESTING_ENABLED $
+      \"ENABLE_TASK_MANAGER=1\" \"ENABLE_EXTENSIONS=1\" \"ENABLE_PDF=1\" $
+      \"ENABLE_PLUGINS=1\" \"ENABLE_SESSION_SERVICE=1\" \"ENABLE_THEMES=1\" $
+      \"ENABLE_AUTOFILL_DIALOG=1\" \"ENABLE_BACKGROUND=1\" $
+      \"ENABLE_PRINTING=1\" \"ENABLE_BASIC_PRINTING=1\" $
+      \"ENABLE_PRINT_PREVIEW=1\" \"ENABLE_SPELLCHECK=1\" $
+      \"ENABLE_CAPTIVE_PORTAL_DETECTION=1\" \"ENABLE_APP_LIST=1\" $
+      \"ENABLE_SETTINGS_APP=1\" \"ENABLE_SUPERVISED_USERS=1\" $
+      \"ENABLE_MDNS=1\" \"ENABLE_SERVICE_DISCOVERY=1\" $
+      V8_USE_EXTERNAL_STARTUP_DATA FULL_SAFE_BROWSING SAFE_BROWSING_CSD $
+      SAFE_BROWSING_DB_LOCAL EXPAT_RELATIVE_PATH FEATURE_ENABLE_SSL $
+      GTEST_RELATIVE_PATH HAVE_OPENSSL_SSL_H NO_MAIN_THREAD_WRAPPING $
+      NO_SOUND_SYSTEM WEBRTC_POSIX SRTP_RELATIVE_PATH SSL_USE_OPENSSL $
+      USE_WEBRTC_DEV_BRANCH \"timezone=_timezone\" XML_STATIC $
+      \"USE_LIBPCI=1\" \"USE_OPENSSL=1\" \"USE_OPENSSL_CERTS=1\"" $
+      "--link_flags=-B../../out/Release/gen/tc_pnacl_newlib/lib  " $
+      "--source-list=../../out/gypfiles/third_party/libjingle/pnacl_newlib.libjingle_nacl.source_list.gypcmd"
+  description = ACTION libjingle_nacl: build newlib $
+      plib_78e1f9b1be72e81c34e3824d19eab430
+  restat = 1
+
+build gen/tc_pnacl_newlib/lib/libjingle_nacl.a: $
+    libjingle_nacl_target_build_newlib_plib_78e1f9b1be72e81c34e3824d19eab430 $
+    ../../native_client/build/build_nexe.py $
+    ../../native_client/build/build_nexe_tools.py $
+    ../../base/atomic_ref_count.h ../../base/atomicops.h $
+    ../../base/atomicops_internals_atomicword_compat.h $
+    ../../base/atomicops_internals_portable.h $
+    ../../base/atomicops_internals_x86_msvc.h ../../base/base_export.h $
+    ../../base/basictypes.h ../../base/bind.h ../../base/bind_helpers.h $
+    ../../base/bind_internal.h ../../base/bind_internal_win.h $
+    ../../base/callback.h ../../base/callback_forward.h $
+    ../../base/callback_internal.h ../../base/compiler_specific.h $
+    ../../base/containers/hash_tables.h ../../base/debug/alias.h $
+    ../../base/debug/debugger.h ../../base/debug/task_annotator.h $
+    ../../base/event_types.h ../../base/gtest_prod_util.h $
+    ../../base/location.h ../../base/logging.h $
+    ../../base/mac/scoped_cffiledescriptorref.h $
+    ../../base/mac/scoped_cftyperef.h ../../base/mac/scoped_typeref.h $
+    ../../base/macros.h $
+    ../../base/memory/raw_scoped_refptr_mismatch_checker.h $
+    ../../base/memory/ref_counted.h ../../base/memory/scoped_policy.h $
+    ../../base/memory/scoped_ptr.h ../../base/memory/weak_ptr.h $
+    ../../base/message_loop/incoming_task_queue.h $
+    ../../base/message_loop/message_loop.h $
+    ../../base/message_loop/message_loop_task_runner.h $
+    ../../base/message_loop/message_pump.h $
+    ../../base/message_loop/message_pump_dispatcher.h $
+    ../../base/message_loop/message_pump_io_ios.h $
+    ../../base/message_loop/message_pump_libevent.h $
+    ../../base/message_loop/message_pump_mac.h $
+    ../../base/message_loop/message_pump_win.h $
+    ../../base/message_loop/timer_slack.h ../../base/metrics/field_trial.h $
+    ../../base/move.h ../../base/numerics/safe_conversions.h $
+    ../../base/numerics/safe_conversions_impl.h $
+    ../../base/numerics/safe_math.h ../../base/numerics/safe_math_impl.h $
+    ../../base/observer_list.h ../../base/observer_list_threadsafe.h $
+    ../../base/pending_task.h ../../base/profiler/tracked_time.h $
+    ../../base/sequence_checker.h ../../base/sequence_checker_impl.h $
+    ../../base/sequenced_task_runner.h $
+    ../../base/sequenced_task_runner_helpers.h $
+    ../../base/single_thread_task_runner.h ../../base/stl_util.h $
+    ../../base/strings/string16.h ../../base/synchronization/lock.h $
+    ../../base/synchronization/lock_impl.h ../../base/task_runner.h $
+    ../../base/template_util.h ../../base/thread_task_runner_handle.h $
+    ../../base/threading/non_thread_safe.h $
+    ../../base/threading/non_thread_safe_impl.h $
+    ../../base/threading/platform_thread.h $
+    ../../base/threading/sequenced_worker_pool.h $
+    ../../base/threading/thread_checker.h $
+    ../../base/threading/thread_checker_impl.h $
+    ../../base/threading/thread_collision_warner.h ../../base/time/time.h $
+    ../../base/tracking_info.h ../../base/tuple.h $
+    ../../base/win/scoped_handle.h ../../build/build_config.h $
+    ../../native_client_sdk/src/libraries/nacl_io/include/sys/ioctl.h $
+    ../../native_client_sdk/src/libraries/nacl_io/include/sys/time.h $
+    ../../native_client_sdk/src/libraries/nacl_io/include/sys/utsname.h $
+    ../../native_client_sdk/src/libraries/third_party/newlib-extras/arpa/inet.h $
+    ../../native_client_sdk/src/libraries/third_party/newlib-extras/netdb.h $
+    ../../native_client_sdk/src/libraries/third_party/newlib-extras/netinet/in.h $
+    ../../native_client_sdk/src/libraries/third_party/newlib-extras/netinet/tcp.h $
+    ../../native_client_sdk/src/libraries/third_party/newlib-extras/netinet6/in6.h $
+    ../../native_client_sdk/src/libraries/third_party/newlib-extras/sys/select.h $
+    ../../native_client_sdk/src/libraries/third_party/newlib-extras/sys/socket.h $
+    ../../testing/gtest/include/gtest/gtest_prod.h $
+    ../../third_party/boringssl/src/include/openssl/aead.h $
+    ../../third_party/boringssl/src/include/openssl/asn1.h $
+    ../../third_party/boringssl/src/include/openssl/base.h $
+    ../../third_party/boringssl/src/include/openssl/base64.h $
+    ../../third_party/boringssl/src/include/openssl/bio.h $
+    ../../third_party/boringssl/src/include/openssl/bn.h $
+    ../../third_party/boringssl/src/include/openssl/buf.h $
+    ../../third_party/boringssl/src/include/openssl/bytestring.h $
+    ../../third_party/boringssl/src/include/openssl/cipher.h $
+    ../../third_party/boringssl/src/include/openssl/conf.h $
+    ../../third_party/boringssl/src/include/openssl/crypto.h $
+    ../../third_party/boringssl/src/include/openssl/dh.h $
+    ../../third_party/boringssl/src/include/openssl/digest.h $
+    ../../third_party/boringssl/src/include/openssl/dsa.h $
+    ../../third_party/boringssl/src/include/openssl/ec.h $
+    ../../third_party/boringssl/src/include/openssl/ec_key.h $
+    ../../third_party/boringssl/src/include/openssl/ecdh.h $
+    ../../third_party/boringssl/src/include/openssl/ecdsa.h $
+    ../../third_party/boringssl/src/include/openssl/engine.h $
+    ../../third_party/boringssl/src/include/openssl/err.h $
+    ../../third_party/boringssl/src/include/openssl/evp.h $
+    ../../third_party/boringssl/src/include/openssl/ex_data.h $
+    ../../third_party/boringssl/src/include/openssl/hmac.h $
+    ../../third_party/boringssl/src/include/openssl/lhash.h $
+    ../../third_party/boringssl/src/include/openssl/lhash_macros.h $
+    ../../third_party/boringssl/src/include/openssl/mem.h $
+    ../../third_party/boringssl/src/include/openssl/obj.h $
+    ../../third_party/boringssl/src/include/openssl/obj_mac.h $
+    ../../third_party/boringssl/src/include/openssl/opensslfeatures.h $
+    ../../third_party/boringssl/src/include/openssl/opensslv.h $
+    ../../third_party/boringssl/src/include/openssl/pem.h $
+    ../../third_party/boringssl/src/include/openssl/rand.h $
+    ../../third_party/boringssl/src/include/openssl/rsa.h $
+    ../../third_party/boringssl/src/include/openssl/sha.h $
+    ../../third_party/boringssl/src/include/openssl/ssl.h $
+    ../../third_party/boringssl/src/include/openssl/ssl3.h $
+    ../../third_party/boringssl/src/include/openssl/stack.h $
+    ../../third_party/boringssl/src/include/openssl/stack_macros.h $
+    ../../third_party/boringssl/src/include/openssl/thread.h $
+    ../../third_party/boringssl/src/include/openssl/tls1.h $
+    ../../third_party/boringssl/src/include/openssl/type_check.h $
+    ../../third_party/boringssl/src/include/openssl/x509.h $
+    ../../third_party/boringssl/src/include/openssl/x509_vfy.h $
+    ../../third_party/boringssl/src/include/openssl/x509v3.h $
+    ../../third_party/expat/files/lib/expat.h $
+    ../../third_party/expat/files/lib/expat_external.h $
+    ../../third_party/webrtc/base/arraysize.h $
+    ../../third_party/webrtc/base/asyncfile.cc $
+    ../../third_party/webrtc/base/asyncfile.h $
+    ../../third_party/webrtc/base/asynchttprequest.cc $
+    ../../third_party/webrtc/base/asynchttprequest.h $
+    ../../third_party/webrtc/base/asyncinvoker-inl.h $
+    ../../third_party/webrtc/base/asyncinvoker.cc $
+    ../../third_party/webrtc/base/asyncinvoker.h $
+    ../../third_party/webrtc/base/asyncpacketsocket.cc $
+    ../../third_party/webrtc/base/asyncpacketsocket.h $
+    ../../third_party/webrtc/base/asyncresolverinterface.cc $
+    ../../third_party/webrtc/base/asyncresolverinterface.h $
+    ../../third_party/webrtc/base/asyncsocket.cc $
+    ../../third_party/webrtc/base/asyncsocket.h $
+    ../../third_party/webrtc/base/asynctcpsocket.cc $
+    ../../third_party/webrtc/base/asynctcpsocket.h $
+    ../../third_party/webrtc/base/asyncudpsocket.cc $
+    ../../third_party/webrtc/base/asyncudpsocket.h $
+    ../../third_party/webrtc/base/atomicops.h $
+    ../../third_party/webrtc/base/autodetectproxy.cc $
+    ../../third_party/webrtc/base/autodetectproxy.h $
+    ../../third_party/webrtc/base/base64.cc $
+    ../../third_party/webrtc/base/base64.h $
+    ../../third_party/webrtc/base/basicdefs.h $
+    ../../third_party/webrtc/base/basictypes.h $
+    ../../third_party/webrtc/base/bind.h $
+    ../../third_party/webrtc/base/buffer.cc $
+    ../../third_party/webrtc/base/buffer.h $
+    ../../third_party/webrtc/base/bufferqueue.h $
+    ../../third_party/webrtc/base/bytebuffer.cc $
+    ../../third_party/webrtc/base/bytebuffer.h $
+    ../../third_party/webrtc/base/byteorder.h $
+    ../../third_party/webrtc/base/callback.h $
+    ../../third_party/webrtc/base/checks.cc $
+    ../../third_party/webrtc/base/checks.h $
+    ../../third_party/webrtc/base/common.cc $
+    ../../third_party/webrtc/base/common.h $
+    ../../third_party/webrtc/base/constructormagic.h $
+    ../../third_party/webrtc/base/crc32.cc $
+    ../../third_party/webrtc/base/crc32.h $
+    ../../third_party/webrtc/base/criticalsection.cc $
+    ../../third_party/webrtc/base/criticalsection.h $
+    ../../third_party/webrtc/base/cryptstring.cc $
+    ../../third_party/webrtc/base/cryptstring.h $
+    ../../third_party/webrtc/base/diskcache.cc $
+    ../../third_party/webrtc/base/diskcache.h $
+    ../../third_party/webrtc/base/dscp.h $
+    ../../third_party/webrtc/base/event.cc $
+    ../../third_party/webrtc/base/event.h $
+    ../../third_party/webrtc/base/event_tracer.cc $
+    ../../third_party/webrtc/base/event_tracer.h $
+    ../../third_party/webrtc/base/fileutils.cc $
+    ../../third_party/webrtc/base/fileutils.h $
+    ../../third_party/webrtc/base/firewallsocketserver.cc $
+    ../../third_party/webrtc/base/firewallsocketserver.h $
+    ../../third_party/webrtc/base/flags.cc $
+    ../../third_party/webrtc/base/flags.h $
+    ../../third_party/webrtc/base/helpers.cc $
+    ../../third_party/webrtc/base/helpers.h $
+    ../../third_party/webrtc/base/httpbase.cc $
+    ../../third_party/webrtc/base/httpbase.h $
+    ../../third_party/webrtc/base/httpclient.cc $
+    ../../third_party/webrtc/base/httpclient.h $
+    ../../third_party/webrtc/base/httpcommon-inl.h $
+    ../../third_party/webrtc/base/httpcommon.cc $
+    ../../third_party/webrtc/base/httpcommon.h $
+    ../../third_party/webrtc/base/httprequest.cc $
+    ../../third_party/webrtc/base/httprequest.h $
+    ../../third_party/webrtc/base/ifaddrs-android.h $
+    ../../third_party/webrtc/base/ipaddress.cc $
+    ../../third_party/webrtc/base/ipaddress.h $
+    ../../third_party/webrtc/base/linked_ptr.h $
+    ../../third_party/webrtc/base/logging.cc $
+    ../../third_party/webrtc/base/logging.h $
+    ../../third_party/webrtc/base/maccocoathreadhelper.h $
+    ../../third_party/webrtc/base/maccocoathreadhelper.mm $
+    ../../third_party/webrtc/base/macconversion.cc $
+    ../../third_party/webrtc/base/macconversion.h $
+    ../../third_party/webrtc/base/macutils.cc $
+    ../../third_party/webrtc/base/macutils.h $
+    ../../third_party/webrtc/base/md5.cc $
+    ../../third_party/webrtc/base/md5.h $
+    ../../third_party/webrtc/base/md5digest.h $
+    ../../third_party/webrtc/base/messagedigest.cc $
+    ../../third_party/webrtc/base/messagedigest.h $
+    ../../third_party/webrtc/base/messagehandler.cc $
+    ../../third_party/webrtc/base/messagehandler.h $
+    ../../third_party/webrtc/base/messagequeue.cc $
+    ../../third_party/webrtc/base/messagequeue.h $
+    ../../third_party/webrtc/base/nethelpers.cc $
+    ../../third_party/webrtc/base/nethelpers.h $
+    ../../third_party/webrtc/base/network.cc $
+    ../../third_party/webrtc/base/network.h $
+    ../../third_party/webrtc/base/networkmonitor.cc $
+    ../../third_party/webrtc/base/networkmonitor.h $
+    ../../third_party/webrtc/base/nullsocketserver.h $
+    ../../third_party/webrtc/base/openssl.h $
+    ../../third_party/webrtc/base/openssladapter.cc $
+    ../../third_party/webrtc/base/openssladapter.h $
+    ../../third_party/webrtc/base/openssldigest.cc $
+    ../../third_party/webrtc/base/openssldigest.h $
+    ../../third_party/webrtc/base/opensslidentity.cc $
+    ../../third_party/webrtc/base/opensslidentity.h $
+    ../../third_party/webrtc/base/opensslstreamadapter.cc $
+    ../../third_party/webrtc/base/opensslstreamadapter.h $
+    ../../third_party/webrtc/base/pathutils.cc $
+    ../../third_party/webrtc/base/pathutils.h $
+    ../../third_party/webrtc/base/physicalsocketserver.cc $
+    ../../third_party/webrtc/base/physicalsocketserver.h $
+    ../../third_party/webrtc/base/platform_file.h $
+    ../../third_party/webrtc/base/platform_thread.cc $
+    ../../third_party/webrtc/base/platform_thread.h $
+    ../../third_party/webrtc/base/platform_thread_types.h $
+    ../../third_party/webrtc/base/proxydetect.cc $
+    ../../third_party/webrtc/base/proxydetect.h $
+    ../../third_party/webrtc/base/proxyinfo.cc $
+    ../../third_party/webrtc/base/proxyinfo.h $
+    ../../third_party/webrtc/base/ratelimiter.cc $
+    ../../third_party/webrtc/base/ratelimiter.h $
+    ../../third_party/webrtc/base/ratetracker.cc $
+    ../../third_party/webrtc/base/ratetracker.h $
+    ../../third_party/webrtc/base/refcount.h $
+    ../../third_party/webrtc/base/rtccertificate.h $
+    ../../third_party/webrtc/base/safe_conversions.h $
+    ../../third_party/webrtc/base/safe_conversions_impl.h $
+    ../../third_party/webrtc/base/scoped_autorelease_pool.h $
+    ../../third_party/webrtc/base/scoped_autorelease_pool.mm $
+    ../../third_party/webrtc/base/scoped_ptr.h $
+    ../../third_party/webrtc/base/scoped_ref_ptr.h $
+    ../../third_party/webrtc/base/scopedptrcollection.h $
+    ../../third_party/webrtc/base/sec_buffer.h $
+    ../../third_party/webrtc/base/sha1.cc $
+    ../../third_party/webrtc/base/sha1.h $
+    ../../third_party/webrtc/base/sha1digest.h $
+    ../../third_party/webrtc/base/signalthread.cc $
+    ../../third_party/webrtc/base/signalthread.h $
+    ../../third_party/webrtc/base/sigslot.cc $
+    ../../third_party/webrtc/base/sigslot.h $
+    ../../third_party/webrtc/base/sigslotrepeater.h $
+    ../../third_party/webrtc/base/socket.h $
+    ../../third_party/webrtc/base/socketadapters.cc $
+    ../../third_party/webrtc/base/socketadapters.h $
+    ../../third_party/webrtc/base/socketaddress.cc $
+    ../../third_party/webrtc/base/socketaddress.h $
+    ../../third_party/webrtc/base/socketaddresspair.cc $
+    ../../third_party/webrtc/base/socketaddresspair.h $
+    ../../third_party/webrtc/base/socketfactory.h $
+    ../../third_party/webrtc/base/socketpool.cc $
+    ../../third_party/webrtc/base/socketpool.h $
+    ../../third_party/webrtc/base/socketserver.h $
+    ../../third_party/webrtc/base/socketstream.cc $
+    ../../third_party/webrtc/base/socketstream.h $
+    ../../third_party/webrtc/base/ssladapter.cc $
+    ../../third_party/webrtc/base/ssladapter.h $
+    ../../third_party/webrtc/base/sslconfig.h $
+    ../../third_party/webrtc/base/sslfingerprint.cc $
+    ../../third_party/webrtc/base/sslfingerprint.h $
+    ../../third_party/webrtc/base/sslidentity.cc $
+    ../../third_party/webrtc/base/sslidentity.h $
+    ../../third_party/webrtc/base/sslroots.h $
+    ../../third_party/webrtc/base/sslsocketfactory.cc $
+    ../../third_party/webrtc/base/sslsocketfactory.h $
+    ../../third_party/webrtc/base/sslstreamadapter.cc $
+    ../../third_party/webrtc/base/sslstreamadapter.h $
+    ../../third_party/webrtc/base/sslstreamadapterhelper.cc $
+    ../../third_party/webrtc/base/sslstreamadapterhelper.h $
+    ../../third_party/webrtc/base/stream.cc $
+    ../../third_party/webrtc/base/stream.h $
+    ../../third_party/webrtc/base/stringencode.cc $
+    ../../third_party/webrtc/base/stringencode.h $
+    ../../third_party/webrtc/base/stringutils.cc $
+    ../../third_party/webrtc/base/stringutils.h $
+    ../../third_party/webrtc/base/task.cc $
+    ../../third_party/webrtc/base/task.h $
+    ../../third_party/webrtc/base/taskparent.cc $
+    ../../third_party/webrtc/base/taskparent.h $
+    ../../third_party/webrtc/base/taskrunner.cc $
+    ../../third_party/webrtc/base/taskrunner.h $
+    ../../third_party/webrtc/base/template_util.h $
+    ../../third_party/webrtc/base/thread.cc $
+    ../../third_party/webrtc/base/thread.h $
+    ../../third_party/webrtc/base/thread_annotations.h $
+    ../../third_party/webrtc/base/thread_checker.h $
+    ../../third_party/webrtc/base/thread_checker_impl.cc $
+    ../../third_party/webrtc/base/thread_checker_impl.h $
+    ../../third_party/webrtc/base/timeutils.cc $
+    ../../third_party/webrtc/base/timeutils.h $
+    ../../third_party/webrtc/base/timing.cc $
+    ../../third_party/webrtc/base/timing.h $
+    ../../third_party/webrtc/base/trace_event.h $
+    ../../third_party/webrtc/base/unixfilesystem.cc $
+    ../../third_party/webrtc/base/unixfilesystem.h $
+    ../../third_party/webrtc/base/urlencode.cc $
+    ../../third_party/webrtc/base/urlencode.h $
+    ../../third_party/webrtc/base/win32.cc $
+    ../../third_party/webrtc/base/win32.h $
+    ../../third_party/webrtc/base/win32filesystem.cc $
+    ../../third_party/webrtc/base/win32filesystem.h $
+    ../../third_party/webrtc/base/win32securityerrors.cc $
+    ../../third_party/webrtc/base/win32socketinit.h $
+    ../../third_party/webrtc/base/win32window.cc $
+    ../../third_party/webrtc/base/win32window.h $
+    ../../third_party/webrtc/base/winfirewall.cc $
+    ../../third_party/webrtc/base/winfirewall.h $
+    ../../third_party/webrtc/base/winping.cc $
+    ../../third_party/webrtc/base/winping.h $
+    ../../third_party/webrtc/base/worker.cc $
+    ../../third_party/webrtc/base/worker.h $
+    ../../third_party/webrtc/common_types.h $
+    ../../third_party/webrtc/config.h $
+    ../../third_party/webrtc/libjingle/xmllite/qname.cc $
+    ../../third_party/webrtc/libjingle/xmllite/qname.h $
+    ../../third_party/webrtc/libjingle/xmllite/xmlbuilder.cc $
+    ../../third_party/webrtc/libjingle/xmllite/xmlbuilder.h $
+    ../../third_party/webrtc/libjingle/xmllite/xmlconstants.cc $
+    ../../third_party/webrtc/libjingle/xmllite/xmlconstants.h $
+    ../../third_party/webrtc/libjingle/xmllite/xmlelement.cc $
+    ../../third_party/webrtc/libjingle/xmllite/xmlelement.h $
+    ../../third_party/webrtc/libjingle/xmllite/xmlnsstack.cc $
+    ../../third_party/webrtc/libjingle/xmllite/xmlnsstack.h $
+    ../../third_party/webrtc/libjingle/xmllite/xmlparser.cc $
+    ../../third_party/webrtc/libjingle/xmllite/xmlparser.h $
+    ../../third_party/webrtc/libjingle/xmllite/xmlprinter.cc $
+    ../../third_party/webrtc/libjingle/xmllite/xmlprinter.h $
+    ../../third_party/webrtc/libjingle/xmpp/asyncsocket.h $
+    ../../third_party/webrtc/libjingle/xmpp/constants.cc $
+    ../../third_party/webrtc/libjingle/xmpp/constants.h $
+    ../../third_party/webrtc/libjingle/xmpp/jid.cc $
+    ../../third_party/webrtc/libjingle/xmpp/jid.h $
+    ../../third_party/webrtc/libjingle/xmpp/plainsaslhandler.h $
+    ../../third_party/webrtc/libjingle/xmpp/prexmppauth.h $
+    ../../third_party/webrtc/libjingle/xmpp/saslcookiemechanism.h $
+    ../../third_party/webrtc/libjingle/xmpp/saslhandler.h $
+    ../../third_party/webrtc/libjingle/xmpp/saslmechanism.cc $
+    ../../third_party/webrtc/libjingle/xmpp/saslmechanism.h $
+    ../../third_party/webrtc/libjingle/xmpp/saslplainmechanism.h $
+    ../../third_party/webrtc/libjingle/xmpp/xmppclient.cc $
+    ../../third_party/webrtc/libjingle/xmpp/xmppclient.h $
+    ../../third_party/webrtc/libjingle/xmpp/xmppclientsettings.h $
+    ../../third_party/webrtc/libjingle/xmpp/xmppengine.h $
+    ../../third_party/webrtc/libjingle/xmpp/xmppengineimpl.cc $
+    ../../third_party/webrtc/libjingle/xmpp/xmppengineimpl.h $
+    ../../third_party/webrtc/libjingle/xmpp/xmppengineimpl_iq.cc $
+    ../../third_party/webrtc/libjingle/xmpp/xmpplogintask.cc $
+    ../../third_party/webrtc/libjingle/xmpp/xmpplogintask.h $
+    ../../third_party/webrtc/libjingle/xmpp/xmppstanzaparser.cc $
+    ../../third_party/webrtc/libjingle/xmpp/xmppstanzaparser.h $
+    ../../third_party/webrtc/libjingle/xmpp/xmpptask.cc $
+    ../../third_party/webrtc/libjingle/xmpp/xmpptask.h $
+    ../../third_party/webrtc/p2p/base/asyncstuntcpsocket.cc $
+    ../../third_party/webrtc/p2p/base/asyncstuntcpsocket.h $
+    ../../third_party/webrtc/p2p/base/basicpacketsocketfactory.cc $
+    ../../third_party/webrtc/p2p/base/basicpacketsocketfactory.h $
+    ../../third_party/webrtc/p2p/base/candidate.h $
+    ../../third_party/webrtc/p2p/base/common.h $
+    ../../third_party/webrtc/p2p/base/constants.cc $
+    ../../third_party/webrtc/p2p/base/constants.h $
+    ../../third_party/webrtc/p2p/base/dtlstransport.h $
+    ../../third_party/webrtc/p2p/base/dtlstransportchannel.cc $
+    ../../third_party/webrtc/p2p/base/dtlstransportchannel.h $
+    ../../third_party/webrtc/p2p/base/p2ptransport.cc $
+    ../../third_party/webrtc/p2p/base/p2ptransport.h $
+    ../../third_party/webrtc/p2p/base/p2ptransportchannel.cc $
+    ../../third_party/webrtc/p2p/base/p2ptransportchannel.h $
+    ../../third_party/webrtc/p2p/base/packetsocketfactory.h $
+    ../../third_party/webrtc/p2p/base/port.cc $
+    ../../third_party/webrtc/p2p/base/port.h $
+    ../../third_party/webrtc/p2p/base/portallocator.cc $
+    ../../third_party/webrtc/p2p/base/portallocator.h $
+    ../../third_party/webrtc/p2p/base/portinterface.h $
+    ../../third_party/webrtc/p2p/base/pseudotcp.cc $
+    ../../third_party/webrtc/p2p/base/pseudotcp.h $
+    ../../third_party/webrtc/p2p/base/rawtransport.cc $
+    ../../third_party/webrtc/p2p/base/rawtransport.h $
+    ../../third_party/webrtc/p2p/base/rawtransportchannel.cc $
+    ../../third_party/webrtc/p2p/base/rawtransportchannel.h $
+    ../../third_party/webrtc/p2p/base/relayport.cc $
+    ../../third_party/webrtc/p2p/base/relayport.h $
+    ../../third_party/webrtc/p2p/base/session.cc $
+    ../../third_party/webrtc/p2p/base/session.h $
+    ../../third_party/webrtc/p2p/base/sessiondescription.cc $
+    ../../third_party/webrtc/p2p/base/sessiondescription.h $
+    ../../third_party/webrtc/p2p/base/sessionid.h $
+    ../../third_party/webrtc/p2p/base/stun.cc $
+    ../../third_party/webrtc/p2p/base/stun.h $
+    ../../third_party/webrtc/p2p/base/stunport.cc $
+    ../../third_party/webrtc/p2p/base/stunport.h $
+    ../../third_party/webrtc/p2p/base/stunrequest.cc $
+    ../../third_party/webrtc/p2p/base/stunrequest.h $
+    ../../third_party/webrtc/p2p/base/tcpport.cc $
+    ../../third_party/webrtc/p2p/base/tcpport.h $
+    ../../third_party/webrtc/p2p/base/transport.cc $
+    ../../third_party/webrtc/p2p/base/transport.h $
+    ../../third_party/webrtc/p2p/base/transportchannel.cc $
+    ../../third_party/webrtc/p2p/base/transportchannel.h $
+    ../../third_party/webrtc/p2p/base/transportchannelimpl.h $
+    ../../third_party/webrtc/p2p/base/transportcontroller.cc $
+    ../../third_party/webrtc/p2p/base/transportcontroller.h $
+    ../../third_party/webrtc/p2p/base/transportdescription.cc $
+    ../../third_party/webrtc/p2p/base/transportdescription.h $
+    ../../third_party/webrtc/p2p/base/transportdescriptionfactory.cc $
+    ../../third_party/webrtc/p2p/base/transportdescriptionfactory.h $
+    ../../third_party/webrtc/p2p/base/transportinfo.h $
+    ../../third_party/webrtc/p2p/base/turnport.cc $
+    ../../third_party/webrtc/p2p/base/turnport.h $
+    ../../third_party/webrtc/p2p/base/udpport.h $
+    ../../third_party/webrtc/p2p/client/basicportallocator.cc $
+    ../../third_party/webrtc/p2p/client/basicportallocator.h $
+    ../../third_party/webrtc/p2p/client/httpportallocator.cc $
+    ../../third_party/webrtc/p2p/client/httpportallocator.h $
+    ../../third_party/webrtc/p2p/client/socketmonitor.cc $
+    ../../third_party/webrtc/p2p/client/socketmonitor.h $
+    ../../third_party/webrtc/system_wrappers/include/field_trial.h $
+    ../../third_party/webrtc/system_wrappers/include/field_trial_default.h $
+    ../../third_party/webrtc/system_wrappers/source/field_trial_default.cc $
+    ../../third_party/webrtc/typedefs.h $
+    ../../third_party/libjingle/overrides/field_trial.cc $
+    ../../out/gypfiles/third_party/libjingle/pnacl_newlib.libjingle_nacl.source_list.gypcmd $
+    ../../native_client/toolchain/linux_x86/pnacl_newlib/pnacl_newlib.json $
+    || obj/third_party/libjingle/libjingle_nacl.actions_depends.stamp
+
+defines = -DV8_DEPRECATION_WARNINGS -DCLD_VERSION=2 -D_FILE_OFFSET_BITS=64 $
+    -DCHROMIUM_BUILD -DCR_CLANG_REVISION=255169-1 $
+    -DUI_COMPOSITOR_IMAGE_TRANSPORT -DUSE_AURA=1 -DUSE_ASH=1 -DUSE_PANGO=1 $
+    -DUSE_CAIRO=1 -DUSE_DEFAULT_RENDER_THEME=1 -DUSE_LIBJPEG_TURBO=1 $
+    -DUSE_X11=1 -DUSE_CLIPBOARD_AURAX11=1 -DENABLE_ONE_CLICK_SIGNIN $
+    -DENABLE_WEBRTC=1 -DENABLE_MEDIA_ROUTER=1 -DENABLE_PEPPER_CDMS $
+    -DENABLE_CONFIGURATION_POLICY -DENABLE_NOTIFICATIONS -DENABLE_HIDPI=1 $
+    -DENABLE_TOPCHROME_MD=1 -DUSE_UDEV -DDONT_EMBED_BUILD_METADATA $
+    -DFIELDTRIAL_TESTING_ENABLED -DENABLE_TASK_MANAGER=1 $
+    -DENABLE_EXTENSIONS=1 -DENABLE_PDF=1 -DENABLE_PLUGINS=1 $
+    -DENABLE_SESSION_SERVICE=1 -DENABLE_THEMES=1 -DENABLE_AUTOFILL_DIALOG=1 $
+    -DENABLE_BACKGROUND=1 -DENABLE_PRINTING=1 -DENABLE_BASIC_PRINTING=1 $
+    -DENABLE_PRINT_PREVIEW=1 -DENABLE_SPELLCHECK=1 $
+    -DENABLE_CAPTIVE_PORTAL_DETECTION=1 -DENABLE_APP_LIST=1 $
+    -DENABLE_SETTINGS_APP=1 -DENABLE_SUPERVISED_USERS=1 -DENABLE_MDNS=1 $
+    -DENABLE_SERVICE_DISCOVERY=1 -DV8_USE_EXTERNAL_STARTUP_DATA $
+    -DFULL_SAFE_BROWSING -DSAFE_BROWSING_CSD -DSAFE_BROWSING_DB_LOCAL $
+    -DEXPAT_RELATIVE_PATH -DFEATURE_ENABLE_SSL -DGTEST_RELATIVE_PATH $
+    -DHAVE_OPENSSL_SSL_H -DNO_MAIN_THREAD_WRAPPING -DNO_SOUND_SYSTEM $
+    -DWEBRTC_POSIX -DSRTP_RELATIVE_PATH -DSSL_USE_OPENSSL $
+    -DUSE_WEBRTC_DEV_BRANCH -Dtimezone=_timezone -DXML_STATIC $
+    -DUSE_LIBPCI=1 -DUSE_OPENSSL=1 -DUSE_OPENSSL_CERTS=1 -DNDEBUG $
+    -DNVALGRIND -DDYNAMIC_ANNOTATIONS_ENABLED=0
+includes = -Igen -I../../third_party/libjingle/source -I../../third_party $
+    -I../../native_client_sdk/src/libraries $
+    -I../../native_client_sdk/src/libraries/nacl_io/include $
+    -I../../native_client_sdk/src/libraries/third_party/newlib-extras $
+    -I../../third_party/expat/files/lib $
+    -I../../third_party/boringssl/src/include
+cflags = -fstack-protector --param=ssp-buffer-size=4 -Werror -pthread $
+    -fno-strict-aliasing -Wno-unused-parameter $
+    -Wno-missing-field-initializers -fvisibility=hidden -pipe -fPIC $
+    -Wno-reserved-user-defined-literal -Xclang -load -Xclang $
+    /b/build/slave/publish_tarball/build/src/third_party/llvm-build/Release+Asserts/lib/libFindBadConstructs.so $
+    -Xclang -add-plugin -Xclang find-bad-constructs -Xclang $
+    -plugin-arg-find-bad-constructs -Xclang check-templates $
+    -fcolor-diagnostics $
+    -B/b/build/slave/publish_tarball/build/src/third_party/binutils/Linux_x64/Release/bin $
+    -Wheader-hygiene -Wno-char-subscripts $
+    -Wno-unneeded-internal-declaration -Wno-covered-switch-default $
+    -Wstring-conversion -Wno-c++11-narrowing -Wno-deprecated-register $
+    -Wno-inconsistent-missing-override -Wno-shift-negative-value $
+    -Wno-bitfield-width -Wno-unused-variable -Wno-format -Wno-unused-result $
+    -m64 -march=x86-64 $
+    --sysroot=/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot $
+    -O2 -fno-ident -fdata-sections -ffunction-sections -funwind-tables
+cflags_c = 
+cflags_cc = -fno-exceptions -fno-rtti -fno-threadsafe-statics $
+    -fvisibility-inlines-hidden -std=gnu++11 -Wno-deprecated
+arflags = 
+
+build obj/third_party/webrtc/base/libjingle_nacl.asyncfile.o: cxx $
+    ../../third_party/webrtc/base/asyncfile.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/base/libjingle_nacl.asynchttprequest.o: cxx $
+    ../../third_party/webrtc/base/asynchttprequest.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/base/libjingle_nacl.asyncinvoker.o: cxx $
+    ../../third_party/webrtc/base/asyncinvoker.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/base/libjingle_nacl.asyncpacketsocket.o: cxx $
+    ../../third_party/webrtc/base/asyncpacketsocket.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/base/libjingle_nacl.asyncresolverinterface.o: $
+    cxx ../../third_party/webrtc/base/asyncresolverinterface.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/base/libjingle_nacl.asyncsocket.o: cxx $
+    ../../third_party/webrtc/base/asyncsocket.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/base/libjingle_nacl.asynctcpsocket.o: cxx $
+    ../../third_party/webrtc/base/asynctcpsocket.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/base/libjingle_nacl.asyncudpsocket.o: cxx $
+    ../../third_party/webrtc/base/asyncudpsocket.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/base/libjingle_nacl.autodetectproxy.o: cxx $
+    ../../third_party/webrtc/base/autodetectproxy.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/base/libjingle_nacl.base64.o: cxx $
+    ../../third_party/webrtc/base/base64.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/base/libjingle_nacl.buffer.o: cxx $
+    ../../third_party/webrtc/base/buffer.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/base/libjingle_nacl.bytebuffer.o: cxx $
+    ../../third_party/webrtc/base/bytebuffer.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/base/libjingle_nacl.checks.o: cxx $
+    ../../third_party/webrtc/base/checks.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/base/libjingle_nacl.common.o: cxx $
+    ../../third_party/webrtc/base/common.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/base/libjingle_nacl.crc32.o: cxx $
+    ../../third_party/webrtc/base/crc32.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/base/libjingle_nacl.criticalsection.o: cxx $
+    ../../third_party/webrtc/base/criticalsection.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/base/libjingle_nacl.cryptstring.o: cxx $
+    ../../third_party/webrtc/base/cryptstring.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/base/libjingle_nacl.diskcache.o: cxx $
+    ../../third_party/webrtc/base/diskcache.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/base/libjingle_nacl.event.o: cxx $
+    ../../third_party/webrtc/base/event.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/base/libjingle_nacl.event_tracer.o: cxx $
+    ../../third_party/webrtc/base/event_tracer.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/base/libjingle_nacl.fileutils.o: cxx $
+    ../../third_party/webrtc/base/fileutils.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/base/libjingle_nacl.firewallsocketserver.o: $
+    cxx ../../third_party/webrtc/base/firewallsocketserver.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/base/libjingle_nacl.flags.o: cxx $
+    ../../third_party/webrtc/base/flags.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/base/libjingle_nacl.helpers.o: cxx $
+    ../../third_party/webrtc/base/helpers.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/base/libjingle_nacl.httpbase.o: cxx $
+    ../../third_party/webrtc/base/httpbase.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/base/libjingle_nacl.httpclient.o: cxx $
+    ../../third_party/webrtc/base/httpclient.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/base/libjingle_nacl.httpcommon.o: cxx $
+    ../../third_party/webrtc/base/httpcommon.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/base/libjingle_nacl.httprequest.o: cxx $
+    ../../third_party/webrtc/base/httprequest.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/base/libjingle_nacl.ipaddress.o: cxx $
+    ../../third_party/webrtc/base/ipaddress.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/base/libjingle_nacl.logging.o: cxx $
+    ../../third_party/webrtc/base/logging.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/base/libjingle_nacl.md5.o: cxx $
+    ../../third_party/webrtc/base/md5.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/base/libjingle_nacl.messagedigest.o: cxx $
+    ../../third_party/webrtc/base/messagedigest.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/base/libjingle_nacl.messagehandler.o: cxx $
+    ../../third_party/webrtc/base/messagehandler.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/base/libjingle_nacl.messagequeue.o: cxx $
+    ../../third_party/webrtc/base/messagequeue.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/base/libjingle_nacl.nethelpers.o: cxx $
+    ../../third_party/webrtc/base/nethelpers.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/base/libjingle_nacl.network.o: cxx $
+    ../../third_party/webrtc/base/network.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/base/libjingle_nacl.networkmonitor.o: cxx $
+    ../../third_party/webrtc/base/networkmonitor.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/base/libjingle_nacl.openssladapter.o: cxx $
+    ../../third_party/webrtc/base/openssladapter.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/base/libjingle_nacl.openssldigest.o: cxx $
+    ../../third_party/webrtc/base/openssldigest.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/base/libjingle_nacl.opensslidentity.o: cxx $
+    ../../third_party/webrtc/base/opensslidentity.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/base/libjingle_nacl.opensslstreamadapter.o: $
+    cxx ../../third_party/webrtc/base/opensslstreamadapter.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/base/libjingle_nacl.pathutils.o: cxx $
+    ../../third_party/webrtc/base/pathutils.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/base/libjingle_nacl.physicalsocketserver.o: $
+    cxx ../../third_party/webrtc/base/physicalsocketserver.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/base/libjingle_nacl.platform_thread.o: cxx $
+    ../../third_party/webrtc/base/platform_thread.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/base/libjingle_nacl.proxydetect.o: cxx $
+    ../../third_party/webrtc/base/proxydetect.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/base/libjingle_nacl.proxyinfo.o: cxx $
+    ../../third_party/webrtc/base/proxyinfo.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/base/libjingle_nacl.ratelimiter.o: cxx $
+    ../../third_party/webrtc/base/ratelimiter.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/base/libjingle_nacl.ratetracker.o: cxx $
+    ../../third_party/webrtc/base/ratetracker.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/base/libjingle_nacl.sha1.o: cxx $
+    ../../third_party/webrtc/base/sha1.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/base/libjingle_nacl.signalthread.o: cxx $
+    ../../third_party/webrtc/base/signalthread.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/base/libjingle_nacl.sigslot.o: cxx $
+    ../../third_party/webrtc/base/sigslot.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/base/libjingle_nacl.socketadapters.o: cxx $
+    ../../third_party/webrtc/base/socketadapters.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/base/libjingle_nacl.socketaddress.o: cxx $
+    ../../third_party/webrtc/base/socketaddress.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/base/libjingle_nacl.socketaddresspair.o: cxx $
+    ../../third_party/webrtc/base/socketaddresspair.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/base/libjingle_nacl.socketpool.o: cxx $
+    ../../third_party/webrtc/base/socketpool.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/base/libjingle_nacl.socketstream.o: cxx $
+    ../../third_party/webrtc/base/socketstream.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/base/libjingle_nacl.ssladapter.o: cxx $
+    ../../third_party/webrtc/base/ssladapter.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/base/libjingle_nacl.sslfingerprint.o: cxx $
+    ../../third_party/webrtc/base/sslfingerprint.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/base/libjingle_nacl.sslidentity.o: cxx $
+    ../../third_party/webrtc/base/sslidentity.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/base/libjingle_nacl.sslsocketfactory.o: cxx $
+    ../../third_party/webrtc/base/sslsocketfactory.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/base/libjingle_nacl.sslstreamadapter.o: cxx $
+    ../../third_party/webrtc/base/sslstreamadapter.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/base/libjingle_nacl.sslstreamadapterhelper.o: $
+    cxx ../../third_party/webrtc/base/sslstreamadapterhelper.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/base/libjingle_nacl.stream.o: cxx $
+    ../../third_party/webrtc/base/stream.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/base/libjingle_nacl.stringencode.o: cxx $
+    ../../third_party/webrtc/base/stringencode.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/base/libjingle_nacl.stringutils.o: cxx $
+    ../../third_party/webrtc/base/stringutils.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/base/libjingle_nacl.task.o: cxx $
+    ../../third_party/webrtc/base/task.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/base/libjingle_nacl.taskparent.o: cxx $
+    ../../third_party/webrtc/base/taskparent.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/base/libjingle_nacl.taskrunner.o: cxx $
+    ../../third_party/webrtc/base/taskrunner.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/base/libjingle_nacl.thread.o: cxx $
+    ../../third_party/webrtc/base/thread.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/base/libjingle_nacl.thread_checker_impl.o: cxx $
+    ../../third_party/webrtc/base/thread_checker_impl.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/base/libjingle_nacl.timeutils.o: cxx $
+    ../../third_party/webrtc/base/timeutils.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/base/libjingle_nacl.timing.o: cxx $
+    ../../third_party/webrtc/base/timing.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/base/libjingle_nacl.unixfilesystem.o: cxx $
+    ../../third_party/webrtc/base/unixfilesystem.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/base/libjingle_nacl.urlencode.o: cxx $
+    ../../third_party/webrtc/base/urlencode.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/base/libjingle_nacl.worker.o: cxx $
+    ../../third_party/webrtc/base/worker.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/libjingle/xmllite/libjingle_nacl.qname.o: cxx $
+    ../../third_party/webrtc/libjingle/xmllite/qname.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/libjingle/xmllite/libjingle_nacl.xmlbuilder.o: $
+    cxx ../../third_party/webrtc/libjingle/xmllite/xmlbuilder.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build $
+    obj/third_party/webrtc/libjingle/xmllite/libjingle_nacl.xmlconstants.o: $
+    cxx ../../third_party/webrtc/libjingle/xmllite/xmlconstants.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/libjingle/xmllite/libjingle_nacl.xmlelement.o: $
+    cxx ../../third_party/webrtc/libjingle/xmllite/xmlelement.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/libjingle/xmllite/libjingle_nacl.xmlnsstack.o: $
+    cxx ../../third_party/webrtc/libjingle/xmllite/xmlnsstack.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/libjingle/xmllite/libjingle_nacl.xmlparser.o: $
+    cxx ../../third_party/webrtc/libjingle/xmllite/xmlparser.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/libjingle/xmllite/libjingle_nacl.xmlprinter.o: $
+    cxx ../../third_party/webrtc/libjingle/xmllite/xmlprinter.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build $
+    obj/third_party/webrtc/system_wrappers/source/libjingle_nacl.field_trial_default.o: $
+    cxx $
+    ../../third_party/webrtc/system_wrappers/source/field_trial_default.cc $
+    || gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/p2p/base/libjingle_nacl.asyncstuntcpsocket.o: $
+    cxx ../../third_party/webrtc/p2p/base/asyncstuntcpsocket.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build $
+    obj/third_party/webrtc/p2p/base/libjingle_nacl.basicpacketsocketfactory.o: $
+    cxx ../../third_party/webrtc/p2p/base/basicpacketsocketfactory.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build $
+    obj/third_party/webrtc/p2p/base/libjingle_nacl.dtlstransportchannel.o: $
+    cxx ../../third_party/webrtc/p2p/base/dtlstransportchannel.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/p2p/base/libjingle_nacl.p2ptransport.o: cxx $
+    ../../third_party/webrtc/p2p/base/p2ptransport.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/p2p/base/libjingle_nacl.p2ptransportchannel.o: $
+    cxx ../../third_party/webrtc/p2p/base/p2ptransportchannel.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/p2p/base/libjingle_nacl.port.o: cxx $
+    ../../third_party/webrtc/p2p/base/port.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/p2p/base/libjingle_nacl.portallocator.o: cxx $
+    ../../third_party/webrtc/p2p/base/portallocator.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/p2p/base/libjingle_nacl.pseudotcp.o: cxx $
+    ../../third_party/webrtc/p2p/base/pseudotcp.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/p2p/base/libjingle_nacl.rawtransport.o: cxx $
+    ../../third_party/webrtc/p2p/base/rawtransport.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/p2p/base/libjingle_nacl.rawtransportchannel.o: $
+    cxx ../../third_party/webrtc/p2p/base/rawtransportchannel.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/p2p/base/libjingle_nacl.relayport.o: cxx $
+    ../../third_party/webrtc/p2p/base/relayport.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/p2p/base/libjingle_nacl.session.o: cxx $
+    ../../third_party/webrtc/p2p/base/session.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/p2p/base/libjingle_nacl.sessiondescription.o: $
+    cxx ../../third_party/webrtc/p2p/base/sessiondescription.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/p2p/base/libjingle_nacl.stun.o: cxx $
+    ../../third_party/webrtc/p2p/base/stun.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/p2p/base/libjingle_nacl.stunport.o: cxx $
+    ../../third_party/webrtc/p2p/base/stunport.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/p2p/base/libjingle_nacl.stunrequest.o: cxx $
+    ../../third_party/webrtc/p2p/base/stunrequest.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/p2p/base/libjingle_nacl.tcpport.o: cxx $
+    ../../third_party/webrtc/p2p/base/tcpport.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/p2p/base/libjingle_nacl.transport.o: cxx $
+    ../../third_party/webrtc/p2p/base/transport.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/p2p/base/libjingle_nacl.transportchannel.o: $
+    cxx ../../third_party/webrtc/p2p/base/transportchannel.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/p2p/base/libjingle_nacl.transportcontroller.o: $
+    cxx ../../third_party/webrtc/p2p/base/transportcontroller.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build $
+    obj/third_party/webrtc/p2p/base/libjingle_nacl.transportdescription.o: $
+    cxx ../../third_party/webrtc/p2p/base/transportdescription.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build $
+    obj/third_party/webrtc/p2p/base/libjingle_nacl.transportdescriptionfactory.o: $
+    cxx ../../third_party/webrtc/p2p/base/transportdescriptionfactory.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/p2p/base/libjingle_nacl.turnport.o: cxx $
+    ../../third_party/webrtc/p2p/base/turnport.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build $
+    obj/third_party/webrtc/p2p/client/libjingle_nacl.basicportallocator.o: $
+    cxx ../../third_party/webrtc/p2p/client/basicportallocator.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/p2p/client/libjingle_nacl.httpportallocator.o: $
+    cxx ../../third_party/webrtc/p2p/client/httpportallocator.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/p2p/client/libjingle_nacl.socketmonitor.o: cxx $
+    ../../third_party/webrtc/p2p/client/socketmonitor.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/libjingle/xmpp/libjingle_nacl.constants.o: cxx $
+    ../../third_party/webrtc/libjingle/xmpp/constants.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/libjingle/xmpp/libjingle_nacl.jid.o: cxx $
+    ../../third_party/webrtc/libjingle/xmpp/jid.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/libjingle/xmpp/libjingle_nacl.saslmechanism.o: $
+    cxx ../../third_party/webrtc/libjingle/xmpp/saslmechanism.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/libjingle/xmpp/libjingle_nacl.xmppclient.o: $
+    cxx ../../third_party/webrtc/libjingle/xmpp/xmppclient.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build $
+    obj/third_party/webrtc/libjingle/xmpp/libjingle_nacl.xmppengineimpl.o: $
+    cxx ../../third_party/webrtc/libjingle/xmpp/xmppengineimpl.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build $
+    obj/third_party/webrtc/libjingle/xmpp/libjingle_nacl.xmppengineimpl_iq.o: $
+    cxx ../../third_party/webrtc/libjingle/xmpp/xmppengineimpl_iq.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/libjingle/xmpp/libjingle_nacl.xmpplogintask.o: $
+    cxx ../../third_party/webrtc/libjingle/xmpp/xmpplogintask.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build $
+    obj/third_party/webrtc/libjingle/xmpp/libjingle_nacl.xmppstanzaparser.o: $
+    cxx ../../third_party/webrtc/libjingle/xmpp/xmppstanzaparser.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+build obj/third_party/webrtc/libjingle/xmpp/libjingle_nacl.xmpptask.o: cxx $
+    ../../third_party/webrtc/libjingle/xmpp/xmpptask.cc || $
+    gen/tc_pnacl_newlib/lib/libjingle_nacl.a
+

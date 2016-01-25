@@ -3,9 +3,9 @@
 # found in the LICENSE file.
 import unittest
 
-from telemetry.core.platform import desktop_device
 from telemetry.internal.backends.chrome import desktop_browser_finder
 from telemetry.internal.browser import browser_options
+from telemetry.internal.platform import desktop_device
 from telemetry.testing import system_stub
 
 
@@ -153,12 +153,19 @@ class LinuxFindTest(FindTestBase):
     self._files.append('../../../out/Debug/content_shell')
 
     self.has_google_chrome_on_path = False
+    self.chrome_beta_is_google_chrome = False
     this = self
     def call_hook(*args, **kwargs): # pylint: disable=W0613
       if this.has_google_chrome_on_path:
         return 0
       raise OSError('Not found')
     self._finder_stubs.subprocess.call = call_hook
+
+    def realpath_hook(*unused_args, **unused_kwargs):
+      if this.chrome_beta_is_google_chrome:
+        return '/opt/google/chrome-beta/google-chrome-beta'
+      return '/opt/google/chrome/google-chrome'
+    self._finder_stubs.os.path.realpath = realpath_hook
 
   def testFindAllWithExact(self):
     if not self.CanFindAvailableBrowsers():
@@ -194,11 +201,22 @@ class LinuxFindTest(FindTestBase):
     del self._files[1]
     self.has_google_chrome_on_path = True
     self.assertIn('system', self.DoFindAllTypes())
+    self.assertIn('stable', self.DoFindAllTypes())
+    self.assertIn('beta', self.DoFindAllTypes())
+    self.assertIn('dev', self.DoFindAllTypes())
 
     self.has_google_chrome_on_path = False
     del self._files[1]
     self.assertEquals(['content-shell-debug', 'content-shell-release'],
                       self.DoFindAllTypes())
+
+    self.has_google_chrome_on_path = True
+    self.chrome_beta_is_google_chrome = True
+
+    google_chrome = [browser for browser in self.DoFindAll()
+                     if browser._local_executable == 'google-chrome'][0]
+    self.assertEquals('/opt/google/chrome-beta',
+                      google_chrome._browser_directory)
 
   def testFindUsingRelease(self):
     if not self.CanFindAvailableBrowsers():
@@ -244,17 +262,5 @@ class WinFindTest(FindTestBase):
         set(types),
         set(['exact',
              'debug', 'release',
-             'content-shell-debug', 'content-shell-release',
-             'system', 'canary']))
-
-  def testFindAllWithExactApk(self):
-    if not self.CanFindAvailableBrowsers():
-      return
-
-    self._finder_options.browser_executable = 'c:\\tmp\\chrome_shell.apk'
-    types = self.DoFindAllTypes()
-    self.assertEquals(
-        set(types),
-        set(['debug', 'release',
              'content-shell-debug', 'content-shell-release',
              'system', 'canary']))

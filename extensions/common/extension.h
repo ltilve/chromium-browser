@@ -204,6 +204,9 @@ class Extension : public base::RefCountedThreadSafe<Extension> {
   // Valid schemes for web extent URLPatterns.
   static const int kValidWebExtentSchemes;
 
+  // Valid schemes for bookmark app installs.
+  static const int kValidBookmarkAppSchemes;
+
   // Valid schemes for host permission URLPatterns.
   static const int kValidHostPermissionSchemes;
 
@@ -354,8 +357,6 @@ class Extension : public base::RefCountedThreadSafe<Extension> {
   bool is_extension() const;
   bool is_shared_module() const;
   bool is_theme() const;
-
-  bool can_be_incognito_enabled() const;
 
   void AddWebExtentPattern(const URLPattern& pattern);
   const URLPatternSet& web_extent() const { return extent_; }
@@ -573,12 +574,11 @@ struct UpdatedExtensionPermissionsInfo {
   // The permissions that have changed. For Reason::ADDED, this would contain
   // only the permissions that have added, and for Reason::REMOVED, this would
   // only contain the removed permissions.
-  const PermissionSet* permissions;
+  const PermissionSet& permissions;
 
-  UpdatedExtensionPermissionsInfo(
-      const Extension* extension,
-      const PermissionSet* permissions,
-      Reason reason);
+  UpdatedExtensionPermissionsInfo(const Extension* extension,
+                                  const PermissionSet& permissions,
+                                  Reason reason);
 };
 
 }  // namespace extensions

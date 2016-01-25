@@ -32,7 +32,7 @@
 #include "chrome/browser/extensions/extension_util.h"
 #include "chrome/browser/extensions/launch_util.h"
 #include "chrome/browser/prefs/incognito_mode_prefs.h"
-#include "chrome/browser/prefs/pref_service_syncable.h"
+#include "chrome/browser/prefs/pref_service_syncable_util.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/profiles/profile_manager.h"
 #include "chrome/browser/ui/ash/app_sync_ui_state.h"
@@ -68,6 +68,7 @@
 #include "chrome/common/url_constants.h"
 #include "chrome/grit/generated_resources.h"
 #include "components/favicon/content/content_favicon_driver.h"
+#include "components/syncable_prefs/pref_service_syncable.h"
 #include "content/public/browser/navigation_entry.h"
 #include "content/public/browser/web_contents.h"
 #include "extensions/browser/extension_prefs.h"
@@ -85,6 +86,7 @@
 #include "ui/aura/window.h"
 #include "ui/aura/window_event_dispatcher.h"
 #include "ui/base/l10n/l10n_util.h"
+#include "ui/base/resource/resource_bundle.h"
 #include "ui/base/window_open_disposition.h"
 #include "ui/keyboard/keyboard_util.h"
 #include "ui/resources/grit/ui_resources.h"
@@ -247,9 +249,10 @@ ash::ShelfAlignment GetShelfAlignmentFromPrefs(Profile* profile,
 
 // If prefs have synced and no user-set value exists at |local_path|, the value
 // from |synced_path| is copied to |local_path|.
-void MaybePropagatePrefToLocal(PrefServiceSyncable* pref_service,
-                               const char* local_path,
-                               const char* synced_path) {
+void MaybePropagatePrefToLocal(
+    syncable_prefs::PrefServiceSyncable* pref_service,
+    const char* local_path,
+    const char* synced_path) {
   if (!pref_service->FindPreference(local_path)->HasUserSetting() &&
       pref_service->IsSyncing()) {
     // First time the user is using this machine, propagate from remote to
@@ -405,7 +408,7 @@ ChromeLauncherController::ChromeLauncherController(Profile* profile,
   // Right now ash::Shell isn't created for tests.
   // TODO(mukai): Allows it to observe display change and write tests.
   if (ash::Shell::HasInstance()) {
-    ash::Shell::GetInstance()->display_controller()->AddObserver(this);
+    ash::Shell::GetInstance()->window_tree_host_manager()->AddObserver(this);
     // If it got already set, we remove the observer first again and swap the
     // ItemDelegateManager.
     if (item_delegate_manager_)
@@ -433,7 +436,7 @@ ChromeLauncherController::~ChromeLauncherController() {
 
   model_->RemoveObserver(this);
   if (ash::Shell::HasInstance())
-    ash::Shell::GetInstance()->display_controller()->RemoveObserver(this);
+    ash::Shell::GetInstance()->window_tree_host_manager()->RemoveObserver(this);
   for (IDToItemControllerMap::iterator i = id_to_item_controller_map_.begin();
        i != id_to_item_controller_map_.end(); ++i) {
     int index = model_->ItemIndexByID(i->first);
@@ -478,7 +481,8 @@ void ChromeLauncherController::Init() {
 #if defined(OS_CHROMEOS)
     SetVirtualKeyboardBehaviorFromPrefs();
 #endif  // defined(OS_CHROMEOS)
-    PrefServiceSyncable* prefs = PrefServiceSyncable::FromProfile(profile_);
+    syncable_prefs::PrefServiceSyncable* prefs =
+        PrefServiceSyncableFromProfile(profile_);
     if (!prefs->FindPreference(prefs::kShelfAlignmentLocal)->HasUserSetting() ||
         !prefs->FindPreference(prefs::kShelfAutoHideBehaviorLocal)->
             HasUserSetting()) {
@@ -610,34 +614,6 @@ bool ChromeLauncherController::IsPinnable(ash::ShelfID id) const {
            type == ash::TYPE_PLATFORM_APP ||
            type == ash::TYPE_WINDOWED_APP) &&
           CanPin());
-}
-
-void ChromeLauncherController::Install(ash::ShelfID id) {
-  LauncherItemController* controller = GetLauncherItemController(id);
-  if (!controller)
-    return;
-
-  std::string app_id = GetAppIDForShelfID(id);
-  if (extensions::util::IsExtensionInstalledPermanently(app_id, profile_))
-    return;
-
-  if (controller->type() == LauncherItemController::TYPE_APP) {
-    AppWindowLauncherItemController* app_window_controller =
-        static_cast<AppWindowLauncherItemController*>(controller);
-    app_window_controller->InstallApp();
-  }
-}
-
-bool ChromeLauncherController::CanInstall(ash::ShelfID id) {
-  int index = model_->ItemIndexByID(id);
-  if (index == -1)
-    return false;
-
-  ash::ShelfItemType type = model_->items()[index].type;
-  if (type != ash::TYPE_PLATFORM_APP)
-    return false;
-
-  return extensions::util::IsEphemeralApp(GetAppIDForShelfID(id), profile_);
 }
 
 void ChromeLauncherController::LockV1AppWithID(const std::string& app_id) {
@@ -1266,7 +1242,8 @@ void ChromeLauncherController::OnDisplayConfigurationChanged() {
 }
 
 void ChromeLauncherController::OnIsSyncingChanged() {
-  PrefServiceSyncable* prefs = PrefServiceSyncable::FromProfile(profile_);
+  syncable_prefs::PrefServiceSyncable* prefs =
+      PrefServiceSyncableFromProfile(profile_);
   MaybePropagatePrefToLocal(prefs,
                             prefs::kShelfAlignmentLocal,
                             prefs::kShelfAlignment);
@@ -1306,7 +1283,8 @@ ChromeLauncherAppMenuItems ChromeLauncherController::GetApplicationList(
 }
 
 std::vector<content::WebContents*>
-ChromeLauncherController::GetV1ApplicationsFromAppId(std::string app_id) {
+ChromeLauncherController::GetV1ApplicationsFromAppId(
+    const std::string& app_id) {
   ash::ShelfID id = GetShelfIDForAppID(app_id);
 
   // If there is no such an item pinned to the launcher, no menu gets created.
@@ -2130,7 +2108,7 @@ void ChromeLauncherController::ReleaseProfile() {
 
   extensions::ExtensionRegistry::Get(profile_)->RemoveObserver(this);
 
-  PrefServiceSyncable::FromProfile(profile_)->RemoveObserver(this);
+  PrefServiceSyncableFromProfile(profile_)->RemoveObserver(this);
 
   pref_change_registrar_.RemoveAll();
 }

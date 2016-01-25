@@ -15,18 +15,20 @@
 #include "base/path_service.h"
 #include "base/process/memory.h"
 #include "base/process/process_handle.h"
+#include "base/process/process_info.h"
 #include "base/strings/string_util.h"
+#include "base/time/time.h"
 #include "base/trace_event/trace_event_impl.h"
 #include "build/build_config.h"
 #include "chrome/browser/chrome_content_browser_client.h"
 #include "chrome/browser/defaults.h"
+#include "chrome/common/channel_info.h"
 #include "chrome/common/chrome_constants.h"
 #include "chrome/common/chrome_content_client.h"
 #include "chrome/common/chrome_paths.h"
 #include "chrome/common/chrome_paths_internal.h"
 #include "chrome/common/chrome_result_codes.h"
 #include "chrome/common/chrome_switches.h"
-#include "chrome/common/chrome_version_info.h"
 #include "chrome/common/crash_keys.h"
 #include "chrome/common/logging_chrome.h"
 #include "chrome/common/profiling.h"
@@ -39,9 +41,11 @@
 #include "components/component_updater/component_updater_paths.h"
 #include "components/content_settings/core/common/content_settings_pattern.h"
 #include "components/startup_metric_utils/startup_metric_utils.h"
+#include "components/version_info/version_info.h"
 #include "content/public/common/content_client.h"
 #include "content/public/common/content_paths.h"
 #include "extensions/common/constants.h"
+#include "ui/base/resource/resource_bundle.h"
 #include "ui/base/ui_base_switches.h"
 
 #if defined(OS_WIN)
@@ -60,8 +64,8 @@
 #include "chrome/app/chrome_main_mac.h"
 #include "chrome/browser/mac/relauncher.h"
 #include "chrome/common/mac/cfbundle_blocker.h"
-#include "chrome/common/mac/objc_zombie.h"
-#include "components/crash/app/crashpad_mac.h"
+#include "components/crash/content/app/crashpad_mac.h"
+#include "components/crash/core/common/objc_zombie.h"
 #include "ui/base/l10n/l10n_util_mac.h"
 #endif
 
@@ -69,7 +73,7 @@
 #include <locale.h>
 #include <signal.h>
 #include "chrome/app/chrome_crash_reporter_client.h"
-#include "components/crash/app/crash_reporter_client.h"
+#include "components/crash/content/app/crash_reporter_client.h"
 #endif
 
 #if !defined(DISABLE_NACL) && defined(OS_LINUX)
@@ -100,7 +104,7 @@
 #endif
 
 #if defined(OS_POSIX) && !defined(OS_MACOSX)
-#include "components/crash/app/breakpad_linux.h"
+#include "components/crash/content/app/breakpad_linux.h"
 #endif
 
 #if defined(OS_LINUX)
@@ -116,10 +120,6 @@
 #include "components/nacl/renderer/plugin/ppapi_entrypoints.h"
 #endif
 
-#if defined(ENABLE_REMOTING)
-#include "remoting/client/plugin/pepper_entrypoints.h"
-#endif
-
 #if defined(ENABLE_PLUGINS) && (defined(CHROME_MULTIPLE_DLL_CHILD) || \
     !defined(CHROME_MULTIPLE_DLL_BROWSER))
 #include "pdf/pdf.h"
@@ -132,18 +132,18 @@ base::LazyInstance<ChromeContentRendererClient>
     g_chrome_content_renderer_client = LAZY_INSTANCE_INITIALIZER;
 base::LazyInstance<ChromeContentUtilityClient>
     g_chrome_content_utility_client = LAZY_INSTANCE_INITIALIZER;
-base::LazyInstance<chrome::ChromeContentPluginClient>
+base::LazyInstance<ChromeContentPluginClient>
     g_chrome_content_plugin_client = LAZY_INSTANCE_INITIALIZER;
 #endif
 
 #if !defined(CHROME_MULTIPLE_DLL_CHILD)
-base::LazyInstance<chrome::ChromeContentBrowserClient>
-    g_chrome_content_browser_client = LAZY_INSTANCE_INITIALIZER;
+base::LazyInstance<ChromeContentBrowserClient> g_chrome_content_browser_client =
+    LAZY_INSTANCE_INITIALIZER;
 #endif
 
 #if defined(OS_POSIX)
-base::LazyInstance<chrome::ChromeCrashReporterClient>::Leaky
-    g_chrome_crash_client = LAZY_INSTANCE_INITIALIZER;
+base::LazyInstance<ChromeCrashReporterClient>::Leaky g_chrome_crash_client =
+    LAZY_INSTANCE_INITIALIZER;
 #endif
 
 extern int NaClMain(const content::MainFunctionParams&);
@@ -155,13 +155,11 @@ namespace {
 // Early versions of Chrome incorrectly registered a chromehtml: URL handler,
 // which gives us nothing but trouble. Avoid launching chrome this way since
 // some apps fail to properly escape arguments.
-bool HasDeprecatedArguments(const std::wstring& command_line) {
+bool HasDeprecatedArguments(const base::string16& command_line) {
   const wchar_t kChromeHtml[] = L"chromehtml:";
-  std::wstring command_line_lower = command_line;
+  base::string16 command_line_lower = base::ToLowerASCII(command_line);
   // We are only searching for ASCII characters so this is OK.
-  base::StringToLowerASCII(&command_line_lower);
-  std::wstring::size_type pos = command_line_lower.find(kChromeHtml);
-  return (pos != std::wstring::npos);
+  return (command_line_lower.find(kChromeHtml) != base::string16::npos);
 }
 
 // If we try to access a path that is not currently available, we want the call
@@ -272,20 +270,18 @@ bool SubprocessNeedsResourceBundle(const std::string& process_type) {
 // Check for --version and --product-version; return true if we encountered
 // one of these switches and should exit now.
 bool HandleVersionSwitches(const base::CommandLine& command_line) {
-  const chrome::VersionInfo version_info;
-
 #if !defined(OS_MACOSX)
   if (command_line.HasSwitch(switches::kProductVersion)) {
-    printf("%s\n", version_info.Version().c_str());
+    printf("%s\n", version_info::GetVersionNumber().c_str());
     return true;
   }
 #endif
 
   if (command_line.HasSwitch(switches::kVersion)) {
     printf("%s %s %s\n",
-           version_info.Name().c_str(),
-           version_info.Version().c_str(),
-           chrome::VersionInfo::GetVersionStringModifier().c_str());
+           version_info::GetProductName().c_str(),
+           version_info::GetVersionNumber().c_str(),
+           chrome::GetChannelString().c_str());
     return true;
   }
 
@@ -393,17 +389,35 @@ void InitializeUserDataDir() {
     command_line->AppendSwitchPath(switches::kUserDataDir, user_data_dir);
 }
 
+#if !defined(OS_ANDROID)
+void InitLogging(const std::string& process_type) {
+  logging::OldFileDeletionState file_state =
+      logging::APPEND_TO_OLD_LOG_FILE;
+  if (process_type.empty()) {
+    file_state = logging::DELETE_OLD_LOG_FILE;
+  }
+  const base::CommandLine& command_line =
+      *base::CommandLine::ForCurrentProcess();
+  logging::InitChromeLogging(command_line, file_state);
+}
+#endif
+
 }  // namespace
 
 ChromeMainDelegate::ChromeMainDelegate() {
-#if defined(OS_ANDROID)
+#if defined(OS_MACOSX) || defined(OS_WIN) || defined(OS_LINUX)
+  // Record the startup process creation time on supported platforms.
+  startup_metric_utils::RecordStartupProcessCreationTime(
+      base::CurrentProcessInfo::CreationTime());
+#endif
+
 // On Android the main entry point time is the time when the Java code starts.
 // This happens before the shared library containing this code is even loaded.
 // The Java startup code has recorded that time, but the C++ code can't fetch it
 // from the Java side until it has initialized the JNI. See
 // ChromeMainDelegateAndroid.
-#else
-  startup_metric_utils::RecordMainEntryPointTime();
+#if !defined(OS_ANDROID)
+  startup_metric_utils::RecordMainEntryPointTime(base::Time::Now());
 #endif
 }
 
@@ -465,7 +479,7 @@ bool ChromeMainDelegate::BasicStartupComplete(int* exit_code) {
     return true;
   }
 
-  InstallCloseHandleHooks();
+  InstallHandleHooks();
 #endif
 
   chrome::RegisterPathProvider();
@@ -613,40 +627,6 @@ void ChromeMainDelegate::InitMacCrashReporter(
     CHECK(command_line.HasSwitch(switches::kProcessType) &&
           !process_type.empty())
         << "Helper application requires --type.";
-
-    // In addition, some helper flavors only work with certain process types.
-    base::FilePath executable;
-    if (PathService::Get(base::FILE_EXE, &executable) &&
-        executable.value().size() >= 3) {
-      std::string last_three =
-          executable.value().substr(executable.value().size() - 3);
-
-      if (last_three == " EH") {
-        CHECK(process_type == switches::kPluginProcess ||
-              process_type == switches::kUtilityProcess)
-            << "Executable-heap process requires --type="
-            << switches::kPluginProcess << " or "
-            << switches::kUtilityProcess << ", saw " << process_type;
-      } else if (last_three == " NP") {
-#if !defined(DISABLE_NACL)
-        CHECK_EQ(switches::kNaClLoaderProcess, process_type)
-            << "Non-PIE process requires --type="
-            << switches::kNaClLoaderProcess << ", saw " << process_type;
-#endif
-      } else {
-#if defined(DISABLE_NACL)
-        CHECK(process_type != switches::kPluginProcess)
-            << "Non-executable-heap PIE process is intolerant of --type="
-            << switches::kPluginProcess;
-#else
-        CHECK(process_type != switches::kPluginProcess &&
-              process_type != switches::kNaClLoaderProcess)
-            << "Non-executable-heap PIE process is intolerant of --type="
-            << switches::kPluginProcess << " and "
-            << switches::kNaClLoaderProcess << ", saw " << process_type;
-#endif
-      }
-    }
   } else {
     CHECK(!command_line.HasSwitch(switches::kProcessType) &&
           process_type.empty())
@@ -696,14 +676,10 @@ void ChromeMainDelegate::PreSandboxStartup() {
   if (command_line.HasSwitch(switches::kMessageLoopHistogrammer))
     base::MessageLoop::EnableHistogrammer(true);
 
-#if !defined(OS_ANDROID)
+#if !defined(OS_ANDROID) && !defined(OS_WIN)
   // Android does InitLogging when library is loaded. Skip here.
-  logging::OldFileDeletionState file_state =
-      logging::APPEND_TO_OLD_LOG_FILE;
-  if (process_type.empty()) {
-    file_state = logging::DELETE_OLD_LOG_FILE;
-  }
-  logging::InitChromeLogging(command_line, file_state);
+  // For windows we call InitLogging when the sandbox is initialized.
+  InitLogging(process_type);
 #endif
 
 #if defined(OS_WIN)
@@ -814,23 +790,18 @@ void ChromeMainDelegate::SandboxInitialized(const std::string& process_type) {
   AdjustLinuxOOMScore(process_type);
 #endif
 #if defined(OS_WIN)
+  InitLogging(process_type);
   SuppressWindowsErrorDialogs();
 #endif
 
 #if defined(CHROME_MULTIPLE_DLL_CHILD) || !defined(CHROME_MULTIPLE_DLL_BROWSER)
-#if defined(ENABLE_REMOTING)
-  ChromeContentClient::SetRemotingEntryFunctions(
-      remoting::PPP_GetInterface,
-      remoting::PPP_InitializeModule,
-      remoting::PPP_ShutdownModule);
-#endif
 #if !defined(DISABLE_NACL)
   ChromeContentClient::SetNaClEntryFunctions(
       nacl_plugin::PPP_GetInterface,
       nacl_plugin::PPP_InitializeModule,
       nacl_plugin::PPP_ShutdownModule);
 #endif
-#if defined(ENABLE_PLUGINS)
+#if defined(ENABLE_PLUGINS) && defined(ENABLE_PDF)
   ChromeContentClient::SetPDFEntryFunctions(
       chrome_pdf::PPP_GetInterface,
       chrome_pdf::PPP_InitializeModule,
@@ -886,7 +857,7 @@ void ChromeMainDelegate::ProcessExiting(const std::string& process_type) {
 #endif  // !defined(OS_ANDROID)
 
 #if defined(OS_WIN)
-  RemoveCloseHandleHooks();
+  RemoveHandleHooks();
 #endif
 }
 
@@ -980,13 +951,13 @@ ChromeMainDelegate::CreateContentUtilityClient() {
 }
 
 bool ChromeMainDelegate::ShouldEnableProfilerRecording() {
-  switch (chrome::VersionInfo::GetChannel()) {
-    case chrome::VersionInfo::CHANNEL_UNKNOWN:
-    case chrome::VersionInfo::CHANNEL_CANARY:
+  switch (chrome::GetChannel()) {
+    case version_info::Channel::UNKNOWN:
+    case version_info::Channel::CANARY:
       return true;
-    case chrome::VersionInfo::CHANNEL_DEV:
-    case chrome::VersionInfo::CHANNEL_BETA:
-    case chrome::VersionInfo::CHANNEL_STABLE:
+    case version_info::Channel::DEV:
+    case version_info::Channel::BETA:
+    case version_info::Channel::STABLE:
     default:
       // Don't enable instrumentation.
       return false;

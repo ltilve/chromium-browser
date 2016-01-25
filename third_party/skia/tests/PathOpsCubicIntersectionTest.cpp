@@ -12,6 +12,8 @@
 #include "SkReduceOrder.h"
 #include "Test.h"
 
+#include <stdlib.h>
+
 const int firstCubicIntersectionTest = 9;
 
 static void standardTestCases(skiatest::Reporter* reporter) {
@@ -625,8 +627,7 @@ static void selfOneOff(skiatest::Reporter* reporter, int index) {
     SkScalar loopT;
     SkScalar d[3];
     SkCubicType cubicType = SkClassifyCubic(c, d);
-    SkDCubic::CubicType dType;
-    if (SkDCubic::ComplexBreak(c, &loopT, &dType) && cubicType == SkCubicType::kLoop_SkCubicType) {
+    if (SkDCubic::ComplexBreak(c, &loopT) && cubicType == SkCubicType::kLoop_SkCubicType) {
         SkIntersections i;
         SkPoint twoCubics[7];
         SkChopCubicAt(c, twoCubics, loopT);
@@ -653,6 +654,11 @@ static void cubicIntersectionSelfTest(skiatest::Reporter* reporter) {
 }
 
 static const SkDCubic coinSet[] = {
+    {{{297.04998779296875, 43.928997039794922}, {297.04998779296875, 43.928997039794922},
+        {300.69699096679688, 45.391998291015625}, {306.92498779296875, 43.08599853515625}}},
+    {{{297.04998779296875, 43.928997039794922}, {297.04998779296875, 43.928997039794922},
+        {300.69699096679688, 45.391998291015625}, {306.92498779296875, 43.08599853515625}}},
+
     {{{2, 3}, {0, 4}, {3, 2}, {5, 3}}},
     {{{2, 3}, {0, 4}, {3, 2}, {5, 3}}},
 

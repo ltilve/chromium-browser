@@ -1,0 +1,15 @@
+rule net_docs_target_net_docs_011ca54ec94219f892f6064f19279f5d
+  command = cd ../../net; python tools/net_docs/net_docs.py --input_path . $
+      --output_path ../out/Debug/net/docs README.md docs/bug-triage.md $
+      docs/bug-triage-labels.md docs/bug-triage-suggested-workflow.md $
+      docs/code-patterns.md docs/life-of-a-url-request.md sdch/README.md
+  description = ACTION Rendering network stack documentation
+  restat = 1
+
+build net/docs: net_docs_target_net_docs_011ca54ec94219f892f6064f19279f5d $
+    ../../net/README.md ../../net/docs/bug-triage.md $
+    ../../net/docs/bug-triage-labels.md $
+    ../../net/docs/bug-triage-suggested-workflow.md $
+    ../../net/docs/code-patterns.md ../../net/docs/life-of-a-url-request.md $
+    ../../net/sdch/README.md
+

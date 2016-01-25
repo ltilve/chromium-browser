@@ -26,6 +26,7 @@
 #include "components/undo/bookmark_undo_utils.h"
 #include "content/public/browser/browser_thread.h"
 #include "sync/api/sync_error.h"
+#include "sync/api/sync_merge_result.h"
 #include "sync/internal_api/public/delete_journal.h"
 #include "sync/internal_api/public/read_node.h"
 #include "sync/internal_api/public/read_transaction.h"
@@ -579,10 +580,10 @@ syncer::SyncError BookmarkModelAssociator::AssociatePermanentFolders(
   context->AddBookmarkRoot(bookmark_model_->other_node());
   int64 mobile_bookmarks_sync_id =
       GetSyncIdFromChromeId(bookmark_model_->mobile_node()->id());
-  if (expect_mobile_bookmarks_folder_) {
+  if (expect_mobile_bookmarks_folder_)
     DCHECK_NE(syncer::kInvalidId, mobile_bookmarks_sync_id);
+  if (mobile_bookmarks_sync_id != syncer::kInvalidId)
     context->AddBookmarkRoot(bookmark_model_->mobile_node());
-  }
 
   // WARNING: The order in which we push these should match their order in the
   // bookmark model (see BookmarkModel::DoneLoading(..)).

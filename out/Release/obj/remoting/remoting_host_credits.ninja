@@ -1,0 +1,15 @@
+rule $
+    remoting_host_credits_target_Build_remoting_host_credits_0a98905ff3b862f15e39d6558ac0db7e
+  command = cd ../../remoting; python ../tools/licenses.py credits $
+      ../out/Release/gen/remoting/CREDITS.txt --file-template $
+      host/installer/credits.tmpl --entry-template $
+      host/installer/credits_entry.tmpl
+  description = ACTION remoting_host_credits: Build remoting host $
+      credits_0a98905ff3b862f15e39d6558ac0db7e
+  restat = 1
+
+build gen/remoting/CREDITS.txt: $
+    remoting_host_credits_target_Build_remoting_host_credits_0a98905ff3b862f15e39d6558ac0db7e $
+    ../../tools/licenses.py ../../remoting/host/installer/credits.tmpl $
+    ../../remoting/host/installer/credits_entry.tmpl
+

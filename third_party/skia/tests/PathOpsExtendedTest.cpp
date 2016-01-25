@@ -16,6 +16,8 @@
 #include "SkRTConf.h"
 #include "SkStream.h"
 
+#include <stdlib.h>
+
 #ifdef SK_BUILD_FOR_MAC
 #include <sys/sysctl.h>
 #endif
@@ -423,14 +425,14 @@ bool testSimplify(SkPath& path, bool useXor, SkPath& out, PathOpsThreadState& st
     if (!state.fReporter->verbose()) {
         return true;
     }
-    int result = comparePaths(state.fReporter, NULL, path, out, *state.fBitmap);
+    int result = comparePaths(state.fReporter, nullptr, path, out, *state.fBitmap);
     if (result) {
         SkAutoMutexAcquire autoM(simplifyDebugOut);
         char temp[8192];
         sk_bzero(temp, sizeof(temp));
         SkMemoryWStream stream(temp, sizeof(temp));
-        const char* pathPrefix = NULL;
-        const char* nameSuffix = NULL;
+        const char* pathPrefix = nullptr;
+        const char* nameSuffix = nullptr;
         if (fillType == SkPath::kEvenOdd_FillType) {
             pathPrefix = "    path.setFillType(SkPath::kEvenOdd_FillType);\n";
             nameSuffix = "x";
@@ -488,7 +490,8 @@ static void showName(const SkPath& a, const SkPath& b, const SkPathOp shapeOp) {
 }
 #endif
 
-bool OpDebug(const SkPath& one, const SkPath& two, SkPathOp op, SkPath* result, bool expectSuccess);
+bool OpDebug(const SkPath& one, const SkPath& two, SkPathOp op, SkPath* result,
+             bool expectSuccess  SkDEBUGPARAMS(const char* testName));
 
 static bool innerPathOp(skiatest::Reporter* reporter, const SkPath& a, const SkPath& b,
         const SkPathOp shapeOp, const char* testName, bool expectSuccess) {
@@ -496,7 +499,7 @@ static bool innerPathOp(skiatest::Reporter* reporter, const SkPath& a, const SkP
     showName(a, b, shapeOp);
 #endif
     SkPath out;
-    if (!OpDebug(a, b, shapeOp, &out, expectSuccess)) {
+    if (!OpDebug(a, b, shapeOp, &out, expectSuccess  SkDEBUGPARAMS(testName))) {
         SkDebugf("%s did not expect failure\n", __FUNCTION__);
         REPORTER_ASSERT(reporter, 0);
         return false;
@@ -583,7 +586,7 @@ void initializeTests(skiatest::Reporter* reporter, const char* test) {
             inData.setCount((int) inFile.getLength());
             size_t inLen = inData.count();
             inFile.read(inData.begin(), inLen);
-            inFile.setPath(NULL);
+            inFile.setPath(nullptr);
             char* insert = strstr(inData.begin(), marker);
             if (insert) {
                 insert += sizeof(marker) - 1;
@@ -596,8 +599,8 @@ void initializeTests(skiatest::Reporter* reporter, const char* test) {
 
 void outputProgress(char* ramStr, const char* pathStr, SkPath::FillType pathFillType) {
     const char testFunction[] = "testSimplify(path);";
-    const char* pathPrefix = NULL;
-    const char* nameSuffix = NULL;
+    const char* pathPrefix = nullptr;
+    const char* nameSuffix = nullptr;
     if (pathFillType == SkPath::kEvenOdd_FillType) {
         pathPrefix = "    path.setFillType(SkPath::kEvenOdd_FillType);\n";
         nameSuffix = "x";
@@ -611,7 +614,7 @@ void outputProgress(char* ramStr, const char* pathStr, SkPathOp op) {
     SkASSERT((size_t) op < SK_ARRAY_COUNT(opSuffixes));
     const char* nameSuffix = opSuffixes[op];
     SkMemoryWStream rRamStream(ramStr, PATH_STR_SIZE);
-    outputToStream(pathStr, NULL, nameSuffix, testFunction, true, rRamStream);
+    outputToStream(pathStr, nullptr, nameSuffix, testFunction, true, rRamStream);
 }
 
 void RunTestSet(skiatest::Reporter* reporter, TestDesc tests[], size_t count,

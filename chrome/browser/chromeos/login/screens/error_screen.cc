@@ -99,7 +99,7 @@ void ErrorScreen::OnShow() {
       chrome::NOTIFICATION_LOGIN_NETWORK_ERROR_SHOWN,
       content::NotificationService::AllSources(),
       content::NotificationService::NoDetails());
-  NetworkPortalDetector::Get()->SetStrategy(
+  network_portal_detector::GetInstance()->SetStrategy(
       PortalDetectorStrategy::STRATEGY_ID_ERROR_SCREEN);
 }
 
@@ -109,7 +109,7 @@ void ErrorScreen::OnHide() {
     on_hide_callback_->Run();
     on_hide_callback_.reset();
   }
-  NetworkPortalDetector::Get()->SetStrategy(
+  network_portal_detector::GetInstance()->SetStrategy(
       PortalDetectorStrategy::STRATEGY_ID_LOGIN_SCREEN);
 }
 
@@ -229,13 +229,9 @@ void ErrorScreen::OnOffTheRecordAuthSuccess() {
   const base::CommandLine& browser_command_line =
       *base::CommandLine::ForCurrentProcess();
   base::CommandLine command_line(browser_command_line.GetProgram());
-  std::string cmd_line_str =
-      GetOffTheRecordCommandLine(GURL(),
-                                 StartupUtils::IsOobeCompleted(),
-                                 browser_command_line,
-                                 &command_line);
-
-  RestartChrome(cmd_line_str);
+  GetOffTheRecordCommandLine(GURL(), StartupUtils::IsOobeCompleted(),
+                             browser_command_line, &command_line);
+  RestartChrome(command_line);
 }
 
 void ErrorScreen::OnPasswordChangeDetected() {
@@ -247,10 +243,6 @@ void ErrorScreen::WhiteListCheckFailed(const std::string& email) {
 }
 
 void ErrorScreen::PolicyLoadFailed() {
-  LOG(FATAL);
-}
-
-void ErrorScreen::OnOnlineChecked(const std::string& username, bool success) {
   LOG(FATAL);
 }
 

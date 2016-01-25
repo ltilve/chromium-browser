@@ -12,9 +12,7 @@
 #include "ash/accelerators/debug_commands.h"
 #include "ash/ash_switches.h"
 #include "ash/debug.h"
-#include "ash/display/display_controller.h"
-#include "ash/display/display_manager.h"
-#include "ash/display/display_util.h"
+#include "ash/display/window_tree_host_manager.h"
 #include "ash/focus_cycler.h"
 #include "ash/gpu_support.h"
 #include "ash/ime_control_delegate.h"
@@ -38,6 +36,7 @@
 #include "ash/system/brightness_control_delegate.h"
 #include "ash/system/keyboard_brightness/keyboard_brightness_control_delegate.h"
 #include "ash/system/status_area_widget.h"
+#include "ash/system/system_notifier.h"
 #include "ash/system/tray/system_tray.h"
 #include "ash/system/tray/system_tray_delegate.h"
 #include "ash/system/tray/system_tray_notifier.h"
@@ -55,16 +54,22 @@
 #include "ash/wm/wm_event.h"
 #include "base/bind.h"
 #include "base/command_line.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/metrics/user_metrics.h"
 #include "ui/aura/env.h"
 #include "ui/base/accelerators/accelerator.h"
 #include "ui/base/accelerators/accelerator_manager.h"
+#include "ui/base/l10n/l10n_util.h"
+#include "ui/base/resource/resource_bundle.h"
 #include "ui/compositor/layer.h"
 #include "ui/compositor/layer_animation_sequence.h"
 #include "ui/compositor/layer_animator.h"
 #include "ui/events/event.h"
 #include "ui/events/keycodes/keyboard_codes.h"
 #include "ui/gfx/screen.h"
+#include "ui/message_center/message_center.h"
+#include "ui/message_center/notification.h"
+#include "ui/message_center/notifier_settings.h"
 #include "ui/views/controls/webview/webview.h"
 
 #if defined(OS_CHROMEOS)
@@ -78,6 +83,62 @@ namespace ash {
 namespace {
 
 using base::UserMetricsAction;
+
+// The notification delegate that will be used to open the keyboard shortcut
+// help page when the notification is clicked.
+class DeprecatedAcceleratorNotificationDelegate
+    : public message_center::NotificationDelegate {
+ public:
+  DeprecatedAcceleratorNotificationDelegate() {}
+
+  // message_center::NotificationDelegate:
+  bool HasClickedListener() override { return true; }
+
+  void Click() override {
+    if (!Shell::GetInstance()->session_state_delegate()->IsUserSessionBlocked())
+      Shell::GetInstance()->delegate()->OpenKeyboardShortcutHelpPage();
+  }
+
+ private:
+  // Private destructor since NotificationDelegate is ref-counted.
+  ~DeprecatedAcceleratorNotificationDelegate() override {}
+
+  DISALLOW_COPY_AND_ASSIGN(DeprecatedAcceleratorNotificationDelegate);
+};
+
+ui::Accelerator CreateAccelerator(ui::KeyboardCode keycode,
+                                  int modifiers,
+                                  bool trigger_on_press) {
+  ui::Accelerator accelerator(keycode, modifiers);
+  accelerator.set_type(trigger_on_press ? ui::ET_KEY_PRESSED
+                                        : ui::ET_KEY_RELEASED);
+  return accelerator;
+}
+
+void ShowDeprecatedAcceleratorNotification(const char* const notification_id,
+                                           int message_id) {
+  const base::string16 message = l10n_util::GetStringUTF16(message_id);
+  scoped_ptr<message_center::Notification> notification(
+      new message_center::Notification(
+          message_center::NOTIFICATION_TYPE_SIMPLE, notification_id,
+          base::string16(), message,
+          Shell::GetInstance()->delegate()->GetDeprecatedAcceleratorImage(),
+          base::string16(), GURL(),
+          message_center::NotifierId(
+              message_center::NotifierId::SYSTEM_COMPONENT,
+              system_notifier::kNotifierDeprecatedAccelerator),
+          message_center::RichNotificationData(),
+          new DeprecatedAcceleratorNotificationDelegate));
+  message_center::MessageCenter::Get()->AddNotification(notification.Pass());
+}
+
+void RecordUmaHistogram(const char* histogram_name,
+                        DeprecatedAcceleratorUsage sample) {
+  auto histogram = base::LinearHistogram::FactoryGet(
+      histogram_name, 1, DEPRECATED_USAGE_COUNT, DEPRECATED_USAGE_COUNT + 1,
+      base::HistogramBase::kUmaTargetedHistogramFlag);
+  histogram->Add(sample);
+}
 
 void HandleCycleBackwardMRU(const ui::Accelerator& accelerator) {
   if (accelerator.key_code() == ui::VKEY_TAB)
@@ -258,6 +319,9 @@ gfx::Display::Rotation GetNextRotation(gfx::Display::Rotation current) {
 
 // Rotates the screen.
 void HandleRotateScreen() {
+  if (Shell::GetInstance()->display_manager()->IsInUnifiedMode())
+    return;
+
   base::RecordAction(UserMetricsAction("Accel_Rotate_Window"));
   gfx::Point point = Shell::GetScreen()->GetCursorScreenPoint();
   gfx::Display display = Shell::GetScreen()->GetDisplayNearestPoint(point);
@@ -283,42 +347,6 @@ void HandleRotateActiveWindow() {
         new ui::LayerAnimationSequence(
             new ash::WindowRotation(360, active_window->layer())));
   }
-}
-
-bool CanHandleScaleReset() {
-  DisplayManager* display_manager = Shell::GetInstance()->display_manager();
-  int64 display_id = display_manager->GetDisplayIdForUIScaling();
-  return (display_id != gfx::Display::kInvalidDisplayID &&
-          display_manager->GetDisplayInfo(display_id).configured_ui_scale() !=
-              1.0f);
-}
-
-void HandleScaleReset() {
-  base::RecordAction(UserMetricsAction("Accel_Scale_Ui_Reset"));
-  DisplayManager* display_manager = Shell::GetInstance()->display_manager();
-  int64 display_id = display_manager->GetDisplayIdForUIScaling();
-  display_manager->SetDisplayUIScale(display_id, 1.0f);
-}
-
-bool CanHandleScaleUI() {
-  DisplayManager* display_manager = Shell::GetInstance()->display_manager();
-  int64 display_id = display_manager->GetDisplayIdForUIScaling();
-  return display_id != gfx::Display::kInvalidDisplayID;
-}
-
-void HandleScaleUI(bool up) {
-  DisplayManager* display_manager = Shell::GetInstance()->display_manager();
-  int64 display_id = display_manager->GetDisplayIdForUIScaling();
-
-  if (up) {
-    base::RecordAction(UserMetricsAction("Accel_Scale_Ui_Up"));
-  } else {
-    base::RecordAction(UserMetricsAction("Accel_Scale_Ui_Down"));
-  }
-
-  const DisplayInfo& display_info = display_manager->GetDisplayInfo(display_id);
-  float next_scale = GetNextUIScale(display_info, up);
-  display_manager->SetDisplayUIScale(display_id, next_scale);
 }
 
 void HandleShowKeyboardOverlay() {
@@ -515,6 +543,10 @@ void HandleKeyboardBrightnessUp(KeyboardBrightnessControlDelegate* delegate,
     delegate->HandleKeyboardBrightnessUp(accelerator);
 }
 
+bool CanHandleLock() {
+  return Shell::GetInstance()->session_state_delegate()->CanLockScreen();
+}
+
 void HandleLock() {
   base::RecordAction(UserMetricsAction("Accel_LockScreen_L"));
   Shell::GetInstance()->session_state_delegate()->LockScreen();
@@ -549,7 +581,7 @@ void HandleSilenceSpokenFeedback() {
 
 void HandleSwapPrimaryDisplay() {
   base::RecordAction(UserMetricsAction("Accel_Swap_Primary_Display"));
-  Shell::GetInstance()->display_controller()->SwapPrimaryDisplay();
+  Shell::GetInstance()->window_tree_host_manager()->SwapPrimaryDisplay();
 }
 
 bool CanHandleCycleUser() {
@@ -598,7 +630,7 @@ void HandleToggleCapsLock() {
 
 void HandleToggleMirrorMode() {
   base::RecordAction(UserMetricsAction("Accel_Toggle_Mirror_Mode"));
-  Shell::GetInstance()->display_controller()->ToggleMirrorMode();
+  Shell::GetInstance()->window_tree_host_manager()->ToggleMirrorMode();
 }
 
 void HandleToggleSpokenFeedback() {
@@ -727,6 +759,11 @@ bool AcceleratorController::IsReserved(
   return reserved_actions_.find(iter->second) != reserved_actions_.end();
 }
 
+bool AcceleratorController::IsDeprecated(
+    const ui::Accelerator& accelerator) const {
+  return deprecated_accelerators_.count(accelerator) != 0;
+}
+
 bool AcceleratorController::PerformActionIfEnabled(AcceleratorAction action) {
   if (CanPerformAction(action, ui::Accelerator())) {
     PerformAction(action, ui::Accelerator());
@@ -755,6 +792,16 @@ void AcceleratorController::SetScreenshotDelegate(
   screenshot_delegate_ = screenshot_delegate.Pass();
 }
 
+bool AcceleratorController::ShouldCloseMenuAndRepostAccelerator(
+    const ui::Accelerator& accelerator) const {
+  auto itr = accelerators_.find(accelerator);
+  if (itr == accelerators_.end())
+    return false;  // Menu shouldn't be closed for an invalid accelerator.
+
+  AcceleratorAction action = itr->second;
+  return actions_keeping_menu_open_.count(action) == 0;
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 // AcceleratorController, ui::AcceleratorTarget implementation:
 
@@ -765,6 +812,31 @@ bool AcceleratorController::AcceleratorPressed(
   DCHECK(it != accelerators_.end());
   AcceleratorAction action = it->second;
   if (CanPerformAction(action, accelerator)) {
+    // Handling the deprecated accelerators (if any) only if action can be
+    // performed.
+    auto itr = actions_with_deprecations_.find(action);
+    if (itr != actions_with_deprecations_.end()) {
+      const DeprecatedAcceleratorData* data = itr->second;
+      if (deprecated_accelerators_.count(accelerator)) {
+        // This accelerator has been deprecated and should be treated according
+        // to its |DeprecatedAcceleratorData|.
+
+        // Record UMA stats.
+        RecordUmaHistogram(data->uma_histogram_name, DEPRECATED_USED);
+
+        // We always display the notification as long as this entry exists.
+        ShowDeprecatedAcceleratorNotification(data->uma_histogram_name,
+                                              data->notification_message_id);
+
+        if (!data->deprecated_enabled)
+          return false;
+      } else {
+        // This is a new accelerator replacing the old deprecated one.
+        // Record UMA stats and proceed normally.
+        RecordUmaHistogram(data->uma_histogram_name, NEW_USED);
+      }
+    }
+
     PerformAction(action, accelerator);
     return ShouldActionConsumeKeyEvent(action);
   }
@@ -799,8 +871,12 @@ void AcceleratorController::Init() {
     actions_allowed_in_app_mode_.insert(kActionsAllowedInAppMode[i]);
   for (size_t i = 0; i < kActionsNeedingWindowLength; ++i)
     actions_needing_window_.insert(kActionsNeedingWindow[i]);
+  for (size_t i = 0; i < kActionsKeepingMenuOpenLength; ++i)
+    actions_keeping_menu_open_.insert(kActionsKeepingMenuOpen[i]);
 
   RegisterAccelerators(kAcceleratorData, kAcceleratorDataLength);
+
+  RegisterDeprecatedAccelerators();
 
   if (debug::DebugAcceleratorsEnabled()) {
     RegisterAccelerators(kDebugAcceleratorData, kDebugAcceleratorDataLength);
@@ -819,14 +895,31 @@ void AcceleratorController::RegisterAccelerators(
     const AcceleratorData accelerators[],
     size_t accelerators_length) {
   for (size_t i = 0; i < accelerators_length; ++i) {
-    ui::Accelerator accelerator(accelerators[i].keycode,
-                                accelerators[i].modifiers);
-    accelerator.set_type(accelerators[i].trigger_on_press ?
-                         ui::ET_KEY_PRESSED : ui::ET_KEY_RELEASED);
+    ui::Accelerator accelerator =
+        CreateAccelerator(accelerators[i].keycode, accelerators[i].modifiers,
+                          accelerators[i].trigger_on_press);
     Register(accelerator, this);
     accelerators_.insert(
         std::make_pair(accelerator, accelerators[i].action));
   }
+}
+
+void AcceleratorController::RegisterDeprecatedAccelerators() {
+#if defined(OS_CHROMEOS)
+  for (size_t i = 0; i < kDeprecatedAcceleratorsLength; ++i) {
+    const DeprecatedAcceleratorData* data = &kDeprecatedAccelerators[i];
+    const AcceleratorAction action = data->deprecated_accelerator.action;
+    const ui::Accelerator deprecated_accelerator =
+        CreateAccelerator(data->deprecated_accelerator.keycode,
+                          data->deprecated_accelerator.modifiers,
+                          data->deprecated_accelerator.trigger_on_press);
+
+    Register(deprecated_accelerator, this);
+    actions_with_deprecations_[action] = data;
+    accelerators_[deprecated_accelerator] = action;
+    deprecated_accelerators_.insert(deprecated_accelerator);
+  }
+#endif  // defined(OS_CHROMEOS)
 }
 
 bool AcceleratorController::CanPerformAction(
@@ -870,10 +963,9 @@ bool AcceleratorController::CanPerformAction(
     case PREVIOUS_IME:
       return CanHandlePreviousIme(ime_control_delegate_.get());
     case SCALE_UI_RESET:
-      return CanHandleScaleReset();
     case SCALE_UI_UP:
     case SCALE_UI_DOWN:
-      return CanHandleScaleUI();
+      return accelerators::IsInternalDisplayZoomEnabled();
     case SHOW_MESSAGE_CENTER_BUBBLE:
       return CanHandleShowMessageCenterBubble();
     case SWITCH_IME:
@@ -887,9 +979,12 @@ bool AcceleratorController::CanPerformAction(
       return CanHandlePositionCenter();
 #if defined(OS_CHROMEOS)
     case DEBUG_ADD_REMOVE_DISPLAY:
+    case DEBUG_TOGGLE_UNIFIED_DESKTOP:
       return debug::DebugAcceleratorsEnabled();
     case DISABLE_CAPS_LOCK:
       return CanHandleDisableCapsLock(previous_accelerator);
+    case LOCK_SCREEN:
+      return CanHandleLock();
     case SILENCE_SPOKEN_FEEDBACK:
       return CanHandleSilenceSpokenFeedback();
     case SWITCH_TO_PREVIOUS_USER:
@@ -946,7 +1041,6 @@ bool AcceleratorController::CanPerformAction(
     case KEYBOARD_BRIGHTNESS_UP:
     case LOCK_PRESSED:
     case LOCK_RELEASED:
-    case LOCK_SCREEN:
     case OPEN_CROSH:
     case OPEN_FILE_MANAGER:
     case OPEN_GET_HELP:
@@ -1082,13 +1176,13 @@ void AcceleratorController::PerformAction(AcceleratorAction action,
       HandleRotateActiveWindow();
       break;
     case SCALE_UI_DOWN:
-      HandleScaleUI(false /* down */);
+      accelerators::ZoomInternalDisplay(false /* down */);
       break;
     case SCALE_UI_RESET:
-      HandleScaleReset();
+      accelerators::ResetInternalDisplayZoom();
       break;
     case SCALE_UI_UP:
-      HandleScaleUI(true /* up */);
+      accelerators::ZoomInternalDisplay(true /* up */);
       break;
     case SHOW_KEYBOARD_OVERLAY:
       HandleShowKeyboardOverlay();
@@ -1141,6 +1235,9 @@ void AcceleratorController::PerformAction(AcceleratorAction action,
       HandleBrightnessUp(brightness_control_delegate_.get(), accelerator);
       break;
     case DEBUG_ADD_REMOVE_DISPLAY:
+      debug::PerformDebugActionIfEnabled(action);
+      break;
+    case DEBUG_TOGGLE_UNIFIED_DESKTOP:
       debug::PerformDebugActionIfEnabled(action);
       break;
     case DISABLE_CAPS_LOCK:

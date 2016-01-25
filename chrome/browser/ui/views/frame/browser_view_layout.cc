@@ -20,9 +20,11 @@
 #include "chrome/browser/ui/views/frame/immersive_mode_controller.h"
 #include "chrome/browser/ui/views/frame/top_container_view.h"
 #include "chrome/browser/ui/views/infobars/infobar_container_view.h"
+#include "chrome/browser/ui/views/layout_constants.h"
 #include "chrome/browser/ui/views/tabs/tab_strip.h"
 #include "components/web_modal/web_contents_modal_dialog_host.h"
 #include "ui/base/hit_test.h"
+#include "ui/base/resource/material_design/material_design_controller.h"
 #include "ui/gfx/geometry/point.h"
 #include "ui/gfx/geometry/size.h"
 #include "ui/gfx/scrollbar_size.h"
@@ -113,9 +115,6 @@ class BrowserViewLayout::WebContentsModalDialogHostViews
   DISALLOW_COPY_AND_ASSIGN(WebContentsModalDialogHostViews);
 };
 
-// static
-const int BrowserViewLayout::kToolbarTabStripVerticalOverlap = 3;
-
 ////////////////////////////////////////////////////////////////////////////////
 // BrowserViewLayout, public:
 
@@ -174,7 +173,7 @@ gfx::Size BrowserViewLayout::GetMinimumSize() {
        browser()->SupportsWindowFeature(Browser::FEATURE_LOCATIONBAR)) ?
            toolbar_->GetMinimumSize() : gfx::Size());
   if (tabstrip_size.height() && toolbar_size.height())
-    toolbar_size.Enlarge(0, -kToolbarTabStripVerticalOverlap);
+    toolbar_size.Enlarge(0, -GetLayoutConstant(TABSTRIP_TOOLBAR_OVERLAP));
   gfx::Size bookmark_bar_size;
   if (bookmark_bar_ &&
       bookmark_bar_->visible() &&
@@ -224,6 +223,8 @@ gfx::Rect BrowserViewLayout::GetFindBarBoundingBox() const {
     // miniature immersive style tab strip is visible. Do not overlap the
     // find bar and the tab strip.
     find_bar_y = top_container_bounds.bottom();
+  } else if (ui::MaterialDesignController::IsModeMaterial()) {
+    find_bar_y = top_container_bounds.bottom() - 6;
   } else {
     // Position the find bar 1 pixel above the bottom of the top container
     // so that it occludes the border between the content area and the top
@@ -398,7 +399,7 @@ int BrowserViewLayout::LayoutToolbar(int top) {
   bool toolbar_visible = delegate_->IsToolbarVisible();
   int y = top;
   y -= (toolbar_visible && delegate_->IsTabStripVisible()) ?
-        kToolbarTabStripVerticalOverlap : 0;
+      GetLayoutConstant(TABSTRIP_TOOLBAR_OVERLAP) : 0;
   int height = toolbar_visible ? toolbar_->GetPreferredSize().height() : 0;
   toolbar_->SetVisible(toolbar_visible);
   toolbar_->SetBounds(vertical_layout_rect_.x(), y, browser_view_width, height);
@@ -522,7 +523,7 @@ int BrowserViewLayout::GetContentsOffsetForBookmarkBar() {
 
   // Offset for the detached bookmark bar.
   return bookmark_bar_->height() -
-      bookmark_bar_->GetFullyDetachedToolbarOverlap();
+      views::NonClientFrameView::kClientEdgeThickness;
 }
 
 int BrowserViewLayout::LayoutDownloadShelf(int bottom) {

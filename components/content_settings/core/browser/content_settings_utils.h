@@ -28,7 +28,36 @@ class RuleIterator;
 
 typedef std::pair<ContentSettingsPattern, ContentSettingsPattern> PatternPair;
 
-std::string GetTypeName(ContentSettingsType type);
+// Helper class to iterate over only the values in a map.
+template <typename IteratorType, typename ReferenceType>
+class MapValueIterator {
+ public:
+  explicit MapValueIterator(IteratorType iterator) : iterator_(iterator) {}
+
+  bool operator!=(const MapValueIterator& other) const {
+    return iterator_ != other.iterator_;
+  }
+
+  MapValueIterator& operator++() {
+    ++iterator_;
+    return *this;
+  }
+
+  ReferenceType operator*() { return iterator_->second; }
+
+ private:
+  IteratorType iterator_;
+};
+
+// These constants are copied from extensions/common/extension_constants.h and
+// content/public/common/url_constants.h to avoid complicated dependencies.
+// TODO(vabr): Get these constants through the ContentSettingsClient.
+const char kChromeDevToolsScheme[] = "chrome-devtools";
+const char kChromeUIScheme[] = "chrome";
+
+#if defined(ENABLE_EXTENSIONS)
+const char kExtensionScheme[] = "chrome-extension";
+#endif
 
 std::string ContentSettingToString(ContentSetting setting);
 
@@ -75,10 +104,6 @@ base::Value* GetContentSettingValueAndPatterns(
 // handled by the renderer.
 void GetRendererContentSettingRules(const HostContentSettingsMap* map,
                                     RendererContentSettingRules* rules);
-
-// Get the flags to use when registering the preference to store |content_type|
-// settings.
-uint32 PrefRegistrationFlagsForType(ContentSettingsType content_type);
 
 }  // namespace content_settings
 

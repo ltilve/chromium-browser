@@ -1,0 +1,17 @@
+rule $
+    concatenated_toolbox_css_target_concatenate_toolbox_css_bdb5dd7472f1924271132231c5d59d6b
+  command = cd ../../third_party/WebKit/Source/devtools; python $
+      scripts/concatenate_css_files.py front_end/toolbox.css $
+      ../../../../out/Release/resources/inspector/toolbox.css
+  description = ACTION concatenated_toolbox_css: $
+      concatenate_toolbox_css_bdb5dd7472f1924271132231c5d59d6b
+  restat = 1
+
+build resources/inspector/toolbox.css: $
+    concatenated_toolbox_css_target_concatenate_toolbox_css_bdb5dd7472f1924271132231c5d59d6b $
+    ../../third_party/WebKit/Source/devtools/scripts/concatenate_css_files.py $
+    ../../third_party/WebKit/Source/devtools/front_end/toolbox.css $
+    ../../third_party/WebKit/Source/devtools/front_end/inspectorStyle.css $
+    ../../third_party/WebKit/Source/devtools/front_end/popover.css $
+    ../../third_party/WebKit/Source/devtools/front_end/sidebarPane.css
+

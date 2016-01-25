@@ -1,0 +1,15 @@
+rule $
+    app_shell_version_header_target_version_header_d765d2ea7fc57a374a814d4ae5d995a7
+  command = cd ../../extensions/shell; python ../../build/util/version.py $
+      -f ../../build/util/LASTCHANGE -f ../../chrome/VERSION $
+      common/version.h.in $
+      ../../out/Debug/gen/extensions/shell/common/version.h
+  description = ACTION Generating version header file: $
+      "gen/extensions/shell/common/version.h"
+  restat = 1
+
+build gen/extensions/shell/common/version.h: $
+    app_shell_version_header_target_version_header_d765d2ea7fc57a374a814d4ae5d995a7 $
+    ../../chrome/VERSION ../../build/util/LASTCHANGE $
+    ../../extensions/shell/common/version.h.in
+

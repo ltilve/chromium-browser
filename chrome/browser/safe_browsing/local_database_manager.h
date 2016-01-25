@@ -16,6 +16,7 @@
 
 #include "base/callback.h"
 #include "base/containers/hash_tables.h"
+#include "base/gtest_prod_util.h"
 #include "base/memory/ref_counted.h"
 #include "base/memory/scoped_ptr.h"
 #include "base/memory/weak_ptr.h"
@@ -70,6 +71,7 @@ class LocalSafeBrowsingDatabaseManager
     std::vector<SBThreatType> full_hash_results;
 
     SafeBrowsingDatabaseManager::Client* client;
+    bool is_extended_reporting;
     bool need_get_hash;
     base::TimeTicks start;  // When check was sent to SB service.
     safe_browsing_util::ListType check_type;  // See comment in constructor.
@@ -100,6 +102,9 @@ class LocalSafeBrowsingDatabaseManager
   // SafeBrowsingDatabaseManager overrides
   //
 
+  bool IsSupported() const override;
+  bool ChecksAreAlwaysAsync() const override;
+  bool CanCheckResourceType(content::ResourceType resource_type) const override;
   bool CanCheckUrl(const GURL& url) const override;
 
   bool CheckBrowseUrl(const GURL& url, Client* client) override;
@@ -198,12 +203,29 @@ class LocalSafeBrowsingDatabaseManager
   // Called on the IO thread with the check result.
   void OnCheckDone(SafeBrowsingCheck* info);
 
+  // Called on the UI thread to prepare hash request.
+  void OnRequestFullHash(SafeBrowsingCheck* check);
+
+  // Called on the UI thread to determine if current profile is opted into
+  // extended reporting.
+  bool GetExtendedReporting();
+
+  // Called on the IO thread to request full hash.
+  void RequestFullHash(SafeBrowsingCheck* check);
+
   // Called on the database thread to retrieve chunks.
   void GetAllChunksFromDatabase(GetChunksCallback callback);
+
+  // Called on the UI thread to prepare GetAllChunksFromDatabase.
+  void BeforeGetAllChunksFromDatabase(
+      const std::vector<SBListChunkRanges>& lists,
+      bool database_error,
+      GetChunksCallback callback);
 
   // Called on the IO thread with the results of all chunks.
   void OnGetAllChunksFromDatabase(const std::vector<SBListChunkRanges>& lists,
                                   bool database_error,
+                                  bool is_extended_reporting,
                                   GetChunksCallback callback);
 
   // Called on the IO thread after the database reports that it added a chunk.

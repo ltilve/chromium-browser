@@ -1,0 +1,16 @@
+build obj/build/chromium_gpu_builder.actions_depends.stamp: stamp chrome $
+    performance_browser_tests content_browsertests content_gl_tests $
+    gles2_conform_test khronos_glcts_test gl_tests angle_unittests $
+    gpu_unittests bitmaptools minidump_stackwalk
+
+build obj/build/chromium_gpu_builder.compile_depends.stamp: stamp $
+    obj/chrome/chrome_initial.actions_rules_copies.stamp $
+    obj/chrome/performance_browser_tests.compile_depends.stamp $
+    obj/content/content_browsertests.compile_depends.stamp $
+    obj/content/content_gl_tests.compile_depends.stamp $
+    obj/gpu/gles2_conform_support/gles2_conform_test.compile_depends.stamp $
+    obj/gpu/khronos_glcts_support/khronos_glcts_test.compile_depends.stamp $
+    obj/gpu/gl_tests.compile_depends.stamp $
+    obj/gpu/angle_unittests.compile_depends.stamp $
+    obj/gpu/gpu_unittests.compile_depends.stamp
+

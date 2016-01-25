@@ -1,0 +1,33 @@
+build obj/ppapi/native_client/ppapi_lib.actions_depends.stamp: stamp $
+    obj/native_client/src/untrusted/pthread/pthread_lib.actions_rules_copies.stamp $
+    obj/ppapi/native_client/src/untrusted/irt_stub/ppapi_stub_lib.actions_rules_copies.stamp
+
+build obj/ppapi/native_client/ppapi_lib.compile_depends.stamp: stamp $
+    obj/native_client/src/untrusted/pthread/pthread_lib.actions_rules_copies.stamp $
+    obj/ppapi/native_client/src/untrusted/irt_stub/ppapi_stub_lib.actions_rules_copies.stamp
+
+build gen/tc_newlib/include/nacl/ppruntime.h: copy $
+    ../../ppapi/native_client/src/shared/ppapi_proxy/ppruntime.h || $
+    obj/ppapi/native_client/ppapi_lib.actions_depends.stamp
+build gen/tc_pnacl_newlib/lib/libppapi.a: copy $
+    ../../ppapi/native_client/src/untrusted/irt_stub/libppapi.a || $
+    obj/ppapi/native_client/ppapi_lib.actions_depends.stamp
+build gen/tc_glibc/include/include/nacl/ppruntime.h: copy $
+    ../../ppapi/native_client/src/shared/ppapi_proxy/ppruntime.h || $
+    obj/ppapi/native_client/ppapi_lib.actions_depends.stamp
+build gen/tc_newlib/lib64/libppapi.a: copy $
+    ../../ppapi/native_client/src/untrusted/irt_stub/libppapi.a || $
+    obj/ppapi/native_client/ppapi_lib.actions_depends.stamp
+build gen/tc_glibc/lib64/libppapi.a: copy $
+    ../../ppapi/native_client/src/untrusted/irt_stub/libppapi.a || $
+    obj/ppapi/native_client/ppapi_lib.actions_depends.stamp
+build gen/tc_glibc/lib64/libppapi.so: copy $
+    ../../ppapi/native_client/src/untrusted/irt_stub/libppapi.so || $
+    obj/ppapi/native_client/ppapi_lib.actions_depends.stamp
+build obj/ppapi/native_client/ppapi_lib.actions_rules_copies.stamp: stamp $
+    gen/tc_newlib/include/nacl/ppruntime.h $
+    gen/tc_pnacl_newlib/lib/libppapi.a $
+    gen/tc_glibc/include/include/nacl/ppruntime.h $
+    gen/tc_newlib/lib64/libppapi.a gen/tc_glibc/lib64/libppapi.a $
+    gen/tc_glibc/lib64/libppapi.so
+

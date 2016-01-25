@@ -1,0 +1,13 @@
+rule nacl_helper_bootstrap_target_munge_phdr_76642418444ab13020136cfe937d6325
+  command = cd ../../native_client/src/trusted/service_runtime/linux; $
+      python nacl_bootstrap_munge_phdr.py $
+      ../../../../../out/Debug/nacl_bootstrap_raw $
+      ../../../../../out/Debug/nacl_helper_bootstrap
+  description = ACTION Munging ELF program header
+  restat = 1
+
+build nacl_helper_bootstrap: $
+    nacl_helper_bootstrap_target_munge_phdr_76642418444ab13020136cfe937d6325 $
+    ../../native_client/src/trusted/service_runtime/linux/nacl_bootstrap_munge_phdr.py $
+    nacl_bootstrap_raw || nacl_bootstrap_raw
+

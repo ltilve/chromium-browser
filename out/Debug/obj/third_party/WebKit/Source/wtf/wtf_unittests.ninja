@@ -1,0 +1,254 @@
+build $
+    obj/third_party/WebKit/Source/wtf/wtf_unittests.actions_depends.stamp: $
+    stamp obj/third_party/WebKit/Source/wtf/libwtf_unittest_helpers.a $
+    obj/third_party/WebKit/Source/wtf/libwtf.a $
+    obj/third_party/WebKit/Source/unittest_config.actions_depends.stamp $
+    obj/base/libtest_support_base.a obj/base/libbase.a $
+    obj/base/allocator/liballocator.a gen/base/debug/debugging_flags.h $
+    obj/base/libbase_static.a obj/third_party/modp_b64/libmodp_b64.a $
+    obj/base/third_party/dynamic_annotations/libdynamic_annotations.a $
+    obj/base/libsymbolize.a obj/base/libxdg_mime.a $
+    obj/third_party/libevent/libevent.a obj/third_party/icu/libicui18n.a $
+    obj/third_party/icu/libicuuc.a icudtl.dat icudtl.dat $
+    obj/testing/libgmock.a obj/testing/libgtest.a obj/base/libbase_i18n.a $
+    obj/third_party/libxml/libxml2.a obj/third_party/zlib/libchrome_zlib.a $
+    obj/third_party/zlib/libzlib_x86_simd.a
+
+build $
+    obj/third_party/WebKit/Source/wtf/wtf_unittests.compile_depends.stamp: $
+    stamp gen/base/debug/debugging_flags.h gen/base/debug/debugging_flags.h $
+    icudtl.dat icudtl.dat icudtl.dat
+
+defines = -DV8_DEPRECATION_WARNINGS -DCLD_VERSION=2 -D_FILE_OFFSET_BITS=64 $
+    -DCHROMIUM_BUILD -DCR_CLANG_REVISION=255169-1 $
+    -DUI_COMPOSITOR_IMAGE_TRANSPORT -DUSE_AURA=1 -DUSE_ASH=1 -DUSE_PANGO=1 $
+    -DUSE_CAIRO=1 -DUSE_DEFAULT_RENDER_THEME=1 -DUSE_LIBJPEG_TURBO=1 $
+    -DUSE_X11=1 -DUSE_CLIPBOARD_AURAX11=1 -DENABLE_ONE_CLICK_SIGNIN $
+    -DENABLE_WEBRTC=1 -DENABLE_MEDIA_ROUTER=1 -DENABLE_PEPPER_CDMS $
+    -DENABLE_CONFIGURATION_POLICY -DENABLE_NOTIFICATIONS -DENABLE_HIDPI=1 $
+    -DENABLE_TOPCHROME_MD=1 -DUSE_UDEV -DDONT_EMBED_BUILD_METADATA $
+    -DFIELDTRIAL_TESTING_ENABLED -DENABLE_TASK_MANAGER=1 $
+    -DENABLE_EXTENSIONS=1 -DENABLE_PDF=1 -DENABLE_PLUGINS=1 $
+    -DENABLE_SESSION_SERVICE=1 -DENABLE_THEMES=1 -DENABLE_AUTOFILL_DIALOG=1 $
+    -DENABLE_BACKGROUND=1 -DENABLE_PRINTING=1 -DENABLE_BASIC_PRINTING=1 $
+    -DENABLE_PRINT_PREVIEW=1 -DENABLE_SPELLCHECK=1 $
+    -DENABLE_CAPTIVE_PORTAL_DETECTION=1 -DENABLE_APP_LIST=1 $
+    -DENABLE_SETTINGS_APP=1 -DENABLE_SUPERVISED_USERS=1 -DENABLE_MDNS=1 $
+    -DENABLE_SERVICE_DISCOVERY=1 -DV8_USE_EXTERNAL_STARTUP_DATA $
+    -DFULL_SAFE_BROWSING -DSAFE_BROWSING_CSD -DSAFE_BROWSING_DB_LOCAL $
+    -DGTEST_HAS_POSIX_RE=0 -DGTEST_LANG_CXX11=0 $
+    -DENABLE_LAYOUT_UNIT_IN_INLINE_BOXES=0 $
+    -DWTF_USE_CONCATENATED_IMPULSE_RESPONSES=1 $
+    -DENABLE_INPUT_MULTIPLE_FIELDS_UI=1 -DENABLE_WEB_AUDIO=1 $
+    -DWTF_USE_WEBAUDIO_FFMPEG=1 -DWTF_USE_DEFAULT_RENDER_THEME=1 $
+    -DU_USING_ICU_NAMESPACE=0 -DU_ENABLE_DYLOAD=0 -DU_STATIC_IMPLEMENTATION $
+    -DUNIT_TEST -DGTEST_HAS_RTTI=0 -DUSE_LIBPCI=1 -DUSE_OPENSSL=1 $
+    -DUSE_GLIB=1 -DUSE_NSS_CERTS=1 -D__STDC_CONSTANT_MACROS $
+    -D__STDC_FORMAT_MACROS -DDYNAMIC_ANNOTATIONS_ENABLED=1 $
+    -DWTF_USE_DYNAMIC_ANNOTATIONS=1 -D_DEBUG -D_GLIBCXX_DEBUG=1
+includes = -Igen -I../../third_party/WebKit/Source $
+    -I../../third_party/icu/source/i18n $
+    -I../../third_party/icu/source/common -I../../third_party/WebKit $
+    -I../../testing/gmock/include -I../../testing/gtest/include -I../..
+cflags = -fstack-protector --param=ssp-buffer-size=4 -Werror -pthread $
+    -fno-strict-aliasing -Wall -Wno-unused-parameter $
+    -Wno-missing-field-initializers -fvisibility=hidden -pipe -fPIC $
+    -Wno-reserved-user-defined-literal -Xclang -load -Xclang $
+    /b/build/slave/publish_tarball/build/src/third_party/llvm-build/Release+Asserts/lib/libFindBadConstructs.so $
+    -Xclang -add-plugin -Xclang find-bad-constructs -Xclang $
+    -plugin-arg-find-bad-constructs -Xclang check-templates $
+    -fcolor-diagnostics $
+    -B/b/build/slave/publish_tarball/build/src/third_party/binutils/Linux_x64/Release/bin $
+    -Wheader-hygiene -Wno-char-subscripts $
+    -Wno-unneeded-internal-declaration -Wno-covered-switch-default $
+    -Wstring-conversion -Wno-c++11-narrowing -Wno-deprecated-register $
+    -Wno-inconsistent-missing-override -Wno-shift-negative-value $
+    -Wno-bitfield-width -Xclang -load -Xclang $
+    /b/build/slave/publish_tarball/build/src/third_party/llvm-build/Release+Asserts/lib/libBlinkGCPlugin.so $
+    -Xclang -add-plugin -Xclang blink-gc-plugin -pthread $
+    -I/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/include/glib-2.0 $
+    -I/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/lib/x86_64-linux-gnu/glib-2.0/include $
+    -m64 -march=x86-64 $
+    --sysroot=/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot $
+    -O0 -g -funwind-tables -gsplit-dwarf -Wno-undefined-bool-conversion $
+    -Wno-tautological-undefined-compare
+cflags_c = 
+cflags_cc = -fno-exceptions -fno-rtti -fno-threadsafe-statics $
+    -fvisibility-inlines-hidden -Wsign-compare -std=gnu++11 -Wno-c++0x-compat
+arflags = 
+
+build $
+    obj/third_party/WebKit/Source/wtf/testing/wtf_unittests.RunAllTests.o: $
+    cxx ../../third_party/WebKit/Source/wtf/testing/RunAllTests.cpp || $
+    obj/third_party/WebKit/Source/wtf/wtf_unittests.compile_depends.stamp
+build obj/third_party/WebKit/Source/wtf/wtf_unittests.ASCIICTypeTest.o: cxx $
+    ../../third_party/WebKit/Source/wtf/ASCIICTypeTest.cpp || $
+    obj/third_party/WebKit/Source/wtf/wtf_unittests.compile_depends.stamp
+build $
+    obj/third_party/WebKit/Source/wtf/wtf_unittests.ArrayBufferBuilderTest.o: $
+    cxx ../../third_party/WebKit/Source/wtf/ArrayBufferBuilderTest.cpp || $
+    obj/third_party/WebKit/Source/wtf/wtf_unittests.compile_depends.stamp
+build obj/third_party/WebKit/Source/wtf/wtf_unittests.AssertionsTest.o: cxx $
+    ../../third_party/WebKit/Source/wtf/AssertionsTest.cpp || $
+    obj/third_party/WebKit/Source/wtf/wtf_unittests.compile_depends.stamp
+build $
+    obj/third_party/WebKit/Source/wtf/wtf_unittests.CheckedArithmeticTest.o: $
+    cxx ../../third_party/WebKit/Source/wtf/CheckedArithmeticTest.cpp || $
+    obj/third_party/WebKit/Source/wtf/wtf_unittests.compile_depends.stamp
+build obj/third_party/WebKit/Source/wtf/wtf_unittests.DequeTest.o: cxx $
+    ../../third_party/WebKit/Source/wtf/DequeTest.cpp || $
+    obj/third_party/WebKit/Source/wtf/wtf_unittests.compile_depends.stamp
+build obj/third_party/WebKit/Source/wtf/wtf_unittests.FunctionalTest.o: cxx $
+    ../../third_party/WebKit/Source/wtf/FunctionalTest.cpp || $
+    obj/third_party/WebKit/Source/wtf/wtf_unittests.compile_depends.stamp
+build obj/third_party/WebKit/Source/wtf/wtf_unittests.HashMapTest.o: cxx $
+    ../../third_party/WebKit/Source/wtf/HashMapTest.cpp || $
+    obj/third_party/WebKit/Source/wtf/wtf_unittests.compile_depends.stamp
+build obj/third_party/WebKit/Source/wtf/wtf_unittests.HashSetTest.o: cxx $
+    ../../third_party/WebKit/Source/wtf/HashSetTest.cpp || $
+    obj/third_party/WebKit/Source/wtf/wtf_unittests.compile_depends.stamp
+build obj/third_party/WebKit/Source/wtf/wtf_unittests.ListHashSetTest.o: $
+    cxx ../../third_party/WebKit/Source/wtf/ListHashSetTest.cpp || $
+    obj/third_party/WebKit/Source/wtf/wtf_unittests.compile_depends.stamp
+build obj/third_party/WebKit/Source/wtf/wtf_unittests.MathExtrasTest.o: cxx $
+    ../../third_party/WebKit/Source/wtf/MathExtrasTest.cpp || $
+    obj/third_party/WebKit/Source/wtf/wtf_unittests.compile_depends.stamp
+build obj/third_party/WebKit/Source/wtf/wtf_unittests.OptionalTest.o: cxx $
+    ../../third_party/WebKit/Source/wtf/OptionalTest.cpp || $
+    obj/third_party/WebKit/Source/wtf/wtf_unittests.compile_depends.stamp
+build obj/third_party/WebKit/Source/wtf/wtf_unittests.PartitionAllocTest.o: $
+    cxx ../../third_party/WebKit/Source/wtf/PartitionAllocTest.cpp || $
+    obj/third_party/WebKit/Source/wtf/wtf_unittests.compile_depends.stamp
+build obj/third_party/WebKit/Source/wtf/wtf_unittests.RefPtrTest.o: cxx $
+    ../../third_party/WebKit/Source/wtf/RefPtrTest.cpp || $
+    obj/third_party/WebKit/Source/wtf/wtf_unittests.compile_depends.stamp
+build $
+    obj/third_party/WebKit/Source/wtf/wtf_unittests.SaturatedArithmeticTest.o: $
+    cxx ../../third_party/WebKit/Source/wtf/SaturatedArithmeticTest.cpp || $
+    obj/third_party/WebKit/Source/wtf/wtf_unittests.compile_depends.stamp
+build obj/third_party/WebKit/Source/wtf/wtf_unittests.StringExtrasTest.o: $
+    cxx ../../third_party/WebKit/Source/wtf/StringExtrasTest.cpp || $
+    obj/third_party/WebKit/Source/wtf/wtf_unittests.compile_depends.stamp
+build obj/third_party/WebKit/Source/wtf/wtf_unittests.StringHasherTest.o: $
+    cxx ../../third_party/WebKit/Source/wtf/StringHasherTest.cpp || $
+    obj/third_party/WebKit/Source/wtf/wtf_unittests.compile_depends.stamp
+build $
+    obj/third_party/WebKit/Source/wtf/wtf_unittests.TemporaryChangeTest.o: $
+    cxx ../../third_party/WebKit/Source/wtf/TemporaryChangeTest.cpp || $
+    obj/third_party/WebKit/Source/wtf/wtf_unittests.compile_depends.stamp
+build obj/third_party/WebKit/Source/wtf/wtf_unittests.TreeNodeTest.o: cxx $
+    ../../third_party/WebKit/Source/wtf/TreeNodeTest.cpp || $
+    obj/third_party/WebKit/Source/wtf/wtf_unittests.compile_depends.stamp
+build obj/third_party/WebKit/Source/wtf/wtf_unittests.VectorTest.o: cxx $
+    ../../third_party/WebKit/Source/wtf/VectorTest.cpp || $
+    obj/third_party/WebKit/Source/wtf/wtf_unittests.compile_depends.stamp
+build obj/third_party/WebKit/Source/wtf/wtf_unittests.dtoa_test.o: cxx $
+    ../../third_party/WebKit/Source/wtf/dtoa_test.cpp || $
+    obj/third_party/WebKit/Source/wtf/wtf_unittests.compile_depends.stamp
+build $
+    obj/third_party/WebKit/Source/wtf/testing/wtf_unittests.WTFTestPrintersTest.o: $
+    cxx ../../third_party/WebKit/Source/wtf/testing/WTFTestPrintersTest.cpp $
+    || obj/third_party/WebKit/Source/wtf/wtf_unittests.compile_depends.stamp
+build $
+    obj/third_party/WebKit/Source/wtf/text/wtf_unittests.AtomicStringTest.o: $
+    cxx ../../third_party/WebKit/Source/wtf/text/AtomicStringTest.cpp || $
+    obj/third_party/WebKit/Source/wtf/wtf_unittests.compile_depends.stamp
+build obj/third_party/WebKit/Source/wtf/text/wtf_unittests.CStringTest.o: $
+    cxx ../../third_party/WebKit/Source/wtf/text/CStringTest.cpp || $
+    obj/third_party/WebKit/Source/wtf/wtf_unittests.compile_depends.stamp
+build $
+    obj/third_party/WebKit/Source/wtf/text/wtf_unittests.StringBufferTest.o: $
+    cxx ../../third_party/WebKit/Source/wtf/text/StringBufferTest.cpp || $
+    obj/third_party/WebKit/Source/wtf/wtf_unittests.compile_depends.stamp
+build $
+    obj/third_party/WebKit/Source/wtf/text/wtf_unittests.StringBuilderTest.o: $
+    cxx ../../third_party/WebKit/Source/wtf/text/StringBuilderTest.cpp || $
+    obj/third_party/WebKit/Source/wtf/wtf_unittests.compile_depends.stamp
+build $
+    obj/third_party/WebKit/Source/wtf/text/wtf_unittests.StringImplTest.o: $
+    cxx ../../third_party/WebKit/Source/wtf/text/StringImplTest.cpp || $
+    obj/third_party/WebKit/Source/wtf/wtf_unittests.compile_depends.stamp
+build $
+    obj/third_party/WebKit/Source/wtf/text/wtf_unittests.StringOperatorsTest.o: $
+    cxx ../../third_party/WebKit/Source/wtf/text/StringOperatorsTest.cpp || $
+    obj/third_party/WebKit/Source/wtf/wtf_unittests.compile_depends.stamp
+build $
+    obj/third_party/WebKit/Source/wtf/text/wtf_unittests.TextCodecReplacementTest.o: $
+    cxx $
+    ../../third_party/WebKit/Source/wtf/text/TextCodecReplacementTest.cpp $
+    || obj/third_party/WebKit/Source/wtf/wtf_unittests.compile_depends.stamp
+build $
+    obj/third_party/WebKit/Source/wtf/text/wtf_unittests.TextCodecUTF8Test.o: $
+    cxx ../../third_party/WebKit/Source/wtf/text/TextCodecUTF8Test.cpp || $
+    obj/third_party/WebKit/Source/wtf/wtf_unittests.compile_depends.stamp
+build obj/third_party/WebKit/Source/wtf/text/wtf_unittests.WTFStringTest.o: $
+    cxx ../../third_party/WebKit/Source/wtf/text/WTFStringTest.cpp || $
+    obj/third_party/WebKit/Source/wtf/wtf_unittests.compile_depends.stamp
+
+ldflags = -Wl,-z,now -Wl,-z,relro -Wl,--fatal-warnings -Wl,-z,defs -pthread $
+    -Wl,-z,noexecstack -fPIC -fuse-ld=gold $
+    -B/b/build/slave/publish_tarball/build/src/third_party/binutils/Linux_x64/Release/bin $
+    -Wl,--disable-new-dtags -Wl,-uIsHeapProfilerRunning,-uProfilerStart $
+    -Wl,-u_Z21InitialMallocHook_NewPKvj,-u_Z22InitialMallocHook_MMapPKvS0_jiiix,-u_Z22InitialMallocHook_SbrkPKvi $
+    -Wl,-u_Z21InitialMallocHook_NewPKvm,-u_Z22InitialMallocHook_MMapPKvS0_miiil,-u_Z22InitialMallocHook_SbrkPKvl $
+    -Wl,-u_ZN15HeapLeakChecker12IgnoreObjectEPKv,-u_ZN15HeapLeakChecker14UnIgnoreObjectEPKv $
+    -m64 $
+    --sysroot=/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot $
+    -L/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/lib/x86_64-linux-gnu $
+    -Wl,-rpath-link=/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/lib/x86_64-linux-gnu $
+    -L/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/lib/x86_64-linux-gnu $
+    -Wl,-rpath-link=/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/lib/x86_64-linux-gnu $
+    -L/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/lib/gcc/x86_64-linux-gnu/4.6 $
+    -Wl,-rpath-link=/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/lib/gcc/x86_64-linux-gnu/4.6 $
+    -L/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/lib $
+    -Wl,-rpath-link=/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/lib $
+    -Wl,--detect-odr-violations -Wl,--icf=all
+libs =  -ldl -lrt -lgmodule-2.0 -lgobject-2.0 -lgthread-2.0 -lglib-2.0 -lm
+build wtf_unittests: link $
+    obj/third_party/WebKit/Source/wtf/testing/wtf_unittests.RunAllTests.o $
+    obj/third_party/WebKit/Source/wtf/wtf_unittests.ASCIICTypeTest.o $
+    obj/third_party/WebKit/Source/wtf/wtf_unittests.ArrayBufferBuilderTest.o $
+    obj/third_party/WebKit/Source/wtf/wtf_unittests.AssertionsTest.o $
+    obj/third_party/WebKit/Source/wtf/wtf_unittests.CheckedArithmeticTest.o $
+    obj/third_party/WebKit/Source/wtf/wtf_unittests.DequeTest.o $
+    obj/third_party/WebKit/Source/wtf/wtf_unittests.FunctionalTest.o $
+    obj/third_party/WebKit/Source/wtf/wtf_unittests.HashMapTest.o $
+    obj/third_party/WebKit/Source/wtf/wtf_unittests.HashSetTest.o $
+    obj/third_party/WebKit/Source/wtf/wtf_unittests.ListHashSetTest.o $
+    obj/third_party/WebKit/Source/wtf/wtf_unittests.MathExtrasTest.o $
+    obj/third_party/WebKit/Source/wtf/wtf_unittests.OptionalTest.o $
+    obj/third_party/WebKit/Source/wtf/wtf_unittests.PartitionAllocTest.o $
+    obj/third_party/WebKit/Source/wtf/wtf_unittests.RefPtrTest.o $
+    obj/third_party/WebKit/Source/wtf/wtf_unittests.SaturatedArithmeticTest.o $
+    obj/third_party/WebKit/Source/wtf/wtf_unittests.StringExtrasTest.o $
+    obj/third_party/WebKit/Source/wtf/wtf_unittests.StringHasherTest.o $
+    obj/third_party/WebKit/Source/wtf/wtf_unittests.TemporaryChangeTest.o $
+    obj/third_party/WebKit/Source/wtf/wtf_unittests.TreeNodeTest.o $
+    obj/third_party/WebKit/Source/wtf/wtf_unittests.VectorTest.o $
+    obj/third_party/WebKit/Source/wtf/wtf_unittests.dtoa_test.o $
+    obj/third_party/WebKit/Source/wtf/testing/wtf_unittests.WTFTestPrintersTest.o $
+    obj/third_party/WebKit/Source/wtf/text/wtf_unittests.AtomicStringTest.o $
+    obj/third_party/WebKit/Source/wtf/text/wtf_unittests.CStringTest.o $
+    obj/third_party/WebKit/Source/wtf/text/wtf_unittests.StringBufferTest.o $
+    obj/third_party/WebKit/Source/wtf/text/wtf_unittests.StringBuilderTest.o $
+    obj/third_party/WebKit/Source/wtf/text/wtf_unittests.StringImplTest.o $
+    obj/third_party/WebKit/Source/wtf/text/wtf_unittests.StringOperatorsTest.o $
+    obj/third_party/WebKit/Source/wtf/text/wtf_unittests.TextCodecReplacementTest.o $
+    obj/third_party/WebKit/Source/wtf/text/wtf_unittests.TextCodecUTF8Test.o $
+    obj/third_party/WebKit/Source/wtf/text/wtf_unittests.WTFStringTest.o $
+    obj/third_party/WebKit/Source/wtf/libwtf_unittest_helpers.a $
+    obj/third_party/WebKit/Source/wtf/libwtf.a $
+    obj/base/libtest_support_base.a obj/base/libbase.a $
+    obj/base/allocator/liballocator.a obj/base/libbase_static.a $
+    obj/third_party/modp_b64/libmodp_b64.a $
+    obj/base/third_party/dynamic_annotations/libdynamic_annotations.a $
+    obj/base/libsymbolize.a obj/base/libxdg_mime.a $
+    obj/third_party/libevent/libevent.a obj/third_party/icu/libicui18n.a $
+    obj/third_party/icu/libicuuc.a obj/testing/libgmock.a $
+    obj/testing/libgtest.a obj/base/libbase_i18n.a $
+    obj/third_party/libxml/libxml2.a obj/third_party/zlib/libchrome_zlib.a $
+    obj/third_party/zlib/libzlib_x86_simd.a | icudtl.dat $
+    gen/base/debug/debugging_flags.h $
+    obj/third_party/WebKit/Source/unittest_config.actions_depends.stamp || $
+    obj/third_party/WebKit/Source/wtf/wtf_unittests.actions_depends.stamp
+  ld = $ldxx

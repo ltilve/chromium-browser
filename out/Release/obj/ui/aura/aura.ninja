@@ -1,0 +1,156 @@
+defines = -DV8_DEPRECATION_WARNINGS -DCLD_VERSION=2 -D_FILE_OFFSET_BITS=64 $
+    -DCHROMIUM_BUILD -DCR_CLANG_REVISION=255169-1 $
+    -DUI_COMPOSITOR_IMAGE_TRANSPORT -DUSE_AURA=1 -DUSE_ASH=1 -DUSE_PANGO=1 $
+    -DUSE_CAIRO=1 -DUSE_DEFAULT_RENDER_THEME=1 -DUSE_LIBJPEG_TURBO=1 $
+    -DUSE_X11=1 -DUSE_CLIPBOARD_AURAX11=1 -DENABLE_ONE_CLICK_SIGNIN $
+    -DENABLE_WEBRTC=1 -DENABLE_MEDIA_ROUTER=1 -DENABLE_PEPPER_CDMS $
+    -DENABLE_CONFIGURATION_POLICY -DENABLE_NOTIFICATIONS -DENABLE_HIDPI=1 $
+    -DENABLE_TOPCHROME_MD=1 -DUSE_UDEV -DDONT_EMBED_BUILD_METADATA $
+    -DFIELDTRIAL_TESTING_ENABLED -DENABLE_TASK_MANAGER=1 $
+    -DENABLE_EXTENSIONS=1 -DENABLE_PDF=1 -DENABLE_PLUGINS=1 $
+    -DENABLE_SESSION_SERVICE=1 -DENABLE_THEMES=1 -DENABLE_AUTOFILL_DIALOG=1 $
+    -DENABLE_BACKGROUND=1 -DENABLE_PRINTING=1 -DENABLE_BASIC_PRINTING=1 $
+    -DENABLE_PRINT_PREVIEW=1 -DENABLE_SPELLCHECK=1 $
+    -DENABLE_CAPTIVE_PORTAL_DETECTION=1 -DENABLE_APP_LIST=1 $
+    -DENABLE_SETTINGS_APP=1 -DENABLE_SUPERVISED_USERS=1 -DENABLE_MDNS=1 $
+    -DENABLE_SERVICE_DISCOVERY=1 -DV8_USE_EXTERNAL_STARTUP_DATA $
+    -DFULL_SAFE_BROWSING -DSAFE_BROWSING_CSD -DSAFE_BROWSING_DB_LOCAL $
+    -DAURA_IMPLEMENTATION -DGL_GLEXT_PROTOTYPES -DU_USING_ICU_NAMESPACE=0 $
+    -DU_ENABLE_DYLOAD=0 -DU_STATIC_IMPLEMENTATION -DSK_SUPPORT_GPU=1 $
+    -DSK_IGNORE_LINEONLY_AA_CONVEX_PATH_OPTS -DUSE_LIBPCI=1 -DUSE_OPENSSL=1 $
+    -DUSE_GLIB=1 -DUSE_NSS_CERTS=1 -D__STDC_CONSTANT_MACROS $
+    -D__STDC_FORMAT_MACROS -DNDEBUG -DNVALGRIND $
+    -DDYNAMIC_ANNOTATIONS_ENABLED=0
+includes = -Igen -I../.. -I../../skia/config -I../../third_party/khronos $
+    -I../../gpu -Igen/angle -I../../third_party/icu/source/common $
+    -I../../third_party/icu/source/i18n $
+    -I../../third_party/skia/include/core $
+    -I../../third_party/skia/include/effects $
+    -I../../third_party/skia/include/pdf $
+    -I../../third_party/skia/include/gpu $
+    -I../../third_party/skia/include/lazy $
+    -I../../third_party/skia/include/pathops $
+    -I../../third_party/skia/include/pipe $
+    -I../../third_party/skia/include/ports $
+    -I../../third_party/skia/include/utils -I../../skia/ext
+cflags = -fstack-protector --param=ssp-buffer-size=4 -Werror -pthread $
+    -fno-strict-aliasing -Wall -Wno-unused-parameter $
+    -Wno-missing-field-initializers -fvisibility=hidden -pipe -fPIC $
+    -Wno-reserved-user-defined-literal -Xclang -load -Xclang $
+    /b/build/slave/publish_tarball/build/src/third_party/llvm-build/Release+Asserts/lib/libFindBadConstructs.so $
+    -Xclang -add-plugin -Xclang find-bad-constructs -Xclang $
+    -plugin-arg-find-bad-constructs -Xclang check-templates $
+    -fcolor-diagnostics $
+    -B/b/build/slave/publish_tarball/build/src/third_party/binutils/Linux_x64/Release/bin $
+    -Wheader-hygiene -Wno-char-subscripts $
+    -Wno-unneeded-internal-declaration -Wno-covered-switch-default $
+    -Wstring-conversion -Wno-c++11-narrowing -Wno-deprecated-register $
+    -Wno-inconsistent-missing-override -Wno-shift-negative-value $
+    -Wno-bitfield-width -pthread $
+    -I/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/include/glib-2.0 $
+    -I/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/lib/x86_64-linux-gnu/glib-2.0/include $
+    -m64 -march=x86-64 $
+    --sysroot=/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot $
+    -O2 -fno-ident -fdata-sections -ffunction-sections -funwind-tables
+cflags_c = 
+cflags_cc = -fno-exceptions -fno-rtti -fno-threadsafe-statics $
+    -fvisibility-inlines-hidden -Wsign-compare -std=gnu++11
+arflags = 
+
+build obj/ui/wm/public/aura.activation_change_observer.o: cxx $
+    ../../ui/wm/public/activation_change_observer.cc
+build obj/ui/wm/public/aura.activation_client.o: cxx $
+    ../../ui/wm/public/activation_client.cc
+build obj/ui/wm/public/aura.activation_delegate.o: cxx $
+    ../../ui/wm/public/activation_delegate.cc
+build obj/ui/wm/public/aura.animation_host.o: cxx $
+    ../../ui/wm/public/animation_host.cc
+build obj/ui/wm/public/aura.dispatcher_client.o: cxx $
+    ../../ui/wm/public/dispatcher_client.cc
+build obj/ui/wm/public/aura.drag_drop_client.o: cxx $
+    ../../ui/wm/public/drag_drop_client.cc
+build obj/ui/wm/public/aura.drag_drop_delegate.o: cxx $
+    ../../ui/wm/public/drag_drop_delegate.cc
+build obj/ui/wm/public/aura.scoped_drag_drop_disabler.o: cxx $
+    ../../ui/wm/public/scoped_drag_drop_disabler.cc
+build obj/ui/wm/public/aura.scoped_tooltip_disabler.o: cxx $
+    ../../ui/wm/public/scoped_tooltip_disabler.cc
+build obj/ui/wm/public/aura.tooltip_client.o: cxx $
+    ../../ui/wm/public/tooltip_client.cc
+build obj/ui/wm/public/aura.transient_window_client.o: cxx $
+    ../../ui/wm/public/transient_window_client.cc
+build obj/ui/wm/public/aura.window_move_client.o: cxx $
+    ../../ui/wm/public/window_move_client.cc
+build obj/ui/aura/client/aura.aura_constants.o: cxx $
+    ../../ui/aura/client/aura_constants.cc
+build obj/ui/aura/client/aura.capture_client.o: cxx $
+    ../../ui/aura/client/capture_client.cc
+build obj/ui/aura/client/aura.cursor_client.o: cxx $
+    ../../ui/aura/client/cursor_client.cc
+build obj/ui/aura/client/aura.cursor_client_observer.o: cxx $
+    ../../ui/aura/client/cursor_client_observer.cc
+build obj/ui/aura/client/aura.default_capture_client.o: cxx $
+    ../../ui/aura/client/default_capture_client.cc
+build obj/ui/aura/client/aura.event_client.o: cxx $
+    ../../ui/aura/client/event_client.cc
+build obj/ui/aura/client/aura.focus_change_observer.o: cxx $
+    ../../ui/aura/client/focus_change_observer.cc
+build obj/ui/aura/client/aura.focus_client.o: cxx $
+    ../../ui/aura/client/focus_client.cc
+build obj/ui/aura/client/aura.screen_position_client.o: cxx $
+    ../../ui/aura/client/screen_position_client.cc
+build obj/ui/aura/client/aura.visibility_client.o: cxx $
+    ../../ui/aura/client/visibility_client.cc
+build obj/ui/aura/client/aura.window_stacking_client.o: cxx $
+    ../../ui/aura/client/window_stacking_client.cc
+build obj/ui/aura/client/aura.window_tree_client.o: cxx $
+    ../../ui/aura/client/window_tree_client.cc
+build obj/ui/aura/aura.env.o: cxx ../../ui/aura/env.cc
+build obj/ui/aura/aura.input_state_lookup.o: cxx $
+    ../../ui/aura/input_state_lookup.cc
+build obj/ui/aura/aura.layout_manager.o: cxx ../../ui/aura/layout_manager.cc
+build obj/ui/aura/aura.scoped_window_targeter.o: cxx $
+    ../../ui/aura/scoped_window_targeter.cc
+build obj/ui/aura/aura.window.o: cxx ../../ui/aura/window.cc
+build obj/ui/aura/aura.window_event_dispatcher.o: cxx $
+    ../../ui/aura/window_event_dispatcher.cc
+build obj/ui/aura/aura.window_observer.o: cxx ../../ui/aura/window_observer.cc
+build obj/ui/aura/aura.window_targeter.o: cxx ../../ui/aura/window_targeter.cc
+build obj/ui/aura/aura.window_tracker.o: cxx ../../ui/aura/window_tracker.cc
+build obj/ui/aura/aura.window_tree_host.o: cxx $
+    ../../ui/aura/window_tree_host.cc
+build obj/ui/aura/aura.window_tree_host_x11.o: cxx $
+    ../../ui/aura/window_tree_host_x11.cc
+
+build obj/ui/aura/libaura.a: alink_thin $
+    obj/ui/wm/public/aura.activation_change_observer.o $
+    obj/ui/wm/public/aura.activation_client.o $
+    obj/ui/wm/public/aura.activation_delegate.o $
+    obj/ui/wm/public/aura.animation_host.o $
+    obj/ui/wm/public/aura.dispatcher_client.o $
+    obj/ui/wm/public/aura.drag_drop_client.o $
+    obj/ui/wm/public/aura.drag_drop_delegate.o $
+    obj/ui/wm/public/aura.scoped_drag_drop_disabler.o $
+    obj/ui/wm/public/aura.scoped_tooltip_disabler.o $
+    obj/ui/wm/public/aura.tooltip_client.o $
+    obj/ui/wm/public/aura.transient_window_client.o $
+    obj/ui/wm/public/aura.window_move_client.o $
+    obj/ui/aura/client/aura.aura_constants.o $
+    obj/ui/aura/client/aura.capture_client.o $
+    obj/ui/aura/client/aura.cursor_client.o $
+    obj/ui/aura/client/aura.cursor_client_observer.o $
+    obj/ui/aura/client/aura.default_capture_client.o $
+    obj/ui/aura/client/aura.event_client.o $
+    obj/ui/aura/client/aura.focus_change_observer.o $
+    obj/ui/aura/client/aura.focus_client.o $
+    obj/ui/aura/client/aura.screen_position_client.o $
+    obj/ui/aura/client/aura.visibility_client.o $
+    obj/ui/aura/client/aura.window_stacking_client.o $
+    obj/ui/aura/client/aura.window_tree_client.o obj/ui/aura/aura.env.o $
+    obj/ui/aura/aura.input_state_lookup.o obj/ui/aura/aura.layout_manager.o $
+    obj/ui/aura/aura.scoped_window_targeter.o obj/ui/aura/aura.window.o $
+    obj/ui/aura/aura.window_event_dispatcher.o $
+    obj/ui/aura/aura.window_observer.o obj/ui/aura/aura.window_targeter.o $
+    obj/ui/aura/aura.window_tracker.o obj/ui/aura/aura.window_tree_host.o $
+    obj/ui/aura/aura.window_tree_host_x11.o || $
+    obj/skia/skia.actions_depends.stamp

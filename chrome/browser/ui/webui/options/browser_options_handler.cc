@@ -58,6 +58,7 @@
 #include "chrome/browser/ui/browser_finder.h"
 #include "chrome/browser/ui/chrome_select_file_policy.h"
 #include "chrome/browser/ui/host_desktop.h"
+#include "chrome/browser/ui/passwords/manage_passwords_view_utils_desktop.h"
 #include "chrome/browser/ui/webui/favicon_source.h"
 #include "chrome/browser/ui/webui/options/options_handlers_helper.h"
 #include "chrome/common/chrome_constants.h"
@@ -69,11 +70,11 @@
 #include "chrome/grit/chromium_strings.h"
 #include "chrome/grit/generated_resources.h"
 #include "chrome/grit/locale_settings.h"
-#include "components/password_manager/core/browser/password_bubble_experiment.h"
 #include "components/policy/core/common/policy_map.h"
 #include "components/policy/core/common/policy_namespace.h"
 #include "components/policy/core/common/policy_service.h"
 #include "components/proximity_auth/switches.h"
+#include "components/proxy_config/proxy_config_pref_names.h"
 #include "components/search_engines/template_url.h"
 #include "components/search_engines/template_url_service.h"
 #include "components/signin/core/browser/signin_manager.h"
@@ -312,12 +313,9 @@ void BrowserOptionsHandler::GetLocalizedValues(base::DictionaryValue* values) {
     { "metricsReportingResetRestart", IDS_OPTIONS_ENABLE_LOGGING_RESTART },
     { "networkPredictionEnabledDescription",
       IDS_NETWORK_PREDICTION_ENABLED_DESCRIPTION },
-    { "passwordManagerEnabled",
-      password_bubble_experiment::IsSmartLockBrandingEnabled(
-          ProfileSyncServiceFactory::GetForProfile(
-              Profile::FromWebUI(web_ui()))) ?
-      IDS_OPTIONS_PASSWORD_MANAGER_SMART_LOCK_ENABLE :
-      IDS_OPTIONS_PASSWORD_MANAGER_ENABLE },
+    { "passwordManagerEnabled", GetPasswordManagerSettingsStringId(
+        ProfileSyncServiceFactory::GetForProfile(Profile::FromWebUI(web_ui())))
+    },
     { "passwordsAndAutofillGroupName",
       IDS_OPTIONS_PASSWORDS_AND_FORMS_GROUP_NAME },
     { "privacyClearDataButton", IDS_OPTIONS_PRIVACY_CLEAR_DATA_BUTTON },
@@ -332,8 +330,6 @@ void BrowserOptionsHandler::GetLocalizedValues(base::DictionaryValue* values) {
     { "profilesManage", IDS_PROFILES_MANAGE_BUTTON_LABEL },
     { "profilesSingleUser", IDS_PROFILES_SINGLE_USER_MESSAGE,
       IDS_PRODUCT_NAME },
-    { "profilesSupervisedDashboardTip",
-      IDS_PROFILES_SUPERVISED_USER_DASHBOARD_TIP },
     { "proxiesLabelExtension", IDS_OPTIONS_EXTENSION_PROXIES_LABEL },
     { "proxiesLabelSystem", IDS_OPTIONS_SYSTEM_PROXIES_LABEL,
       IDS_PRODUCT_NAME },
@@ -364,7 +360,7 @@ void BrowserOptionsHandler::GetLocalizedValues(base::DictionaryValue* values) {
     { "startupShowNewTab", IDS_OPTIONS_STARTUP_SHOW_NEWTAB },
     { "startupShowPages", IDS_OPTIONS_STARTUP_SHOW_PAGES },
     { "suggestPref", IDS_OPTIONS_SUGGEST_PREF },
-    { "supervisedUserLabel", IDS_PROFILES_LIST_SUPERVISED_USER_LABEL },
+    { "supervisedUserLabel", IDS_PROFILES_LIST_LEGACY_SUPERVISED_USER_LABEL },
     { "syncButtonTextInProgress", IDS_SYNC_NTP_SETUP_IN_PROGRESS },
     { "syncButtonTextSignIn", IDS_SYNC_START_SYNC_BUTTON_LABEL,
       IDS_SHORT_PRODUCT_NAME },
@@ -543,6 +539,12 @@ void BrowserOptionsHandler::GetLocalizedValues(base::DictionaryValue* values) {
                 IDS_HOTWORD_CONFIRM_BUBBLE_TITLE);
   values->SetString("hotwordManageAudioHistoryURL",
                     chrome::kManageAudioHistoryURL);
+  base::string16 supervised_user_dashboard =
+      base::ASCIIToUTF16(chrome::kLegacySupervisedUserManagementURL);
+  values->SetString("profilesSupervisedDashboardTip",
+      l10n_util::GetStringFUTF16(
+          IDS_PROFILES_LEGACY_SUPERVISED_USER_DASHBOARD_TIP,
+          supervised_user_dashboard));
 
 #if defined(OS_CHROMEOS)
   Profile* profile = Profile::FromWebUI(web_ui());
@@ -566,8 +568,9 @@ void BrowserOptionsHandler::GetLocalizedValues(base::DictionaryValue* values) {
   values->SetString("doNotTrackLearnMoreURL", chrome::kDoNotTrackLearnMoreURL);
 
 #if !defined(OS_CHROMEOS)
-  values->SetBoolean("metricsReportingEnabledAtStart",
-       ChromeMetricsServiceAccessor::IsMetricsReportingEnabled());
+  values->SetBoolean(
+      "metricsReportingEnabledAtStart",
+      ChromeMetricsServiceAccessor::IsMetricsAndCrashReportingEnabled());
 #endif
 
 #if defined(OS_CHROMEOS)
@@ -663,13 +666,14 @@ void BrowserOptionsHandler::GetLocalizedValues(base::DictionaryValue* values) {
 
   RegisterTitle(values, "thirdPartyImeConfirmOverlay",
                 IDS_OPTIONS_SETTINGS_LANGUAGES_THIRD_PARTY_WARNING_TITLE);
+  values->SetBoolean("usingNewProfilesUI", false);
+#else
+  values->SetBoolean("usingNewProfilesUI", true);
 #endif
 
   values->SetBoolean("showSetDefault", ShouldShowSetDefaultBrowser());
 
   values->SetBoolean("allowAdvancedSettings", ShouldAllowAdvancedSettings());
-
-  values->SetBoolean("usingNewProfilesUI", switches::IsNewAvatarMenu());
 
 #if defined(OS_CHROMEOS)
   values->SetBoolean(
@@ -853,7 +857,7 @@ void BrowserOptionsHandler::PageLoadStarted() {
 void BrowserOptionsHandler::InitializeHandler() {
   Profile* profile = Profile::FromWebUI(web_ui());
   PrefService* prefs = profile->GetPrefs();
-  chrome::ChromeZoomLevelPrefs* zoom_level_prefs = profile->GetZoomLevelPrefs();
+  ChromeZoomLevelPrefs* zoom_level_prefs = profile->GetZoomLevelPrefs();
   // Only regular profiles are able to edit default zoom level, or delete per-
   // host zoom levels, via the settings menu. We only require a zoom_level_prefs
   // if the profile is able to change these preference types.
@@ -983,7 +987,7 @@ void BrowserOptionsHandler::InitializeHandler() {
                  weak_ptr_factory_.GetWeakPtr()));
 #else  // !defined(OS_CHROMEOS)
   profile_pref_registrar_.Add(
-      prefs::kProxy,
+      proxy_config::prefs::kProxy,
       base::Bind(&BrowserOptionsHandler::SetupProxySettingsSection,
                  base::Unretained(this)));
 #endif  // !defined(OS_CHROMEOS)
@@ -1507,7 +1511,7 @@ BrowserOptionsHandler::GetSyncStateDictionary() {
   sync_status->SetBoolean("setupCompleted",
                           service && service->HasSyncSetupCompleted());
   sync_status->SetBoolean("setupInProgress",
-      service && !service->IsManaged() && service->FirstSetupInProgress());
+      service && !service->IsManaged() && service->IsFirstSetupInProgress());
 
   base::string16 status_label;
   base::string16 link_label;
@@ -1664,8 +1668,7 @@ void BrowserOptionsHandler::HandleRestartBrowser(const base::ListValue* args) {
   // environment variable is defined. So we undefine this environment variable
   // before restarting, as the restarted processes will inherit their
   // environment variables from ours, thus suppressing crash uploads.
-  PrefService* pref_service = g_browser_process->local_state();
-  if (!pref_service->GetBoolean(prefs::kMetricsReportingEnabled)) {
+  if (!ChromeMetricsServiceAccessor::IsMetricsAndCrashReportingEnabled()) {
     HMODULE exe_module = GetModuleHandle(chrome::kBrowserProcessExecutableName);
     if (exe_module) {
       typedef void (__cdecl *ClearBreakpadPipeEnvVar)();
@@ -1812,7 +1815,8 @@ void BrowserOptionsHandler::HandleRequestHotwordAvailable(
     // in, audio history is meaningless. This is only displayed if always-on
     // hotwording is available.
     if (authenticated && always_on) {
-      std::string user_display_name = signin->GetAuthenticatedUsername();
+      std::string user_display_name =
+          signin->GetAuthenticatedAccountInfo().email;
       DCHECK(!user_display_name.empty());
       base::string16 audio_history_state =
           l10n_util::GetStringFUTF16(IDS_HOTWORD_AUDIO_HISTORY_ENABLED,
@@ -2046,7 +2050,7 @@ void BrowserOptionsHandler::SetupProxySettingsSection() {
 #endif
   PrefService* pref_service = Profile::FromWebUI(web_ui())->GetPrefs();
   const PrefService::Preference* proxy_config =
-      pref_service->FindPreference(prefs::kProxy);
+      pref_service->FindPreference(proxy_config::prefs::kProxy);
   bool is_extension_controlled = (proxy_config &&
                                   proxy_config->IsExtensionControlled());
 
@@ -2143,7 +2147,8 @@ void BrowserOptionsHandler::SetupExtensionControlledIndicators() {
 void BrowserOptionsHandler::SetupMetricsReportingCheckbox() {
   // This function does not work for ChromeOS and non-official builds.
 #if !defined(OS_CHROMEOS) && defined(GOOGLE_CHROME_BUILD)
-  bool checked = ChromeMetricsServiceAccessor::IsMetricsReportingEnabled();
+  bool checked =
+      ChromeMetricsServiceAccessor::IsMetricsAndCrashReportingEnabled();
   bool disabled = !IsMetricsReportingUserChangable();
 
   SetMetricsReportingCheckbox(checked, disabled);

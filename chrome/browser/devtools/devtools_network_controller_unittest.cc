@@ -68,10 +68,10 @@ class DevToolsNetworkControllerHelper {
     return request_.get();
   }
 
-  void SetNetworkState(const std::string id, bool offline) {
+  void SetNetworkState(const std::string& id, bool offline) {
     scoped_ptr<DevToolsNetworkConditions> conditions(
         new DevToolsNetworkConditions(offline));
-    controller_.SetNetworkStateOnIO(id, conditions.Pass());
+    controller_.SetNetworkState(id, conditions.Pass());
   }
 
   int Start() {

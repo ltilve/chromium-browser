@@ -1,0 +1,262 @@
+build obj/components/nacl_helper_nonsfi.actions_depends.stamp: stamp $
+    gen/tc_nonsfi_helper/lib32/libbase_nacl_nonsfi.a $
+    gen/tc_nonsfi_helper/lib32/libcontent_common_nacl_nonsfi.a $
+    gen/tc_nonsfi_helper/lib32/libipc_nacl_nonsfi.a $
+    gen/tc_nonsfi_helper/lib32/libnacl_sys_private.a $
+    gen/tc_nonsfi_helper/lib32/libelf_loader.a $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp $
+    obj/ppapi/ppapi_proxy_nacl.actions_rules_copies.stamp $
+    gen/tc_nonsfi_helper/lib32/libsandbox_linux_nacl_nonsfi.a $
+    gen/tc_nonsfi_helper/lib32/libnacl_helper_nonsfi_sandbox.a
+
+build obj/components/nacl_helper_nonsfi.compile_depends.stamp: stamp $
+    gen/tc_nonsfi_helper/lib32/libbase_nacl_nonsfi.a $
+    gen/tc_nonsfi_helper/lib32/libcontent_common_nacl_nonsfi.a $
+    gen/tc_nonsfi_helper/lib32/libipc_nacl_nonsfi.a $
+    gen/tc_nonsfi_helper/lib32/libnacl_sys_private.a $
+    gen/tc_nonsfi_helper/lib32/libelf_loader.a $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp $
+    obj/ppapi/ppapi_proxy_nacl.actions_rules_copies.stamp $
+    gen/tc_nonsfi_helper/lib32/libsandbox_linux_nacl_nonsfi.a $
+    gen/tc_nonsfi_helper/lib32/libnacl_helper_nonsfi_sandbox.a
+
+rule $
+    nacl_helper_nonsfi_target_build_non_SFI_helper_x86_32_nexe_a45e65dd2094118c61f49edd75dfc172
+  command = cd ../../components; python $
+      ../native_client/build/build_nexe.py --root .. --product-dir $
+      ../out/Debug/xyz --config-name Debug -t ../native_client/toolchain/ $
+      --arch x86-32-nonsfi --build newlib_nexe_pnacl --name $
+      ../out/Debug/nacl_helper_nonsfi --objdir $
+      ../out/Debug/obj/components/nacl_helper_nonsfi.gen/nonsfi_helper-x86-32/nacl_helper_nonsfi $
+      "--include-dirs=../out/Debug/gen/tc_newlib/include $
+      ../native_client/src/public/linux_syscalls .. \"../out/Debug/gen\" $
+      ../third_party/khronos ../gpu .." $
+      "--compile_flags=--target=i686-unknown-nacl $
+      --pnacl-bias=x86-32-nonsfi -O2 -g -Wall -fdiagnostics-show-option $
+      -Werror  -Wno-unused-function -Wno-char-subscripts $
+      -Wno-c++11-extensions -Wno-unnamed-type-template-args -Wno-extra-semi $
+      -Wno-unused-private-field -Wno-char-subscripts -Wno-unused-function $
+      \"-std=gnu++11\" " --gomadir "" "--defines=\"__STDC_LIMIT_MACROS=1\" $
+      \"__STDC_FORMAT_MACROS=1\" \"_GNU_SOURCE=1\" $
+      \"_POSIX_C_SOURCE=199506\" \"_XOPEN_SOURCE=600\" $
+      \"DYNAMIC_ANNOTATIONS_ENABLED=1\" $
+      \"DYNAMIC_ANNOTATIONS_PREFIX=NACL_\" \"NACL_BUILD_ARCH=x86\" $
+      V8_DEPRECATION_WARNINGS \"CLD_VERSION=2\" \"_FILE_OFFSET_BITS=64\" $
+      CHROMIUM_BUILD \"CR_CLANG_REVISION=255169-1\" $
+      UI_COMPOSITOR_IMAGE_TRANSPORT \"USE_AURA=1\" \"USE_ASH=1\" $
+      \"USE_PANGO=1\" \"USE_CAIRO=1\" \"USE_DEFAULT_RENDER_THEME=1\" $
+      \"USE_LIBJPEG_TURBO=1\" \"USE_X11=1\" \"USE_CLIPBOARD_AURAX11=1\" $
+      ENABLE_ONE_CLICK_SIGNIN \"ENABLE_WEBRTC=1\" \"ENABLE_MEDIA_ROUTER=1\" $
+      ENABLE_PEPPER_CDMS ENABLE_CONFIGURATION_POLICY ENABLE_NOTIFICATIONS $
+      \"ENABLE_HIDPI=1\" \"ENABLE_TOPCHROME_MD=1\" USE_UDEV $
+      DONT_EMBED_BUILD_METADATA FIELDTRIAL_TESTING_ENABLED $
+      \"ENABLE_TASK_MANAGER=1\" \"ENABLE_EXTENSIONS=1\" \"ENABLE_PDF=1\" $
+      \"ENABLE_PLUGINS=1\" \"ENABLE_SESSION_SERVICE=1\" \"ENABLE_THEMES=1\" $
+      \"ENABLE_AUTOFILL_DIALOG=1\" \"ENABLE_BACKGROUND=1\" $
+      \"ENABLE_PRINTING=1\" \"ENABLE_BASIC_PRINTING=1\" $
+      \"ENABLE_PRINT_PREVIEW=1\" \"ENABLE_SPELLCHECK=1\" $
+      \"ENABLE_CAPTIVE_PORTAL_DETECTION=1\" \"ENABLE_APP_LIST=1\" $
+      \"ENABLE_SETTINGS_APP=1\" \"ENABLE_SUPERVISED_USERS=1\" $
+      \"ENABLE_MDNS=1\" \"ENABLE_SERVICE_DISCOVERY=1\" $
+      V8_USE_EXTERNAL_STARTUP_DATA FULL_SAFE_BROWSING SAFE_BROWSING_CSD $
+      SAFE_BROWSING_DB_LOCAL \"USE_LIBPCI=1\" \"USE_OPENSSL=1\" $
+      \"USE_OPENSSL_CERTS=1\" __STDC_CONSTANT_MACROS __STDC_FORMAT_MACROS" $
+      "--link_flags=--target=i686-unknown-nacl -arch x86-32-nonsfi $
+      --pnacl-allow-translate --pnacl-allow-native -Wl,--noirt -Wt,--noirt $
+      -Wt,--noirtshim -nodefaultlibs $
+      -B../out/Debug/gen/tc_nonsfi_helper/lib32 -Wl,--start-group -lc++ -lm $
+      -lnacl -lc -lpnaclmm -lbase_nacl_nonsfi -lcommand_buffer_client_nacl $
+      -lcommand_buffer_common_nacl -lcontent_common_nacl_nonsfi $
+      -lelf_loader -levent_nacl_nonsfi -lgio -lgles2_cmd_helper_nacl $
+      -lgles2_implementation_nacl -lgles2_utils_nacl -lgpu_ipc_nacl $
+      -lipc_nacl_nonsfi -lnacl_helper_nonsfi_sandbox -lplatform $
+      -lppapi_ipc_nacl -lppapi_proxy_nacl -lppapi_shared_nacl $
+      -lsandbox_linux_nacl_nonsfi -lshared_memory_support_nacl $
+      -ltracing_nacl  -Wl,--end-group" $
+      "--source-list=../out/gypfiles/components/nonsfi_helper-x86-32-nonsfi.nacl_helper_nonsfi.source_list.gypcmd"
+  description = ACTION nacl_helper_nonsfi: build non-SFI helper x86-32 $
+      nexe_a45e65dd2094118c61f49edd75dfc172
+  restat = 1
+
+build nacl_helper_nonsfi: $
+    nacl_helper_nonsfi_target_build_non_SFI_helper_x86_32_nexe_a45e65dd2094118c61f49edd75dfc172 $
+    ../../native_client/build/build_nexe.py $
+    ../../native_client/build/build_nexe_tools.py ../../base/at_exit.h $
+    ../../base/atomic_ref_count.h ../../base/atomicops.h $
+    ../../base/atomicops_internals_atomicword_compat.h $
+    ../../base/atomicops_internals_portable.h $
+    ../../base/atomicops_internals_x86_msvc.h ../../base/base_export.h $
+    ../../base/basictypes.h ../../base/bind.h ../../base/bind_helpers.h $
+    ../../base/bind_internal.h ../../base/bind_internal_win.h $
+    ../../base/callback.h ../../base/callback_forward.h $
+    ../../base/callback_internal.h ../../base/command_line.h $
+    ../../base/compiler_specific.h ../../base/containers/hash_tables.h $
+    ../../base/containers/small_map.h $
+    ../../base/containers/stack_container.h ../../base/debug/alias.h $
+    ../../base/debug/debugger.h ../../base/debug/leak_annotations.h $
+    ../../base/debug/task_annotator.h ../../base/environment.h $
+    ../../base/event_types.h ../../base/file_descriptor_posix.h $
+    ../../base/files/file.h ../../base/files/file_path.h $
+    ../../base/files/file_tracing.h ../../base/files/file_util.h $
+    ../../base/files/memory_mapped_file.h ../../base/files/scoped_file.h $
+    ../../base/format_macros.h ../../base/gtest_prod_util.h $
+    ../../base/lazy_instance.h ../../base/location.h ../../base/logging.h $
+    ../../base/mac/scoped_cffiledescriptorref.h $
+    ../../base/mac/scoped_cftyperef.h ../../base/mac/scoped_typeref.h $
+    ../../base/macros.h ../../base/memory/aligned_memory.h $
+    ../../base/memory/manual_constructor.h $
+    ../../base/memory/raw_scoped_refptr_mismatch_checker.h $
+    ../../base/memory/ref_counted.h ../../base/memory/ref_counted_memory.h $
+    ../../base/memory/scoped_policy.h ../../base/memory/scoped_ptr.h $
+    ../../base/memory/scoped_vector.h ../../base/memory/shared_memory.h $
+    ../../base/memory/shared_memory_handle.h ../../base/memory/singleton.h $
+    ../../base/memory/weak_ptr.h $
+    ../../base/message_loop/incoming_task_queue.h $
+    ../../base/message_loop/message_loop.h $
+    ../../base/message_loop/message_loop_task_runner.h $
+    ../../base/message_loop/message_pump.h $
+    ../../base/message_loop/message_pump_dispatcher.h $
+    ../../base/message_loop/message_pump_io_ios.h $
+    ../../base/message_loop/message_pump_libevent.h $
+    ../../base/message_loop/message_pump_mac.h $
+    ../../base/message_loop/message_pump_win.h $
+    ../../base/message_loop/timer_slack.h ../../base/move.h $
+    ../../base/numerics/safe_conversions.h $
+    ../../base/numerics/safe_conversions_impl.h $
+    ../../base/numerics/safe_math.h ../../base/numerics/safe_math_impl.h $
+    ../../base/observer_list.h ../../base/pending_task.h $
+    ../../base/pickle.h ../../base/posix/eintr_wrapper.h $
+    ../../base/posix/file_descriptor_shuffle.h $
+    ../../base/posix/global_descriptors.h $
+    ../../base/posix/unix_domain_socket_linux.h ../../base/process/kill.h $
+    ../../base/process/launch.h ../../base/process/port_provider_mac.h $
+    ../../base/process/process.h ../../base/process/process_handle.h $
+    ../../base/process/process_metrics.h $
+    ../../base/profiler/alternate_timer.h $
+    ../../base/profiler/scoped_profile.h ../../base/profiler/tracked_time.h $
+    ../../base/rand_util.h ../../base/scoped_generic.h $
+    ../../base/sequence_checker.h ../../base/sequence_checker_impl.h $
+    ../../base/sequenced_task_runner.h $
+    ../../base/sequenced_task_runner_helpers.h $
+    ../../base/single_thread_task_runner.h ../../base/stl_util.h $
+    ../../base/strings/string16.h ../../base/strings/string_piece.h $
+    ../../base/strings/string_util.h ../../base/strings/string_util_posix.h $
+    ../../base/strings/string_util_win.h ../../base/strings/stringprintf.h $
+    ../../base/synchronization/condition_variable.h $
+    ../../base/synchronization/lock.h $
+    ../../base/synchronization/lock_impl.h $
+    ../../base/synchronization/waitable_event.h $
+    ../../base/synchronization/waitable_event_watcher.h $
+    ../../base/task_runner.h ../../base/template_util.h $
+    ../../base/threading/non_thread_safe.h $
+    ../../base/threading/non_thread_safe_impl.h $
+    ../../base/threading/platform_thread.h $
+    ../../base/threading/sequenced_worker_pool.h $
+    ../../base/threading/thread.h ../../base/threading/thread_checker.h $
+    ../../base/threading/thread_checker_impl.h $
+    ../../base/threading/thread_collision_warner.h $
+    ../../base/threading/thread_local.h $
+    ../../base/threading/thread_local_storage.h $
+    ../../base/threading/thread_restrictions.h ../../base/time/time.h $
+    ../../base/timer/timer.h $
+    ../../base/trace_event/common/trace_event_common.h $
+    ../../base/trace_event/memory_dump_provider.h $
+    ../../base/trace_event/memory_dump_request_args.h $
+    ../../base/trace_event/trace_config.h $
+    ../../base/trace_event/trace_event.h $
+    ../../base/trace_event/trace_event_impl.h $
+    ../../base/trace_event/trace_event_memory_overhead.h $
+    ../../base/trace_event/trace_event_system_stats_monitor.h $
+    ../../base/trace_event/trace_log.h ../../base/tracked_objects.h $
+    ../../base/tracking_info.h ../../base/tuple.h ../../base/values.h $
+    ../../base/win/object_watcher.h ../../base/win/scoped_handle.h $
+    ../../build/build_config.h ../../content/common/content_export.h $
+    ../../content/public/common/content_descriptors.h $
+    ../../content/public/common/send_zygote_child_ping_linux.h $
+    ../../content/public/common/zygote_fork_delegate_linux.h $
+    ../../ipc/attachment_broker.h ../../ipc/brokerable_attachment.h $
+    ../../ipc/ipc_channel.h ../../ipc/ipc_channel_handle.h $
+    ../../ipc/ipc_channel_proxy.h ../../ipc/ipc_descriptors.h $
+    ../../ipc/ipc_endpoint.h ../../ipc/ipc_export.h $
+    ../../ipc/ipc_listener.h ../../ipc/ipc_message.h $
+    ../../ipc/ipc_message_attachment.h ../../ipc/ipc_message_macros.h $
+    ../../ipc/ipc_message_null_macros.h ../../ipc/ipc_message_start.h $
+    ../../ipc/ipc_message_utils.h ../../ipc/ipc_message_utils_impl.h $
+    ../../ipc/ipc_param_traits.h ../../ipc/ipc_platform_file.h $
+    ../../ipc/ipc_sender.h ../../ipc/ipc_switches.h $
+    ../../ipc/ipc_sync_channel.h ../../ipc/ipc_sync_message.h $
+    ../../ipc/ipc_sync_message_filter.h ../../ipc/message_filter.h $
+    ../../ipc/param_traits_log_macros.h ../../ipc/param_traits_macros.h $
+    ../../ipc/param_traits_read_macros.h $
+    ../../ipc/param_traits_write_macros.h $
+    ../../ipc/struct_constructor_macros.h $
+    ../../ipc/struct_destructor_macros.h $
+    ../../native_client/src/include/build_config.h $
+    ../../native_client/src/include/elf_auxv.h $
+    ../../native_client/src/include/nacl_base.h $
+    ../../native_client/src/include/nacl_compiler_annotations.h $
+    ../../native_client/src/include/nacl_macros.h $
+    ../../native_client/src/include/portability.h $
+    ../../native_client/src/include/win/port_win.h $
+    ../../native_client/src/public/chrome_main.h $
+    ../../native_client/src/public/nonsfi/elf_loader.h $
+    ../../native_client/src/public/nonsfi/irt_exception_handling.h $
+    ../../native_client/src/public/nonsfi/irt_random.h $
+    ../../native_client/src/public/nonsfi/irt_signal_handling.h $
+    ../../native_client/src/shared/imc/nacl_imc_c.h $
+    ../../native_client/src/third_party/valgrind/memcheck.h $
+    ../../native_client/src/third_party/valgrind/valgrind.h $
+    ../../native_client/src/trusted/service_runtime/include/bits/wordsize.h $
+    ../../native_client/src/trusted/service_runtime/include/machine/_types.h $
+    ../../ppapi/nacl_irt/irt_interfaces.h $
+    ../../ppapi/nacl_irt/irt_manifest.h $
+    ../../ppapi/nacl_irt/plugin_startup.h $
+    ../../ppapi/proxy/ppapi_proxy_export.h $
+    ../../sandbox/linux/services/credentials.h $
+    ../../sandbox/linux/services/namespace_sandbox.h $
+    ../../sandbox/linux/system_headers/capability.h $
+    ../../sandbox/sandbox_export.h $
+    ../../testing/gtest/include/gtest/gtest_prod.h $
+    ../../components/nacl/common/nacl_messages.cc $
+    ../../components/nacl/common/nacl_messages.h $
+    ../../components/nacl/common/nacl_switches.cc $
+    ../../components/nacl/common/nacl_switches.h $
+    ../../components/nacl/common/nacl_types.cc $
+    ../../components/nacl/common/nacl_types.h $
+    ../../components/nacl/common/nacl_types_param_traits.cc $
+    ../../components/nacl/common/nacl_types_param_traits.h $
+    ../../components/nacl/loader/nacl_helper_linux.cc $
+    ../../components/nacl/loader/nacl_helper_linux.h $
+    ../../components/nacl/loader/nacl_listener.h $
+    ../../components/nacl/loader/nacl_trusted_listener.cc $
+    ../../components/nacl/loader/nacl_trusted_listener.h $
+    ../../components/nacl/loader/nonsfi/nonsfi_listener.cc $
+    ../../components/nacl/loader/nonsfi/nonsfi_listener.h $
+    ../../components/nacl/loader/nonsfi/nonsfi_main.cc $
+    ../../components/nacl/loader/nonsfi/nonsfi_main.h $
+    ../../components/nacl/loader/sandbox_linux/nacl_sandbox_linux.h $
+    gen/tc_nonsfi_helper/lib32/libbase_nacl_nonsfi.a $
+    gen/tc_nonsfi_helper/lib32/libcommand_buffer_client_nacl.a $
+    gen/tc_nonsfi_helper/lib32/libcommand_buffer_common_nacl.a $
+    gen/tc_nonsfi_helper/lib32/libcontent_common_nacl_nonsfi.a $
+    gen/tc_nonsfi_helper/lib32/libelf_loader.a $
+    gen/tc_nonsfi_helper/lib32/libevent_nacl_nonsfi.a $
+    gen/tc_nonsfi_helper/lib32/libgio.a $
+    gen/tc_nonsfi_helper/lib32/libgles2_cmd_helper_nacl.a $
+    gen/tc_nonsfi_helper/lib32/libgles2_implementation_nacl.a $
+    gen/tc_nonsfi_helper/lib32/libgles2_utils_nacl.a $
+    gen/tc_nonsfi_helper/lib32/libgpu_ipc_nacl.a $
+    gen/tc_nonsfi_helper/lib32/libipc_nacl_nonsfi.a $
+    gen/tc_nonsfi_helper/lib32/libnacl_helper_nonsfi_sandbox.a $
+    gen/tc_nonsfi_helper/lib32/libplatform.a $
+    gen/tc_nonsfi_helper/lib32/libppapi_ipc_nacl.a $
+    gen/tc_nonsfi_helper/lib32/libppapi_proxy_nacl.a $
+    gen/tc_nonsfi_helper/lib32/libppapi_shared_nacl.a $
+    gen/tc_nonsfi_helper/lib32/libsandbox_linux_nacl_nonsfi.a $
+    gen/tc_nonsfi_helper/lib32/libshared_memory_support_nacl.a $
+    gen/tc_nonsfi_helper/lib32/libtracing_nacl.a $
+    ../../out/gypfiles/components/nonsfi_helper-x86-32-nonsfi.nacl_helper_nonsfi.source_list.gypcmd $
+    ../../native_client/toolchain/linux_x86/pnacl_newlib/pnacl_newlib.json $
+    gen/tc_nonsfi_helper/lib32/libnacl_sys_private.a || $
+    obj/components/nacl_helper_nonsfi.actions_depends.stamp
+

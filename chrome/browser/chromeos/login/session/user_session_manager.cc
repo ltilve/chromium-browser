@@ -10,6 +10,7 @@
 #include "base/bind.h"
 #include "base/command_line.h"
 #include "base/logging.h"
+#include "base/message_loop/message_loop.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/path_service.h"
 #include "base/prefs/pref_member.h"
@@ -31,6 +32,7 @@
 #include "chrome/browser/chromeos/base/locale_util.h"
 #include "chrome/browser/chromeos/boot_times_recorder.h"
 #include "chrome/browser/chromeos/first_run/first_run.h"
+#include "chrome/browser/chromeos/first_run/goodies_displayer.h"
 #include "chrome/browser/chromeos/input_method/input_method_util.h"
 #include "chrome/browser/chromeos/login/auth/chrome_cryptohome_authenticator.h"
 #include "chrome/browser/chromeos/login/chrome_restart_request.h"
@@ -61,11 +63,9 @@
 #include "chrome/browser/lifetime/application_lifetime.h"
 #include "chrome/browser/net/crl_set_fetcher.h"
 #include "chrome/browser/net/nss_context.h"
-#include "chrome/browser/pref_service_flags_storage.h"
 #include "chrome/browser/prefs/session_startup_pref.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/profiles/profile_manager.h"
-#include "chrome/browser/rlz/rlz.h"
 #include "chrome/browser/signin/account_tracker_service_factory.h"
 #include "chrome/browser/signin/easy_unlock_service.h"
 #include "chrome/browser/signin/signin_manager_factory.h"
@@ -88,6 +88,7 @@
 #include "chromeos/network/portal_detector/network_portal_detector_strategy.h"
 #include "chromeos/settings/cros_settings_names.h"
 #include "components/component_updater/component_updater_service.h"
+#include "components/flags_ui/pref_service_flags_storage.h"
 #include "components/policy/core/common/cloud/cloud_policy_constants.h"
 #include "components/session_manager/core/session_manager.h"
 #include "components/signin/core/browser/account_tracker_service.h"
@@ -98,8 +99,14 @@
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/notification_service.h"
 #include "content/public/browser/storage_partition.h"
+#include "ui/base/ime/chromeos/input_method_descriptor.h"
 #include "ui/base/ime/chromeos/input_method_manager.h"
 #include "url/gurl.h"
+
+#if defined(ENABLE_RLZ)
+#include "chrome/browser/rlz/chrome_rlz_tracker_delegate.h"
+#include "components/rlz/rlz_tracker.h"
+#endif
 
 namespace chromeos {
 
@@ -108,6 +115,10 @@ namespace {
 // Milliseconds until we timeout our attempt to fetch flags from the child
 // account service.
 static const int kFlagsFetchingLoginTimeoutMs = 1000;
+
+// The maximum ammount of time that we are willing to delay a browser restart
+// for, waiting for a session restore to finish.
+static const int kMaxRestartDelaySeconds = 10;
 
 // ChromeVox tutorial URL (used in place of "getting started" url when
 // accessibility is enabled).
@@ -137,26 +148,38 @@ void InitLocaleAndInputMethodsForNewUser(
   // First, we'll set kLanguagePreloadEngines.
   input_method::InputMethodManager* manager =
       input_method::InputMethodManager::Get();
-  std::vector<std::string> input_method_ids;
 
+  input_method::InputMethodDescriptor preferred_input_method;
   if (!public_session_input_method.empty()) {
-    // If this is a public session and the user chose a
-    // |public_session_input_method|, set kLanguagePreloadEngines to this input
-    // method only.
-    input_method_ids.push_back(public_session_input_method);
-  } else {
-    // Otherwise, set kLanguagePreloadEngines to a list of input methods derived
-    // from the |locale| and the currently active input method.
-    manager->GetInputMethodUtil()->GetFirstLoginInputMethodIds(
-        locale,
-        session_manager->GetDefaultIMEState(profile)->GetCurrentInputMethod(),
-        &input_method_ids);
+    // If this is a public session and the user chose a valid
+    // |public_session_input_method|, use it as the |preferred_input_method|.
+    const input_method::InputMethodDescriptor* const descriptor =
+        manager->GetInputMethodUtil()->GetInputMethodDescriptorFromId(
+            public_session_input_method);
+    if (descriptor) {
+      preferred_input_method = *descriptor;
+    } else {
+      LOG(WARNING) << "Public session is initialized with an invalid IME"
+                   << ", id=" << public_session_input_method;
+    }
   }
+
+  // If |preferred_input_method| is not set, use the currently active input
+  // method.
+  if (preferred_input_method.id().empty()) {
+    preferred_input_method =
+        session_manager->GetDefaultIMEState(profile)->GetCurrentInputMethod();
+  }
+
+  // Derive kLanguagePreloadEngines from |locale| and |preferred_input_method|.
+  std::vector<std::string> input_method_ids;
+  manager->GetInputMethodUtil()->GetFirstLoginInputMethodIds(
+      locale, preferred_input_method, &input_method_ids);
 
   // Save the input methods in the user's preferences.
   StringPrefMember language_preload_engines;
   language_preload_engines.Init(prefs::kLanguagePreloadEngines, prefs);
-  language_preload_engines.SetValue(JoinString(input_method_ids, ','));
+  language_preload_engines.SetValue(base::JoinString(input_method_ids, ","));
   BootTimesRecorder::Get()->AddLoginTimeMarker("IMEStarted", false);
 
   // Second, we'll set kLanguagePreferredLanguages.
@@ -184,7 +207,7 @@ void InitLocaleAndInputMethodsForNewUser(
 
   // Save the preferred languages in the user's preferences.
   prefs->SetString(prefs::kLanguagePreferredLanguages,
-                   JoinString(language_codes, ','));
+                   base::JoinString(language_codes, ","));
 
   // Indicate that we need to merge the syncable input methods when we sync,
   // since we have not applied the synced prefs before.
@@ -215,7 +238,7 @@ void OnGetNSSCertDatabaseForUser(net::NSSCertDatabase* database) {
 // Returns new CommandLine with per-user flags.
 base::CommandLine CreatePerSessionCommandLine(Profile* profile) {
   base::CommandLine user_flags(base::CommandLine::NO_PROGRAM);
-  about_flags::PrefServiceFlagsStorage flags_storage_(profile->GetPrefs());
+  flags_ui::PrefServiceFlagsStorage flags_storage_(profile->GetPrefs());
   about_flags::ConvertFlagsToSwitches(&flags_storage_, &user_flags,
                                       about_flags::kAddSentinels);
   return user_flags;
@@ -282,6 +305,12 @@ void LogCustomSwitches(const std::set<std::string>& switches) {
   }
 }
 
+void RestartOnTimeout() {
+  LOG(WARNING) << "Restarting Chrome because the time out was reached."
+                  "The session restore has not finished.";
+  chrome::AttemptRestart();
+}
+
 }  // namespace
 
 UserSessionManagerDelegate::~UserSessionManagerDelegate() {
@@ -295,8 +324,8 @@ UserSessionStateObserver::~UserSessionStateObserver() {
 
 // static
 UserSessionManager* UserSessionManager::GetInstance() {
-  return Singleton<UserSessionManager,
-      DefaultSingletonTraits<UserSessionManager> >::get();
+  return base::Singleton<UserSessionManager, base::DefaultSingletonTraits<
+                                                 UserSessionManager>>::get();
 }
 
 // static
@@ -322,6 +351,7 @@ void UserSessionManager::OverrideHomedir() {
 void UserSessionManager::RegisterPrefs(PrefRegistrySimple* registry) {
   registry->RegisterStringPref(prefs::kRLZBrand, std::string());
   registry->RegisterBooleanPref(prefs::kRLZDisabled, false);
+  registry->RegisterBooleanPref(prefs::kCanShowOobeGoodiesPage, true);
 }
 
 UserSessionManager::UserSessionManager()
@@ -368,11 +398,8 @@ void UserSessionManager::CompleteGuestSessionLogin(const GURL& start_url) {
   const base::CommandLine& browser_command_line =
       *base::CommandLine::ForCurrentProcess();
   base::CommandLine command_line(browser_command_line.GetProgram());
-  std::string cmd_line_str =
-      GetOffTheRecordCommandLine(start_url,
-                                 StartupUtils::IsOobeCompleted(),
-                                 browser_command_line,
-                                 &command_line);
+  GetOffTheRecordCommandLine(start_url, StartupUtils::IsOobeCompleted(),
+                             browser_command_line, &command_line);
 
   // This makes sure that Chrome restarts with no per-session flags. The guest
   // profile will always have empty set of per-session flags. If this is not
@@ -387,7 +414,7 @@ void UserSessionManager::CompleteGuestSessionLogin(const GURL& start_url) {
         chromeos::login::kGuestUserName, base::CommandLine::StringVector());
   }
 
-  RestartChrome(cmd_line_str);
+  RestartChrome(command_line);
 }
 
 scoped_refptr<Authenticator> UserSessionManager::CreateAuthenticator(
@@ -450,8 +477,8 @@ void UserSessionManager::DelegateDeleted(UserSessionManagerDelegate* delegate) {
 void UserSessionManager::PerformPostUserLoggedInActions() {
   user_manager::UserManager* user_manager = user_manager::UserManager::Get();
   if (user_manager->GetLoggedInUsers().size() == 1) {
-    if (NetworkPortalDetector::IsInitialized()) {
-      NetworkPortalDetector::Get()->SetStrategy(
+    if (network_portal_detector::IsInitialized()) {
+      network_portal_detector::GetInstance()->SetStrategy(
           PortalDetectorStrategy::STRATEGY_ID_SESSION);
     }
   }
@@ -672,8 +699,7 @@ bool UserSessionManager::RestartToApplyPerSessionFlagsIfNeed(
 }
 
 bool UserSessionManager::NeedsToUpdateEasyUnlockKeys() const {
-  return EasyUnlockService::IsSignInEnabled() &&
-         !user_context_.GetUserID().empty() &&
+  return !user_context_.GetUserID().empty() &&
          user_manager::User::TypeHasGaiaAccount(user_context_.GetUserType()) &&
          user_context_.GetKey() && !user_context_.GetKey()->GetSecret().empty();
 }
@@ -810,7 +836,7 @@ void UserSessionManager::ChildAccountStatusReceivedCallback(Profile* profile) {
 }
 
 void UserSessionManager::StopChildStatusObserving(Profile* profile) {
-  if (!waiting_for_child_account_status_ &&
+  if (waiting_for_child_account_status_ &&
       !SessionStartupPref::TypeIsManaged(profile->GetPrefs())) {
     InitializeStartUrls();
   }
@@ -941,7 +967,7 @@ void UserSessionManager::InitProfilePreferences(
     if (gaia_id.empty()) {
       AccountTrackerService* account_tracker =
           AccountTrackerServiceFactory::GetForProfile(profile);
-      AccountTrackerService::AccountInfo info =
+      AccountInfo info =
           account_tracker->FindAccountInfoByEmail(user_context.GetUserID());
       gaia_id = info.gaia;
       DCHECK(!gaia_id.empty());
@@ -1113,6 +1139,9 @@ void UserSessionManager::FinalizePrepareProfile(Profile* profile) {
   // launch browser.
   bool browser_launched = InitializeUserSession(profile);
 
+  // If needed, create browser observer to display first run OOBE Goodies page.
+  first_run::GoodiesDisplayer::Init();
+
   // TODO(nkostylev): This pointer should probably never be NULL, but it looks
   // like OnProfileCreated() may be getting called before
   // UserSessionManager::PrepareProfile() has set |delegate_| when Chrome is
@@ -1144,7 +1173,7 @@ void UserSessionManager::InitializeStartUrls() const {
       const char* url = kChromeVoxTutorialURLPattern;
       PrefService* prefs = g_browser_process->local_state();
       const std::string current_locale =
-          base::StringToLowerASCII(prefs->GetString(prefs::kApplicationLocale));
+          base::ToLowerASCII(prefs->GetString(prefs::kApplicationLocale));
       std::string vox_url = base::StringPrintf(url, current_locale.c_str());
       start_urls.push_back(vox_url);
       can_show_getstarted_guide = false;
@@ -1156,7 +1185,7 @@ void UserSessionManager::InitializeStartUrls() const {
 
   if (can_show_getstarted_guide && should_show_getstarted_guide) {
     // Don't open default Chrome window if we're going to launch the first-run
-    // app. Because we dont' want the first-run app to be hidden in the
+    // app. Because we don't want the first-run app to be hidden in the
     // background.
     base::CommandLine::ForCurrentProcess()->AppendSwitch(
         ::switches::kSilentLaunch);
@@ -1298,7 +1327,7 @@ void UserSessionManager::InitRlzImpl(Profile* profile, bool disabled) {
   }
   if (disabled != local_state->GetBoolean(prefs::kRLZDisabled)) {
     // When switching to RLZ enabled/disabled state, clear all recorded events.
-    RLZTracker::ClearRlzState();
+    rlz::RLZTracker::ClearRlzState();
     local_state->SetBoolean(prefs::kRLZDisabled, disabled);
   }
   // Init the RLZ library.
@@ -1306,11 +1335,14 @@ void UserSessionManager::InitRlzImpl(Profile* profile, bool disabled) {
       ::first_run::GetPingDelayPrefName().c_str());
   // Negative ping delay means to send ping immediately after a first search is
   // recorded.
-  RLZTracker::InitRlzFromProfileDelayed(
-      profile,
-      user_manager::UserManager::Get()->IsCurrentUserNew(),
-      ping_delay < 0,
-      base::TimeDelta::FromMilliseconds(abs(ping_delay)));
+  rlz::RLZTracker::SetRlzDelegate(
+      make_scoped_ptr(new ChromeRLZTrackerDelegate));
+  rlz::RLZTracker::InitRlzDelayed(
+      user_manager::UserManager::Get()->IsCurrentUserNew(), ping_delay < 0,
+      base::TimeDelta::FromMilliseconds(abs(ping_delay)),
+      ChromeRLZTrackerDelegate::IsGoogleDefaultSearch(profile),
+      ChromeRLZTrackerDelegate::IsGoogleHomepage(profile),
+      ChromeRLZTrackerDelegate::IsGoogleInStartpages(profile));
 #endif
 }
 
@@ -1425,7 +1457,7 @@ void UserSessionManager::RestorePendingUserSessions() {
 }
 
 void UserSessionManager::NotifyPendingUserSessionsRestoreFinished() {
-  DCHECK(content::BrowserThread::CurrentlyOn(content::BrowserThread::UI));
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   user_sessions_restored_ = true;
   user_sessions_restore_in_progress_ = false;
   FOR_EACH_OBSERVER(chromeos::UserSessionStateObserver,
@@ -1492,6 +1524,12 @@ UserSessionManager::GetAuthRequestContext() const {
 }
 
 void UserSessionManager::AttemptRestart(Profile* profile) {
+  // Restart unconditionally in case if we are stuck somewhere in a session
+  // restore process. http://crbug.com/520346.
+  base::MessageLoop::current()->PostDelayedTask(
+      FROM_HERE, base::Bind(RestartOnTimeout),
+      base::TimeDelta::FromSeconds(kMaxRestartDelaySeconds));
+
   if (CheckEasyUnlockKeyOps(base::Bind(&UserSessionManager::AttemptRestart,
                                        AsWeakPtr(), profile))) {
     return;
@@ -1721,6 +1759,7 @@ bool UserSessionManager::TokenHandlesEnabled() {
 void UserSessionManager::Shutdown() {
   token_handle_fetcher_.reset();
   token_handle_util_.reset();
+  first_run::GoodiesDisplayer::Delete();
 }
 
 void UserSessionManager::CreateTokenUtilIfMissing() {

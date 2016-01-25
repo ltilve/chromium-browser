@@ -11,10 +11,11 @@
 #include "device/bluetooth/bluetooth_adapter_factory.h"
 #include "device/bluetooth/bluetooth_discovery_session.h"
 #include "extensions/browser/api/bluetooth/bluetooth_api.h"
+#include "extensions/browser/api/bluetooth/bluetooth_api_pairing_delegate.h"
 #include "extensions/browser/api/bluetooth/bluetooth_event_router.h"
 #include "extensions/common/api/bluetooth_private.h"
 
-namespace bt_private = extensions::core_api::bluetooth_private;
+namespace bt_private = extensions::api::bluetooth_private;
 namespace SetDiscoveryFilter = bt_private::SetDiscoveryFilter;
 
 namespace extensions {
@@ -60,7 +61,7 @@ void BluetoothPrivateAPI::OnListenerRemoved(const EventListenerInfo& details) {
       details.extension_id);
 }
 
-namespace core_api {
+namespace api {
 
 namespace {
 
@@ -87,6 +88,8 @@ const char kAdapterNotPresent[] =
 const char kDisconnectError[] = "Failed to disconnect device";
 
 const char kSetDiscoveryFilterFailed[] = "Failed to set discovery filter";
+
+const char kPairingFailed[] = "Pairing failed";
 
 // Returns true if the pairing response options passed into the
 // setPairingResponse function are valid.
@@ -227,9 +230,9 @@ void BluetoothPrivateSetAdapterStateFunction::SendError() {
             std::back_inserter(failed_vector));
 
   std::vector<std::string> replacements(1);
-  replacements[0] = JoinString(failed_vector, ", ");
-  std::string error =
-      ReplaceStringPlaceholders(kSetAdapterPropertyError, replacements, NULL);
+  replacements[0] = base::JoinString(failed_vector, ", ");
+  std::string error = base::ReplaceStringPlaceholders(kSetAdapterPropertyError,
+                                                      replacements, NULL);
   SetError(error);
   SendResponse(false);
 }
@@ -415,6 +418,47 @@ bool BluetoothPrivateSetDiscoveryFilterFunction::DoWork(
   return true;
 }
 
-}  // namespace core_api
+BluetoothPrivatePairFunction::BluetoothPrivatePairFunction() {}
+
+BluetoothPrivatePairFunction::~BluetoothPrivatePairFunction() {}
+
+void BluetoothPrivatePairFunction::OnSuccessCallback() {
+  SendResponse(true);
+}
+
+void BluetoothPrivatePairFunction::OnErrorCallback(
+    device::BluetoothDevice::ConnectErrorCode error) {
+  SetError(kPairingFailed);
+  SendResponse(false);
+}
+
+bool BluetoothPrivatePairFunction::DoWork(
+    scoped_refptr<device::BluetoothAdapter> adapter) {
+  scoped_ptr<bt_private::Pair::Params> params(
+      bt_private::Pair::Params::Create(*args_));
+
+  device::BluetoothDevice* device = adapter->GetDevice(params->device_address);
+  if (!device) {
+    SetError(kDeviceNotFoundError);
+    SendResponse(false);
+    return true;
+  }
+
+  BluetoothEventRouter* router =
+      BluetoothAPI::Get(browser_context())->event_router();
+  if (!router->GetPairingDelegate(extension_id())) {
+    SetError(kPairingNotEnabled);
+    SendResponse(false);
+    return true;
+  }
+
+  device->Pair(
+      router->GetPairingDelegate(extension_id()),
+      base::Bind(&BluetoothPrivatePairFunction::OnSuccessCallback, this),
+      base::Bind(&BluetoothPrivatePairFunction::OnErrorCallback, this));
+  return true;
+}
+
+}  // namespace api
 
 }  // namespace extensions

@@ -14,7 +14,7 @@ file. All content written to this directory will be uploaded upon termination
 and the .isolated file describing this directory will be printed to stdout.
 """
 
-__version__ = '0.4.1'
+__version__ = '0.5.2'
 
 import logging
 import optparse
@@ -25,6 +25,7 @@ import tempfile
 from third_party.depot_tools import fix_encoding
 
 from utils import file_path
+from utils import logging_utils
 from utils import on_error
 from utils import subprocess42
 from utils import tools
@@ -78,13 +79,17 @@ def get_as_zip_package(executable=True):
   return package
 
 
-def make_temp_dir(prefix, root_dir):
-  """Returns a temporary directory on the same file system as root_dir."""
+def make_temp_dir(prefix, root_dir=None):
+  """Returns a temporary directory.
+
+  If root_dir is given and /tmp is on same file system as root_dir, uses /tmp.
+  Otherwise makes a new temp directory under root_dir.
+  """
   base_temp_dir = None
   if (root_dir and
       not file_path.is_same_filesystem(root_dir, tempfile.gettempdir())):
     base_temp_dir = root_dir
-  return tempfile.mkdtemp(prefix=prefix, dir=base_temp_dir)
+  return unicode(tempfile.mkdtemp(prefix=prefix, dir=base_temp_dir))
 
 
 def change_tree_read_only(rootdir, read_only):
@@ -117,15 +122,173 @@ def change_tree_read_only(rootdir, read_only):
 
 def process_command(command, out_dir):
   """Replaces isolated specific variables in a command line."""
-  filtered = []
-  for arg in command:
+  def fix(arg):
     if '${ISOLATED_OUTDIR}' in arg:
-      arg = arg.replace('${ISOLATED_OUTDIR}', out_dir).replace('/', os.sep)
-    filtered.append(arg)
-  return filtered
+      return arg.replace('${ISOLATED_OUTDIR}', out_dir).replace('/', os.sep)
+    return arg
+
+  return [fix(arg) for arg in command]
 
 
-def run_tha_test(isolated_hash, storage, cache, leak_temp_dir, extra_args):
+def run_command(command, cwd, tmp_dir):
+  """Runs the command, returns the process exit code."""
+  logging.info('run_command(%s, %s)' % (command, cwd))
+  sys.stdout.flush()
+
+  env = os.environ.copy()
+  if sys.platform == 'darwin':
+    env['TMPDIR'] = tmp_dir.encode('ascii')
+  elif sys.platform == 'win32':
+    # Temporarily disable this behavior on Windows while investigating
+    # https://crbug.com/533552.
+    # env['TEMP'] = tmp_dir.encode('ascii')
+    pass
+  else:
+    env['TMP'] = tmp_dir.encode('ascii')
+  with tools.Profiler('RunTest'):
+    try:
+      with subprocess42.Popen_with_handler(command, cwd=cwd, env=env) as p:
+        p.communicate()
+        exit_code = p.returncode
+    except OSError:
+      # This is not considered to be an internal error. The executable simply
+      # does not exit.
+      exit_code = 1
+  logging.info(
+      'Command finished with exit code %d (%s)',
+      exit_code, hex(0xffffffff & exit_code))
+  return exit_code
+
+
+def delete_and_upload(storage, out_dir, leak_temp_dir):
+  """Deletes the temporary run directory and uploads results back.
+
+  Returns:
+    tuple(outputs_ref, success)
+    - outputs_ref is a dict referring to the results archived back to the
+      isolated server, if applicable.
+    - success is False if something occurred that means that the task must
+      forcibly be considered a failure, e.g. zombie processes were left behind.
+  """
+
+  # Upload out_dir and generate a .isolated file out of this directory. It is
+  # only done if files were written in the directory.
+  outputs_ref = None
+  if os.path.isdir(out_dir) and os.listdir(out_dir):
+    with tools.Profiler('ArchiveOutput'):
+      try:
+        results = isolateserver.archive_files_to_storage(
+            storage, [out_dir], None)
+        outputs_ref = {
+          'isolated': results[0][0],
+          'isolatedserver': storage.location,
+          'namespace': storage.namespace,
+        }
+      except isolateserver.Aborted:
+        # This happens when a signal SIGTERM was received while uploading data.
+        # There is 2 causes:
+        # - The task was too slow and was about to be killed anyway due to
+        #   exceeding the hard timeout.
+        # - The amount of data uploaded back is very large and took too much
+        #   time to archive.
+        sys.stderr.write('Received SIGTERM while uploading')
+        # Re-raise, so it will be treated as an internal failure.
+        raise
+  try:
+    if (not leak_temp_dir and os.path.isdir(out_dir) and
+        not file_path.rmtree(out_dir)):
+      logging.error('Had difficulties removing out_dir %s', out_dir)
+      return outputs_ref, False
+  except OSError as e:
+    # When this happens, it means there's a process error.
+    logging.error('Had difficulties removing out_dir %s: %s', out_dir, e)
+    return outputs_ref, False
+  return outputs_ref, True
+
+
+def map_and_run(
+    isolated_hash, storage, cache, leak_temp_dir, root_dir, extra_args):
+  """Maps and run the command. Returns metadata about the result."""
+  # TODO(maruel): Include performance statistics.
+  result = {
+    'exit_code': None,
+    'internal_failure': None,
+    'outputs_ref': None,
+    'version': 1,
+  }
+  if root_dir:
+    if not os.path.isdir(root_dir):
+      os.makedirs(root_dir, 0700)
+    prefix = u''
+  else:
+    root_dir = os.path.dirname(cache.cache_dir) if cache.cache_dir else None
+    prefix = u'isolated_'
+  run_dir = make_temp_dir(prefix + u'run', root_dir)
+  out_dir = make_temp_dir(prefix + u'out', root_dir)
+  tmp_dir = make_temp_dir(prefix + u'tmp', root_dir)
+  try:
+    bundle = isolateserver.fetch_isolated(
+        isolated_hash=isolated_hash,
+        storage=storage,
+        cache=cache,
+        outdir=run_dir,
+        require_command=True)
+
+    change_tree_read_only(run_dir, bundle.read_only)
+    cwd = os.path.normpath(os.path.join(run_dir, bundle.relative_cwd))
+    command = bundle.command + extra_args
+    file_path.ensure_command_has_abs_path(command, cwd)
+    result['exit_code'] = run_command(
+        process_command(command, out_dir), cwd, tmp_dir)
+  except Exception as e:
+    # An internal error occured. Report accordingly so the swarming task will be
+    # retried automatically.
+    logging.error('internal failure: %s', e)
+    result['internal_failure'] = str(e)
+    on_error.report(None)
+  finally:
+    try:
+      if leak_temp_dir:
+        logging.warning(
+            'Deliberately leaking %s for later examination', run_dir)
+      else:
+        if os.path.isdir(run_dir) and not file_path.rmtree(run_dir):
+          # On Windows rmtree(run_dir) call above has a synchronization effect:
+          # it finishes only when all task child processes terminate (since a
+          # running process locks *.exe file). Examine out_dir only after that
+          # call completes (since child processes may write to out_dir too and
+          # we need to wait for them to finish).
+          print >> sys.stderr, (
+              'Failed to delete the run directory, forcibly failing\n'
+              'the task because of it. No zombie process can outlive a\n'
+              'successful task run and still be marked as successful.\n'
+              'Fix your stuff.')
+          if result['exit_code'] == 0:
+            result['exit_code'] = 1
+        if os.path.isdir(tmp_dir) and not file_path.rmtree(tmp_dir):
+          print >> sys.stderr, (
+              'Failed to delete the temporary directory, forcibly failing\n'
+              'the task because of it. No zombie process can outlive a\n'
+              'successful task run and still be marked as successful.\n'
+              'Fix your stuff.')
+          if result['exit_code'] == 0:
+            result['exit_code'] = 1
+
+      # This deletes out_dir if leak_temp_dir is not set.
+      result['outputs_ref'], success = delete_and_upload(
+          storage, out_dir, leak_temp_dir)
+      if not success and result['exit_code'] == 0:
+        result['exit_code'] = 1
+    except Exception as e:
+      # Swallow any exception in the main finally clause.
+      logging.error('Leaking out_dir %s: %s', out_dir, e)
+      result['internal_failure'] = str(e)
+  return result
+
+
+def run_tha_test(
+    isolated_hash, storage, cache, leak_temp_dir, result_json, root_dir,
+    extra_args):
   """Downloads the dependencies in the cache, hardlinks them into a temporary
   directory and runs the executable from there.
 
@@ -144,145 +307,58 @@ def run_tha_test(isolated_hash, storage, cache, leak_temp_dir, extra_args):
            in-memory.
     leak_temp_dir: if true, the temporary directory will be deliberately leaked
                    for later examination.
+    result_json: file path to dump result metadata into. If set, the process
+                 exit code is always 0 unless an internal error occured.
+    root_dir: directory to the path to use to create the temporary directory. If
+              not specified, a random temporary directory is created.
     extra_args: optional arguments to add to the command stated in the .isolate
                 file.
+
+  Returns:
+    Process exit code that should be used.
   """
-  run_dir = make_temp_dir(u'run_tha_test', cache.cache_dir)
-  out_dir = unicode(make_temp_dir(u'isolated_out', cache.cache_dir))
-  result = 0
-  try:
-    try:
-      bundle = isolateserver.fetch_isolated(
-          isolated_hash=isolated_hash,
-          storage=storage,
-          cache=cache,
-          outdir=run_dir,
-          require_command=True)
-    except isolated_format.IsolatedError:
-      on_error.report(None)
-      return 1
+  # run_isolated exit code. Depends on if result_json is used or not.
+  result = map_and_run(
+      isolated_hash, storage, cache, leak_temp_dir, root_dir, extra_args)
+  logging.info('Result:\n%s', tools.format_json(result, dense=True))
+  if result_json:
+    # We've found tests to delete 'work' when quitting, causing an exception
+    # here. Try to recreate the directory if necessary.
+    work_dir = os.path.dirname(result_json)
+    if not os.path.isdir(work_dir):
+      os.mkdir(work_dir)
+    tools.write_json(result_json, result, dense=True)
+    # Only return 1 if there was an internal error.
+    return int(bool(result['internal_failure']))
 
-    change_tree_read_only(run_dir, bundle.read_only)
-    cwd = os.path.normpath(os.path.join(run_dir, bundle.relative_cwd))
-    command = bundle.command + extra_args
-
-    file_path.ensure_command_has_abs_path(command, cwd)
-    command = process_command(command, out_dir)
-    logging.info('Running %s, cwd=%s' % (command, cwd))
-
-    # TODO(csharp): This should be specified somewhere else.
-    # TODO(vadimsh): Pass it via 'env_vars' in manifest.
-    # Add a rotating log file if one doesn't already exist.
-    env = os.environ.copy()
-    if MAIN_DIR:
-      env.setdefault('RUN_TEST_CASES_LOG_FILE',
-          os.path.join(MAIN_DIR, RUN_TEST_CASES_LOG))
+  # Marshall into old-style inline output.
+  if result['outputs_ref']:
+    data = {
+      'hash': result['outputs_ref']['isolated'],
+      'namespace': result['outputs_ref']['namespace'],
+      'storage': result['outputs_ref']['isolatedserver'],
+    }
     sys.stdout.flush()
-    with tools.Profiler('RunTest'):
-      try:
-        with subprocess42.Popen_with_handler(command, cwd=cwd, env=env) as p:
-          p.communicate()
-          result = p.returncode
-      except OSError:
-        on_error.report('Failed to run %s; cwd=%s' % (command, cwd))
-        result = 1
-    logging.info(
-        'Command finished with exit code %d (%s)',
-        result, hex(0xffffffff & result))
-  finally:
-    try:
-      if leak_temp_dir:
-        logging.warning('Deliberately leaking %s for later examination',
-                        run_dir)
-      else:
-        try:
-          if not file_path.rmtree(run_dir):
-            print >> sys.stderr, (
-                'Failed to delete the temporary directory, forcibly failing\n'
-                'the task because of it. No zombie process can outlive a\n'
-                'successful task run and still be marked as successful.\n'
-                'Fix your stuff.')
-            result = result or 1
-        except OSError:
-          logging.warning('Leaking %s', run_dir)
-          result = 1
-
-      # HACK(vadimsh): On Windows rmtree(run_dir) call above has
-      # a synchronization effect: it finishes only when all task child processes
-      # terminate (since a running process locks *.exe file). Examine out_dir
-      # only after that call completes (since child processes may
-      # write to out_dir too and we need to wait for them to finish).
-
-      # Upload out_dir and generate a .isolated file out of this directory.
-      # It is only done if files were written in the directory.
-      if os.path.isdir(out_dir) and os.listdir(out_dir):
-        with tools.Profiler('ArchiveOutput'):
-          try:
-            results = isolateserver.archive_files_to_storage(
-                storage, [out_dir], None)
-          except isolateserver.Aborted:
-            # This happens when a signal SIGTERM was received while uploading
-            # data. There is 2 causes:
-            # - The task was too slow and was about to be killed anyway due to
-            #   exceeding the hard timeout.
-            # - The amount of data uploaded back is very large and took too much
-            #   time to archive.
-            #
-            # There's 3 options to handle this:
-            # - Ignore the upload failure as a silent failure. This can be
-            #   detected client side by the fact no result file exists.
-            # - Return as if the task failed. This is not factually correct.
-            # - Return an internal failure. Sadly, it's impossible at this level
-            #   at the moment.
-            #
-            # For now, silently drop the upload.
-            #
-            # In any case, the process only has a very short grace period so it
-            # needs to exit right away.
-            sys.stderr.write('Received SIGTERM while uploading')
-            results = None
-
-        if results:
-          # TODO(maruel): Implement side-channel to publish this information.
-          output_data = {
-            'hash': results[0][0],
-            'namespace': storage.namespace,
-            'storage': storage.location,
-          }
-          sys.stdout.flush()
-          print(
-              '[run_isolated_out_hack]%s[/run_isolated_out_hack]' %
-              tools.format_json(output_data, dense=True))
-
-    finally:
-      try:
-        if os.path.isdir(out_dir) and not file_path.rmtree(out_dir):
-          result = result or 1
-      except OSError:
-        # The error was already printed out. Report it but that's it. Only
-        # report on non-Windows or on Windows when the process had succeeded.
-        # Due to the way file sharing works on Windows, it's sadly expected that
-        # file deletion may fail when a test failed.
-        if sys.platform != 'win32' or not result:
-          on_error.report(None)
-        result = 1
-
-  return result
+    print(
+        '[run_isolated_out_hack]%s[/run_isolated_out_hack]' %
+        tools.format_json(data, dense=True))
+  return result['exit_code'] or int(bool(result['internal_failure']))
 
 
 def main(args):
   tools.disable_buffering()
-  parser = tools.OptionParserWithLogging(
+  parser = logging_utils.OptionParserWithLogging(
       usage='%prog <options>',
       version=__version__,
       log_file=RUN_ISOLATED_LOG_FILE)
-
+  parser.add_option(
+      '--json',
+      help='dump output metadata to json file. When used, run_isolated returns '
+           'non-zero only on internal failure')
   data_group = optparse.OptionGroup(parser, 'Data source')
   data_group.add_option(
       '-s', '--isolated',
       help='Hash of the .isolated to grab from the isolate server')
-  data_group.add_option(
-      '-H', dest='isolated', help=optparse.SUPPRESS_HELP)
   isolateserver.add_isolate_server_options(data_group)
   parser.add_option_group(data_group)
 
@@ -295,6 +371,8 @@ def main(args):
       action='store_true',
       help='Deliberately leak isolate\'s temp dir for later examination '
           '[default: %default]')
+  debug_group.add_option(
+      '--root-dir', help='Use a directory instead of a random one')
   parser.add_option_group(debug_group)
 
   auth.add_auth_options(parser)
@@ -310,7 +388,8 @@ def main(args):
     # Hashing schemes used by |storage| and |cache| MUST match.
     assert storage.hash_algo == cache.hash_algo
     return run_tha_test(
-        options.isolated, storage, cache, options.leak_temp_dir, args)
+        options.isolated, storage, cache, options.leak_temp_dir, options.json,
+        options.root_dir, args)
 
 
 if __name__ == '__main__':

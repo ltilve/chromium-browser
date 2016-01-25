@@ -23,10 +23,11 @@
 #include "chrome/browser/metrics/chrome_metrics_service_accessor.h"
 #include "chrome/browser/plugins/plugin_prefs.h"
 #include "chrome/browser/profiles/profile.h"
-#include "chrome/common/chrome_version_info.h"
+#include "chrome/common/channel_info.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/grit/chromium_strings.h"
 #include "chrome/grit/generated_resources.h"
+#include "components/version_info/version_info.h"
 #include "content/public/browser/gpu_data_manager.h"
 #include "content/public/browser/gpu_data_manager_observer.h"
 #include "content/public/browser/plugin_service.h"
@@ -112,7 +113,7 @@ class FlashDOMHandler : public WebUIMessageHandler,
   void OnTimeout();
 
   // A timer to keep track of when the data fetching times out.
-  base::OneShotTimer<FlashDOMHandler> timeout_;
+  base::OneShotTimer timeout_;
 
   // Crash list.
   scoped_refptr<CrashUploadList> upload_list_;
@@ -138,7 +139,7 @@ FlashDOMHandler::FlashDOMHandler()
       has_plugin_info_(false),
       weak_ptr_factory_(this) {
         // Request Crash data asynchronously.
-  upload_list_ = CrashUploadList::Create(this);
+  upload_list_ = CreateCrashUploadList(this);
   upload_list_->LoadUploadListAsynchronously();
 
   // Watch for changes in GPUInfo.
@@ -233,19 +234,16 @@ void FlashDOMHandler::MaybeRespondToPage() {
   // need to jump through hoops to offload this to the IO thread.
   base::ThreadRestrictions::ScopedAllowIO allow_io;
 
-  // Obtain the Chrome version info.
-  chrome::VersionInfo version_info;
-
   base::ListValue* list = new base::ListValue();
 
   // Chrome version information.
   AddPair(list,
           l10n_util::GetStringUTF16(IDS_PRODUCT_NAME),
-          version_info.Version() + " (" +
-          chrome::VersionInfo::GetVersionStringModifier() + ")");
+          version_info::GetVersionNumber() + " (" +
+          chrome::GetChannelString() + ")");
 
   // OS version information.
-  std::string os_label = version_info.OSType();
+  std::string os_label = version_info::GetOSType();
 #if defined(OS_WIN)
   base::win::OSInfo* os = base::win::OSInfo::GetInstance();
   switch (os->version()) {
@@ -296,7 +294,7 @@ void FlashDOMHandler::MaybeRespondToPage() {
   // Crash information.
   AddPair(list, base::string16(), "--- Crash data ---");
   bool crash_reporting_enabled =
-      ChromeMetricsServiceAccessor::IsCrashReportingEnabled();
+      ChromeMetricsServiceAccessor::IsMetricsAndCrashReportingEnabled();
   if (crash_reporting_enabled) {
     std::vector<CrashUploadList::UploadInfo> crashes;
     upload_list_->GetUploads(10, &crashes);

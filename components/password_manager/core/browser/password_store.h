@@ -77,15 +77,15 @@ class PasswordStore : protected PasswordStoreSync,
   // affiliation-based matching is disabled. The passed |helper| must already be
   // initialized if it is non-null.
   void SetAffiliatedMatchHelper(scoped_ptr<AffiliatedMatchHelper> helper);
+  AffiliatedMatchHelper* affiliated_match_helper() const {
+    return affiliated_match_helper_.get();
+  }
 
   // Toggles whether or not to propagate password changes in Android credentials
   // to the affiliated Web credentials.
   void enable_propagating_password_changes_to_web_credentials(bool enabled) {
     is_propagating_password_changes_to_web_credentials_enabled_ = enabled;
   }
-
-  // Returns whether or not an affiliation-based match helper is set.
-  bool HasAffiliatedMatchHelper() const;
 
   // Adds the given PasswordForm to the secure password store asynchronously.
   virtual void AddLogin(const autofill::PasswordForm& form);
@@ -125,6 +125,9 @@ class PasswordStore : protected PasswordStoreSync,
   // platforms that support prompting the user for access (such as Mac OS).
   // NOTE: This means that this method can return different results depending
   // on the value of |prompt_policy|.
+  // TODO(engedy): Currently, this will not return federated logins saved from
+  // Android applications that are affiliated with the realm of |form|. Need to
+  // decide if this is the desired behavior. See: https://crbug.com/539844.
   virtual void GetLogins(const autofill::PasswordForm& form,
                          AuthorizationPromptPolicy prompt_policy,
                          PasswordStoreConsumer* consumer);

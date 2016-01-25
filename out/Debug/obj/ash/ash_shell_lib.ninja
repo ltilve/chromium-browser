@@ -1,0 +1,130 @@
+build obj/ash/ash_shell_lib.actions_depends.stamp: stamp $
+    obj/chrome/packed_resources.actions_rules_copies.stamp $
+    obj/skia/skia.actions_depends.stamp $
+    obj/ui/resources/ui_resources.actions_rules_copies.stamp $
+    obj/ui/accessibility/libax_gen.a $
+    obj/ash/ash_resources.actions_rules_copies.stamp $
+    obj/ash/ash_strings.actions_rules_copies.stamp
+
+build obj/ash/ash_shell_lib.compile_depends.stamp: stamp $
+    obj/chrome/packed_resources.actions_rules_copies.stamp $
+    obj/ui/resources/ui_resources.actions_rules_copies.stamp $
+    obj/ui/accessibility/ax_gen.actions_rules_copies.stamp $
+    obj/ash/ash_resources.actions_rules_copies.stamp $
+    obj/ash/ash_strings.actions_rules_copies.stamp
+
+defines = -DV8_DEPRECATION_WARNINGS -DCLD_VERSION=2 -D_FILE_OFFSET_BITS=64 $
+    -DCHROMIUM_BUILD -DCR_CLANG_REVISION=255169-1 $
+    -DUI_COMPOSITOR_IMAGE_TRANSPORT -DUSE_AURA=1 -DUSE_ASH=1 -DUSE_PANGO=1 $
+    -DUSE_CAIRO=1 -DUSE_DEFAULT_RENDER_THEME=1 -DUSE_LIBJPEG_TURBO=1 $
+    -DUSE_X11=1 -DUSE_CLIPBOARD_AURAX11=1 -DENABLE_ONE_CLICK_SIGNIN $
+    -DENABLE_WEBRTC=1 -DENABLE_MEDIA_ROUTER=1 -DENABLE_PEPPER_CDMS $
+    -DENABLE_CONFIGURATION_POLICY -DENABLE_NOTIFICATIONS -DENABLE_HIDPI=1 $
+    -DENABLE_TOPCHROME_MD=1 -DUSE_UDEV -DDONT_EMBED_BUILD_METADATA $
+    -DFIELDTRIAL_TESTING_ENABLED -DENABLE_TASK_MANAGER=1 $
+    -DENABLE_EXTENSIONS=1 -DENABLE_PDF=1 -DENABLE_PLUGINS=1 $
+    -DENABLE_SESSION_SERVICE=1 -DENABLE_THEMES=1 -DENABLE_AUTOFILL_DIALOG=1 $
+    -DENABLE_BACKGROUND=1 -DENABLE_PRINTING=1 -DENABLE_BASIC_PRINTING=1 $
+    -DENABLE_PRINT_PREVIEW=1 -DENABLE_SPELLCHECK=1 $
+    -DENABLE_CAPTIVE_PORTAL_DETECTION=1 -DENABLE_APP_LIST=1 $
+    -DENABLE_SETTINGS_APP=1 -DENABLE_SUPERVISED_USERS=1 -DENABLE_MDNS=1 $
+    -DENABLE_SERVICE_DISCOVERY=1 -DV8_USE_EXTERNAL_STARTUP_DATA $
+    -DFULL_SAFE_BROWSING -DSAFE_BROWSING_CSD -DSAFE_BROWSING_DB_LOCAL $
+    -DGL_GLEXT_PROTOTYPES -DTOOLKIT_VIEWS=1 -DMOJO_USE_SYSTEM_IMPL $
+    -DGTEST_HAS_POSIX_RE=0 -DGTEST_LANG_CXX11=0 -DSK_SUPPORT_GPU=1 $
+    -DSK_IGNORE_LINEONLY_AA_CONVEX_PATH_OPTS -DU_USING_ICU_NAMESPACE=0 $
+    -DU_ENABLE_DYLOAD=0 -DU_STATIC_IMPLEMENTATION -DUSE_LIBPCI=1 $
+    -DUSE_OPENSSL=1 -DUSE_GLIB=1 -DUSE_NSS_CERTS=1 -D__STDC_CONSTANT_MACROS $
+    -D__STDC_FORMAT_MACROS -DDYNAMIC_ANNOTATIONS_ENABLED=1 $
+    -DWTF_USE_DYNAMIC_ANNOTATIONS=1 -D_DEBUG -D_GLIBCXX_DEBUG=1
+includes = -Igen -I../.. -I../../skia/config -I../../third_party/khronos $
+    -I../../gpu -Igen/angle -I../../third_party/WebKit/Source $
+    -I../../third_party/skia/include/core $
+    -I../../third_party/skia/include/effects $
+    -I../../third_party/skia/include/pdf $
+    -I../../third_party/skia/include/gpu $
+    -I../../third_party/skia/include/lazy $
+    -I../../third_party/skia/include/pathops $
+    -I../../third_party/skia/include/pipe $
+    -I../../third_party/skia/include/ports $
+    -I../../third_party/skia/include/utils -I../../skia/ext $
+    -I../../third_party/icu/source/i18n $
+    -I../../third_party/icu/source/common -Igen/ui/resources $
+    -Igen/ui/views/resources -Igen/ash/resources -Igen/ash/strings
+cflags = -fstack-protector --param=ssp-buffer-size=4 -Werror -pthread $
+    -fno-strict-aliasing -Wall -Wno-unused-parameter $
+    -Wno-missing-field-initializers -fvisibility=hidden -pipe -fPIC $
+    -Wno-reserved-user-defined-literal -Xclang -load -Xclang $
+    /b/build/slave/publish_tarball/build/src/third_party/llvm-build/Release+Asserts/lib/libFindBadConstructs.so $
+    -Xclang -add-plugin -Xclang find-bad-constructs -Xclang $
+    -plugin-arg-find-bad-constructs -Xclang check-templates $
+    -fcolor-diagnostics $
+    -B/b/build/slave/publish_tarball/build/src/third_party/binutils/Linux_x64/Release/bin $
+    -Wheader-hygiene -Wno-char-subscripts $
+    -Wno-unneeded-internal-declaration -Wno-covered-switch-default $
+    -Wstring-conversion -Wno-c++11-narrowing -Wno-deprecated-register $
+    -Wno-inconsistent-missing-override -Wno-shift-negative-value $
+    -Wno-bitfield-width -pthread $
+    -I/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/include/glib-2.0 $
+    -I/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/lib/x86_64-linux-gnu/glib-2.0/include $
+    -m64 -march=x86-64 $
+    --sysroot=/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot $
+    -O0 -g -funwind-tables -gsplit-dwarf -Wno-undefined-bool-conversion $
+    -Wno-tautological-undefined-compare
+cflags_c = 
+cflags_cc = -fno-exceptions -fno-rtti -fno-threadsafe-statics $
+    -fvisibility-inlines-hidden -Wsign-compare -std=gnu++11
+arflags = 
+
+build obj/ui/views/test/ash_shell_lib.test_views_delegate_aura.o: cxx $
+    ../../ui/views/test/test_views_delegate_aura.cc || $
+    obj/ash/ash_shell_lib.compile_depends.stamp
+build obj/ash/shell/ash_shell_lib.app_list.o: cxx $
+    ../../ash/shell/app_list.cc || obj/ash/ash_shell_lib.compile_depends.stamp
+build obj/ash/shell/ash_shell_lib.bubble.o: cxx ../../ash/shell/bubble.cc $
+    || obj/ash/ash_shell_lib.compile_depends.stamp
+build obj/ash/shell/ash_shell_lib.context_menu.o: cxx $
+    ../../ash/shell/context_menu.cc || $
+    obj/ash/ash_shell_lib.compile_depends.stamp
+build obj/ash/shell/ash_shell_lib.lock_view.o: cxx $
+    ../../ash/shell/lock_view.cc || $
+    obj/ash/ash_shell_lib.compile_depends.stamp
+build obj/ash/shell/ash_shell_lib.panel_window.o: cxx $
+    ../../ash/shell/panel_window.cc || $
+    obj/ash/ash_shell_lib.compile_depends.stamp
+build obj/ash/shell/ash_shell_lib.shelf_delegate_impl.o: cxx $
+    ../../ash/shell/shelf_delegate_impl.cc || $
+    obj/ash/ash_shell_lib.compile_depends.stamp
+build obj/ash/shell/ash_shell_lib.shell_delegate_impl.o: cxx $
+    ../../ash/shell/shell_delegate_impl.cc || $
+    obj/ash/ash_shell_lib.compile_depends.stamp
+build obj/ash/shell/ash_shell_lib.toplevel_window.o: cxx $
+    ../../ash/shell/toplevel_window.cc || $
+    obj/ash/ash_shell_lib.compile_depends.stamp
+build obj/ash/shell/ash_shell_lib.widgets.o: cxx ../../ash/shell/widgets.cc $
+    || obj/ash/ash_shell_lib.compile_depends.stamp
+build obj/ash/shell/ash_shell_lib.window_type_launcher.o: cxx $
+    ../../ash/shell/window_type_launcher.cc || $
+    obj/ash/ash_shell_lib.compile_depends.stamp
+build obj/ash/shell/ash_shell_lib.window_watcher.o: cxx $
+    ../../ash/shell/window_watcher.cc || $
+    obj/ash/ash_shell_lib.compile_depends.stamp
+build obj/ash/shell/ash_shell_lib.window_watcher_shelf_item_delegate.o: cxx $
+    ../../ash/shell/window_watcher_shelf_item_delegate.cc || $
+    obj/ash/ash_shell_lib.compile_depends.stamp
+
+build obj/ash/libash_shell_lib.a: alink_thin $
+    obj/ui/views/test/ash_shell_lib.test_views_delegate_aura.o $
+    obj/ash/shell/ash_shell_lib.app_list.o $
+    obj/ash/shell/ash_shell_lib.bubble.o $
+    obj/ash/shell/ash_shell_lib.context_menu.o $
+    obj/ash/shell/ash_shell_lib.lock_view.o $
+    obj/ash/shell/ash_shell_lib.panel_window.o $
+    obj/ash/shell/ash_shell_lib.shelf_delegate_impl.o $
+    obj/ash/shell/ash_shell_lib.shell_delegate_impl.o $
+    obj/ash/shell/ash_shell_lib.toplevel_window.o $
+    obj/ash/shell/ash_shell_lib.widgets.o $
+    obj/ash/shell/ash_shell_lib.window_type_launcher.o $
+    obj/ash/shell/ash_shell_lib.window_watcher.o $
+    obj/ash/shell/ash_shell_lib.window_watcher_shelf_item_delegate.o || $
+    obj/ash/ash_shell_lib.actions_depends.stamp

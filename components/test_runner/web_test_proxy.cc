@@ -14,6 +14,7 @@
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/thread_task_runner_handle.h"
+#include "base/time/time.h"
 #include "base/trace_event/trace_event.h"
 #include "components/test_runner/accessibility_controller.h"
 #include "components/test_runner/event_sender.h"
@@ -41,7 +42,6 @@
 #include "third_party/WebKit/public/platform/WebURLResponse.h"
 #include "third_party/WebKit/public/web/WebAXEnums.h"
 #include "third_party/WebKit/public/web/WebAXObject.h"
-#include "third_party/WebKit/public/web/WebCachedURLRequest.h"
 #include "third_party/WebKit/public/web/WebConsoleMessage.h"
 #include "third_party/WebKit/public/web/WebDataSource.h"
 #include "third_party/WebKit/public/web/WebDocument.h"
@@ -72,7 +72,7 @@ class CaptureCallback : public blink::WebCompositeAndReadbackAsyncCallback {
   }
 
   // WebCompositeAndReadbackAsyncCallback implementation.
-  virtual void didCompositeAndReadback(const SkBitmap& bitmap);
+  void didCompositeAndReadback(const SkBitmap& bitmap) override;
 
  private:
   base::Callback<void(const SkBitmap&)> callback_;
@@ -92,7 +92,7 @@ class LayoutAndPaintCallback : public blink::WebLayoutAndPaintAsyncCallback {
   void set_wait_for_popup(bool wait) { wait_for_popup_ = wait; }
 
   // WebLayoutAndPaintAsyncCallback implementation.
-  virtual void didLayoutAndPaint();
+  void didLayoutAndPaint() override;
 
  private:
   base::Closure callback_;
@@ -200,7 +200,7 @@ bool IsLocalHost(const std::string& host) {
 }
 
 bool IsTestHost(const std::string& host) {
-  return base::EndsWith(host, ".test", false);
+  return base::EndsWith(host, ".test", base::CompareCase::INSENSITIVE_ASCII);
 }
 
 bool HostIsUsedBySomeTestsToGenerateError(const std::string& host) {
@@ -281,8 +281,9 @@ const char* WebNavigationPolicyToString(blink::WebNavigationPolicy policy) {
       return kPolicyNewWindow;
     case blink::WebNavigationPolicyNewPopup:
       return kPolicyNewPopup;
+    default:
+      return kIllegalString;
   }
-  return kIllegalString;
 }
 
 std::string DumpFrameHeaderIfNeeded(blink::WebFrame* frame) {
@@ -392,6 +393,7 @@ WebTestProxyBase::WebTestProxyBase()
 
 WebTestProxyBase::~WebTestProxyBase() {
   test_interfaces_->WindowClosed(this);
+  delegate_->OnWebTestProxyBaseDestroy(this);
 }
 
 void WebTestProxyBase::SetInterfaces(WebTestInterfaces* interfaces) {
@@ -758,11 +760,17 @@ void WebTestProxyBase::ScheduleAnimation() {
 
 void WebTestProxyBase::AnimateNow() {
   if (animate_scheduled_) {
+    base::TimeDelta animate_time = base::TimeTicks::Now() - base::TimeTicks();
+    base::TimeDelta interval = base::TimeDelta::FromMicroseconds(16666);
+    blink::WebBeginFrameArgs args(animate_time.InSecondsF(),
+                                  (animate_time + interval).InSecondsF(),
+                                  interval.InSecondsF());
+
     animate_scheduled_ = false;
-    web_widget_->beginFrame(blink::WebBeginFrameArgs(0.0, 0.0, 0.0));
+    web_widget_->beginFrame(args);
     web_widget_->layout();
     if (blink::WebPagePopup* popup = web_widget_->pagePopup()) {
-      popup->beginFrame(blink::WebBeginFrameArgs(0.0, 0.0, 0.0));
+      popup->beginFrame(args);
       popup->layout();
     }
   }
@@ -805,11 +813,17 @@ void WebTestProxyBase::PostAccessibilityEvent(const blink::WebAXObject& obj,
     case blink::WebAXEventChildrenChanged:
       event_name = "ChildrenChanged";
       break;
+    case blink::WebAXEventDocumentSelectionChanged:
+      event_name = "DocumentSelectionChanged";
+      break;
     case blink::WebAXEventFocus:
       event_name = "Focus";
       break;
     case blink::WebAXEventHide:
       event_name = "Hide";
+      break;
+    case blink::WebAXEventHover:
+      event_name = "Hover";
       break;
     case blink::WebAXEventInvalidStatusChanged:
       event_name = "InvalidStatusChanged";
@@ -1151,8 +1165,7 @@ void WebTestProxyBase::DidFinishLoad(blink::WebLocalFrame* frame) {
   CheckDone(frame, LoadFinished);
 }
 
-void WebTestProxyBase::DidDetectXSS(blink::WebLocalFrame* frame,
-                                    const blink::WebURL& insecure_url,
+void WebTestProxyBase::DidDetectXSS(const blink::WebURL& insecure_url,
                                     bool did_block_entire_page) {
   if (test_interfaces_->GetTestRunner()->shouldDumpFrameLoadCallbacks())
     delegate_->PrintMessage("didDetectXSS\n");
@@ -1163,19 +1176,6 @@ void WebTestProxyBase::DidDispatchPingLoader(blink::WebLocalFrame* frame,
   if (test_interfaces_->GetTestRunner()->shouldDumpPingLoaderCallbacks())
     delegate_->PrintMessage(std::string("PingLoader dispatched to '") +
                             URLDescription(url).c_str() + "'.\n");
-}
-
-void WebTestProxyBase::WillRequestResource(
-    blink::WebLocalFrame* frame,
-    const blink::WebCachedURLRequest& request) {
-  if (test_interfaces_->GetTestRunner()->shouldDumpResourceRequestCallbacks()) {
-    PrintFrameDescription(delegate_, frame);
-    delegate_->PrintMessage(std::string(" - ") +
-                            request.initiatorName().utf8().data());
-    delegate_->PrintMessage(std::string(" requested '") +
-                            URLDescription(request.urlRequest().url()).c_str() +
-                            "'\n");
-  }
 }
 
 void WebTestProxyBase::WillSendRequest(

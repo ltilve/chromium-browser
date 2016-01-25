@@ -20,14 +20,12 @@
 #include "chrome/browser/chromeos/profiles/profile_helper.h"
 #include "chrome/browser/extensions/chrome_extension_web_contents_observer.h"
 #include "chrome/browser/media/media_capture_devices_dispatcher.h"
-#include "chrome/browser/media/media_stream_infobar_delegate.h"
+#include "chrome/browser/media/media_stream_devices_controller.h"
 #include "chrome/browser/password_manager/chrome_password_manager_client.h"
 #include "chrome/browser/renderer_preferences_util.h"
 #include "chrome/browser/sessions/session_tab_helper.h"
 #include "chrome/browser/ui/autofill/chrome_autofill_client.h"
 #include "chrome/browser/ui/webui/chromeos/login/oobe_ui.h"
-#include "chrome/common/chrome_version_info.h"
-#include "chrome/common/render_messages.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
 #include "chromeos/dbus/session_manager_client.h"
 #include "chromeos/network/network_state.h"
@@ -69,8 +67,6 @@ const char kAccelNameDeviceRequisitionRemora[] = "device_requisition_remora";
 const char kAccelNameDeviceRequisitionShark[] = "device_requisition_shark";
 const char kAccelNameAppLaunchBailout[] = "app_launch_bailout";
 const char kAccelNameAppLaunchNetworkConfig[] = "app_launch_network_config";
-const char kAccelNameToggleWebviewSignin[] = "toggle_webview_signin";
-const char kAccelNameToggleNewLoginUI[] = "toggle_new_login_ui";
 const char kAccelNameToggleEasyBootstrap[] = "toggle_easy_bootstrap";
 
 // A class to change arrow key traversal behavior when it's alive.
@@ -132,9 +128,6 @@ WebUILoginView::WebUILoginView()
       ui::EF_CONTROL_DOWN | ui::EF_ALT_DOWN | ui::EF_SHIFT_DOWN)] =
       kAccelNameEnableDebugging;
   accel_map_[ui::Accelerator(
-      ui::VKEY_L, ui::EF_CONTROL_DOWN | ui::EF_ALT_DOWN | ui::EF_SHIFT_DOWN)] =
-      kAccelNameToggleNewLoginUI;
-  accel_map_[ui::Accelerator(
       ui::VKEY_B, ui::EF_CONTROL_DOWN | ui::EF_ALT_DOWN | ui::EF_SHIFT_DOWN)] =
       kAccelNameToggleEasyBootstrap;
 
@@ -142,24 +135,6 @@ WebUILoginView::WebUILoginView()
       kAccelFocusPrev;
   accel_map_[ui::Accelerator(ui::VKEY_RIGHT, ui::EF_NONE)] =
       kAccelFocusNext;
-
-  // Ctrl-Alt-Shift-W for canary/dev builds only.
-  const chrome::VersionInfo::Channel channel =
-      chrome::VersionInfo::GetChannel();
-  if (channel != chrome::VersionInfo::CHANNEL_STABLE &&
-      channel != chrome::VersionInfo::CHANNEL_BETA) {
-    accel_map_[ui::Accelerator(
-        ui::VKEY_W, ui::EF_CONTROL_DOWN | ui::EF_ALT_DOWN |
-                        ui::EF_SHIFT_DOWN)] = kAccelNameToggleWebviewSignin;
-  }
-
-  // Use KEY_RELEASED because Gaia consumes KEY_PRESSED for up/down key.
-  ui::Accelerator key_up(ui::VKEY_UP, ui::EF_NONE);
-  key_up.set_type(ui::ET_KEY_RELEASED);
-  ui::Accelerator key_down(ui::VKEY_DOWN, ui::EF_NONE);
-  key_down.set_type(ui::ET_KEY_RELEASED);
-  accel_map_[key_up] = kAccelFocusPrev;
-  accel_map_[key_down] = kAccelFocusNext;
 
   accel_map_[ui::Accelerator(
       ui::VKEY_D, ui::EF_CONTROL_DOWN | ui::EF_ALT_DOWN | ui::EF_SHIFT_DOWN)] =
@@ -217,9 +192,6 @@ void WebUILoginView::Init() {
   WebContentsModalDialogManager::CreateForWebContents(web_contents);
   WebContentsModalDialogManager::FromWebContents(web_contents)->
       SetDelegate(this);
-  if (!popup_manager_.get())
-    popup_manager_.reset(new web_modal::PopupManager(this));
-  popup_manager_->RegisterWith(web_contents);
 
   web_contents->SetDelegate(this);
   extensions::ChromeExtensionWebContentsObserver::CreateForWebContents(
@@ -468,7 +440,8 @@ void WebUILoginView::RequestMediaAccessPermission(
     WebContents* web_contents,
     const content::MediaStreamRequest& request,
     const content::MediaResponseCallback& callback) {
-  if (MediaStreamInfoBarDelegate::Create(web_contents, request, callback))
+  MediaStreamDevicesController controller(web_contents, request, callback);
+  if (controller.IsAskingForVideo() || controller.IsAskingForAudio())
     NOTREACHED() << "Media stream not allowed for WebUI";
 }
 

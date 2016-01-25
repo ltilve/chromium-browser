@@ -1,0 +1,11 @@
+rule $
+    cloud_print_version_resources_target_version_22ec54db974de9bd3b95a1354c290514
+  command = cd ../../cloud_print; python ../build/util/version.py -f $
+      "${source}" -f ../chrome/VERSION -f $
+      ../chrome/app/theme/chromium/BRANDING -f ../build/util/LASTCHANGE -f $
+      BRANDING ../chrome/app/chrome_version.rc.version $
+      "../out/Release/gen/cloud_print/${root}_version.rc"
+  description = RULE Generating version information in $
+      "gen/cloud_print/${root}_version.rc"
+  restat = 1
+

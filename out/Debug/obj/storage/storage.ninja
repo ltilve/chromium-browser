@@ -1,0 +1,400 @@
+defines = -DV8_DEPRECATION_WARNINGS -DCLD_VERSION=2 -D_FILE_OFFSET_BITS=64 $
+    -DCHROMIUM_BUILD -DCR_CLANG_REVISION=255169-1 $
+    -DUI_COMPOSITOR_IMAGE_TRANSPORT -DUSE_AURA=1 -DUSE_ASH=1 -DUSE_PANGO=1 $
+    -DUSE_CAIRO=1 -DUSE_DEFAULT_RENDER_THEME=1 -DUSE_LIBJPEG_TURBO=1 $
+    -DUSE_X11=1 -DUSE_CLIPBOARD_AURAX11=1 -DENABLE_ONE_CLICK_SIGNIN $
+    -DENABLE_WEBRTC=1 -DENABLE_MEDIA_ROUTER=1 -DENABLE_PEPPER_CDMS $
+    -DENABLE_CONFIGURATION_POLICY -DENABLE_NOTIFICATIONS -DENABLE_HIDPI=1 $
+    -DENABLE_TOPCHROME_MD=1 -DUSE_UDEV -DDONT_EMBED_BUILD_METADATA $
+    -DFIELDTRIAL_TESTING_ENABLED -DENABLE_TASK_MANAGER=1 $
+    -DENABLE_EXTENSIONS=1 -DENABLE_PDF=1 -DENABLE_PLUGINS=1 $
+    -DENABLE_SESSION_SERVICE=1 -DENABLE_THEMES=1 -DENABLE_AUTOFILL_DIALOG=1 $
+    -DENABLE_BACKGROUND=1 -DENABLE_PRINTING=1 -DENABLE_BASIC_PRINTING=1 $
+    -DENABLE_PRINT_PREVIEW=1 -DENABLE_SPELLCHECK=1 $
+    -DENABLE_CAPTIVE_PORTAL_DETECTION=1 -DENABLE_APP_LIST=1 $
+    -DENABLE_SETTINGS_APP=1 -DENABLE_SUPERVISED_USERS=1 -DENABLE_MDNS=1 $
+    -DENABLE_SERVICE_DISCOVERY=1 -DV8_USE_EXTERNAL_STARTUP_DATA $
+    -DFULL_SAFE_BROWSING -DSAFE_BROWSING_CSD -DSAFE_BROWSING_DB_LOCAL $
+    -DSTORAGE_BROWSER_IMPLEMENTATION -DGL_GLEXT_PROTOTYPES $
+    -DU_USING_ICU_NAMESPACE=0 -DU_ENABLE_DYLOAD=0 -DU_STATIC_IMPLEMENTATION $
+    -DSK_SUPPORT_GPU=1 -DSK_IGNORE_LINEONLY_AA_CONVEX_PATH_OPTS $
+    -DCHROME_PNG_WRITE_SUPPORT -DPNG_USER_CONFIG -DUSE_LIBPCI=1 $
+    -DUSE_OPENSSL=1 -DUSE_GLIB=1 -DUSE_NSS_CERTS=1 -D__STDC_CONSTANT_MACROS $
+    -D__STDC_FORMAT_MACROS -DDYNAMIC_ANNOTATIONS_ENABLED=1 $
+    -DWTF_USE_DYNAMIC_ANNOTATIONS=1 -D_DEBUG -D_GLIBCXX_DEBUG=1
+includes = -Igen -I../.. -I../../skia/config $
+    -I../../third_party/WebKit/Source -I../../third_party/khronos $
+    -I../../gpu -Igen/angle -I../../third_party/icu/source/common $
+    -I../../third_party/icu/source/i18n $
+    -I../../third_party/leveldatabase/src/include $
+    -I../../third_party/leveldatabase/src -I../../third_party/leveldatabase $
+    -I../../third_party/WebKit -I../../third_party/skia/include/core $
+    -I../../third_party/skia/include/effects $
+    -I../../third_party/skia/include/pdf $
+    -I../../third_party/skia/include/gpu $
+    -I../../third_party/skia/include/lazy $
+    -I../../third_party/skia/include/pathops $
+    -I../../third_party/skia/include/pipe $
+    -I../../third_party/skia/include/ports $
+    -I../../third_party/skia/include/utils -I../../skia/ext $
+    -I../../third_party/npapi -I../../third_party/npapi/bindings $
+    -I../../v8/include -I../../third_party/libpng -I../../third_party/zlib $
+    -I../../third_party/libwebp -I../../third_party/ots/include $
+    -I../../third_party/qcms/src -I../../third_party/iccjpeg $
+    -I../../third_party/libjpeg_turbo
+cflags = -fstack-protector --param=ssp-buffer-size=4 -Werror -pthread $
+    -fno-strict-aliasing -Wall -Wno-unused-parameter $
+    -Wno-missing-field-initializers -fvisibility=hidden -pipe -fPIC $
+    -Wno-reserved-user-defined-literal -Xclang -load -Xclang $
+    /b/build/slave/publish_tarball/build/src/third_party/llvm-build/Release+Asserts/lib/libFindBadConstructs.so $
+    -Xclang -add-plugin -Xclang find-bad-constructs -Xclang $
+    -plugin-arg-find-bad-constructs -Xclang check-templates $
+    -fcolor-diagnostics $
+    -B/b/build/slave/publish_tarball/build/src/third_party/binutils/Linux_x64/Release/bin $
+    -Wheader-hygiene -Wno-char-subscripts $
+    -Wno-unneeded-internal-declaration -Wno-covered-switch-default $
+    -Wstring-conversion -Wno-c++11-narrowing -Wno-deprecated-register $
+    -Wno-inconsistent-missing-override -Wno-shift-negative-value $
+    -Wno-bitfield-width -Wexit-time-destructors -pthread $
+    -I/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/include/glib-2.0 $
+    -I/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/lib/x86_64-linux-gnu/glib-2.0/include $
+    -m64 -march=x86-64 $
+    --sysroot=/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot $
+    -O0 -g -funwind-tables -gsplit-dwarf -Wno-undefined-bool-conversion $
+    -Wno-tautological-undefined-compare
+cflags_c = 
+cflags_cc = -fno-exceptions -fno-rtti -fno-threadsafe-statics $
+    -fvisibility-inlines-hidden -Wsign-compare -std=gnu++11
+arflags = 
+
+build obj/storage/browser/blob/storage.blob_async_builder_host.o: cxx $
+    ../../storage/browser/blob/blob_async_builder_host.cc || $
+    obj/third_party/WebKit/public/blink.compile_depends.stamp
+build obj/storage/browser/blob/storage.blob_async_transport_strategy.o: cxx $
+    ../../storage/browser/blob/blob_async_transport_strategy.cc || $
+    obj/third_party/WebKit/public/blink.compile_depends.stamp
+build obj/storage/browser/blob/storage.blob_data_builder.o: cxx $
+    ../../storage/browser/blob/blob_data_builder.cc || $
+    obj/third_party/WebKit/public/blink.compile_depends.stamp
+build obj/storage/browser/blob/storage.blob_data_handle.o: cxx $
+    ../../storage/browser/blob/blob_data_handle.cc || $
+    obj/third_party/WebKit/public/blink.compile_depends.stamp
+build obj/storage/browser/blob/storage.blob_data_item.o: cxx $
+    ../../storage/browser/blob/blob_data_item.cc || $
+    obj/third_party/WebKit/public/blink.compile_depends.stamp
+build obj/storage/browser/blob/storage.blob_data_snapshot.o: cxx $
+    ../../storage/browser/blob/blob_data_snapshot.cc || $
+    obj/third_party/WebKit/public/blink.compile_depends.stamp
+build obj/storage/browser/blob/storage.blob_reader.o: cxx $
+    ../../storage/browser/blob/blob_reader.cc || $
+    obj/third_party/WebKit/public/blink.compile_depends.stamp
+build obj/storage/browser/blob/storage.blob_storage_context.o: cxx $
+    ../../storage/browser/blob/blob_storage_context.cc || $
+    obj/third_party/WebKit/public/blink.compile_depends.stamp
+build obj/storage/browser/blob/storage.blob_storage_registry.o: cxx $
+    ../../storage/browser/blob/blob_storage_registry.cc || $
+    obj/third_party/WebKit/public/blink.compile_depends.stamp
+build obj/storage/browser/blob/storage.blob_url_request_job.o: cxx $
+    ../../storage/browser/blob/blob_url_request_job.cc || $
+    obj/third_party/WebKit/public/blink.compile_depends.stamp
+build obj/storage/browser/blob/storage.blob_url_request_job_factory.o: cxx $
+    ../../storage/browser/blob/blob_url_request_job_factory.cc || $
+    obj/third_party/WebKit/public/blink.compile_depends.stamp
+build obj/storage/browser/blob/storage.internal_blob_data.o: cxx $
+    ../../storage/browser/blob/internal_blob_data.cc || $
+    obj/third_party/WebKit/public/blink.compile_depends.stamp
+build obj/storage/browser/blob/storage.scoped_file.o: cxx $
+    ../../storage/browser/blob/scoped_file.cc || $
+    obj/third_party/WebKit/public/blink.compile_depends.stamp
+build obj/storage/browser/blob/storage.shareable_blob_data_item.o: cxx $
+    ../../storage/browser/blob/shareable_blob_data_item.cc || $
+    obj/third_party/WebKit/public/blink.compile_depends.stamp
+build obj/storage/browser/blob/storage.shareable_file_reference.o: cxx $
+    ../../storage/browser/blob/shareable_file_reference.cc || $
+    obj/third_party/WebKit/public/blink.compile_depends.stamp
+build obj/storage/browser/blob/storage.upload_blob_element_reader.o: cxx $
+    ../../storage/browser/blob/upload_blob_element_reader.cc || $
+    obj/third_party/WebKit/public/blink.compile_depends.stamp
+build obj/storage/browser/blob/storage.view_blob_internals_job.o: cxx $
+    ../../storage/browser/blob/view_blob_internals_job.cc || $
+    obj/third_party/WebKit/public/blink.compile_depends.stamp
+build obj/storage/browser/database/storage.database_quota_client.o: cxx $
+    ../../storage/browser/database/database_quota_client.cc || $
+    obj/third_party/WebKit/public/blink.compile_depends.stamp
+build obj/storage/browser/database/storage.database_tracker.o: cxx $
+    ../../storage/browser/database/database_tracker.cc || $
+    obj/third_party/WebKit/public/blink.compile_depends.stamp
+build obj/storage/browser/database/storage.database_util.o: cxx $
+    ../../storage/browser/database/database_util.cc || $
+    obj/third_party/WebKit/public/blink.compile_depends.stamp
+build obj/storage/browser/database/storage.databases_table.o: cxx $
+    ../../storage/browser/database/databases_table.cc || $
+    obj/third_party/WebKit/public/blink.compile_depends.stamp
+build obj/storage/browser/database/storage.vfs_backend.o: cxx $
+    ../../storage/browser/database/vfs_backend.cc || $
+    obj/third_party/WebKit/public/blink.compile_depends.stamp
+build obj/storage/browser/fileapi/storage.async_file_util_adapter.o: cxx $
+    ../../storage/browser/fileapi/async_file_util_adapter.cc || $
+    obj/third_party/WebKit/public/blink.compile_depends.stamp
+build $
+    obj/storage/browser/fileapi/storage.copy_or_move_operation_delegate.o: $
+    cxx ../../storage/browser/fileapi/copy_or_move_operation_delegate.cc || $
+    obj/third_party/WebKit/public/blink.compile_depends.stamp
+build obj/storage/browser/fileapi/storage.dragged_file_util.o: cxx $
+    ../../storage/browser/fileapi/dragged_file_util.cc || $
+    obj/third_party/WebKit/public/blink.compile_depends.stamp
+build obj/storage/browser/fileapi/storage.external_mount_points.o: cxx $
+    ../../storage/browser/fileapi/external_mount_points.cc || $
+    obj/third_party/WebKit/public/blink.compile_depends.stamp
+build obj/storage/browser/fileapi/storage.file_stream_reader.o: cxx $
+    ../../storage/browser/fileapi/file_stream_reader.cc || $
+    obj/third_party/WebKit/public/blink.compile_depends.stamp
+build obj/storage/browser/fileapi/storage.file_system_context.o: cxx $
+    ../../storage/browser/fileapi/file_system_context.cc || $
+    obj/third_party/WebKit/public/blink.compile_depends.stamp
+build $
+    obj/storage/browser/fileapi/storage.file_system_dir_url_request_job.o: $
+    cxx ../../storage/browser/fileapi/file_system_dir_url_request_job.cc || $
+    obj/third_party/WebKit/public/blink.compile_depends.stamp
+build obj/storage/browser/fileapi/storage.file_system_file_stream_reader.o: $
+    cxx ../../storage/browser/fileapi/file_system_file_stream_reader.cc || $
+    obj/third_party/WebKit/public/blink.compile_depends.stamp
+build obj/storage/browser/fileapi/storage.file_system_file_util.o: cxx $
+    ../../storage/browser/fileapi/file_system_file_util.cc || $
+    obj/third_party/WebKit/public/blink.compile_depends.stamp
+build obj/storage/browser/fileapi/storage.file_system_operation_context.o: $
+    cxx ../../storage/browser/fileapi/file_system_operation_context.cc || $
+    obj/third_party/WebKit/public/blink.compile_depends.stamp
+build obj/storage/browser/fileapi/storage.file_system_operation_impl.o: cxx $
+    ../../storage/browser/fileapi/file_system_operation_impl.cc || $
+    obj/third_party/WebKit/public/blink.compile_depends.stamp
+build obj/storage/browser/fileapi/storage.file_system_operation_runner.o: $
+    cxx ../../storage/browser/fileapi/file_system_operation_runner.cc || $
+    obj/third_party/WebKit/public/blink.compile_depends.stamp
+build obj/storage/browser/fileapi/storage.file_system_options.o: cxx $
+    ../../storage/browser/fileapi/file_system_options.cc || $
+    obj/third_party/WebKit/public/blink.compile_depends.stamp
+build obj/storage/browser/fileapi/storage.file_system_quota_client.o: cxx $
+    ../../storage/browser/fileapi/file_system_quota_client.cc || $
+    obj/third_party/WebKit/public/blink.compile_depends.stamp
+build obj/storage/browser/fileapi/storage.file_system_url.o: cxx $
+    ../../storage/browser/fileapi/file_system_url.cc || $
+    obj/third_party/WebKit/public/blink.compile_depends.stamp
+build obj/storage/browser/fileapi/storage.file_system_url_request_job.o: $
+    cxx ../../storage/browser/fileapi/file_system_url_request_job.cc || $
+    obj/third_party/WebKit/public/blink.compile_depends.stamp
+build $
+    obj/storage/browser/fileapi/storage.file_system_url_request_job_factory.o: $
+    cxx $
+    ../../storage/browser/fileapi/file_system_url_request_job_factory.cc || $
+    obj/third_party/WebKit/public/blink.compile_depends.stamp
+build obj/storage/browser/fileapi/storage.file_system_usage_cache.o: cxx $
+    ../../storage/browser/fileapi/file_system_usage_cache.cc || $
+    obj/third_party/WebKit/public/blink.compile_depends.stamp
+build obj/storage/browser/fileapi/storage.file_writer_delegate.o: cxx $
+    ../../storage/browser/fileapi/file_writer_delegate.cc || $
+    obj/third_party/WebKit/public/blink.compile_depends.stamp
+build obj/storage/browser/fileapi/storage.isolated_context.o: cxx $
+    ../../storage/browser/fileapi/isolated_context.cc || $
+    obj/third_party/WebKit/public/blink.compile_depends.stamp
+build obj/storage/browser/fileapi/storage.isolated_file_system_backend.o: $
+    cxx ../../storage/browser/fileapi/isolated_file_system_backend.cc || $
+    obj/third_party/WebKit/public/blink.compile_depends.stamp
+build obj/storage/browser/fileapi/storage.local_file_stream_reader.o: cxx $
+    ../../storage/browser/fileapi/local_file_stream_reader.cc || $
+    obj/third_party/WebKit/public/blink.compile_depends.stamp
+build obj/storage/browser/fileapi/storage.local_file_stream_writer.o: cxx $
+    ../../storage/browser/fileapi/local_file_stream_writer.cc || $
+    obj/third_party/WebKit/public/blink.compile_depends.stamp
+build obj/storage/browser/fileapi/storage.local_file_util.o: cxx $
+    ../../storage/browser/fileapi/local_file_util.cc || $
+    obj/third_party/WebKit/public/blink.compile_depends.stamp
+build obj/storage/browser/fileapi/storage.mount_points.o: cxx $
+    ../../storage/browser/fileapi/mount_points.cc || $
+    obj/third_party/WebKit/public/blink.compile_depends.stamp
+build obj/storage/browser/fileapi/storage.native_file_util.o: cxx $
+    ../../storage/browser/fileapi/native_file_util.cc || $
+    obj/third_party/WebKit/public/blink.compile_depends.stamp
+build obj/storage/browser/fileapi/storage.obfuscated_file_util.o: cxx $
+    ../../storage/browser/fileapi/obfuscated_file_util.cc || $
+    obj/third_party/WebKit/public/blink.compile_depends.stamp
+build $
+    obj/storage/browser/fileapi/storage.plugin_private_file_system_backend.o: $
+    cxx ../../storage/browser/fileapi/plugin_private_file_system_backend.cc $
+    || obj/third_party/WebKit/public/blink.compile_depends.stamp
+build obj/storage/browser/fileapi/quota/storage.open_file_handle.o: cxx $
+    ../../storage/browser/fileapi/quota/open_file_handle.cc || $
+    obj/third_party/WebKit/public/blink.compile_depends.stamp
+build obj/storage/browser/fileapi/quota/storage.open_file_handle_context.o: $
+    cxx ../../storage/browser/fileapi/quota/open_file_handle_context.cc || $
+    obj/third_party/WebKit/public/blink.compile_depends.stamp
+build obj/storage/browser/fileapi/quota/storage.quota_backend_impl.o: cxx $
+    ../../storage/browser/fileapi/quota/quota_backend_impl.cc || $
+    obj/third_party/WebKit/public/blink.compile_depends.stamp
+build obj/storage/browser/fileapi/quota/storage.quota_reservation.o: cxx $
+    ../../storage/browser/fileapi/quota/quota_reservation.cc || $
+    obj/third_party/WebKit/public/blink.compile_depends.stamp
+build obj/storage/browser/fileapi/quota/storage.quota_reservation_buffer.o: $
+    cxx ../../storage/browser/fileapi/quota/quota_reservation_buffer.cc || $
+    obj/third_party/WebKit/public/blink.compile_depends.stamp
+build $
+    obj/storage/browser/fileapi/quota/storage.quota_reservation_manager.o: $
+    cxx ../../storage/browser/fileapi/quota/quota_reservation_manager.cc || $
+    obj/third_party/WebKit/public/blink.compile_depends.stamp
+build obj/storage/browser/fileapi/storage.recursive_operation_delegate.o: $
+    cxx ../../storage/browser/fileapi/recursive_operation_delegate.cc || $
+    obj/third_party/WebKit/public/blink.compile_depends.stamp
+build obj/storage/browser/fileapi/storage.remove_operation_delegate.o: cxx $
+    ../../storage/browser/fileapi/remove_operation_delegate.cc || $
+    obj/third_party/WebKit/public/blink.compile_depends.stamp
+build obj/storage/browser/fileapi/storage.sandbox_directory_database.o: cxx $
+    ../../storage/browser/fileapi/sandbox_directory_database.cc || $
+    obj/third_party/WebKit/public/blink.compile_depends.stamp
+build obj/storage/browser/fileapi/storage.sandbox_file_stream_writer.o: cxx $
+    ../../storage/browser/fileapi/sandbox_file_stream_writer.cc || $
+    obj/third_party/WebKit/public/blink.compile_depends.stamp
+build obj/storage/browser/fileapi/storage.sandbox_file_system_backend.o: $
+    cxx ../../storage/browser/fileapi/sandbox_file_system_backend.cc || $
+    obj/third_party/WebKit/public/blink.compile_depends.stamp
+build $
+    obj/storage/browser/fileapi/storage.sandbox_file_system_backend_delegate.o: $
+    cxx $
+    ../../storage/browser/fileapi/sandbox_file_system_backend_delegate.cc $
+    || obj/third_party/WebKit/public/blink.compile_depends.stamp
+build $
+    obj/storage/browser/fileapi/storage.sandbox_isolated_origin_database.o: $
+    cxx ../../storage/browser/fileapi/sandbox_isolated_origin_database.cc $
+    || obj/third_party/WebKit/public/blink.compile_depends.stamp
+build obj/storage/browser/fileapi/storage.sandbox_origin_database.o: cxx $
+    ../../storage/browser/fileapi/sandbox_origin_database.cc || $
+    obj/third_party/WebKit/public/blink.compile_depends.stamp
+build $
+    obj/storage/browser/fileapi/storage.sandbox_origin_database_interface.o: $
+    cxx ../../storage/browser/fileapi/sandbox_origin_database_interface.cc $
+    || obj/third_party/WebKit/public/blink.compile_depends.stamp
+build $
+    obj/storage/browser/fileapi/storage.sandbox_prioritized_origin_database.o: $
+    cxx $
+    ../../storage/browser/fileapi/sandbox_prioritized_origin_database.cc || $
+    obj/third_party/WebKit/public/blink.compile_depends.stamp
+build obj/storage/browser/fileapi/storage.sandbox_quota_observer.o: cxx $
+    ../../storage/browser/fileapi/sandbox_quota_observer.cc || $
+    obj/third_party/WebKit/public/blink.compile_depends.stamp
+build obj/storage/browser/fileapi/storage.timed_task_helper.o: cxx $
+    ../../storage/browser/fileapi/timed_task_helper.cc || $
+    obj/third_party/WebKit/public/blink.compile_depends.stamp
+build obj/storage/browser/fileapi/storage.transient_file_util.o: cxx $
+    ../../storage/browser/fileapi/transient_file_util.cc || $
+    obj/third_party/WebKit/public/blink.compile_depends.stamp
+build obj/storage/browser/quota/storage.client_usage_tracker.o: cxx $
+    ../../storage/browser/quota/client_usage_tracker.cc || $
+    obj/third_party/WebKit/public/blink.compile_depends.stamp
+build obj/storage/browser/quota/storage.quota_database.o: cxx $
+    ../../storage/browser/quota/quota_database.cc || $
+    obj/third_party/WebKit/public/blink.compile_depends.stamp
+build obj/storage/browser/quota/storage.quota_manager.o: cxx $
+    ../../storage/browser/quota/quota_manager.cc || $
+    obj/third_party/WebKit/public/blink.compile_depends.stamp
+build obj/storage/browser/quota/storage.quota_manager_proxy.o: cxx $
+    ../../storage/browser/quota/quota_manager_proxy.cc || $
+    obj/third_party/WebKit/public/blink.compile_depends.stamp
+build obj/storage/browser/quota/storage.quota_task.o: cxx $
+    ../../storage/browser/quota/quota_task.cc || $
+    obj/third_party/WebKit/public/blink.compile_depends.stamp
+build obj/storage/browser/quota/storage.quota_temporary_storage_evictor.o: $
+    cxx ../../storage/browser/quota/quota_temporary_storage_evictor.cc || $
+    obj/third_party/WebKit/public/blink.compile_depends.stamp
+build obj/storage/browser/quota/storage.special_storage_policy.o: cxx $
+    ../../storage/browser/quota/special_storage_policy.cc || $
+    obj/third_party/WebKit/public/blink.compile_depends.stamp
+build obj/storage/browser/quota/storage.storage_monitor.o: cxx $
+    ../../storage/browser/quota/storage_monitor.cc || $
+    obj/third_party/WebKit/public/blink.compile_depends.stamp
+build obj/storage/browser/quota/storage.storage_observer.o: cxx $
+    ../../storage/browser/quota/storage_observer.cc || $
+    obj/third_party/WebKit/public/blink.compile_depends.stamp
+build obj/storage/browser/quota/storage.usage_tracker.o: cxx $
+    ../../storage/browser/quota/usage_tracker.cc || $
+    obj/third_party/WebKit/public/blink.compile_depends.stamp
+
+build obj/storage/libstorage.a: alink_thin $
+    obj/storage/browser/blob/storage.blob_async_builder_host.o $
+    obj/storage/browser/blob/storage.blob_async_transport_strategy.o $
+    obj/storage/browser/blob/storage.blob_data_builder.o $
+    obj/storage/browser/blob/storage.blob_data_handle.o $
+    obj/storage/browser/blob/storage.blob_data_item.o $
+    obj/storage/browser/blob/storage.blob_data_snapshot.o $
+    obj/storage/browser/blob/storage.blob_reader.o $
+    obj/storage/browser/blob/storage.blob_storage_context.o $
+    obj/storage/browser/blob/storage.blob_storage_registry.o $
+    obj/storage/browser/blob/storage.blob_url_request_job.o $
+    obj/storage/browser/blob/storage.blob_url_request_job_factory.o $
+    obj/storage/browser/blob/storage.internal_blob_data.o $
+    obj/storage/browser/blob/storage.scoped_file.o $
+    obj/storage/browser/blob/storage.shareable_blob_data_item.o $
+    obj/storage/browser/blob/storage.shareable_file_reference.o $
+    obj/storage/browser/blob/storage.upload_blob_element_reader.o $
+    obj/storage/browser/blob/storage.view_blob_internals_job.o $
+    obj/storage/browser/database/storage.database_quota_client.o $
+    obj/storage/browser/database/storage.database_tracker.o $
+    obj/storage/browser/database/storage.database_util.o $
+    obj/storage/browser/database/storage.databases_table.o $
+    obj/storage/browser/database/storage.vfs_backend.o $
+    obj/storage/browser/fileapi/storage.async_file_util_adapter.o $
+    obj/storage/browser/fileapi/storage.copy_or_move_operation_delegate.o $
+    obj/storage/browser/fileapi/storage.dragged_file_util.o $
+    obj/storage/browser/fileapi/storage.external_mount_points.o $
+    obj/storage/browser/fileapi/storage.file_stream_reader.o $
+    obj/storage/browser/fileapi/storage.file_system_context.o $
+    obj/storage/browser/fileapi/storage.file_system_dir_url_request_job.o $
+    obj/storage/browser/fileapi/storage.file_system_file_stream_reader.o $
+    obj/storage/browser/fileapi/storage.file_system_file_util.o $
+    obj/storage/browser/fileapi/storage.file_system_operation_context.o $
+    obj/storage/browser/fileapi/storage.file_system_operation_impl.o $
+    obj/storage/browser/fileapi/storage.file_system_operation_runner.o $
+    obj/storage/browser/fileapi/storage.file_system_options.o $
+    obj/storage/browser/fileapi/storage.file_system_quota_client.o $
+    obj/storage/browser/fileapi/storage.file_system_url.o $
+    obj/storage/browser/fileapi/storage.file_system_url_request_job.o $
+    obj/storage/browser/fileapi/storage.file_system_url_request_job_factory.o $
+    obj/storage/browser/fileapi/storage.file_system_usage_cache.o $
+    obj/storage/browser/fileapi/storage.file_writer_delegate.o $
+    obj/storage/browser/fileapi/storage.isolated_context.o $
+    obj/storage/browser/fileapi/storage.isolated_file_system_backend.o $
+    obj/storage/browser/fileapi/storage.local_file_stream_reader.o $
+    obj/storage/browser/fileapi/storage.local_file_stream_writer.o $
+    obj/storage/browser/fileapi/storage.local_file_util.o $
+    obj/storage/browser/fileapi/storage.mount_points.o $
+    obj/storage/browser/fileapi/storage.native_file_util.o $
+    obj/storage/browser/fileapi/storage.obfuscated_file_util.o $
+    obj/storage/browser/fileapi/storage.plugin_private_file_system_backend.o $
+    obj/storage/browser/fileapi/quota/storage.open_file_handle.o $
+    obj/storage/browser/fileapi/quota/storage.open_file_handle_context.o $
+    obj/storage/browser/fileapi/quota/storage.quota_backend_impl.o $
+    obj/storage/browser/fileapi/quota/storage.quota_reservation.o $
+    obj/storage/browser/fileapi/quota/storage.quota_reservation_buffer.o $
+    obj/storage/browser/fileapi/quota/storage.quota_reservation_manager.o $
+    obj/storage/browser/fileapi/storage.recursive_operation_delegate.o $
+    obj/storage/browser/fileapi/storage.remove_operation_delegate.o $
+    obj/storage/browser/fileapi/storage.sandbox_directory_database.o $
+    obj/storage/browser/fileapi/storage.sandbox_file_stream_writer.o $
+    obj/storage/browser/fileapi/storage.sandbox_file_system_backend.o $
+    obj/storage/browser/fileapi/storage.sandbox_file_system_backend_delegate.o $
+    obj/storage/browser/fileapi/storage.sandbox_isolated_origin_database.o $
+    obj/storage/browser/fileapi/storage.sandbox_origin_database.o $
+    obj/storage/browser/fileapi/storage.sandbox_origin_database_interface.o $
+    obj/storage/browser/fileapi/storage.sandbox_prioritized_origin_database.o $
+    obj/storage/browser/fileapi/storage.sandbox_quota_observer.o $
+    obj/storage/browser/fileapi/storage.timed_task_helper.o $
+    obj/storage/browser/fileapi/storage.transient_file_util.o $
+    obj/storage/browser/quota/storage.client_usage_tracker.o $
+    obj/storage/browser/quota/storage.quota_database.o $
+    obj/storage/browser/quota/storage.quota_manager.o $
+    obj/storage/browser/quota/storage.quota_manager_proxy.o $
+    obj/storage/browser/quota/storage.quota_task.o $
+    obj/storage/browser/quota/storage.quota_temporary_storage_evictor.o $
+    obj/storage/browser/quota/storage.special_storage_policy.o $
+    obj/storage/browser/quota/storage.storage_monitor.o $
+    obj/storage/browser/quota/storage.storage_observer.o $
+    obj/storage/browser/quota/storage.usage_tracker.o || $
+    obj/third_party/WebKit/public/blink.actions_depends.stamp

@@ -37,8 +37,8 @@
 #include "chrome/common/extensions/extension_constants.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/test/base/browser_with_test_window_test.h"
-#include "chrome/test/base/testing_pref_service_syncable.h"
 #include "chrome/test/base/testing_profile.h"
+#include "components/syncable_prefs/testing_pref_service_syncable.h"
 #include "content/public/browser/web_contents.h"
 #include "extensions/common/extension.h"
 #include "extensions/common/manifest_constants.h"
@@ -71,6 +71,10 @@
 #include "extensions/browser/app_window/native_app_window.h"
 #include "ui/aura/window.h"
 #endif
+
+#if defined(USE_AURA)
+#include "chrome/test/base/test_browser_window_aura.h"
+#endif  // defined(USE_AURA)
 
 using base::ASCIIToUTF16;
 using extensions::Extension;
@@ -411,14 +415,31 @@ class ChromeLauncherControllerTest : public BrowserWithTestWindowTest {
 
   void TearDown() override {
     launcher_controller_->SetShelfItemDelegateManagerForTest(nullptr);
-    if (!ash::Shell::HasInstance())
-      delete item_delegate_manager_;
     model_->RemoveObserver(model_observer_.get());
     model_observer_.reset();
     launcher_controller_.reset();
+
+    // item_delegate_manager_ must be deleted after launch_controller_,
+    // because launch_controller_ has a map of pointers to the data
+    // hold by item_delegate_manager_.
+    if (!ash::Shell::HasInstance())
+      delete item_delegate_manager_;
+
     model_.reset();
 
     BrowserWithTestWindowTest::TearDown();
+  }
+
+  BrowserWindow* CreateBrowserWindow() override {
+    return CreateTestBrowserWindowAura();
+  }
+
+  scoped_ptr<Browser> CreateBrowserWithTestWindowForProfile(Profile* profile) {
+    TestBrowserWindow* browser_widnow = CreateTestBrowserWindowAura();
+    new TestBrowserWindowOwner(browser_widnow);
+    return make_scoped_ptr(CreateBrowser(profile, Browser::TYPE_TABBED, false,
+                                         chrome::HOST_DESKTOP_TYPE_ASH,
+                                         browser_widnow));
   }
 
   void AddAppListLauncherItem() {
@@ -439,7 +460,7 @@ class ChromeLauncherControllerTest : public BrowserWithTestWindowTest {
   void InitLauncherControllerWithBrowser() {
     InitLauncherController();
     chrome::NewTab(browser());
-    BrowserList::SetLastActive(browser());
+    browser()->window()->Show();
   }
 
   void SetAppIconLoader(extensions::AppIconLoader* loader) {
@@ -614,55 +635,21 @@ class ChromeLauncherControllerTest : public BrowserWithTestWindowTest {
   ash::ShelfItemDelegateManager* item_delegate_manager_;
 
  private:
+  TestBrowserWindow* CreateTestBrowserWindowAura() {
+    scoped_ptr<aura::Window> window(new aura::Window(nullptr));
+    window->set_id(0);
+    window->SetType(ui::wm::WINDOW_TYPE_NORMAL);
+    window->Init(ui::LAYER_TEXTURED);
+    aura::client::ParentWindowWithContext(window.get(), GetContext(),
+                                          gfx::Rect(200, 200));
+
+    return new TestBrowserWindowAura(window.Pass());
+  }
+
   DISALLOW_COPY_AND_ASSIGN(ChromeLauncherControllerTest);
 };
 
 #if defined(OS_CHROMEOS)
-// A browser window proxy which is able to associate an aura native window with
-// it.
-class TestBrowserWindowAura : public TestBrowserWindow {
- public:
-  // |native_window| will still be owned by the caller after the constructor
-  // was called.
-  explicit TestBrowserWindowAura(aura::Window* native_window)
-      : native_window_(native_window) {
-  }
-  ~TestBrowserWindowAura() override {}
-
-  gfx::NativeWindow GetNativeWindow() const override {
-    return native_window_.get();
-  }
-
-  Browser* browser() { return browser_.get(); }
-
-  void CreateBrowser(const Browser::CreateParams& params) {
-    Browser::CreateParams create_params = params;
-    create_params.window = this;
-    browser_.reset(new Browser(create_params));
-  }
-
- private:
-  scoped_ptr<Browser> browser_;
-  scoped_ptr<aura::Window> native_window_;
-
-  DISALLOW_COPY_AND_ASSIGN(TestBrowserWindowAura);
-};
-
-// Creates a test browser window which has a native window.
-scoped_ptr<TestBrowserWindowAura> CreateTestBrowserWindow(
-    const Browser::CreateParams& params) {
-  // Create a window.
-  aura::Window* window = new aura::Window(NULL);
-  window->set_id(0);
-  window->SetType(ui::wm::WINDOW_TYPE_NORMAL);
-  window->Init(ui::LAYER_TEXTURED);
-  window->Show();
-
-  scoped_ptr<TestBrowserWindowAura> browser_window(
-      new TestBrowserWindowAura(window));
-  browser_window->CreateBrowser(params);
-  return browser_window.Pass();
-}
 
 // Watches WebContents and blocks until it is destroyed. This is needed for
 // the destruction of a V2 application.
@@ -861,17 +848,16 @@ class MultiProfileMultiBrowserShelfLayoutChromeLauncherControllerTest
   }
 
   // Creates a browser with a |profile| and load a tab with a |title| and |url|.
-  Browser* CreateBrowserAndTabWithProfile(Profile* profile,
-                                          const std::string& title,
-                                          const std::string& url) {
-    Browser::CreateParams params(profile, chrome::HOST_DESKTOP_TYPE_ASH);
-    Browser* browser = chrome::CreateBrowserWithTestWindowForParams(&params);
-    chrome::NewTab(browser);
+  scoped_ptr<Browser> CreateBrowserAndTabWithProfile(Profile* profile,
+                                                     const std::string& title,
+                                                     const std::string& url) {
+    scoped_ptr<Browser> browser(CreateBrowserWithTestWindowForProfile(profile));
+    chrome::NewTab(browser.get());
 
-    BrowserList::SetLastActive(browser);
-    NavigateAndCommitActiveTabWithTitle(
-        browser, GURL(url), ASCIIToUTF16(title));
-    return browser;
+    browser->window()->Show();
+    NavigateAndCommitActiveTabWithTitle(browser.get(), GURL(url),
+                                        ASCIIToUTF16(title));
+    return browser.Pass();
   }
 
   // Creates a running V1 application.
@@ -1473,24 +1459,25 @@ TEST_F(MultiProfileMultiBrowserShelfLayoutChromeLauncherControllerTest,
   chrome::MultiUserWindowManager* manager =
       chrome::MultiUserWindowManager::GetInstance();
 
-  // Add two users to the window manager.
-  std::string user2 = "user2";
-  TestingProfile* profile2 = CreateMultiUserProfile(user2);
-  manager->AddUser(profile());
-  manager->AddUser(profile2);
+  // Create a second test profile. The first is the one in profile() created in
+  // BrowserWithTestWindowTest::SetUp().
+  // No need to add the profiles to the MultiUserWindowManager here.
+  // CreateMultiUserProfile() already does that.
+  TestingProfile* profile2 = CreateMultiUserProfile("user2");
   const std::string& current_user =
       multi_user_util::GetUserIDFromProfile(profile());
 
   // Create a browser window with a native window for the current user.
-  scoped_ptr<BrowserWindow> browser_window(CreateTestBrowserWindow(
-      Browser::CreateParams(profile(), chrome::HOST_DESKTOP_TYPE_ASH)));
+  Browser::CreateParams params(profile(), chrome::HOST_DESKTOP_TYPE_ASH);
+  scoped_ptr<Browser> browser(
+      chrome::CreateBrowserWithAuraTestWindowForParams(nullptr, &params));
+  BrowserWindow* browser_window = browser->window();
   aura::Window* window = browser_window->GetNativeWindow();
   manager->SetWindowOwner(window, current_user);
 
   // Check that an activation of the window on its owner's desktop does not
   // change the visibility to another user.
-  launcher_controller_->ActivateWindowOrMinimizeIfActive(browser_window.get(),
-                                                         false);
+  launcher_controller_->ActivateWindowOrMinimizeIfActive(browser_window, false);
   EXPECT_TRUE(manager->IsWindowOnDesktopOfUser(window, current_user));
 
   // Transfer the window to another user's desktop and check that activating it
@@ -1498,8 +1485,7 @@ TEST_F(MultiProfileMultiBrowserShelfLayoutChromeLauncherControllerTest,
   manager->ShowWindowForUser(window,
                              multi_user_util::GetUserIDFromProfile(profile2));
   EXPECT_FALSE(manager->IsWindowOnDesktopOfUser(window, current_user));
-  launcher_controller_->ActivateWindowOrMinimizeIfActive(browser_window.get(),
-                                                         false);
+  launcher_controller_->ActivateWindowOrMinimizeIfActive(browser_window, false);
   EXPECT_TRUE(manager->IsWindowOnDesktopOfUser(window, current_user));
 }
 #endif
@@ -1955,9 +1941,8 @@ TEST_F(ChromeLauncherControllerTest, BrowserMenuGeneration) {
   EXPECT_TRUE(CheckMenuCreation(
       launcher_controller_.get(), item_browser, 0, NULL, true));
 
-  // Now make the created browser() visible by adding it to the active browser
-  // list.
-  BrowserList::SetLastActive(browser());
+  // Now make the created browser() visible by showing its browser window.
+  browser()->window()->Show();
   base::string16 title1 = ASCIIToUTF16("Test1");
   NavigateAndCommitActiveTabWithTitle(browser(), GURL("http://test1"), title1);
   base::string16 one_menu_item[] = { title1 };
@@ -1966,11 +1951,10 @@ TEST_F(ChromeLauncherControllerTest, BrowserMenuGeneration) {
       launcher_controller_.get(), item_browser, 1, one_menu_item, true));
 
   // Create one more browser/window and check that one more was added.
-  Browser::CreateParams ash_params(profile(), chrome::HOST_DESKTOP_TYPE_ASH);
   scoped_ptr<Browser> browser2(
-      chrome::CreateBrowserWithTestWindowForParams(&ash_params));
+      CreateBrowserWithTestWindowForProfile(profile()));
   chrome::NewTab(browser2.get());
-  BrowserList::SetLastActive(browser2.get());
+  browser2->window()->Show();
   base::string16 title2 = ASCIIToUTF16("Test2");
   NavigateAndCommitActiveTabWithTitle(browser2.get(), GURL("http://test2"),
                                       title2);
@@ -2003,8 +1987,8 @@ TEST_F(MultiProfileMultiBrowserShelfLayoutChromeLauncherControllerTest,
   EXPECT_TRUE(CheckMenuCreation(
       launcher_controller_.get(), item_browser, 0, NULL, true));
 
-  // Show the created |browser()| by adding it to the active browser list.
-  BrowserList::SetLastActive(browser());
+  // Show the created |browser()| by showing its window.
+  browser()->window()->Show();
   base::string16 title1 = ASCIIToUTF16("Test1");
   NavigateAndCommitActiveTabWithTitle(browser(), GURL("http://test1"), title1);
   base::string16 one_menu_item1[] = { title1 };

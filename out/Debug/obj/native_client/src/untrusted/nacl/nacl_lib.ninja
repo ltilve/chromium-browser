@@ -1,0 +1,10 @@
+build obj/native_client/src/untrusted/nacl/nacl_lib.actions_depends.stamp: $
+    stamp $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp $
+    obj/native_client/src/untrusted/nacl/nacl_lib_glibc.actions_rules_copies.stamp
+
+build obj/native_client/src/untrusted/nacl/nacl_lib.compile_depends.stamp: $
+    stamp $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp $
+    obj/native_client/src/untrusted/nacl/nacl_lib_glibc.actions_rules_copies.stamp
+

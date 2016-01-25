@@ -56,6 +56,7 @@
 #include "third_party/WebKit/public/platform/WebRect.h"
 #include "third_party/WebKit/public/platform/WebSize.h"
 #include "third_party/WebKit/public/platform/WebString.h"
+#include "third_party/WebKit/public/platform/WebTaskRunner.h"
 #include "third_party/WebKit/public/platform/WebThread.h"
 #include "third_party/WebKit/public/platform/WebTraceLocation.h"
 #include "third_party/WebKit/public/platform/WebURL.h"
@@ -107,7 +108,7 @@ namespace content {
 
 namespace {
 
-class InvokeTaskHelper : public WebThread::Task {
+class InvokeTaskHelper : public blink::WebTaskRunner::Task {
  public:
   InvokeTaskHelper(scoped_ptr<test_runner::WebTask> task)
       : task_(task.Pass()) {}
@@ -290,14 +291,14 @@ void BlinkTestRunner::PrintMessage(const std::string& message) {
 }
 
 void BlinkTestRunner::PostTask(test_runner::WebTask* task) {
-  Platform::current()->currentThread()->postTask(
+  Platform::current()->currentThread()->taskRunner()->postTask(
       WebTraceLocation(__FUNCTION__, __FILE__),
       new InvokeTaskHelper(make_scoped_ptr(task)));
 }
 
 void BlinkTestRunner::PostDelayedTask(test_runner::WebTask* task,
                                       long long ms) {
-  Platform::current()->currentThread()->postDelayedTask(
+  Platform::current()->currentThread()->taskRunner()->postDelayedTask(
       WebTraceLocation(__FUNCTION__, __FILE__),
       new InvokeTaskHelper(make_scoped_ptr(task)), ms);
 }
@@ -459,8 +460,10 @@ void BlinkTestRunner::SetDatabaseQuota(int quota) {
   Send(new LayoutTestHostMsg_SetDatabaseQuota(routing_id(), quota));
 }
 
-void BlinkTestRunner::SimulateWebNotificationClick(const std::string& title) {
-  Send(new LayoutTestHostMsg_SimulateWebNotificationClick(routing_id(), title));
+void BlinkTestRunner::SimulateWebNotificationClick(const std::string& title,
+                                                   int action_index) {
+  Send(new LayoutTestHostMsg_SimulateWebNotificationClick(routing_id(), title,
+                                                          action_index));
 }
 
 void BlinkTestRunner::SetDeviceScaleFactor(float factor) {
@@ -473,6 +476,26 @@ void BlinkTestRunner::SetDeviceColorProfile(const std::string& name) {
 
 void BlinkTestRunner::SetBluetoothMockDataSet(const std::string& name) {
   Send(new LayoutTestHostMsg_SetBluetoothAdapter(name));
+  // Auto-reset the chooser type so we don't get order dependence when some
+  // tests forget to do it explicitly.
+  Send(new ShellViewHostMsg_SetBluetoothManualChooser(routing_id(), false));
+}
+
+void BlinkTestRunner::SetBluetoothManualChooser() {
+  Send(new ShellViewHostMsg_SetBluetoothManualChooser(routing_id(), true));
+}
+
+void BlinkTestRunner::GetBluetoothManualChooserEvents(
+    const base::Callback<void(const std::vector<std::string>&)>& callback) {
+  get_bluetooth_events_callbacks_.push_back(callback);
+  Send(new ShellViewHostMsg_GetBluetoothManualChooserEvents(routing_id()));
+}
+
+void BlinkTestRunner::SendBluetoothManualChooserEvent(
+    const std::string& event,
+    const std::string& argument) {
+  Send(new ShellViewHostMsg_SendBluetoothManualChooserEvent(routing_id(), event,
+                                                            argument));
 }
 
 void BlinkTestRunner::SetGeofencingMockProvider(bool service_available) {
@@ -532,7 +555,7 @@ std::string BlinkTestRunner::PathToLocalResource(const std::string& resource) {
   // Some layout tests use file://// which we resolve as a UNC path. Normalize
   // them to just file:///.
   std::string result = resource;
-  while (base::StringToLowerASCII(result).find("file:////") == 0) {
+  while (base::ToLowerASCII(result).find("file:////") == 0) {
     result = result.substr(0, strlen("file:///")) +
              result.substr(strlen("file:////"));
   }
@@ -646,16 +669,6 @@ void BlinkTestRunner::ResetPermissions() {
   Send(new LayoutTestHostMsg_ResetPermissions(routing_id()));
 }
 
-scoped_refptr<cc::TextureLayer> BlinkTestRunner::CreateTextureLayerForMailbox(
-    cc::TextureLayerClient* client) {
-  return ::content::CreateTextureLayerForMailbox(client);
-}
-
-blink::WebLayer* BlinkTestRunner::InstantiateWebLayer(
-    scoped_refptr<cc::TextureLayer> layer) {
-  return ::content::InstantiateWebLayer(layer);
-}
-
 cc::SharedBitmapManager* BlinkTestRunner::GetSharedBitmapManager() {
   return RenderThread::Get()->GetSharedBitmapManager();
 }
@@ -683,7 +696,8 @@ void BlinkTestRunner::ResolveBeforeInstallPromptPromise(
       int request_id, const std::string& platform) {
   test_runner::WebTestInterfaces* interfaces =
       LayoutTestRenderProcessObserver::GetInstance()->test_interfaces();
-  interfaces->GetAppBannerClient()->ResolvePromise(request_id, platform);
+  if (interfaces->GetAppBannerClient())
+    interfaces->GetAppBannerClient()->ResolvePromise(request_id, platform);
 }
 
 blink::WebPlugin* BlinkTestRunner::CreatePluginPlaceholder(
@@ -695,6 +709,10 @@ blink::WebPlugin* BlinkTestRunner::CreatePluginPlaceholder(
       new plugins::PluginPlaceholder(render_view()->GetMainRenderFrame(), frame,
                                      params, "<div>Test content</div>");
   return placeholder->plugin();
+}
+
+void BlinkTestRunner::OnWebTestProxyBaseDestroy(
+    test_runner::WebTestProxyBase* proxy) {
 }
 
 // RenderViewObserver  --------------------------------------------------------
@@ -715,6 +733,8 @@ bool BlinkTestRunner::OnMessageReceived(const IPC::Message& message) {
     IPC_MESSAGE_HANDLER(ShellViewMsg_Reset, OnReset)
     IPC_MESSAGE_HANDLER(ShellViewMsg_NotifyDone, OnNotifyDone)
     IPC_MESSAGE_HANDLER(ShellViewMsg_TryLeakDetection, OnTryLeakDetection)
+    IPC_MESSAGE_HANDLER(ShellViewMsg_ReplyBluetoothManualChooserEvents,
+                        OnReplyBluetoothManualChooserEvents)
     IPC_MESSAGE_UNHANDLED(handled = false)
   IPC_END_MESSAGE_MAP()
 
@@ -799,18 +819,14 @@ void BlinkTestRunner::CaptureDump() {
     }
   }
 #ifndef NDEBUG
-  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
-          switches::kEnableSlimmingPaint) ||
-      !base::CommandLine::ForCurrentProcess()->HasSwitch(
-          switches::kDisableSlimmingPaint)) {
-      // Force a layout/paint by the end of the test to ensure test coverage of
-      // incremental painting in slimming paint mode.
-      proxy()->LayoutAndPaintAsyncThen(base::Bind(
-          &BlinkTestRunner::CaptureDumpComplete, base::Unretained(this)));
-      return;
-  }
-#endif
+    // Force a layout/paint by the end of the test to ensure test coverage of
+    // incremental painting.
+    proxy()->LayoutAndPaintAsyncThen(base::Bind(
+        &BlinkTestRunner::CaptureDumpComplete, base::Unretained(this)));
+    return;
+#else
   CaptureDumpComplete();
+#endif
 }
 
 void BlinkTestRunner::CaptureDumpPixels(const SkBitmap& snapshot) {
@@ -896,6 +912,15 @@ void BlinkTestRunner::OnTryLeakDetection() {
   DCHECK(!main_frame->isLoading());
 
   leak_detector_->TryLeakDetection(main_frame);
+}
+
+void BlinkTestRunner::OnReplyBluetoothManualChooserEvents(
+    const std::vector<std::string>& events) {
+  DCHECK(!get_bluetooth_events_callbacks_.empty());
+  base::Callback<void(const std::vector<std::string>&)> callback =
+      get_bluetooth_events_callbacks_.front();
+  get_bluetooth_events_callbacks_.pop_front();
+  callback.Run(events);
 }
 
 void BlinkTestRunner::ReportLeakDetectionResult(

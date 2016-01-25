@@ -12,13 +12,11 @@
 #include "components/autofill/core/common/autofill_switches.h"
 #include "components/autofill/core/common/form_data.h"
 #include "components/autofill/core/common/form_field_data.h"
-#include "components/rappor/test_rappor_service.h"
 #include "components/variations/entropy_provider.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "url/gurl.h"
 
 using base::ASCIIToUTF16;
-using rappor::TestRapporService;
 
 namespace autofill {
 
@@ -57,13 +55,12 @@ class FormStructureTest : public testing::Test {
 
  protected:
   void DisableAutofillMetadataFieldTrial() {
-    field_trial_list_.reset(NULL);
+    field_trial_list_.reset();
   }
 
  private:
   void EnableAutofillMetadataFieldTrial() {
-    // Clear the existing |field_trial_list_| to avoid firing a DCHECK.
-    field_trial_list_.reset(NULL);
+    field_trial_list_.reset();
     field_trial_list_.reset(
         new base::FieldTrialList(new metrics::SHA1EntropyProvider("foo")));
     field_trial_ = base::FieldTrialList::CreateFieldTrial(
@@ -1657,7 +1654,7 @@ TEST_F(FormStructureTest, EncodeUploadRequest) {
 
   std::string encoded_xml;
   EXPECT_TRUE(form_structure->EncodeUploadRequest(available_field_types, false,
-                                                  &encoded_xml));
+                                                  std::string(), &encoded_xml));
   EXPECT_EQ("<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
             "<autofillupload clientversion=\"6.1.1715.1442/en (GGLL)\""
             " formsignature=\"8736493185895608956\" autofillused=\"false\""
@@ -1675,7 +1672,7 @@ TEST_F(FormStructureTest, EncodeUploadRequest) {
             "</autofillupload>",
             encoded_xml);
   EXPECT_TRUE(form_structure->EncodeUploadRequest(available_field_types, true,
-                                                  &encoded_xml));
+                                                  std::string(), &encoded_xml));
   EXPECT_EQ("<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
             "<autofillupload clientversion=\"6.1.1715.1442/en (GGLL)\""
             " formsignature=\"8736493185895608956\" autofillused=\"true\""
@@ -1712,7 +1709,7 @@ TEST_F(FormStructureTest, EncodeUploadRequest) {
     form_structure->field(i)->set_possible_types(possible_field_types[i]);
 
   EXPECT_TRUE(form_structure->EncodeUploadRequest(available_field_types, false,
-                                                  &encoded_xml));
+                                                  std::string(), &encoded_xml));
   EXPECT_EQ("<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
             "<autofillupload clientversion=\"6.1.1715.1442/en (GGLL)\""
             " formsignature=\"7816485729218079147\" autofillused=\"false\""
@@ -1761,8 +1758,89 @@ TEST_F(FormStructureTest, EncodeUploadRequest) {
   ASSERT_EQ(form_structure->field_count(), possible_field_types.size());
   for (size_t i = 0; i < form_structure->field_count(); ++i)
     form_structure->field(i)->set_possible_types(possible_field_types[i]);
-  EXPECT_FALSE(form_structure->EncodeUploadRequest(available_field_types, false,
-                                                   &encoded_xml));
+  EXPECT_FALSE(form_structure->EncodeUploadRequest(
+      available_field_types, false, std::string(), &encoded_xml));
+}
+
+TEST_F(FormStructureTest,
+       EncodeUploadRequestWithAdditionalPasswordFormSignature) {
+  scoped_ptr<FormStructure> form_structure;
+  std::vector<ServerFieldTypeSet> possible_field_types;
+  FormData form;
+  form_structure.reset(new FormStructure(form));
+  form_structure->DetermineHeuristicTypes();
+
+  FormFieldData field;
+  field.label = ASCIIToUTF16("First Name");
+  field.name = ASCIIToUTF16("firstname");
+  field.autocomplete_attribute = "given-name";
+  form.fields.push_back(field);
+  possible_field_types.push_back(ServerFieldTypeSet());
+  possible_field_types.back().insert(NAME_FIRST);
+
+  field.label = ASCIIToUTF16("Last Name");
+  field.name = ASCIIToUTF16("lastname");
+  field.autocomplete_attribute = "family-name";
+  form.fields.push_back(field);
+  possible_field_types.push_back(ServerFieldTypeSet());
+  possible_field_types.back().insert(NAME_LAST);
+
+  field.label = ASCIIToUTF16("Email");
+  field.name = ASCIIToUTF16("email");
+  field.form_control_type = "email";
+  field.autocomplete_attribute = "email";
+  form.fields.push_back(field);
+  possible_field_types.push_back(ServerFieldTypeSet());
+  possible_field_types.back().insert(EMAIL_ADDRESS);
+
+  field.label = ASCIIToUTF16("username");
+  field.name = ASCIIToUTF16("username");
+  field.form_control_type = "text";
+  form.fields.push_back(field);
+  possible_field_types.push_back(ServerFieldTypeSet());
+  possible_field_types.back().insert(USERNAME);
+
+  field.label = ASCIIToUTF16("password");
+  field.name = ASCIIToUTF16("password");
+  field.form_control_type = "password";
+  form.fields.push_back(field);
+  possible_field_types.push_back(ServerFieldTypeSet());
+  possible_field_types.back().insert(ACCOUNT_CREATION_PASSWORD);
+
+  form_structure.reset(new FormStructure(form));
+
+  ASSERT_EQ(form_structure->field_count(), possible_field_types.size());
+  for (size_t i = 0; i < form_structure->field_count(); ++i)
+    form_structure->field(i)->set_possible_types(possible_field_types[i]);
+
+  ServerFieldTypeSet available_field_types;
+  available_field_types.insert(NAME_FIRST);
+  available_field_types.insert(NAME_LAST);
+  available_field_types.insert(EMAIL_ADDRESS);
+  available_field_types.insert(USERNAME);
+  available_field_types.insert(ACCOUNT_CREATION_PASSWORD);
+
+  std::string encoded_xml;
+  EXPECT_TRUE(form_structure->EncodeUploadRequest(available_field_types, true,
+                                                  "42", &encoded_xml));
+  EXPECT_EQ(
+      "<?xml version=\"1.0\" encoding=\"UTF-8\"?><autofillupload "
+      "clientversion=\"6.1.1715.1442/en (GGLL)\" "
+      "formsignature=\"5810032074788446513\" autofillused=\"true\" "
+      "datapresent=\"1440000000000000000802\" "
+      "loginformsignature=\"42\"><field signature=\"4224610201\" "
+      "name=\"firstname\" type=\"\" label=\"First Name\" "
+      "autocomplete=\"given-name\" autofilltype=\"3\"/><field "
+      "signature=\"2786066110\" name=\"lastname\" type=\"\" label=\"Last "
+      "Name\" autocomplete=\"family-name\" autofilltype=\"5\"/><field "
+      "signature=\"1029417091\" name=\"email\" type=\"email\" label=\"Email\" "
+      "autocomplete=\"email\" autofilltype=\"9\"/><field "
+      "signature=\"239111655\" name=\"username\" type=\"text\" "
+      "label=\"username\" autocomplete=\"email\" autofilltype=\"86\"/><field "
+      "signature=\"2051817934\" name=\"password\" type=\"password\" "
+      "label=\"password\" autocomplete=\"email\" "
+      "autofilltype=\"76\"/></autofillupload>",
+      encoded_xml);
 }
 
 TEST_F(FormStructureTest, EncodeUploadRequest_WithAutocomplete) {
@@ -1810,7 +1888,7 @@ TEST_F(FormStructureTest, EncodeUploadRequest_WithAutocomplete) {
 
   std::string encoded_xml;
   EXPECT_TRUE(form_structure->EncodeUploadRequest(available_field_types, true,
-                                                  &encoded_xml));
+                                                  std::string(), &encoded_xml));
   EXPECT_EQ("<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
             "<autofillupload clientversion=\"6.1.1715.1442/en (GGLL)\""
             " formsignature=\"14746822798145140279\" autofillused=\"true\""
@@ -1864,7 +1942,7 @@ TEST_F(FormStructureTest, EncodeUploadRequest_WithLabels) {
 
   std::string encoded_xml;
   EXPECT_TRUE(form_structure->EncodeUploadRequest(available_field_types, true,
-                                                  &encoded_xml));
+                                                  std::string(), &encoded_xml));
   // Expected that the first field does not send the label but others do.
   EXPECT_EQ("<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
             "<autofillupload clientversion=\"6.1.1715.1442/en (GGLL)\""
@@ -1921,7 +1999,7 @@ TEST_F(FormStructureTest, EncodeUploadRequestPartialMetadata) {
 
   std::string encoded_xml;
   EXPECT_TRUE(form_structure->EncodeUploadRequest(available_field_types, true,
-                                                  &encoded_xml));
+                                                  std::string(), &encoded_xml));
   EXPECT_EQ("<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
             "<autofillupload clientversion=\"6.1.1715.1442/en (GGLL)\""
             " formsignature=\"13043654279838250996\" autofillused=\"true\""
@@ -1984,7 +2062,7 @@ TEST_F(FormStructureTest, EncodeUploadRequest_DisabledMetadataTrial) {
 
   std::string encoded_xml;
   EXPECT_TRUE(form_structure->EncodeUploadRequest(available_field_types, true,
-                                                  &encoded_xml));
+                                                  std::string(), &encoded_xml));
   EXPECT_EQ("<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
             "<autofillupload clientversion=\"6.1.1715.1442/en (GGLL)\""
             " formsignature=\"14746822798145140279\" autofillused=\"true\""
@@ -2154,7 +2232,7 @@ TEST_F(FormStructureTest, CheckDataPresence) {
 
   std::string encoded_xml;
   EXPECT_TRUE(form_structure.EncodeUploadRequest(available_field_types, false,
-                                                 &encoded_xml));
+                                                 std::string(), &encoded_xml));
   EXPECT_EQ("<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
             "<autofillupload clientversion=\"6.1.1715.1442/en (GGLL)\""
             " formsignature=\"6402244543831589061\" autofillused=\"false\""
@@ -2186,7 +2264,7 @@ TEST_F(FormStructureTest, CheckDataPresence) {
   available_field_types.insert(ADDRESS_HOME_CITY);
 
   EXPECT_TRUE(form_structure.EncodeUploadRequest(available_field_types, false,
-                                                 &encoded_xml));
+                                                 std::string(), &encoded_xml));
   EXPECT_EQ("<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
             "<autofillupload clientversion=\"6.1.1715.1442/en (GGLL)\""
             " formsignature=\"6402244543831589061\" autofillused=\"false\""
@@ -2242,7 +2320,7 @@ TEST_F(FormStructureTest, CheckDataPresence) {
   available_field_types.insert(COMPANY_NAME);
 
   EXPECT_TRUE(form_structure.EncodeUploadRequest(available_field_types, false,
-                                                 &encoded_xml));
+                                                 std::string(), &encoded_xml));
   EXPECT_EQ("<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
             "<autofillupload clientversion=\"6.1.1715.1442/en (GGLL)\""
             " formsignature=\"6402244543831589061\" autofillused=\"false\""
@@ -2276,7 +2354,7 @@ TEST_F(FormStructureTest, CheckDataPresence) {
   available_field_types.insert(CREDIT_CARD_EXP_DATE_4_DIGIT_YEAR);
 
   EXPECT_TRUE(form_structure.EncodeUploadRequest(available_field_types, false,
-                                                 &encoded_xml));
+                                                 std::string(), &encoded_xml));
   EXPECT_EQ("<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
             "<autofillupload clientversion=\"6.1.1715.1442/en (GGLL)\""
             " formsignature=\"6402244543831589061\" autofillused=\"false\""
@@ -2346,7 +2424,7 @@ TEST_F(FormStructureTest, CheckDataPresence) {
   available_field_types.insert(COMPANY_NAME);
 
   EXPECT_TRUE(form_structure.EncodeUploadRequest(available_field_types, false,
-                                                 &encoded_xml));
+                                                 std::string(), &encoded_xml));
   EXPECT_EQ("<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
             "<autofillupload clientversion=\"6.1.1715.1442/en (GGLL)\""
             " formsignature=\"6402244543831589061\" autofillused=\"false\""
@@ -2423,7 +2501,7 @@ TEST_F(FormStructureTest, CheckMultipleTypes) {
 
   // Now we matched both fields singularly.
   EXPECT_TRUE(form_structure->EncodeUploadRequest(available_field_types, false,
-                                                  &encoded_xml));
+                                                  std::string(), &encoded_xml));
   EXPECT_EQ("<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
             "<autofillupload clientversion=\"6.1.1715.1442/en (GGLL)\""
             " formsignature=\"18062476096658145866\" autofillused=\"false\""
@@ -2441,7 +2519,7 @@ TEST_F(FormStructureTest, CheckMultipleTypes) {
   possible_field_types[2].insert(NAME_FIRST);
   form_structure->field(2)->set_possible_types(possible_field_types[2]);
   EXPECT_TRUE(form_structure->EncodeUploadRequest(available_field_types, false,
-                                                  &encoded_xml));
+                                                  std::string(), &encoded_xml));
   EXPECT_EQ("<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
             "<autofillupload clientversion=\"6.1.1715.1442/en (GGLL)\""
             " formsignature=\"18062476096658145866\" autofillused=\"false\""
@@ -2461,7 +2539,7 @@ TEST_F(FormStructureTest, CheckMultipleTypes) {
   form_structure->field(form_structure->field_count() - 1)->set_possible_types(
       possible_field_types[form_structure->field_count() - 1]);
   EXPECT_TRUE(form_structure->EncodeUploadRequest(available_field_types, false,
-                                                  &encoded_xml));
+                                                  std::string(), &encoded_xml));
   EXPECT_EQ("<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
             "<autofillupload clientversion=\"6.1.1715.1442/en (GGLL)\""
             " formsignature=\"18062476096658145866\" autofillused=\"false\""
@@ -2485,7 +2563,7 @@ TEST_F(FormStructureTest, CheckMultipleTypes) {
   form_structure->field(form_structure->field_count() - 1)->set_possible_types(
       possible_field_types[form_structure->field_count() - 1]);
   EXPECT_TRUE(form_structure->EncodeUploadRequest(available_field_types, false,
-                                                  &encoded_xml));
+                                                  std::string(), &encoded_xml));
   EXPECT_EQ("<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
             "<autofillupload clientversion=\"6.1.1715.1442/en (GGLL)\""
             " formsignature=\"18062476096658145866\" autofillused=\"false\""
@@ -2596,11 +2674,6 @@ TEST_F(FormStructureTest, ToFormData) {
   form.fields.push_back(field);
 
   EXPECT_TRUE(form.SameFormAs(FormStructure(form).ToFormData()));
-
-  // Currently |FormStructure(form_data)ToFormData().user_submitted| is always
-  // false. This forces a future author that changes this to update this test.
-  form.user_submitted = true;
-  EXPECT_FALSE(form.SameFormAs(FormStructure(form).ToFormData()));
 }
 
 TEST_F(FormStructureTest, SkipFieldTest) {
@@ -2811,7 +2884,6 @@ TEST_F(FormStructureTest, PossibleValues) {
 }
 
 TEST_F(FormStructureTest, ParseQueryResponse) {
-  TestRapporService rappor_service;
   FormData form;
   form.origin = GURL("http://foo.com");
   FormFieldData field;
@@ -2854,7 +2926,7 @@ TEST_F(FormStructureTest, ParseQueryResponse) {
       "<field autofilltype=\"0\" />"
       "</autofillqueryresponse>";
 
-  FormStructure::ParseQueryResponse(response, forms.get(), &rappor_service);
+  FormStructure::ParseQueryResponse(response, forms.get(), nullptr);
 
   ASSERT_GE(forms[0]->field_count(), 2U);
   ASSERT_GE(forms[1]->field_count(), 2U);
@@ -2862,15 +2934,10 @@ TEST_F(FormStructureTest, ParseQueryResponse) {
   EXPECT_EQ(30, forms[0]->field(1)->server_type());
   EXPECT_EQ(9, forms[1]->field(0)->server_type());
   EXPECT_EQ(0, forms[1]->field(1)->server_type());
-
-  // No RAPPOR metrics are logged in the case there is server data available for
-  // all forms.
-  EXPECT_EQ(0, rappor_service.GetReportsCount());
 }
 
 // If user defined types are present, only parse password fields.
 TEST_F(FormStructureTest, ParseQueryResponseAuthorDefinedTypes) {
-  TestRapporService rappor_service;
   FormData form;
   form.origin = GURL("http://foo.com");
   FormFieldData field;
@@ -2897,162 +2964,11 @@ TEST_F(FormStructureTest, ParseQueryResponseAuthorDefinedTypes) {
       "<field autofilltype=\"76\" />"
       "</autofillqueryresponse>";
 
-  FormStructure::ParseQueryResponse(response, forms.get(), &rappor_service);
+  FormStructure::ParseQueryResponse(response, forms.get(), nullptr);
 
   ASSERT_GE(forms[0]->field_count(), 2U);
   EXPECT_EQ(NO_SERVER_DATA, forms[0]->field(0)->server_type());
   EXPECT_EQ(76, forms[0]->field(1)->server_type());
-}
-
-// If the server returns NO_SERVER_DATA for one of the forms, expect RAPPOR
-// logging.
-TEST_F(FormStructureTest,
-       ParseQueryResponse_RapporLogging_OneFormNoServerData) {
-  TestRapporService rappor_service;
-  FormData form;
-  form.origin = GURL("http://foo.com");
-  FormFieldData field;
-  field.form_control_type = "text";
-
-  field.label = ASCIIToUTF16("fullname");
-  field.name = ASCIIToUTF16("fullname");
-  form.fields.push_back(field);
-
-  field.label = ASCIIToUTF16("address");
-  field.name = ASCIIToUTF16("address");
-  form.fields.push_back(field);
-
-  ScopedVector<FormStructure> forms;
-  forms.push_back(new FormStructure(form));
-
-  field.label = ASCIIToUTF16("email");
-  field.name = ASCIIToUTF16("email");
-  form.fields.push_back(field);
-
-  field.label = ASCIIToUTF16("password");
-  field.name = ASCIIToUTF16("password");
-  field.form_control_type = "password";
-  form.fields.push_back(field);
-
-  forms.push_back(new FormStructure(form));
-
-  std::string response =
-      "<autofillqueryresponse>"
-      "<field autofilltype=\"0\" />"
-      "<field autofilltype=\"0\" />"
-      "<field autofilltype=\"9\" />"
-      "<field autofilltype=\"0\" />"
-      "</autofillqueryresponse>";
-
-  FormStructure::ParseQueryResponse(response, forms.get(), &rappor_service);
-
-  EXPECT_EQ(1, rappor_service.GetReportsCount());
-  std::string sample;
-  rappor::RapporType type;
-  EXPECT_TRUE(rappor_service.GetRecordedSampleForMetric(
-      "Autofill.QueryResponseHasNoServerDataForForm", &sample, &type));
-  EXPECT_EQ("foo.com", sample);
-  EXPECT_EQ(rappor::ETLD_PLUS_ONE_RAPPOR_TYPE, type);
-}
-
-// If the server returns NO_SERVER_DATA for both of the forms, expect RAPPOR
-// logging.
-TEST_F(FormStructureTest,
-       ParseQueryResponse_RapporLogging_AllFormsNoServerData) {
-  TestRapporService rappor_service;
-  FormData form;
-  form.origin = GURL("http://foo.com");
-  FormFieldData field;
-  field.form_control_type = "text";
-
-  field.label = ASCIIToUTF16("fullname");
-  field.name = ASCIIToUTF16("fullname");
-  form.fields.push_back(field);
-
-  field.label = ASCIIToUTF16("address");
-  field.name = ASCIIToUTF16("address");
-  form.fields.push_back(field);
-
-  ScopedVector<FormStructure> forms;
-  forms.push_back(new FormStructure(form));
-
-  field.label = ASCIIToUTF16("email");
-  field.name = ASCIIToUTF16("email");
-  form.fields.push_back(field);
-
-  field.label = ASCIIToUTF16("password");
-  field.name = ASCIIToUTF16("password");
-  field.form_control_type = "password";
-  form.fields.push_back(field);
-
-  forms.push_back(new FormStructure(form));
-
-  std::string response =
-      "<autofillqueryresponse>"
-      "<field autofilltype=\"0\" />"
-      "<field autofilltype=\"0\" />"
-      "<field autofilltype=\"0\" />"
-      "<field autofilltype=\"0\" />"
-      "</autofillqueryresponse>";
-
-  FormStructure::ParseQueryResponse(response, forms.get(), &rappor_service);
-
-  // Even though both forms are logging to RAPPOR, there is only one sample for
-  // a given eTLD+1.
-  EXPECT_EQ(1, rappor_service.GetReportsCount());
-  std::string sample;
-  rappor::RapporType type;
-  EXPECT_TRUE(rappor_service.GetRecordedSampleForMetric(
-      "Autofill.QueryResponseHasNoServerDataForForm", &sample, &type));
-  EXPECT_EQ("foo.com", sample);
-  EXPECT_EQ(rappor::ETLD_PLUS_ONE_RAPPOR_TYPE, type);
-}
-
-// If the server returns NO_SERVER_DATA for only some of the fields, expect no
-// RAPPOR logging.
-TEST_F(FormStructureTest,
-       ParseQueryResponse_RapporLogging_PartialNoServerData) {
-  TestRapporService rappor_service;
-  FormData form;
-  form.origin = GURL("http://foo.com");
-  FormFieldData field;
-  field.form_control_type = "text";
-
-  field.label = ASCIIToUTF16("fullname");
-  field.name = ASCIIToUTF16("fullname");
-  form.fields.push_back(field);
-
-  field.label = ASCIIToUTF16("address");
-  field.name = ASCIIToUTF16("address");
-  form.fields.push_back(field);
-
-  ScopedVector<FormStructure> forms;
-  forms.push_back(new FormStructure(form));
-
-  field.label = ASCIIToUTF16("email");
-  field.name = ASCIIToUTF16("email");
-  form.fields.push_back(field);
-
-  field.label = ASCIIToUTF16("password");
-  field.name = ASCIIToUTF16("password");
-  field.form_control_type = "password";
-  form.fields.push_back(field);
-
-  forms.push_back(new FormStructure(form));
-
-  std::string response =
-      "<autofillqueryresponse>"
-      "<field autofilltype=\"0\" />"
-      "<field autofilltype=\"10\" />"
-      "<field autofilltype=\"0\" />"
-      "<field autofilltype=\"11\" />"
-      "</autofillqueryresponse>";
-
-  FormStructure::ParseQueryResponse(response, forms.get(), &rappor_service);
-
-  // No RAPPOR metrics are logged in the case there is at least some server data
-  // available for all forms.
-  EXPECT_EQ(0, rappor_service.GetReportsCount());
 }
 
 }  // namespace autofill

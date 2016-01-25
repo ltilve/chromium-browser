@@ -110,9 +110,9 @@ class WebFrameTestProxy : public Base {
     Base::didChangeIcon(frame, icon_type);
   }
 
-  virtual void didFinishDocumentLoad(blink::WebLocalFrame* frame) {
+  virtual void didFinishDocumentLoad(blink::WebLocalFrame* frame, bool empty) {
     base_proxy_->DidFinishDocumentLoad(frame);
-    Base::didFinishDocumentLoad(frame);
+    Base::didFinishDocumentLoad(frame, empty);
   }
 
   virtual void didHandleOnloadEvents(blink::WebLocalFrame* frame) {
@@ -179,13 +179,12 @@ class WebFrameTestProxy : public Base {
     Base::showContextMenu(context_menu_data);
   }
 
-  virtual void didDetectXSS(blink::WebLocalFrame* frame,
-                            const blink::WebURL& insecure_url,
+  virtual void didDetectXSS(const blink::WebURL& insecure_url,
                             bool did_block_entire_page) {
     // This is not implemented in RenderFrameImpl, so need to explicitly call
     // into the base proxy.
-    base_proxy_->DidDetectXSS(frame, insecure_url, did_block_entire_page);
-    Base::didDetectXSS(frame, insecure_url, did_block_entire_page);
+    base_proxy_->DidDetectXSS(insecure_url, did_block_entire_page);
+    Base::didDetectXSS(insecure_url, did_block_entire_page);
   }
 
   virtual void didDispatchPingLoader(blink::WebLocalFrame* frame,
@@ -194,14 +193,6 @@ class WebFrameTestProxy : public Base {
     // into the base proxy.
     base_proxy_->DidDispatchPingLoader(frame, url);
     Base::didDispatchPingLoader(frame, url);
-  }
-
-  virtual void willRequestResource(blink::WebLocalFrame* frame,
-                                   const blink::WebCachedURLRequest& request) {
-    // This is not implemented in RenderFrameImpl, so need to explicitly call
-    // into the base proxy.
-    base_proxy_->WillRequestResource(frame, request);
-    Base::willRequestResource(frame, request);
   }
 
   virtual void didCreateDataSource(blink::WebLocalFrame* frame,
@@ -240,7 +231,6 @@ class WebFrameTestProxy : public Base {
   virtual void didFinishResourceLoad(blink::WebLocalFrame* frame,
                                      unsigned identifier) {
     base_proxy_->DidFinishResourceLoad(frame, identifier);
-    Base::didFinishResourceLoad(frame, identifier);
   }
 
   virtual blink::WebNavigationPolicy decidePolicyForNavigation(

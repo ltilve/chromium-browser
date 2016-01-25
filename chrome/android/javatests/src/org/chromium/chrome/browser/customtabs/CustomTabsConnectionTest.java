@@ -8,14 +8,10 @@ import android.app.Application;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Bundle;
-import android.os.IBinder;
 import android.os.Process;
 import android.support.customtabs.ICustomTabsCallback;
 import android.test.InstrumentationTestCase;
 import android.test.suitebuilder.annotation.SmallTest;
-
-import org.chromium.base.ThreadUtils;
 
 /** Tests for CustomTabsConnection. */
 public class CustomTabsConnectionTest extends InstrumentationTestCase {
@@ -24,37 +20,19 @@ public class CustomTabsConnectionTest extends InstrumentationTestCase {
     private static final String URL2 = "https://www.android.com";
     private static final String INVALID_SCHEME_URL = "intent://www.google.com";
 
+    private Context mContext;
+
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        Context context = getInstrumentation().getTargetContext().getApplicationContext();
-        mCustomTabsConnection = CustomTabsConnection.getInstance((Application) context);
+        mContext = getInstrumentation().getTargetContext().getApplicationContext();
+        mCustomTabsConnection = CustomTabsTestUtils.setUpConnection((Application) mContext);
     }
 
     @Override
     protected void tearDown() throws Exception {
         super.tearDown();
-        cleanupSessions();
-    }
-
-    private void cleanupSessions() {
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                mCustomTabsConnection.cleanupAll();
-            }
-        });
-    }
-
-    private ICustomTabsCallback newDummyCallback() {
-        return new ICustomTabsCallback.Stub() {
-            @Override
-            public void onNavigationEvent(int navigationEvent, Bundle extras) {}
-            @Override
-            public IBinder asBinder() {
-                return this;
-            }
-        };
+        CustomTabsTestUtils.cleanupSessions(mCustomTabsConnection);
     }
 
     /**
@@ -64,9 +42,20 @@ public class CustomTabsConnectionTest extends InstrumentationTestCase {
     @SmallTest
     public void testNewSession() {
         assertEquals(false, mCustomTabsConnection.newSession(null));
-        ICustomTabsCallback cb = newDummyCallback();
+        ICustomTabsCallback cb = new CustomTabsTestUtils.DummyCallback();
         assertEquals(true, mCustomTabsConnection.newSession(cb));
         assertEquals(false, mCustomTabsConnection.newSession(cb));
+    }
+
+    /**
+     * Tests that we can create several sessions.
+     */
+    @SmallTest
+    public void testSeveralSessions() {
+        ICustomTabsCallback cb = new CustomTabsTestUtils.DummyCallback();
+        assertEquals(true, mCustomTabsConnection.newSession(cb));
+        ICustomTabsCallback cb2 = new CustomTabsTestUtils.DummyCallback();
+        assertEquals(true, mCustomTabsConnection.newSession(cb2));
     }
 
     /**
@@ -87,7 +76,7 @@ public class CustomTabsConnectionTest extends InstrumentationTestCase {
             ICustomTabsCallback cb, String url, boolean shouldSucceed) {
         mCustomTabsConnection.warmup(0);
         if (cb == null) {
-            cb = newDummyCallback();
+            cb = new CustomTabsTestUtils.DummyCallback();
             mCustomTabsConnection.newSession(cb);
         }
         boolean succeeded = mCustomTabsConnection.mayLaunchUrl(cb, Uri.parse(url), null, null);
@@ -97,12 +86,13 @@ public class CustomTabsConnectionTest extends InstrumentationTestCase {
 
     /**
      * Tests that
-     * {@link CustomTabsConnection#mayLaunchUrl(long, String, Bundle, List<Bundle>)}
+     * {@link CustomTabsConnection#mayLaunchUrl(
+     * ICustomTabsCallback, Uri, android.os.Bundle, java.util.List)}
      * returns an error when called with an invalid session ID.
      */
     @SmallTest
     public void testNoMayLaunchUrlWithInvalidSessionId() {
-        assertWarmupAndMayLaunchUrl(newDummyCallback(), URL, false);
+        assertWarmupAndMayLaunchUrl(new CustomTabsTestUtils.DummyCallback(), URL, false);
     }
 
     /**
@@ -133,7 +123,9 @@ public class CustomTabsConnectionTest extends InstrumentationTestCase {
     @SmallTest
     public void testMultipleMayLaunchUrl() {
         ICustomTabsCallback cb = assertWarmupAndMayLaunchUrl(null, URL, true);
+        mCustomTabsConnection.resetThrottling(mContext, Process.myUid());
         assertWarmupAndMayLaunchUrl(cb, URL, true);
+        mCustomTabsConnection.resetThrottling(mContext, Process.myUid());
         assertWarmupAndMayLaunchUrl(cb, URL2, true);
     }
 
@@ -143,22 +135,101 @@ public class CustomTabsConnectionTest extends InstrumentationTestCase {
     @SmallTest
     public void testForgetsSession() {
         ICustomTabsCallback cb = assertWarmupAndMayLaunchUrl(null, URL, true);
-        cleanupSessions();
+        CustomTabsTestUtils.cleanupSessions(mCustomTabsConnection);
         assertWarmupAndMayLaunchUrl(cb, URL, false);
     }
 
     /**
-     * Tests that CPU cgroup exists and is either root or background.
+     * Tests that CPU cgroups exist and have the expected values for background and foreground.
+     *
+     * To make testing easier the test assumes that the Android Framework uses
+     * the same cgroup for background processes and background _threads_, which
+     * has been the case through LOLLIPOP_MR1.
      */
     @SmallTest
     public void testGetSchedulerGroup() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) return;
         assertNotNull(CustomTabsConnection.getSchedulerGroup(Process.myPid()));
         String cgroup = CustomTabsConnection.getSchedulerGroup(Process.myPid());
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            // TODO(lizeb): Really test with background processes, as this
-            // process doesn't run in the background.
-            assertTrue(cgroup.equals("/") || cgroup.equals("/bg_non_interactive") // L MR1+
-                    || cgroup.equals("/apps") || cgroup.equals("/apps//bg_non_interactive"));
+        // Tests run in the foreground.
+        assertTrue(cgroup.equals("/") || cgroup.equals("/apps"));
+
+        final String[] backgroundThreadCgroup = {null};
+        Thread backgroundThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                int tid = Process.myTid();
+                Process.setThreadPriority(tid, Process.THREAD_PRIORITY_BACKGROUND);
+                backgroundThreadCgroup[0] = CustomTabsConnection.getSchedulerGroup(tid);
+            }
+        });
+        backgroundThread.start();
+        try {
+            backgroundThread.join();
+        } catch (InterruptedException e) {
+            fail();
+            return;
         }
+        String threadCgroup = backgroundThreadCgroup[0];
+        assertNotNull(threadCgroup);
+        assertTrue(threadCgroup.equals("/bg_non_interactive")
+                || threadCgroup.equals("/apps/bg_non_interactive"));
+    }
+
+    /**
+     * Tests that predictions are throttled.
+     */
+    @SmallTest
+    public void testThrottleMayLaunchUrl() {
+        ICustomTabsCallback cb = assertWarmupAndMayLaunchUrl(null, URL, true);
+        int successfulRequests = 0;
+        // Send a burst of requests instead of checking for precise delays to avoid flakiness.
+        while (successfulRequests < 10) {
+            if (!mCustomTabsConnection.mayLaunchUrl(cb, Uri.parse(URL), null, null)) break;
+            successfulRequests++;
+        }
+        assertTrue("10 requests in a row should not all succeed.", successfulRequests < 10);
+    }
+
+    /**
+     * Tests that the mayLaunchUrl() throttling is reset after a long enough wait.
+     */
+    @SmallTest
+    public void testThrottlingIsReset() {
+        ICustomTabsCallback cb = assertWarmupAndMayLaunchUrl(null, URL, true);
+        mCustomTabsConnection.mayLaunchUrl(cb, Uri.parse(URL), null, null);
+        // Depending on the timing, the delay should be 100 or 200ms here.
+        assertWarmupAndMayLaunchUrl(cb, URL, false);
+        // Wait for more than 2 * MAX_POSSIBLE_DELAY to clear the delay
+        try {
+            Thread.sleep(450); // 2 * MAX_POSSIBLE_DELAY + 50ms
+        } catch (InterruptedException e) {
+            fail();
+            return;
+        }
+        assertWarmupAndMayLaunchUrl(cb, URL, true);
+        // Check that the delay has been reset, by waiting for 100ms.
+        try {
+            Thread.sleep(150); // MIN_DELAY + 50ms margin
+        } catch (InterruptedException e) {
+            fail();
+            return;
+        }
+        assertWarmupAndMayLaunchUrl(cb, URL, true);
+    }
+
+    /**
+     * Tests that throttling applies across sessions.
+     */
+    @SmallTest
+    public void testThrottlingAcrossSessions() {
+        ICustomTabsCallback cb = assertWarmupAndMayLaunchUrl(null, URL, true);
+        mCustomTabsConnection.resetThrottling(mContext, Process.myUid());
+        ICustomTabsCallback cb2 = assertWarmupAndMayLaunchUrl(null, URL, true);
+        mCustomTabsConnection.resetThrottling(mContext, Process.myUid());
+        for (int i = 0; i < 10; i++) {
+            mCustomTabsConnection.mayLaunchUrl(cb, Uri.parse(URL), null, null);
+        }
+        assertWarmupAndMayLaunchUrl(cb2, URL, false);
     }
 }

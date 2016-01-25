@@ -1,0 +1,11 @@
+tracing/child_memory_dump_manager_delegate_impl.cc
+tracing/child_memory_dump_manager_delegate_impl.h
+tracing/child_trace_message_filter.cc
+tracing/child_trace_message_filter.h
+tracing/trace_config_file.cc
+tracing/trace_config_file.h
+tracing/tracing_export.h
+tracing/tracing_messages.cc
+tracing/tracing_messages.h
+tracing/tracing_switches.cc
+tracing/tracing_switches.h

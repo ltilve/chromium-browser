@@ -1,0 +1,1401 @@
+rule boringssl_nacl_target_build_newlib_plib_30e0587540d94aa5dc06b3509db6c344
+  command = cd ../../third_party/boringssl; python $
+      ../../native_client/build/build_nexe.py --root ../.. --product-dir $
+      ../../out/Debug/xyz --config-name Debug -t $
+      ../../native_client/toolchain/ --arch pnacl --build newlib_plib $
+      --name ../../out/Debug/gen/tc_pnacl_newlib/lib/libboringssl_nacl.a $
+      --objdir $
+      ../../out/Debug/obj/third_party/boringssl/boringssl_nacl.gen/pnacl_newlib-pnacl/boringssl_nacl $
+      "--include-dirs=../../out/Debug/gen/tc_pnacl_newlib/include ../.. $
+      \"../../out/Debug/gen\" src/include $
+      ../../native_client_sdk/src/libraries $
+      ../../native_client_sdk/src/libraries/nacl_io/include $
+      ../../native_client_sdk/src/libraries/third_party/newlib-extras" $
+      "--compile_flags=-O2 -g -Wall -fdiagnostics-show-option -Werror  $
+      -Wno-unused-function -Wno-char-subscripts -Wno-c++11-extensions $
+      -Wno-unnamed-type-template-args -Wno-extra-semi $
+      -Wno-unused-private-field -Wno-char-subscripts -Wno-unused-function $
+      \"-std=gnu++11\" -Wno-sometimes-uninitialized -Wno-unused-variable" $
+      --gomadir "" "--defines=\"__STDC_LIMIT_MACROS=1\" $
+      \"__STDC_FORMAT_MACROS=1\" \"_GNU_SOURCE=1\" $
+      \"_POSIX_C_SOURCE=199506\" \"_XOPEN_SOURCE=600\" $
+      \"DYNAMIC_ANNOTATIONS_ENABLED=1\" $
+      \"DYNAMIC_ANNOTATIONS_PREFIX=NACL_\" \"NACL_BUILD_ARCH=x86\" $
+      V8_DEPRECATION_WARNINGS \"CLD_VERSION=2\" \"_FILE_OFFSET_BITS=64\" $
+      CHROMIUM_BUILD \"CR_CLANG_REVISION=255169-1\" $
+      UI_COMPOSITOR_IMAGE_TRANSPORT \"USE_AURA=1\" \"USE_ASH=1\" $
+      \"USE_PANGO=1\" \"USE_CAIRO=1\" \"USE_DEFAULT_RENDER_THEME=1\" $
+      \"USE_LIBJPEG_TURBO=1\" \"USE_X11=1\" \"USE_CLIPBOARD_AURAX11=1\" $
+      ENABLE_ONE_CLICK_SIGNIN \"ENABLE_WEBRTC=1\" \"ENABLE_MEDIA_ROUTER=1\" $
+      ENABLE_PEPPER_CDMS ENABLE_CONFIGURATION_POLICY ENABLE_NOTIFICATIONS $
+      \"ENABLE_HIDPI=1\" \"ENABLE_TOPCHROME_MD=1\" USE_UDEV $
+      DONT_EMBED_BUILD_METADATA FIELDTRIAL_TESTING_ENABLED $
+      \"ENABLE_TASK_MANAGER=1\" \"ENABLE_EXTENSIONS=1\" \"ENABLE_PDF=1\" $
+      \"ENABLE_PLUGINS=1\" \"ENABLE_SESSION_SERVICE=1\" \"ENABLE_THEMES=1\" $
+      \"ENABLE_AUTOFILL_DIALOG=1\" \"ENABLE_BACKGROUND=1\" $
+      \"ENABLE_PRINTING=1\" \"ENABLE_BASIC_PRINTING=1\" $
+      \"ENABLE_PRINT_PREVIEW=1\" \"ENABLE_SPELLCHECK=1\" $
+      \"ENABLE_CAPTIVE_PORTAL_DETECTION=1\" \"ENABLE_APP_LIST=1\" $
+      \"ENABLE_SETTINGS_APP=1\" \"ENABLE_SUPERVISED_USERS=1\" $
+      \"ENABLE_MDNS=1\" \"ENABLE_SERVICE_DISCOVERY=1\" $
+      V8_USE_EXTERNAL_STARTUP_DATA FULL_SAFE_BROWSING SAFE_BROWSING_CSD $
+      SAFE_BROWSING_DB_LOCAL OPENSSL_NO_ASM \"USE_LIBPCI=1\" $
+      \"USE_OPENSSL=1\" \"USE_GLIB=1\" \"USE_NSS_CERTS=1\"" $
+      "--link_flags=-B../../out/Debug/gen/tc_pnacl_newlib/lib  " $
+      "--source-list=../../out/gypfiles/third_party/boringssl/pnacl_newlib.boringssl_nacl.source_list.gypcmd"
+  description = ACTION boringssl_nacl: build newlib $
+      plib_30e0587540d94aa5dc06b3509db6c344
+  restat = 1
+
+build gen/tc_pnacl_newlib/lib/libboringssl_nacl.a: $
+    boringssl_nacl_target_build_newlib_plib_30e0587540d94aa5dc06b3509db6c344 $
+    ../../native_client/build/build_nexe.py $
+    ../../native_client/build/build_nexe_tools.py $
+    ../../native_client_sdk/src/libraries/nacl_io/include/sys/time.h $
+    ../../native_client_sdk/src/libraries/third_party/newlib-extras/arpa/inet.h $
+    ../../native_client_sdk/src/libraries/third_party/newlib-extras/netdb.h $
+    ../../native_client_sdk/src/libraries/third_party/newlib-extras/netinet/in.h $
+    ../../native_client_sdk/src/libraries/third_party/newlib-extras/netinet6/in6.h $
+    ../../native_client_sdk/src/libraries/third_party/newlib-extras/sys/socket.h $
+    ../../third_party/boringssl/err_data.c $
+    ../../third_party/boringssl/src/crypto/aes/aes.c $
+    ../../third_party/boringssl/src/crypto/aes/mode_wrappers.c $
+    ../../third_party/boringssl/src/crypto/asn1/a_bitstr.c $
+    ../../third_party/boringssl/src/crypto/asn1/a_bool.c $
+    ../../third_party/boringssl/src/crypto/asn1/a_bytes.c $
+    ../../third_party/boringssl/src/crypto/asn1/a_d2i_fp.c $
+    ../../third_party/boringssl/src/crypto/asn1/a_dup.c $
+    ../../third_party/boringssl/src/crypto/asn1/a_enum.c $
+    ../../third_party/boringssl/src/crypto/asn1/a_gentm.c $
+    ../../third_party/boringssl/src/crypto/asn1/a_i2d_fp.c $
+    ../../third_party/boringssl/src/crypto/asn1/a_int.c $
+    ../../third_party/boringssl/src/crypto/asn1/a_mbstr.c $
+    ../../third_party/boringssl/src/crypto/asn1/a_object.c $
+    ../../third_party/boringssl/src/crypto/asn1/a_octet.c $
+    ../../third_party/boringssl/src/crypto/asn1/a_print.c $
+    ../../third_party/boringssl/src/crypto/asn1/a_strnid.c $
+    ../../third_party/boringssl/src/crypto/asn1/a_time.c $
+    ../../third_party/boringssl/src/crypto/asn1/a_type.c $
+    ../../third_party/boringssl/src/crypto/asn1/a_utctm.c $
+    ../../third_party/boringssl/src/crypto/asn1/a_utf8.c $
+    ../../third_party/boringssl/src/crypto/asn1/asn1_lib.c $
+    ../../third_party/boringssl/src/crypto/asn1/asn1_locl.h $
+    ../../third_party/boringssl/src/crypto/asn1/asn1_par.c $
+    ../../third_party/boringssl/src/crypto/asn1/asn_pack.c $
+    ../../third_party/boringssl/src/crypto/asn1/bio_asn1.c $
+    ../../third_party/boringssl/src/crypto/asn1/bio_ndef.c $
+    ../../third_party/boringssl/src/crypto/asn1/f_enum.c $
+    ../../third_party/boringssl/src/crypto/asn1/f_int.c $
+    ../../third_party/boringssl/src/crypto/asn1/f_string.c $
+    ../../third_party/boringssl/src/crypto/asn1/t_bitst.c $
+    ../../third_party/boringssl/src/crypto/asn1/t_pkey.c $
+    ../../third_party/boringssl/src/crypto/asn1/tasn_dec.c $
+    ../../third_party/boringssl/src/crypto/asn1/tasn_enc.c $
+    ../../third_party/boringssl/src/crypto/asn1/tasn_fre.c $
+    ../../third_party/boringssl/src/crypto/asn1/tasn_new.c $
+    ../../third_party/boringssl/src/crypto/asn1/tasn_prn.c $
+    ../../third_party/boringssl/src/crypto/asn1/tasn_typ.c $
+    ../../third_party/boringssl/src/crypto/asn1/tasn_utl.c $
+    ../../third_party/boringssl/src/crypto/asn1/x_bignum.c $
+    ../../third_party/boringssl/src/crypto/asn1/x_long.c $
+    ../../third_party/boringssl/src/crypto/base64/base64.c $
+    ../../third_party/boringssl/src/crypto/bio/bio.c $
+    ../../third_party/boringssl/src/crypto/bio/bio_mem.c $
+    ../../third_party/boringssl/src/crypto/bio/buffer.c $
+    ../../third_party/boringssl/src/crypto/bio/connect.c $
+    ../../third_party/boringssl/src/crypto/bio/fd.c $
+    ../../third_party/boringssl/src/crypto/bio/file.c $
+    ../../third_party/boringssl/src/crypto/bio/hexdump.c $
+    ../../third_party/boringssl/src/crypto/bio/pair.c $
+    ../../third_party/boringssl/src/crypto/bio/printf.c $
+    ../../third_party/boringssl/src/crypto/bio/socket.c $
+    ../../third_party/boringssl/src/crypto/bio/socket_helper.c $
+    ../../third_party/boringssl/src/crypto/bn/add.c $
+    ../../third_party/boringssl/src/crypto/bn/asm/x86_64-gcc.c $
+    ../../third_party/boringssl/src/crypto/bn/bn.c $
+    ../../third_party/boringssl/src/crypto/bn/bn_asn1.c $
+    ../../third_party/boringssl/src/crypto/bn/cmp.c $
+    ../../third_party/boringssl/src/crypto/bn/convert.c $
+    ../../third_party/boringssl/src/crypto/bn/ctx.c $
+    ../../third_party/boringssl/src/crypto/bn/div.c $
+    ../../third_party/boringssl/src/crypto/bn/exponentiation.c $
+    ../../third_party/boringssl/src/crypto/bn/gcd.c $
+    ../../third_party/boringssl/src/crypto/bn/generic.c $
+    ../../third_party/boringssl/src/crypto/bn/internal.h $
+    ../../third_party/boringssl/src/crypto/bn/kronecker.c $
+    ../../third_party/boringssl/src/crypto/bn/montgomery.c $
+    ../../third_party/boringssl/src/crypto/bn/mul.c $
+    ../../third_party/boringssl/src/crypto/bn/prime.c $
+    ../../third_party/boringssl/src/crypto/bn/random.c $
+    ../../third_party/boringssl/src/crypto/bn/rsaz_exp.c $
+    ../../third_party/boringssl/src/crypto/bn/rsaz_exp.h $
+    ../../third_party/boringssl/src/crypto/bn/shift.c $
+    ../../third_party/boringssl/src/crypto/bn/sqrt.c $
+    ../../third_party/boringssl/src/crypto/buf/buf.c $
+    ../../third_party/boringssl/src/crypto/bytestring/ber.c $
+    ../../third_party/boringssl/src/crypto/bytestring/cbb.c $
+    ../../third_party/boringssl/src/crypto/bytestring/cbs.c $
+    ../../third_party/boringssl/src/crypto/bytestring/internal.h $
+    ../../third_party/boringssl/src/crypto/chacha/chacha_generic.c $
+    ../../third_party/boringssl/src/crypto/chacha/chacha_vec.c $
+    ../../third_party/boringssl/src/crypto/cipher/aead.c $
+    ../../third_party/boringssl/src/crypto/cipher/cipher.c $
+    ../../third_party/boringssl/src/crypto/cipher/derive_key.c $
+    ../../third_party/boringssl/src/crypto/cipher/e_aes.c $
+    ../../third_party/boringssl/src/crypto/cipher/e_chacha20poly1305.c $
+    ../../third_party/boringssl/src/crypto/cipher/e_des.c $
+    ../../third_party/boringssl/src/crypto/cipher/e_null.c $
+    ../../third_party/boringssl/src/crypto/cipher/e_rc2.c $
+    ../../third_party/boringssl/src/crypto/cipher/e_rc4.c $
+    ../../third_party/boringssl/src/crypto/cipher/e_ssl3.c $
+    ../../third_party/boringssl/src/crypto/cipher/e_tls.c $
+    ../../third_party/boringssl/src/crypto/cipher/tls_cbc.c $
+    ../../third_party/boringssl/src/crypto/cmac/cmac.c $
+    ../../third_party/boringssl/src/crypto/conf/conf.c $
+    ../../third_party/boringssl/src/crypto/conf/conf_def.h $
+    ../../third_party/boringssl/src/crypto/conf/internal.h $
+    ../../third_party/boringssl/src/crypto/cpu-arm.c $
+    ../../third_party/boringssl/src/crypto/cpu-intel.c $
+    ../../third_party/boringssl/src/crypto/crypto.c $
+    ../../third_party/boringssl/src/crypto/curve25519/curve25519.c $
+    ../../third_party/boringssl/src/crypto/des/des.c $
+    ../../third_party/boringssl/src/crypto/dh/check.c $
+    ../../third_party/boringssl/src/crypto/dh/dh.c $
+    ../../third_party/boringssl/src/crypto/dh/dh_asn1.c $
+    ../../third_party/boringssl/src/crypto/dh/internal.h $
+    ../../third_party/boringssl/src/crypto/dh/params.c $
+    ../../third_party/boringssl/src/crypto/digest/digest.c $
+    ../../third_party/boringssl/src/crypto/digest/digests.c $
+    ../../third_party/boringssl/src/crypto/digest/internal.h $
+    ../../third_party/boringssl/src/crypto/digest/md32_common.h $
+    ../../third_party/boringssl/src/crypto/directory.h $
+    ../../third_party/boringssl/src/crypto/directory_posix.c $
+    ../../third_party/boringssl/src/crypto/directory_win.c $
+    ../../third_party/boringssl/src/crypto/dsa/dsa.c $
+    ../../third_party/boringssl/src/crypto/dsa/dsa_asn1.c $
+    ../../third_party/boringssl/src/crypto/dsa/internal.h $
+    ../../third_party/boringssl/src/crypto/ec/ec.c $
+    ../../third_party/boringssl/src/crypto/ec/ec_asn1.c $
+    ../../third_party/boringssl/src/crypto/ec/ec_key.c $
+    ../../third_party/boringssl/src/crypto/ec/ec_montgomery.c $
+    ../../third_party/boringssl/src/crypto/ec/internal.h $
+    ../../third_party/boringssl/src/crypto/ec/oct.c $
+    ../../third_party/boringssl/src/crypto/ec/p224-64.c $
+    ../../third_party/boringssl/src/crypto/ec/p256-64.c $
+    ../../third_party/boringssl/src/crypto/ec/p256-x86_64-table.h $
+    ../../third_party/boringssl/src/crypto/ec/p256-x86_64.c $
+    ../../third_party/boringssl/src/crypto/ec/simple.c $
+    ../../third_party/boringssl/src/crypto/ec/util-64.c $
+    ../../third_party/boringssl/src/crypto/ec/wnaf.c $
+    ../../third_party/boringssl/src/crypto/ecdh/ecdh.c $
+    ../../third_party/boringssl/src/crypto/ecdsa/ecdsa.c $
+    ../../third_party/boringssl/src/crypto/ecdsa/ecdsa_asn1.c $
+    ../../third_party/boringssl/src/crypto/engine/engine.c $
+    ../../third_party/boringssl/src/crypto/err/err.c $
+    ../../third_party/boringssl/src/crypto/evp/algorithm.c $
+    ../../third_party/boringssl/src/crypto/evp/digestsign.c $
+    ../../third_party/boringssl/src/crypto/evp/evp.c $
+    ../../third_party/boringssl/src/crypto/evp/evp_asn1.c $
+    ../../third_party/boringssl/src/crypto/evp/evp_ctx.c $
+    ../../third_party/boringssl/src/crypto/evp/internal.h $
+    ../../third_party/boringssl/src/crypto/evp/p_dsa_asn1.c $
+    ../../third_party/boringssl/src/crypto/evp/p_ec.c $
+    ../../third_party/boringssl/src/crypto/evp/p_ec_asn1.c $
+    ../../third_party/boringssl/src/crypto/evp/p_rsa.c $
+    ../../third_party/boringssl/src/crypto/evp/p_rsa_asn1.c $
+    ../../third_party/boringssl/src/crypto/evp/pbkdf.c $
+    ../../third_party/boringssl/src/crypto/evp/sign.c $
+    ../../third_party/boringssl/src/crypto/ex_data.c $
+    ../../third_party/boringssl/src/crypto/hkdf/hkdf.c $
+    ../../third_party/boringssl/src/crypto/hmac/hmac.c $
+    ../../third_party/boringssl/src/crypto/internal.h $
+    ../../third_party/boringssl/src/crypto/lhash/lhash.c $
+    ../../third_party/boringssl/src/crypto/md4/md4.c $
+    ../../third_party/boringssl/src/crypto/md5/md5.c $
+    ../../third_party/boringssl/src/crypto/mem.c $
+    ../../third_party/boringssl/src/crypto/modes/cbc.c $
+    ../../third_party/boringssl/src/crypto/modes/cfb.c $
+    ../../third_party/boringssl/src/crypto/modes/ctr.c $
+    ../../third_party/boringssl/src/crypto/modes/gcm.c $
+    ../../third_party/boringssl/src/crypto/modes/internal.h $
+    ../../third_party/boringssl/src/crypto/modes/ofb.c $
+    ../../third_party/boringssl/src/crypto/obj/obj.c $
+    ../../third_party/boringssl/src/crypto/obj/obj_dat.h $
+    ../../third_party/boringssl/src/crypto/obj/obj_xref.c $
+    ../../third_party/boringssl/src/crypto/obj/obj_xref.h $
+    ../../third_party/boringssl/src/crypto/pem/pem_all.c $
+    ../../third_party/boringssl/src/crypto/pem/pem_info.c $
+    ../../third_party/boringssl/src/crypto/pem/pem_lib.c $
+    ../../third_party/boringssl/src/crypto/pem/pem_oth.c $
+    ../../third_party/boringssl/src/crypto/pem/pem_pk8.c $
+    ../../third_party/boringssl/src/crypto/pem/pem_pkey.c $
+    ../../third_party/boringssl/src/crypto/pem/pem_x509.c $
+    ../../third_party/boringssl/src/crypto/pem/pem_xaux.c $
+    ../../third_party/boringssl/src/crypto/pkcs8/p5_pbe.c $
+    ../../third_party/boringssl/src/crypto/pkcs8/p5_pbev2.c $
+    ../../third_party/boringssl/src/crypto/pkcs8/p8_pkey.c $
+    ../../third_party/boringssl/src/crypto/pkcs8/pkcs8.c $
+    ../../third_party/boringssl/src/crypto/poly1305/poly1305.c $
+    ../../third_party/boringssl/src/crypto/poly1305/poly1305_arm.c $
+    ../../third_party/boringssl/src/crypto/poly1305/poly1305_vec.c $
+    ../../third_party/boringssl/src/crypto/rand/rand.c $
+    ../../third_party/boringssl/src/crypto/rand/urandom.c $
+    ../../third_party/boringssl/src/crypto/rand/windows.c $
+    ../../third_party/boringssl/src/crypto/rc4/rc4.c $
+    ../../third_party/boringssl/src/crypto/refcount_c11.c $
+    ../../third_party/boringssl/src/crypto/refcount_lock.c $
+    ../../third_party/boringssl/src/crypto/rsa/blinding.c $
+    ../../third_party/boringssl/src/crypto/rsa/internal.h $
+    ../../third_party/boringssl/src/crypto/rsa/padding.c $
+    ../../third_party/boringssl/src/crypto/rsa/rsa.c $
+    ../../third_party/boringssl/src/crypto/rsa/rsa_asn1.c $
+    ../../third_party/boringssl/src/crypto/rsa/rsa_impl.c $
+    ../../third_party/boringssl/src/crypto/sha/sha1.c $
+    ../../third_party/boringssl/src/crypto/sha/sha256.c $
+    ../../third_party/boringssl/src/crypto/sha/sha512.c $
+    ../../third_party/boringssl/src/crypto/stack/stack.c $
+    ../../third_party/boringssl/src/crypto/thread.c $
+    ../../third_party/boringssl/src/crypto/thread_none.c $
+    ../../third_party/boringssl/src/crypto/thread_pthread.c $
+    ../../third_party/boringssl/src/crypto/thread_win.c $
+    ../../third_party/boringssl/src/crypto/time_support.c $
+    ../../third_party/boringssl/src/crypto/x509/a_digest.c $
+    ../../third_party/boringssl/src/crypto/x509/a_sign.c $
+    ../../third_party/boringssl/src/crypto/x509/a_strex.c $
+    ../../third_party/boringssl/src/crypto/x509/a_verify.c $
+    ../../third_party/boringssl/src/crypto/x509/asn1_gen.c $
+    ../../third_party/boringssl/src/crypto/x509/by_dir.c $
+    ../../third_party/boringssl/src/crypto/x509/by_file.c $
+    ../../third_party/boringssl/src/crypto/x509/charmap.h $
+    ../../third_party/boringssl/src/crypto/x509/i2d_pr.c $
+    ../../third_party/boringssl/src/crypto/x509/pkcs7.c $
+    ../../third_party/boringssl/src/crypto/x509/t_crl.c $
+    ../../third_party/boringssl/src/crypto/x509/t_req.c $
+    ../../third_party/boringssl/src/crypto/x509/t_x509.c $
+    ../../third_party/boringssl/src/crypto/x509/t_x509a.c $
+    ../../third_party/boringssl/src/crypto/x509/vpm_int.h $
+    ../../third_party/boringssl/src/crypto/x509/x509.c $
+    ../../third_party/boringssl/src/crypto/x509/x509_att.c $
+    ../../third_party/boringssl/src/crypto/x509/x509_cmp.c $
+    ../../third_party/boringssl/src/crypto/x509/x509_d2.c $
+    ../../third_party/boringssl/src/crypto/x509/x509_def.c $
+    ../../third_party/boringssl/src/crypto/x509/x509_ext.c $
+    ../../third_party/boringssl/src/crypto/x509/x509_lu.c $
+    ../../third_party/boringssl/src/crypto/x509/x509_obj.c $
+    ../../third_party/boringssl/src/crypto/x509/x509_r2x.c $
+    ../../third_party/boringssl/src/crypto/x509/x509_req.c $
+    ../../third_party/boringssl/src/crypto/x509/x509_set.c $
+    ../../third_party/boringssl/src/crypto/x509/x509_trs.c $
+    ../../third_party/boringssl/src/crypto/x509/x509_txt.c $
+    ../../third_party/boringssl/src/crypto/x509/x509_v3.c $
+    ../../third_party/boringssl/src/crypto/x509/x509_vfy.c $
+    ../../third_party/boringssl/src/crypto/x509/x509_vpm.c $
+    ../../third_party/boringssl/src/crypto/x509/x509cset.c $
+    ../../third_party/boringssl/src/crypto/x509/x509name.c $
+    ../../third_party/boringssl/src/crypto/x509/x509rset.c $
+    ../../third_party/boringssl/src/crypto/x509/x509spki.c $
+    ../../third_party/boringssl/src/crypto/x509/x509type.c $
+    ../../third_party/boringssl/src/crypto/x509/x_algor.c $
+    ../../third_party/boringssl/src/crypto/x509/x_all.c $
+    ../../third_party/boringssl/src/crypto/x509/x_attrib.c $
+    ../../third_party/boringssl/src/crypto/x509/x_crl.c $
+    ../../third_party/boringssl/src/crypto/x509/x_exten.c $
+    ../../third_party/boringssl/src/crypto/x509/x_info.c $
+    ../../third_party/boringssl/src/crypto/x509/x_name.c $
+    ../../third_party/boringssl/src/crypto/x509/x_pkey.c $
+    ../../third_party/boringssl/src/crypto/x509/x_pubkey.c $
+    ../../third_party/boringssl/src/crypto/x509/x_req.c $
+    ../../third_party/boringssl/src/crypto/x509/x_sig.c $
+    ../../third_party/boringssl/src/crypto/x509/x_spki.c $
+    ../../third_party/boringssl/src/crypto/x509/x_val.c $
+    ../../third_party/boringssl/src/crypto/x509/x_x509.c $
+    ../../third_party/boringssl/src/crypto/x509/x_x509a.c $
+    ../../third_party/boringssl/src/crypto/x509v3/ext_dat.h $
+    ../../third_party/boringssl/src/crypto/x509v3/pcy_cache.c $
+    ../../third_party/boringssl/src/crypto/x509v3/pcy_data.c $
+    ../../third_party/boringssl/src/crypto/x509v3/pcy_int.h $
+    ../../third_party/boringssl/src/crypto/x509v3/pcy_lib.c $
+    ../../third_party/boringssl/src/crypto/x509v3/pcy_map.c $
+    ../../third_party/boringssl/src/crypto/x509v3/pcy_node.c $
+    ../../third_party/boringssl/src/crypto/x509v3/pcy_tree.c $
+    ../../third_party/boringssl/src/crypto/x509v3/v3_akey.c $
+    ../../third_party/boringssl/src/crypto/x509v3/v3_akeya.c $
+    ../../third_party/boringssl/src/crypto/x509v3/v3_alt.c $
+    ../../third_party/boringssl/src/crypto/x509v3/v3_bcons.c $
+    ../../third_party/boringssl/src/crypto/x509v3/v3_bitst.c $
+    ../../third_party/boringssl/src/crypto/x509v3/v3_conf.c $
+    ../../third_party/boringssl/src/crypto/x509v3/v3_cpols.c $
+    ../../third_party/boringssl/src/crypto/x509v3/v3_crld.c $
+    ../../third_party/boringssl/src/crypto/x509v3/v3_enum.c $
+    ../../third_party/boringssl/src/crypto/x509v3/v3_extku.c $
+    ../../third_party/boringssl/src/crypto/x509v3/v3_genn.c $
+    ../../third_party/boringssl/src/crypto/x509v3/v3_ia5.c $
+    ../../third_party/boringssl/src/crypto/x509v3/v3_info.c $
+    ../../third_party/boringssl/src/crypto/x509v3/v3_int.c $
+    ../../third_party/boringssl/src/crypto/x509v3/v3_lib.c $
+    ../../third_party/boringssl/src/crypto/x509v3/v3_ncons.c $
+    ../../third_party/boringssl/src/crypto/x509v3/v3_pci.c $
+    ../../third_party/boringssl/src/crypto/x509v3/v3_pcia.c $
+    ../../third_party/boringssl/src/crypto/x509v3/v3_pcons.c $
+    ../../third_party/boringssl/src/crypto/x509v3/v3_pku.c $
+    ../../third_party/boringssl/src/crypto/x509v3/v3_pmaps.c $
+    ../../third_party/boringssl/src/crypto/x509v3/v3_prn.c $
+    ../../third_party/boringssl/src/crypto/x509v3/v3_purp.c $
+    ../../third_party/boringssl/src/crypto/x509v3/v3_skey.c $
+    ../../third_party/boringssl/src/crypto/x509v3/v3_sxnet.c $
+    ../../third_party/boringssl/src/crypto/x509v3/v3_utl.c $
+    ../../third_party/boringssl/src/include/openssl/aead.h $
+    ../../third_party/boringssl/src/include/openssl/aes.h $
+    ../../third_party/boringssl/src/include/openssl/arm_arch.h $
+    ../../third_party/boringssl/src/include/openssl/asn1.h $
+    ../../third_party/boringssl/src/include/openssl/asn1_mac.h $
+    ../../third_party/boringssl/src/include/openssl/asn1t.h $
+    ../../third_party/boringssl/src/include/openssl/base.h $
+    ../../third_party/boringssl/src/include/openssl/base64.h $
+    ../../third_party/boringssl/src/include/openssl/bio.h $
+    ../../third_party/boringssl/src/include/openssl/bn.h $
+    ../../third_party/boringssl/src/include/openssl/buf.h $
+    ../../third_party/boringssl/src/include/openssl/buffer.h $
+    ../../third_party/boringssl/src/include/openssl/bytestring.h $
+    ../../third_party/boringssl/src/include/openssl/chacha.h $
+    ../../third_party/boringssl/src/include/openssl/cipher.h $
+    ../../third_party/boringssl/src/include/openssl/cmac.h $
+    ../../third_party/boringssl/src/include/openssl/conf.h $
+    ../../third_party/boringssl/src/include/openssl/cpu.h $
+    ../../third_party/boringssl/src/include/openssl/crypto.h $
+    ../../third_party/boringssl/src/include/openssl/curve25519.h $
+    ../../third_party/boringssl/src/include/openssl/des.h $
+    ../../third_party/boringssl/src/include/openssl/dh.h $
+    ../../third_party/boringssl/src/include/openssl/digest.h $
+    ../../third_party/boringssl/src/include/openssl/dsa.h $
+    ../../third_party/boringssl/src/include/openssl/ec.h $
+    ../../third_party/boringssl/src/include/openssl/ec_key.h $
+    ../../third_party/boringssl/src/include/openssl/ecdh.h $
+    ../../third_party/boringssl/src/include/openssl/ecdsa.h $
+    ../../third_party/boringssl/src/include/openssl/engine.h $
+    ../../third_party/boringssl/src/include/openssl/err.h $
+    ../../third_party/boringssl/src/include/openssl/evp.h $
+    ../../third_party/boringssl/src/include/openssl/ex_data.h $
+    ../../third_party/boringssl/src/include/openssl/hkdf.h $
+    ../../third_party/boringssl/src/include/openssl/hmac.h $
+    ../../third_party/boringssl/src/include/openssl/lhash.h $
+    ../../third_party/boringssl/src/include/openssl/lhash_macros.h $
+    ../../third_party/boringssl/src/include/openssl/md4.h $
+    ../../third_party/boringssl/src/include/openssl/md5.h $
+    ../../third_party/boringssl/src/include/openssl/mem.h $
+    ../../third_party/boringssl/src/include/openssl/obj.h $
+    ../../third_party/boringssl/src/include/openssl/obj_mac.h $
+    ../../third_party/boringssl/src/include/openssl/objects.h $
+    ../../third_party/boringssl/src/include/openssl/opensslfeatures.h $
+    ../../third_party/boringssl/src/include/openssl/pem.h $
+    ../../third_party/boringssl/src/include/openssl/pkcs8.h $
+    ../../third_party/boringssl/src/include/openssl/poly1305.h $
+    ../../third_party/boringssl/src/include/openssl/pqueue.h $
+    ../../third_party/boringssl/src/include/openssl/rand.h $
+    ../../third_party/boringssl/src/include/openssl/rc4.h $
+    ../../third_party/boringssl/src/include/openssl/rsa.h $
+    ../../third_party/boringssl/src/include/openssl/sha.h $
+    ../../third_party/boringssl/src/include/openssl/ssl.h $
+    ../../third_party/boringssl/src/include/openssl/ssl3.h $
+    ../../third_party/boringssl/src/include/openssl/stack.h $
+    ../../third_party/boringssl/src/include/openssl/stack_macros.h $
+    ../../third_party/boringssl/src/include/openssl/thread.h $
+    ../../third_party/boringssl/src/include/openssl/time_support.h $
+    ../../third_party/boringssl/src/include/openssl/tls1.h $
+    ../../third_party/boringssl/src/include/openssl/type_check.h $
+    ../../third_party/boringssl/src/include/openssl/x509.h $
+    ../../third_party/boringssl/src/include/openssl/x509_vfy.h $
+    ../../third_party/boringssl/src/include/openssl/x509v3.h $
+    ../../third_party/boringssl/src/ssl/custom_extensions.c $
+    ../../third_party/boringssl/src/ssl/d1_both.c $
+    ../../third_party/boringssl/src/ssl/d1_clnt.c $
+    ../../third_party/boringssl/src/ssl/d1_lib.c $
+    ../../third_party/boringssl/src/ssl/d1_meth.c $
+    ../../third_party/boringssl/src/ssl/d1_pkt.c $
+    ../../third_party/boringssl/src/ssl/d1_srtp.c $
+    ../../third_party/boringssl/src/ssl/d1_srvr.c $
+    ../../third_party/boringssl/src/ssl/dtls_record.c $
+    ../../third_party/boringssl/src/ssl/internal.h $
+    ../../third_party/boringssl/src/ssl/pqueue/pqueue.c $
+    ../../third_party/boringssl/src/ssl/s3_both.c $
+    ../../third_party/boringssl/src/ssl/s3_clnt.c $
+    ../../third_party/boringssl/src/ssl/s3_enc.c $
+    ../../third_party/boringssl/src/ssl/s3_lib.c $
+    ../../third_party/boringssl/src/ssl/s3_meth.c $
+    ../../third_party/boringssl/src/ssl/s3_pkt.c $
+    ../../third_party/boringssl/src/ssl/s3_srvr.c $
+    ../../third_party/boringssl/src/ssl/ssl_aead_ctx.c $
+    ../../third_party/boringssl/src/ssl/ssl_asn1.c $
+    ../../third_party/boringssl/src/ssl/ssl_buffer.c $
+    ../../third_party/boringssl/src/ssl/ssl_cert.c $
+    ../../third_party/boringssl/src/ssl/ssl_cipher.c $
+    ../../third_party/boringssl/src/ssl/ssl_file.c $
+    ../../third_party/boringssl/src/ssl/ssl_lib.c $
+    ../../third_party/boringssl/src/ssl/ssl_rsa.c $
+    ../../third_party/boringssl/src/ssl/ssl_session.c $
+    ../../third_party/boringssl/src/ssl/ssl_stat.c $
+    ../../third_party/boringssl/src/ssl/t1_enc.c $
+    ../../third_party/boringssl/src/ssl/t1_lib.c $
+    ../../third_party/boringssl/src/ssl/tls_record.c $
+    ../../out/gypfiles/third_party/boringssl/pnacl_newlib.boringssl_nacl.source_list.gypcmd $
+    ../../native_client/toolchain/linux_x86/pnacl_newlib/pnacl_newlib.json $
+    || obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+
+defines = -DV8_DEPRECATION_WARNINGS -DCLD_VERSION=2 -D_FILE_OFFSET_BITS=64 $
+    -DCHROMIUM_BUILD -DCR_CLANG_REVISION=255169-1 $
+    -DUI_COMPOSITOR_IMAGE_TRANSPORT -DUSE_AURA=1 -DUSE_ASH=1 -DUSE_PANGO=1 $
+    -DUSE_CAIRO=1 -DUSE_DEFAULT_RENDER_THEME=1 -DUSE_LIBJPEG_TURBO=1 $
+    -DUSE_X11=1 -DUSE_CLIPBOARD_AURAX11=1 -DENABLE_ONE_CLICK_SIGNIN $
+    -DENABLE_WEBRTC=1 -DENABLE_MEDIA_ROUTER=1 -DENABLE_PEPPER_CDMS $
+    -DENABLE_CONFIGURATION_POLICY -DENABLE_NOTIFICATIONS -DENABLE_HIDPI=1 $
+    -DENABLE_TOPCHROME_MD=1 -DUSE_UDEV -DDONT_EMBED_BUILD_METADATA $
+    -DFIELDTRIAL_TESTING_ENABLED -DENABLE_TASK_MANAGER=1 $
+    -DENABLE_EXTENSIONS=1 -DENABLE_PDF=1 -DENABLE_PLUGINS=1 $
+    -DENABLE_SESSION_SERVICE=1 -DENABLE_THEMES=1 -DENABLE_AUTOFILL_DIALOG=1 $
+    -DENABLE_BACKGROUND=1 -DENABLE_PRINTING=1 -DENABLE_BASIC_PRINTING=1 $
+    -DENABLE_PRINT_PREVIEW=1 -DENABLE_SPELLCHECK=1 $
+    -DENABLE_CAPTIVE_PORTAL_DETECTION=1 -DENABLE_APP_LIST=1 $
+    -DENABLE_SETTINGS_APP=1 -DENABLE_SUPERVISED_USERS=1 -DENABLE_MDNS=1 $
+    -DENABLE_SERVICE_DISCOVERY=1 -DV8_USE_EXTERNAL_STARTUP_DATA $
+    -DFULL_SAFE_BROWSING -DSAFE_BROWSING_CSD -DSAFE_BROWSING_DB_LOCAL $
+    -DOPENSSL_NO_ASM -DUSE_LIBPCI=1 -DUSE_OPENSSL=1 -DUSE_GLIB=1 $
+    -DUSE_NSS_CERTS=1 -DDYNAMIC_ANNOTATIONS_ENABLED=1 $
+    -DWTF_USE_DYNAMIC_ANNOTATIONS=1 -D_DEBUG -D_GLIBCXX_DEBUG=1
+includes = -Igen -I../../third_party/boringssl/src/include $
+    -I../../native_client_sdk/src/libraries $
+    -I../../native_client_sdk/src/libraries/nacl_io/include $
+    -I../../native_client_sdk/src/libraries/third_party/newlib-extras
+cflags = -fstack-protector --param=ssp-buffer-size=4 -Werror -pthread $
+    -fno-strict-aliasing -Wno-unused-parameter $
+    -Wno-missing-field-initializers -fvisibility=hidden -pipe -fPIC $
+    -Wno-reserved-user-defined-literal -Xclang -load -Xclang $
+    /b/build/slave/publish_tarball/build/src/third_party/llvm-build/Release+Asserts/lib/libFindBadConstructs.so $
+    -Xclang -add-plugin -Xclang find-bad-constructs -Xclang $
+    -plugin-arg-find-bad-constructs -Xclang check-templates $
+    -fcolor-diagnostics $
+    -B/b/build/slave/publish_tarball/build/src/third_party/binutils/Linux_x64/Release/bin $
+    -Wheader-hygiene -Wno-char-subscripts $
+    -Wno-unneeded-internal-declaration -Wno-covered-switch-default $
+    -Wstring-conversion -Wno-c++11-narrowing -Wno-deprecated-register $
+    -Wno-inconsistent-missing-override -Wno-shift-negative-value $
+    -Wno-bitfield-width -Wno-unused-variable -Wno-format -Wno-unused-result $
+    -m64 -march=x86-64 $
+    --sysroot=/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot $
+    -O0 -g -funwind-tables -gsplit-dwarf -Wno-undefined-bool-conversion $
+    -Wno-tautological-undefined-compare
+cflags_c = 
+cflags_cc = -fno-exceptions -fno-rtti -fno-threadsafe-statics $
+    -fvisibility-inlines-hidden -std=gnu++11 -Wno-deprecated
+arflags = 
+
+build obj/third_party/boringssl/boringssl_nacl.err_data.o: cc $
+    ../../third_party/boringssl/err_data.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/aes/boringssl_nacl.aes.o: cc $
+    ../../third_party/boringssl/src/crypto/aes/aes.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build $
+    obj/third_party/boringssl/src/crypto/aes/boringssl_nacl.mode_wrappers.o: $
+    cc ../../third_party/boringssl/src/crypto/aes/mode_wrappers.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/asn1/boringssl_nacl.a_bitstr.o: $
+    cc ../../third_party/boringssl/src/crypto/asn1/a_bitstr.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/asn1/boringssl_nacl.a_bool.o: cc $
+    ../../third_party/boringssl/src/crypto/asn1/a_bool.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/asn1/boringssl_nacl.a_bytes.o: $
+    cc ../../third_party/boringssl/src/crypto/asn1/a_bytes.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/asn1/boringssl_nacl.a_d2i_fp.o: $
+    cc ../../third_party/boringssl/src/crypto/asn1/a_d2i_fp.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/asn1/boringssl_nacl.a_dup.o: cc $
+    ../../third_party/boringssl/src/crypto/asn1/a_dup.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/asn1/boringssl_nacl.a_enum.o: cc $
+    ../../third_party/boringssl/src/crypto/asn1/a_enum.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/asn1/boringssl_nacl.a_gentm.o: $
+    cc ../../third_party/boringssl/src/crypto/asn1/a_gentm.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/asn1/boringssl_nacl.a_i2d_fp.o: $
+    cc ../../third_party/boringssl/src/crypto/asn1/a_i2d_fp.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/asn1/boringssl_nacl.a_int.o: cc $
+    ../../third_party/boringssl/src/crypto/asn1/a_int.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/asn1/boringssl_nacl.a_mbstr.o: $
+    cc ../../third_party/boringssl/src/crypto/asn1/a_mbstr.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/asn1/boringssl_nacl.a_object.o: $
+    cc ../../third_party/boringssl/src/crypto/asn1/a_object.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/asn1/boringssl_nacl.a_octet.o: $
+    cc ../../third_party/boringssl/src/crypto/asn1/a_octet.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/asn1/boringssl_nacl.a_print.o: $
+    cc ../../third_party/boringssl/src/crypto/asn1/a_print.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/asn1/boringssl_nacl.a_strnid.o: $
+    cc ../../third_party/boringssl/src/crypto/asn1/a_strnid.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/asn1/boringssl_nacl.a_time.o: cc $
+    ../../third_party/boringssl/src/crypto/asn1/a_time.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/asn1/boringssl_nacl.a_type.o: cc $
+    ../../third_party/boringssl/src/crypto/asn1/a_type.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/asn1/boringssl_nacl.a_utctm.o: $
+    cc ../../third_party/boringssl/src/crypto/asn1/a_utctm.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/asn1/boringssl_nacl.a_utf8.o: cc $
+    ../../third_party/boringssl/src/crypto/asn1/a_utf8.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/asn1/boringssl_nacl.asn1_lib.o: $
+    cc ../../third_party/boringssl/src/crypto/asn1/asn1_lib.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/asn1/boringssl_nacl.asn1_par.o: $
+    cc ../../third_party/boringssl/src/crypto/asn1/asn1_par.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/asn1/boringssl_nacl.asn_pack.o: $
+    cc ../../third_party/boringssl/src/crypto/asn1/asn_pack.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/asn1/boringssl_nacl.bio_asn1.o: $
+    cc ../../third_party/boringssl/src/crypto/asn1/bio_asn1.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/asn1/boringssl_nacl.bio_ndef.o: $
+    cc ../../third_party/boringssl/src/crypto/asn1/bio_ndef.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/asn1/boringssl_nacl.f_enum.o: cc $
+    ../../third_party/boringssl/src/crypto/asn1/f_enum.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/asn1/boringssl_nacl.f_int.o: cc $
+    ../../third_party/boringssl/src/crypto/asn1/f_int.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/asn1/boringssl_nacl.f_string.o: $
+    cc ../../third_party/boringssl/src/crypto/asn1/f_string.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/asn1/boringssl_nacl.t_bitst.o: $
+    cc ../../third_party/boringssl/src/crypto/asn1/t_bitst.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/asn1/boringssl_nacl.t_pkey.o: cc $
+    ../../third_party/boringssl/src/crypto/asn1/t_pkey.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/asn1/boringssl_nacl.tasn_dec.o: $
+    cc ../../third_party/boringssl/src/crypto/asn1/tasn_dec.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/asn1/boringssl_nacl.tasn_enc.o: $
+    cc ../../third_party/boringssl/src/crypto/asn1/tasn_enc.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/asn1/boringssl_nacl.tasn_fre.o: $
+    cc ../../third_party/boringssl/src/crypto/asn1/tasn_fre.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/asn1/boringssl_nacl.tasn_new.o: $
+    cc ../../third_party/boringssl/src/crypto/asn1/tasn_new.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/asn1/boringssl_nacl.tasn_prn.o: $
+    cc ../../third_party/boringssl/src/crypto/asn1/tasn_prn.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/asn1/boringssl_nacl.tasn_typ.o: $
+    cc ../../third_party/boringssl/src/crypto/asn1/tasn_typ.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/asn1/boringssl_nacl.tasn_utl.o: $
+    cc ../../third_party/boringssl/src/crypto/asn1/tasn_utl.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/asn1/boringssl_nacl.x_bignum.o: $
+    cc ../../third_party/boringssl/src/crypto/asn1/x_bignum.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/asn1/boringssl_nacl.x_long.o: cc $
+    ../../third_party/boringssl/src/crypto/asn1/x_long.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/base64/boringssl_nacl.base64.o: $
+    cc ../../third_party/boringssl/src/crypto/base64/base64.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/bio/boringssl_nacl.bio.o: cc $
+    ../../third_party/boringssl/src/crypto/bio/bio.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/bio/boringssl_nacl.bio_mem.o: cc $
+    ../../third_party/boringssl/src/crypto/bio/bio_mem.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/bio/boringssl_nacl.buffer.o: cc $
+    ../../third_party/boringssl/src/crypto/bio/buffer.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/bio/boringssl_nacl.connect.o: cc $
+    ../../third_party/boringssl/src/crypto/bio/connect.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/bio/boringssl_nacl.fd.o: cc $
+    ../../third_party/boringssl/src/crypto/bio/fd.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/bio/boringssl_nacl.file.o: cc $
+    ../../third_party/boringssl/src/crypto/bio/file.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/bio/boringssl_nacl.hexdump.o: cc $
+    ../../third_party/boringssl/src/crypto/bio/hexdump.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/bio/boringssl_nacl.pair.o: cc $
+    ../../third_party/boringssl/src/crypto/bio/pair.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/bio/boringssl_nacl.printf.o: cc $
+    ../../third_party/boringssl/src/crypto/bio/printf.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/bio/boringssl_nacl.socket.o: cc $
+    ../../third_party/boringssl/src/crypto/bio/socket.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build $
+    obj/third_party/boringssl/src/crypto/bio/boringssl_nacl.socket_helper.o: $
+    cc ../../third_party/boringssl/src/crypto/bio/socket_helper.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/bn/boringssl_nacl.add.o: cc $
+    ../../third_party/boringssl/src/crypto/bn/add.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build $
+    obj/third_party/boringssl/src/crypto/bn/asm/boringssl_nacl.x86_64-gcc.o: $
+    cc ../../third_party/boringssl/src/crypto/bn/asm/x86_64-gcc.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/bn/boringssl_nacl.bn.o: cc $
+    ../../third_party/boringssl/src/crypto/bn/bn.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/bn/boringssl_nacl.bn_asn1.o: cc $
+    ../../third_party/boringssl/src/crypto/bn/bn_asn1.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/bn/boringssl_nacl.cmp.o: cc $
+    ../../third_party/boringssl/src/crypto/bn/cmp.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/bn/boringssl_nacl.convert.o: cc $
+    ../../third_party/boringssl/src/crypto/bn/convert.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/bn/boringssl_nacl.ctx.o: cc $
+    ../../third_party/boringssl/src/crypto/bn/ctx.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/bn/boringssl_nacl.div.o: cc $
+    ../../third_party/boringssl/src/crypto/bn/div.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build $
+    obj/third_party/boringssl/src/crypto/bn/boringssl_nacl.exponentiation.o: $
+    cc ../../third_party/boringssl/src/crypto/bn/exponentiation.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/bn/boringssl_nacl.gcd.o: cc $
+    ../../third_party/boringssl/src/crypto/bn/gcd.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/bn/boringssl_nacl.generic.o: cc $
+    ../../third_party/boringssl/src/crypto/bn/generic.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/bn/boringssl_nacl.kronecker.o: $
+    cc ../../third_party/boringssl/src/crypto/bn/kronecker.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/bn/boringssl_nacl.montgomery.o: $
+    cc ../../third_party/boringssl/src/crypto/bn/montgomery.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/bn/boringssl_nacl.mul.o: cc $
+    ../../third_party/boringssl/src/crypto/bn/mul.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/bn/boringssl_nacl.prime.o: cc $
+    ../../third_party/boringssl/src/crypto/bn/prime.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/bn/boringssl_nacl.random.o: cc $
+    ../../third_party/boringssl/src/crypto/bn/random.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/bn/boringssl_nacl.rsaz_exp.o: cc $
+    ../../third_party/boringssl/src/crypto/bn/rsaz_exp.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/bn/boringssl_nacl.shift.o: cc $
+    ../../third_party/boringssl/src/crypto/bn/shift.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/bn/boringssl_nacl.sqrt.o: cc $
+    ../../third_party/boringssl/src/crypto/bn/sqrt.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/buf/boringssl_nacl.buf.o: cc $
+    ../../third_party/boringssl/src/crypto/buf/buf.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/bytestring/boringssl_nacl.ber.o: $
+    cc ../../third_party/boringssl/src/crypto/bytestring/ber.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/bytestring/boringssl_nacl.cbb.o: $
+    cc ../../third_party/boringssl/src/crypto/bytestring/cbb.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/bytestring/boringssl_nacl.cbs.o: $
+    cc ../../third_party/boringssl/src/crypto/bytestring/cbs.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build $
+    obj/third_party/boringssl/src/crypto/chacha/boringssl_nacl.chacha_generic.o: $
+    cc ../../third_party/boringssl/src/crypto/chacha/chacha_generic.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build $
+    obj/third_party/boringssl/src/crypto/chacha/boringssl_nacl.chacha_vec.o: $
+    cc ../../third_party/boringssl/src/crypto/chacha/chacha_vec.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/cipher/boringssl_nacl.aead.o: cc $
+    ../../third_party/boringssl/src/crypto/cipher/aead.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/cipher/boringssl_nacl.cipher.o: $
+    cc ../../third_party/boringssl/src/crypto/cipher/cipher.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build $
+    obj/third_party/boringssl/src/crypto/cipher/boringssl_nacl.derive_key.o: $
+    cc ../../third_party/boringssl/src/crypto/cipher/derive_key.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/cipher/boringssl_nacl.e_aes.o: $
+    cc ../../third_party/boringssl/src/crypto/cipher/e_aes.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build $
+    obj/third_party/boringssl/src/crypto/cipher/boringssl_nacl.e_chacha20poly1305.o: $
+    cc ../../third_party/boringssl/src/crypto/cipher/e_chacha20poly1305.c $
+    || gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/cipher/boringssl_nacl.e_des.o: $
+    cc ../../third_party/boringssl/src/crypto/cipher/e_des.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/cipher/boringssl_nacl.e_null.o: $
+    cc ../../third_party/boringssl/src/crypto/cipher/e_null.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/cipher/boringssl_nacl.e_rc2.o: $
+    cc ../../third_party/boringssl/src/crypto/cipher/e_rc2.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/cipher/boringssl_nacl.e_rc4.o: $
+    cc ../../third_party/boringssl/src/crypto/cipher/e_rc4.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/cipher/boringssl_nacl.e_ssl3.o: $
+    cc ../../third_party/boringssl/src/crypto/cipher/e_ssl3.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/cipher/boringssl_nacl.e_tls.o: $
+    cc ../../third_party/boringssl/src/crypto/cipher/e_tls.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/cipher/boringssl_nacl.tls_cbc.o: $
+    cc ../../third_party/boringssl/src/crypto/cipher/tls_cbc.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/cmac/boringssl_nacl.cmac.o: cc $
+    ../../third_party/boringssl/src/crypto/cmac/cmac.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/conf/boringssl_nacl.conf.o: cc $
+    ../../third_party/boringssl/src/crypto/conf/conf.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/boringssl_nacl.cpu-arm.o: cc $
+    ../../third_party/boringssl/src/crypto/cpu-arm.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/boringssl_nacl.cpu-intel.o: cc $
+    ../../third_party/boringssl/src/crypto/cpu-intel.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/boringssl_nacl.crypto.o: cc $
+    ../../third_party/boringssl/src/crypto/crypto.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build $
+    obj/third_party/boringssl/src/crypto/curve25519/boringssl_nacl.curve25519.o: $
+    cc ../../third_party/boringssl/src/crypto/curve25519/curve25519.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/des/boringssl_nacl.des.o: cc $
+    ../../third_party/boringssl/src/crypto/des/des.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/dh/boringssl_nacl.check.o: cc $
+    ../../third_party/boringssl/src/crypto/dh/check.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/dh/boringssl_nacl.dh.o: cc $
+    ../../third_party/boringssl/src/crypto/dh/dh.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/dh/boringssl_nacl.dh_asn1.o: cc $
+    ../../third_party/boringssl/src/crypto/dh/dh_asn1.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/dh/boringssl_nacl.params.o: cc $
+    ../../third_party/boringssl/src/crypto/dh/params.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/digest/boringssl_nacl.digest.o: $
+    cc ../../third_party/boringssl/src/crypto/digest/digest.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/digest/boringssl_nacl.digests.o: $
+    cc ../../third_party/boringssl/src/crypto/digest/digests.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build $
+    obj/third_party/boringssl/src/crypto/boringssl_nacl.directory_posix.o: $
+    cc ../../third_party/boringssl/src/crypto/directory_posix.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/boringssl_nacl.directory_win.o: $
+    cc ../../third_party/boringssl/src/crypto/directory_win.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/dsa/boringssl_nacl.dsa.o: cc $
+    ../../third_party/boringssl/src/crypto/dsa/dsa.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/dsa/boringssl_nacl.dsa_asn1.o: $
+    cc ../../third_party/boringssl/src/crypto/dsa/dsa_asn1.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/ec/boringssl_nacl.ec.o: cc $
+    ../../third_party/boringssl/src/crypto/ec/ec.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/ec/boringssl_nacl.ec_asn1.o: cc $
+    ../../third_party/boringssl/src/crypto/ec/ec_asn1.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/ec/boringssl_nacl.ec_key.o: cc $
+    ../../third_party/boringssl/src/crypto/ec/ec_key.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build $
+    obj/third_party/boringssl/src/crypto/ec/boringssl_nacl.ec_montgomery.o: $
+    cc ../../third_party/boringssl/src/crypto/ec/ec_montgomery.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/ec/boringssl_nacl.oct.o: cc $
+    ../../third_party/boringssl/src/crypto/ec/oct.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/ec/boringssl_nacl.p224-64.o: cc $
+    ../../third_party/boringssl/src/crypto/ec/p224-64.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/ec/boringssl_nacl.p256-64.o: cc $
+    ../../third_party/boringssl/src/crypto/ec/p256-64.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/ec/boringssl_nacl.p256-x86_64.o: $
+    cc ../../third_party/boringssl/src/crypto/ec/p256-x86_64.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/ec/boringssl_nacl.simple.o: cc $
+    ../../third_party/boringssl/src/crypto/ec/simple.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/ec/boringssl_nacl.util-64.o: cc $
+    ../../third_party/boringssl/src/crypto/ec/util-64.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/ec/boringssl_nacl.wnaf.o: cc $
+    ../../third_party/boringssl/src/crypto/ec/wnaf.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/ecdh/boringssl_nacl.ecdh.o: cc $
+    ../../third_party/boringssl/src/crypto/ecdh/ecdh.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/ecdsa/boringssl_nacl.ecdsa.o: cc $
+    ../../third_party/boringssl/src/crypto/ecdsa/ecdsa.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build $
+    obj/third_party/boringssl/src/crypto/ecdsa/boringssl_nacl.ecdsa_asn1.o: $
+    cc ../../third_party/boringssl/src/crypto/ecdsa/ecdsa_asn1.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/engine/boringssl_nacl.engine.o: $
+    cc ../../third_party/boringssl/src/crypto/engine/engine.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/err/boringssl_nacl.err.o: cc $
+    ../../third_party/boringssl/src/crypto/err/err.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/evp/boringssl_nacl.algorithm.o: $
+    cc ../../third_party/boringssl/src/crypto/evp/algorithm.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/evp/boringssl_nacl.digestsign.o: $
+    cc ../../third_party/boringssl/src/crypto/evp/digestsign.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/evp/boringssl_nacl.evp.o: cc $
+    ../../third_party/boringssl/src/crypto/evp/evp.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/evp/boringssl_nacl.evp_asn1.o: $
+    cc ../../third_party/boringssl/src/crypto/evp/evp_asn1.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/evp/boringssl_nacl.evp_ctx.o: cc $
+    ../../third_party/boringssl/src/crypto/evp/evp_ctx.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/evp/boringssl_nacl.p_dsa_asn1.o: $
+    cc ../../third_party/boringssl/src/crypto/evp/p_dsa_asn1.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/evp/boringssl_nacl.p_ec.o: cc $
+    ../../third_party/boringssl/src/crypto/evp/p_ec.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/evp/boringssl_nacl.p_ec_asn1.o: $
+    cc ../../third_party/boringssl/src/crypto/evp/p_ec_asn1.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/evp/boringssl_nacl.p_rsa.o: cc $
+    ../../third_party/boringssl/src/crypto/evp/p_rsa.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/evp/boringssl_nacl.p_rsa_asn1.o: $
+    cc ../../third_party/boringssl/src/crypto/evp/p_rsa_asn1.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/evp/boringssl_nacl.pbkdf.o: cc $
+    ../../third_party/boringssl/src/crypto/evp/pbkdf.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/evp/boringssl_nacl.sign.o: cc $
+    ../../third_party/boringssl/src/crypto/evp/sign.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/boringssl_nacl.ex_data.o: cc $
+    ../../third_party/boringssl/src/crypto/ex_data.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/hkdf/boringssl_nacl.hkdf.o: cc $
+    ../../third_party/boringssl/src/crypto/hkdf/hkdf.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/hmac/boringssl_nacl.hmac.o: cc $
+    ../../third_party/boringssl/src/crypto/hmac/hmac.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/lhash/boringssl_nacl.lhash.o: cc $
+    ../../third_party/boringssl/src/crypto/lhash/lhash.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/md4/boringssl_nacl.md4.o: cc $
+    ../../third_party/boringssl/src/crypto/md4/md4.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/md5/boringssl_nacl.md5.o: cc $
+    ../../third_party/boringssl/src/crypto/md5/md5.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/boringssl_nacl.mem.o: cc $
+    ../../third_party/boringssl/src/crypto/mem.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/modes/boringssl_nacl.cbc.o: cc $
+    ../../third_party/boringssl/src/crypto/modes/cbc.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/modes/boringssl_nacl.cfb.o: cc $
+    ../../third_party/boringssl/src/crypto/modes/cfb.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/modes/boringssl_nacl.ctr.o: cc $
+    ../../third_party/boringssl/src/crypto/modes/ctr.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/modes/boringssl_nacl.gcm.o: cc $
+    ../../third_party/boringssl/src/crypto/modes/gcm.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/modes/boringssl_nacl.ofb.o: cc $
+    ../../third_party/boringssl/src/crypto/modes/ofb.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/obj/boringssl_nacl.obj.o: cc $
+    ../../third_party/boringssl/src/crypto/obj/obj.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/obj/boringssl_nacl.obj_xref.o: $
+    cc ../../third_party/boringssl/src/crypto/obj/obj_xref.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/pem/boringssl_nacl.pem_all.o: cc $
+    ../../third_party/boringssl/src/crypto/pem/pem_all.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/pem/boringssl_nacl.pem_info.o: $
+    cc ../../third_party/boringssl/src/crypto/pem/pem_info.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/pem/boringssl_nacl.pem_lib.o: cc $
+    ../../third_party/boringssl/src/crypto/pem/pem_lib.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/pem/boringssl_nacl.pem_oth.o: cc $
+    ../../third_party/boringssl/src/crypto/pem/pem_oth.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/pem/boringssl_nacl.pem_pk8.o: cc $
+    ../../third_party/boringssl/src/crypto/pem/pem_pk8.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/pem/boringssl_nacl.pem_pkey.o: $
+    cc ../../third_party/boringssl/src/crypto/pem/pem_pkey.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/pem/boringssl_nacl.pem_x509.o: $
+    cc ../../third_party/boringssl/src/crypto/pem/pem_x509.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/pem/boringssl_nacl.pem_xaux.o: $
+    cc ../../third_party/boringssl/src/crypto/pem/pem_xaux.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/pkcs8/boringssl_nacl.p5_pbe.o: $
+    cc ../../third_party/boringssl/src/crypto/pkcs8/p5_pbe.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/pkcs8/boringssl_nacl.p5_pbev2.o: $
+    cc ../../third_party/boringssl/src/crypto/pkcs8/p5_pbev2.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/pkcs8/boringssl_nacl.p8_pkey.o: $
+    cc ../../third_party/boringssl/src/crypto/pkcs8/p8_pkey.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/pkcs8/boringssl_nacl.pkcs8.o: cc $
+    ../../third_party/boringssl/src/crypto/pkcs8/pkcs8.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build $
+    obj/third_party/boringssl/src/crypto/poly1305/boringssl_nacl.poly1305.o: $
+    cc ../../third_party/boringssl/src/crypto/poly1305/poly1305.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build $
+    obj/third_party/boringssl/src/crypto/poly1305/boringssl_nacl.poly1305_arm.o: $
+    cc ../../third_party/boringssl/src/crypto/poly1305/poly1305_arm.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build $
+    obj/third_party/boringssl/src/crypto/poly1305/boringssl_nacl.poly1305_vec.o: $
+    cc ../../third_party/boringssl/src/crypto/poly1305/poly1305_vec.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/rand/boringssl_nacl.rand.o: cc $
+    ../../third_party/boringssl/src/crypto/rand/rand.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/rand/boringssl_nacl.urandom.o: $
+    cc ../../third_party/boringssl/src/crypto/rand/urandom.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/rand/boringssl_nacl.windows.o: $
+    cc ../../third_party/boringssl/src/crypto/rand/windows.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/rc4/boringssl_nacl.rc4.o: cc $
+    ../../third_party/boringssl/src/crypto/rc4/rc4.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/boringssl_nacl.refcount_c11.o: $
+    cc ../../third_party/boringssl/src/crypto/refcount_c11.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/boringssl_nacl.refcount_lock.o: $
+    cc ../../third_party/boringssl/src/crypto/refcount_lock.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/rsa/boringssl_nacl.blinding.o: $
+    cc ../../third_party/boringssl/src/crypto/rsa/blinding.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/rsa/boringssl_nacl.padding.o: cc $
+    ../../third_party/boringssl/src/crypto/rsa/padding.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/rsa/boringssl_nacl.rsa.o: cc $
+    ../../third_party/boringssl/src/crypto/rsa/rsa.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/rsa/boringssl_nacl.rsa_asn1.o: $
+    cc ../../third_party/boringssl/src/crypto/rsa/rsa_asn1.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/rsa/boringssl_nacl.rsa_impl.o: $
+    cc ../../third_party/boringssl/src/crypto/rsa/rsa_impl.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/sha/boringssl_nacl.sha1.o: cc $
+    ../../third_party/boringssl/src/crypto/sha/sha1.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/sha/boringssl_nacl.sha256.o: cc $
+    ../../third_party/boringssl/src/crypto/sha/sha256.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/sha/boringssl_nacl.sha512.o: cc $
+    ../../third_party/boringssl/src/crypto/sha/sha512.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/stack/boringssl_nacl.stack.o: cc $
+    ../../third_party/boringssl/src/crypto/stack/stack.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/boringssl_nacl.thread.o: cc $
+    ../../third_party/boringssl/src/crypto/thread.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/boringssl_nacl.thread_none.o: cc $
+    ../../third_party/boringssl/src/crypto/thread_none.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/boringssl_nacl.thread_pthread.o: $
+    cc ../../third_party/boringssl/src/crypto/thread_pthread.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/boringssl_nacl.thread_win.o: cc $
+    ../../third_party/boringssl/src/crypto/thread_win.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/boringssl_nacl.time_support.o: $
+    cc ../../third_party/boringssl/src/crypto/time_support.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/x509/boringssl_nacl.a_digest.o: $
+    cc ../../third_party/boringssl/src/crypto/x509/a_digest.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/x509/boringssl_nacl.a_sign.o: cc $
+    ../../third_party/boringssl/src/crypto/x509/a_sign.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/x509/boringssl_nacl.a_strex.o: $
+    cc ../../third_party/boringssl/src/crypto/x509/a_strex.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/x509/boringssl_nacl.a_verify.o: $
+    cc ../../third_party/boringssl/src/crypto/x509/a_verify.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/x509/boringssl_nacl.asn1_gen.o: $
+    cc ../../third_party/boringssl/src/crypto/x509/asn1_gen.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/x509/boringssl_nacl.by_dir.o: cc $
+    ../../third_party/boringssl/src/crypto/x509/by_dir.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/x509/boringssl_nacl.by_file.o: $
+    cc ../../third_party/boringssl/src/crypto/x509/by_file.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/x509/boringssl_nacl.i2d_pr.o: cc $
+    ../../third_party/boringssl/src/crypto/x509/i2d_pr.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/x509/boringssl_nacl.pkcs7.o: cc $
+    ../../third_party/boringssl/src/crypto/x509/pkcs7.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/x509/boringssl_nacl.t_crl.o: cc $
+    ../../third_party/boringssl/src/crypto/x509/t_crl.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/x509/boringssl_nacl.t_req.o: cc $
+    ../../third_party/boringssl/src/crypto/x509/t_req.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/x509/boringssl_nacl.t_x509.o: cc $
+    ../../third_party/boringssl/src/crypto/x509/t_x509.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/x509/boringssl_nacl.t_x509a.o: $
+    cc ../../third_party/boringssl/src/crypto/x509/t_x509a.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/x509/boringssl_nacl.x509.o: cc $
+    ../../third_party/boringssl/src/crypto/x509/x509.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/x509/boringssl_nacl.x509_att.o: $
+    cc ../../third_party/boringssl/src/crypto/x509/x509_att.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/x509/boringssl_nacl.x509_cmp.o: $
+    cc ../../third_party/boringssl/src/crypto/x509/x509_cmp.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/x509/boringssl_nacl.x509_d2.o: $
+    cc ../../third_party/boringssl/src/crypto/x509/x509_d2.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/x509/boringssl_nacl.x509_def.o: $
+    cc ../../third_party/boringssl/src/crypto/x509/x509_def.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/x509/boringssl_nacl.x509_ext.o: $
+    cc ../../third_party/boringssl/src/crypto/x509/x509_ext.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/x509/boringssl_nacl.x509_lu.o: $
+    cc ../../third_party/boringssl/src/crypto/x509/x509_lu.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/x509/boringssl_nacl.x509_obj.o: $
+    cc ../../third_party/boringssl/src/crypto/x509/x509_obj.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/x509/boringssl_nacl.x509_r2x.o: $
+    cc ../../third_party/boringssl/src/crypto/x509/x509_r2x.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/x509/boringssl_nacl.x509_req.o: $
+    cc ../../third_party/boringssl/src/crypto/x509/x509_req.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/x509/boringssl_nacl.x509_set.o: $
+    cc ../../third_party/boringssl/src/crypto/x509/x509_set.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/x509/boringssl_nacl.x509_trs.o: $
+    cc ../../third_party/boringssl/src/crypto/x509/x509_trs.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/x509/boringssl_nacl.x509_txt.o: $
+    cc ../../third_party/boringssl/src/crypto/x509/x509_txt.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/x509/boringssl_nacl.x509_v3.o: $
+    cc ../../third_party/boringssl/src/crypto/x509/x509_v3.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/x509/boringssl_nacl.x509_vfy.o: $
+    cc ../../third_party/boringssl/src/crypto/x509/x509_vfy.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/x509/boringssl_nacl.x509_vpm.o: $
+    cc ../../third_party/boringssl/src/crypto/x509/x509_vpm.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/x509/boringssl_nacl.x509cset.o: $
+    cc ../../third_party/boringssl/src/crypto/x509/x509cset.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/x509/boringssl_nacl.x509name.o: $
+    cc ../../third_party/boringssl/src/crypto/x509/x509name.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/x509/boringssl_nacl.x509rset.o: $
+    cc ../../third_party/boringssl/src/crypto/x509/x509rset.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/x509/boringssl_nacl.x509spki.o: $
+    cc ../../third_party/boringssl/src/crypto/x509/x509spki.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/x509/boringssl_nacl.x509type.o: $
+    cc ../../third_party/boringssl/src/crypto/x509/x509type.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/x509/boringssl_nacl.x_algor.o: $
+    cc ../../third_party/boringssl/src/crypto/x509/x_algor.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/x509/boringssl_nacl.x_all.o: cc $
+    ../../third_party/boringssl/src/crypto/x509/x_all.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/x509/boringssl_nacl.x_attrib.o: $
+    cc ../../third_party/boringssl/src/crypto/x509/x_attrib.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/x509/boringssl_nacl.x_crl.o: cc $
+    ../../third_party/boringssl/src/crypto/x509/x_crl.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/x509/boringssl_nacl.x_exten.o: $
+    cc ../../third_party/boringssl/src/crypto/x509/x_exten.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/x509/boringssl_nacl.x_info.o: cc $
+    ../../third_party/boringssl/src/crypto/x509/x_info.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/x509/boringssl_nacl.x_name.o: cc $
+    ../../third_party/boringssl/src/crypto/x509/x_name.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/x509/boringssl_nacl.x_pkey.o: cc $
+    ../../third_party/boringssl/src/crypto/x509/x_pkey.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/x509/boringssl_nacl.x_pubkey.o: $
+    cc ../../third_party/boringssl/src/crypto/x509/x_pubkey.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/x509/boringssl_nacl.x_req.o: cc $
+    ../../third_party/boringssl/src/crypto/x509/x_req.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/x509/boringssl_nacl.x_sig.o: cc $
+    ../../third_party/boringssl/src/crypto/x509/x_sig.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/x509/boringssl_nacl.x_spki.o: cc $
+    ../../third_party/boringssl/src/crypto/x509/x_spki.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/x509/boringssl_nacl.x_val.o: cc $
+    ../../third_party/boringssl/src/crypto/x509/x_val.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/x509/boringssl_nacl.x_x509.o: cc $
+    ../../third_party/boringssl/src/crypto/x509/x_x509.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/x509/boringssl_nacl.x_x509a.o: $
+    cc ../../third_party/boringssl/src/crypto/x509/x_x509a.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build $
+    obj/third_party/boringssl/src/crypto/x509v3/boringssl_nacl.pcy_cache.o: $
+    cc ../../third_party/boringssl/src/crypto/x509v3/pcy_cache.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build $
+    obj/third_party/boringssl/src/crypto/x509v3/boringssl_nacl.pcy_data.o: $
+    cc ../../third_party/boringssl/src/crypto/x509v3/pcy_data.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/x509v3/boringssl_nacl.pcy_lib.o: $
+    cc ../../third_party/boringssl/src/crypto/x509v3/pcy_lib.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/x509v3/boringssl_nacl.pcy_map.o: $
+    cc ../../third_party/boringssl/src/crypto/x509v3/pcy_map.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build $
+    obj/third_party/boringssl/src/crypto/x509v3/boringssl_nacl.pcy_node.o: $
+    cc ../../third_party/boringssl/src/crypto/x509v3/pcy_node.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build $
+    obj/third_party/boringssl/src/crypto/x509v3/boringssl_nacl.pcy_tree.o: $
+    cc ../../third_party/boringssl/src/crypto/x509v3/pcy_tree.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/x509v3/boringssl_nacl.v3_akey.o: $
+    cc ../../third_party/boringssl/src/crypto/x509v3/v3_akey.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build $
+    obj/third_party/boringssl/src/crypto/x509v3/boringssl_nacl.v3_akeya.o: $
+    cc ../../third_party/boringssl/src/crypto/x509v3/v3_akeya.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/x509v3/boringssl_nacl.v3_alt.o: $
+    cc ../../third_party/boringssl/src/crypto/x509v3/v3_alt.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build $
+    obj/third_party/boringssl/src/crypto/x509v3/boringssl_nacl.v3_bcons.o: $
+    cc ../../third_party/boringssl/src/crypto/x509v3/v3_bcons.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build $
+    obj/third_party/boringssl/src/crypto/x509v3/boringssl_nacl.v3_bitst.o: $
+    cc ../../third_party/boringssl/src/crypto/x509v3/v3_bitst.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/x509v3/boringssl_nacl.v3_conf.o: $
+    cc ../../third_party/boringssl/src/crypto/x509v3/v3_conf.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build $
+    obj/third_party/boringssl/src/crypto/x509v3/boringssl_nacl.v3_cpols.o: $
+    cc ../../third_party/boringssl/src/crypto/x509v3/v3_cpols.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/x509v3/boringssl_nacl.v3_crld.o: $
+    cc ../../third_party/boringssl/src/crypto/x509v3/v3_crld.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/x509v3/boringssl_nacl.v3_enum.o: $
+    cc ../../third_party/boringssl/src/crypto/x509v3/v3_enum.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build $
+    obj/third_party/boringssl/src/crypto/x509v3/boringssl_nacl.v3_extku.o: $
+    cc ../../third_party/boringssl/src/crypto/x509v3/v3_extku.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/x509v3/boringssl_nacl.v3_genn.o: $
+    cc ../../third_party/boringssl/src/crypto/x509v3/v3_genn.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/x509v3/boringssl_nacl.v3_ia5.o: $
+    cc ../../third_party/boringssl/src/crypto/x509v3/v3_ia5.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/x509v3/boringssl_nacl.v3_info.o: $
+    cc ../../third_party/boringssl/src/crypto/x509v3/v3_info.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/x509v3/boringssl_nacl.v3_int.o: $
+    cc ../../third_party/boringssl/src/crypto/x509v3/v3_int.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/x509v3/boringssl_nacl.v3_lib.o: $
+    cc ../../third_party/boringssl/src/crypto/x509v3/v3_lib.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build $
+    obj/third_party/boringssl/src/crypto/x509v3/boringssl_nacl.v3_ncons.o: $
+    cc ../../third_party/boringssl/src/crypto/x509v3/v3_ncons.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/x509v3/boringssl_nacl.v3_pci.o: $
+    cc ../../third_party/boringssl/src/crypto/x509v3/v3_pci.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/x509v3/boringssl_nacl.v3_pcia.o: $
+    cc ../../third_party/boringssl/src/crypto/x509v3/v3_pcia.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build $
+    obj/third_party/boringssl/src/crypto/x509v3/boringssl_nacl.v3_pcons.o: $
+    cc ../../third_party/boringssl/src/crypto/x509v3/v3_pcons.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/x509v3/boringssl_nacl.v3_pku.o: $
+    cc ../../third_party/boringssl/src/crypto/x509v3/v3_pku.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build $
+    obj/third_party/boringssl/src/crypto/x509v3/boringssl_nacl.v3_pmaps.o: $
+    cc ../../third_party/boringssl/src/crypto/x509v3/v3_pmaps.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/x509v3/boringssl_nacl.v3_prn.o: $
+    cc ../../third_party/boringssl/src/crypto/x509v3/v3_prn.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/x509v3/boringssl_nacl.v3_purp.o: $
+    cc ../../third_party/boringssl/src/crypto/x509v3/v3_purp.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/x509v3/boringssl_nacl.v3_skey.o: $
+    cc ../../third_party/boringssl/src/crypto/x509v3/v3_skey.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build $
+    obj/third_party/boringssl/src/crypto/x509v3/boringssl_nacl.v3_sxnet.o: $
+    cc ../../third_party/boringssl/src/crypto/x509v3/v3_sxnet.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/crypto/x509v3/boringssl_nacl.v3_utl.o: $
+    cc ../../third_party/boringssl/src/crypto/x509v3/v3_utl.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/ssl/boringssl_nacl.custom_extensions.o: $
+    cc ../../third_party/boringssl/src/ssl/custom_extensions.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/ssl/boringssl_nacl.d1_both.o: cc $
+    ../../third_party/boringssl/src/ssl/d1_both.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/ssl/boringssl_nacl.d1_clnt.o: cc $
+    ../../third_party/boringssl/src/ssl/d1_clnt.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/ssl/boringssl_nacl.d1_lib.o: cc $
+    ../../third_party/boringssl/src/ssl/d1_lib.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/ssl/boringssl_nacl.d1_meth.o: cc $
+    ../../third_party/boringssl/src/ssl/d1_meth.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/ssl/boringssl_nacl.d1_pkt.o: cc $
+    ../../third_party/boringssl/src/ssl/d1_pkt.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/ssl/boringssl_nacl.d1_srtp.o: cc $
+    ../../third_party/boringssl/src/ssl/d1_srtp.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/ssl/boringssl_nacl.d1_srvr.o: cc $
+    ../../third_party/boringssl/src/ssl/d1_srvr.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/ssl/boringssl_nacl.dtls_record.o: cc $
+    ../../third_party/boringssl/src/ssl/dtls_record.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/ssl/pqueue/boringssl_nacl.pqueue.o: cc $
+    ../../third_party/boringssl/src/ssl/pqueue/pqueue.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/ssl/boringssl_nacl.s3_both.o: cc $
+    ../../third_party/boringssl/src/ssl/s3_both.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/ssl/boringssl_nacl.s3_clnt.o: cc $
+    ../../third_party/boringssl/src/ssl/s3_clnt.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/ssl/boringssl_nacl.s3_enc.o: cc $
+    ../../third_party/boringssl/src/ssl/s3_enc.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/ssl/boringssl_nacl.s3_lib.o: cc $
+    ../../third_party/boringssl/src/ssl/s3_lib.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/ssl/boringssl_nacl.s3_meth.o: cc $
+    ../../third_party/boringssl/src/ssl/s3_meth.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/ssl/boringssl_nacl.s3_pkt.o: cc $
+    ../../third_party/boringssl/src/ssl/s3_pkt.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/ssl/boringssl_nacl.s3_srvr.o: cc $
+    ../../third_party/boringssl/src/ssl/s3_srvr.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/ssl/boringssl_nacl.ssl_aead_ctx.o: cc $
+    ../../third_party/boringssl/src/ssl/ssl_aead_ctx.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/ssl/boringssl_nacl.ssl_asn1.o: cc $
+    ../../third_party/boringssl/src/ssl/ssl_asn1.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/ssl/boringssl_nacl.ssl_buffer.o: cc $
+    ../../third_party/boringssl/src/ssl/ssl_buffer.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/ssl/boringssl_nacl.ssl_cert.o: cc $
+    ../../third_party/boringssl/src/ssl/ssl_cert.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/ssl/boringssl_nacl.ssl_cipher.o: cc $
+    ../../third_party/boringssl/src/ssl/ssl_cipher.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/ssl/boringssl_nacl.ssl_file.o: cc $
+    ../../third_party/boringssl/src/ssl/ssl_file.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/ssl/boringssl_nacl.ssl_lib.o: cc $
+    ../../third_party/boringssl/src/ssl/ssl_lib.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/ssl/boringssl_nacl.ssl_rsa.o: cc $
+    ../../third_party/boringssl/src/ssl/ssl_rsa.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/ssl/boringssl_nacl.ssl_session.o: cc $
+    ../../third_party/boringssl/src/ssl/ssl_session.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/ssl/boringssl_nacl.ssl_stat.o: cc $
+    ../../third_party/boringssl/src/ssl/ssl_stat.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/ssl/boringssl_nacl.t1_enc.o: cc $
+    ../../third_party/boringssl/src/ssl/t1_enc.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/ssl/boringssl_nacl.t1_lib.o: cc $
+    ../../third_party/boringssl/src/ssl/t1_lib.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+build obj/third_party/boringssl/src/ssl/boringssl_nacl.tls_record.o: cc $
+    ../../third_party/boringssl/src/ssl/tls_record.c || $
+    gen/tc_pnacl_newlib/lib/libboringssl_nacl.a
+

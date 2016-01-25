@@ -113,12 +113,10 @@ void AddPluginsToFingerprint(const std::vector<content::WebPluginInfo>& plugins,
 void AddAcceptLanguagesToFingerprint(
     const std::string& accept_languages_str,
     Fingerprint::MachineCharacteristics* machine) {
-  std::vector<std::string> accept_languages;
-  base::SplitString(accept_languages_str, ',', &accept_languages);
-  for (std::vector<std::string>::const_iterator it = accept_languages.begin();
-       it != accept_languages.end(); ++it) {
-    machine->add_requested_language(*it);
-  }
+  for (const std::string& lang :
+       base::SplitString(accept_languages_str, ",", base::TRIM_WHITESPACE,
+                         base::SPLIT_WANT_ALL))
+    machine->add_requested_language(lang);
 }
 
 // This function writes
@@ -239,7 +237,7 @@ class FingerprintDataLoader : public content::GpuDataManagerObserver {
 
   // Timer to enforce a maximum timeout before the |callback_| is called, even
   // if not all asynchronous data has been loaded.
-  base::OneShotTimer<FingerprintDataLoader> timeout_timer_;
+  base::OneShotTimer timeout_timer_;
 
   // The callback that will be called once all the data is available.
   base::Callback<void(scoped_ptr<Fingerprint>)> callback_;

@@ -45,7 +45,7 @@ public class PostMessageTest extends AwTestBase {
         private String mData;
         private String mOrigin;
         private int[] mPorts;
-        private Object mLock = new Object();
+        private final Object mLock = new Object();
 
         @JavascriptInterface
         public void setMessageParams(String data, String origin, int[] ports) {
@@ -161,16 +161,10 @@ public class PostMessageTest extends AwTestBase {
     // Call on non-UI thread.
     private void expectTitle(final String title) throws Throwable {
         assertTrue("Received title " + mAwContents.getTitle() + " while expecting " + title,
-                CriteriaHelper.pollForCriteria(new Criteria() {
+                CriteriaHelper.pollForUIThreadCriteria(new Criteria() {
                     @Override
                     public boolean isSatisfied() {
-                        return ThreadUtils.runOnUiThreadBlockingNoException(
-                                new Callable<Boolean>() {
-                                    @Override
-                                    public Boolean call() throws Exception {
-                                        return mAwContents.getTitle().equals(title);
-                                    }
-                                });
+                        return mAwContents.getTitle().equals(title);
                     }
                 }));
     }
@@ -526,7 +520,7 @@ public class PostMessageTest extends AwTestBase {
     private static class ChannelContainer {
         private boolean mReady;
         private AwMessagePort[] mChannel;
-        private Object mLock = new Object();
+        private final Object mLock = new Object();
         private String mMessage = "";
         private int mCount;
         private int mWaitCount;
@@ -634,16 +628,10 @@ public class PostMessageTest extends AwTestBase {
 
     // Call on non-UI thread.
     private void waitUntilPortReady(final AwMessagePort port) throws Throwable {
-        CriteriaHelper.pollForCriteria(new Criteria() {
+        CriteriaHelper.pollForUIThreadCriteria(new Criteria() {
             @Override
             public boolean isSatisfied() {
-                return ThreadUtils.runOnUiThreadBlockingNoException(
-                        new Callable<Boolean>() {
-                            @Override
-                            public Boolean call() throws Exception {
-                                return port.isReady();
-                            }
-                        });
+                return port.isReady();
             }
         });
     }
@@ -819,7 +807,7 @@ public class PostMessageTest extends AwTestBase {
 
         private boolean mReady;
         private AwMessagePort mPort;
-        private Object mLock = new Object();
+        private final Object mLock = new Object();
 
         public TestMessagePort(AwMessagePortService service) {
             super(service);
@@ -1038,7 +1026,6 @@ public class PostMessageTest extends AwTestBase {
     private static final String TEST_PAGE_FOR_UNSUPPORTED_MESSAGES = "<!DOCTYPE html><html><body>"
             + "    <script>"
             + "        onmessage = function (e) {"
-            + "            e.source.postMessage('" + HELLO + "', '*');"
             + "            e.ports[0].postMessage(null);"
             + "            e.ports[0].postMessage(undefined);"
             + "            e.ports[0].postMessage(NaN);"

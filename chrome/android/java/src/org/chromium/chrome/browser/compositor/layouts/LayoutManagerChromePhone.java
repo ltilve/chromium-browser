@@ -7,11 +7,11 @@ package org.chromium.chrome.browser.compositor.layouts;
 import android.content.Context;
 import android.view.ViewGroup;
 
-import org.chromium.chrome.browser.Tab;
 import org.chromium.chrome.browser.compositor.layouts.content.TabContentManager;
 import org.chromium.chrome.browser.compositor.layouts.phone.SimpleAnimationLayout;
 import org.chromium.chrome.browser.compositor.overlays.SceneOverlay;
 import org.chromium.chrome.browser.contextualsearch.ContextualSearchManagementDelegate;
+import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.tabmodel.TabCreatorManager;
 import org.chromium.chrome.browser.tabmodel.TabModel.TabLaunchType;
 import org.chromium.chrome.browser.tabmodel.TabModelSelector;
@@ -89,7 +89,7 @@ public class LayoutManagerChromePhone extends LayoutManagerChrome {
             // The user is currently interacting with the {@code LayoutHost}.
             // Allow the foreground layout to animate the tab closing.
             getActiveLayout().onTabClosing(time(), id);
-        } else if (mEnableAnimations) {
+        } else if (animationsEnabled()) {
             startShowing(mSimpleAnimationLayout, false);
             getActiveLayout().onTabClosing(time(), id);
         }
@@ -107,7 +107,7 @@ public class LayoutManagerChromePhone extends LayoutManagerChrome {
         getActiveLayout().onTabClosed(time(), id, nextId, incognito);
         Tab nextTab = getTabById(nextId);
         if (nextTab != null) nextTab.requestFocus();
-        if (getActiveLayout() != overviewLayout && showOverview && !mEnableAnimations) {
+        if (getActiveLayout() != overviewLayout && showOverview && !animationsEnabled()) {
             startShowing(overviewLayout, false);
         }
     }
@@ -119,7 +119,7 @@ public class LayoutManagerChromePhone extends LayoutManagerChrome {
             // This check allows us to switch from the StackLayout to the SimpleAnimationLayout
             // smoothly.
             getActiveLayout().onTabCreating(sourceId);
-        } else if (mEnableAnimations) {
+        } else if (animationsEnabled()) {
             if (getActiveLayout() != null && getActiveLayout().isHiding()) {
                 setNextLayout(mSimpleAnimationLayout);
                 // The method Layout#doneHiding() will automatically show the next layout.

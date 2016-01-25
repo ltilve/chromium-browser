@@ -274,6 +274,12 @@ bool NativeAppWindowViews::ShouldDescendIntoChildForEventHandling(
 
 // WidgetObserver implementation.
 
+void NativeAppWindowViews::OnWidgetDestroying(views::Widget* widget) {
+  FOR_EACH_OBSERVER(web_modal::ModalDialogHostObserver,
+                    observer_list_,
+                    OnHostDestroying());
+}
+
 void NativeAppWindowViews::OnWidgetVisibilityChanged(views::Widget* widget,
                                                      bool visible) {
   app_window_->OnNativeWindowChanged();
@@ -370,10 +376,6 @@ void NativeAppWindowViews::UpdateShape(scoped_ptr<SkRegion> region) {
   // Stub implementation. See also ChromeNativeAppWindowViews.
 }
 
-void NativeAppWindowViews::SetInterceptAllKeys(bool want_all_keys) {
-  // Stub implementation. See also ChromeNativeAppWindowViews.
-}
-
 void NativeAppWindowViews::HandleKeyboardEvent(
     const content::NativeWebKeyboardEvent& event) {
   unhandled_keyboard_event_handler_.HandleKeyboardEvent(event,
@@ -415,9 +417,6 @@ void NativeAppWindowViews::HideWithApp() {
 }
 
 void NativeAppWindowViews::ShowWithApp() {
-}
-
-void NativeAppWindowViews::UpdateShelfMenu() {
 }
 
 gfx::Size NativeAppWindowViews::GetContentMinimumSize() const {

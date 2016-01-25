@@ -2,6 +2,7 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import("//build/config/crypto.gni")
 import("//build/config/features.gni")
 import("//build/config/ui.gni")
 import("//testing/test.gni")
@@ -38,19 +39,18 @@ if (enable_nacl) {
       "//ppapi/proxy:ipc",
       "//ppapi/shared_impl",
       "//third_party/mojo/src/mojo/edk/embedder",
+      # TODO(use_chrome_edk): so that EDK in third_party can choose the EDK in
+      # src/mojo if the command line flag is specified. It has to since we can
+      # only have one definition of the Mojo primitives.
+      "//mojo/edk/embedder",
     ]
 
     if (enable_nacl_untrusted) {
-      data_deps = [
-        # TODO(GYP): handle other architectures correctly.
-        "//ppapi/native_client:nacl_irt(//native_client/build/toolchain/nacl:irt_x64)",
-      ]
+      data_deps = [ "//ppapi/native_client:irt" ]
     }
     if (enable_pnacl) {
-      data_deps += [
-        # TODO(GYP): handle other architectures correctly.
-        "//ppapi/native_client/src/untrusted/pnacl_support_extension",
-      ]
+      data_deps +=
+          [ "//ppapi/native_client/src/untrusted/pnacl_support_extension" ]
     }
   }
 
@@ -148,7 +148,15 @@ if (enable_nacl) {
       "//ppapi/proxy:ipc",
       "//ppapi/shared_impl",
       "//third_party/WebKit/public:blink",
-      "//third_party/jsoncpp",
+    ]
+  }
+
+  # TODO(GYP): Delete this after we've converted everything to GN.
+  # The _run targets exist only for compatibility w/ GYP.
+  group("nacl_loader_unittests_run") {
+    testonly = true
+    deps = [
+      ":nacl_loader_unittests",
     ]
   }
 
@@ -179,10 +187,10 @@ if (enable_nacl) {
         ":nacl_linux",
         ":nacl_switches",
         "//base",
+        "//build/config/sanitizers:deps",
         "//content/public/common",
         "//crypto",
         "//ipc",
-        "//sandbox/linux:libc_urandom_override",
       ]
 
       cflags = [ "-fPIE" ]
@@ -244,7 +252,6 @@ if (enable_nacl) {
         "//ppapi/proxy",
         "//ppapi/shared_impl",
         "//sandbox",
-        "//sandbox/linux:libc_urandom_override",
         "//sandbox/linux:sandbox_services_headers",
       ]
 
@@ -259,6 +266,8 @@ if (enable_nacl) {
   }
 } else {
   group("nacl") {
+  }
+  group("nacl_helper") {
   }
 }
 

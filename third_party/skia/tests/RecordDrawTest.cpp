@@ -67,7 +67,7 @@ DEF_TEST(RecordDraw_Abort, r) {
     SkRecorder canvas(&rerecord, W, H);
 
     JustOneDraw callback;
-    SkRecordDraw(record, &canvas, NULL, NULL, 0, NULL/*bbh*/, &callback);
+    SkRecordDraw(record, &canvas, nullptr, nullptr, 0, nullptr/*bbh*/, &callback);
 
     REPORTER_ASSERT(r, 1 == count_instances_of_type<SkRecords::DrawRect>(rerecord));
     REPORTER_ASSERT(r, 0 == count_instances_of_type<SkRecords::ClipRect>(rerecord));
@@ -81,7 +81,7 @@ DEF_TEST(RecordDraw_Unbalanced, r) {
 
     SkRecord rerecord;
     SkRecorder canvas(&rerecord, W, H);
-    SkRecordDraw(record, &canvas, NULL, NULL, 0, NULL/*bbh*/, NULL/*callback*/);
+    SkRecordDraw(record, &canvas, nullptr, nullptr, 0, nullptr/*bbh*/, nullptr/*callback*/);
 
     int save_count = count_instances_of_type<SkRecords::Save>(rerecord);
     int restore_count = count_instances_of_type<SkRecords::Save>(rerecord);
@@ -103,7 +103,7 @@ DEF_TEST(RecordDraw_SetMatrixClobber, r) {
     translate.setTranslate(20, 20);
     translateCanvas.setMatrix(translate);
 
-    SkRecordDraw(scaleRecord, &translateCanvas, NULL, NULL, 0, NULL/*bbh*/, NULL/*callback*/);
+    SkRecordDraw(scaleRecord, &translateCanvas, nullptr, nullptr, 0, nullptr/*bbh*/, nullptr/*callback*/);
     REPORTER_ASSERT(r, 4 == translateRecord.count());
     assert_type<SkRecords::SetMatrix>(r, translateRecord, 0);
     assert_type<SkRecords::Save>     (r, translateRecord, 1);
@@ -126,17 +126,17 @@ struct TestBBH : public SkBBoxHierarchy {
     void insert(const SkRect boundsArray[], int N) override {
         fEntries.setCount(N);
         for (int i = 0; i < N; i++) {
-            Entry e = { (unsigned)i, boundsArray[i] };
+            Entry e = { i, boundsArray[i] };
             fEntries[i] = e;
         }
     }
 
-    void search(const SkRect& query, SkTDArray<unsigned>* results) const override {}
+    void search(const SkRect& query, SkTDArray<int>* results) const override {}
     size_t bytesUsed() const override { return 0; }
     SkRect getRootBound() const override { return SkRect::MakeEmpty(); }
 
     struct Entry {
-        unsigned opIndex;
+        int opIndex;
         SkRect bounds;
     };
     SkTDArray<Entry> fEntries;
@@ -166,7 +166,7 @@ DEF_TEST(RecordDraw_BBH, r) {
 
     REPORTER_ASSERT(r, bbh.fEntries.count() == 5);
     for (int i = 0; i < bbh.fEntries.count(); i++) {
-        REPORTER_ASSERT(r, bbh.fEntries[i].opIndex == (unsigned)i);
+        REPORTER_ASSERT(r, bbh.fEntries[i].opIndex == i);
 
         REPORTER_ASSERT(r, sloppy_rect_eq(SkRect::MakeWH(400, 480), bbh.fEntries[i].bounds));
     }
@@ -215,7 +215,7 @@ DEF_TEST(RecordDraw_PartialStartStop, r) {
 
     SkRecord rerecord;
     SkRecorder canvas(&rerecord, kWidth, kHeight);
-    SkRecordPartialDraw(record, &canvas, NULL, 0, 1, 2, SkMatrix::I()); // replay just drawRect of r2
+    SkRecordPartialDraw(record, &canvas, nullptr, 0, 1, 2, SkMatrix::I()); // replay just drawRect of r2
 
     REPORTER_ASSERT(r, 1 == count_instances_of_type<SkRecords::DrawRect>(rerecord));
     int index = find_first_instances_of_type<SkRecords::DrawRect>(rerecord);
@@ -238,7 +238,7 @@ DEF_TEST(RecordDraw_SaveLayerAffectsClipBounds, r) {
     paint.setImageFilter(SkDropShadowImageFilter::Create(20, 0, 0, 0, SK_ColorBLACK,
                          SkDropShadowImageFilter::kDrawShadowAndForeground_ShadowMode))->unref();
 
-    recorder.saveLayer(NULL, &paint);
+    recorder.saveLayer(nullptr, &paint);
         recorder.clipRect(SkRect::MakeWH(20, 40));
         recorder.drawRect(SkRect::MakeWH(20, 40), SkPaint());
     recorder.restore();
@@ -295,7 +295,7 @@ DEF_TEST(RecordDraw_drawImage, r){
         }
 
         void onDrawImageRect(const SkImage* image, const SkRect* src, const SkRect& dst,
-                             const SkPaint* paint) override {
+                             const SkPaint* paint, SrcRectConstraint) override {
             fDrawImageRectCalled = true;
         }
 
@@ -317,7 +317,7 @@ DEF_TEST(RecordDraw_drawImage, r){
         SkRecord record;
         SkRecorder recorder(&record, 10, 10);
         recorder.drawImage(image, 0, 0);
-        SkRecordDraw(record, &canvas, NULL, NULL, 0, NULL, 0);
+        SkRecordDraw(record, &canvas, nullptr, nullptr, 0, nullptr, 0);
     }
     REPORTER_ASSERT(r, canvas.fDrawImageCalled);
     canvas.resetTestValues();
@@ -325,8 +325,8 @@ DEF_TEST(RecordDraw_drawImage, r){
     {
         SkRecord record;
         SkRecorder recorder(&record, 10, 10);
-        recorder.drawImageRect(image, 0, SkRect::MakeWH(10, 10));
-        SkRecordDraw(record, &canvas, NULL, NULL, 0, NULL, 0);
+        recorder.drawImageRect(image, SkRect::MakeWH(10, 10), nullptr);
+        SkRecordDraw(record, &canvas, nullptr, nullptr, 0, nullptr, 0);
     }
     REPORTER_ASSERT(r, canvas.fDrawImageRectCalled);
 

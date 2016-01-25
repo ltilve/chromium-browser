@@ -249,7 +249,7 @@ class ExtensionCrxInstallerTest : public ExtensionBrowserTest {
     mock_prompt->set_record_oauth2_grant(record_oauth2_grant);
     InstallWithPrompt("browsertest/scopes", std::string(), mock_prompt);
 
-    scoped_refptr<PermissionSet> permissions =
+    scoped_ptr<const PermissionSet> permissions =
         ExtensionPrefs::Get(browser()->profile())
             ->GetGrantedPermissions(mock_prompt->extension_id());
     ASSERT_TRUE(permissions.get());
@@ -583,8 +583,8 @@ IN_PROC_BROWSER_TEST_F(ExtensionCrxInstallerTest, DoNotSync) {
   const ExtensionPrefs* extension_prefs =
       ExtensionPrefs::Get(browser()->profile());
   EXPECT_TRUE(extension_prefs->DoNotSync(crx_installer->extension()->id()));
-  EXPECT_FALSE(extensions::util::ShouldSyncApp(crx_installer->extension(),
-                                               browser()->profile()));
+  EXPECT_FALSE(extensions::util::ShouldSync(crx_installer->extension(),
+                                            browser()->profile()));
 }
 
 IN_PROC_BROWSER_TEST_F(ExtensionCrxInstallerTest, ManagementPolicy) {

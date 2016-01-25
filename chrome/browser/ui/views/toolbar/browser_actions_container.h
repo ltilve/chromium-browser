@@ -168,7 +168,7 @@ class BrowserActionsContainer
   }
 
   // Returns the ID of the action represented by the view at |index|.
-  const std::string& GetIdAt(size_t index) const;
+  std::string GetIdAt(size_t index) const;
 
   // Returns the ToolbarActionView* associated with the given |extension|, or
   // NULL if none exists.
@@ -232,6 +232,7 @@ class BrowserActionsContainer
   bool ShownInsideMenu() const override;
   void OnToolbarActionViewDragDone() override;
   views::MenuButton* GetOverflowReferenceView() override;
+  void OnMouseEnteredToolbarActionView() override;
 
   // ToolbarActionsBarDelegate:
   void AddViewForAction(ToolbarActionViewController* action,
@@ -243,12 +244,10 @@ class BrowserActionsContainer
                         int target_width,
                         bool suppress_chevron) override;
   void SetChevronVisibility(bool chevron_visible) override;
-  int GetWidth() const override;
+  int GetWidth(GetWidthTime get_width_time) const override;
   bool IsAnimating() const override;
   void StopAnimating() override;
   int GetChevronWidth() const override;
-  void OnOverflowedActionWantsToRunChanged(
-      bool overflowed_action_wants_to_run) override;
   void ShowExtensionMessageBubble(
       scoped_ptr<extensions::ExtensionMessageBubbleController> controller,
       ToolbarActionViewController* anchor_action) override;
@@ -262,6 +261,8 @@ class BrowserActionsContainer
       override;
 
   views::BubbleDelegateView* active_bubble() { return active_bubble_; }
+
+  ChevronMenuButton* chevron_for_testing() { return chevron_; }
 
  protected:
   // Overridden from views::View:
@@ -314,7 +315,8 @@ class BrowserActionsContainer
   ChevronMenuButton* chevron_;
 
   // The painter used when we are highlighting a subset of extensions.
-  scoped_ptr<views::Painter> highlight_painter_;
+  scoped_ptr<views::Painter> info_highlight_painter_;
+  scoped_ptr<views::Painter> warning_highlight_painter_;
 
   // The animation that happens when the container snaps to place.
   scoped_ptr<gfx::SlideAnimation> resize_animation_;

@@ -12,11 +12,13 @@
 PersistentNotificationDelegate::PersistentNotificationDelegate(
     content::BrowserContext* browser_context,
     int64_t persistent_notification_id,
-    const GURL& origin)
+    const GURL& origin,
+    int notification_settings_index)
     : browser_context_(browser_context),
       persistent_notification_id_(persistent_notification_id),
       origin_(origin),
-      id_(base::GenerateGUID()) {}
+      id_(base::GenerateGUID()),
+      notification_settings_index_(notification_settings_index) {}
 
 PersistentNotificationDelegate::~PersistentNotificationDelegate() {}
 
@@ -33,7 +35,23 @@ void PersistentNotificationDelegate::Click() {
   PlatformNotificationServiceImpl::GetInstance()->OnPersistentNotificationClick(
       browser_context_,
       persistent_notification_id_,
-      origin_);
+      origin_,
+      -1 /* action_index */);
+}
+
+void PersistentNotificationDelegate::ButtonClick(int button_index) {
+  DCHECK_GE(button_index, 0);
+  if (button_index == notification_settings_index_) {
+    PlatformNotificationServiceImpl::GetInstance()->OpenNotificationSettings(
+        browser_context_);
+    return;
+  }
+
+  PlatformNotificationServiceImpl::GetInstance()->OnPersistentNotificationClick(
+      browser_context_,
+      persistent_notification_id_,
+      origin_,
+      button_index);
 }
 
 std::string PersistentNotificationDelegate::id() const {

@@ -20,7 +20,7 @@ import org.chromium.chrome.browser.util.MathUtils;
 /**
  * Base abstract class for animating the Contextual Search Panel.
  */
-abstract class ContextualSearchPanelAnimation extends ContextualSearchPanelBase
+public abstract class ContextualSearchPanelAnimation extends ContextualSearchPanelBase
         implements Animatable<ContextualSearchPanelAnimation.Property> {
 
     /**
@@ -28,7 +28,8 @@ abstract class ContextualSearchPanelAnimation extends ContextualSearchPanelBase
      */
     protected enum Property {
         PANEL_HEIGHT,
-        PROMO_VISIBILITY
+        PROMO_VISIBILITY,
+        BOTTOM_BAR_TEXT_VISIBILITY
     }
 
     /**
@@ -94,6 +95,23 @@ abstract class ContextualSearchPanelAnimation extends ContextualSearchPanelBase
         super(context);
         mUpdateHost = updateHost;
     }
+
+    // ============================================================================================
+    // Custom Animations
+    // ============================================================================================
+
+    /**
+     * Updates the UI state for the SearchBar text. The search context view will fade out
+     * while the search term fades in.
+     *
+     * @param percentage The visibility percentage of the search term view.
+     */
+    protected abstract void updateSearchBarTextOpacity(float percentage);
+
+    /**
+     * Notifies that the acceptance animation has finished.
+     */
+    protected abstract void onPromoAcceptanceAnimationFinished();
 
     // ============================================================================================
     // Animation API
@@ -200,6 +218,19 @@ abstract class ContextualSearchPanelAnimation extends ContextualSearchPanelBase
         animateProperty(Property.PROMO_VISIBILITY, 1.f, 0.f, BASE_ANIMATION_DURATION_MS);
     }
 
+    @Override
+    protected void animateSearchTermResolution() {
+        animateProperty(Property.BOTTOM_BAR_TEXT_VISIBILITY, 0.f, 1.f,
+                MAXIMUM_ANIMATION_DURATION_MS);
+    }
+
+    @Override
+    protected void cancelSearchTermResolutionAnimation() {
+        if (animationIsRunning()) {
+            cancelAnimation(this, Property.BOTTOM_BAR_TEXT_VISIBILITY);
+        }
+    }
+
     /**
      * Animates the Panel to its nearest state.
      */
@@ -229,11 +260,13 @@ abstract class ContextualSearchPanelAnimation extends ContextualSearchPanelBase
         PanelState projectedState = findNearestPanelStateFromHeight(projectedHeight);
 
         // Prevent the fling gesture from moving the Panel from PEEKED to MAXIMIZED if the Panel
-        // Promo is available. This is to make sure the Promo will be visible, considering that
-        // the EXPANDED state is the only one that will show the Promo.
+        // Promo is available and we are running in full screen panel mode. This is to make sure
+        // the Promo will be visible, considering that the EXPANDED state is the only one that will
+        // show the Promo in full screen panel mode. In narrow panel UI the Promo is visible in
+        // maximized so this project state change is not needed.
         if (projectedState == PanelState.MAXIMIZED
                 && getPanelState() == PanelState.PEEKED
-                && isPromoAvailable()) {
+                && isPromoVisible() && isFullscreenSizePanel()) {
             projectedState = PanelState.EXPANDED;
         }
 
@@ -349,6 +382,8 @@ abstract class ContextualSearchPanelAnimation extends ContextualSearchPanelBase
             setPanelHeight(value);
         } else if (prop == Property.PROMO_VISIBILITY) {
             setPromoVisibilityForOptInAnimation(value);
+        } else if (prop == Property.BOTTOM_BAR_TEXT_VISIBILITY) {
+            updateSearchBarTextOpacity(value);
         }
     }
 
@@ -389,7 +424,7 @@ abstract class ContextualSearchPanelAnimation extends ContextualSearchPanelBase
     protected void onAnimationFinished() {
         if (mIsAnimatingPromoAcceptance) {
             mIsAnimatingPromoAcceptance = false;
-            setPreferenceState(true);
+            onPromoAcceptanceAnimationFinished();
         }
 
         if (mIsAnimatingPanelClosing) {

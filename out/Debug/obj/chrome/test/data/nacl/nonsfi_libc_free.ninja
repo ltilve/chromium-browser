@@ -1,0 +1,35 @@
+build obj/chrome/test/data/nacl/nonsfi_libc_free.actions_depends.stamp: $
+    stamp $
+    obj/native_client/src/untrusted/nacl/nacl_lib.actions_depends.stamp $
+    obj/native_client/src/untrusted/pthread/pthread_lib.actions_rules_copies.stamp $
+    obj/ppapi/ppapi_cpp_lib.actions_rules_copies.stamp $
+    obj/ppapi/native_client/ppapi_lib.actions_rules_copies.stamp $
+    nacl_test_data/libc-free/libc_free_x86_64.nexe
+
+build obj/chrome/test/data/nacl/nonsfi_libc_free.compile_depends.stamp: $
+    stamp $
+    obj/native_client/src/untrusted/nacl/nacl_lib.compile_depends.stamp $
+    obj/native_client/src/untrusted/pthread/pthread_lib.actions_rules_copies.stamp $
+    obj/ppapi/ppapi_cpp_lib.actions_rules_copies.stamp $
+    obj/ppapi/native_client/ppapi_lib.actions_rules_copies.stamp $
+    obj/chrome/test/data/nacl/nonsfi_libc_free_nexe.compile_depends.stamp
+
+build nacl_test_data/libc-free/nacltest.js: copy $
+    ../../ppapi/native_client/tools/browser_tester/browserdata/nacltest.js $
+    || obj/chrome/test/data/nacl/nonsfi_libc_free.actions_depends.stamp
+build nacl_test_data/libc-free/libc_free.html: copy $
+    ../../chrome/test/data/nacl/nonsfi/libc_free.html || $
+    obj/chrome/test/data/nacl/nonsfi_libc_free.actions_depends.stamp
+build nacl_test_data/libc-free/libc_free.nmf: copy $
+    ../../chrome/test/data/nacl/nonsfi/libc_free.nmf || $
+    obj/chrome/test/data/nacl/nonsfi_libc_free.actions_depends.stamp
+build nacl_test_data/libc-free/irt_test.html: copy $
+    ../../chrome/test/data/nacl/nonsfi/irt_test.html || $
+    obj/chrome/test/data/nacl/nonsfi_libc_free.actions_depends.stamp
+build $
+    obj/chrome/test/data/nacl/nonsfi_libc_free.actions_rules_copies.stamp: $
+    stamp nacl_test_data/libc-free/nacltest.js $
+    nacl_test_data/libc-free/libc_free.html $
+    nacl_test_data/libc-free/libc_free.nmf $
+    nacl_test_data/libc-free/irt_test.html
+

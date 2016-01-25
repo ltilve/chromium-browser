@@ -32,6 +32,10 @@ using namespace password_manager::mac::ui;
   return self;
 }
 
+- (NSButton*)defaultButton {
+  return okButton_;
+}
+
 - (void)onOKClicked:(id)sender {
   model_->OnOKClicked();
   [delegate_ viewShouldDismiss];
@@ -78,7 +82,7 @@ using namespace password_manager::mac::ui;
       gfx::SkColorToCalibratedNSColor(chrome_style::GetLinkColor());
   [confirmationText_
       addLinkRange:model_->save_confirmation_link_range().ToNSRange()
-          withName:@""
+           withURL:@"about:blank"  // using a link here is bad ui
          linkColor:linkColor];
   [confirmationText_ setDelegate:self];
   [[confirmationText_ textContainer] setLineFragmentPadding:0.0f];

@@ -4,7 +4,7 @@
 
 package org.chromium.chrome.test.util.browser.tabmodel;
 
-import org.chromium.chrome.browser.Tab;
+import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.tabmodel.EmptyTabModel;
 import org.chromium.chrome.browser.tabmodel.TabModel;
 
@@ -41,7 +41,7 @@ public class MockTabModel extends EmptyTabModel {
 
     public void addTab(int id) {
         Tab tab = mDelegate == null
-                ? new Tab(id, isIncognito(), null, null) : mDelegate.createTab(id, isIncognito());
+                ? new Tab(id, isIncognito(), null) : mDelegate.createTab(id, isIncognito());
         mTabs.add(tab);
     }
 

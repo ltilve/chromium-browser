@@ -55,8 +55,11 @@ class FormStructure {
   void DetermineHeuristicTypes();
 
   // Encodes the XML upload request from this FormStructure.
+  // In some cases, a |login_form_signature| is included as part of the upload.
+  // This field is empty when sending upload requests for non-login forms.
   bool EncodeUploadRequest(const ServerFieldTypeSet& available_field_types,
                            bool form_was_autofilled,
+                           const std::string& login_form_signature,
                            std::string* encoded_xml) const;
 
   // Encodes a XML block contains autofill field type from this FormStructure.
@@ -168,6 +171,10 @@ class FormStructure {
   AutofillField* field(size_t index);
   size_t field_count() const;
 
+  // Returns the number of fields that are part of the form signature and that
+  // are included in queries to the Autofill server.
+  size_t active_field_count() const;
+
   // Returns the number of fields that are able to be autofilled.
   size_t autofill_count() const { return autofill_count_; }
 
@@ -191,7 +198,6 @@ class FormStructure {
   UploadRequired upload_required() const { return upload_required_; }
 
   // Returns a FormData containing the data this form structure knows about.
-  // |user_submitted| is currently always false.
   FormData ToFormData() const;
 
   bool operator==(const FormData& form) const;
@@ -227,8 +233,6 @@ class FormStructure {
   // Returns true if field should be skipped when talking to Autofill server.
   bool ShouldSkipField(const FormFieldData& field) const;
 
-  size_t active_field_count() const;
-
   // The name of the form.
   base::string16 form_name_;
 
@@ -244,8 +248,8 @@ class FormStructure {
   // A vector of all the input fields in the form.
   ScopedVector<AutofillField> fields_;
 
-  // The number of fields counted towards form signature and request to Autofill
-  // server.
+  // The number of fields that are part of the form signature and that are
+  // included in queries to the Autofill server.
   size_t active_field_count_;
 
   // The names of the form input elements, that are part of the form signature.

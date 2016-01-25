@@ -1,0 +1,17 @@
+rule $
+    concatenated_inspector_css_target_concatenate_inspector_css_9d7225e3d3f96541615c3a39cc38c7fa
+  command = cd ../../third_party/WebKit/Source/devtools; python $
+      scripts/concatenate_css_files.py front_end/inspector.css $
+      ../../../../out/Release/resources/inspector/inspector.css
+  description = ACTION concatenated_inspector_css: $
+      concatenate_inspector_css_9d7225e3d3f96541615c3a39cc38c7fa
+  restat = 1
+
+build resources/inspector/inspector.css: $
+    concatenated_inspector_css_target_concatenate_inspector_css_9d7225e3d3f96541615c3a39cc38c7fa $
+    ../../third_party/WebKit/Source/devtools/scripts/concatenate_css_files.py $
+    ../../third_party/WebKit/Source/devtools/front_end/inspector.css $
+    ../../third_party/WebKit/Source/devtools/front_end/inspectorStyle.css $
+    ../../third_party/WebKit/Source/devtools/front_end/popover.css $
+    ../../third_party/WebKit/Source/devtools/front_end/sidebarPane.css
+

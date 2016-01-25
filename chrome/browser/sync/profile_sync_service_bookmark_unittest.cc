@@ -15,7 +15,6 @@
 #include "base/files/file_path.h"
 #include "base/location.h"
 #include "base/memory/scoped_ptr.h"
-#include "base/message_loop/message_loop.h"
 #include "base/strings/string16.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_util.h"
@@ -26,17 +25,20 @@
 #include "chrome/browser/bookmarks/bookmark_model_factory.h"
 #include "chrome/browser/bookmarks/chrome_bookmark_client.h"
 #include "chrome/browser/bookmarks/chrome_bookmark_client_factory.h"
+#include "chrome/browser/bookmarks/managed_bookmark_service_factory.h"
 #include "chrome/browser/sync/glue/bookmark_change_processor.h"
 #include "chrome/browser/sync/glue/bookmark_model_associator.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/test/base/testing_profile.h"
 #include "components/bookmarks/browser/base_bookmark_model_observer.h"
 #include "components/bookmarks/browser/bookmark_model.h"
+#include "components/bookmarks/managed/managed_bookmark_service.h"
 #include "components/bookmarks/test/bookmark_test_helpers.h"
 #include "components/sync_driver/data_type_error_handler.h"
 #include "components/sync_driver/data_type_error_handler_mock.h"
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "sync/api/sync_error.h"
+#include "sync/api/sync_merge_result.h"
 #include "sync/internal_api/public/change_record.h"
 #include "sync/internal_api/public/read_node.h"
 #include "sync/internal_api/public/read_transaction.h"
@@ -377,7 +379,8 @@ class ProfileSyncServiceBookmarkTest : public testing::Test {
   // change the sync model directly after ModelAssociation.  This function can
   // be invoked prior to model association to set up first-time sync model
   // association scenarios.
-  int64 AddFolderToShare(syncer::WriteTransaction* trans, std::string title) {
+  int64 AddFolderToShare(syncer::WriteTransaction* trans,
+                         const std::string& title) {
     EXPECT_FALSE(model_associator_);
 
     // Be sure to call CreatePermanentBookmarkNodes(), otherwise this will fail.
@@ -2080,13 +2083,11 @@ TEST_F(ProfileSyncServiceBookmarkTestWithData, OptimisticMergeWithMoves) {
 
   EXPECT_EQ(num_bookmarks, model_->root_node()->GetTotalNodeCount());
 
-  // Move one folder into another
+  // Move one folder into mobile bookmarks
   const BookmarkNode* bookmark_bar_node = model_->bookmark_bar_node();
   const BookmarkNode* f1 = bookmark_bar_node->GetChild(1);
   ASSERT_TRUE(f1->is_folder());
-  const BookmarkNode* f2 = bookmark_bar_node->GetChild(3);
-  ASSERT_TRUE(f2->is_folder());
-  model_->Move(f2, f1, 0);
+  model_->Move(f1, model_->mobile_node(), 0);
 
   StartSync();
   ExpectModelMatch();
@@ -2576,6 +2577,31 @@ TEST_F(ProfileSyncServiceBookmarkTest, UpdateThenAdd) {
   // Then simulate the add call arriving late.
   change_processor_->BookmarkNodeAdded(model_, model_->bookmark_bar_node(), 0);
   ExpectModelMatch();
+}
+
+// Verify operations on native nodes that shouldn't be propagated to Sync.
+TEST_F(ProfileSyncServiceBookmarkTest, TestUnsupportedNodes) {
+  LoadBookmarkModel(DELETE_EXISTING_STORAGE, DONT_SAVE_TO_STORAGE);
+  StartSync();
+
+  // Initial number of bookmarks on the sync side.
+  int sync_bookmark_count = GetSyncBookmarkCount();
+
+  // Create a bookmark under managed_node() permanent folder.
+  bookmarks::ManagedBookmarkService* managed_bookmark_service =
+      ManagedBookmarkServiceFactory::GetForProfile(&profile_);
+  const BookmarkNode* folder = managed_bookmark_service->managed_node();
+  const BookmarkNode* node = model_->AddURL(
+      folder, 0, base::ASCIIToUTF16("node"), GURL("http://www.node.com/"));
+
+  // Verify that these changes are ignored by Sync.
+  EXPECT_EQ(sync_bookmark_count, GetSyncBookmarkCount());
+  int64 sync_id = model_associator_->GetSyncIdFromChromeId(node->id());
+  EXPECT_EQ(syncer::kInvalidId, sync_id);
+
+  // Verify that Sync ignores deleting this node.
+  model_->Remove(node);
+  EXPECT_EQ(sync_bookmark_count, GetSyncBookmarkCount());
 }
 
 }  // namespace

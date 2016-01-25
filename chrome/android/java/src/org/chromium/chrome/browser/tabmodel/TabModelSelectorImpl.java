@@ -9,10 +9,10 @@ import android.os.Handler;
 
 import org.chromium.base.metrics.RecordHistogram;
 import org.chromium.chrome.browser.ChromeActivity;
-import org.chromium.chrome.browser.Tab;
 import org.chromium.chrome.browser.compositor.layouts.OverviewModeBehavior;
 import org.chromium.chrome.browser.compositor.layouts.content.TabContentManager;
 import org.chromium.chrome.browser.ntp.NativePageFactory;
+import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.tab.TabIdManager;
 import org.chromium.chrome.browser.tabmodel.OffTheRecordTabModel.OffTheRecordTabModelDelegate;
 import org.chromium.chrome.browser.tabmodel.TabModel.TabLaunchType;
@@ -375,7 +375,7 @@ public class TabModelSelectorImpl extends TabModelSelectorBase implements TabMod
                 && tab.getLaunchType() == TabLaunchType.FROM_EXTERNAL_APP;
 
         if (mVisibleTab != tab && tab != null && !tab.isNativePage()) {
-            TabModelBase.startTabSwitchLatencyTiming(type);
+            TabModelImpl.startTabSwitchLatencyTiming(type);
         }
         if (mVisibleTab != null && mVisibleTab != tab && !mVisibleTab.needsReload()) {
             if (mVisibleTab.isInitialized()) {

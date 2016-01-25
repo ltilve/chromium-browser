@@ -133,11 +133,13 @@ DEF_TEST(SkNi, r) {
     test_Ni<8, int>(r);
 }
 
-DEF_TEST(SkNi_min, r) {
+DEF_TEST(SkNi_min_lt, r) {
     // Exhaustively check the 8x8 bit space.
     for (int a = 0; a < (1<<8); a++) {
     for (int b = 0; b < (1<<8); b++) {
-        REPORTER_ASSERT(r, Sk16b::Min(Sk16b(a), Sk16b(b)).kth<0>() == SkTMin(a, b));
+        Sk16b aw(a), bw(b);
+        REPORTER_ASSERT(r, Sk16b::Min(aw, bw).kth<0>() == SkTMin(a, b));
+        REPORTER_ASSERT(r, !(aw < bw).kth<0>() == !(a < b));
     }}
 
     // Exhausting the 16x16 bit space is kind of slow, so only do that in release builds.
@@ -189,4 +191,35 @@ DEF_TEST(Sk4px_muldiv255round, r) {
         }
     }
     }
+}
+
+DEF_TEST(Sk4px_widening, r) {
+    SkPMColor colors[] = {
+        SkPreMultiplyColor(0xff00ff00),
+        SkPreMultiplyColor(0x40008000),
+        SkPreMultiplyColor(0x7f020406),
+        SkPreMultiplyColor(0x00000000),
+    };
+    auto packed = Sk4px::Load4(colors);
+
+    auto wideLo = packed.widenLo(),
+         wideHi = packed.widenHi(),
+         wideLoHi    = packed.widenLoHi(),
+         wideLoHiAlt = wideLo + wideHi;
+    REPORTER_ASSERT(r, 0 == memcmp(&wideLoHi, &wideLoHiAlt, sizeof(wideLoHi)));
+}
+
+DEF_TEST(Sk4f_toBytes, r) {
+    uint8_t bytes[4];
+
+    // toBytes truncates, not rounds.
+    Sk4f(0.7f).toBytes(bytes);
+    REPORTER_ASSERT(r, bytes[0] == 0);
+
+    // Clamping edge cases.
+    Sk4f(-2.0f, -0.7f, 255.9f, 256.0f).toBytes(bytes);
+    REPORTER_ASSERT(r, bytes[0] == 0);
+    REPORTER_ASSERT(r, bytes[1] == 0);
+    REPORTER_ASSERT(r, bytes[2] == 255);
+    REPORTER_ASSERT(r, bytes[3] == 255);
 }

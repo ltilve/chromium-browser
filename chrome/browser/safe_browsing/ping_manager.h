@@ -18,8 +18,8 @@
 #include "net/url_request/url_fetcher_delegate.h"
 #include "url/gurl.h"
 
-namespace chrome_browser_net {
-class CertificateErrorReporter;
+namespace certificate_reporting {
+class ErrorReporter;
 }
 
 namespace net {
@@ -48,7 +48,8 @@ class SafeBrowsingPingManager : public net::URLFetcherDelegate {
                              const GURL& referrer_url,
                              bool is_subresource,
                              SBThreatType threat_type,
-                             const std::string& post_data);
+                             const std::string& post_data,
+                             bool is_extended_reporting);
 
   // Users can opt-in on the SafeBrowsing interstitial to send detailed
   // malware reports. |report| is the serialized report.
@@ -58,8 +59,9 @@ class SafeBrowsingPingManager : public net::URLFetcherDelegate {
   // certificate chains.
   void ReportInvalidCertificateChain(const std::string& serialized_report);
 
-  void SetCertificateErrorReporterForTesting(scoped_ptr<
-      chrome_browser_net::CertificateErrorReporter> certificate_error_reporter);
+  void SetCertificateErrorReporterForTesting(
+      scoped_ptr<certificate_reporting::ErrorReporter>
+          certificate_error_reporter);
 
  private:
   FRIEND_TEST_ALL_PREFIXES(SafeBrowsingPingManagerTest,
@@ -76,10 +78,12 @@ class SafeBrowsingPingManager : public net::URLFetcherDelegate {
       const SafeBrowsingProtocolConfig& config);
 
   // Generates URL for reporting safe browsing hits for UMA users.
-  GURL SafeBrowsingHitUrl(
-      const GURL& malicious_url, const GURL& page_url, const GURL& referrer_url,
-      bool is_subresource,
-      SBThreatType threat_type) const;
+  GURL SafeBrowsingHitUrl(const GURL& malicious_url,
+                          const GURL& page_url,
+                          const GURL& referrer_url,
+                          bool is_subresource,
+                          SBThreatType threat_type,
+                          bool is_extended_reporting) const;
   // Generates URL for reporting malware details for users who opt-in.
   GURL MalwareDetailsUrl() const;
 
@@ -101,8 +105,7 @@ class SafeBrowsingPingManager : public net::URLFetcherDelegate {
   Reports safebrowsing_reports_;
 
   // Sends reports of invalid SSL certificate chains.
-  scoped_ptr<chrome_browser_net::CertificateErrorReporter>
-      certificate_error_reporter_;
+  scoped_ptr<certificate_reporting::ErrorReporter> certificate_error_reporter_;
 
   DISALLOW_COPY_AND_ASSIGN(SafeBrowsingPingManager);
 };

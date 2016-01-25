@@ -22,12 +22,14 @@ from benchmarks import image_decoding
 from benchmarks import indexeddb_perf
 from benchmarks import jetstream
 from benchmarks import kraken
+from benchmarks import memory
 from benchmarks import octane
 from benchmarks import rasterize_and_record_micro
 from benchmarks import repaint
 from benchmarks import spaceport
 from benchmarks import speedometer
 from benchmarks import sunspider
+from benchmarks import text_selection
 
 
 def SmokeTestGenerator(benchmark):
@@ -56,7 +58,6 @@ def SmokeTestGenerator(benchmark):
     # Set the benchmark's default arguments.
     options = options_for_unittests.GetCopy()
     options.output_format = 'none'
-    options.suppress_gtest_report = True
     parser = options.CreateParser()
 
     benchmark.AddCommandLineArgs(parser)
@@ -83,13 +84,15 @@ _BLACK_LIST_TEST_MODULES = {
     spaceport,  # Takes 451 seconds.
     speedometer,  # Takes 101 seconds.
     jetstream,  # Take 206 seconds.
+    text_selection, # Always fails on cq bot.
+    memory  # Flaky on bots, crbug.com/513767
 }
 
 # Some smoke benchmark tests that run quickly on desktop platform can be very
 # slow on Android. So we create a separate set of black list only for Android.
 _ANDROID_BLACK_LIST_MODULES = {
     kraken,  # Takes 275 seconds on Android.
-    sunspider  # Takes 163 seconds on Android.
+    sunspider,  # Takes 163 seconds on Android.
 }
 
 
@@ -144,6 +147,10 @@ def load_tests(loader, standard_tests, pattern):
 
     # Disable some tests on android platform only.
     if sys.modules[benchmark.__module__] in _ANDROID_BLACK_LIST_MODULES:
+      method._disabled_strings.append('android')
+
+    # TODO(bashi): Remove once crrev.com/1266833004 is landed.
+    if benchmark.Name() == 'memory.blink_memory_mobile':
       method._disabled_strings.append('android')
 
     setattr(BenchmarkSmokeTest, benchmark.Name(), method)

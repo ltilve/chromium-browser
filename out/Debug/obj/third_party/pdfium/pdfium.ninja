@@ -1,0 +1,113 @@
+defines = -DOPJ_STATIC -DV8_DEPRECATION_WARNINGS -D_CRT_SECURE_NO_WARNINGS $
+    -DCLD_VERSION=2 -D_FILE_OFFSET_BITS=64 -DPDF_ENABLE_V8 $
+    -D_FX_CPU_=_FX_X64_ -DCHROMIUM_BUILD -DCR_CLANG_REVISION=255169-1 $
+    -DUI_COMPOSITOR_IMAGE_TRANSPORT -DUSE_AURA=1 -DUSE_ASH=1 -DUSE_PANGO=1 $
+    -DUSE_CAIRO=1 -DUSE_DEFAULT_RENDER_THEME=1 -DUSE_LIBJPEG_TURBO=1 $
+    -DUSE_X11=1 -DUSE_CLIPBOARD_AURAX11=1 -DENABLE_ONE_CLICK_SIGNIN $
+    -DENABLE_WEBRTC=1 -DENABLE_MEDIA_ROUTER=1 -DENABLE_PEPPER_CDMS $
+    -DENABLE_CONFIGURATION_POLICY -DENABLE_NOTIFICATIONS -DENABLE_HIDPI=1 $
+    -DENABLE_TOPCHROME_MD=1 -DUSE_UDEV -DDONT_EMBED_BUILD_METADATA $
+    -DFIELDTRIAL_TESTING_ENABLED -DENABLE_TASK_MANAGER=1 $
+    -DENABLE_EXTENSIONS=1 -DENABLE_PDF=1 -DENABLE_PLUGINS=1 $
+    -DENABLE_SESSION_SERVICE=1 -DENABLE_THEMES=1 -DENABLE_AUTOFILL_DIALOG=1 $
+    -DENABLE_BACKGROUND=1 -DENABLE_PRINTING=1 -DENABLE_BASIC_PRINTING=1 $
+    -DENABLE_PRINT_PREVIEW=1 -DENABLE_SPELLCHECK=1 $
+    -DENABLE_CAPTIVE_PORTAL_DETECTION=1 -DENABLE_APP_LIST=1 $
+    -DENABLE_SETTINGS_APP=1 -DENABLE_SUPERVISED_USERS=1 -DENABLE_MDNS=1 $
+    -DENABLE_SERVICE_DISCOVERY=1 -DV8_USE_EXTERNAL_STARTUP_DATA $
+    -DFULL_SAFE_BROWSING -DSAFE_BROWSING_CSD -DSAFE_BROWSING_DB_LOCAL $
+    -DUSE_LIBPCI=1 -DUSE_OPENSSL=1 -DUSE_GLIB=1 -DUSE_NSS_CERTS=1 $
+    -DDYNAMIC_ANNOTATIONS_ENABLED=1 -DWTF_USE_DYNAMIC_ANNOTATIONS=1 $
+    -D_DEBUG -D_GLIBCXX_DEBUG=1
+includes = -I../.. -I../../third_party/pdfium $
+    -I../../third_party/pdfium/third_party/freetype/include $
+    -I../../third_party/pdfium/third_party/freetype/include/freetype -Igen $
+    -I../../v8/include
+cflags = -fstack-protector --param=ssp-buffer-size=4 -Werror -pthread $
+    -fno-strict-aliasing -Wno-unused-parameter $
+    -Wno-missing-field-initializers -fvisibility=hidden -pipe -fPIC $
+    -Wno-reserved-user-defined-literal -Xclang -load -Xclang $
+    /b/build/slave/publish_tarball/build/src/third_party/llvm-build/Release+Asserts/lib/libFindBadConstructs.so $
+    -Xclang -add-plugin -Xclang find-bad-constructs -Xclang $
+    -plugin-arg-find-bad-constructs -Xclang check-templates $
+    -fcolor-diagnostics $
+    -B/b/build/slave/publish_tarball/build/src/third_party/binutils/Linux_x64/Release/bin $
+    -fPIC -Wno-sign-compare -Wheader-hygiene -Wno-char-subscripts $
+    -Wno-unneeded-internal-declaration -Wno-covered-switch-default $
+    -Wstring-conversion -Wno-c++11-narrowing -Wno-deprecated-register $
+    -Wno-inconsistent-missing-override -Wno-shift-negative-value $
+    -Wno-bitfield-width -Wno-unused-variable -Wno-format -Wno-unused-result $
+    -m64 -march=x86-64 $
+    --sysroot=/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot $
+    -O0 -g -funwind-tables -gsplit-dwarf -Wno-undefined-bool-conversion $
+    -Wno-tautological-undefined-compare
+cflags_c = 
+cflags_cc = -fno-exceptions -fno-rtti -fno-threadsafe-statics $
+    -fvisibility-inlines-hidden -std=gnu++11 -Wno-deprecated
+arflags = 
+
+build obj/third_party/pdfium/fpdfsdk/src/pdfium.fpdfdoc.o: cxx $
+    ../../third_party/pdfium/fpdfsdk/src/fpdfdoc.cpp
+build obj/third_party/pdfium/fpdfsdk/src/pdfium.fpdfeditimg.o: cxx $
+    ../../third_party/pdfium/fpdfsdk/src/fpdfeditimg.cpp
+build obj/third_party/pdfium/fpdfsdk/src/pdfium.fpdfeditpage.o: cxx $
+    ../../third_party/pdfium/fpdfsdk/src/fpdfeditpage.cpp
+build obj/third_party/pdfium/fpdfsdk/src/pdfium.fpdfformfill.o: cxx $
+    ../../third_party/pdfium/fpdfsdk/src/fpdfformfill.cpp
+build obj/third_party/pdfium/fpdfsdk/src/pdfium.fpdfppo.o: cxx $
+    ../../third_party/pdfium/fpdfsdk/src/fpdfppo.cpp
+build obj/third_party/pdfium/fpdfsdk/src/pdfium.fpdfsave.o: cxx $
+    ../../third_party/pdfium/fpdfsdk/src/fpdfsave.cpp
+build obj/third_party/pdfium/fpdfsdk/src/pdfium.fpdftext.o: cxx $
+    ../../third_party/pdfium/fpdfsdk/src/fpdftext.cpp
+build obj/third_party/pdfium/fpdfsdk/src/pdfium.fpdfview.o: cxx $
+    ../../third_party/pdfium/fpdfsdk/src/fpdfview.cpp
+build obj/third_party/pdfium/fpdfsdk/src/pdfium.fpdf_dataavail.o: cxx $
+    ../../third_party/pdfium/fpdfsdk/src/fpdf_dataavail.cpp
+build obj/third_party/pdfium/fpdfsdk/src/pdfium.fpdf_ext.o: cxx $
+    ../../third_party/pdfium/fpdfsdk/src/fpdf_ext.cpp
+build obj/third_party/pdfium/fpdfsdk/src/pdfium.fpdf_flatten.o: cxx $
+    ../../third_party/pdfium/fpdfsdk/src/fpdf_flatten.cpp
+build obj/third_party/pdfium/fpdfsdk/src/pdfium.fpdf_progressive.o: cxx $
+    ../../third_party/pdfium/fpdfsdk/src/fpdf_progressive.cpp
+build obj/third_party/pdfium/fpdfsdk/src/pdfium.fpdf_searchex.o: cxx $
+    ../../third_party/pdfium/fpdfsdk/src/fpdf_searchex.cpp
+build obj/third_party/pdfium/fpdfsdk/src/pdfium.fpdf_sysfontinfo.o: cxx $
+    ../../third_party/pdfium/fpdfsdk/src/fpdf_sysfontinfo.cpp
+build obj/third_party/pdfium/fpdfsdk/src/pdfium.fpdf_transformpage.o: cxx $
+    ../../third_party/pdfium/fpdfsdk/src/fpdf_transformpage.cpp
+build obj/third_party/pdfium/fpdfsdk/src/pdfium.fsdk_actionhandler.o: cxx $
+    ../../third_party/pdfium/fpdfsdk/src/fsdk_actionhandler.cpp
+build obj/third_party/pdfium/fpdfsdk/src/pdfium.fsdk_annothandler.o: cxx $
+    ../../third_party/pdfium/fpdfsdk/src/fsdk_annothandler.cpp
+build obj/third_party/pdfium/fpdfsdk/src/pdfium.fsdk_baseannot.o: cxx $
+    ../../third_party/pdfium/fpdfsdk/src/fsdk_baseannot.cpp
+build obj/third_party/pdfium/fpdfsdk/src/pdfium.fsdk_baseform.o: cxx $
+    ../../third_party/pdfium/fpdfsdk/src/fsdk_baseform.cpp
+build obj/third_party/pdfium/fpdfsdk/src/pdfium.fsdk_mgr.o: cxx $
+    ../../third_party/pdfium/fpdfsdk/src/fsdk_mgr.cpp
+build obj/third_party/pdfium/fpdfsdk/src/pdfium.fsdk_rendercontext.o: cxx $
+    ../../third_party/pdfium/fpdfsdk/src/fsdk_rendercontext.cpp
+
+build obj/third_party/pdfium/libpdfium.a: alink_thin $
+    obj/third_party/pdfium/fpdfsdk/src/pdfium.fpdfdoc.o $
+    obj/third_party/pdfium/fpdfsdk/src/pdfium.fpdfeditimg.o $
+    obj/third_party/pdfium/fpdfsdk/src/pdfium.fpdfeditpage.o $
+    obj/third_party/pdfium/fpdfsdk/src/pdfium.fpdfformfill.o $
+    obj/third_party/pdfium/fpdfsdk/src/pdfium.fpdfppo.o $
+    obj/third_party/pdfium/fpdfsdk/src/pdfium.fpdfsave.o $
+    obj/third_party/pdfium/fpdfsdk/src/pdfium.fpdftext.o $
+    obj/third_party/pdfium/fpdfsdk/src/pdfium.fpdfview.o $
+    obj/third_party/pdfium/fpdfsdk/src/pdfium.fpdf_dataavail.o $
+    obj/third_party/pdfium/fpdfsdk/src/pdfium.fpdf_ext.o $
+    obj/third_party/pdfium/fpdfsdk/src/pdfium.fpdf_flatten.o $
+    obj/third_party/pdfium/fpdfsdk/src/pdfium.fpdf_progressive.o $
+    obj/third_party/pdfium/fpdfsdk/src/pdfium.fpdf_searchex.o $
+    obj/third_party/pdfium/fpdfsdk/src/pdfium.fpdf_sysfontinfo.o $
+    obj/third_party/pdfium/fpdfsdk/src/pdfium.fpdf_transformpage.o $
+    obj/third_party/pdfium/fpdfsdk/src/pdfium.fsdk_actionhandler.o $
+    obj/third_party/pdfium/fpdfsdk/src/pdfium.fsdk_annothandler.o $
+    obj/third_party/pdfium/fpdfsdk/src/pdfium.fsdk_baseannot.o $
+    obj/third_party/pdfium/fpdfsdk/src/pdfium.fsdk_baseform.o $
+    obj/third_party/pdfium/fpdfsdk/src/pdfium.fsdk_mgr.o $
+    obj/third_party/pdfium/fpdfsdk/src/pdfium.fsdk_rendercontext.o

@@ -87,6 +87,7 @@
 #define IDC_BASIC_PRINT                 35007
 #define IDC_TRANSLATE_PAGE              35009
 #define IDC_MANAGE_PASSWORDS_FOR_PAGE   35010
+#define IDC_ROUTE_MEDIA                 35011
 
 // When adding a new encoding to this list, be sure to append it to the
 // EncodingMenuController::kValidEncodingIds array in
@@ -308,7 +309,7 @@
 #define IDC_CONTENT_CONTEXT_INSPECTELEMENT 50151
 #define IDC_CONTENT_CONTEXT_VIEWPAGEINFO 50152
 #define IDC_CONTENT_CONTEXT_LANGUAGE_SETTINGS 50153
-#define IDC_CONTENT_CONTEXT_LOOK_UP_IN_DICTIONARY 50154
+#define IDC_CONTENT_CONTEXT_LOOK_UP 50154
 #define IDC_CONTENT_CONTEXT_NO_SPELLING_SUGGESTIONS 50155
 #define IDC_CONTENT_CONTEXT_SPELLING_SUGGESTION 50156
 #define IDC_CONTENT_CONTEXT_SPELLING_TOGGLE 50157
@@ -327,7 +328,6 @@
 // Search items.
 #define IDC_CONTENT_CONTEXT_GOTOURL 50180
 #define IDC_CONTENT_CONTEXT_SEARCHWEBFOR 50181
-#define IDC_CONTENT_CONTEXT_ADDSEARCHENGINE 50182
 
 // Context menu items in the bookmark bar
 #define IDC_BOOKMARK_BAR_OPEN_ALL 51000
@@ -348,6 +348,12 @@
 
 // Context menu items in the status tray
 #define IDC_STATUS_TRAY_KEEP_CHROME_RUNNING_IN_BACKGROUND 51100
+
+// Context menu items for media router
+#define IDC_MEDIA_ROUTER_ABOUT 51200
+#define IDC_MEDIA_ROUTER_HELP 51201
+#define IDC_MEDIA_ROUTER_LEARN_MORE 51202
+#define IDC_MEDIA_ROUTER_REPORT_ISSUE 51203
 
 // Context menu items for media stream status tray
 #define IDC_MEDIA_STREAM_DEVICE_STATUS_TRAY 51300

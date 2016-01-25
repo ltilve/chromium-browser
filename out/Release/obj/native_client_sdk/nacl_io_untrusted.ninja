@@ -1,0 +1,1203 @@
+rule $
+    nacl_io_untrusted_target_build_newlib_plib_7356a6ab914d0bbb75a46926e0562c69
+  command = cd ../../native_client_sdk; python $
+      ../native_client/build/build_nexe.py --root .. --product-dir $
+      ../out/Release/xyz --config-name Release -t $
+      ../native_client/toolchain/ --arch pnacl --build newlib_plib --name $
+      ../out/Release/gen/tc_pnacl_newlib/lib/libnacl_io.a --objdir $
+      ../out/Release/obj/native_client_sdk/nacl_io_untrusted.gen/pnacl_newlib-pnacl/nacl_io_untrusted $
+      "--include-dirs=../out/Release/gen/tc_pnacl_newlib/include .. $
+      \"../out/Release/gen\" ../native_client/src/untrusted/irt $
+      src/libraries src/libraries/nacl_io/include $
+      src/libraries/third_party/newlib-extras" "--compile_flags=-O2 -g $
+      -Wall -fdiagnostics-show-option -Werror  -Wno-unused-function $
+      -Wno-char-subscripts -Wno-c++11-extensions $
+      -Wno-unnamed-type-template-args -Wno-extra-semi $
+      -Wno-unused-private-field -Wno-char-subscripts -Wno-unused-function $
+      \"-std=gnu++11\" " --gomadir "" "--defines=\"__STDC_LIMIT_MACROS=1\" $
+      \"__STDC_FORMAT_MACROS=1\" \"_GNU_SOURCE=1\" $
+      \"_POSIX_C_SOURCE=199506\" \"_XOPEN_SOURCE=600\" $
+      \"DYNAMIC_ANNOTATIONS_ENABLED=1\" $
+      \"DYNAMIC_ANNOTATIONS_PREFIX=NACL_\" \"NACL_BUILD_ARCH=x86\" $
+      V8_DEPRECATION_WARNINGS \"CLD_VERSION=2\" \"_FILE_OFFSET_BITS=64\" $
+      CHROMIUM_BUILD \"CR_CLANG_REVISION=255169-1\" $
+      UI_COMPOSITOR_IMAGE_TRANSPORT \"USE_AURA=1\" \"USE_ASH=1\" $
+      \"USE_PANGO=1\" \"USE_CAIRO=1\" \"USE_DEFAULT_RENDER_THEME=1\" $
+      \"USE_LIBJPEG_TURBO=1\" \"USE_X11=1\" \"USE_CLIPBOARD_AURAX11=1\" $
+      ENABLE_ONE_CLICK_SIGNIN \"ENABLE_WEBRTC=1\" \"ENABLE_MEDIA_ROUTER=1\" $
+      ENABLE_PEPPER_CDMS ENABLE_CONFIGURATION_POLICY ENABLE_NOTIFICATIONS $
+      \"ENABLE_HIDPI=1\" \"ENABLE_TOPCHROME_MD=1\" USE_UDEV $
+      DONT_EMBED_BUILD_METADATA FIELDTRIAL_TESTING_ENABLED $
+      \"ENABLE_TASK_MANAGER=1\" \"ENABLE_EXTENSIONS=1\" \"ENABLE_PDF=1\" $
+      \"ENABLE_PLUGINS=1\" \"ENABLE_SESSION_SERVICE=1\" \"ENABLE_THEMES=1\" $
+      \"ENABLE_AUTOFILL_DIALOG=1\" \"ENABLE_BACKGROUND=1\" $
+      \"ENABLE_PRINTING=1\" \"ENABLE_BASIC_PRINTING=1\" $
+      \"ENABLE_PRINT_PREVIEW=1\" \"ENABLE_SPELLCHECK=1\" $
+      \"ENABLE_CAPTIVE_PORTAL_DETECTION=1\" \"ENABLE_APP_LIST=1\" $
+      \"ENABLE_SETTINGS_APP=1\" \"ENABLE_SUPERVISED_USERS=1\" $
+      \"ENABLE_MDNS=1\" \"ENABLE_SERVICE_DISCOVERY=1\" $
+      V8_USE_EXTERNAL_STARTUP_DATA FULL_SAFE_BROWSING SAFE_BROWSING_CSD $
+      SAFE_BROWSING_DB_LOCAL \"USE_LIBPCI=1\" \"USE_OPENSSL=1\" $
+      \"USE_OPENSSL_CERTS=1\"" $
+      "--link_flags=-B../out/Release/gen/tc_pnacl_newlib/lib  " $
+      "--source-list=../out/gypfiles/native_client_sdk/pnacl_newlib.nacl_io_untrusted.source_list.gypcmd"
+  description = ACTION nacl_io_untrusted: build newlib $
+      plib_7356a6ab914d0bbb75a46926e0562c69
+  restat = 1
+
+build gen/tc_pnacl_newlib/lib/libnacl_io.a: $
+    nacl_io_untrusted_target_build_newlib_plib_7356a6ab914d0bbb75a46926e0562c69 $
+    ../../native_client/build/build_nexe.py $
+    ../../native_client/build/build_nexe_tools.py $
+    ../../native_client/src/untrusted/irt/irt.h $
+    ../../native_client/src/untrusted/irt/irt_dev.h $
+    ../../native_client/src/untrusted/irt/irt_extension.h $
+    ../../ppapi/c/pp_array_output.h ../../ppapi/c/pp_bool.h $
+    ../../ppapi/c/pp_completion_callback.h $
+    ../../ppapi/c/pp_directory_entry.h ../../ppapi/c/pp_errors.h $
+    ../../ppapi/c/pp_file_info.h ../../ppapi/c/pp_instance.h $
+    ../../ppapi/c/pp_macros.h ../../ppapi/c/pp_module.h $
+    ../../ppapi/c/pp_resource.h ../../ppapi/c/pp_stdint.h $
+    ../../ppapi/c/pp_time.h ../../ppapi/c/pp_var.h ../../ppapi/c/ppb.h $
+    ../../ppapi/c/ppb_console.h ../../ppapi/c/ppb_core.h $
+    ../../ppapi/c/ppb_file_io.h ../../ppapi/c/ppb_file_ref.h $
+    ../../ppapi/c/ppb_file_system.h ../../ppapi/c/ppb_host_resolver.h $
+    ../../ppapi/c/ppb_message_loop.h ../../ppapi/c/ppb_messaging.h $
+    ../../ppapi/c/ppb_net_address.h ../../ppapi/c/ppb_tcp_socket.h $
+    ../../ppapi/c/ppb_udp_socket.h ../../ppapi/c/ppb_url_loader.h $
+    ../../ppapi/c/ppb_url_request_info.h $
+    ../../ppapi/c/ppb_url_response_info.h ../../ppapi/c/ppb_var.h $
+    ../../ppapi/c/ppb_var_array.h ../../ppapi/c/ppb_var_array_buffer.h $
+    ../../ppapi/c/ppb_var_dictionary.h ../../ppapi/c/ppp_message_handler.h $
+    ../../native_client_sdk/src/libraries/nacl_io/char_node.h $
+    ../../native_client_sdk/src/libraries/nacl_io/devfs/dev_fs.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/devfs/dev_fs.h $
+    ../../native_client_sdk/src/libraries/nacl_io/devfs/jspipe_event_emitter.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/devfs/jspipe_event_emitter.h $
+    ../../native_client_sdk/src/libraries/nacl_io/devfs/jspipe_node.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/devfs/jspipe_node.h $
+    ../../native_client_sdk/src/libraries/nacl_io/devfs/tty_node.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/devfs/tty_node.h $
+    ../../native_client_sdk/src/libraries/nacl_io/dir_node.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/dir_node.h $
+    ../../native_client_sdk/src/libraries/nacl_io/error.h $
+    ../../native_client_sdk/src/libraries/nacl_io/event_emitter.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/event_emitter.h $
+    ../../native_client_sdk/src/libraries/nacl_io/event_listener.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/event_listener.h $
+    ../../native_client_sdk/src/libraries/nacl_io/fifo_char.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/fifo_char.h $
+    ../../native_client_sdk/src/libraries/nacl_io/fifo_interface.h $
+    ../../native_client_sdk/src/libraries/nacl_io/filesystem.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/filesystem.h $
+    ../../native_client_sdk/src/libraries/nacl_io/fs_factory.h $
+    ../../native_client_sdk/src/libraries/nacl_io/fuse.h $
+    ../../native_client_sdk/src/libraries/nacl_io/fusefs/fuse_fs.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/fusefs/fuse_fs.h $
+    ../../native_client_sdk/src/libraries/nacl_io/fusefs/fuse_fs_factory.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/fusefs/fuse_fs_factory.h $
+    ../../native_client_sdk/src/libraries/nacl_io/getdents_helper.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/getdents_helper.h $
+    ../../native_client_sdk/src/libraries/nacl_io/h_errno.c $
+    ../../native_client_sdk/src/libraries/nacl_io/host_resolver.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/host_resolver.h $
+    ../../native_client_sdk/src/libraries/nacl_io/html5fs/html5_fs.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/html5fs/html5_fs.h $
+    ../../native_client_sdk/src/libraries/nacl_io/html5fs/html5_fs_node.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/html5fs/html5_fs_node.h $
+    ../../native_client_sdk/src/libraries/nacl_io/httpfs/http_fs.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/httpfs/http_fs.h $
+    ../../native_client_sdk/src/libraries/nacl_io/httpfs/http_fs_node.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/httpfs/http_fs_node.h $
+    ../../native_client_sdk/src/libraries/nacl_io/in6_addr.c $
+    ../../native_client_sdk/src/libraries/nacl_io/include/poll.h $
+    ../../native_client_sdk/src/libraries/nacl_io/include/sys/ioctl.h $
+    ../../native_client_sdk/src/libraries/nacl_io/include/sys/poll.h $
+    ../../native_client_sdk/src/libraries/nacl_io/include/sys/termios.h $
+    ../../native_client_sdk/src/libraries/nacl_io/include/sys/time.h $
+    ../../native_client_sdk/src/libraries/nacl_io/include/sys/utsname.h $
+    ../../native_client_sdk/src/libraries/nacl_io/include/utime.h $
+    ../../native_client_sdk/src/libraries/nacl_io/inode_pool.h $
+    ../../native_client_sdk/src/libraries/nacl_io/ioctl.h $
+    ../../native_client_sdk/src/libraries/nacl_io/jsfs/js_fs.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/jsfs/js_fs.h $
+    ../../native_client_sdk/src/libraries/nacl_io/jsfs/js_fs_node.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/jsfs/js_fs_node.h $
+    ../../native_client_sdk/src/libraries/nacl_io/kernel_handle.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/kernel_handle.h $
+    ../../native_client_sdk/src/libraries/nacl_io/kernel_intercept.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/kernel_intercept.h $
+    ../../native_client_sdk/src/libraries/nacl_io/kernel_object.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/kernel_object.h $
+    ../../native_client_sdk/src/libraries/nacl_io/kernel_proxy.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/kernel_proxy.h $
+    ../../native_client_sdk/src/libraries/nacl_io/kernel_wrap.h $
+    ../../native_client_sdk/src/libraries/nacl_io/kernel_wrap_dummy.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/kernel_wrap_glibc.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/kernel_wrap_irt_ext.c $
+    ../../native_client_sdk/src/libraries/nacl_io/kernel_wrap_newlib.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/kernel_wrap_real.h $
+    ../../native_client_sdk/src/libraries/nacl_io/kernel_wrap_win.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/log.c $
+    ../../native_client_sdk/src/libraries/nacl_io/log.h $
+    ../../native_client_sdk/src/libraries/nacl_io/memfs/mem_fs.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/memfs/mem_fs.h $
+    ../../native_client_sdk/src/libraries/nacl_io/memfs/mem_fs_node.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/memfs/mem_fs_node.h $
+    ../../native_client_sdk/src/libraries/nacl_io/nacl_abi_types.h $
+    ../../native_client_sdk/src/libraries/nacl_io/nacl_io.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/nacl_io.h $
+    ../../native_client_sdk/src/libraries/nacl_io/node.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/node.h $
+    ../../native_client_sdk/src/libraries/nacl_io/osdirent.h $
+    ../../native_client_sdk/src/libraries/nacl_io/osinttypes.h $
+    ../../native_client_sdk/src/libraries/nacl_io/osmman.h $
+    ../../native_client_sdk/src/libraries/nacl_io/ossignal.h $
+    ../../native_client_sdk/src/libraries/nacl_io/ossocket.h $
+    ../../native_client_sdk/src/libraries/nacl_io/osstat.h $
+    ../../native_client_sdk/src/libraries/nacl_io/ostermios.h $
+    ../../native_client_sdk/src/libraries/nacl_io/ostime.h $
+    ../../native_client_sdk/src/libraries/nacl_io/ostypes.h $
+    ../../native_client_sdk/src/libraries/nacl_io/osunistd.h $
+    ../../native_client_sdk/src/libraries/nacl_io/osutime.h $
+    ../../native_client_sdk/src/libraries/nacl_io/passthroughfs/passthrough_fs.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/passthroughfs/passthrough_fs.h $
+    ../../native_client_sdk/src/libraries/nacl_io/passthroughfs/real_node.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/passthroughfs/real_node.h $
+    ../../native_client_sdk/src/libraries/nacl_io/path.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/path.h $
+    ../../native_client_sdk/src/libraries/nacl_io/pepper/all_interfaces.h $
+    ../../native_client_sdk/src/libraries/nacl_io/pepper/define_empty_macros.h $
+    ../../native_client_sdk/src/libraries/nacl_io/pepper/undef_macros.h $
+    ../../native_client_sdk/src/libraries/nacl_io/pepper_interface.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/pepper_interface.h $
+    ../../native_client_sdk/src/libraries/nacl_io/pepper_interface_delegate.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/pepper_interface_delegate.h $
+    ../../native_client_sdk/src/libraries/nacl_io/pipe/pipe_event_emitter.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/pipe/pipe_event_emitter.h $
+    ../../native_client_sdk/src/libraries/nacl_io/pipe/pipe_node.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/pipe/pipe_node.h $
+    ../../native_client_sdk/src/libraries/nacl_io/real_pepper_interface.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/real_pepper_interface.h $
+    ../../native_client_sdk/src/libraries/nacl_io/socket/fifo_packet.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/socket/fifo_packet.h $
+    ../../native_client_sdk/src/libraries/nacl_io/socket/packet.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/socket/packet.h $
+    ../../native_client_sdk/src/libraries/nacl_io/socket/socket_node.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/socket/socket_node.h $
+    ../../native_client_sdk/src/libraries/nacl_io/socket/tcp_event_emitter.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/socket/tcp_event_emitter.h $
+    ../../native_client_sdk/src/libraries/nacl_io/socket/tcp_node.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/socket/tcp_node.h $
+    ../../native_client_sdk/src/libraries/nacl_io/socket/udp_event_emitter.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/socket/udp_event_emitter.h $
+    ../../native_client_sdk/src/libraries/nacl_io/socket/udp_node.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/socket/udp_node.h $
+    ../../native_client_sdk/src/libraries/nacl_io/socket/unix_event_emitter.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/socket/unix_event_emitter.h $
+    ../../native_client_sdk/src/libraries/nacl_io/socket/unix_node.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/socket/unix_node.h $
+    ../../native_client_sdk/src/libraries/nacl_io/stream/stream_event_emitter.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/stream/stream_event_emitter.h $
+    ../../native_client_sdk/src/libraries/nacl_io/stream/stream_fs.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/stream/stream_fs.h $
+    ../../native_client_sdk/src/libraries/nacl_io/stream/stream_node.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/stream/stream_node.h $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/access.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/chown.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/fchown.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/fcntl.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/ftruncate.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/futimes.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/getwd.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/ioctl.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/isatty.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/kill.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/killpg.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/lchown.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/mount.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/pipe.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/poll.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/realpath.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/select.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/sigaction.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/signal.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/sigpause.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/sigpending.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/sigset.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/sigsuspend.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/socket/accept.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/socket/bind.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/socket/connect.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/socket/freeaddrinfo.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/socket/gai_strerror.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/socket/getaddrinfo.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/socket/gethostbyname.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/socket/getnameinfo.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/socket/getpeername.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/socket/getsockname.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/socket/getsockopt.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/socket/herror.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/socket/hstrerror.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/socket/htonl.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/socket/htons.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/socket/inet_addr.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/socket/inet_aton.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/socket/inet_ntoa.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/socket/inet_ntop.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/socket/inet_pton.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/socket/listen.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/socket/ntohl.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/socket/ntohs.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/socket/recv.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/socket/recvfrom.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/socket/recvmsg.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/socket/send.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/socket/sendmsg.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/socket/sendto.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/socket/setsockopt.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/socket/shutdown.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/socket/socket.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/socket/socketpair.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/symlink.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/termios/cfgetispeed.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/termios/cfgetospeed.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/termios/cfsetispeed.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/termios/cfsetospeed.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/termios/cfsetspeed.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/termios/tcdrain.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/termios/tcflow.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/termios/tcflush.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/termios/tcgetattr.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/termios/tcsendbreak.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/termios/tcsetattr.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/truncate.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/umask.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/umount.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/uname.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/utime.c $
+    ../../native_client_sdk/src/libraries/nacl_io/typed_fs_factory.h $
+    ../../native_client_sdk/src/libraries/sdk_util/atomicops.h $
+    ../../native_client_sdk/src/libraries/sdk_util/auto_lock.h $
+    ../../native_client_sdk/src/libraries/sdk_util/macros.h $
+    ../../native_client_sdk/src/libraries/sdk_util/ref_object.h $
+    ../../native_client_sdk/src/libraries/sdk_util/scoped_ref.h $
+    ../../native_client_sdk/src/libraries/sdk_util/simple_lock.h $
+    ../../native_client_sdk/src/libraries/sdk_util/string_util.h $
+    ../../native_client_sdk/src/libraries/third_party/newlib-extras/arpa/inet.h $
+    ../../native_client_sdk/src/libraries/third_party/newlib-extras/netdb.h $
+    ../../native_client_sdk/src/libraries/third_party/newlib-extras/netinet/in.h $
+    ../../native_client_sdk/src/libraries/third_party/newlib-extras/netinet/tcp.h $
+    ../../native_client_sdk/src/libraries/third_party/newlib-extras/netinet6/in6.h $
+    ../../native_client_sdk/src/libraries/third_party/newlib-extras/sys/select.h $
+    ../../native_client_sdk/src/libraries/third_party/newlib-extras/sys/socket.h $
+    ../../out/gypfiles/native_client_sdk/pnacl_newlib.nacl_io_untrusted.source_list.gypcmd $
+    ../../native_client/toolchain/linux_x86/pnacl_newlib/pnacl_newlib.json $
+    || obj/ppapi/native_client/ppapi_lib.actions_rules_copies.stamp
+
+rule $
+    nacl_io_untrusted_target_build_newlib_x86_64_nlib_7356a6ab914d0bbb75a46926e0562c69
+  command = cd ../../native_client_sdk; python $
+      ../native_client/build/build_nexe.py --root .. --product-dir $
+      ../out/Release/xyz --config-name Release -t $
+      ../native_client/toolchain/ --arch x86-64 --build newlib_nlib --name $
+      ../out/Release/gen/tc_newlib/lib64/libnacl_io.a --objdir $
+      ../out/Release/obj/native_client_sdk/nacl_io_untrusted.gen/newlib-x86-64/nacl_io_untrusted $
+      "--include-dirs=../out/Release/gen/tc_newlib/include .. $
+      \"../out/Release/gen\" ../native_client/src/untrusted/irt $
+      src/libraries src/libraries/nacl_io/include $
+      src/libraries/third_party/newlib-extras" "--compile_flags=-m64 -O2 -g $
+      -Wall -fdiagnostics-show-option -Werror " --gomadir "" $
+      "--defines=\"__STDC_LIMIT_MACROS=1\" \"__STDC_FORMAT_MACROS=1\" $
+      \"_GNU_SOURCE=1\" \"_POSIX_C_SOURCE=199506\" \"_XOPEN_SOURCE=600\" $
+      \"DYNAMIC_ANNOTATIONS_ENABLED=1\" $
+      \"DYNAMIC_ANNOTATIONS_PREFIX=NACL_\" \"NACL_BUILD_ARCH=x86\" $
+      V8_DEPRECATION_WARNINGS \"CLD_VERSION=2\" \"_FILE_OFFSET_BITS=64\" $
+      CHROMIUM_BUILD \"CR_CLANG_REVISION=255169-1\" $
+      UI_COMPOSITOR_IMAGE_TRANSPORT \"USE_AURA=1\" \"USE_ASH=1\" $
+      \"USE_PANGO=1\" \"USE_CAIRO=1\" \"USE_DEFAULT_RENDER_THEME=1\" $
+      \"USE_LIBJPEG_TURBO=1\" \"USE_X11=1\" \"USE_CLIPBOARD_AURAX11=1\" $
+      ENABLE_ONE_CLICK_SIGNIN \"ENABLE_WEBRTC=1\" \"ENABLE_MEDIA_ROUTER=1\" $
+      ENABLE_PEPPER_CDMS ENABLE_CONFIGURATION_POLICY ENABLE_NOTIFICATIONS $
+      \"ENABLE_HIDPI=1\" \"ENABLE_TOPCHROME_MD=1\" USE_UDEV $
+      DONT_EMBED_BUILD_METADATA FIELDTRIAL_TESTING_ENABLED $
+      \"ENABLE_TASK_MANAGER=1\" \"ENABLE_EXTENSIONS=1\" \"ENABLE_PDF=1\" $
+      \"ENABLE_PLUGINS=1\" \"ENABLE_SESSION_SERVICE=1\" \"ENABLE_THEMES=1\" $
+      \"ENABLE_AUTOFILL_DIALOG=1\" \"ENABLE_BACKGROUND=1\" $
+      \"ENABLE_PRINTING=1\" \"ENABLE_BASIC_PRINTING=1\" $
+      \"ENABLE_PRINT_PREVIEW=1\" \"ENABLE_SPELLCHECK=1\" $
+      \"ENABLE_CAPTIVE_PORTAL_DETECTION=1\" \"ENABLE_APP_LIST=1\" $
+      \"ENABLE_SETTINGS_APP=1\" \"ENABLE_SUPERVISED_USERS=1\" $
+      \"ENABLE_MDNS=1\" \"ENABLE_SERVICE_DISCOVERY=1\" $
+      V8_USE_EXTERNAL_STARTUP_DATA FULL_SAFE_BROWSING SAFE_BROWSING_CSD $
+      SAFE_BROWSING_DB_LOCAL \"USE_LIBPCI=1\" \"USE_OPENSSL=1\" $
+      \"USE_OPENSSL_CERTS=1\"" $
+      "--link_flags=-B../out/Release/gen/tc_newlib/lib64  " $
+      "--source-list=../out/gypfiles/native_client_sdk/newlib-x86-64.nacl_io_untrusted.source_list.gypcmd"
+  description = ACTION nacl_io_untrusted: build newlib x86-64 $
+      nlib_7356a6ab914d0bbb75a46926e0562c69
+  restat = 1
+
+build gen/tc_newlib/lib64/libnacl_io.a: $
+    nacl_io_untrusted_target_build_newlib_x86_64_nlib_7356a6ab914d0bbb75a46926e0562c69 $
+    ../../native_client/build/build_nexe.py $
+    ../../native_client/build/build_nexe_tools.py $
+    ../../native_client/src/untrusted/irt/irt.h $
+    ../../native_client/src/untrusted/irt/irt_dev.h $
+    ../../native_client/src/untrusted/irt/irt_extension.h $
+    ../../ppapi/c/pp_array_output.h ../../ppapi/c/pp_bool.h $
+    ../../ppapi/c/pp_completion_callback.h $
+    ../../ppapi/c/pp_directory_entry.h ../../ppapi/c/pp_errors.h $
+    ../../ppapi/c/pp_file_info.h ../../ppapi/c/pp_instance.h $
+    ../../ppapi/c/pp_macros.h ../../ppapi/c/pp_module.h $
+    ../../ppapi/c/pp_resource.h ../../ppapi/c/pp_stdint.h $
+    ../../ppapi/c/pp_time.h ../../ppapi/c/pp_var.h ../../ppapi/c/ppb.h $
+    ../../ppapi/c/ppb_console.h ../../ppapi/c/ppb_core.h $
+    ../../ppapi/c/ppb_file_io.h ../../ppapi/c/ppb_file_ref.h $
+    ../../ppapi/c/ppb_file_system.h ../../ppapi/c/ppb_host_resolver.h $
+    ../../ppapi/c/ppb_message_loop.h ../../ppapi/c/ppb_messaging.h $
+    ../../ppapi/c/ppb_net_address.h ../../ppapi/c/ppb_tcp_socket.h $
+    ../../ppapi/c/ppb_udp_socket.h ../../ppapi/c/ppb_url_loader.h $
+    ../../ppapi/c/ppb_url_request_info.h $
+    ../../ppapi/c/ppb_url_response_info.h ../../ppapi/c/ppb_var.h $
+    ../../ppapi/c/ppb_var_array.h ../../ppapi/c/ppb_var_array_buffer.h $
+    ../../ppapi/c/ppb_var_dictionary.h ../../ppapi/c/ppp_message_handler.h $
+    ../../native_client_sdk/src/libraries/nacl_io/char_node.h $
+    ../../native_client_sdk/src/libraries/nacl_io/devfs/dev_fs.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/devfs/dev_fs.h $
+    ../../native_client_sdk/src/libraries/nacl_io/devfs/jspipe_event_emitter.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/devfs/jspipe_event_emitter.h $
+    ../../native_client_sdk/src/libraries/nacl_io/devfs/jspipe_node.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/devfs/jspipe_node.h $
+    ../../native_client_sdk/src/libraries/nacl_io/devfs/tty_node.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/devfs/tty_node.h $
+    ../../native_client_sdk/src/libraries/nacl_io/dir_node.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/dir_node.h $
+    ../../native_client_sdk/src/libraries/nacl_io/error.h $
+    ../../native_client_sdk/src/libraries/nacl_io/event_emitter.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/event_emitter.h $
+    ../../native_client_sdk/src/libraries/nacl_io/event_listener.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/event_listener.h $
+    ../../native_client_sdk/src/libraries/nacl_io/fifo_char.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/fifo_char.h $
+    ../../native_client_sdk/src/libraries/nacl_io/fifo_interface.h $
+    ../../native_client_sdk/src/libraries/nacl_io/filesystem.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/filesystem.h $
+    ../../native_client_sdk/src/libraries/nacl_io/fs_factory.h $
+    ../../native_client_sdk/src/libraries/nacl_io/fuse.h $
+    ../../native_client_sdk/src/libraries/nacl_io/fusefs/fuse_fs.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/fusefs/fuse_fs.h $
+    ../../native_client_sdk/src/libraries/nacl_io/fusefs/fuse_fs_factory.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/fusefs/fuse_fs_factory.h $
+    ../../native_client_sdk/src/libraries/nacl_io/getdents_helper.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/getdents_helper.h $
+    ../../native_client_sdk/src/libraries/nacl_io/h_errno.c $
+    ../../native_client_sdk/src/libraries/nacl_io/host_resolver.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/host_resolver.h $
+    ../../native_client_sdk/src/libraries/nacl_io/html5fs/html5_fs.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/html5fs/html5_fs.h $
+    ../../native_client_sdk/src/libraries/nacl_io/html5fs/html5_fs_node.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/html5fs/html5_fs_node.h $
+    ../../native_client_sdk/src/libraries/nacl_io/httpfs/http_fs.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/httpfs/http_fs.h $
+    ../../native_client_sdk/src/libraries/nacl_io/httpfs/http_fs_node.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/httpfs/http_fs_node.h $
+    ../../native_client_sdk/src/libraries/nacl_io/in6_addr.c $
+    ../../native_client_sdk/src/libraries/nacl_io/include/poll.h $
+    ../../native_client_sdk/src/libraries/nacl_io/include/sys/ioctl.h $
+    ../../native_client_sdk/src/libraries/nacl_io/include/sys/poll.h $
+    ../../native_client_sdk/src/libraries/nacl_io/include/sys/termios.h $
+    ../../native_client_sdk/src/libraries/nacl_io/include/sys/time.h $
+    ../../native_client_sdk/src/libraries/nacl_io/include/sys/utsname.h $
+    ../../native_client_sdk/src/libraries/nacl_io/include/utime.h $
+    ../../native_client_sdk/src/libraries/nacl_io/inode_pool.h $
+    ../../native_client_sdk/src/libraries/nacl_io/ioctl.h $
+    ../../native_client_sdk/src/libraries/nacl_io/jsfs/js_fs.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/jsfs/js_fs.h $
+    ../../native_client_sdk/src/libraries/nacl_io/jsfs/js_fs_node.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/jsfs/js_fs_node.h $
+    ../../native_client_sdk/src/libraries/nacl_io/kernel_handle.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/kernel_handle.h $
+    ../../native_client_sdk/src/libraries/nacl_io/kernel_intercept.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/kernel_intercept.h $
+    ../../native_client_sdk/src/libraries/nacl_io/kernel_object.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/kernel_object.h $
+    ../../native_client_sdk/src/libraries/nacl_io/kernel_proxy.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/kernel_proxy.h $
+    ../../native_client_sdk/src/libraries/nacl_io/kernel_wrap.h $
+    ../../native_client_sdk/src/libraries/nacl_io/kernel_wrap_dummy.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/kernel_wrap_glibc.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/kernel_wrap_irt_ext.c $
+    ../../native_client_sdk/src/libraries/nacl_io/kernel_wrap_newlib.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/kernel_wrap_real.h $
+    ../../native_client_sdk/src/libraries/nacl_io/kernel_wrap_win.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/log.c $
+    ../../native_client_sdk/src/libraries/nacl_io/log.h $
+    ../../native_client_sdk/src/libraries/nacl_io/memfs/mem_fs.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/memfs/mem_fs.h $
+    ../../native_client_sdk/src/libraries/nacl_io/memfs/mem_fs_node.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/memfs/mem_fs_node.h $
+    ../../native_client_sdk/src/libraries/nacl_io/nacl_abi_types.h $
+    ../../native_client_sdk/src/libraries/nacl_io/nacl_io.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/nacl_io.h $
+    ../../native_client_sdk/src/libraries/nacl_io/node.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/node.h $
+    ../../native_client_sdk/src/libraries/nacl_io/osdirent.h $
+    ../../native_client_sdk/src/libraries/nacl_io/osinttypes.h $
+    ../../native_client_sdk/src/libraries/nacl_io/osmman.h $
+    ../../native_client_sdk/src/libraries/nacl_io/ossignal.h $
+    ../../native_client_sdk/src/libraries/nacl_io/ossocket.h $
+    ../../native_client_sdk/src/libraries/nacl_io/osstat.h $
+    ../../native_client_sdk/src/libraries/nacl_io/ostermios.h $
+    ../../native_client_sdk/src/libraries/nacl_io/ostime.h $
+    ../../native_client_sdk/src/libraries/nacl_io/ostypes.h $
+    ../../native_client_sdk/src/libraries/nacl_io/osunistd.h $
+    ../../native_client_sdk/src/libraries/nacl_io/osutime.h $
+    ../../native_client_sdk/src/libraries/nacl_io/passthroughfs/passthrough_fs.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/passthroughfs/passthrough_fs.h $
+    ../../native_client_sdk/src/libraries/nacl_io/passthroughfs/real_node.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/passthroughfs/real_node.h $
+    ../../native_client_sdk/src/libraries/nacl_io/path.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/path.h $
+    ../../native_client_sdk/src/libraries/nacl_io/pepper/all_interfaces.h $
+    ../../native_client_sdk/src/libraries/nacl_io/pepper/define_empty_macros.h $
+    ../../native_client_sdk/src/libraries/nacl_io/pepper/undef_macros.h $
+    ../../native_client_sdk/src/libraries/nacl_io/pepper_interface.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/pepper_interface.h $
+    ../../native_client_sdk/src/libraries/nacl_io/pepper_interface_delegate.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/pepper_interface_delegate.h $
+    ../../native_client_sdk/src/libraries/nacl_io/pipe/pipe_event_emitter.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/pipe/pipe_event_emitter.h $
+    ../../native_client_sdk/src/libraries/nacl_io/pipe/pipe_node.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/pipe/pipe_node.h $
+    ../../native_client_sdk/src/libraries/nacl_io/real_pepper_interface.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/real_pepper_interface.h $
+    ../../native_client_sdk/src/libraries/nacl_io/socket/fifo_packet.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/socket/fifo_packet.h $
+    ../../native_client_sdk/src/libraries/nacl_io/socket/packet.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/socket/packet.h $
+    ../../native_client_sdk/src/libraries/nacl_io/socket/socket_node.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/socket/socket_node.h $
+    ../../native_client_sdk/src/libraries/nacl_io/socket/tcp_event_emitter.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/socket/tcp_event_emitter.h $
+    ../../native_client_sdk/src/libraries/nacl_io/socket/tcp_node.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/socket/tcp_node.h $
+    ../../native_client_sdk/src/libraries/nacl_io/socket/udp_event_emitter.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/socket/udp_event_emitter.h $
+    ../../native_client_sdk/src/libraries/nacl_io/socket/udp_node.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/socket/udp_node.h $
+    ../../native_client_sdk/src/libraries/nacl_io/socket/unix_event_emitter.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/socket/unix_event_emitter.h $
+    ../../native_client_sdk/src/libraries/nacl_io/socket/unix_node.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/socket/unix_node.h $
+    ../../native_client_sdk/src/libraries/nacl_io/stream/stream_event_emitter.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/stream/stream_event_emitter.h $
+    ../../native_client_sdk/src/libraries/nacl_io/stream/stream_fs.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/stream/stream_fs.h $
+    ../../native_client_sdk/src/libraries/nacl_io/stream/stream_node.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/stream/stream_node.h $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/access.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/chown.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/fchown.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/fcntl.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/ftruncate.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/futimes.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/getwd.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/ioctl.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/isatty.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/kill.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/killpg.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/lchown.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/mount.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/pipe.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/poll.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/realpath.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/select.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/sigaction.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/signal.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/sigpause.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/sigpending.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/sigset.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/sigsuspend.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/socket/accept.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/socket/bind.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/socket/connect.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/socket/freeaddrinfo.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/socket/gai_strerror.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/socket/getaddrinfo.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/socket/gethostbyname.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/socket/getnameinfo.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/socket/getpeername.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/socket/getsockname.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/socket/getsockopt.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/socket/herror.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/socket/hstrerror.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/socket/htonl.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/socket/htons.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/socket/inet_addr.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/socket/inet_aton.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/socket/inet_ntoa.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/socket/inet_ntop.cc $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/socket/inet_pton.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/socket/listen.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/socket/ntohl.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/socket/ntohs.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/socket/recv.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/socket/recvfrom.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/socket/recvmsg.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/socket/send.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/socket/sendmsg.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/socket/sendto.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/socket/setsockopt.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/socket/shutdown.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/socket/socket.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/socket/socketpair.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/symlink.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/termios/cfgetispeed.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/termios/cfgetospeed.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/termios/cfsetispeed.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/termios/cfsetospeed.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/termios/cfsetspeed.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/termios/tcdrain.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/termios/tcflow.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/termios/tcflush.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/termios/tcgetattr.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/termios/tcsendbreak.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/termios/tcsetattr.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/truncate.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/umask.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/umount.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/uname.c $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/utime.c $
+    ../../native_client_sdk/src/libraries/nacl_io/typed_fs_factory.h $
+    ../../native_client_sdk/src/libraries/sdk_util/atomicops.h $
+    ../../native_client_sdk/src/libraries/sdk_util/auto_lock.h $
+    ../../native_client_sdk/src/libraries/sdk_util/macros.h $
+    ../../native_client_sdk/src/libraries/sdk_util/ref_object.h $
+    ../../native_client_sdk/src/libraries/sdk_util/scoped_ref.h $
+    ../../native_client_sdk/src/libraries/sdk_util/simple_lock.h $
+    ../../native_client_sdk/src/libraries/sdk_util/string_util.h $
+    ../../native_client_sdk/src/libraries/third_party/newlib-extras/arpa/inet.h $
+    ../../native_client_sdk/src/libraries/third_party/newlib-extras/netdb.h $
+    ../../native_client_sdk/src/libraries/third_party/newlib-extras/netinet/in.h $
+    ../../native_client_sdk/src/libraries/third_party/newlib-extras/netinet/tcp.h $
+    ../../native_client_sdk/src/libraries/third_party/newlib-extras/netinet6/in6.h $
+    ../../native_client_sdk/src/libraries/third_party/newlib-extras/sys/select.h $
+    ../../native_client_sdk/src/libraries/third_party/newlib-extras/sys/socket.h $
+    ../../out/gypfiles/native_client_sdk/newlib-x86-64.nacl_io_untrusted.source_list.gypcmd $
+    ../../native_client/toolchain/linux_x86/nacl_x86_newlib/nacl_x86_newlib.json $
+    || obj/ppapi/native_client/ppapi_lib.actions_rules_copies.stamp
+
+build obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp: $
+    stamp gen/tc_pnacl_newlib/lib/libnacl_io.a $
+    gen/tc_newlib/lib64/libnacl_io.a
+
+defines = -DV8_DEPRECATION_WARNINGS -DCLD_VERSION=2 -D_FILE_OFFSET_BITS=64 $
+    -DCHROMIUM_BUILD -DCR_CLANG_REVISION=255169-1 $
+    -DUI_COMPOSITOR_IMAGE_TRANSPORT -DUSE_AURA=1 -DUSE_ASH=1 -DUSE_PANGO=1 $
+    -DUSE_CAIRO=1 -DUSE_DEFAULT_RENDER_THEME=1 -DUSE_LIBJPEG_TURBO=1 $
+    -DUSE_X11=1 -DUSE_CLIPBOARD_AURAX11=1 -DENABLE_ONE_CLICK_SIGNIN $
+    -DENABLE_WEBRTC=1 -DENABLE_MEDIA_ROUTER=1 -DENABLE_PEPPER_CDMS $
+    -DENABLE_CONFIGURATION_POLICY -DENABLE_NOTIFICATIONS -DENABLE_HIDPI=1 $
+    -DENABLE_TOPCHROME_MD=1 -DUSE_UDEV -DDONT_EMBED_BUILD_METADATA $
+    -DFIELDTRIAL_TESTING_ENABLED -DENABLE_TASK_MANAGER=1 $
+    -DENABLE_EXTENSIONS=1 -DENABLE_PDF=1 -DENABLE_PLUGINS=1 $
+    -DENABLE_SESSION_SERVICE=1 -DENABLE_THEMES=1 -DENABLE_AUTOFILL_DIALOG=1 $
+    -DENABLE_BACKGROUND=1 -DENABLE_PRINTING=1 -DENABLE_BASIC_PRINTING=1 $
+    -DENABLE_PRINT_PREVIEW=1 -DENABLE_SPELLCHECK=1 $
+    -DENABLE_CAPTIVE_PORTAL_DETECTION=1 -DENABLE_APP_LIST=1 $
+    -DENABLE_SETTINGS_APP=1 -DENABLE_SUPERVISED_USERS=1 -DENABLE_MDNS=1 $
+    -DENABLE_SERVICE_DISCOVERY=1 -DV8_USE_EXTERNAL_STARTUP_DATA $
+    -DFULL_SAFE_BROWSING -DSAFE_BROWSING_CSD -DSAFE_BROWSING_DB_LOCAL $
+    -DUSE_LIBPCI=1 -DUSE_OPENSSL=1 -DUSE_OPENSSL_CERTS=1 -DNDEBUG $
+    -DNVALGRIND -DDYNAMIC_ANNOTATIONS_ENABLED=0
+includes = -Igen -I../../native_client/src/untrusted/irt $
+    -I../../native_client_sdk/src/libraries $
+    -I../../native_client_sdk/src/libraries/nacl_io/include $
+    -I../../native_client_sdk/src/libraries/third_party/newlib-extras
+cflags = -fstack-protector --param=ssp-buffer-size=4 -Werror -pthread $
+    -fno-strict-aliasing -Wno-unused-parameter $
+    -Wno-missing-field-initializers -fvisibility=hidden -pipe -fPIC $
+    -Wno-reserved-user-defined-literal -Xclang -load -Xclang $
+    /b/build/slave/publish_tarball/build/src/third_party/llvm-build/Release+Asserts/lib/libFindBadConstructs.so $
+    -Xclang -add-plugin -Xclang find-bad-constructs -Xclang $
+    -plugin-arg-find-bad-constructs -Xclang check-templates $
+    -fcolor-diagnostics $
+    -B/b/build/slave/publish_tarball/build/src/third_party/binutils/Linux_x64/Release/bin $
+    -Wheader-hygiene -Wno-char-subscripts $
+    -Wno-unneeded-internal-declaration -Wno-covered-switch-default $
+    -Wstring-conversion -Wno-c++11-narrowing -Wno-deprecated-register $
+    -Wno-inconsistent-missing-override -Wno-shift-negative-value $
+    -Wno-bitfield-width -Wno-unused-variable -Wno-format -Wno-unused-result $
+    -m64 -march=x86-64 $
+    --sysroot=/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot $
+    -O2 -fno-ident -fdata-sections -ffunction-sections -funwind-tables
+cflags_c = 
+cflags_cc = -fno-exceptions -fno-rtti -fno-threadsafe-statics $
+    -fvisibility-inlines-hidden -std=gnu++11 -Wno-deprecated
+arflags = 
+
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/devfs/nacl_io_untrusted.dev_fs.o: $
+    cxx ../../native_client_sdk/src/libraries/nacl_io/devfs/dev_fs.cc || $
+    obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/devfs/nacl_io_untrusted.jspipe_event_emitter.o: $
+    cxx $
+    ../../native_client_sdk/src/libraries/nacl_io/devfs/jspipe_event_emitter.cc $
+    || obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/devfs/nacl_io_untrusted.jspipe_node.o: $
+    cxx ../../native_client_sdk/src/libraries/nacl_io/devfs/jspipe_node.cc $
+    || obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/devfs/nacl_io_untrusted.tty_node.o: $
+    cxx ../../native_client_sdk/src/libraries/nacl_io/devfs/tty_node.cc || $
+    obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/nacl_io_untrusted.dir_node.o: $
+    cxx ../../native_client_sdk/src/libraries/nacl_io/dir_node.cc || $
+    obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/nacl_io_untrusted.event_emitter.o: $
+    cxx ../../native_client_sdk/src/libraries/nacl_io/event_emitter.cc || $
+    obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/nacl_io_untrusted.event_listener.o: $
+    cxx ../../native_client_sdk/src/libraries/nacl_io/event_listener.cc || $
+    obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/nacl_io_untrusted.fifo_char.o: $
+    cxx ../../native_client_sdk/src/libraries/nacl_io/fifo_char.cc || $
+    obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/nacl_io_untrusted.filesystem.o: $
+    cxx ../../native_client_sdk/src/libraries/nacl_io/filesystem.cc || $
+    obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/fusefs/nacl_io_untrusted.fuse_fs.o: $
+    cxx ../../native_client_sdk/src/libraries/nacl_io/fusefs/fuse_fs.cc || $
+    obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/fusefs/nacl_io_untrusted.fuse_fs_factory.o: $
+    cxx $
+    ../../native_client_sdk/src/libraries/nacl_io/fusefs/fuse_fs_factory.cc $
+    || obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/nacl_io_untrusted.getdents_helper.o: $
+    cxx ../../native_client_sdk/src/libraries/nacl_io/getdents_helper.cc || $
+    obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/nacl_io_untrusted.h_errno.o: $
+    cc ../../native_client_sdk/src/libraries/nacl_io/h_errno.c || $
+    obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/nacl_io_untrusted.host_resolver.o: $
+    cxx ../../native_client_sdk/src/libraries/nacl_io/host_resolver.cc || $
+    obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/html5fs/nacl_io_untrusted.html5_fs.o: $
+    cxx ../../native_client_sdk/src/libraries/nacl_io/html5fs/html5_fs.cc $
+    || obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/html5fs/nacl_io_untrusted.html5_fs_node.o: $
+    cxx $
+    ../../native_client_sdk/src/libraries/nacl_io/html5fs/html5_fs_node.cc $
+    || obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/httpfs/nacl_io_untrusted.http_fs.o: $
+    cxx ../../native_client_sdk/src/libraries/nacl_io/httpfs/http_fs.cc || $
+    obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/httpfs/nacl_io_untrusted.http_fs_node.o: $
+    cxx $
+    ../../native_client_sdk/src/libraries/nacl_io/httpfs/http_fs_node.cc || $
+    obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/nacl_io_untrusted.in6_addr.o: $
+    cc ../../native_client_sdk/src/libraries/nacl_io/in6_addr.c || $
+    obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/jsfs/nacl_io_untrusted.js_fs.o: $
+    cxx ../../native_client_sdk/src/libraries/nacl_io/jsfs/js_fs.cc || $
+    obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/jsfs/nacl_io_untrusted.js_fs_node.o: $
+    cxx ../../native_client_sdk/src/libraries/nacl_io/jsfs/js_fs_node.cc || $
+    obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/nacl_io_untrusted.kernel_handle.o: $
+    cxx ../../native_client_sdk/src/libraries/nacl_io/kernel_handle.cc || $
+    obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/nacl_io_untrusted.kernel_intercept.o: $
+    cxx ../../native_client_sdk/src/libraries/nacl_io/kernel_intercept.cc $
+    || obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/nacl_io_untrusted.kernel_object.o: $
+    cxx ../../native_client_sdk/src/libraries/nacl_io/kernel_object.cc || $
+    obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/nacl_io_untrusted.kernel_proxy.o: $
+    cxx ../../native_client_sdk/src/libraries/nacl_io/kernel_proxy.cc || $
+    obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/nacl_io_untrusted.kernel_wrap_dummy.o: $
+    cxx ../../native_client_sdk/src/libraries/nacl_io/kernel_wrap_dummy.cc $
+    || obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/nacl_io_untrusted.kernel_wrap_glibc.o: $
+    cxx ../../native_client_sdk/src/libraries/nacl_io/kernel_wrap_glibc.cc $
+    || obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/nacl_io_untrusted.kernel_wrap_irt_ext.o: $
+    cc ../../native_client_sdk/src/libraries/nacl_io/kernel_wrap_irt_ext.c $
+    || obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/nacl_io_untrusted.kernel_wrap_newlib.o: $
+    cxx ../../native_client_sdk/src/libraries/nacl_io/kernel_wrap_newlib.cc $
+    || obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/nacl_io_untrusted.kernel_wrap_win.o: $
+    cxx ../../native_client_sdk/src/libraries/nacl_io/kernel_wrap_win.cc || $
+    obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build obj/native_client_sdk/src/libraries/nacl_io/nacl_io_untrusted.log.o: $
+    cc ../../native_client_sdk/src/libraries/nacl_io/log.c || $
+    obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/memfs/nacl_io_untrusted.mem_fs.o: $
+    cxx ../../native_client_sdk/src/libraries/nacl_io/memfs/mem_fs.cc || $
+    obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/memfs/nacl_io_untrusted.mem_fs_node.o: $
+    cxx ../../native_client_sdk/src/libraries/nacl_io/memfs/mem_fs_node.cc $
+    || obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/nacl_io_untrusted.nacl_io.o: $
+    cxx ../../native_client_sdk/src/libraries/nacl_io/nacl_io.cc || $
+    obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build obj/native_client_sdk/src/libraries/nacl_io/nacl_io_untrusted.node.o: $
+    cxx ../../native_client_sdk/src/libraries/nacl_io/node.cc || $
+    obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/passthroughfs/nacl_io_untrusted.passthrough_fs.o: $
+    cxx $
+    ../../native_client_sdk/src/libraries/nacl_io/passthroughfs/passthrough_fs.cc $
+    || obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/passthroughfs/nacl_io_untrusted.real_node.o: $
+    cxx $
+    ../../native_client_sdk/src/libraries/nacl_io/passthroughfs/real_node.cc $
+    || obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build obj/native_client_sdk/src/libraries/nacl_io/nacl_io_untrusted.path.o: $
+    cxx ../../native_client_sdk/src/libraries/nacl_io/path.cc || $
+    obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/nacl_io_untrusted.pepper_interface.o: $
+    cxx ../../native_client_sdk/src/libraries/nacl_io/pepper_interface.cc $
+    || obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/nacl_io_untrusted.pepper_interface_delegate.o: $
+    cxx $
+    ../../native_client_sdk/src/libraries/nacl_io/pepper_interface_delegate.cc $
+    || obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/pipe/nacl_io_untrusted.pipe_event_emitter.o: $
+    cxx $
+    ../../native_client_sdk/src/libraries/nacl_io/pipe/pipe_event_emitter.cc $
+    || obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/pipe/nacl_io_untrusted.pipe_node.o: $
+    cxx ../../native_client_sdk/src/libraries/nacl_io/pipe/pipe_node.cc || $
+    obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/nacl_io_untrusted.real_pepper_interface.o: $
+    cxx $
+    ../../native_client_sdk/src/libraries/nacl_io/real_pepper_interface.cc $
+    || obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/socket/nacl_io_untrusted.fifo_packet.o: $
+    cxx ../../native_client_sdk/src/libraries/nacl_io/socket/fifo_packet.cc $
+    || obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/socket/nacl_io_untrusted.packet.o: $
+    cxx ../../native_client_sdk/src/libraries/nacl_io/socket/packet.cc || $
+    obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/socket/nacl_io_untrusted.socket_node.o: $
+    cxx ../../native_client_sdk/src/libraries/nacl_io/socket/socket_node.cc $
+    || obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/socket/nacl_io_untrusted.tcp_event_emitter.o: $
+    cxx $
+    ../../native_client_sdk/src/libraries/nacl_io/socket/tcp_event_emitter.cc $
+    || obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/socket/nacl_io_untrusted.tcp_node.o: $
+    cxx ../../native_client_sdk/src/libraries/nacl_io/socket/tcp_node.cc || $
+    obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/socket/nacl_io_untrusted.udp_event_emitter.o: $
+    cxx $
+    ../../native_client_sdk/src/libraries/nacl_io/socket/udp_event_emitter.cc $
+    || obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/socket/nacl_io_untrusted.udp_node.o: $
+    cxx ../../native_client_sdk/src/libraries/nacl_io/socket/udp_node.cc || $
+    obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/socket/nacl_io_untrusted.unix_event_emitter.o: $
+    cxx $
+    ../../native_client_sdk/src/libraries/nacl_io/socket/unix_event_emitter.cc $
+    || obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/socket/nacl_io_untrusted.unix_node.o: $
+    cxx ../../native_client_sdk/src/libraries/nacl_io/socket/unix_node.cc $
+    || obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/stream/nacl_io_untrusted.stream_event_emitter.o: $
+    cxx $
+    ../../native_client_sdk/src/libraries/nacl_io/stream/stream_event_emitter.cc $
+    || obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/stream/nacl_io_untrusted.stream_fs.o: $
+    cxx ../../native_client_sdk/src/libraries/nacl_io/stream/stream_fs.cc $
+    || obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/stream/nacl_io_untrusted.stream_node.o: $
+    cxx ../../native_client_sdk/src/libraries/nacl_io/stream/stream_node.cc $
+    || obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/syscalls/nacl_io_untrusted.access.o: $
+    cc ../../native_client_sdk/src/libraries/nacl_io/syscalls/access.c || $
+    obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/syscalls/nacl_io_untrusted.chown.o: $
+    cc ../../native_client_sdk/src/libraries/nacl_io/syscalls/chown.c || $
+    obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/syscalls/nacl_io_untrusted.fchown.o: $
+    cc ../../native_client_sdk/src/libraries/nacl_io/syscalls/fchown.c || $
+    obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/syscalls/nacl_io_untrusted.fcntl.o: $
+    cc ../../native_client_sdk/src/libraries/nacl_io/syscalls/fcntl.c || $
+    obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/syscalls/nacl_io_untrusted.ftruncate.o: $
+    cc ../../native_client_sdk/src/libraries/nacl_io/syscalls/ftruncate.c $
+    || obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/syscalls/nacl_io_untrusted.futimes.o: $
+    cc ../../native_client_sdk/src/libraries/nacl_io/syscalls/futimes.c || $
+    obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/syscalls/nacl_io_untrusted.getwd.o: $
+    cc ../../native_client_sdk/src/libraries/nacl_io/syscalls/getwd.c || $
+    obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/syscalls/nacl_io_untrusted.ioctl.o: $
+    cc ../../native_client_sdk/src/libraries/nacl_io/syscalls/ioctl.c || $
+    obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/syscalls/nacl_io_untrusted.isatty.o: $
+    cc ../../native_client_sdk/src/libraries/nacl_io/syscalls/isatty.c || $
+    obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/syscalls/nacl_io_untrusted.kill.o: $
+    cc ../../native_client_sdk/src/libraries/nacl_io/syscalls/kill.c || $
+    obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/syscalls/nacl_io_untrusted.killpg.o: $
+    cc ../../native_client_sdk/src/libraries/nacl_io/syscalls/killpg.c || $
+    obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/syscalls/nacl_io_untrusted.lchown.o: $
+    cc ../../native_client_sdk/src/libraries/nacl_io/syscalls/lchown.c || $
+    obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/syscalls/nacl_io_untrusted.mount.o: $
+    cc ../../native_client_sdk/src/libraries/nacl_io/syscalls/mount.c || $
+    obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/syscalls/nacl_io_untrusted.pipe.o: $
+    cc ../../native_client_sdk/src/libraries/nacl_io/syscalls/pipe.c || $
+    obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/syscalls/nacl_io_untrusted.poll.o: $
+    cc ../../native_client_sdk/src/libraries/nacl_io/syscalls/poll.c || $
+    obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/syscalls/nacl_io_untrusted.realpath.o: $
+    cc ../../native_client_sdk/src/libraries/nacl_io/syscalls/realpath.c || $
+    obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/syscalls/nacl_io_untrusted.select.o: $
+    cc ../../native_client_sdk/src/libraries/nacl_io/syscalls/select.c || $
+    obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/syscalls/nacl_io_untrusted.sigaction.o: $
+    cc ../../native_client_sdk/src/libraries/nacl_io/syscalls/sigaction.c $
+    || obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/syscalls/nacl_io_untrusted.signal.o: $
+    cc ../../native_client_sdk/src/libraries/nacl_io/syscalls/signal.c || $
+    obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/syscalls/nacl_io_untrusted.sigpause.o: $
+    cc ../../native_client_sdk/src/libraries/nacl_io/syscalls/sigpause.c || $
+    obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/syscalls/nacl_io_untrusted.sigpending.o: $
+    cc ../../native_client_sdk/src/libraries/nacl_io/syscalls/sigpending.c $
+    || obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/syscalls/nacl_io_untrusted.sigset.o: $
+    cc ../../native_client_sdk/src/libraries/nacl_io/syscalls/sigset.c || $
+    obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/syscalls/nacl_io_untrusted.sigsuspend.o: $
+    cc ../../native_client_sdk/src/libraries/nacl_io/syscalls/sigsuspend.c $
+    || obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/syscalls/socket/nacl_io_untrusted.accept.o: $
+    cc $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/socket/accept.c $
+    || obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/syscalls/socket/nacl_io_untrusted.bind.o: $
+    cc ../../native_client_sdk/src/libraries/nacl_io/syscalls/socket/bind.c $
+    || obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/syscalls/socket/nacl_io_untrusted.connect.o: $
+    cc $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/socket/connect.c $
+    || obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/syscalls/socket/nacl_io_untrusted.freeaddrinfo.o: $
+    cc $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/socket/freeaddrinfo.c $
+    || obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/syscalls/socket/nacl_io_untrusted.gai_strerror.o: $
+    cc $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/socket/gai_strerror.c $
+    || obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/syscalls/socket/nacl_io_untrusted.getaddrinfo.o: $
+    cc $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/socket/getaddrinfo.c $
+    || obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/syscalls/socket/nacl_io_untrusted.gethostbyname.o: $
+    cc $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/socket/gethostbyname.c $
+    || obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/syscalls/socket/nacl_io_untrusted.getnameinfo.o: $
+    cc $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/socket/getnameinfo.c $
+    || obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/syscalls/socket/nacl_io_untrusted.getpeername.o: $
+    cc $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/socket/getpeername.c $
+    || obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/syscalls/socket/nacl_io_untrusted.getsockname.o: $
+    cc $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/socket/getsockname.c $
+    || obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/syscalls/socket/nacl_io_untrusted.getsockopt.o: $
+    cc $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/socket/getsockopt.c $
+    || obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/syscalls/socket/nacl_io_untrusted.herror.o: $
+    cc $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/socket/herror.c $
+    || obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/syscalls/socket/nacl_io_untrusted.hstrerror.o: $
+    cc $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/socket/hstrerror.c $
+    || obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/syscalls/socket/nacl_io_untrusted.htonl.o: $
+    cc $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/socket/htonl.c $
+    || obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/syscalls/socket/nacl_io_untrusted.htons.o: $
+    cc $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/socket/htons.c $
+    || obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/syscalls/socket/nacl_io_untrusted.inet_addr.o: $
+    cc $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/socket/inet_addr.c $
+    || obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/syscalls/socket/nacl_io_untrusted.inet_aton.o: $
+    cc $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/socket/inet_aton.c $
+    || obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/syscalls/socket/nacl_io_untrusted.inet_ntoa.o: $
+    cc $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/socket/inet_ntoa.c $
+    || obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/syscalls/socket/nacl_io_untrusted.inet_ntop.o: $
+    cxx $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/socket/inet_ntop.cc $
+    || obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/syscalls/socket/nacl_io_untrusted.inet_pton.o: $
+    cc $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/socket/inet_pton.c $
+    || obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/syscalls/socket/nacl_io_untrusted.listen.o: $
+    cc $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/socket/listen.c $
+    || obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/syscalls/socket/nacl_io_untrusted.ntohl.o: $
+    cc $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/socket/ntohl.c $
+    || obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/syscalls/socket/nacl_io_untrusted.ntohs.o: $
+    cc $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/socket/ntohs.c $
+    || obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/syscalls/socket/nacl_io_untrusted.recv.o: $
+    cc ../../native_client_sdk/src/libraries/nacl_io/syscalls/socket/recv.c $
+    || obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/syscalls/socket/nacl_io_untrusted.recvfrom.o: $
+    cc $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/socket/recvfrom.c $
+    || obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/syscalls/socket/nacl_io_untrusted.recvmsg.o: $
+    cc $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/socket/recvmsg.c $
+    || obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/syscalls/socket/nacl_io_untrusted.send.o: $
+    cc ../../native_client_sdk/src/libraries/nacl_io/syscalls/socket/send.c $
+    || obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/syscalls/socket/nacl_io_untrusted.sendmsg.o: $
+    cc $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/socket/sendmsg.c $
+    || obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/syscalls/socket/nacl_io_untrusted.sendto.o: $
+    cc $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/socket/sendto.c $
+    || obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/syscalls/socket/nacl_io_untrusted.setsockopt.o: $
+    cc $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/socket/setsockopt.c $
+    || obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/syscalls/socket/nacl_io_untrusted.shutdown.o: $
+    cc $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/socket/shutdown.c $
+    || obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/syscalls/socket/nacl_io_untrusted.socket.o: $
+    cc $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/socket/socket.c $
+    || obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/syscalls/socket/nacl_io_untrusted.socketpair.o: $
+    cc $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/socket/socketpair.c $
+    || obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/syscalls/termios/nacl_io_untrusted.cfgetispeed.o: $
+    cc $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/termios/cfgetispeed.c $
+    || obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/syscalls/termios/nacl_io_untrusted.cfgetospeed.o: $
+    cc $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/termios/cfgetospeed.c $
+    || obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/syscalls/termios/nacl_io_untrusted.cfsetispeed.o: $
+    cc $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/termios/cfsetispeed.c $
+    || obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/syscalls/termios/nacl_io_untrusted.cfsetospeed.o: $
+    cc $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/termios/cfsetospeed.c $
+    || obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/syscalls/termios/nacl_io_untrusted.cfsetspeed.o: $
+    cc $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/termios/cfsetspeed.c $
+    || obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/syscalls/termios/nacl_io_untrusted.tcflow.o: $
+    cc $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/termios/tcflow.c $
+    || obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/syscalls/termios/nacl_io_untrusted.tcflush.o: $
+    cc $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/termios/tcflush.c $
+    || obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/syscalls/termios/nacl_io_untrusted.tcdrain.o: $
+    cc $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/termios/tcdrain.c $
+    || obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/syscalls/termios/nacl_io_untrusted.tcgetattr.o: $
+    cc $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/termios/tcgetattr.c $
+    || obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/syscalls/termios/nacl_io_untrusted.tcsendbreak.o: $
+    cc $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/termios/tcsendbreak.c $
+    || obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/syscalls/termios/nacl_io_untrusted.tcsetattr.o: $
+    cc $
+    ../../native_client_sdk/src/libraries/nacl_io/syscalls/termios/tcsetattr.c $
+    || obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/syscalls/nacl_io_untrusted.symlink.o: $
+    cc ../../native_client_sdk/src/libraries/nacl_io/syscalls/symlink.c || $
+    obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/syscalls/nacl_io_untrusted.truncate.o: $
+    cc ../../native_client_sdk/src/libraries/nacl_io/syscalls/truncate.c || $
+    obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/syscalls/nacl_io_untrusted.umask.o: $
+    cc ../../native_client_sdk/src/libraries/nacl_io/syscalls/umask.c || $
+    obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/syscalls/nacl_io_untrusted.umount.o: $
+    cc ../../native_client_sdk/src/libraries/nacl_io/syscalls/umount.c || $
+    obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/syscalls/nacl_io_untrusted.uname.o: $
+    cc ../../native_client_sdk/src/libraries/nacl_io/syscalls/uname.c || $
+    obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+build $
+    obj/native_client_sdk/src/libraries/nacl_io/syscalls/nacl_io_untrusted.utime.o: $
+    cc ../../native_client_sdk/src/libraries/nacl_io/syscalls/utime.c || $
+    obj/native_client_sdk/nacl_io_untrusted.actions_rules_copies.stamp
+

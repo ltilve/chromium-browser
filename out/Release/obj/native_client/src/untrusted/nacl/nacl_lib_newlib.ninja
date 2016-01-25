@@ -1,0 +1,2917 @@
+rule nacl_lib_newlib_target_build_newlib_plib_34595b1baf6b0067c0d7da5211c629a9
+  command = cd ../../native_client/src/untrusted/nacl; python $
+      ../../../../native_client/build/build_nexe.py --root ../../../.. $
+      --product-dir ../../../../out/Release/xyz --config-name Release -t $
+      ../../../../native_client/toolchain/ --arch pnacl --build newlib_plib $
+      --name ../../../../out/Release/gen/tc_pnacl_newlib/lib/libnacl.a $
+      --objdir $
+      ../../../../out/Release/obj/native_client/src/untrusted/nacl/nacl_lib_newlib.gen/pnacl_newlib-pnacl/nacl_lib_newlib $
+      "--include-dirs=../../../../out/Release/gen/tc_pnacl_newlib/include $
+      ../../../.. \"../../../../out/Release/gen\" ../../../src/third_party $
+      ../../../.." "--compile_flags=-O2 -g -Wall -fdiagnostics-show-option $
+      -Werror  -Wno-unused-function -Wno-char-subscripts $
+      -Wno-c++11-extensions -Wno-unnamed-type-template-args -Wno-extra-semi $
+      -Wno-unused-private-field -Wno-char-subscripts -Wno-unused-function $
+      \"-std=gnu++11\" " --gomadir "" "--defines=\"__STDC_LIMIT_MACROS=1\" $
+      \"__STDC_FORMAT_MACROS=1\" \"_GNU_SOURCE=1\" $
+      \"_POSIX_C_SOURCE=199506\" \"_XOPEN_SOURCE=600\" $
+      \"DYNAMIC_ANNOTATIONS_ENABLED=1\" $
+      \"DYNAMIC_ANNOTATIONS_PREFIX=NACL_\" \"NACL_BUILD_ARCH=x86\" $
+      V8_DEPRECATION_WARNINGS \"CLD_VERSION=2\" \"_FILE_OFFSET_BITS=64\" $
+      \"_POSIX_C_SOURCE=199506\" \"_XOPEN_SOURCE=600\" \"_GNU_SOURCE=1\" $
+      \"__STDC_LIMIT_MACROS=1\" CHROMIUM_BUILD $
+      \"CR_CLANG_REVISION=255169-1\" UI_COMPOSITOR_IMAGE_TRANSPORT $
+      \"USE_AURA=1\" \"USE_ASH=1\" \"USE_PANGO=1\" \"USE_CAIRO=1\" $
+      \"USE_DEFAULT_RENDER_THEME=1\" \"USE_LIBJPEG_TURBO=1\" \"USE_X11=1\" $
+      \"USE_CLIPBOARD_AURAX11=1\" ENABLE_ONE_CLICK_SIGNIN $
+      \"ENABLE_WEBRTC=1\" \"ENABLE_MEDIA_ROUTER=1\" ENABLE_PEPPER_CDMS $
+      ENABLE_CONFIGURATION_POLICY ENABLE_NOTIFICATIONS \"ENABLE_HIDPI=1\" $
+      \"ENABLE_TOPCHROME_MD=1\" USE_UDEV DONT_EMBED_BUILD_METADATA $
+      FIELDTRIAL_TESTING_ENABLED \"ENABLE_TASK_MANAGER=1\" $
+      \"ENABLE_EXTENSIONS=1\" \"ENABLE_PDF=1\" \"ENABLE_PLUGINS=1\" $
+      \"ENABLE_SESSION_SERVICE=1\" \"ENABLE_THEMES=1\" $
+      \"ENABLE_AUTOFILL_DIALOG=1\" \"ENABLE_BACKGROUND=1\" $
+      \"ENABLE_PRINTING=1\" \"ENABLE_BASIC_PRINTING=1\" $
+      \"ENABLE_PRINT_PREVIEW=1\" \"ENABLE_SPELLCHECK=1\" $
+      \"ENABLE_CAPTIVE_PORTAL_DETECTION=1\" \"ENABLE_APP_LIST=1\" $
+      \"ENABLE_SETTINGS_APP=1\" \"ENABLE_SUPERVISED_USERS=1\" $
+      \"ENABLE_MDNS=1\" \"ENABLE_SERVICE_DISCOVERY=1\" $
+      V8_USE_EXTERNAL_STARTUP_DATA FULL_SAFE_BROWSING SAFE_BROWSING_CSD $
+      SAFE_BROWSING_DB_LOCAL \"USE_LIBPCI=1\" \"USE_OPENSSL=1\" $
+      \"USE_GLIB=1\" \"USE_NSS_CERTS=1\"" $
+      "--link_flags=-B../../../../out/Release/gen/tc_pnacl_newlib/lib  " $
+      "--source-list=../../../../out/gypfiles/native_client/src/untrusted/nacl/pnacl_newlib.nacl_lib_newlib.source_list.gypcmd"
+  description = ACTION nacl_lib_newlib: build newlib $
+      plib_34595b1baf6b0067c0d7da5211c629a9
+  restat = 1
+
+build gen/tc_pnacl_newlib/lib/libnacl.a: $
+    nacl_lib_newlib_target_build_newlib_plib_34595b1baf6b0067c0d7da5211c629a9 $
+    ../../native_client/build/build_nexe.py $
+    ../../native_client/build/build_nexe_tools.py $
+    ../../../../../../../../usr/include/_G_config.h $
+    ../../../../../../../../usr/include/alloca.h $
+    ../../../../../../../../usr/include/asm-generic/errno-base.h $
+    ../../../../../../../../usr/include/asm-generic/errno.h $
+    ../../../../../../../../usr/include/asm/errno.h $
+    ../../../../../../../../usr/include/bits/byteswap-16.h $
+    ../../../../../../../../usr/include/bits/byteswap.h $
+    ../../../../../../../../usr/include/bits/confname.h $
+    ../../../../../../../../usr/include/bits/endian.h $
+    ../../../../../../../../usr/include/bits/environments.h $
+    ../../../../../../../../usr/include/bits/errno.h $
+    ../../../../../../../../usr/include/bits/libc-lock.h $
+    ../../../../../../../../usr/include/bits/libio-ldbl.h $
+    ../../../../../../../../usr/include/bits/posix_opt.h $
+    ../../../../../../../../usr/include/bits/pthreadtypes.h $
+    ../../../../../../../../usr/include/bits/sched.h $
+    ../../../../../../../../usr/include/bits/select.h $
+    ../../../../../../../../usr/include/bits/select2.h $
+    ../../../../../../../../usr/include/bits/setjmp.h $
+    ../../../../../../../../usr/include/bits/sigset.h $
+    ../../../../../../../../usr/include/bits/stat.h $
+    ../../../../../../../../usr/include/bits/stdio-ldbl.h $
+    ../../../../../../../../usr/include/bits/stdio-lock.h $
+    ../../../../../../../../usr/include/bits/stdio.h $
+    ../../../../../../../../usr/include/bits/stdio2.h $
+    ../../../../../../../../usr/include/bits/stdio_lim.h $
+    ../../../../../../../../usr/include/bits/stdlib-bsearch.h $
+    ../../../../../../../../usr/include/bits/stdlib-float.h $
+    ../../../../../../../../usr/include/bits/stdlib-ldbl.h $
+    ../../../../../../../../usr/include/bits/stdlib.h $
+    ../../../../../../../../usr/include/bits/string.h $
+    ../../../../../../../../usr/include/bits/string2.h $
+    ../../../../../../../../usr/include/bits/string3.h $
+    ../../../../../../../../usr/include/bits/sys_errlist.h $
+    ../../../../../../../../usr/include/bits/time.h $
+    ../../../../../../../../usr/include/bits/timex.h $
+    ../../../../../../../../usr/include/bits/types.h $
+    ../../../../../../../../usr/include/bits/typesizes.h $
+    ../../../../../../../../usr/include/bits/unistd.h $
+    ../../../../../../../../usr/include/bits/waitflags.h $
+    ../../../../../../../../usr/include/bits/waitstatus.h $
+    ../../../../../../../../usr/include/bits/wchar-ldbl.h $
+    ../../../../../../../../usr/include/bits/wchar.h $
+    ../../../../../../../../usr/include/bits/wchar2.h $
+    ../../../../../../../../usr/include/bits/wordsize.h $
+    ../../../../../../../../usr/include/ctype.h $
+    ../../../../../../../../usr/include/endian.h $
+    ../../../../../../../../usr/include/errno.h $
+    ../../../../../../../../usr/include/features.h $
+    ../../../../../../../../usr/include/gconv.h $
+    ../../../../../../../../usr/include/getopt.h $
+    ../../../../../../../../usr/include/gnu/option-groups.h $
+    ../../../../../../../../usr/include/gnu/stubs-32.h $
+    ../../../../../../../../usr/include/gnu/stubs-64.h $
+    ../../../../../../../../usr/include/gnu/stubs-x32.h $
+    ../../../../../../../../usr/include/gnu/stubs.h $
+    ../../../../../../../../usr/include/libio.h $
+    ../../../../../../../../usr/include/linux/errno.h $
+    ../../../../../../../../usr/include/linux/stddef.h $
+    ../../../../../../../../usr/include/malloc.h $
+    ../../../../../../../../usr/include/pthread.h $
+    ../../../../../../../../usr/include/sched.h $
+    ../../../../../../../../usr/include/stdc-predef.h $
+    ../../../../../../../../usr/include/stdint.h $
+    ../../../../../../../../usr/include/stdio.h $
+    ../../../../../../../../usr/include/stdlib.h $
+    ../../../../../../../../usr/include/string.h $
+    ../../../../../../../../usr/include/sys/cdefs.h $
+    ../../../../../../../../usr/include/sys/select.h $
+    ../../../../../../../../usr/include/sys/stat.h $
+    ../../../../../../../../usr/include/sys/sysmacros.h $
+    ../../../../../../../../usr/include/sys/time.h $
+    ../../../../../../../../usr/include/sys/types.h $
+    ../../../../../../../../usr/include/sys/unistd.h $
+    ../../../../../../../../usr/include/time.h $
+    ../../../../../../../../usr/include/unistd.h $
+    ../../../../../../../../usr/include/wchar.h $
+    ../../../../../../../../usr/include/wctype.h $
+    ../../../../../../../../usr/include/xlocale.h $
+    ../../native_client/src/include/build_config.h $
+    ../../native_client/src/include/elf32.h $
+    ../../native_client/src/include/elf64.h $
+    ../../native_client/src/include/elf_auxv.h $
+    ../../native_client/src/include/elf_constants.h $
+    ../../native_client/src/include/nacl_base.h $
+    ../../native_client/src/include/nacl_compiler_annotations.h $
+    ../../native_client/src/include/nacl_macros.h $
+    ../../native_client/src/include/portability.h $
+    ../../native_client/src/include/win/port_win.h $
+    ../../native_client/src/public/linux_syscalls/sys/socket.h $
+    ../../native_client/src/third_party/dlmalloc/malloc.c $
+    ../../native_client/src/third_party/valgrind/memcheck.h $
+    ../../native_client/src/third_party/valgrind/valgrind.h $
+    ../../native_client/src/trusted/service_runtime/include/bits/limits.h $
+    ../../native_client/src/trusted/service_runtime/include/bits/wordsize.h $
+    ../../native_client/src/untrusted/irt/irt.h $
+    ../../native_client/src/untrusted/irt/irt_dev.h $
+    ../../native_client/src/untrusted/irt/irt_extension.h $
+    ../../native_client/src/untrusted/irt/irt_interfaces.h $
+    ../../native_client/src/untrusted/nacl/_exit.c $
+    ../../native_client/src/untrusted/nacl/abort.c $
+    ../../native_client/src/untrusted/nacl/access.c $
+    ../../native_client/src/untrusted/nacl/chdir.c $
+    ../../native_client/src/untrusted/nacl/chmod.c $
+    ../../native_client/src/untrusted/nacl/clock.c $
+    ../../native_client/src/untrusted/nacl/clock_getres.c $
+    ../../native_client/src/untrusted/nacl/clock_gettime.c $
+    ../../native_client/src/untrusted/nacl/close.c $
+    ../../native_client/src/untrusted/nacl/dup.c $
+    ../../native_client/src/untrusted/nacl/eaccess.c $
+    ../../native_client/src/untrusted/nacl/fchdir.c $
+    ../../native_client/src/untrusted/nacl/fchmod.c $
+    ../../native_client/src/untrusted/nacl/fdatasync.c $
+    ../../native_client/src/untrusted/nacl/fstat.c $
+    ../../native_client/src/untrusted/nacl/fsync.c $
+    ../../native_client/src/untrusted/nacl/ftruncate.c $
+    ../../native_client/src/untrusted/nacl/gc_hooks.c $
+    ../../native_client/src/untrusted/nacl/gc_hooks.h $
+    ../../native_client/src/untrusted/nacl/getcwd.c $
+    ../../native_client/src/untrusted/nacl/getcwd.h $
+    ../../native_client/src/untrusted/nacl/getcwd_without_malloc.c $
+    ../../native_client/src/untrusted/nacl/getdents.c $
+    ../../native_client/src/untrusted/nacl/gethostname.c $
+    ../../native_client/src/untrusted/nacl/getpagesize.c $
+    ../../native_client/src/untrusted/nacl/getpid.c $
+    ../../native_client/src/untrusted/nacl/gettimeofday.c $
+    ../../native_client/src/untrusted/nacl/htonl.c $
+    ../../native_client/src/untrusted/nacl/htons.c $
+    ../../native_client/src/untrusted/nacl/include/sys/utsname.h $
+    ../../native_client/src/untrusted/nacl/isatty.c $
+    ../../native_client/src/untrusted/nacl/link.c $
+    ../../native_client/src/untrusted/nacl/lock.c $
+    ../../native_client/src/untrusted/nacl/lseek.c $
+    ../../native_client/src/untrusted/nacl/lstat.c $
+    ../../native_client/src/untrusted/nacl/malloc.c $
+    ../../native_client/src/untrusted/nacl/mkdir.c $
+    ../../native_client/src/untrusted/nacl/mmap.c $
+    ../../native_client/src/untrusted/nacl/mprotect.c $
+    ../../native_client/src/untrusted/nacl/munmap.c $
+    ../../native_client/src/untrusted/nacl/nacl_add_tp.c $
+    ../../native_client/src/untrusted/nacl/nacl_ext_supply.c $
+    ../../native_client/src/untrusted/nacl/nacl_interface_query.c $
+    ../../native_client/src/untrusted/nacl/nacl_irt.c $
+    ../../native_client/src/untrusted/nacl/nacl_irt.h $
+    ../../native_client/src/untrusted/nacl/nacl_irt_fdio.c $
+    ../../native_client/src/untrusted/nacl/nacl_irt_filename.c $
+    ../../native_client/src/untrusted/nacl/nacl_irt_init.c $
+    ../../native_client/src/untrusted/nacl/nacl_random.c $
+    ../../native_client/src/untrusted/nacl/nacl_read_tp.c $
+    ../../native_client/src/untrusted/nacl/nacl_startup.h $
+    ../../native_client/src/untrusted/nacl/nacl_thread.h $
+    ../../native_client/src/untrusted/nacl/nacl_tls_get.c $
+    ../../native_client/src/untrusted/nacl/nacl_tls_init.c $
+    ../../native_client/src/untrusted/nacl/nanosleep.c $
+    ../../native_client/src/untrusted/nacl/ntohl.c $
+    ../../native_client/src/untrusted/nacl/ntohs.c $
+    ../../native_client/src/untrusted/nacl/open.c $
+    ../../native_client/src/untrusted/nacl/pthread_initialize_minimal.c $
+    ../../native_client/src/untrusted/nacl/pthread_stubs.c $
+    ../../native_client/src/untrusted/nacl/random.c $
+    ../../native_client/src/untrusted/nacl/read.c $
+    ../../native_client/src/untrusted/nacl/readlink.c $
+    ../../native_client/src/untrusted/nacl/rename.c $
+    ../../native_client/src/untrusted/nacl/rmdir.c $
+    ../../native_client/src/untrusted/nacl/sbrk.c $
+    ../../native_client/src/untrusted/nacl/sched_yield.c $
+    ../../native_client/src/untrusted/nacl/sigblock.c $
+    ../../native_client/src/untrusted/nacl/siggetmask.c $
+    ../../native_client/src/untrusted/nacl/sigmask.c $
+    ../../native_client/src/untrusted/nacl/sigprocmask.c $
+    ../../native_client/src/untrusted/nacl/sigsetmask.c $
+    ../../native_client/src/untrusted/nacl/srandom.c $
+    ../../native_client/src/untrusted/nacl/stacktrace.c $
+    ../../native_client/src/untrusted/nacl/start.c $
+    ../../native_client/src/untrusted/nacl/start.h $
+    ../../native_client/src/untrusted/nacl/stat.c $
+    ../../native_client/src/untrusted/nacl/stubs/_execve.c $
+    ../../native_client/src/untrusted/nacl/stubs/accept.c $
+    ../../native_client/src/untrusted/nacl/stubs/addmntent.c $
+    ../../native_client/src/untrusted/nacl/stubs/bind.c $
+    ../../native_client/src/untrusted/nacl/stubs/chown.c $
+    ../../native_client/src/untrusted/nacl/stubs/closelog.c $
+    ../../native_client/src/untrusted/nacl/stubs/connect.c $
+    ../../native_client/src/untrusted/nacl/stubs/endgrent.c $
+    ../../native_client/src/untrusted/nacl/stubs/endmntent.c $
+    ../../native_client/src/untrusted/nacl/stubs/endpwent.c $
+    ../../native_client/src/untrusted/nacl/stubs/environ.c $
+    ../../native_client/src/untrusted/nacl/stubs/execvpe.c $
+    ../../native_client/src/untrusted/nacl/stubs/fchown.c $
+    ../../native_client/src/untrusted/nacl/stubs/fcntl.c $
+    ../../native_client/src/untrusted/nacl/stubs/fork.c $
+    ../../native_client/src/untrusted/nacl/stubs/freeaddrinfo.c $
+    ../../native_client/src/untrusted/nacl/stubs/fstatvfs.c $
+    ../../native_client/src/untrusted/nacl/stubs/gai_strerror.c $
+    ../../native_client/src/untrusted/nacl/stubs/get_current_dir_name.c $
+    ../../native_client/src/untrusted/nacl/stubs/getaddrinfo.c $
+    ../../native_client/src/untrusted/nacl/stubs/getdtablesize.c $
+    ../../native_client/src/untrusted/nacl/stubs/getegid.c $
+    ../../native_client/src/untrusted/nacl/stubs/geteuid.c $
+    ../../native_client/src/untrusted/nacl/stubs/getgid.c $
+    ../../native_client/src/untrusted/nacl/stubs/getgrent.c $
+    ../../native_client/src/untrusted/nacl/stubs/getgrgid.c $
+    ../../native_client/src/untrusted/nacl/stubs/getgrgid_r.c $
+    ../../native_client/src/untrusted/nacl/stubs/getgrnam.c $
+    ../../native_client/src/untrusted/nacl/stubs/getgroups.c $
+    ../../native_client/src/untrusted/nacl/stubs/gethostbyaddr.c $
+    ../../native_client/src/untrusted/nacl/stubs/gethostbyname.c $
+    ../../native_client/src/untrusted/nacl/stubs/getlogin.c $
+    ../../native_client/src/untrusted/nacl/stubs/getmntent.c $
+    ../../native_client/src/untrusted/nacl/stubs/getnameinfo.c $
+    ../../native_client/src/untrusted/nacl/stubs/getpeername.c $
+    ../../native_client/src/untrusted/nacl/stubs/getpgrp.c $
+    ../../native_client/src/untrusted/nacl/stubs/getppid.c $
+    ../../native_client/src/untrusted/nacl/stubs/getpwent.c $
+    ../../native_client/src/untrusted/nacl/stubs/getpwnam.c $
+    ../../native_client/src/untrusted/nacl/stubs/getpwnam_r.c $
+    ../../native_client/src/untrusted/nacl/stubs/getpwuid.c $
+    ../../native_client/src/untrusted/nacl/stubs/getpwuid_r.c $
+    ../../native_client/src/untrusted/nacl/stubs/getrlimit.c $
+    ../../native_client/src/untrusted/nacl/stubs/getrusage.c $
+    ../../native_client/src/untrusted/nacl/stubs/getservbyname.c $
+    ../../native_client/src/untrusted/nacl/stubs/getservbyport.c $
+    ../../native_client/src/untrusted/nacl/stubs/getsockname.c $
+    ../../native_client/src/untrusted/nacl/stubs/getsockopt.c $
+    ../../native_client/src/untrusted/nacl/stubs/getuid.c $
+    ../../native_client/src/untrusted/nacl/stubs/getwd.c $
+    ../../native_client/src/untrusted/nacl/stubs/hasmntopt.c $
+    ../../native_client/src/untrusted/nacl/stubs/if_freenameindex.c $
+    ../../native_client/src/untrusted/nacl/stubs/if_indextoname.c $
+    ../../native_client/src/untrusted/nacl/stubs/if_nameindex.c $
+    ../../native_client/src/untrusted/nacl/stubs/if_nametoindex.c $
+    ../../native_client/src/untrusted/nacl/stubs/inet_ntoa.c $
+    ../../native_client/src/untrusted/nacl/stubs/inet_ntop.c $
+    ../../native_client/src/untrusted/nacl/stubs/initgroups.c $
+    ../../native_client/src/untrusted/nacl/stubs/ioctl.c $
+    ../../native_client/src/untrusted/nacl/stubs/issetugid.c $
+    ../../native_client/src/untrusted/nacl/stubs/kill.c $
+    ../../native_client/src/untrusted/nacl/stubs/lchown.c $
+    ../../native_client/src/untrusted/nacl/stubs/listen.c $
+    ../../native_client/src/untrusted/nacl/stubs/llseek.c $
+    ../../native_client/src/untrusted/nacl/stubs/major.c $
+    ../../native_client/src/untrusted/nacl/stubs/makedev.c $
+    ../../native_client/src/untrusted/nacl/stubs/minor.c $
+    ../../native_client/src/untrusted/nacl/stubs/mkfifo.c $
+    ../../native_client/src/untrusted/nacl/stubs/mknod.c $
+    ../../native_client/src/untrusted/nacl/stubs/msync.c $
+    ../../native_client/src/untrusted/nacl/stubs/openlog.c $
+    ../../native_client/src/untrusted/nacl/stubs/pipe.c $
+    ../../native_client/src/untrusted/nacl/stubs/poll.c $
+    ../../native_client/src/untrusted/nacl/stubs/pselect.c $
+    ../../native_client/src/untrusted/nacl/stubs/pthread_sigmask.c $
+    ../../native_client/src/untrusted/nacl/stubs/readv.c $
+    ../../native_client/src/untrusted/nacl/stubs/recv.c $
+    ../../native_client/src/untrusted/nacl/stubs/recvfrom.c $
+    ../../native_client/src/untrusted/nacl/stubs/recvmsg.c $
+    ../../native_client/src/untrusted/nacl/stubs/sched_get_priority_max.c $
+    ../../native_client/src/untrusted/nacl/stubs/sched_get_priority_min.c $
+    ../../native_client/src/untrusted/nacl/stubs/sched_setparam.c $
+    ../../native_client/src/untrusted/nacl/stubs/sched_setscheduler.c $
+    ../../native_client/src/untrusted/nacl/stubs/select.c $
+    ../../native_client/src/untrusted/nacl/stubs/send.c $
+    ../../native_client/src/untrusted/nacl/stubs/sendmsg.c $
+    ../../native_client/src/untrusted/nacl/stubs/sendto.c $
+    ../../native_client/src/untrusted/nacl/stubs/setegid.c $
+    ../../native_client/src/untrusted/nacl/stubs/seteuid.c $
+    ../../native_client/src/untrusted/nacl/stubs/setgid.c $
+    ../../native_client/src/untrusted/nacl/stubs/setgrent.c $
+    ../../native_client/src/untrusted/nacl/stubs/setgroups.c $
+    ../../native_client/src/untrusted/nacl/stubs/setmntent.c $
+    ../../native_client/src/untrusted/nacl/stubs/setpgid.c $
+    ../../native_client/src/untrusted/nacl/stubs/setpwent.c $
+    ../../native_client/src/untrusted/nacl/stubs/setrlimit.c $
+    ../../native_client/src/untrusted/nacl/stubs/setsid.c $
+    ../../native_client/src/untrusted/nacl/stubs/setsockopt.c $
+    ../../native_client/src/untrusted/nacl/stubs/settimeofday.c $
+    ../../native_client/src/untrusted/nacl/stubs/setuid.c $
+    ../../native_client/src/untrusted/nacl/stubs/shutdown.c $
+    ../../native_client/src/untrusted/nacl/stubs/sigaction.c $
+    ../../native_client/src/untrusted/nacl/stubs/signal.c $
+    ../../native_client/src/untrusted/nacl/stubs/sigsuspend.c $
+    ../../native_client/src/untrusted/nacl/stubs/sigvec.c $
+    ../../native_client/src/untrusted/nacl/stubs/socket.c $
+    ../../native_client/src/untrusted/nacl/stubs/socketpair.c $
+    ../../native_client/src/untrusted/nacl/stubs/statvfs.c $
+    ../../native_client/src/untrusted/nacl/stubs/syslog.c $
+    ../../native_client/src/untrusted/nacl/stubs/tcdrain.c $
+    ../../native_client/src/untrusted/nacl/stubs/tcflow.c $
+    ../../native_client/src/untrusted/nacl/stubs/tcflush.c $
+    ../../native_client/src/untrusted/nacl/stubs/tcgetattr.c $
+    ../../native_client/src/untrusted/nacl/stubs/tcsendbreak.c $
+    ../../native_client/src/untrusted/nacl/stubs/tcsetattr.c $
+    ../../native_client/src/untrusted/nacl/stubs/times.c $
+    ../../native_client/src/untrusted/nacl/stubs/ttyname.c $
+    ../../native_client/src/untrusted/nacl/stubs/ttyname_r.c $
+    ../../native_client/src/untrusted/nacl/stubs/umask.c $
+    ../../native_client/src/untrusted/nacl/stubs/vfork.c $
+    ../../native_client/src/untrusted/nacl/stubs/wait.c $
+    ../../native_client/src/untrusted/nacl/stubs/waitpid.c $
+    ../../native_client/src/untrusted/nacl/symlink.c $
+    ../../native_client/src/untrusted/nacl/sysconf.c $
+    ../../native_client/src/untrusted/nacl/tls.c $
+    ../../native_client/src/untrusted/nacl/tls.h $
+    ../../native_client/src/untrusted/nacl/tls_params.h $
+    ../../native_client/src/untrusted/nacl/truncate.c $
+    ../../native_client/src/untrusted/nacl/uname.c $
+    ../../native_client/src/untrusted/nacl/unlink.c $
+    ../../native_client/src/untrusted/nacl/utime.c $
+    ../../native_client/src/untrusted/nacl/utimes.c $
+    ../../native_client/src/untrusted/nacl/write.c $
+    ../../out/gypfiles/native_client/src/untrusted/nacl/pnacl_newlib.nacl_lib_newlib.source_list.gypcmd $
+    ../../native_client/toolchain/linux_x86/pnacl_newlib/pnacl_newlib.json
+
+rule $
+    nacl_lib_newlib_target_build_newlib_x86_64_nlib_34595b1baf6b0067c0d7da5211c629a9
+  command = cd ../../native_client/src/untrusted/nacl; python $
+      ../../../../native_client/build/build_nexe.py --root ../../../.. $
+      --product-dir ../../../../out/Release/xyz --config-name Release -t $
+      ../../../../native_client/toolchain/ --arch x86-64 --build $
+      newlib_nlib --name $
+      ../../../../out/Release/gen/tc_newlib/lib64/libnacl.a --objdir $
+      ../../../../out/Release/obj/native_client/src/untrusted/nacl/nacl_lib_newlib.gen/newlib-x86-64/nacl_lib_newlib $
+      "--include-dirs=../../../../out/Release/gen/tc_newlib/include $
+      ../../../.. \"../../../../out/Release/gen\" ../../../src/third_party $
+      ../../../.." "--compile_flags=-m64 -O2 -g -Wall $
+      -fdiagnostics-show-option -Werror " --gomadir "" $
+      "--defines=\"__STDC_LIMIT_MACROS=1\" \"__STDC_FORMAT_MACROS=1\" $
+      \"_GNU_SOURCE=1\" \"_POSIX_C_SOURCE=199506\" \"_XOPEN_SOURCE=600\" $
+      \"DYNAMIC_ANNOTATIONS_ENABLED=1\" $
+      \"DYNAMIC_ANNOTATIONS_PREFIX=NACL_\" \"NACL_BUILD_ARCH=x86\" $
+      V8_DEPRECATION_WARNINGS \"CLD_VERSION=2\" \"_FILE_OFFSET_BITS=64\" $
+      \"_POSIX_C_SOURCE=199506\" \"_XOPEN_SOURCE=600\" \"_GNU_SOURCE=1\" $
+      \"__STDC_LIMIT_MACROS=1\" CHROMIUM_BUILD $
+      \"CR_CLANG_REVISION=255169-1\" UI_COMPOSITOR_IMAGE_TRANSPORT $
+      \"USE_AURA=1\" \"USE_ASH=1\" \"USE_PANGO=1\" \"USE_CAIRO=1\" $
+      \"USE_DEFAULT_RENDER_THEME=1\" \"USE_LIBJPEG_TURBO=1\" \"USE_X11=1\" $
+      \"USE_CLIPBOARD_AURAX11=1\" ENABLE_ONE_CLICK_SIGNIN $
+      \"ENABLE_WEBRTC=1\" \"ENABLE_MEDIA_ROUTER=1\" ENABLE_PEPPER_CDMS $
+      ENABLE_CONFIGURATION_POLICY ENABLE_NOTIFICATIONS \"ENABLE_HIDPI=1\" $
+      \"ENABLE_TOPCHROME_MD=1\" USE_UDEV DONT_EMBED_BUILD_METADATA $
+      FIELDTRIAL_TESTING_ENABLED \"ENABLE_TASK_MANAGER=1\" $
+      \"ENABLE_EXTENSIONS=1\" \"ENABLE_PDF=1\" \"ENABLE_PLUGINS=1\" $
+      \"ENABLE_SESSION_SERVICE=1\" \"ENABLE_THEMES=1\" $
+      \"ENABLE_AUTOFILL_DIALOG=1\" \"ENABLE_BACKGROUND=1\" $
+      \"ENABLE_PRINTING=1\" \"ENABLE_BASIC_PRINTING=1\" $
+      \"ENABLE_PRINT_PREVIEW=1\" \"ENABLE_SPELLCHECK=1\" $
+      \"ENABLE_CAPTIVE_PORTAL_DETECTION=1\" \"ENABLE_APP_LIST=1\" $
+      \"ENABLE_SETTINGS_APP=1\" \"ENABLE_SUPERVISED_USERS=1\" $
+      \"ENABLE_MDNS=1\" \"ENABLE_SERVICE_DISCOVERY=1\" $
+      V8_USE_EXTERNAL_STARTUP_DATA FULL_SAFE_BROWSING SAFE_BROWSING_CSD $
+      SAFE_BROWSING_DB_LOCAL \"USE_LIBPCI=1\" \"USE_OPENSSL=1\" $
+      \"USE_GLIB=1\" \"USE_NSS_CERTS=1\"" $
+      "--link_flags=-B../../../../out/Release/gen/tc_newlib/lib64  " $
+      "--source-list=../../../../out/gypfiles/native_client/src/untrusted/nacl/newlib-x86-64.nacl_lib_newlib.source_list.gypcmd"
+  description = ACTION nacl_lib_newlib: build newlib x86-64 $
+      nlib_34595b1baf6b0067c0d7da5211c629a9
+  restat = 1
+
+build gen/tc_newlib/lib64/libnacl.a: $
+    nacl_lib_newlib_target_build_newlib_x86_64_nlib_34595b1baf6b0067c0d7da5211c629a9 $
+    ../../native_client/build/build_nexe.py $
+    ../../native_client/build/build_nexe_tools.py $
+    ../../../../../../../../usr/include/_G_config.h $
+    ../../../../../../../../usr/include/alloca.h $
+    ../../../../../../../../usr/include/asm-generic/errno-base.h $
+    ../../../../../../../../usr/include/asm-generic/errno.h $
+    ../../../../../../../../usr/include/asm/errno.h $
+    ../../../../../../../../usr/include/bits/byteswap-16.h $
+    ../../../../../../../../usr/include/bits/byteswap.h $
+    ../../../../../../../../usr/include/bits/confname.h $
+    ../../../../../../../../usr/include/bits/endian.h $
+    ../../../../../../../../usr/include/bits/environments.h $
+    ../../../../../../../../usr/include/bits/errno.h $
+    ../../../../../../../../usr/include/bits/libc-lock.h $
+    ../../../../../../../../usr/include/bits/libio-ldbl.h $
+    ../../../../../../../../usr/include/bits/posix_opt.h $
+    ../../../../../../../../usr/include/bits/pthreadtypes.h $
+    ../../../../../../../../usr/include/bits/sched.h $
+    ../../../../../../../../usr/include/bits/select.h $
+    ../../../../../../../../usr/include/bits/select2.h $
+    ../../../../../../../../usr/include/bits/setjmp.h $
+    ../../../../../../../../usr/include/bits/sigset.h $
+    ../../../../../../../../usr/include/bits/stat.h $
+    ../../../../../../../../usr/include/bits/stdio-ldbl.h $
+    ../../../../../../../../usr/include/bits/stdio-lock.h $
+    ../../../../../../../../usr/include/bits/stdio.h $
+    ../../../../../../../../usr/include/bits/stdio2.h $
+    ../../../../../../../../usr/include/bits/stdio_lim.h $
+    ../../../../../../../../usr/include/bits/stdlib-bsearch.h $
+    ../../../../../../../../usr/include/bits/stdlib-float.h $
+    ../../../../../../../../usr/include/bits/stdlib-ldbl.h $
+    ../../../../../../../../usr/include/bits/stdlib.h $
+    ../../../../../../../../usr/include/bits/string.h $
+    ../../../../../../../../usr/include/bits/string2.h $
+    ../../../../../../../../usr/include/bits/string3.h $
+    ../../../../../../../../usr/include/bits/sys_errlist.h $
+    ../../../../../../../../usr/include/bits/time.h $
+    ../../../../../../../../usr/include/bits/timex.h $
+    ../../../../../../../../usr/include/bits/types.h $
+    ../../../../../../../../usr/include/bits/typesizes.h $
+    ../../../../../../../../usr/include/bits/unistd.h $
+    ../../../../../../../../usr/include/bits/waitflags.h $
+    ../../../../../../../../usr/include/bits/waitstatus.h $
+    ../../../../../../../../usr/include/bits/wchar-ldbl.h $
+    ../../../../../../../../usr/include/bits/wchar.h $
+    ../../../../../../../../usr/include/bits/wchar2.h $
+    ../../../../../../../../usr/include/bits/wordsize.h $
+    ../../../../../../../../usr/include/ctype.h $
+    ../../../../../../../../usr/include/endian.h $
+    ../../../../../../../../usr/include/errno.h $
+    ../../../../../../../../usr/include/features.h $
+    ../../../../../../../../usr/include/gconv.h $
+    ../../../../../../../../usr/include/getopt.h $
+    ../../../../../../../../usr/include/gnu/option-groups.h $
+    ../../../../../../../../usr/include/gnu/stubs-32.h $
+    ../../../../../../../../usr/include/gnu/stubs-64.h $
+    ../../../../../../../../usr/include/gnu/stubs-x32.h $
+    ../../../../../../../../usr/include/gnu/stubs.h $
+    ../../../../../../../../usr/include/libio.h $
+    ../../../../../../../../usr/include/linux/errno.h $
+    ../../../../../../../../usr/include/linux/stddef.h $
+    ../../../../../../../../usr/include/malloc.h $
+    ../../../../../../../../usr/include/pthread.h $
+    ../../../../../../../../usr/include/sched.h $
+    ../../../../../../../../usr/include/stdc-predef.h $
+    ../../../../../../../../usr/include/stdint.h $
+    ../../../../../../../../usr/include/stdio.h $
+    ../../../../../../../../usr/include/stdlib.h $
+    ../../../../../../../../usr/include/string.h $
+    ../../../../../../../../usr/include/sys/cdefs.h $
+    ../../../../../../../../usr/include/sys/select.h $
+    ../../../../../../../../usr/include/sys/stat.h $
+    ../../../../../../../../usr/include/sys/sysmacros.h $
+    ../../../../../../../../usr/include/sys/time.h $
+    ../../../../../../../../usr/include/sys/types.h $
+    ../../../../../../../../usr/include/sys/unistd.h $
+    ../../../../../../../../usr/include/time.h $
+    ../../../../../../../../usr/include/unistd.h $
+    ../../../../../../../../usr/include/wchar.h $
+    ../../../../../../../../usr/include/wctype.h $
+    ../../../../../../../../usr/include/xlocale.h $
+    ../../native_client/src/include/build_config.h $
+    ../../native_client/src/include/elf32.h $
+    ../../native_client/src/include/elf64.h $
+    ../../native_client/src/include/elf_auxv.h $
+    ../../native_client/src/include/elf_constants.h $
+    ../../native_client/src/include/nacl_base.h $
+    ../../native_client/src/include/nacl_compiler_annotations.h $
+    ../../native_client/src/include/nacl_macros.h $
+    ../../native_client/src/include/portability.h $
+    ../../native_client/src/include/win/port_win.h $
+    ../../native_client/src/public/linux_syscalls/sys/socket.h $
+    ../../native_client/src/third_party/dlmalloc/malloc.c $
+    ../../native_client/src/third_party/valgrind/memcheck.h $
+    ../../native_client/src/third_party/valgrind/valgrind.h $
+    ../../native_client/src/trusted/service_runtime/include/bits/limits.h $
+    ../../native_client/src/trusted/service_runtime/include/bits/wordsize.h $
+    ../../native_client/src/untrusted/irt/irt.h $
+    ../../native_client/src/untrusted/irt/irt_dev.h $
+    ../../native_client/src/untrusted/irt/irt_extension.h $
+    ../../native_client/src/untrusted/irt/irt_interfaces.h $
+    ../../native_client/src/untrusted/nacl/_exit.c $
+    ../../native_client/src/untrusted/nacl/abort.c $
+    ../../native_client/src/untrusted/nacl/access.c $
+    ../../native_client/src/untrusted/nacl/chdir.c $
+    ../../native_client/src/untrusted/nacl/chmod.c $
+    ../../native_client/src/untrusted/nacl/clock.c $
+    ../../native_client/src/untrusted/nacl/clock_getres.c $
+    ../../native_client/src/untrusted/nacl/clock_gettime.c $
+    ../../native_client/src/untrusted/nacl/close.c $
+    ../../native_client/src/untrusted/nacl/dup.c $
+    ../../native_client/src/untrusted/nacl/eaccess.c $
+    ../../native_client/src/untrusted/nacl/fchdir.c $
+    ../../native_client/src/untrusted/nacl/fchmod.c $
+    ../../native_client/src/untrusted/nacl/fdatasync.c $
+    ../../native_client/src/untrusted/nacl/fstat.c $
+    ../../native_client/src/untrusted/nacl/fsync.c $
+    ../../native_client/src/untrusted/nacl/ftruncate.c $
+    ../../native_client/src/untrusted/nacl/gc_hooks.c $
+    ../../native_client/src/untrusted/nacl/gc_hooks.h $
+    ../../native_client/src/untrusted/nacl/getcwd.c $
+    ../../native_client/src/untrusted/nacl/getcwd.h $
+    ../../native_client/src/untrusted/nacl/getcwd_without_malloc.c $
+    ../../native_client/src/untrusted/nacl/getdents.c $
+    ../../native_client/src/untrusted/nacl/gethostname.c $
+    ../../native_client/src/untrusted/nacl/getpagesize.c $
+    ../../native_client/src/untrusted/nacl/getpid.c $
+    ../../native_client/src/untrusted/nacl/gettimeofday.c $
+    ../../native_client/src/untrusted/nacl/htonl.c $
+    ../../native_client/src/untrusted/nacl/htons.c $
+    ../../native_client/src/untrusted/nacl/include/sys/utsname.h $
+    ../../native_client/src/untrusted/nacl/isatty.c $
+    ../../native_client/src/untrusted/nacl/link.c $
+    ../../native_client/src/untrusted/nacl/lock.c $
+    ../../native_client/src/untrusted/nacl/lseek.c $
+    ../../native_client/src/untrusted/nacl/lstat.c $
+    ../../native_client/src/untrusted/nacl/malloc.c $
+    ../../native_client/src/untrusted/nacl/mkdir.c $
+    ../../native_client/src/untrusted/nacl/mmap.c $
+    ../../native_client/src/untrusted/nacl/mprotect.c $
+    ../../native_client/src/untrusted/nacl/munmap.c $
+    ../../native_client/src/untrusted/nacl/nacl_add_tp.c $
+    ../../native_client/src/untrusted/nacl/nacl_ext_supply.c $
+    ../../native_client/src/untrusted/nacl/nacl_interface_query.c $
+    ../../native_client/src/untrusted/nacl/nacl_irt.c $
+    ../../native_client/src/untrusted/nacl/nacl_irt.h $
+    ../../native_client/src/untrusted/nacl/nacl_irt_fdio.c $
+    ../../native_client/src/untrusted/nacl/nacl_irt_filename.c $
+    ../../native_client/src/untrusted/nacl/nacl_irt_init.c $
+    ../../native_client/src/untrusted/nacl/nacl_random.c $
+    ../../native_client/src/untrusted/nacl/nacl_read_tp.c $
+    ../../native_client/src/untrusted/nacl/nacl_startup.h $
+    ../../native_client/src/untrusted/nacl/nacl_thread.h $
+    ../../native_client/src/untrusted/nacl/nacl_tls_get.c $
+    ../../native_client/src/untrusted/nacl/nacl_tls_init.c $
+    ../../native_client/src/untrusted/nacl/nanosleep.c $
+    ../../native_client/src/untrusted/nacl/ntohl.c $
+    ../../native_client/src/untrusted/nacl/ntohs.c $
+    ../../native_client/src/untrusted/nacl/open.c $
+    ../../native_client/src/untrusted/nacl/pthread_initialize_minimal.c $
+    ../../native_client/src/untrusted/nacl/pthread_stubs.c $
+    ../../native_client/src/untrusted/nacl/random.c $
+    ../../native_client/src/untrusted/nacl/read.c $
+    ../../native_client/src/untrusted/nacl/readlink.c $
+    ../../native_client/src/untrusted/nacl/rename.c $
+    ../../native_client/src/untrusted/nacl/rmdir.c $
+    ../../native_client/src/untrusted/nacl/sbrk.c $
+    ../../native_client/src/untrusted/nacl/sched_yield.c $
+    ../../native_client/src/untrusted/nacl/sigblock.c $
+    ../../native_client/src/untrusted/nacl/siggetmask.c $
+    ../../native_client/src/untrusted/nacl/sigmask.c $
+    ../../native_client/src/untrusted/nacl/sigprocmask.c $
+    ../../native_client/src/untrusted/nacl/sigsetmask.c $
+    ../../native_client/src/untrusted/nacl/srandom.c $
+    ../../native_client/src/untrusted/nacl/stacktrace.c $
+    ../../native_client/src/untrusted/nacl/start.c $
+    ../../native_client/src/untrusted/nacl/start.h $
+    ../../native_client/src/untrusted/nacl/stat.c $
+    ../../native_client/src/untrusted/nacl/stubs/_execve.c $
+    ../../native_client/src/untrusted/nacl/stubs/accept.c $
+    ../../native_client/src/untrusted/nacl/stubs/addmntent.c $
+    ../../native_client/src/untrusted/nacl/stubs/bind.c $
+    ../../native_client/src/untrusted/nacl/stubs/chown.c $
+    ../../native_client/src/untrusted/nacl/stubs/closelog.c $
+    ../../native_client/src/untrusted/nacl/stubs/connect.c $
+    ../../native_client/src/untrusted/nacl/stubs/endgrent.c $
+    ../../native_client/src/untrusted/nacl/stubs/endmntent.c $
+    ../../native_client/src/untrusted/nacl/stubs/endpwent.c $
+    ../../native_client/src/untrusted/nacl/stubs/environ.c $
+    ../../native_client/src/untrusted/nacl/stubs/execvpe.c $
+    ../../native_client/src/untrusted/nacl/stubs/fchown.c $
+    ../../native_client/src/untrusted/nacl/stubs/fcntl.c $
+    ../../native_client/src/untrusted/nacl/stubs/fork.c $
+    ../../native_client/src/untrusted/nacl/stubs/freeaddrinfo.c $
+    ../../native_client/src/untrusted/nacl/stubs/fstatvfs.c $
+    ../../native_client/src/untrusted/nacl/stubs/gai_strerror.c $
+    ../../native_client/src/untrusted/nacl/stubs/get_current_dir_name.c $
+    ../../native_client/src/untrusted/nacl/stubs/getaddrinfo.c $
+    ../../native_client/src/untrusted/nacl/stubs/getdtablesize.c $
+    ../../native_client/src/untrusted/nacl/stubs/getegid.c $
+    ../../native_client/src/untrusted/nacl/stubs/geteuid.c $
+    ../../native_client/src/untrusted/nacl/stubs/getgid.c $
+    ../../native_client/src/untrusted/nacl/stubs/getgrent.c $
+    ../../native_client/src/untrusted/nacl/stubs/getgrgid.c $
+    ../../native_client/src/untrusted/nacl/stubs/getgrgid_r.c $
+    ../../native_client/src/untrusted/nacl/stubs/getgrnam.c $
+    ../../native_client/src/untrusted/nacl/stubs/getgroups.c $
+    ../../native_client/src/untrusted/nacl/stubs/gethostbyaddr.c $
+    ../../native_client/src/untrusted/nacl/stubs/gethostbyname.c $
+    ../../native_client/src/untrusted/nacl/stubs/getlogin.c $
+    ../../native_client/src/untrusted/nacl/stubs/getmntent.c $
+    ../../native_client/src/untrusted/nacl/stubs/getnameinfo.c $
+    ../../native_client/src/untrusted/nacl/stubs/getpeername.c $
+    ../../native_client/src/untrusted/nacl/stubs/getpgrp.c $
+    ../../native_client/src/untrusted/nacl/stubs/getppid.c $
+    ../../native_client/src/untrusted/nacl/stubs/getpwent.c $
+    ../../native_client/src/untrusted/nacl/stubs/getpwnam.c $
+    ../../native_client/src/untrusted/nacl/stubs/getpwnam_r.c $
+    ../../native_client/src/untrusted/nacl/stubs/getpwuid.c $
+    ../../native_client/src/untrusted/nacl/stubs/getpwuid_r.c $
+    ../../native_client/src/untrusted/nacl/stubs/getrlimit.c $
+    ../../native_client/src/untrusted/nacl/stubs/getrusage.c $
+    ../../native_client/src/untrusted/nacl/stubs/getservbyname.c $
+    ../../native_client/src/untrusted/nacl/stubs/getservbyport.c $
+    ../../native_client/src/untrusted/nacl/stubs/getsockname.c $
+    ../../native_client/src/untrusted/nacl/stubs/getsockopt.c $
+    ../../native_client/src/untrusted/nacl/stubs/getuid.c $
+    ../../native_client/src/untrusted/nacl/stubs/getwd.c $
+    ../../native_client/src/untrusted/nacl/stubs/hasmntopt.c $
+    ../../native_client/src/untrusted/nacl/stubs/if_freenameindex.c $
+    ../../native_client/src/untrusted/nacl/stubs/if_indextoname.c $
+    ../../native_client/src/untrusted/nacl/stubs/if_nameindex.c $
+    ../../native_client/src/untrusted/nacl/stubs/if_nametoindex.c $
+    ../../native_client/src/untrusted/nacl/stubs/inet_ntoa.c $
+    ../../native_client/src/untrusted/nacl/stubs/inet_ntop.c $
+    ../../native_client/src/untrusted/nacl/stubs/initgroups.c $
+    ../../native_client/src/untrusted/nacl/stubs/ioctl.c $
+    ../../native_client/src/untrusted/nacl/stubs/issetugid.c $
+    ../../native_client/src/untrusted/nacl/stubs/kill.c $
+    ../../native_client/src/untrusted/nacl/stubs/lchown.c $
+    ../../native_client/src/untrusted/nacl/stubs/listen.c $
+    ../../native_client/src/untrusted/nacl/stubs/llseek.c $
+    ../../native_client/src/untrusted/nacl/stubs/major.c $
+    ../../native_client/src/untrusted/nacl/stubs/makedev.c $
+    ../../native_client/src/untrusted/nacl/stubs/minor.c $
+    ../../native_client/src/untrusted/nacl/stubs/mkfifo.c $
+    ../../native_client/src/untrusted/nacl/stubs/mknod.c $
+    ../../native_client/src/untrusted/nacl/stubs/msync.c $
+    ../../native_client/src/untrusted/nacl/stubs/openlog.c $
+    ../../native_client/src/untrusted/nacl/stubs/pipe.c $
+    ../../native_client/src/untrusted/nacl/stubs/poll.c $
+    ../../native_client/src/untrusted/nacl/stubs/pselect.c $
+    ../../native_client/src/untrusted/nacl/stubs/pthread_sigmask.c $
+    ../../native_client/src/untrusted/nacl/stubs/readv.c $
+    ../../native_client/src/untrusted/nacl/stubs/recv.c $
+    ../../native_client/src/untrusted/nacl/stubs/recvfrom.c $
+    ../../native_client/src/untrusted/nacl/stubs/recvmsg.c $
+    ../../native_client/src/untrusted/nacl/stubs/sched_get_priority_max.c $
+    ../../native_client/src/untrusted/nacl/stubs/sched_get_priority_min.c $
+    ../../native_client/src/untrusted/nacl/stubs/sched_setparam.c $
+    ../../native_client/src/untrusted/nacl/stubs/sched_setscheduler.c $
+    ../../native_client/src/untrusted/nacl/stubs/select.c $
+    ../../native_client/src/untrusted/nacl/stubs/send.c $
+    ../../native_client/src/untrusted/nacl/stubs/sendmsg.c $
+    ../../native_client/src/untrusted/nacl/stubs/sendto.c $
+    ../../native_client/src/untrusted/nacl/stubs/setegid.c $
+    ../../native_client/src/untrusted/nacl/stubs/seteuid.c $
+    ../../native_client/src/untrusted/nacl/stubs/setgid.c $
+    ../../native_client/src/untrusted/nacl/stubs/setgrent.c $
+    ../../native_client/src/untrusted/nacl/stubs/setgroups.c $
+    ../../native_client/src/untrusted/nacl/stubs/setmntent.c $
+    ../../native_client/src/untrusted/nacl/stubs/setpgid.c $
+    ../../native_client/src/untrusted/nacl/stubs/setpwent.c $
+    ../../native_client/src/untrusted/nacl/stubs/setrlimit.c $
+    ../../native_client/src/untrusted/nacl/stubs/setsid.c $
+    ../../native_client/src/untrusted/nacl/stubs/setsockopt.c $
+    ../../native_client/src/untrusted/nacl/stubs/settimeofday.c $
+    ../../native_client/src/untrusted/nacl/stubs/setuid.c $
+    ../../native_client/src/untrusted/nacl/stubs/shutdown.c $
+    ../../native_client/src/untrusted/nacl/stubs/sigaction.c $
+    ../../native_client/src/untrusted/nacl/stubs/signal.c $
+    ../../native_client/src/untrusted/nacl/stubs/sigsuspend.c $
+    ../../native_client/src/untrusted/nacl/stubs/sigvec.c $
+    ../../native_client/src/untrusted/nacl/stubs/socket.c $
+    ../../native_client/src/untrusted/nacl/stubs/socketpair.c $
+    ../../native_client/src/untrusted/nacl/stubs/statvfs.c $
+    ../../native_client/src/untrusted/nacl/stubs/syslog.c $
+    ../../native_client/src/untrusted/nacl/stubs/tcdrain.c $
+    ../../native_client/src/untrusted/nacl/stubs/tcflow.c $
+    ../../native_client/src/untrusted/nacl/stubs/tcflush.c $
+    ../../native_client/src/untrusted/nacl/stubs/tcgetattr.c $
+    ../../native_client/src/untrusted/nacl/stubs/tcsendbreak.c $
+    ../../native_client/src/untrusted/nacl/stubs/tcsetattr.c $
+    ../../native_client/src/untrusted/nacl/stubs/times.c $
+    ../../native_client/src/untrusted/nacl/stubs/ttyname.c $
+    ../../native_client/src/untrusted/nacl/stubs/ttyname_r.c $
+    ../../native_client/src/untrusted/nacl/stubs/umask.c $
+    ../../native_client/src/untrusted/nacl/stubs/vfork.c $
+    ../../native_client/src/untrusted/nacl/stubs/wait.c $
+    ../../native_client/src/untrusted/nacl/stubs/waitpid.c $
+    ../../native_client/src/untrusted/nacl/symlink.c $
+    ../../native_client/src/untrusted/nacl/sysconf.c $
+    ../../native_client/src/untrusted/nacl/tls.c $
+    ../../native_client/src/untrusted/nacl/tls.h $
+    ../../native_client/src/untrusted/nacl/tls_params.h $
+    ../../native_client/src/untrusted/nacl/truncate.c $
+    ../../native_client/src/untrusted/nacl/uname.c $
+    ../../native_client/src/untrusted/nacl/unlink.c $
+    ../../native_client/src/untrusted/nacl/utime.c $
+    ../../native_client/src/untrusted/nacl/utimes.c $
+    ../../native_client/src/untrusted/nacl/write.c $
+    ../../out/gypfiles/native_client/src/untrusted/nacl/newlib-x86-64.nacl_lib_newlib.source_list.gypcmd $
+    ../../native_client/toolchain/linux_x86/nacl_x86_newlib/nacl_x86_newlib.json
+
+rule $
+    nacl_lib_newlib_target_build_irt_x86_64_nlib_34595b1baf6b0067c0d7da5211c629a9
+  command = cd ../../native_client/src/untrusted/nacl; python $
+      ../../../../native_client/build/build_nexe.py --root ../../../.. $
+      --product-dir ../../../../out/Release/xyz --config-name Release -t $
+      ../../../../native_client/toolchain/ --arch x86-64 --build $
+      newlib_nlib_clang --name $
+      ../../../../out/Release/gen/tc_irt/lib64/libnacl.a --objdir $
+      ../../../../out/Release/obj/native_client/src/untrusted/nacl/nacl_lib_newlib.gen/irt-x86-64/nacl_lib_newlib $
+      "--include-dirs=../../../../out/Release/gen/tc_newlib/include $
+      ../../../.. \"../../../../out/Release/gen\" ../../../src/third_party $
+      ../../../.." "--compile_flags=-O2 -g -Wall -fdiagnostics-show-option $
+      -Werror  -Wno-unused-function -Wno-char-subscripts $
+      -Wno-c++11-extensions -Wno-unnamed-type-template-args -Wno-extra-semi $
+      -Wno-unused-private-field -Wno-char-subscripts -Wno-unused-function $
+      \"-std=gnu++11\"  -Os -fno-exceptions -ffunction-sections $
+      -fdata-sections -fasynchronous-unwind-tables -fomit-frame-pointer $
+      -integrated-as" --gomadir "" "--defines=\"__STDC_LIMIT_MACROS=1\" $
+      \"__STDC_FORMAT_MACROS=1\" \"_GNU_SOURCE=1\" $
+      \"_POSIX_C_SOURCE=199506\" \"_XOPEN_SOURCE=600\" $
+      \"DYNAMIC_ANNOTATIONS_ENABLED=1\" $
+      \"DYNAMIC_ANNOTATIONS_PREFIX=NACL_\" \"NACL_BUILD_ARCH=x86\" $
+      V8_DEPRECATION_WARNINGS \"CLD_VERSION=2\" \"_FILE_OFFSET_BITS=64\" $
+      \"_POSIX_C_SOURCE=199506\" \"_XOPEN_SOURCE=600\" \"_GNU_SOURCE=1\" $
+      \"__STDC_LIMIT_MACROS=1\" CHROMIUM_BUILD $
+      \"CR_CLANG_REVISION=255169-1\" UI_COMPOSITOR_IMAGE_TRANSPORT $
+      \"USE_AURA=1\" \"USE_ASH=1\" \"USE_PANGO=1\" \"USE_CAIRO=1\" $
+      \"USE_DEFAULT_RENDER_THEME=1\" \"USE_LIBJPEG_TURBO=1\" \"USE_X11=1\" $
+      \"USE_CLIPBOARD_AURAX11=1\" ENABLE_ONE_CLICK_SIGNIN $
+      \"ENABLE_WEBRTC=1\" \"ENABLE_MEDIA_ROUTER=1\" ENABLE_PEPPER_CDMS $
+      ENABLE_CONFIGURATION_POLICY ENABLE_NOTIFICATIONS \"ENABLE_HIDPI=1\" $
+      \"ENABLE_TOPCHROME_MD=1\" USE_UDEV DONT_EMBED_BUILD_METADATA $
+      FIELDTRIAL_TESTING_ENABLED \"ENABLE_TASK_MANAGER=1\" $
+      \"ENABLE_EXTENSIONS=1\" \"ENABLE_PDF=1\" \"ENABLE_PLUGINS=1\" $
+      \"ENABLE_SESSION_SERVICE=1\" \"ENABLE_THEMES=1\" $
+      \"ENABLE_AUTOFILL_DIALOG=1\" \"ENABLE_BACKGROUND=1\" $
+      \"ENABLE_PRINTING=1\" \"ENABLE_BASIC_PRINTING=1\" $
+      \"ENABLE_PRINT_PREVIEW=1\" \"ENABLE_SPELLCHECK=1\" $
+      \"ENABLE_CAPTIVE_PORTAL_DETECTION=1\" \"ENABLE_APP_LIST=1\" $
+      \"ENABLE_SETTINGS_APP=1\" \"ENABLE_SUPERVISED_USERS=1\" $
+      \"ENABLE_MDNS=1\" \"ENABLE_SERVICE_DISCOVERY=1\" $
+      V8_USE_EXTERNAL_STARTUP_DATA FULL_SAFE_BROWSING SAFE_BROWSING_CSD $
+      SAFE_BROWSING_DB_LOCAL \"USE_LIBPCI=1\" \"USE_OPENSSL=1\" $
+      \"USE_GLIB=1\" \"USE_NSS_CERTS=1\"" $
+      "--link_flags=-B../../../../out/Release/gen/tc_irt/lib64   $
+      -Wl,--gc-sections -nodefaultlibs -lc++ -lm -lirt_browser $
+      -Wl,--start-group -lc -lnacl -lgcc -lgcc_eh -Wl,--end-group" $
+      "--source-list=../../../../out/gypfiles/native_client/src/untrusted/nacl/irt-x86-64.nacl_lib_newlib.source_list.gypcmd"
+  description = ACTION nacl_lib_newlib: build irt x86-64 $
+      nlib_34595b1baf6b0067c0d7da5211c629a9
+  restat = 1
+
+build gen/tc_irt/lib64/libnacl.a: $
+    nacl_lib_newlib_target_build_irt_x86_64_nlib_34595b1baf6b0067c0d7da5211c629a9 $
+    ../../native_client/build/build_nexe.py $
+    ../../native_client/build/build_nexe_tools.py $
+    ../../../../../../../../usr/include/_G_config.h $
+    ../../../../../../../../usr/include/alloca.h $
+    ../../../../../../../../usr/include/asm-generic/errno-base.h $
+    ../../../../../../../../usr/include/asm-generic/errno.h $
+    ../../../../../../../../usr/include/asm/errno.h $
+    ../../../../../../../../usr/include/bits/byteswap-16.h $
+    ../../../../../../../../usr/include/bits/byteswap.h $
+    ../../../../../../../../usr/include/bits/confname.h $
+    ../../../../../../../../usr/include/bits/endian.h $
+    ../../../../../../../../usr/include/bits/environments.h $
+    ../../../../../../../../usr/include/bits/errno.h $
+    ../../../../../../../../usr/include/bits/libc-lock.h $
+    ../../../../../../../../usr/include/bits/libio-ldbl.h $
+    ../../../../../../../../usr/include/bits/posix_opt.h $
+    ../../../../../../../../usr/include/bits/pthreadtypes.h $
+    ../../../../../../../../usr/include/bits/sched.h $
+    ../../../../../../../../usr/include/bits/select.h $
+    ../../../../../../../../usr/include/bits/select2.h $
+    ../../../../../../../../usr/include/bits/setjmp.h $
+    ../../../../../../../../usr/include/bits/sigset.h $
+    ../../../../../../../../usr/include/bits/stat.h $
+    ../../../../../../../../usr/include/bits/stdio-ldbl.h $
+    ../../../../../../../../usr/include/bits/stdio-lock.h $
+    ../../../../../../../../usr/include/bits/stdio.h $
+    ../../../../../../../../usr/include/bits/stdio2.h $
+    ../../../../../../../../usr/include/bits/stdio_lim.h $
+    ../../../../../../../../usr/include/bits/stdlib-bsearch.h $
+    ../../../../../../../../usr/include/bits/stdlib-float.h $
+    ../../../../../../../../usr/include/bits/stdlib-ldbl.h $
+    ../../../../../../../../usr/include/bits/stdlib.h $
+    ../../../../../../../../usr/include/bits/string.h $
+    ../../../../../../../../usr/include/bits/string2.h $
+    ../../../../../../../../usr/include/bits/string3.h $
+    ../../../../../../../../usr/include/bits/sys_errlist.h $
+    ../../../../../../../../usr/include/bits/time.h $
+    ../../../../../../../../usr/include/bits/timex.h $
+    ../../../../../../../../usr/include/bits/types.h $
+    ../../../../../../../../usr/include/bits/typesizes.h $
+    ../../../../../../../../usr/include/bits/unistd.h $
+    ../../../../../../../../usr/include/bits/waitflags.h $
+    ../../../../../../../../usr/include/bits/waitstatus.h $
+    ../../../../../../../../usr/include/bits/wchar-ldbl.h $
+    ../../../../../../../../usr/include/bits/wchar.h $
+    ../../../../../../../../usr/include/bits/wchar2.h $
+    ../../../../../../../../usr/include/bits/wordsize.h $
+    ../../../../../../../../usr/include/ctype.h $
+    ../../../../../../../../usr/include/endian.h $
+    ../../../../../../../../usr/include/errno.h $
+    ../../../../../../../../usr/include/features.h $
+    ../../../../../../../../usr/include/gconv.h $
+    ../../../../../../../../usr/include/getopt.h $
+    ../../../../../../../../usr/include/gnu/option-groups.h $
+    ../../../../../../../../usr/include/gnu/stubs-32.h $
+    ../../../../../../../../usr/include/gnu/stubs-64.h $
+    ../../../../../../../../usr/include/gnu/stubs-x32.h $
+    ../../../../../../../../usr/include/gnu/stubs.h $
+    ../../../../../../../../usr/include/libio.h $
+    ../../../../../../../../usr/include/linux/errno.h $
+    ../../../../../../../../usr/include/linux/stddef.h $
+    ../../../../../../../../usr/include/malloc.h $
+    ../../../../../../../../usr/include/pthread.h $
+    ../../../../../../../../usr/include/sched.h $
+    ../../../../../../../../usr/include/stdc-predef.h $
+    ../../../../../../../../usr/include/stdint.h $
+    ../../../../../../../../usr/include/stdio.h $
+    ../../../../../../../../usr/include/stdlib.h $
+    ../../../../../../../../usr/include/string.h $
+    ../../../../../../../../usr/include/sys/cdefs.h $
+    ../../../../../../../../usr/include/sys/select.h $
+    ../../../../../../../../usr/include/sys/stat.h $
+    ../../../../../../../../usr/include/sys/sysmacros.h $
+    ../../../../../../../../usr/include/sys/time.h $
+    ../../../../../../../../usr/include/sys/types.h $
+    ../../../../../../../../usr/include/sys/unistd.h $
+    ../../../../../../../../usr/include/time.h $
+    ../../../../../../../../usr/include/unistd.h $
+    ../../../../../../../../usr/include/wchar.h $
+    ../../../../../../../../usr/include/wctype.h $
+    ../../../../../../../../usr/include/xlocale.h $
+    ../../native_client/src/include/build_config.h $
+    ../../native_client/src/include/elf32.h $
+    ../../native_client/src/include/elf64.h $
+    ../../native_client/src/include/elf_auxv.h $
+    ../../native_client/src/include/elf_constants.h $
+    ../../native_client/src/include/nacl_base.h $
+    ../../native_client/src/include/nacl_compiler_annotations.h $
+    ../../native_client/src/include/nacl_macros.h $
+    ../../native_client/src/include/portability.h $
+    ../../native_client/src/include/win/port_win.h $
+    ../../native_client/src/public/linux_syscalls/sys/socket.h $
+    ../../native_client/src/third_party/dlmalloc/malloc.c $
+    ../../native_client/src/third_party/valgrind/memcheck.h $
+    ../../native_client/src/third_party/valgrind/valgrind.h $
+    ../../native_client/src/trusted/service_runtime/include/bits/limits.h $
+    ../../native_client/src/trusted/service_runtime/include/bits/wordsize.h $
+    ../../native_client/src/untrusted/irt/irt.h $
+    ../../native_client/src/untrusted/irt/irt_dev.h $
+    ../../native_client/src/untrusted/irt/irt_extension.h $
+    ../../native_client/src/untrusted/irt/irt_interfaces.h $
+    ../../native_client/src/untrusted/nacl/_exit.c $
+    ../../native_client/src/untrusted/nacl/abort.c $
+    ../../native_client/src/untrusted/nacl/access.c $
+    ../../native_client/src/untrusted/nacl/chdir.c $
+    ../../native_client/src/untrusted/nacl/chmod.c $
+    ../../native_client/src/untrusted/nacl/clock.c $
+    ../../native_client/src/untrusted/nacl/clock_getres.c $
+    ../../native_client/src/untrusted/nacl/clock_gettime.c $
+    ../../native_client/src/untrusted/nacl/close.c $
+    ../../native_client/src/untrusted/nacl/dup.c $
+    ../../native_client/src/untrusted/nacl/eaccess.c $
+    ../../native_client/src/untrusted/nacl/fchdir.c $
+    ../../native_client/src/untrusted/nacl/fchmod.c $
+    ../../native_client/src/untrusted/nacl/fdatasync.c $
+    ../../native_client/src/untrusted/nacl/fstat.c $
+    ../../native_client/src/untrusted/nacl/fsync.c $
+    ../../native_client/src/untrusted/nacl/ftruncate.c $
+    ../../native_client/src/untrusted/nacl/gc_hooks.c $
+    ../../native_client/src/untrusted/nacl/gc_hooks.h $
+    ../../native_client/src/untrusted/nacl/getcwd.c $
+    ../../native_client/src/untrusted/nacl/getcwd.h $
+    ../../native_client/src/untrusted/nacl/getcwd_without_malloc.c $
+    ../../native_client/src/untrusted/nacl/getdents.c $
+    ../../native_client/src/untrusted/nacl/gethostname.c $
+    ../../native_client/src/untrusted/nacl/getpagesize.c $
+    ../../native_client/src/untrusted/nacl/getpid.c $
+    ../../native_client/src/untrusted/nacl/gettimeofday.c $
+    ../../native_client/src/untrusted/nacl/htonl.c $
+    ../../native_client/src/untrusted/nacl/htons.c $
+    ../../native_client/src/untrusted/nacl/include/sys/utsname.h $
+    ../../native_client/src/untrusted/nacl/isatty.c $
+    ../../native_client/src/untrusted/nacl/link.c $
+    ../../native_client/src/untrusted/nacl/lock.c $
+    ../../native_client/src/untrusted/nacl/lseek.c $
+    ../../native_client/src/untrusted/nacl/lstat.c $
+    ../../native_client/src/untrusted/nacl/malloc.c $
+    ../../native_client/src/untrusted/nacl/mkdir.c $
+    ../../native_client/src/untrusted/nacl/mmap.c $
+    ../../native_client/src/untrusted/nacl/mprotect.c $
+    ../../native_client/src/untrusted/nacl/munmap.c $
+    ../../native_client/src/untrusted/nacl/nacl_add_tp.c $
+    ../../native_client/src/untrusted/nacl/nacl_ext_supply.c $
+    ../../native_client/src/untrusted/nacl/nacl_interface_query.c $
+    ../../native_client/src/untrusted/nacl/nacl_irt.c $
+    ../../native_client/src/untrusted/nacl/nacl_irt.h $
+    ../../native_client/src/untrusted/nacl/nacl_irt_fdio.c $
+    ../../native_client/src/untrusted/nacl/nacl_irt_filename.c $
+    ../../native_client/src/untrusted/nacl/nacl_irt_init.c $
+    ../../native_client/src/untrusted/nacl/nacl_random.c $
+    ../../native_client/src/untrusted/nacl/nacl_read_tp.c $
+    ../../native_client/src/untrusted/nacl/nacl_startup.h $
+    ../../native_client/src/untrusted/nacl/nacl_thread.h $
+    ../../native_client/src/untrusted/nacl/nacl_tls_get.c $
+    ../../native_client/src/untrusted/nacl/nacl_tls_init.c $
+    ../../native_client/src/untrusted/nacl/nanosleep.c $
+    ../../native_client/src/untrusted/nacl/ntohl.c $
+    ../../native_client/src/untrusted/nacl/ntohs.c $
+    ../../native_client/src/untrusted/nacl/open.c $
+    ../../native_client/src/untrusted/nacl/pthread_initialize_minimal.c $
+    ../../native_client/src/untrusted/nacl/pthread_stubs.c $
+    ../../native_client/src/untrusted/nacl/random.c $
+    ../../native_client/src/untrusted/nacl/read.c $
+    ../../native_client/src/untrusted/nacl/readlink.c $
+    ../../native_client/src/untrusted/nacl/rename.c $
+    ../../native_client/src/untrusted/nacl/rmdir.c $
+    ../../native_client/src/untrusted/nacl/sbrk.c $
+    ../../native_client/src/untrusted/nacl/sched_yield.c $
+    ../../native_client/src/untrusted/nacl/sigblock.c $
+    ../../native_client/src/untrusted/nacl/siggetmask.c $
+    ../../native_client/src/untrusted/nacl/sigmask.c $
+    ../../native_client/src/untrusted/nacl/sigprocmask.c $
+    ../../native_client/src/untrusted/nacl/sigsetmask.c $
+    ../../native_client/src/untrusted/nacl/srandom.c $
+    ../../native_client/src/untrusted/nacl/stacktrace.c $
+    ../../native_client/src/untrusted/nacl/start.c $
+    ../../native_client/src/untrusted/nacl/start.h $
+    ../../native_client/src/untrusted/nacl/stat.c $
+    ../../native_client/src/untrusted/nacl/stubs/_execve.c $
+    ../../native_client/src/untrusted/nacl/stubs/accept.c $
+    ../../native_client/src/untrusted/nacl/stubs/addmntent.c $
+    ../../native_client/src/untrusted/nacl/stubs/bind.c $
+    ../../native_client/src/untrusted/nacl/stubs/chown.c $
+    ../../native_client/src/untrusted/nacl/stubs/closelog.c $
+    ../../native_client/src/untrusted/nacl/stubs/connect.c $
+    ../../native_client/src/untrusted/nacl/stubs/endgrent.c $
+    ../../native_client/src/untrusted/nacl/stubs/endmntent.c $
+    ../../native_client/src/untrusted/nacl/stubs/endpwent.c $
+    ../../native_client/src/untrusted/nacl/stubs/environ.c $
+    ../../native_client/src/untrusted/nacl/stubs/execvpe.c $
+    ../../native_client/src/untrusted/nacl/stubs/fchown.c $
+    ../../native_client/src/untrusted/nacl/stubs/fcntl.c $
+    ../../native_client/src/untrusted/nacl/stubs/fork.c $
+    ../../native_client/src/untrusted/nacl/stubs/freeaddrinfo.c $
+    ../../native_client/src/untrusted/nacl/stubs/fstatvfs.c $
+    ../../native_client/src/untrusted/nacl/stubs/gai_strerror.c $
+    ../../native_client/src/untrusted/nacl/stubs/get_current_dir_name.c $
+    ../../native_client/src/untrusted/nacl/stubs/getaddrinfo.c $
+    ../../native_client/src/untrusted/nacl/stubs/getdtablesize.c $
+    ../../native_client/src/untrusted/nacl/stubs/getegid.c $
+    ../../native_client/src/untrusted/nacl/stubs/geteuid.c $
+    ../../native_client/src/untrusted/nacl/stubs/getgid.c $
+    ../../native_client/src/untrusted/nacl/stubs/getgrent.c $
+    ../../native_client/src/untrusted/nacl/stubs/getgrgid.c $
+    ../../native_client/src/untrusted/nacl/stubs/getgrgid_r.c $
+    ../../native_client/src/untrusted/nacl/stubs/getgrnam.c $
+    ../../native_client/src/untrusted/nacl/stubs/getgroups.c $
+    ../../native_client/src/untrusted/nacl/stubs/gethostbyaddr.c $
+    ../../native_client/src/untrusted/nacl/stubs/gethostbyname.c $
+    ../../native_client/src/untrusted/nacl/stubs/getlogin.c $
+    ../../native_client/src/untrusted/nacl/stubs/getmntent.c $
+    ../../native_client/src/untrusted/nacl/stubs/getnameinfo.c $
+    ../../native_client/src/untrusted/nacl/stubs/getpeername.c $
+    ../../native_client/src/untrusted/nacl/stubs/getpgrp.c $
+    ../../native_client/src/untrusted/nacl/stubs/getppid.c $
+    ../../native_client/src/untrusted/nacl/stubs/getpwent.c $
+    ../../native_client/src/untrusted/nacl/stubs/getpwnam.c $
+    ../../native_client/src/untrusted/nacl/stubs/getpwnam_r.c $
+    ../../native_client/src/untrusted/nacl/stubs/getpwuid.c $
+    ../../native_client/src/untrusted/nacl/stubs/getpwuid_r.c $
+    ../../native_client/src/untrusted/nacl/stubs/getrlimit.c $
+    ../../native_client/src/untrusted/nacl/stubs/getrusage.c $
+    ../../native_client/src/untrusted/nacl/stubs/getservbyname.c $
+    ../../native_client/src/untrusted/nacl/stubs/getservbyport.c $
+    ../../native_client/src/untrusted/nacl/stubs/getsockname.c $
+    ../../native_client/src/untrusted/nacl/stubs/getsockopt.c $
+    ../../native_client/src/untrusted/nacl/stubs/getuid.c $
+    ../../native_client/src/untrusted/nacl/stubs/getwd.c $
+    ../../native_client/src/untrusted/nacl/stubs/hasmntopt.c $
+    ../../native_client/src/untrusted/nacl/stubs/if_freenameindex.c $
+    ../../native_client/src/untrusted/nacl/stubs/if_indextoname.c $
+    ../../native_client/src/untrusted/nacl/stubs/if_nameindex.c $
+    ../../native_client/src/untrusted/nacl/stubs/if_nametoindex.c $
+    ../../native_client/src/untrusted/nacl/stubs/inet_ntoa.c $
+    ../../native_client/src/untrusted/nacl/stubs/inet_ntop.c $
+    ../../native_client/src/untrusted/nacl/stubs/initgroups.c $
+    ../../native_client/src/untrusted/nacl/stubs/ioctl.c $
+    ../../native_client/src/untrusted/nacl/stubs/issetugid.c $
+    ../../native_client/src/untrusted/nacl/stubs/kill.c $
+    ../../native_client/src/untrusted/nacl/stubs/lchown.c $
+    ../../native_client/src/untrusted/nacl/stubs/listen.c $
+    ../../native_client/src/untrusted/nacl/stubs/llseek.c $
+    ../../native_client/src/untrusted/nacl/stubs/major.c $
+    ../../native_client/src/untrusted/nacl/stubs/makedev.c $
+    ../../native_client/src/untrusted/nacl/stubs/minor.c $
+    ../../native_client/src/untrusted/nacl/stubs/mkfifo.c $
+    ../../native_client/src/untrusted/nacl/stubs/mknod.c $
+    ../../native_client/src/untrusted/nacl/stubs/msync.c $
+    ../../native_client/src/untrusted/nacl/stubs/openlog.c $
+    ../../native_client/src/untrusted/nacl/stubs/pipe.c $
+    ../../native_client/src/untrusted/nacl/stubs/poll.c $
+    ../../native_client/src/untrusted/nacl/stubs/pselect.c $
+    ../../native_client/src/untrusted/nacl/stubs/pthread_sigmask.c $
+    ../../native_client/src/untrusted/nacl/stubs/readv.c $
+    ../../native_client/src/untrusted/nacl/stubs/recv.c $
+    ../../native_client/src/untrusted/nacl/stubs/recvfrom.c $
+    ../../native_client/src/untrusted/nacl/stubs/recvmsg.c $
+    ../../native_client/src/untrusted/nacl/stubs/sched_get_priority_max.c $
+    ../../native_client/src/untrusted/nacl/stubs/sched_get_priority_min.c $
+    ../../native_client/src/untrusted/nacl/stubs/sched_setparam.c $
+    ../../native_client/src/untrusted/nacl/stubs/sched_setscheduler.c $
+    ../../native_client/src/untrusted/nacl/stubs/select.c $
+    ../../native_client/src/untrusted/nacl/stubs/send.c $
+    ../../native_client/src/untrusted/nacl/stubs/sendmsg.c $
+    ../../native_client/src/untrusted/nacl/stubs/sendto.c $
+    ../../native_client/src/untrusted/nacl/stubs/setegid.c $
+    ../../native_client/src/untrusted/nacl/stubs/seteuid.c $
+    ../../native_client/src/untrusted/nacl/stubs/setgid.c $
+    ../../native_client/src/untrusted/nacl/stubs/setgrent.c $
+    ../../native_client/src/untrusted/nacl/stubs/setgroups.c $
+    ../../native_client/src/untrusted/nacl/stubs/setmntent.c $
+    ../../native_client/src/untrusted/nacl/stubs/setpgid.c $
+    ../../native_client/src/untrusted/nacl/stubs/setpwent.c $
+    ../../native_client/src/untrusted/nacl/stubs/setrlimit.c $
+    ../../native_client/src/untrusted/nacl/stubs/setsid.c $
+    ../../native_client/src/untrusted/nacl/stubs/setsockopt.c $
+    ../../native_client/src/untrusted/nacl/stubs/settimeofday.c $
+    ../../native_client/src/untrusted/nacl/stubs/setuid.c $
+    ../../native_client/src/untrusted/nacl/stubs/shutdown.c $
+    ../../native_client/src/untrusted/nacl/stubs/sigaction.c $
+    ../../native_client/src/untrusted/nacl/stubs/signal.c $
+    ../../native_client/src/untrusted/nacl/stubs/sigsuspend.c $
+    ../../native_client/src/untrusted/nacl/stubs/sigvec.c $
+    ../../native_client/src/untrusted/nacl/stubs/socket.c $
+    ../../native_client/src/untrusted/nacl/stubs/socketpair.c $
+    ../../native_client/src/untrusted/nacl/stubs/statvfs.c $
+    ../../native_client/src/untrusted/nacl/stubs/syslog.c $
+    ../../native_client/src/untrusted/nacl/stubs/tcdrain.c $
+    ../../native_client/src/untrusted/nacl/stubs/tcflow.c $
+    ../../native_client/src/untrusted/nacl/stubs/tcflush.c $
+    ../../native_client/src/untrusted/nacl/stubs/tcgetattr.c $
+    ../../native_client/src/untrusted/nacl/stubs/tcsendbreak.c $
+    ../../native_client/src/untrusted/nacl/stubs/tcsetattr.c $
+    ../../native_client/src/untrusted/nacl/stubs/times.c $
+    ../../native_client/src/untrusted/nacl/stubs/ttyname.c $
+    ../../native_client/src/untrusted/nacl/stubs/ttyname_r.c $
+    ../../native_client/src/untrusted/nacl/stubs/umask.c $
+    ../../native_client/src/untrusted/nacl/stubs/vfork.c $
+    ../../native_client/src/untrusted/nacl/stubs/wait.c $
+    ../../native_client/src/untrusted/nacl/stubs/waitpid.c $
+    ../../native_client/src/untrusted/nacl/symlink.c $
+    ../../native_client/src/untrusted/nacl/sysconf.c $
+    ../../native_client/src/untrusted/nacl/tls.c $
+    ../../native_client/src/untrusted/nacl/tls.h $
+    ../../native_client/src/untrusted/nacl/tls_params.h $
+    ../../native_client/src/untrusted/nacl/truncate.c $
+    ../../native_client/src/untrusted/nacl/uname.c $
+    ../../native_client/src/untrusted/nacl/unlink.c $
+    ../../native_client/src/untrusted/nacl/utime.c $
+    ../../native_client/src/untrusted/nacl/utimes.c $
+    ../../native_client/src/untrusted/nacl/write.c $
+    ../../out/gypfiles/native_client/src/untrusted/nacl/irt-x86-64.nacl_lib_newlib.source_list.gypcmd $
+    ../../native_client/toolchain/linux_x86/pnacl_newlib/pnacl_newlib.json
+
+rule $
+    nacl_lib_newlib_target_build_newlib_x86_32_nlib_34595b1baf6b0067c0d7da5211c629a9
+  command = cd ../../native_client/src/untrusted/nacl; python $
+      ../../../../native_client/build/build_nexe.py --root ../../../.. $
+      --product-dir ../../../../out/Release/xyz --config-name Release -t $
+      ../../../../native_client/toolchain/ --arch x86-32 --build $
+      newlib_nlib --name $
+      ../../../../out/Release/gen/tc_newlib/lib32/libnacl.a --objdir $
+      ../../../../out/Release/obj/native_client/src/untrusted/nacl/nacl_lib_newlib.gen/newlib-x86-32/nacl_lib_newlib $
+      "--include-dirs=../../../../out/Release/gen/tc_newlib/include $
+      ../../../.. \"../../../../out/Release/gen\" ../../../src/third_party $
+      ../../../.." "--compile_flags=-m32  -O2 -g -Wall $
+      -fdiagnostics-show-option -Werror " --gomadir "" $
+      "--defines=\"__STDC_LIMIT_MACROS=1\" \"__STDC_FORMAT_MACROS=1\" $
+      \"_GNU_SOURCE=1\" \"_POSIX_C_SOURCE=199506\" \"_XOPEN_SOURCE=600\" $
+      \"DYNAMIC_ANNOTATIONS_ENABLED=1\" $
+      \"DYNAMIC_ANNOTATIONS_PREFIX=NACL_\" \"NACL_BUILD_ARCH=x86\" $
+      V8_DEPRECATION_WARNINGS \"CLD_VERSION=2\" \"_FILE_OFFSET_BITS=64\" $
+      \"_POSIX_C_SOURCE=199506\" \"_XOPEN_SOURCE=600\" \"_GNU_SOURCE=1\" $
+      \"__STDC_LIMIT_MACROS=1\" CHROMIUM_BUILD $
+      \"CR_CLANG_REVISION=255169-1\" UI_COMPOSITOR_IMAGE_TRANSPORT $
+      \"USE_AURA=1\" \"USE_ASH=1\" \"USE_PANGO=1\" \"USE_CAIRO=1\" $
+      \"USE_DEFAULT_RENDER_THEME=1\" \"USE_LIBJPEG_TURBO=1\" \"USE_X11=1\" $
+      \"USE_CLIPBOARD_AURAX11=1\" ENABLE_ONE_CLICK_SIGNIN $
+      \"ENABLE_WEBRTC=1\" \"ENABLE_MEDIA_ROUTER=1\" ENABLE_PEPPER_CDMS $
+      ENABLE_CONFIGURATION_POLICY ENABLE_NOTIFICATIONS \"ENABLE_HIDPI=1\" $
+      \"ENABLE_TOPCHROME_MD=1\" USE_UDEV DONT_EMBED_BUILD_METADATA $
+      FIELDTRIAL_TESTING_ENABLED \"ENABLE_TASK_MANAGER=1\" $
+      \"ENABLE_EXTENSIONS=1\" \"ENABLE_PDF=1\" \"ENABLE_PLUGINS=1\" $
+      \"ENABLE_SESSION_SERVICE=1\" \"ENABLE_THEMES=1\" $
+      \"ENABLE_AUTOFILL_DIALOG=1\" \"ENABLE_BACKGROUND=1\" $
+      \"ENABLE_PRINTING=1\" \"ENABLE_BASIC_PRINTING=1\" $
+      \"ENABLE_PRINT_PREVIEW=1\" \"ENABLE_SPELLCHECK=1\" $
+      \"ENABLE_CAPTIVE_PORTAL_DETECTION=1\" \"ENABLE_APP_LIST=1\" $
+      \"ENABLE_SETTINGS_APP=1\" \"ENABLE_SUPERVISED_USERS=1\" $
+      \"ENABLE_MDNS=1\" \"ENABLE_SERVICE_DISCOVERY=1\" $
+      V8_USE_EXTERNAL_STARTUP_DATA FULL_SAFE_BROWSING SAFE_BROWSING_CSD $
+      SAFE_BROWSING_DB_LOCAL \"USE_LIBPCI=1\" \"USE_OPENSSL=1\" $
+      \"USE_GLIB=1\" \"USE_NSS_CERTS=1\"" "--link_flags=-m32 $
+      -B../../../../out/Release/gen/tc_newlib/lib32  " $
+      "--source-list=../../../../out/gypfiles/native_client/src/untrusted/nacl/newlib-x86-32.nacl_lib_newlib.source_list.gypcmd"
+  description = ACTION nacl_lib_newlib: build newlib x86-32 $
+      nlib_34595b1baf6b0067c0d7da5211c629a9
+  restat = 1
+
+build gen/tc_newlib/lib32/libnacl.a: $
+    nacl_lib_newlib_target_build_newlib_x86_32_nlib_34595b1baf6b0067c0d7da5211c629a9 $
+    ../../native_client/build/build_nexe.py $
+    ../../native_client/build/build_nexe_tools.py $
+    ../../../../../../../../usr/include/_G_config.h $
+    ../../../../../../../../usr/include/alloca.h $
+    ../../../../../../../../usr/include/asm-generic/errno-base.h $
+    ../../../../../../../../usr/include/asm-generic/errno.h $
+    ../../../../../../../../usr/include/asm/errno.h $
+    ../../../../../../../../usr/include/bits/byteswap-16.h $
+    ../../../../../../../../usr/include/bits/byteswap.h $
+    ../../../../../../../../usr/include/bits/confname.h $
+    ../../../../../../../../usr/include/bits/endian.h $
+    ../../../../../../../../usr/include/bits/environments.h $
+    ../../../../../../../../usr/include/bits/errno.h $
+    ../../../../../../../../usr/include/bits/libc-lock.h $
+    ../../../../../../../../usr/include/bits/libio-ldbl.h $
+    ../../../../../../../../usr/include/bits/posix_opt.h $
+    ../../../../../../../../usr/include/bits/pthreadtypes.h $
+    ../../../../../../../../usr/include/bits/sched.h $
+    ../../../../../../../../usr/include/bits/select.h $
+    ../../../../../../../../usr/include/bits/select2.h $
+    ../../../../../../../../usr/include/bits/setjmp.h $
+    ../../../../../../../../usr/include/bits/sigset.h $
+    ../../../../../../../../usr/include/bits/stat.h $
+    ../../../../../../../../usr/include/bits/stdio-ldbl.h $
+    ../../../../../../../../usr/include/bits/stdio-lock.h $
+    ../../../../../../../../usr/include/bits/stdio.h $
+    ../../../../../../../../usr/include/bits/stdio2.h $
+    ../../../../../../../../usr/include/bits/stdio_lim.h $
+    ../../../../../../../../usr/include/bits/stdlib-bsearch.h $
+    ../../../../../../../../usr/include/bits/stdlib-float.h $
+    ../../../../../../../../usr/include/bits/stdlib-ldbl.h $
+    ../../../../../../../../usr/include/bits/stdlib.h $
+    ../../../../../../../../usr/include/bits/string.h $
+    ../../../../../../../../usr/include/bits/string2.h $
+    ../../../../../../../../usr/include/bits/string3.h $
+    ../../../../../../../../usr/include/bits/sys_errlist.h $
+    ../../../../../../../../usr/include/bits/time.h $
+    ../../../../../../../../usr/include/bits/timex.h $
+    ../../../../../../../../usr/include/bits/types.h $
+    ../../../../../../../../usr/include/bits/typesizes.h $
+    ../../../../../../../../usr/include/bits/unistd.h $
+    ../../../../../../../../usr/include/bits/waitflags.h $
+    ../../../../../../../../usr/include/bits/waitstatus.h $
+    ../../../../../../../../usr/include/bits/wchar-ldbl.h $
+    ../../../../../../../../usr/include/bits/wchar.h $
+    ../../../../../../../../usr/include/bits/wchar2.h $
+    ../../../../../../../../usr/include/bits/wordsize.h $
+    ../../../../../../../../usr/include/ctype.h $
+    ../../../../../../../../usr/include/endian.h $
+    ../../../../../../../../usr/include/errno.h $
+    ../../../../../../../../usr/include/features.h $
+    ../../../../../../../../usr/include/gconv.h $
+    ../../../../../../../../usr/include/getopt.h $
+    ../../../../../../../../usr/include/gnu/option-groups.h $
+    ../../../../../../../../usr/include/gnu/stubs-32.h $
+    ../../../../../../../../usr/include/gnu/stubs-64.h $
+    ../../../../../../../../usr/include/gnu/stubs-x32.h $
+    ../../../../../../../../usr/include/gnu/stubs.h $
+    ../../../../../../../../usr/include/libio.h $
+    ../../../../../../../../usr/include/linux/errno.h $
+    ../../../../../../../../usr/include/linux/stddef.h $
+    ../../../../../../../../usr/include/malloc.h $
+    ../../../../../../../../usr/include/pthread.h $
+    ../../../../../../../../usr/include/sched.h $
+    ../../../../../../../../usr/include/stdc-predef.h $
+    ../../../../../../../../usr/include/stdint.h $
+    ../../../../../../../../usr/include/stdio.h $
+    ../../../../../../../../usr/include/stdlib.h $
+    ../../../../../../../../usr/include/string.h $
+    ../../../../../../../../usr/include/sys/cdefs.h $
+    ../../../../../../../../usr/include/sys/select.h $
+    ../../../../../../../../usr/include/sys/stat.h $
+    ../../../../../../../../usr/include/sys/sysmacros.h $
+    ../../../../../../../../usr/include/sys/time.h $
+    ../../../../../../../../usr/include/sys/types.h $
+    ../../../../../../../../usr/include/sys/unistd.h $
+    ../../../../../../../../usr/include/time.h $
+    ../../../../../../../../usr/include/unistd.h $
+    ../../../../../../../../usr/include/wchar.h $
+    ../../../../../../../../usr/include/wctype.h $
+    ../../../../../../../../usr/include/xlocale.h $
+    ../../native_client/src/include/build_config.h $
+    ../../native_client/src/include/elf32.h $
+    ../../native_client/src/include/elf64.h $
+    ../../native_client/src/include/elf_auxv.h $
+    ../../native_client/src/include/elf_constants.h $
+    ../../native_client/src/include/nacl_base.h $
+    ../../native_client/src/include/nacl_compiler_annotations.h $
+    ../../native_client/src/include/nacl_macros.h $
+    ../../native_client/src/include/portability.h $
+    ../../native_client/src/include/win/port_win.h $
+    ../../native_client/src/public/linux_syscalls/sys/socket.h $
+    ../../native_client/src/third_party/dlmalloc/malloc.c $
+    ../../native_client/src/third_party/valgrind/memcheck.h $
+    ../../native_client/src/third_party/valgrind/valgrind.h $
+    ../../native_client/src/trusted/service_runtime/include/bits/limits.h $
+    ../../native_client/src/trusted/service_runtime/include/bits/wordsize.h $
+    ../../native_client/src/untrusted/irt/irt.h $
+    ../../native_client/src/untrusted/irt/irt_dev.h $
+    ../../native_client/src/untrusted/irt/irt_extension.h $
+    ../../native_client/src/untrusted/irt/irt_interfaces.h $
+    ../../native_client/src/untrusted/nacl/_exit.c $
+    ../../native_client/src/untrusted/nacl/abort.c $
+    ../../native_client/src/untrusted/nacl/access.c $
+    ../../native_client/src/untrusted/nacl/chdir.c $
+    ../../native_client/src/untrusted/nacl/chmod.c $
+    ../../native_client/src/untrusted/nacl/clock.c $
+    ../../native_client/src/untrusted/nacl/clock_getres.c $
+    ../../native_client/src/untrusted/nacl/clock_gettime.c $
+    ../../native_client/src/untrusted/nacl/close.c $
+    ../../native_client/src/untrusted/nacl/dup.c $
+    ../../native_client/src/untrusted/nacl/eaccess.c $
+    ../../native_client/src/untrusted/nacl/fchdir.c $
+    ../../native_client/src/untrusted/nacl/fchmod.c $
+    ../../native_client/src/untrusted/nacl/fdatasync.c $
+    ../../native_client/src/untrusted/nacl/fstat.c $
+    ../../native_client/src/untrusted/nacl/fsync.c $
+    ../../native_client/src/untrusted/nacl/ftruncate.c $
+    ../../native_client/src/untrusted/nacl/gc_hooks.c $
+    ../../native_client/src/untrusted/nacl/gc_hooks.h $
+    ../../native_client/src/untrusted/nacl/getcwd.c $
+    ../../native_client/src/untrusted/nacl/getcwd.h $
+    ../../native_client/src/untrusted/nacl/getcwd_without_malloc.c $
+    ../../native_client/src/untrusted/nacl/getdents.c $
+    ../../native_client/src/untrusted/nacl/gethostname.c $
+    ../../native_client/src/untrusted/nacl/getpagesize.c $
+    ../../native_client/src/untrusted/nacl/getpid.c $
+    ../../native_client/src/untrusted/nacl/gettimeofday.c $
+    ../../native_client/src/untrusted/nacl/htonl.c $
+    ../../native_client/src/untrusted/nacl/htons.c $
+    ../../native_client/src/untrusted/nacl/include/sys/utsname.h $
+    ../../native_client/src/untrusted/nacl/isatty.c $
+    ../../native_client/src/untrusted/nacl/link.c $
+    ../../native_client/src/untrusted/nacl/lock.c $
+    ../../native_client/src/untrusted/nacl/lseek.c $
+    ../../native_client/src/untrusted/nacl/lstat.c $
+    ../../native_client/src/untrusted/nacl/malloc.c $
+    ../../native_client/src/untrusted/nacl/mkdir.c $
+    ../../native_client/src/untrusted/nacl/mmap.c $
+    ../../native_client/src/untrusted/nacl/mprotect.c $
+    ../../native_client/src/untrusted/nacl/munmap.c $
+    ../../native_client/src/untrusted/nacl/nacl_add_tp.c $
+    ../../native_client/src/untrusted/nacl/nacl_ext_supply.c $
+    ../../native_client/src/untrusted/nacl/nacl_interface_query.c $
+    ../../native_client/src/untrusted/nacl/nacl_irt.c $
+    ../../native_client/src/untrusted/nacl/nacl_irt.h $
+    ../../native_client/src/untrusted/nacl/nacl_irt_fdio.c $
+    ../../native_client/src/untrusted/nacl/nacl_irt_filename.c $
+    ../../native_client/src/untrusted/nacl/nacl_irt_init.c $
+    ../../native_client/src/untrusted/nacl/nacl_random.c $
+    ../../native_client/src/untrusted/nacl/nacl_read_tp.c $
+    ../../native_client/src/untrusted/nacl/nacl_startup.h $
+    ../../native_client/src/untrusted/nacl/nacl_thread.h $
+    ../../native_client/src/untrusted/nacl/nacl_tls_get.c $
+    ../../native_client/src/untrusted/nacl/nacl_tls_init.c $
+    ../../native_client/src/untrusted/nacl/nanosleep.c $
+    ../../native_client/src/untrusted/nacl/ntohl.c $
+    ../../native_client/src/untrusted/nacl/ntohs.c $
+    ../../native_client/src/untrusted/nacl/open.c $
+    ../../native_client/src/untrusted/nacl/pthread_initialize_minimal.c $
+    ../../native_client/src/untrusted/nacl/pthread_stubs.c $
+    ../../native_client/src/untrusted/nacl/random.c $
+    ../../native_client/src/untrusted/nacl/read.c $
+    ../../native_client/src/untrusted/nacl/readlink.c $
+    ../../native_client/src/untrusted/nacl/rename.c $
+    ../../native_client/src/untrusted/nacl/rmdir.c $
+    ../../native_client/src/untrusted/nacl/sbrk.c $
+    ../../native_client/src/untrusted/nacl/sched_yield.c $
+    ../../native_client/src/untrusted/nacl/sigblock.c $
+    ../../native_client/src/untrusted/nacl/siggetmask.c $
+    ../../native_client/src/untrusted/nacl/sigmask.c $
+    ../../native_client/src/untrusted/nacl/sigprocmask.c $
+    ../../native_client/src/untrusted/nacl/sigsetmask.c $
+    ../../native_client/src/untrusted/nacl/srandom.c $
+    ../../native_client/src/untrusted/nacl/stacktrace.c $
+    ../../native_client/src/untrusted/nacl/start.c $
+    ../../native_client/src/untrusted/nacl/start.h $
+    ../../native_client/src/untrusted/nacl/stat.c $
+    ../../native_client/src/untrusted/nacl/stubs/_execve.c $
+    ../../native_client/src/untrusted/nacl/stubs/accept.c $
+    ../../native_client/src/untrusted/nacl/stubs/addmntent.c $
+    ../../native_client/src/untrusted/nacl/stubs/bind.c $
+    ../../native_client/src/untrusted/nacl/stubs/chown.c $
+    ../../native_client/src/untrusted/nacl/stubs/closelog.c $
+    ../../native_client/src/untrusted/nacl/stubs/connect.c $
+    ../../native_client/src/untrusted/nacl/stubs/endgrent.c $
+    ../../native_client/src/untrusted/nacl/stubs/endmntent.c $
+    ../../native_client/src/untrusted/nacl/stubs/endpwent.c $
+    ../../native_client/src/untrusted/nacl/stubs/environ.c $
+    ../../native_client/src/untrusted/nacl/stubs/execvpe.c $
+    ../../native_client/src/untrusted/nacl/stubs/fchown.c $
+    ../../native_client/src/untrusted/nacl/stubs/fcntl.c $
+    ../../native_client/src/untrusted/nacl/stubs/fork.c $
+    ../../native_client/src/untrusted/nacl/stubs/freeaddrinfo.c $
+    ../../native_client/src/untrusted/nacl/stubs/fstatvfs.c $
+    ../../native_client/src/untrusted/nacl/stubs/gai_strerror.c $
+    ../../native_client/src/untrusted/nacl/stubs/get_current_dir_name.c $
+    ../../native_client/src/untrusted/nacl/stubs/getaddrinfo.c $
+    ../../native_client/src/untrusted/nacl/stubs/getdtablesize.c $
+    ../../native_client/src/untrusted/nacl/stubs/getegid.c $
+    ../../native_client/src/untrusted/nacl/stubs/geteuid.c $
+    ../../native_client/src/untrusted/nacl/stubs/getgid.c $
+    ../../native_client/src/untrusted/nacl/stubs/getgrent.c $
+    ../../native_client/src/untrusted/nacl/stubs/getgrgid.c $
+    ../../native_client/src/untrusted/nacl/stubs/getgrgid_r.c $
+    ../../native_client/src/untrusted/nacl/stubs/getgrnam.c $
+    ../../native_client/src/untrusted/nacl/stubs/getgroups.c $
+    ../../native_client/src/untrusted/nacl/stubs/gethostbyaddr.c $
+    ../../native_client/src/untrusted/nacl/stubs/gethostbyname.c $
+    ../../native_client/src/untrusted/nacl/stubs/getlogin.c $
+    ../../native_client/src/untrusted/nacl/stubs/getmntent.c $
+    ../../native_client/src/untrusted/nacl/stubs/getnameinfo.c $
+    ../../native_client/src/untrusted/nacl/stubs/getpeername.c $
+    ../../native_client/src/untrusted/nacl/stubs/getpgrp.c $
+    ../../native_client/src/untrusted/nacl/stubs/getppid.c $
+    ../../native_client/src/untrusted/nacl/stubs/getpwent.c $
+    ../../native_client/src/untrusted/nacl/stubs/getpwnam.c $
+    ../../native_client/src/untrusted/nacl/stubs/getpwnam_r.c $
+    ../../native_client/src/untrusted/nacl/stubs/getpwuid.c $
+    ../../native_client/src/untrusted/nacl/stubs/getpwuid_r.c $
+    ../../native_client/src/untrusted/nacl/stubs/getrlimit.c $
+    ../../native_client/src/untrusted/nacl/stubs/getrusage.c $
+    ../../native_client/src/untrusted/nacl/stubs/getservbyname.c $
+    ../../native_client/src/untrusted/nacl/stubs/getservbyport.c $
+    ../../native_client/src/untrusted/nacl/stubs/getsockname.c $
+    ../../native_client/src/untrusted/nacl/stubs/getsockopt.c $
+    ../../native_client/src/untrusted/nacl/stubs/getuid.c $
+    ../../native_client/src/untrusted/nacl/stubs/getwd.c $
+    ../../native_client/src/untrusted/nacl/stubs/hasmntopt.c $
+    ../../native_client/src/untrusted/nacl/stubs/if_freenameindex.c $
+    ../../native_client/src/untrusted/nacl/stubs/if_indextoname.c $
+    ../../native_client/src/untrusted/nacl/stubs/if_nameindex.c $
+    ../../native_client/src/untrusted/nacl/stubs/if_nametoindex.c $
+    ../../native_client/src/untrusted/nacl/stubs/inet_ntoa.c $
+    ../../native_client/src/untrusted/nacl/stubs/inet_ntop.c $
+    ../../native_client/src/untrusted/nacl/stubs/initgroups.c $
+    ../../native_client/src/untrusted/nacl/stubs/ioctl.c $
+    ../../native_client/src/untrusted/nacl/stubs/issetugid.c $
+    ../../native_client/src/untrusted/nacl/stubs/kill.c $
+    ../../native_client/src/untrusted/nacl/stubs/lchown.c $
+    ../../native_client/src/untrusted/nacl/stubs/listen.c $
+    ../../native_client/src/untrusted/nacl/stubs/llseek.c $
+    ../../native_client/src/untrusted/nacl/stubs/major.c $
+    ../../native_client/src/untrusted/nacl/stubs/makedev.c $
+    ../../native_client/src/untrusted/nacl/stubs/minor.c $
+    ../../native_client/src/untrusted/nacl/stubs/mkfifo.c $
+    ../../native_client/src/untrusted/nacl/stubs/mknod.c $
+    ../../native_client/src/untrusted/nacl/stubs/msync.c $
+    ../../native_client/src/untrusted/nacl/stubs/openlog.c $
+    ../../native_client/src/untrusted/nacl/stubs/pipe.c $
+    ../../native_client/src/untrusted/nacl/stubs/poll.c $
+    ../../native_client/src/untrusted/nacl/stubs/pselect.c $
+    ../../native_client/src/untrusted/nacl/stubs/pthread_sigmask.c $
+    ../../native_client/src/untrusted/nacl/stubs/readv.c $
+    ../../native_client/src/untrusted/nacl/stubs/recv.c $
+    ../../native_client/src/untrusted/nacl/stubs/recvfrom.c $
+    ../../native_client/src/untrusted/nacl/stubs/recvmsg.c $
+    ../../native_client/src/untrusted/nacl/stubs/sched_get_priority_max.c $
+    ../../native_client/src/untrusted/nacl/stubs/sched_get_priority_min.c $
+    ../../native_client/src/untrusted/nacl/stubs/sched_setparam.c $
+    ../../native_client/src/untrusted/nacl/stubs/sched_setscheduler.c $
+    ../../native_client/src/untrusted/nacl/stubs/select.c $
+    ../../native_client/src/untrusted/nacl/stubs/send.c $
+    ../../native_client/src/untrusted/nacl/stubs/sendmsg.c $
+    ../../native_client/src/untrusted/nacl/stubs/sendto.c $
+    ../../native_client/src/untrusted/nacl/stubs/setegid.c $
+    ../../native_client/src/untrusted/nacl/stubs/seteuid.c $
+    ../../native_client/src/untrusted/nacl/stubs/setgid.c $
+    ../../native_client/src/untrusted/nacl/stubs/setgrent.c $
+    ../../native_client/src/untrusted/nacl/stubs/setgroups.c $
+    ../../native_client/src/untrusted/nacl/stubs/setmntent.c $
+    ../../native_client/src/untrusted/nacl/stubs/setpgid.c $
+    ../../native_client/src/untrusted/nacl/stubs/setpwent.c $
+    ../../native_client/src/untrusted/nacl/stubs/setrlimit.c $
+    ../../native_client/src/untrusted/nacl/stubs/setsid.c $
+    ../../native_client/src/untrusted/nacl/stubs/setsockopt.c $
+    ../../native_client/src/untrusted/nacl/stubs/settimeofday.c $
+    ../../native_client/src/untrusted/nacl/stubs/setuid.c $
+    ../../native_client/src/untrusted/nacl/stubs/shutdown.c $
+    ../../native_client/src/untrusted/nacl/stubs/sigaction.c $
+    ../../native_client/src/untrusted/nacl/stubs/signal.c $
+    ../../native_client/src/untrusted/nacl/stubs/sigsuspend.c $
+    ../../native_client/src/untrusted/nacl/stubs/sigvec.c $
+    ../../native_client/src/untrusted/nacl/stubs/socket.c $
+    ../../native_client/src/untrusted/nacl/stubs/socketpair.c $
+    ../../native_client/src/untrusted/nacl/stubs/statvfs.c $
+    ../../native_client/src/untrusted/nacl/stubs/syslog.c $
+    ../../native_client/src/untrusted/nacl/stubs/tcdrain.c $
+    ../../native_client/src/untrusted/nacl/stubs/tcflow.c $
+    ../../native_client/src/untrusted/nacl/stubs/tcflush.c $
+    ../../native_client/src/untrusted/nacl/stubs/tcgetattr.c $
+    ../../native_client/src/untrusted/nacl/stubs/tcsendbreak.c $
+    ../../native_client/src/untrusted/nacl/stubs/tcsetattr.c $
+    ../../native_client/src/untrusted/nacl/stubs/times.c $
+    ../../native_client/src/untrusted/nacl/stubs/ttyname.c $
+    ../../native_client/src/untrusted/nacl/stubs/ttyname_r.c $
+    ../../native_client/src/untrusted/nacl/stubs/umask.c $
+    ../../native_client/src/untrusted/nacl/stubs/vfork.c $
+    ../../native_client/src/untrusted/nacl/stubs/wait.c $
+    ../../native_client/src/untrusted/nacl/stubs/waitpid.c $
+    ../../native_client/src/untrusted/nacl/symlink.c $
+    ../../native_client/src/untrusted/nacl/sysconf.c $
+    ../../native_client/src/untrusted/nacl/tls.c $
+    ../../native_client/src/untrusted/nacl/tls.h $
+    ../../native_client/src/untrusted/nacl/tls_params.h $
+    ../../native_client/src/untrusted/nacl/truncate.c $
+    ../../native_client/src/untrusted/nacl/uname.c $
+    ../../native_client/src/untrusted/nacl/unlink.c $
+    ../../native_client/src/untrusted/nacl/utime.c $
+    ../../native_client/src/untrusted/nacl/utimes.c $
+    ../../native_client/src/untrusted/nacl/write.c $
+    ../../out/gypfiles/native_client/src/untrusted/nacl/newlib-x86-32.nacl_lib_newlib.source_list.gypcmd $
+    ../../native_client/toolchain/linux_x86/nacl_x86_newlib/nacl_x86_newlib.json
+
+rule $
+    nacl_lib_newlib_target_build_IRT_x86_32_nlib_34595b1baf6b0067c0d7da5211c629a9
+  command = cd ../../native_client/src/untrusted/nacl; python $
+      ../../../../native_client/build/build_nexe.py --root ../../../.. $
+      --product-dir ../../../../out/Release/xyz --config-name Release -t $
+      ../../../../native_client/toolchain/ --arch x86-32 --build $
+      newlib_nlib_clang --name $
+      ../../../../out/Release/gen/tc_irt/lib32/libnacl.a --objdir $
+      ../../../../out/Release/obj/native_client/src/untrusted/nacl/nacl_lib_newlib.gen/irt-x86-32/nacl_lib_newlib $
+      "--include-dirs=../../../../out/Release/gen/tc_newlib/include $
+      ../../../.. \"../../../../out/Release/gen\" ../../../src/third_party $
+      ../../../.." "--compile_flags=-m32 -mstackrealign -mno-sse -O2 -g $
+      -Wall -fdiagnostics-show-option -Werror  -Wno-unused-function $
+      -Wno-char-subscripts -Wno-c++11-extensions $
+      -Wno-unnamed-type-template-args -Wno-extra-semi $
+      -Wno-unused-private-field -Wno-char-subscripts -Wno-unused-function $
+      \"-std=gnu++11\"  -Os -fno-exceptions -ffunction-sections $
+      -fdata-sections -fasynchronous-unwind-tables -fomit-frame-pointer $
+      -integrated-as" --gomadir "" "--defines=\"__STDC_LIMIT_MACROS=1\" $
+      \"__STDC_FORMAT_MACROS=1\" \"_GNU_SOURCE=1\" $
+      \"_POSIX_C_SOURCE=199506\" \"_XOPEN_SOURCE=600\" $
+      \"DYNAMIC_ANNOTATIONS_ENABLED=1\" $
+      \"DYNAMIC_ANNOTATIONS_PREFIX=NACL_\" \"NACL_BUILD_ARCH=x86\" $
+      V8_DEPRECATION_WARNINGS \"CLD_VERSION=2\" \"_FILE_OFFSET_BITS=64\" $
+      \"_POSIX_C_SOURCE=199506\" \"_XOPEN_SOURCE=600\" \"_GNU_SOURCE=1\" $
+      \"__STDC_LIMIT_MACROS=1\" CHROMIUM_BUILD $
+      \"CR_CLANG_REVISION=255169-1\" UI_COMPOSITOR_IMAGE_TRANSPORT $
+      \"USE_AURA=1\" \"USE_ASH=1\" \"USE_PANGO=1\" \"USE_CAIRO=1\" $
+      \"USE_DEFAULT_RENDER_THEME=1\" \"USE_LIBJPEG_TURBO=1\" \"USE_X11=1\" $
+      \"USE_CLIPBOARD_AURAX11=1\" ENABLE_ONE_CLICK_SIGNIN $
+      \"ENABLE_WEBRTC=1\" \"ENABLE_MEDIA_ROUTER=1\" ENABLE_PEPPER_CDMS $
+      ENABLE_CONFIGURATION_POLICY ENABLE_NOTIFICATIONS \"ENABLE_HIDPI=1\" $
+      \"ENABLE_TOPCHROME_MD=1\" USE_UDEV DONT_EMBED_BUILD_METADATA $
+      FIELDTRIAL_TESTING_ENABLED \"ENABLE_TASK_MANAGER=1\" $
+      \"ENABLE_EXTENSIONS=1\" \"ENABLE_PDF=1\" \"ENABLE_PLUGINS=1\" $
+      \"ENABLE_SESSION_SERVICE=1\" \"ENABLE_THEMES=1\" $
+      \"ENABLE_AUTOFILL_DIALOG=1\" \"ENABLE_BACKGROUND=1\" $
+      \"ENABLE_PRINTING=1\" \"ENABLE_BASIC_PRINTING=1\" $
+      \"ENABLE_PRINT_PREVIEW=1\" \"ENABLE_SPELLCHECK=1\" $
+      \"ENABLE_CAPTIVE_PORTAL_DETECTION=1\" \"ENABLE_APP_LIST=1\" $
+      \"ENABLE_SETTINGS_APP=1\" \"ENABLE_SUPERVISED_USERS=1\" $
+      \"ENABLE_MDNS=1\" \"ENABLE_SERVICE_DISCOVERY=1\" $
+      V8_USE_EXTERNAL_STARTUP_DATA FULL_SAFE_BROWSING SAFE_BROWSING_CSD $
+      SAFE_BROWSING_DB_LOCAL \"USE_LIBPCI=1\" \"USE_OPENSSL=1\" $
+      \"USE_GLIB=1\" \"USE_NSS_CERTS=1\"" "--link_flags=-m32 $
+      -B../../../../out/Release/gen/tc_irt/lib32   -Wl,--gc-sections $
+      -nodefaultlibs -lc++ -lm -lirt_browser -Wl,--start-group -lc -lnacl $
+      -lgcc -lgcc_eh -Wl,--end-group" $
+      "--source-list=../../../../out/gypfiles/native_client/src/untrusted/nacl/irt-x86-32.nacl_lib_newlib.source_list.gypcmd"
+  description = ACTION nacl_lib_newlib: build IRT x86-32 $
+      nlib_34595b1baf6b0067c0d7da5211c629a9
+  restat = 1
+
+build gen/tc_irt/lib32/libnacl.a: $
+    nacl_lib_newlib_target_build_IRT_x86_32_nlib_34595b1baf6b0067c0d7da5211c629a9 $
+    ../../native_client/build/build_nexe.py $
+    ../../native_client/build/build_nexe_tools.py $
+    ../../../../../../../../usr/include/_G_config.h $
+    ../../../../../../../../usr/include/alloca.h $
+    ../../../../../../../../usr/include/asm-generic/errno-base.h $
+    ../../../../../../../../usr/include/asm-generic/errno.h $
+    ../../../../../../../../usr/include/asm/errno.h $
+    ../../../../../../../../usr/include/bits/byteswap-16.h $
+    ../../../../../../../../usr/include/bits/byteswap.h $
+    ../../../../../../../../usr/include/bits/confname.h $
+    ../../../../../../../../usr/include/bits/endian.h $
+    ../../../../../../../../usr/include/bits/environments.h $
+    ../../../../../../../../usr/include/bits/errno.h $
+    ../../../../../../../../usr/include/bits/libc-lock.h $
+    ../../../../../../../../usr/include/bits/libio-ldbl.h $
+    ../../../../../../../../usr/include/bits/posix_opt.h $
+    ../../../../../../../../usr/include/bits/pthreadtypes.h $
+    ../../../../../../../../usr/include/bits/sched.h $
+    ../../../../../../../../usr/include/bits/select.h $
+    ../../../../../../../../usr/include/bits/select2.h $
+    ../../../../../../../../usr/include/bits/setjmp.h $
+    ../../../../../../../../usr/include/bits/sigset.h $
+    ../../../../../../../../usr/include/bits/stat.h $
+    ../../../../../../../../usr/include/bits/stdio-ldbl.h $
+    ../../../../../../../../usr/include/bits/stdio-lock.h $
+    ../../../../../../../../usr/include/bits/stdio.h $
+    ../../../../../../../../usr/include/bits/stdio2.h $
+    ../../../../../../../../usr/include/bits/stdio_lim.h $
+    ../../../../../../../../usr/include/bits/stdlib-bsearch.h $
+    ../../../../../../../../usr/include/bits/stdlib-float.h $
+    ../../../../../../../../usr/include/bits/stdlib-ldbl.h $
+    ../../../../../../../../usr/include/bits/stdlib.h $
+    ../../../../../../../../usr/include/bits/string.h $
+    ../../../../../../../../usr/include/bits/string2.h $
+    ../../../../../../../../usr/include/bits/string3.h $
+    ../../../../../../../../usr/include/bits/sys_errlist.h $
+    ../../../../../../../../usr/include/bits/time.h $
+    ../../../../../../../../usr/include/bits/timex.h $
+    ../../../../../../../../usr/include/bits/types.h $
+    ../../../../../../../../usr/include/bits/typesizes.h $
+    ../../../../../../../../usr/include/bits/unistd.h $
+    ../../../../../../../../usr/include/bits/waitflags.h $
+    ../../../../../../../../usr/include/bits/waitstatus.h $
+    ../../../../../../../../usr/include/bits/wchar-ldbl.h $
+    ../../../../../../../../usr/include/bits/wchar.h $
+    ../../../../../../../../usr/include/bits/wchar2.h $
+    ../../../../../../../../usr/include/bits/wordsize.h $
+    ../../../../../../../../usr/include/ctype.h $
+    ../../../../../../../../usr/include/endian.h $
+    ../../../../../../../../usr/include/errno.h $
+    ../../../../../../../../usr/include/features.h $
+    ../../../../../../../../usr/include/gconv.h $
+    ../../../../../../../../usr/include/getopt.h $
+    ../../../../../../../../usr/include/gnu/option-groups.h $
+    ../../../../../../../../usr/include/gnu/stubs-32.h $
+    ../../../../../../../../usr/include/gnu/stubs-64.h $
+    ../../../../../../../../usr/include/gnu/stubs-x32.h $
+    ../../../../../../../../usr/include/gnu/stubs.h $
+    ../../../../../../../../usr/include/libio.h $
+    ../../../../../../../../usr/include/linux/errno.h $
+    ../../../../../../../../usr/include/linux/stddef.h $
+    ../../../../../../../../usr/include/malloc.h $
+    ../../../../../../../../usr/include/pthread.h $
+    ../../../../../../../../usr/include/sched.h $
+    ../../../../../../../../usr/include/stdc-predef.h $
+    ../../../../../../../../usr/include/stdint.h $
+    ../../../../../../../../usr/include/stdio.h $
+    ../../../../../../../../usr/include/stdlib.h $
+    ../../../../../../../../usr/include/string.h $
+    ../../../../../../../../usr/include/sys/cdefs.h $
+    ../../../../../../../../usr/include/sys/select.h $
+    ../../../../../../../../usr/include/sys/stat.h $
+    ../../../../../../../../usr/include/sys/sysmacros.h $
+    ../../../../../../../../usr/include/sys/time.h $
+    ../../../../../../../../usr/include/sys/types.h $
+    ../../../../../../../../usr/include/sys/unistd.h $
+    ../../../../../../../../usr/include/time.h $
+    ../../../../../../../../usr/include/unistd.h $
+    ../../../../../../../../usr/include/wchar.h $
+    ../../../../../../../../usr/include/wctype.h $
+    ../../../../../../../../usr/include/xlocale.h $
+    ../../native_client/src/include/build_config.h $
+    ../../native_client/src/include/elf32.h $
+    ../../native_client/src/include/elf64.h $
+    ../../native_client/src/include/elf_auxv.h $
+    ../../native_client/src/include/elf_constants.h $
+    ../../native_client/src/include/nacl_base.h $
+    ../../native_client/src/include/nacl_compiler_annotations.h $
+    ../../native_client/src/include/nacl_macros.h $
+    ../../native_client/src/include/portability.h $
+    ../../native_client/src/include/win/port_win.h $
+    ../../native_client/src/public/linux_syscalls/sys/socket.h $
+    ../../native_client/src/third_party/dlmalloc/malloc.c $
+    ../../native_client/src/third_party/valgrind/memcheck.h $
+    ../../native_client/src/third_party/valgrind/valgrind.h $
+    ../../native_client/src/trusted/service_runtime/include/bits/limits.h $
+    ../../native_client/src/trusted/service_runtime/include/bits/wordsize.h $
+    ../../native_client/src/untrusted/irt/irt.h $
+    ../../native_client/src/untrusted/irt/irt_dev.h $
+    ../../native_client/src/untrusted/irt/irt_extension.h $
+    ../../native_client/src/untrusted/irt/irt_interfaces.h $
+    ../../native_client/src/untrusted/nacl/_exit.c $
+    ../../native_client/src/untrusted/nacl/abort.c $
+    ../../native_client/src/untrusted/nacl/access.c $
+    ../../native_client/src/untrusted/nacl/chdir.c $
+    ../../native_client/src/untrusted/nacl/chmod.c $
+    ../../native_client/src/untrusted/nacl/clock.c $
+    ../../native_client/src/untrusted/nacl/clock_getres.c $
+    ../../native_client/src/untrusted/nacl/clock_gettime.c $
+    ../../native_client/src/untrusted/nacl/close.c $
+    ../../native_client/src/untrusted/nacl/dup.c $
+    ../../native_client/src/untrusted/nacl/eaccess.c $
+    ../../native_client/src/untrusted/nacl/fchdir.c $
+    ../../native_client/src/untrusted/nacl/fchmod.c $
+    ../../native_client/src/untrusted/nacl/fdatasync.c $
+    ../../native_client/src/untrusted/nacl/fstat.c $
+    ../../native_client/src/untrusted/nacl/fsync.c $
+    ../../native_client/src/untrusted/nacl/ftruncate.c $
+    ../../native_client/src/untrusted/nacl/gc_hooks.c $
+    ../../native_client/src/untrusted/nacl/gc_hooks.h $
+    ../../native_client/src/untrusted/nacl/getcwd.c $
+    ../../native_client/src/untrusted/nacl/getcwd.h $
+    ../../native_client/src/untrusted/nacl/getcwd_without_malloc.c $
+    ../../native_client/src/untrusted/nacl/getdents.c $
+    ../../native_client/src/untrusted/nacl/gethostname.c $
+    ../../native_client/src/untrusted/nacl/getpagesize.c $
+    ../../native_client/src/untrusted/nacl/getpid.c $
+    ../../native_client/src/untrusted/nacl/gettimeofday.c $
+    ../../native_client/src/untrusted/nacl/htonl.c $
+    ../../native_client/src/untrusted/nacl/htons.c $
+    ../../native_client/src/untrusted/nacl/include/sys/utsname.h $
+    ../../native_client/src/untrusted/nacl/isatty.c $
+    ../../native_client/src/untrusted/nacl/link.c $
+    ../../native_client/src/untrusted/nacl/lock.c $
+    ../../native_client/src/untrusted/nacl/lseek.c $
+    ../../native_client/src/untrusted/nacl/lstat.c $
+    ../../native_client/src/untrusted/nacl/malloc.c $
+    ../../native_client/src/untrusted/nacl/mkdir.c $
+    ../../native_client/src/untrusted/nacl/mmap.c $
+    ../../native_client/src/untrusted/nacl/mprotect.c $
+    ../../native_client/src/untrusted/nacl/munmap.c $
+    ../../native_client/src/untrusted/nacl/nacl_add_tp.c $
+    ../../native_client/src/untrusted/nacl/nacl_ext_supply.c $
+    ../../native_client/src/untrusted/nacl/nacl_interface_query.c $
+    ../../native_client/src/untrusted/nacl/nacl_irt.c $
+    ../../native_client/src/untrusted/nacl/nacl_irt.h $
+    ../../native_client/src/untrusted/nacl/nacl_irt_fdio.c $
+    ../../native_client/src/untrusted/nacl/nacl_irt_filename.c $
+    ../../native_client/src/untrusted/nacl/nacl_irt_init.c $
+    ../../native_client/src/untrusted/nacl/nacl_random.c $
+    ../../native_client/src/untrusted/nacl/nacl_read_tp.c $
+    ../../native_client/src/untrusted/nacl/nacl_startup.h $
+    ../../native_client/src/untrusted/nacl/nacl_thread.h $
+    ../../native_client/src/untrusted/nacl/nacl_tls_get.c $
+    ../../native_client/src/untrusted/nacl/nacl_tls_init.c $
+    ../../native_client/src/untrusted/nacl/nanosleep.c $
+    ../../native_client/src/untrusted/nacl/ntohl.c $
+    ../../native_client/src/untrusted/nacl/ntohs.c $
+    ../../native_client/src/untrusted/nacl/open.c $
+    ../../native_client/src/untrusted/nacl/pthread_initialize_minimal.c $
+    ../../native_client/src/untrusted/nacl/pthread_stubs.c $
+    ../../native_client/src/untrusted/nacl/random.c $
+    ../../native_client/src/untrusted/nacl/read.c $
+    ../../native_client/src/untrusted/nacl/readlink.c $
+    ../../native_client/src/untrusted/nacl/rename.c $
+    ../../native_client/src/untrusted/nacl/rmdir.c $
+    ../../native_client/src/untrusted/nacl/sbrk.c $
+    ../../native_client/src/untrusted/nacl/sched_yield.c $
+    ../../native_client/src/untrusted/nacl/sigblock.c $
+    ../../native_client/src/untrusted/nacl/siggetmask.c $
+    ../../native_client/src/untrusted/nacl/sigmask.c $
+    ../../native_client/src/untrusted/nacl/sigprocmask.c $
+    ../../native_client/src/untrusted/nacl/sigsetmask.c $
+    ../../native_client/src/untrusted/nacl/srandom.c $
+    ../../native_client/src/untrusted/nacl/stacktrace.c $
+    ../../native_client/src/untrusted/nacl/start.c $
+    ../../native_client/src/untrusted/nacl/start.h $
+    ../../native_client/src/untrusted/nacl/stat.c $
+    ../../native_client/src/untrusted/nacl/stubs/_execve.c $
+    ../../native_client/src/untrusted/nacl/stubs/accept.c $
+    ../../native_client/src/untrusted/nacl/stubs/addmntent.c $
+    ../../native_client/src/untrusted/nacl/stubs/bind.c $
+    ../../native_client/src/untrusted/nacl/stubs/chown.c $
+    ../../native_client/src/untrusted/nacl/stubs/closelog.c $
+    ../../native_client/src/untrusted/nacl/stubs/connect.c $
+    ../../native_client/src/untrusted/nacl/stubs/endgrent.c $
+    ../../native_client/src/untrusted/nacl/stubs/endmntent.c $
+    ../../native_client/src/untrusted/nacl/stubs/endpwent.c $
+    ../../native_client/src/untrusted/nacl/stubs/environ.c $
+    ../../native_client/src/untrusted/nacl/stubs/execvpe.c $
+    ../../native_client/src/untrusted/nacl/stubs/fchown.c $
+    ../../native_client/src/untrusted/nacl/stubs/fcntl.c $
+    ../../native_client/src/untrusted/nacl/stubs/fork.c $
+    ../../native_client/src/untrusted/nacl/stubs/freeaddrinfo.c $
+    ../../native_client/src/untrusted/nacl/stubs/fstatvfs.c $
+    ../../native_client/src/untrusted/nacl/stubs/gai_strerror.c $
+    ../../native_client/src/untrusted/nacl/stubs/get_current_dir_name.c $
+    ../../native_client/src/untrusted/nacl/stubs/getaddrinfo.c $
+    ../../native_client/src/untrusted/nacl/stubs/getdtablesize.c $
+    ../../native_client/src/untrusted/nacl/stubs/getegid.c $
+    ../../native_client/src/untrusted/nacl/stubs/geteuid.c $
+    ../../native_client/src/untrusted/nacl/stubs/getgid.c $
+    ../../native_client/src/untrusted/nacl/stubs/getgrent.c $
+    ../../native_client/src/untrusted/nacl/stubs/getgrgid.c $
+    ../../native_client/src/untrusted/nacl/stubs/getgrgid_r.c $
+    ../../native_client/src/untrusted/nacl/stubs/getgrnam.c $
+    ../../native_client/src/untrusted/nacl/stubs/getgroups.c $
+    ../../native_client/src/untrusted/nacl/stubs/gethostbyaddr.c $
+    ../../native_client/src/untrusted/nacl/stubs/gethostbyname.c $
+    ../../native_client/src/untrusted/nacl/stubs/getlogin.c $
+    ../../native_client/src/untrusted/nacl/stubs/getmntent.c $
+    ../../native_client/src/untrusted/nacl/stubs/getnameinfo.c $
+    ../../native_client/src/untrusted/nacl/stubs/getpeername.c $
+    ../../native_client/src/untrusted/nacl/stubs/getpgrp.c $
+    ../../native_client/src/untrusted/nacl/stubs/getppid.c $
+    ../../native_client/src/untrusted/nacl/stubs/getpwent.c $
+    ../../native_client/src/untrusted/nacl/stubs/getpwnam.c $
+    ../../native_client/src/untrusted/nacl/stubs/getpwnam_r.c $
+    ../../native_client/src/untrusted/nacl/stubs/getpwuid.c $
+    ../../native_client/src/untrusted/nacl/stubs/getpwuid_r.c $
+    ../../native_client/src/untrusted/nacl/stubs/getrlimit.c $
+    ../../native_client/src/untrusted/nacl/stubs/getrusage.c $
+    ../../native_client/src/untrusted/nacl/stubs/getservbyname.c $
+    ../../native_client/src/untrusted/nacl/stubs/getservbyport.c $
+    ../../native_client/src/untrusted/nacl/stubs/getsockname.c $
+    ../../native_client/src/untrusted/nacl/stubs/getsockopt.c $
+    ../../native_client/src/untrusted/nacl/stubs/getuid.c $
+    ../../native_client/src/untrusted/nacl/stubs/getwd.c $
+    ../../native_client/src/untrusted/nacl/stubs/hasmntopt.c $
+    ../../native_client/src/untrusted/nacl/stubs/if_freenameindex.c $
+    ../../native_client/src/untrusted/nacl/stubs/if_indextoname.c $
+    ../../native_client/src/untrusted/nacl/stubs/if_nameindex.c $
+    ../../native_client/src/untrusted/nacl/stubs/if_nametoindex.c $
+    ../../native_client/src/untrusted/nacl/stubs/inet_ntoa.c $
+    ../../native_client/src/untrusted/nacl/stubs/inet_ntop.c $
+    ../../native_client/src/untrusted/nacl/stubs/initgroups.c $
+    ../../native_client/src/untrusted/nacl/stubs/ioctl.c $
+    ../../native_client/src/untrusted/nacl/stubs/issetugid.c $
+    ../../native_client/src/untrusted/nacl/stubs/kill.c $
+    ../../native_client/src/untrusted/nacl/stubs/lchown.c $
+    ../../native_client/src/untrusted/nacl/stubs/listen.c $
+    ../../native_client/src/untrusted/nacl/stubs/llseek.c $
+    ../../native_client/src/untrusted/nacl/stubs/major.c $
+    ../../native_client/src/untrusted/nacl/stubs/makedev.c $
+    ../../native_client/src/untrusted/nacl/stubs/minor.c $
+    ../../native_client/src/untrusted/nacl/stubs/mkfifo.c $
+    ../../native_client/src/untrusted/nacl/stubs/mknod.c $
+    ../../native_client/src/untrusted/nacl/stubs/msync.c $
+    ../../native_client/src/untrusted/nacl/stubs/openlog.c $
+    ../../native_client/src/untrusted/nacl/stubs/pipe.c $
+    ../../native_client/src/untrusted/nacl/stubs/poll.c $
+    ../../native_client/src/untrusted/nacl/stubs/pselect.c $
+    ../../native_client/src/untrusted/nacl/stubs/pthread_sigmask.c $
+    ../../native_client/src/untrusted/nacl/stubs/readv.c $
+    ../../native_client/src/untrusted/nacl/stubs/recv.c $
+    ../../native_client/src/untrusted/nacl/stubs/recvfrom.c $
+    ../../native_client/src/untrusted/nacl/stubs/recvmsg.c $
+    ../../native_client/src/untrusted/nacl/stubs/sched_get_priority_max.c $
+    ../../native_client/src/untrusted/nacl/stubs/sched_get_priority_min.c $
+    ../../native_client/src/untrusted/nacl/stubs/sched_setparam.c $
+    ../../native_client/src/untrusted/nacl/stubs/sched_setscheduler.c $
+    ../../native_client/src/untrusted/nacl/stubs/select.c $
+    ../../native_client/src/untrusted/nacl/stubs/send.c $
+    ../../native_client/src/untrusted/nacl/stubs/sendmsg.c $
+    ../../native_client/src/untrusted/nacl/stubs/sendto.c $
+    ../../native_client/src/untrusted/nacl/stubs/setegid.c $
+    ../../native_client/src/untrusted/nacl/stubs/seteuid.c $
+    ../../native_client/src/untrusted/nacl/stubs/setgid.c $
+    ../../native_client/src/untrusted/nacl/stubs/setgrent.c $
+    ../../native_client/src/untrusted/nacl/stubs/setgroups.c $
+    ../../native_client/src/untrusted/nacl/stubs/setmntent.c $
+    ../../native_client/src/untrusted/nacl/stubs/setpgid.c $
+    ../../native_client/src/untrusted/nacl/stubs/setpwent.c $
+    ../../native_client/src/untrusted/nacl/stubs/setrlimit.c $
+    ../../native_client/src/untrusted/nacl/stubs/setsid.c $
+    ../../native_client/src/untrusted/nacl/stubs/setsockopt.c $
+    ../../native_client/src/untrusted/nacl/stubs/settimeofday.c $
+    ../../native_client/src/untrusted/nacl/stubs/setuid.c $
+    ../../native_client/src/untrusted/nacl/stubs/shutdown.c $
+    ../../native_client/src/untrusted/nacl/stubs/sigaction.c $
+    ../../native_client/src/untrusted/nacl/stubs/signal.c $
+    ../../native_client/src/untrusted/nacl/stubs/sigsuspend.c $
+    ../../native_client/src/untrusted/nacl/stubs/sigvec.c $
+    ../../native_client/src/untrusted/nacl/stubs/socket.c $
+    ../../native_client/src/untrusted/nacl/stubs/socketpair.c $
+    ../../native_client/src/untrusted/nacl/stubs/statvfs.c $
+    ../../native_client/src/untrusted/nacl/stubs/syslog.c $
+    ../../native_client/src/untrusted/nacl/stubs/tcdrain.c $
+    ../../native_client/src/untrusted/nacl/stubs/tcflow.c $
+    ../../native_client/src/untrusted/nacl/stubs/tcflush.c $
+    ../../native_client/src/untrusted/nacl/stubs/tcgetattr.c $
+    ../../native_client/src/untrusted/nacl/stubs/tcsendbreak.c $
+    ../../native_client/src/untrusted/nacl/stubs/tcsetattr.c $
+    ../../native_client/src/untrusted/nacl/stubs/times.c $
+    ../../native_client/src/untrusted/nacl/stubs/ttyname.c $
+    ../../native_client/src/untrusted/nacl/stubs/ttyname_r.c $
+    ../../native_client/src/untrusted/nacl/stubs/umask.c $
+    ../../native_client/src/untrusted/nacl/stubs/vfork.c $
+    ../../native_client/src/untrusted/nacl/stubs/wait.c $
+    ../../native_client/src/untrusted/nacl/stubs/waitpid.c $
+    ../../native_client/src/untrusted/nacl/symlink.c $
+    ../../native_client/src/untrusted/nacl/sysconf.c $
+    ../../native_client/src/untrusted/nacl/tls.c $
+    ../../native_client/src/untrusted/nacl/tls.h $
+    ../../native_client/src/untrusted/nacl/tls_params.h $
+    ../../native_client/src/untrusted/nacl/truncate.c $
+    ../../native_client/src/untrusted/nacl/uname.c $
+    ../../native_client/src/untrusted/nacl/unlink.c $
+    ../../native_client/src/untrusted/nacl/utime.c $
+    ../../native_client/src/untrusted/nacl/utimes.c $
+    ../../native_client/src/untrusted/nacl/write.c $
+    ../../out/gypfiles/native_client/src/untrusted/nacl/irt-x86-32.nacl_lib_newlib.source_list.gypcmd $
+    ../../native_client/toolchain/linux_x86/pnacl_newlib/pnacl_newlib.json
+
+rule $
+    nacl_lib_newlib_target_build_nonsfi_helper_x86_32_nlib_34595b1baf6b0067c0d7da5211c629a9
+  command = cd ../../native_client/src/untrusted/nacl; python $
+      ../../../../native_client/build/build_nexe.py --root ../../../.. $
+      --product-dir ../../../../out/Release/xyz --config-name Release -t $
+      ../../../../native_client/toolchain/ --arch x86-32-nonsfi --build $
+      newlib_nlib_pnacl --name $
+      ../../../../out/Release/gen/tc_nonsfi_helper/lib32/libnacl.a --objdir $
+      ../../../../out/Release/obj/native_client/src/untrusted/nacl/nacl_lib_newlib.gen/nonsfi_helper-x86-32-nonsfi/nacl_lib_newlib $
+      "--include-dirs=../../../../out/Release/gen/tc_newlib/include $
+      ../../../../native_client/src/public/linux_syscalls ../../../.. $
+      \"../../../../out/Release/gen\" ../../../src/third_party ../../../.." $
+      "--compile_flags=--target=i686-unknown-nacl $
+      --pnacl-bias=x86-32-nonsfi --pnacl-allow-translate $
+      --pnacl-allow-native -arch x86-32-nonsfi -O2 -g -Wall $
+      -fdiagnostics-show-option -Werror  -Wno-unused-function $
+      -Wno-char-subscripts -Wno-c++11-extensions $
+      -Wno-unnamed-type-template-args -Wno-extra-semi $
+      -Wno-unused-private-field -Wno-char-subscripts -Wno-unused-function $
+      \"-std=gnu++11\" " --gomadir "" "--defines=\"__STDC_LIMIT_MACROS=1\" $
+      \"__STDC_FORMAT_MACROS=1\" \"_GNU_SOURCE=1\" $
+      \"_POSIX_C_SOURCE=199506\" \"_XOPEN_SOURCE=600\" $
+      \"DYNAMIC_ANNOTATIONS_ENABLED=1\" $
+      \"DYNAMIC_ANNOTATIONS_PREFIX=NACL_\" \"NACL_BUILD_ARCH=x86\" $
+      V8_DEPRECATION_WARNINGS \"CLD_VERSION=2\" \"_FILE_OFFSET_BITS=64\" $
+      \"_POSIX_C_SOURCE=199506\" \"_XOPEN_SOURCE=600\" \"_GNU_SOURCE=1\" $
+      \"__STDC_LIMIT_MACROS=1\" CHROMIUM_BUILD $
+      \"CR_CLANG_REVISION=255169-1\" UI_COMPOSITOR_IMAGE_TRANSPORT $
+      \"USE_AURA=1\" \"USE_ASH=1\" \"USE_PANGO=1\" \"USE_CAIRO=1\" $
+      \"USE_DEFAULT_RENDER_THEME=1\" \"USE_LIBJPEG_TURBO=1\" \"USE_X11=1\" $
+      \"USE_CLIPBOARD_AURAX11=1\" ENABLE_ONE_CLICK_SIGNIN $
+      \"ENABLE_WEBRTC=1\" \"ENABLE_MEDIA_ROUTER=1\" ENABLE_PEPPER_CDMS $
+      ENABLE_CONFIGURATION_POLICY ENABLE_NOTIFICATIONS \"ENABLE_HIDPI=1\" $
+      \"ENABLE_TOPCHROME_MD=1\" USE_UDEV DONT_EMBED_BUILD_METADATA $
+      FIELDTRIAL_TESTING_ENABLED \"ENABLE_TASK_MANAGER=1\" $
+      \"ENABLE_EXTENSIONS=1\" \"ENABLE_PDF=1\" \"ENABLE_PLUGINS=1\" $
+      \"ENABLE_SESSION_SERVICE=1\" \"ENABLE_THEMES=1\" $
+      \"ENABLE_AUTOFILL_DIALOG=1\" \"ENABLE_BACKGROUND=1\" $
+      \"ENABLE_PRINTING=1\" \"ENABLE_BASIC_PRINTING=1\" $
+      \"ENABLE_PRINT_PREVIEW=1\" \"ENABLE_SPELLCHECK=1\" $
+      \"ENABLE_CAPTIVE_PORTAL_DETECTION=1\" \"ENABLE_APP_LIST=1\" $
+      \"ENABLE_SETTINGS_APP=1\" \"ENABLE_SUPERVISED_USERS=1\" $
+      \"ENABLE_MDNS=1\" \"ENABLE_SERVICE_DISCOVERY=1\" $
+      V8_USE_EXTERNAL_STARTUP_DATA FULL_SAFE_BROWSING SAFE_BROWSING_CSD $
+      SAFE_BROWSING_DB_LOCAL \"USE_LIBPCI=1\" \"USE_OPENSSL=1\" $
+      \"USE_GLIB=1\" \"USE_NSS_CERTS=1\"" $
+      "--link_flags=-B../../../../out/Release/gen/tc_nonsfi_helper/lib32  " $
+      "--source-list=../../../../out/gypfiles/native_client/src/untrusted/nacl/nonsfi_helper-x86-32-nonsfi.nacl_lib_newlib.source_list.gypcmd"
+  description = ACTION nacl_lib_newlib: build nonsfi_helper x86-32 $
+      nlib_34595b1baf6b0067c0d7da5211c629a9
+  restat = 1
+
+build gen/tc_nonsfi_helper/lib32/libnacl.a: $
+    nacl_lib_newlib_target_build_nonsfi_helper_x86_32_nlib_34595b1baf6b0067c0d7da5211c629a9 $
+    ../../native_client/build/build_nexe.py $
+    ../../native_client/build/build_nexe_tools.py $
+    ../../../../../../../../usr/include/_G_config.h $
+    ../../../../../../../../usr/include/alloca.h $
+    ../../../../../../../../usr/include/asm-generic/errno-base.h $
+    ../../../../../../../../usr/include/asm-generic/errno.h $
+    ../../../../../../../../usr/include/asm/errno.h $
+    ../../../../../../../../usr/include/bits/byteswap-16.h $
+    ../../../../../../../../usr/include/bits/byteswap.h $
+    ../../../../../../../../usr/include/bits/confname.h $
+    ../../../../../../../../usr/include/bits/endian.h $
+    ../../../../../../../../usr/include/bits/environments.h $
+    ../../../../../../../../usr/include/bits/errno.h $
+    ../../../../../../../../usr/include/bits/libc-lock.h $
+    ../../../../../../../../usr/include/bits/libio-ldbl.h $
+    ../../../../../../../../usr/include/bits/posix_opt.h $
+    ../../../../../../../../usr/include/bits/pthreadtypes.h $
+    ../../../../../../../../usr/include/bits/sched.h $
+    ../../../../../../../../usr/include/bits/select.h $
+    ../../../../../../../../usr/include/bits/select2.h $
+    ../../../../../../../../usr/include/bits/setjmp.h $
+    ../../../../../../../../usr/include/bits/sigset.h $
+    ../../../../../../../../usr/include/bits/stat.h $
+    ../../../../../../../../usr/include/bits/stdio-ldbl.h $
+    ../../../../../../../../usr/include/bits/stdio-lock.h $
+    ../../../../../../../../usr/include/bits/stdio.h $
+    ../../../../../../../../usr/include/bits/stdio2.h $
+    ../../../../../../../../usr/include/bits/stdio_lim.h $
+    ../../../../../../../../usr/include/bits/stdlib-bsearch.h $
+    ../../../../../../../../usr/include/bits/stdlib-float.h $
+    ../../../../../../../../usr/include/bits/stdlib-ldbl.h $
+    ../../../../../../../../usr/include/bits/stdlib.h $
+    ../../../../../../../../usr/include/bits/string.h $
+    ../../../../../../../../usr/include/bits/string2.h $
+    ../../../../../../../../usr/include/bits/string3.h $
+    ../../../../../../../../usr/include/bits/sys_errlist.h $
+    ../../../../../../../../usr/include/bits/time.h $
+    ../../../../../../../../usr/include/bits/timex.h $
+    ../../../../../../../../usr/include/bits/types.h $
+    ../../../../../../../../usr/include/bits/typesizes.h $
+    ../../../../../../../../usr/include/bits/unistd.h $
+    ../../../../../../../../usr/include/bits/waitflags.h $
+    ../../../../../../../../usr/include/bits/waitstatus.h $
+    ../../../../../../../../usr/include/bits/wchar-ldbl.h $
+    ../../../../../../../../usr/include/bits/wchar.h $
+    ../../../../../../../../usr/include/bits/wchar2.h $
+    ../../../../../../../../usr/include/bits/wordsize.h $
+    ../../../../../../../../usr/include/ctype.h $
+    ../../../../../../../../usr/include/endian.h $
+    ../../../../../../../../usr/include/errno.h $
+    ../../../../../../../../usr/include/features.h $
+    ../../../../../../../../usr/include/gconv.h $
+    ../../../../../../../../usr/include/getopt.h $
+    ../../../../../../../../usr/include/gnu/option-groups.h $
+    ../../../../../../../../usr/include/gnu/stubs-32.h $
+    ../../../../../../../../usr/include/gnu/stubs-64.h $
+    ../../../../../../../../usr/include/gnu/stubs-x32.h $
+    ../../../../../../../../usr/include/gnu/stubs.h $
+    ../../../../../../../../usr/include/libio.h $
+    ../../../../../../../../usr/include/linux/errno.h $
+    ../../../../../../../../usr/include/linux/stddef.h $
+    ../../../../../../../../usr/include/malloc.h $
+    ../../../../../../../../usr/include/pthread.h $
+    ../../../../../../../../usr/include/sched.h $
+    ../../../../../../../../usr/include/stdc-predef.h $
+    ../../../../../../../../usr/include/stdint.h $
+    ../../../../../../../../usr/include/stdio.h $
+    ../../../../../../../../usr/include/stdlib.h $
+    ../../../../../../../../usr/include/string.h $
+    ../../../../../../../../usr/include/sys/cdefs.h $
+    ../../../../../../../../usr/include/sys/select.h $
+    ../../../../../../../../usr/include/sys/stat.h $
+    ../../../../../../../../usr/include/sys/sysmacros.h $
+    ../../../../../../../../usr/include/sys/time.h $
+    ../../../../../../../../usr/include/sys/types.h $
+    ../../../../../../../../usr/include/sys/unistd.h $
+    ../../../../../../../../usr/include/time.h $
+    ../../../../../../../../usr/include/unistd.h $
+    ../../../../../../../../usr/include/wchar.h $
+    ../../../../../../../../usr/include/wctype.h $
+    ../../../../../../../../usr/include/xlocale.h $
+    ../../native_client/src/include/build_config.h $
+    ../../native_client/src/include/elf32.h $
+    ../../native_client/src/include/elf64.h $
+    ../../native_client/src/include/elf_auxv.h $
+    ../../native_client/src/include/elf_constants.h $
+    ../../native_client/src/include/nacl_base.h $
+    ../../native_client/src/include/nacl_compiler_annotations.h $
+    ../../native_client/src/include/nacl_macros.h $
+    ../../native_client/src/include/portability.h $
+    ../../native_client/src/include/win/port_win.h $
+    ../../native_client/src/public/linux_syscalls/sys/socket.h $
+    ../../native_client/src/third_party/dlmalloc/malloc.c $
+    ../../native_client/src/third_party/valgrind/memcheck.h $
+    ../../native_client/src/third_party/valgrind/valgrind.h $
+    ../../native_client/src/trusted/service_runtime/include/bits/limits.h $
+    ../../native_client/src/trusted/service_runtime/include/bits/wordsize.h $
+    ../../native_client/src/untrusted/irt/irt.h $
+    ../../native_client/src/untrusted/irt/irt_dev.h $
+    ../../native_client/src/untrusted/irt/irt_extension.h $
+    ../../native_client/src/untrusted/irt/irt_interfaces.h $
+    ../../native_client/src/untrusted/nacl/_exit.c $
+    ../../native_client/src/untrusted/nacl/abort.c $
+    ../../native_client/src/untrusted/nacl/access.c $
+    ../../native_client/src/untrusted/nacl/chdir.c $
+    ../../native_client/src/untrusted/nacl/chmod.c $
+    ../../native_client/src/untrusted/nacl/clock.c $
+    ../../native_client/src/untrusted/nacl/clock_getres.c $
+    ../../native_client/src/untrusted/nacl/clock_gettime.c $
+    ../../native_client/src/untrusted/nacl/close.c $
+    ../../native_client/src/untrusted/nacl/dup.c $
+    ../../native_client/src/untrusted/nacl/eaccess.c $
+    ../../native_client/src/untrusted/nacl/fchdir.c $
+    ../../native_client/src/untrusted/nacl/fchmod.c $
+    ../../native_client/src/untrusted/nacl/fdatasync.c $
+    ../../native_client/src/untrusted/nacl/fstat.c $
+    ../../native_client/src/untrusted/nacl/fsync.c $
+    ../../native_client/src/untrusted/nacl/ftruncate.c $
+    ../../native_client/src/untrusted/nacl/gc_hooks.c $
+    ../../native_client/src/untrusted/nacl/gc_hooks.h $
+    ../../native_client/src/untrusted/nacl/getcwd.c $
+    ../../native_client/src/untrusted/nacl/getcwd.h $
+    ../../native_client/src/untrusted/nacl/getcwd_without_malloc.c $
+    ../../native_client/src/untrusted/nacl/getdents.c $
+    ../../native_client/src/untrusted/nacl/gethostname.c $
+    ../../native_client/src/untrusted/nacl/getpagesize.c $
+    ../../native_client/src/untrusted/nacl/getpid.c $
+    ../../native_client/src/untrusted/nacl/gettimeofday.c $
+    ../../native_client/src/untrusted/nacl/htonl.c $
+    ../../native_client/src/untrusted/nacl/htons.c $
+    ../../native_client/src/untrusted/nacl/include/sys/utsname.h $
+    ../../native_client/src/untrusted/nacl/isatty.c $
+    ../../native_client/src/untrusted/nacl/link.c $
+    ../../native_client/src/untrusted/nacl/lock.c $
+    ../../native_client/src/untrusted/nacl/lseek.c $
+    ../../native_client/src/untrusted/nacl/lstat.c $
+    ../../native_client/src/untrusted/nacl/malloc.c $
+    ../../native_client/src/untrusted/nacl/mkdir.c $
+    ../../native_client/src/untrusted/nacl/mmap.c $
+    ../../native_client/src/untrusted/nacl/mprotect.c $
+    ../../native_client/src/untrusted/nacl/munmap.c $
+    ../../native_client/src/untrusted/nacl/nacl_add_tp.c $
+    ../../native_client/src/untrusted/nacl/nacl_ext_supply.c $
+    ../../native_client/src/untrusted/nacl/nacl_interface_query.c $
+    ../../native_client/src/untrusted/nacl/nacl_irt.c $
+    ../../native_client/src/untrusted/nacl/nacl_irt.h $
+    ../../native_client/src/untrusted/nacl/nacl_irt_fdio.c $
+    ../../native_client/src/untrusted/nacl/nacl_irt_filename.c $
+    ../../native_client/src/untrusted/nacl/nacl_irt_init.c $
+    ../../native_client/src/untrusted/nacl/nacl_random.c $
+    ../../native_client/src/untrusted/nacl/nacl_read_tp.c $
+    ../../native_client/src/untrusted/nacl/nacl_startup.h $
+    ../../native_client/src/untrusted/nacl/nacl_thread.h $
+    ../../native_client/src/untrusted/nacl/nacl_tls_get.c $
+    ../../native_client/src/untrusted/nacl/nacl_tls_init.c $
+    ../../native_client/src/untrusted/nacl/nanosleep.c $
+    ../../native_client/src/untrusted/nacl/ntohl.c $
+    ../../native_client/src/untrusted/nacl/ntohs.c $
+    ../../native_client/src/untrusted/nacl/open.c $
+    ../../native_client/src/untrusted/nacl/pthread_initialize_minimal.c $
+    ../../native_client/src/untrusted/nacl/pthread_stubs.c $
+    ../../native_client/src/untrusted/nacl/random.c $
+    ../../native_client/src/untrusted/nacl/read.c $
+    ../../native_client/src/untrusted/nacl/readlink.c $
+    ../../native_client/src/untrusted/nacl/rename.c $
+    ../../native_client/src/untrusted/nacl/rmdir.c $
+    ../../native_client/src/untrusted/nacl/sbrk.c $
+    ../../native_client/src/untrusted/nacl/sched_yield.c $
+    ../../native_client/src/untrusted/nacl/sigblock.c $
+    ../../native_client/src/untrusted/nacl/siggetmask.c $
+    ../../native_client/src/untrusted/nacl/sigmask.c $
+    ../../native_client/src/untrusted/nacl/sigprocmask.c $
+    ../../native_client/src/untrusted/nacl/sigsetmask.c $
+    ../../native_client/src/untrusted/nacl/srandom.c $
+    ../../native_client/src/untrusted/nacl/stacktrace.c $
+    ../../native_client/src/untrusted/nacl/start.c $
+    ../../native_client/src/untrusted/nacl/start.h $
+    ../../native_client/src/untrusted/nacl/stat.c $
+    ../../native_client/src/untrusted/nacl/stubs/_execve.c $
+    ../../native_client/src/untrusted/nacl/stubs/accept.c $
+    ../../native_client/src/untrusted/nacl/stubs/addmntent.c $
+    ../../native_client/src/untrusted/nacl/stubs/bind.c $
+    ../../native_client/src/untrusted/nacl/stubs/chown.c $
+    ../../native_client/src/untrusted/nacl/stubs/closelog.c $
+    ../../native_client/src/untrusted/nacl/stubs/connect.c $
+    ../../native_client/src/untrusted/nacl/stubs/endgrent.c $
+    ../../native_client/src/untrusted/nacl/stubs/endmntent.c $
+    ../../native_client/src/untrusted/nacl/stubs/endpwent.c $
+    ../../native_client/src/untrusted/nacl/stubs/environ.c $
+    ../../native_client/src/untrusted/nacl/stubs/execvpe.c $
+    ../../native_client/src/untrusted/nacl/stubs/fchown.c $
+    ../../native_client/src/untrusted/nacl/stubs/fcntl.c $
+    ../../native_client/src/untrusted/nacl/stubs/fork.c $
+    ../../native_client/src/untrusted/nacl/stubs/freeaddrinfo.c $
+    ../../native_client/src/untrusted/nacl/stubs/fstatvfs.c $
+    ../../native_client/src/untrusted/nacl/stubs/gai_strerror.c $
+    ../../native_client/src/untrusted/nacl/stubs/get_current_dir_name.c $
+    ../../native_client/src/untrusted/nacl/stubs/getaddrinfo.c $
+    ../../native_client/src/untrusted/nacl/stubs/getdtablesize.c $
+    ../../native_client/src/untrusted/nacl/stubs/getegid.c $
+    ../../native_client/src/untrusted/nacl/stubs/geteuid.c $
+    ../../native_client/src/untrusted/nacl/stubs/getgid.c $
+    ../../native_client/src/untrusted/nacl/stubs/getgrent.c $
+    ../../native_client/src/untrusted/nacl/stubs/getgrgid.c $
+    ../../native_client/src/untrusted/nacl/stubs/getgrgid_r.c $
+    ../../native_client/src/untrusted/nacl/stubs/getgrnam.c $
+    ../../native_client/src/untrusted/nacl/stubs/getgroups.c $
+    ../../native_client/src/untrusted/nacl/stubs/gethostbyaddr.c $
+    ../../native_client/src/untrusted/nacl/stubs/gethostbyname.c $
+    ../../native_client/src/untrusted/nacl/stubs/getlogin.c $
+    ../../native_client/src/untrusted/nacl/stubs/getmntent.c $
+    ../../native_client/src/untrusted/nacl/stubs/getnameinfo.c $
+    ../../native_client/src/untrusted/nacl/stubs/getpeername.c $
+    ../../native_client/src/untrusted/nacl/stubs/getpgrp.c $
+    ../../native_client/src/untrusted/nacl/stubs/getppid.c $
+    ../../native_client/src/untrusted/nacl/stubs/getpwent.c $
+    ../../native_client/src/untrusted/nacl/stubs/getpwnam.c $
+    ../../native_client/src/untrusted/nacl/stubs/getpwnam_r.c $
+    ../../native_client/src/untrusted/nacl/stubs/getpwuid.c $
+    ../../native_client/src/untrusted/nacl/stubs/getpwuid_r.c $
+    ../../native_client/src/untrusted/nacl/stubs/getrlimit.c $
+    ../../native_client/src/untrusted/nacl/stubs/getrusage.c $
+    ../../native_client/src/untrusted/nacl/stubs/getservbyname.c $
+    ../../native_client/src/untrusted/nacl/stubs/getservbyport.c $
+    ../../native_client/src/untrusted/nacl/stubs/getsockname.c $
+    ../../native_client/src/untrusted/nacl/stubs/getsockopt.c $
+    ../../native_client/src/untrusted/nacl/stubs/getuid.c $
+    ../../native_client/src/untrusted/nacl/stubs/getwd.c $
+    ../../native_client/src/untrusted/nacl/stubs/hasmntopt.c $
+    ../../native_client/src/untrusted/nacl/stubs/if_freenameindex.c $
+    ../../native_client/src/untrusted/nacl/stubs/if_indextoname.c $
+    ../../native_client/src/untrusted/nacl/stubs/if_nameindex.c $
+    ../../native_client/src/untrusted/nacl/stubs/if_nametoindex.c $
+    ../../native_client/src/untrusted/nacl/stubs/inet_ntoa.c $
+    ../../native_client/src/untrusted/nacl/stubs/inet_ntop.c $
+    ../../native_client/src/untrusted/nacl/stubs/initgroups.c $
+    ../../native_client/src/untrusted/nacl/stubs/ioctl.c $
+    ../../native_client/src/untrusted/nacl/stubs/issetugid.c $
+    ../../native_client/src/untrusted/nacl/stubs/kill.c $
+    ../../native_client/src/untrusted/nacl/stubs/lchown.c $
+    ../../native_client/src/untrusted/nacl/stubs/listen.c $
+    ../../native_client/src/untrusted/nacl/stubs/llseek.c $
+    ../../native_client/src/untrusted/nacl/stubs/major.c $
+    ../../native_client/src/untrusted/nacl/stubs/makedev.c $
+    ../../native_client/src/untrusted/nacl/stubs/minor.c $
+    ../../native_client/src/untrusted/nacl/stubs/mkfifo.c $
+    ../../native_client/src/untrusted/nacl/stubs/mknod.c $
+    ../../native_client/src/untrusted/nacl/stubs/msync.c $
+    ../../native_client/src/untrusted/nacl/stubs/openlog.c $
+    ../../native_client/src/untrusted/nacl/stubs/pipe.c $
+    ../../native_client/src/untrusted/nacl/stubs/poll.c $
+    ../../native_client/src/untrusted/nacl/stubs/pselect.c $
+    ../../native_client/src/untrusted/nacl/stubs/pthread_sigmask.c $
+    ../../native_client/src/untrusted/nacl/stubs/readv.c $
+    ../../native_client/src/untrusted/nacl/stubs/recv.c $
+    ../../native_client/src/untrusted/nacl/stubs/recvfrom.c $
+    ../../native_client/src/untrusted/nacl/stubs/recvmsg.c $
+    ../../native_client/src/untrusted/nacl/stubs/sched_get_priority_max.c $
+    ../../native_client/src/untrusted/nacl/stubs/sched_get_priority_min.c $
+    ../../native_client/src/untrusted/nacl/stubs/sched_setparam.c $
+    ../../native_client/src/untrusted/nacl/stubs/sched_setscheduler.c $
+    ../../native_client/src/untrusted/nacl/stubs/select.c $
+    ../../native_client/src/untrusted/nacl/stubs/send.c $
+    ../../native_client/src/untrusted/nacl/stubs/sendmsg.c $
+    ../../native_client/src/untrusted/nacl/stubs/sendto.c $
+    ../../native_client/src/untrusted/nacl/stubs/setegid.c $
+    ../../native_client/src/untrusted/nacl/stubs/seteuid.c $
+    ../../native_client/src/untrusted/nacl/stubs/setgid.c $
+    ../../native_client/src/untrusted/nacl/stubs/setgrent.c $
+    ../../native_client/src/untrusted/nacl/stubs/setgroups.c $
+    ../../native_client/src/untrusted/nacl/stubs/setmntent.c $
+    ../../native_client/src/untrusted/nacl/stubs/setpgid.c $
+    ../../native_client/src/untrusted/nacl/stubs/setpwent.c $
+    ../../native_client/src/untrusted/nacl/stubs/setrlimit.c $
+    ../../native_client/src/untrusted/nacl/stubs/setsid.c $
+    ../../native_client/src/untrusted/nacl/stubs/setsockopt.c $
+    ../../native_client/src/untrusted/nacl/stubs/settimeofday.c $
+    ../../native_client/src/untrusted/nacl/stubs/setuid.c $
+    ../../native_client/src/untrusted/nacl/stubs/shutdown.c $
+    ../../native_client/src/untrusted/nacl/stubs/sigaction.c $
+    ../../native_client/src/untrusted/nacl/stubs/signal.c $
+    ../../native_client/src/untrusted/nacl/stubs/sigsuspend.c $
+    ../../native_client/src/untrusted/nacl/stubs/sigvec.c $
+    ../../native_client/src/untrusted/nacl/stubs/socket.c $
+    ../../native_client/src/untrusted/nacl/stubs/socketpair.c $
+    ../../native_client/src/untrusted/nacl/stubs/statvfs.c $
+    ../../native_client/src/untrusted/nacl/stubs/syslog.c $
+    ../../native_client/src/untrusted/nacl/stubs/tcdrain.c $
+    ../../native_client/src/untrusted/nacl/stubs/tcflow.c $
+    ../../native_client/src/untrusted/nacl/stubs/tcflush.c $
+    ../../native_client/src/untrusted/nacl/stubs/tcgetattr.c $
+    ../../native_client/src/untrusted/nacl/stubs/tcsendbreak.c $
+    ../../native_client/src/untrusted/nacl/stubs/tcsetattr.c $
+    ../../native_client/src/untrusted/nacl/stubs/times.c $
+    ../../native_client/src/untrusted/nacl/stubs/ttyname.c $
+    ../../native_client/src/untrusted/nacl/stubs/ttyname_r.c $
+    ../../native_client/src/untrusted/nacl/stubs/umask.c $
+    ../../native_client/src/untrusted/nacl/stubs/vfork.c $
+    ../../native_client/src/untrusted/nacl/stubs/wait.c $
+    ../../native_client/src/untrusted/nacl/stubs/waitpid.c $
+    ../../native_client/src/untrusted/nacl/symlink.c $
+    ../../native_client/src/untrusted/nacl/sysconf.c $
+    ../../native_client/src/untrusted/nacl/tls.c $
+    ../../native_client/src/untrusted/nacl/tls.h $
+    ../../native_client/src/untrusted/nacl/tls_params.h $
+    ../../native_client/src/untrusted/nacl/truncate.c $
+    ../../native_client/src/untrusted/nacl/uname.c $
+    ../../native_client/src/untrusted/nacl/unlink.c $
+    ../../native_client/src/untrusted/nacl/utime.c $
+    ../../native_client/src/untrusted/nacl/utimes.c $
+    ../../native_client/src/untrusted/nacl/write.c $
+    ../../out/gypfiles/native_client/src/untrusted/nacl/nonsfi_helper-x86-32-nonsfi.nacl_lib_newlib.source_list.gypcmd $
+    ../../native_client/toolchain/linux_x86/pnacl_newlib/pnacl_newlib.json
+
+build $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp: $
+    stamp gen/tc_pnacl_newlib/lib/libnacl.a gen/tc_newlib/lib64/libnacl.a $
+    gen/tc_irt/lib64/libnacl.a gen/tc_newlib/lib32/libnacl.a $
+    gen/tc_irt/lib32/libnacl.a gen/tc_nonsfi_helper/lib32/libnacl.a
+
+defines = -DV8_DEPRECATION_WARNINGS -DCLD_VERSION=2 -D_FILE_OFFSET_BITS=64 $
+    -D_POSIX_C_SOURCE=199506 -D_XOPEN_SOURCE=600 -D_GNU_SOURCE=1 $
+    -D__STDC_LIMIT_MACROS=1 -DCHROMIUM_BUILD -DCR_CLANG_REVISION=255169-1 $
+    -DUI_COMPOSITOR_IMAGE_TRANSPORT -DUSE_AURA=1 -DUSE_ASH=1 -DUSE_PANGO=1 $
+    -DUSE_CAIRO=1 -DUSE_DEFAULT_RENDER_THEME=1 -DUSE_LIBJPEG_TURBO=1 $
+    -DUSE_X11=1 -DUSE_CLIPBOARD_AURAX11=1 -DENABLE_ONE_CLICK_SIGNIN $
+    -DENABLE_WEBRTC=1 -DENABLE_MEDIA_ROUTER=1 -DENABLE_PEPPER_CDMS $
+    -DENABLE_CONFIGURATION_POLICY -DENABLE_NOTIFICATIONS -DENABLE_HIDPI=1 $
+    -DENABLE_TOPCHROME_MD=1 -DUSE_UDEV -DDONT_EMBED_BUILD_METADATA $
+    -DFIELDTRIAL_TESTING_ENABLED -DENABLE_TASK_MANAGER=1 $
+    -DENABLE_EXTENSIONS=1 -DENABLE_PDF=1 -DENABLE_PLUGINS=1 $
+    -DENABLE_SESSION_SERVICE=1 -DENABLE_THEMES=1 -DENABLE_AUTOFILL_DIALOG=1 $
+    -DENABLE_BACKGROUND=1 -DENABLE_PRINTING=1 -DENABLE_BASIC_PRINTING=1 $
+    -DENABLE_PRINT_PREVIEW=1 -DENABLE_SPELLCHECK=1 $
+    -DENABLE_CAPTIVE_PORTAL_DETECTION=1 -DENABLE_APP_LIST=1 $
+    -DENABLE_SETTINGS_APP=1 -DENABLE_SUPERVISED_USERS=1 -DENABLE_MDNS=1 $
+    -DENABLE_SERVICE_DISCOVERY=1 -DV8_USE_EXTERNAL_STARTUP_DATA $
+    -DFULL_SAFE_BROWSING -DSAFE_BROWSING_CSD -DSAFE_BROWSING_DB_LOCAL $
+    -DUSE_LIBPCI=1 -DUSE_OPENSSL=1 -DUSE_GLIB=1 -DUSE_NSS_CERTS=1 -DNDEBUG $
+    -DNVALGRIND -DDYNAMIC_ANNOTATIONS_ENABLED=0
+includes = -Igen -I../../native_client/src/third_party -I../..
+cflags = -fstack-protector --param=ssp-buffer-size=4 -pthread $
+    -fno-strict-aliasing -Wno-unused-parameter $
+    -Wno-missing-field-initializers -fvisibility=hidden -pipe -fPIC $
+    -Wno-reserved-user-defined-literal -Xclang -load -Xclang $
+    /b/build/slave/publish_tarball/build/src/third_party/llvm-build/Release+Asserts/lib/libFindBadConstructs.so $
+    -Xclang -add-plugin -Xclang find-bad-constructs -Xclang $
+    -plugin-arg-find-bad-constructs -Xclang check-templates $
+    -fcolor-diagnostics $
+    -B/b/build/slave/publish_tarball/build/src/third_party/binutils/Linux_x64/Release/bin $
+    -Wheader-hygiene -Wno-char-subscripts $
+    -Wno-unneeded-internal-declaration -Wno-covered-switch-default $
+    -Wstring-conversion -Wno-c++11-narrowing -Wno-deprecated-register $
+    -Wno-inconsistent-missing-override -Wno-shift-negative-value $
+    -Wno-bitfield-width -Wno-unused-variable -Wno-format -Wno-unused-result $
+    -m64 -march=x86-64 $
+    --sysroot=/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot $
+    -O2 -fno-ident -fdata-sections -ffunction-sections -funwind-tables
+cflags_c = 
+cflags_cc = -fno-exceptions -fno-rtti -fno-threadsafe-statics $
+    -fvisibility-inlines-hidden -std=gnu++11 -Wno-deprecated
+arflags = 
+
+build obj/native_client/src/untrusted/nacl/nacl_lib_newlib.gc_hooks.o: cc $
+    ../../native_client/src/untrusted/nacl/gc_hooks.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/nacl_lib_newlib.nacl_irt.o: cc $
+    ../../native_client/src/untrusted/nacl/nacl_irt.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/nacl_lib_newlib.nacl_irt_init.o: $
+    cc ../../native_client/src/untrusted/nacl/nacl_irt_init.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/nacl_lib_newlib.nacl_random.o: $
+    cc ../../native_client/src/untrusted/nacl/nacl_random.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/nacl_lib_newlib.nacl_tls_get.o: $
+    cc ../../native_client/src/untrusted/nacl/nacl_tls_get.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/nacl_lib_newlib.nacl_tls_init.o: $
+    cc ../../native_client/src/untrusted/nacl/nacl_tls_init.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/nacl_lib_newlib._exit.o: cc $
+    ../../native_client/src/untrusted/nacl/_exit.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/nacl_lib_newlib.abort.o: cc $
+    ../../native_client/src/untrusted/nacl/abort.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/nacl_lib_newlib.access.o: cc $
+    ../../native_client/src/untrusted/nacl/access.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/nacl_lib_newlib.chdir.o: cc $
+    ../../native_client/src/untrusted/nacl/chdir.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/nacl_lib_newlib.chmod.o: cc $
+    ../../native_client/src/untrusted/nacl/chmod.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/nacl_lib_newlib.clock.o: cc $
+    ../../native_client/src/untrusted/nacl/clock.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/nacl_lib_newlib.clock_getres.o: $
+    cc ../../native_client/src/untrusted/nacl/clock_getres.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/nacl_lib_newlib.clock_gettime.o: $
+    cc ../../native_client/src/untrusted/nacl/clock_gettime.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/nacl_lib_newlib.close.o: cc $
+    ../../native_client/src/untrusted/nacl/close.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/nacl_lib_newlib.dup.o: cc $
+    ../../native_client/src/untrusted/nacl/dup.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/nacl_lib_newlib.eaccess.o: cc $
+    ../../native_client/src/untrusted/nacl/eaccess.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/nacl_lib_newlib.fchdir.o: cc $
+    ../../native_client/src/untrusted/nacl/fchdir.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/nacl_lib_newlib.fchmod.o: cc $
+    ../../native_client/src/untrusted/nacl/fchmod.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/nacl_lib_newlib.fdatasync.o: cc $
+    ../../native_client/src/untrusted/nacl/fdatasync.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/nacl_lib_newlib.fstat.o: cc $
+    ../../native_client/src/untrusted/nacl/fstat.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/nacl_lib_newlib.fsync.o: cc $
+    ../../native_client/src/untrusted/nacl/fsync.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/nacl_lib_newlib.ftruncate.o: cc $
+    ../../native_client/src/untrusted/nacl/ftruncate.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/nacl_lib_newlib.getcwd.o: cc $
+    ../../native_client/src/untrusted/nacl/getcwd.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.getcwd_without_malloc.o: $
+    cc ../../native_client/src/untrusted/nacl/getcwd_without_malloc.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/nacl_lib_newlib.getdents.o: cc $
+    ../../native_client/src/untrusted/nacl/getdents.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/nacl_lib_newlib.gethostname.o: $
+    cc ../../native_client/src/untrusted/nacl/gethostname.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/nacl_lib_newlib.getpagesize.o: $
+    cc ../../native_client/src/untrusted/nacl/getpagesize.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/nacl_lib_newlib.getpid.o: cc $
+    ../../native_client/src/untrusted/nacl/getpid.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/nacl_lib_newlib.gettimeofday.o: $
+    cc ../../native_client/src/untrusted/nacl/gettimeofday.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/nacl_lib_newlib.htonl.o: cc $
+    ../../native_client/src/untrusted/nacl/htonl.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/nacl_lib_newlib.htons.o: cc $
+    ../../native_client/src/untrusted/nacl/htons.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/nacl_lib_newlib.isatty.o: cc $
+    ../../native_client/src/untrusted/nacl/isatty.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/nacl_lib_newlib.link.o: cc $
+    ../../native_client/src/untrusted/nacl/link.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/nacl_lib_newlib.lock.o: cc $
+    ../../native_client/src/untrusted/nacl/lock.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/nacl_lib_newlib.lseek.o: cc $
+    ../../native_client/src/untrusted/nacl/lseek.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/nacl_lib_newlib.lstat.o: cc $
+    ../../native_client/src/untrusted/nacl/lstat.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/nacl_lib_newlib.malloc.o: cc $
+    ../../native_client/src/untrusted/nacl/malloc.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/nacl_lib_newlib.mkdir.o: cc $
+    ../../native_client/src/untrusted/nacl/mkdir.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/nacl_lib_newlib.mmap.o: cc $
+    ../../native_client/src/untrusted/nacl/mmap.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/nacl_lib_newlib.mprotect.o: cc $
+    ../../native_client/src/untrusted/nacl/mprotect.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/nacl_lib_newlib.munmap.o: cc $
+    ../../native_client/src/untrusted/nacl/munmap.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/nacl_lib_newlib.nacl_add_tp.o: $
+    cc ../../native_client/src/untrusted/nacl/nacl_add_tp.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.nacl_ext_supply.o: $
+    cc ../../native_client/src/untrusted/nacl/nacl_ext_supply.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.nacl_interface_query.o: $
+    cc ../../native_client/src/untrusted/nacl/nacl_interface_query.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/nacl_lib_newlib.nacl_irt_fdio.o: $
+    cc ../../native_client/src/untrusted/nacl/nacl_irt_fdio.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.nacl_irt_filename.o: $
+    cc ../../native_client/src/untrusted/nacl/nacl_irt_filename.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/nacl_lib_newlib.nacl_read_tp.o: $
+    cc ../../native_client/src/untrusted/nacl/nacl_read_tp.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/nacl_lib_newlib.nanosleep.o: cc $
+    ../../native_client/src/untrusted/nacl/nanosleep.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/nacl_lib_newlib.ntohl.o: cc $
+    ../../native_client/src/untrusted/nacl/ntohl.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/nacl_lib_newlib.ntohs.o: cc $
+    ../../native_client/src/untrusted/nacl/ntohs.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/nacl_lib_newlib.open.o: cc $
+    ../../native_client/src/untrusted/nacl/open.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.pthread_initialize_minimal.o: $
+    cc ../../native_client/src/untrusted/nacl/pthread_initialize_minimal.c $
+    || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/nacl_lib_newlib.pthread_stubs.o: $
+    cc ../../native_client/src/untrusted/nacl/pthread_stubs.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/nacl_lib_newlib.random.o: cc $
+    ../../native_client/src/untrusted/nacl/random.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/nacl_lib_newlib.read.o: cc $
+    ../../native_client/src/untrusted/nacl/read.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/nacl_lib_newlib.readlink.o: cc $
+    ../../native_client/src/untrusted/nacl/readlink.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/nacl_lib_newlib.rename.o: cc $
+    ../../native_client/src/untrusted/nacl/rename.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/nacl_lib_newlib.rmdir.o: cc $
+    ../../native_client/src/untrusted/nacl/rmdir.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/nacl_lib_newlib.sbrk.o: cc $
+    ../../native_client/src/untrusted/nacl/sbrk.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/nacl_lib_newlib.sched_yield.o: $
+    cc ../../native_client/src/untrusted/nacl/sched_yield.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/nacl_lib_newlib.sigblock.o: cc $
+    ../../native_client/src/untrusted/nacl/sigblock.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/nacl_lib_newlib.siggetmask.o: cc $
+    ../../native_client/src/untrusted/nacl/siggetmask.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/nacl_lib_newlib.sigmask.o: cc $
+    ../../native_client/src/untrusted/nacl/sigmask.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/nacl_lib_newlib.sigprocmask.o: $
+    cc ../../native_client/src/untrusted/nacl/sigprocmask.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/nacl_lib_newlib.sigsetmask.o: cc $
+    ../../native_client/src/untrusted/nacl/sigsetmask.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/nacl_lib_newlib.srandom.o: cc $
+    ../../native_client/src/untrusted/nacl/srandom.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/nacl_lib_newlib.stacktrace.o: cc $
+    ../../native_client/src/untrusted/nacl/stacktrace.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/nacl_lib_newlib.start.o: cc $
+    ../../native_client/src/untrusted/nacl/start.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/nacl_lib_newlib.stat.o: cc $
+    ../../native_client/src/untrusted/nacl/stat.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/nacl_lib_newlib.symlink.o: cc $
+    ../../native_client/src/untrusted/nacl/symlink.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/nacl_lib_newlib.sysconf.o: cc $
+    ../../native_client/src/untrusted/nacl/sysconf.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/nacl_lib_newlib.tls.o: cc $
+    ../../native_client/src/untrusted/nacl/tls.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/nacl_lib_newlib.truncate.o: cc $
+    ../../native_client/src/untrusted/nacl/truncate.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/nacl_lib_newlib.uname.o: cc $
+    ../../native_client/src/untrusted/nacl/uname.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/nacl_lib_newlib.unlink.o: cc $
+    ../../native_client/src/untrusted/nacl/unlink.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/nacl_lib_newlib.utime.o: cc $
+    ../../native_client/src/untrusted/nacl/utime.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/nacl_lib_newlib.utimes.o: cc $
+    ../../native_client/src/untrusted/nacl/utimes.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/nacl_lib_newlib.write.o: cc $
+    ../../native_client/src/untrusted/nacl/write.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib._execve.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/_execve.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.accept.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/accept.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build $
+    obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.addmntent.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/addmntent.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.bind.o: cc $
+    ../../native_client/src/untrusted/nacl/stubs/bind.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.chown.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/chown.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build $
+    obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.closelog.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/closelog.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.connect.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/connect.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build $
+    obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.endgrent.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/endgrent.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build $
+    obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.endmntent.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/endmntent.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build $
+    obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.endpwent.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/endpwent.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.environ.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/environ.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.execvpe.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/execvpe.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.fchown.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/fchown.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.fcntl.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/fcntl.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.fork.o: cc $
+    ../../native_client/src/untrusted/nacl/stubs/fork.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build $
+    obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.freeaddrinfo.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/freeaddrinfo.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build $
+    obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.fstatvfs.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/fstatvfs.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build $
+    obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.gai_strerror.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/gai_strerror.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build $
+    obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.get_current_dir_name.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/get_current_dir_name.c $
+    || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build $
+    obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.getaddrinfo.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/getaddrinfo.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build $
+    obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.getdtablesize.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/getdtablesize.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.getegid.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/getegid.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.geteuid.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/geteuid.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.getgid.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/getgid.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build $
+    obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.getgrent.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/getgrent.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build $
+    obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.getgrgid.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/getgrgid.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build $
+    obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.getgrgid_r.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/getgrgid_r.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build $
+    obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.getgrnam.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/getgrnam.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build $
+    obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.getgroups.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/getgroups.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build $
+    obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.gethostbyaddr.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/gethostbyaddr.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build $
+    obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.gethostbyname.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/gethostbyname.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build $
+    obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.getlogin.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/getlogin.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build $
+    obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.getmntent.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/getmntent.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build $
+    obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.getnameinfo.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/getnameinfo.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build $
+    obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.getpeername.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/getpeername.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.getpgrp.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/getpgrp.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.getppid.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/getppid.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build $
+    obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.getpwent.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/getpwent.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build $
+    obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.getpwnam.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/getpwnam.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build $
+    obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.getpwnam_r.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/getpwnam_r.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build $
+    obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.getpwuid.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/getpwuid.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build $
+    obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.getpwuid_r.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/getpwuid_r.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build $
+    obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.getrlimit.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/getrlimit.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build $
+    obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.getrusage.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/getrusage.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build $
+    obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.getservbyname.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/getservbyname.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build $
+    obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.getservbyport.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/getservbyport.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build $
+    obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.getsockname.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/getsockname.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build $
+    obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.getsockopt.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/getsockopt.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.getuid.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/getuid.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.getwd.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/getwd.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build $
+    obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.hasmntopt.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/hasmntopt.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build $
+    obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.if_freenameindex.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/if_freenameindex.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build $
+    obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.if_indextoname.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/if_indextoname.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build $
+    obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.if_nameindex.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/if_nameindex.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build $
+    obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.if_nametoindex.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/if_nametoindex.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build $
+    obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.inet_ntoa.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/inet_ntoa.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build $
+    obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.inet_ntop.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/inet_ntop.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build $
+    obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.initgroups.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/initgroups.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.ioctl.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/ioctl.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build $
+    obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.issetugid.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/issetugid.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.kill.o: cc $
+    ../../native_client/src/untrusted/nacl/stubs/kill.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.lchown.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/lchown.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.listen.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/listen.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.llseek.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/llseek.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.major.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/major.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.makedev.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/makedev.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.minor.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/minor.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.mkfifo.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/mkfifo.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.mknod.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/mknod.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.msync.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/msync.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.openlog.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/openlog.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.pipe.o: cc $
+    ../../native_client/src/untrusted/nacl/stubs/pipe.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.poll.o: cc $
+    ../../native_client/src/untrusted/nacl/stubs/poll.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.pselect.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/pselect.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build $
+    obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.pthread_sigmask.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/pthread_sigmask.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.readv.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/readv.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.recv.o: cc $
+    ../../native_client/src/untrusted/nacl/stubs/recv.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build $
+    obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.recvfrom.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/recvfrom.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.recvmsg.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/recvmsg.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build $
+    obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.sched_get_priority_max.o: $
+    cc $
+    ../../native_client/src/untrusted/nacl/stubs/sched_get_priority_max.c $
+    || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build $
+    obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.sched_get_priority_min.o: $
+    cc $
+    ../../native_client/src/untrusted/nacl/stubs/sched_get_priority_min.c $
+    || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build $
+    obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.sched_setparam.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/sched_setparam.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build $
+    obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.sched_setscheduler.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/sched_setscheduler.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.select.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/select.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.send.o: cc $
+    ../../native_client/src/untrusted/nacl/stubs/send.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.sendmsg.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/sendmsg.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.sendto.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/sendto.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.setegid.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/setegid.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.seteuid.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/seteuid.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.setgid.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/setgid.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build $
+    obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.setgrent.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/setgrent.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build $
+    obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.setgroups.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/setgroups.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build $
+    obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.setmntent.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/setmntent.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.setpgid.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/setpgid.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build $
+    obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.setpwent.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/setpwent.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build $
+    obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.setrlimit.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/setrlimit.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.setsid.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/setsid.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build $
+    obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.setsockopt.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/setsockopt.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build $
+    obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.settimeofday.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/settimeofday.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.setuid.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/setuid.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build $
+    obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.shutdown.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/shutdown.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build $
+    obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.sigaction.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/sigaction.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.signal.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/signal.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build $
+    obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.sigsuspend.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/sigsuspend.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.sigvec.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/sigvec.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.socket.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/socket.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build $
+    obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.socketpair.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/socketpair.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.statvfs.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/statvfs.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.syslog.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/syslog.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.tcdrain.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/tcdrain.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.tcflow.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/tcflow.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.tcflush.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/tcflush.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build $
+    obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.tcgetattr.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/tcgetattr.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build $
+    obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.tcsendbreak.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/tcsendbreak.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build $
+    obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.tcsetattr.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/tcsetattr.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.times.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/times.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.ttyname.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/ttyname.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build $
+    obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.ttyname_r.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/ttyname_r.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.umask.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/umask.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.vfork.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/vfork.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.wait.o: cc $
+    ../../native_client/src/untrusted/nacl/stubs/wait.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+build obj/native_client/src/untrusted/nacl/stubs/nacl_lib_newlib.waitpid.o: $
+    cc ../../native_client/src/untrusted/nacl/stubs/waitpid.c || $
+    obj/native_client/src/untrusted/nacl/nacl_lib_newlib.actions_rules_copies.stamp
+

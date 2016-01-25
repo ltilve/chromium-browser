@@ -7,6 +7,7 @@
 #import <UIKit/UIKit.h>
 #import <WebKit/WebKit.h>
 
+#include "base/ios/ios_util.h"
 #include "base/mac/scoped_nsobject.h"
 #include "base/strings/sys_string_conversions.h"
 #include "base/test/histogram_tester.h"
@@ -32,8 +33,11 @@
 #import "ios/web/web_state/ui/crw_web_controller+protected.h"
 #import "ios/web/web_state/ui/crw_web_controller_container_view.h"
 #import "ios/web/web_state/web_state_impl.h"
+#import "ios/web/web_state/wk_web_view_security_util.h"
 #import "net/base/mac/url_conversions.h"
+#include "net/base/test_data_directory.h"
 #include "net/ssl/ssl_info.h"
+#include "net/test/cert_test_util.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "testing/gtest_mac.h"
 #include "third_party/ocmock/OCMock/OCMock.h"
@@ -53,8 +57,8 @@ using web::NavigationManagerImpl;
 @property(nonatomic, readonly) CRWWebControllerContainerView* containerView;
 - (void)setJsMessageQueueThrottled:(BOOL)throttle;
 - (void)removeDocumentLoadCommandsFromQueue;
-- (GURL)updateURLForHistoryNavigationFromURL:(const GURL&)startURL
-                                       toURL:(const GURL&)endURL;
+- (GURL)URLForHistoryNavigationFromItem:(web::NavigationItem*)fromItem
+                                 toItem:(web::NavigationItem*)toItem;
 - (BOOL)checkForUnexpectedURLChange;
 - (void)injectEarlyInjectionScripts;
 - (void)stopExpectingURLChangeIfNecessary;
@@ -261,15 +265,15 @@ NSString* GetHTMLForZoomState(const web::PageZoomState& zoom_state,
                               PageScalabilityType scalability_type) {
   NSString* const kHTMLFormat =
       @"<html><head><meta name='viewport' content="
-       "'width=%f,maximum-scale=%f,initial-scale=%f,"
+       "'width=%f,minimum-scale=%f,maximum-scale=%f,initial-scale=%f,"
        "user-scalable=%@'/></head><body>Test</body></html>";
   CGFloat width = CGRectGetWidth([UIScreen mainScreen].bounds) /
       zoom_state.minimum_zoom_scale();
   BOOL scalability_enabled = scalability_type == PAGE_SCALABILITY_ENABLED;
-  return [NSString stringWithFormat:kHTMLFormat, width,
-                                    zoom_state.maximum_zoom_scale(),
-                                    zoom_state.zoom_scale(),
-                                    scalability_enabled ? @"yes" : @"no"];
+  return [NSString
+      stringWithFormat:kHTMLFormat, width, zoom_state.minimum_zoom_scale(),
+                       zoom_state.maximum_zoom_scale(), zoom_state.zoom_scale(),
+                       scalability_enabled ? @"yes" : @"no"];
 }
 
 // Forces |webController|'s view to render and waits until |webController|'s
@@ -341,7 +345,7 @@ class WebControllerTest : public WebTestT {
 };
 
 class CRWUIWebViewWebControllerTest
-    : public WebControllerTest<web::UIWebViewWebTest> {
+    : public WebControllerTest<web::WebTestWithUIWebViewWebController> {
  protected:
   UIView* CreateMockWebView() const override {
     id result = [[OCMockObject mockForClass:[UIWebView class]] retain];
@@ -367,17 +371,17 @@ class CRWUIWebViewWebControllerTest
 };
 
 class CRWWKWebViewWebControllerTest
-    : public WebControllerTest<web::WKWebViewWebTest> {
+    : public WebControllerTest<web::WebTestWithWKWebViewWebController> {
  protected:
   void SetUp() override {
     CR_TEST_REQUIRES_WK_WEB_VIEW();
-    WebControllerTest<web::WKWebViewWebTest>::SetUp();
+    WebControllerTest<web::WebTestWithWKWebViewWebController>::SetUp();
   }
   UIView* CreateMockWebView() const override {
     id result = [[OCMockObject mockForClass:[WKWebView class]] retain];
 
     // Called by resetInjectedWebView
-    [[result stub] configuration];
+    [[result stub] backForwardList];
     [[result stub] setNavigationDelegate:OCMOCK_ANY];
     [[result stub] setUIDelegate:OCMOCK_ANY];
     [[result stub] addObserver:webController_
@@ -823,23 +827,27 @@ WEB_TEST_F(CRWUIWebViewWebControllerTest,
       [urlsWithFragments addObject:[url stringByAppendingString:fragment]];
     }
   }
+  web::NavigationItemImpl fromItem;
+  web::NavigationItemImpl toItem;
 
   // No start fragment: the end url is never changed.
   for (NSString* start in urlsNoFragments) {
     for (NSString* end in urlsWithFragments) {
+      fromItem.SetURL(MAKE_URL(start));
+      toItem.SetURL(MAKE_URL(end));
       EXPECT_EQ(MAKE_URL(end),
-                [this->webController_
-                    updateURLForHistoryNavigationFromURL:MAKE_URL(start)
-                                                   toURL:MAKE_URL(end)]);
+                [this->webController_ URLForHistoryNavigationFromItem:&fromItem
+                                                               toItem:&toItem]);
     }
   }
   // Both contain fragments: the end url is never changed.
   for (NSString* start in urlsWithFragments) {
     for (NSString* end in urlsWithFragments) {
+      fromItem.SetURL(MAKE_URL(start));
+      toItem.SetURL(MAKE_URL(end));
       EXPECT_EQ(MAKE_URL(end),
-                [this->webController_
-                    updateURLForHistoryNavigationFromURL:MAKE_URL(start)
-                                                   toURL:MAKE_URL(end)]);
+                [this->webController_ URLForHistoryNavigationFromItem:&fromItem
+                                                               toItem:&toItem]);
     }
   }
   for (unsigned start_index = 0; start_index < [urlsWithFragments count];
@@ -850,17 +858,20 @@ WEB_TEST_F(CRWUIWebViewWebControllerTest,
       NSString* end = urlsNoFragments[end_index];
       if (start_index / 2 != end_index) {
         // The URLs have nothing in common, they are left untouched.
-        EXPECT_EQ(MAKE_URL(end),
-                  [this->webController_
-                      updateURLForHistoryNavigationFromURL:MAKE_URL(start)
-                                                     toURL:MAKE_URL(end)]);
+        fromItem.SetURL(MAKE_URL(start));
+        toItem.SetURL(MAKE_URL(end));
+        EXPECT_EQ(MAKE_URL(end), [this->webController_
+                                     URLForHistoryNavigationFromItem:&fromItem
+                                                              toItem:&toItem]);
       } else {
         // Start contains a fragment and matches end: An empty fragment is
         // added.
-        EXPECT_EQ(MAKE_URL([end stringByAppendingString:@"#"]),
-                  [this->webController_
-                      updateURLForHistoryNavigationFromURL:MAKE_URL(start)
-                                                     toURL:MAKE_URL(end)]);
+        fromItem.SetURL(MAKE_URL(start));
+        toItem.SetURL(MAKE_URL(end));
+        EXPECT_EQ(
+            MAKE_URL([end stringByAppendingString:@"#"]),
+            [this->webController_ URLForHistoryNavigationFromItem:&fromItem
+                                                           toItem:&toItem]);
       }
     }
   }
@@ -870,15 +881,21 @@ WEB_TEST_F(CRWUIWebViewWebControllerTest,
 #if !defined(ENABLE_CHROME_NET_STACK_FOR_WKWEBVIEW)
 // Tests that presentSSLError:forSSLStatus:recoverable:callback: is called with
 // correct arguments if WKWebView fails to load a page with bad SSL cert.
-TEST_F(CRWWKWebViewWebControllerTest, SSLError) {
+TEST_F(CRWWKWebViewWebControllerTest, SSLCertError) {
   CR_TEST_REQUIRES_WK_WEB_VIEW();
 
   ASSERT_FALSE([mockDelegate_ SSLInfo].is_valid());
 
+  scoped_refptr<net::X509Certificate> cert =
+      net::ImportCertFromFile(net::GetTestCertsDirectory(), "ok_cert.pem");
+
+  NSArray* chain = @[ static_cast<id>(cert->os_cert_handle()) ];
   NSError* error =
       [NSError errorWithDomain:NSURLErrorDomain
                           code:NSURLErrorServerCertificateHasUnknownRoot
-                      userInfo:nil];
+                      userInfo:@{
+                        web::kNSErrorPeerCertificateChainKey : chain,
+                      }];
   WKWebView* webView = static_cast<WKWebView*>([webController_ webView]);
   [static_cast<id<WKNavigationDelegate>>(webController_.get()) webView:webView
                                           didFailProvisionalNavigation:nil
@@ -891,15 +908,17 @@ TEST_F(CRWWKWebViewWebControllerTest, SSLError) {
   EXPECT_EQ(web::SECURITY_STYLE_AUTHENTICATION_BROKEN,
             [mockDelegate_ SSLStatus].security_style);
   EXPECT_FALSE([mockDelegate_ recoverable]);
-  EXPECT_FALSE([mockDelegate_ shouldContinueCallback]);
+  EXPECT_TRUE([mockDelegate_ shouldContinueCallback]);
 }
 #endif  // !defined(ENABLE_CHROME_NET_STACK_FOR_WKWEBVIEW)
 
 // None of the |CRWUIWebViewWebControllerTest| setup is needed;
-typedef web::UIWebViewWebTest CRWUIWebControllerPageDialogsOpenPolicyTest;
+typedef web::WebTestWithUIWebViewWebController
+    CRWUIWebControllerPageDialogsOpenPolicyTest;
 
 // None of the |CRWWKWebViewWebControllerTest| setup is needed;
-typedef web::WKWebViewWebTest CRWWKWebControllerPageDialogsOpenPolicyTest;
+typedef web::WebTestWithWKWebViewWebController
+    CRWWKWebControllerPageDialogsOpenPolicyTest;
 
 WEB_TEST_F(CRWUIWebControllerPageDialogsOpenPolicyTest,
            CRWWKWebControllerPageDialogsOpenPolicyTest,
@@ -919,7 +938,8 @@ WEB_TEST_F(CRWUIWebControllerPageDialogsOpenPolicyTest,
 
 // A separate test class, as none of the |CRWUIWebViewWebControllerTest| setup
 // is needed;
-class CRWUIWebControllerPageScrollStateTest : public web::UIWebViewWebTest {
+class CRWUIWebControllerPageScrollStateTest
+    : public web::WebTestWithUIWebViewWebController {
  protected:
   // Returns a web::PageDisplayState that will scroll a UIWebView to
   // |scrollOffset| and zoom the content by |relativeZoomScale|.
@@ -938,7 +958,8 @@ class CRWUIWebControllerPageScrollStateTest : public web::UIWebViewWebTest {
 
 // A separate test class, as none of the |CRWUIWebViewWebControllerTest| setup
 // is needed;
-class CRWWKWebControllerPageScrollStateTest : public web::WKWebViewWebTest {
+class CRWWKWebControllerPageScrollStateTest
+    : public web::WebTestWithWKWebViewWebController {
  protected:
   // Returns a web::PageDisplayState that will scroll a WKWebView to
   // |scrollOffset| and zoom the content by |relativeZoomScale|.
@@ -1179,10 +1200,12 @@ TEST_F(WebControllerJSEvaluationTest, JavaScriptEvaluationNilHandler) {
 }
 
 // Real UIWebView is required for JSEvaluationTest.
-typedef web::UIWebViewWebTest CRWUIWebControllerJSEvaluationTest;
+typedef web::WebTestWithUIWebViewWebController
+    CRWUIWebControllerJSEvaluationTest;
 
 // Real WKWebView is required for JSEvaluationTest.
-typedef web::WKWebViewWebTest CRWWKWebControllerJSEvaluationTest;
+typedef web::WebTestWithWKWebViewWebController
+    CRWWKWebControllerJSEvaluationTest;
 
 // Tests that a script correctly evaluates to string.
 WEB_TEST_F(CRWUIWebControllerJSEvaluationTest,
@@ -1213,10 +1236,11 @@ WEB_TEST_F(CRWUIWebControllerJSEvaluationTest,
 // A separate test class is used for testing the keyboard dismissal, as none of
 // the setup in |CRWUIWebViewWebControllerTest| is needed; keyboard appearance
 // is tracked by the KeyboardAppearanceListener.
-class WebControllerKeyboardTest : public web::UIWebViewWebTest {
+class WebControllerKeyboardTest
+    : public web::WebTestWithUIWebViewWebController {
  protected:
   void SetUp() override {
-    UIWebViewWebTest::SetUp();
+    web::WebTestWithUIWebViewWebController::SetUp();
     // Close any outstanding alert boxes.
     ui::test::uiview_utils::CancelAlerts();
 
@@ -1293,8 +1317,8 @@ TEST_F(CRWWKWebViewWebControllerTest, WebURLWithTrustLevel) {
 
 // A separate test class, as none of the |CRWUIWebViewWebControllerTest| setup
 // is needed;
-typedef web::UIWebViewWebTest CRWUIWebControllerObserversTest;
-typedef web::WKWebViewWebTest CRWWKWebControllerObserversTest;
+typedef web::WebTestWithUIWebViewWebController CRWUIWebControllerObserversTest;
+typedef web::WebTestWithWKWebViewWebController CRWWKWebControllerObserversTest;
 
 // Tests that CRWWebControllerObservers are called.
 WEB_TEST_F(CRWUIWebControllerObserversTest,
@@ -1329,11 +1353,12 @@ WEB_TEST_F(CRWUIWebControllerObserversTest,
 };
 
 // Test fixture for window.open tests.
-class CRWWKWebControllerWindowOpenTest : public web::WKWebViewWebTest {
+class CRWWKWebControllerWindowOpenTest
+    : public web::WebTestWithWKWebViewWebController {
  protected:
   void SetUp() override {
     CR_TEST_REQUIRES_WK_WEB_VIEW();
-    WKWebViewWebTest::SetUp();
+    web::WebTestWithWKWebViewWebController::SetUp();
 
     // Configure web delegate.
     delegate_.reset([[MockInteractionLoader alloc]
@@ -1362,7 +1387,7 @@ class CRWWKWebControllerWindowOpenTest : public web::WKWebViewWebTest {
     [webController_ setDelegate:nil];
     [child_ close];
 
-    WKWebViewWebTest::TearDown();
+    web::WebTestWithWKWebViewWebController::TearDown();
   }
   // Executes JavaScript that opens a new window and returns evaluation result
   // as a string.
@@ -1475,11 +1500,12 @@ TEST_F(CRWWKWebControllerWindowOpenTest, BlockPopup) {
 };
 
 // Fixture class to test WKWebView crashes.
-class CRWWKWebControllerWebProcessTest : public web::WKWebViewWebTest {
+class CRWWKWebControllerWebProcessTest
+    : public web::WebTestWithWKWebViewWebController {
  protected:
   void SetUp() override {
     CR_TEST_REQUIRES_WK_WEB_VIEW();
-    WKWebViewWebTest::SetUp();
+    web::WebTestWithWKWebViewWebController::SetUp();
     webView_.reset(web::CreateTerminatedWKWebView());
     base::scoped_nsobject<TestWebViewContentView> webViewContentView(
         [[TestWebViewContentView alloc]
@@ -1507,7 +1533,7 @@ TEST_F(CRWWKWebControllerWebProcessTest, Crash) {
 
 // Tests that WKWebView does not crash if deallocation happens during JavaScript
 // evaluation.
-typedef web::WKWebViewWebTest DeallocationDuringJSEvaluation;
+typedef web::WebTestWithWKWebViewWebController DeallocationDuringJSEvaluation;
 TEST_F(DeallocationDuringJSEvaluation, NoCrash) {
   CR_TEST_REQUIRES_WK_WEB_VIEW();
 

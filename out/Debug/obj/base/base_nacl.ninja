@@ -1,0 +1,1948 @@
+rule base_nacl_target_build_newlib_plib_9b4f41e4158ebb93a5d28e6734a13e85
+  command = cd ../../base; python ../native_client/build/build_nexe.py $
+      --root .. --product-dir ../out/Debug/xyz --config-name Debug -t $
+      ../native_client/toolchain/ --arch pnacl --build newlib_plib --name $
+      ../out/Debug/gen/tc_pnacl_newlib/lib/libbase_nacl.a --objdir $
+      ../out/Debug/obj/base/base_nacl.gen/pnacl_newlib-pnacl/base_nacl $
+      "--include-dirs=../out/Debug/gen/tc_pnacl_newlib/include .. $
+      \"../out/Debug/gen\" .." "--compile_flags=-O2 -g -Wall $
+      -fdiagnostics-show-option -Werror -fno-strict-aliasing  $
+      -Wno-unused-function -Wno-char-subscripts -Wno-c++11-extensions $
+      -Wno-unnamed-type-template-args -Wno-extra-semi $
+      -Wno-unused-private-field -Wno-char-subscripts -Wno-unused-function $
+      \"-std=gnu++11\" " --gomadir "" "--defines=\"__STDC_LIMIT_MACROS=1\" $
+      \"__STDC_FORMAT_MACROS=1\" \"_GNU_SOURCE=1\" $
+      \"_POSIX_C_SOURCE=199506\" \"_XOPEN_SOURCE=600\" $
+      \"DYNAMIC_ANNOTATIONS_ENABLED=1\" $
+      \"DYNAMIC_ANNOTATIONS_PREFIX=NACL_\" \"NACL_BUILD_ARCH=x86\" $
+      V8_DEPRECATION_WARNINGS \"CLD_VERSION=2\" \"_FILE_OFFSET_BITS=64\" $
+      CHROMIUM_BUILD \"CR_CLANG_REVISION=255169-1\" $
+      UI_COMPOSITOR_IMAGE_TRANSPORT \"USE_AURA=1\" \"USE_ASH=1\" $
+      \"USE_PANGO=1\" \"USE_CAIRO=1\" \"USE_DEFAULT_RENDER_THEME=1\" $
+      \"USE_LIBJPEG_TURBO=1\" \"USE_X11=1\" \"USE_CLIPBOARD_AURAX11=1\" $
+      ENABLE_ONE_CLICK_SIGNIN \"ENABLE_WEBRTC=1\" \"ENABLE_MEDIA_ROUTER=1\" $
+      ENABLE_PEPPER_CDMS ENABLE_CONFIGURATION_POLICY ENABLE_NOTIFICATIONS $
+      \"ENABLE_HIDPI=1\" \"ENABLE_TOPCHROME_MD=1\" USE_UDEV $
+      DONT_EMBED_BUILD_METADATA FIELDTRIAL_TESTING_ENABLED $
+      \"ENABLE_TASK_MANAGER=1\" \"ENABLE_EXTENSIONS=1\" \"ENABLE_PDF=1\" $
+      \"ENABLE_PLUGINS=1\" \"ENABLE_SESSION_SERVICE=1\" \"ENABLE_THEMES=1\" $
+      \"ENABLE_AUTOFILL_DIALOG=1\" \"ENABLE_BACKGROUND=1\" $
+      \"ENABLE_PRINTING=1\" \"ENABLE_BASIC_PRINTING=1\" $
+      \"ENABLE_PRINT_PREVIEW=1\" \"ENABLE_SPELLCHECK=1\" $
+      \"ENABLE_CAPTIVE_PORTAL_DETECTION=1\" \"ENABLE_APP_LIST=1\" $
+      \"ENABLE_SETTINGS_APP=1\" \"ENABLE_SUPERVISED_USERS=1\" $
+      \"ENABLE_MDNS=1\" \"ENABLE_SERVICE_DISCOVERY=1\" $
+      V8_USE_EXTERNAL_STARTUP_DATA FULL_SAFE_BROWSING SAFE_BROWSING_CSD $
+      SAFE_BROWSING_DB_LOCAL \"USE_LIBPCI=1\" \"USE_OPENSSL=1\" $
+      \"USE_OPENSSL_CERTS=1\" __STDC_CONSTANT_MACROS __STDC_FORMAT_MACROS $
+      BASE_IMPLEMENTATION" $
+      "--link_flags=-B../out/Debug/gen/tc_pnacl_newlib/lib  " $
+      "--source-list=../out/gypfiles/base/pnacl_newlib.base_nacl.source_list.gypcmd"
+  description = ACTION base_nacl: build newlib $
+      plib_9b4f41e4158ebb93a5d28e6734a13e85
+  restat = 1
+
+build gen/tc_pnacl_newlib/lib/libbase_nacl.a: $
+    base_nacl_target_build_newlib_plib_9b4f41e4158ebb93a5d28e6734a13e85 $
+    ../../native_client/build/build_nexe.py $
+    ../../native_client/build/build_nexe_tools.py $
+    ../../build/build_config.h $
+    ../../testing/gtest/include/gtest/gtest_prod.h $
+    ../../third_party/apple_apsl/CFBase.h $
+    ../../third_party/apple_apsl/CFRuntime.h $
+    ../../third_party/apple_apsl/malloc.h ../../third_party/ashmem/ashmem.h $
+    ../../third_party/modp_b64/modp_b64.h $
+    ../../third_party/tcmalloc/chromium/src/gperftools/profiler.h $
+    ../../base/allocator/allocator_extension.cc $
+    ../../base/allocator/allocator_extension.h $
+    ../../base/android/animation_frame_time_histogram.cc $
+    ../../base/android/animation_frame_time_histogram.h $
+    ../../base/android/apk_assets.cc ../../base/android/apk_assets.h $
+    ../../base/android/application_status_listener.cc $
+    ../../base/android/application_status_listener.h $
+    ../../base/android/base_jni_onload.cc $
+    ../../base/android/base_jni_onload.h $
+    ../../base/android/base_jni_registrar.cc $
+    ../../base/android/base_jni_registrar.h $
+    ../../base/android/build_info.cc ../../base/android/build_info.h $
+    ../../base/android/command_line_android.cc $
+    ../../base/android/command_line_android.h $
+    ../../base/android/content_uri_utils.cc $
+    ../../base/android/content_uri_utils.h $
+    ../../base/android/context_utils.cc ../../base/android/context_utils.h $
+    ../../base/android/cpu_features.cc ../../base/android/cpu_features.h $
+    ../../base/android/cxa_demangle_stub.cc ../../base/android/event_log.cc $
+    ../../base/android/event_log.h ../../base/android/field_trial_list.cc $
+    ../../base/android/field_trial_list.h ../../base/android/fifo_utils.cc $
+    ../../base/android/fifo_utils.h $
+    ../../base/android/important_file_writer_android.cc $
+    ../../base/android/important_file_writer_android.h $
+    ../../base/android/java_handler_thread.cc $
+    ../../base/android/java_handler_thread.h $
+    ../../base/android/java_runtime.cc ../../base/android/java_runtime.h $
+    ../../base/android/jni_android.cc ../../base/android/jni_android.h $
+    ../../base/android/jni_array.cc ../../base/android/jni_array.h $
+    ../../base/android/jni_registrar.cc ../../base/android/jni_registrar.h $
+    ../../base/android/jni_string.cc ../../base/android/jni_string.h $
+    ../../base/android/jni_utils.cc ../../base/android/jni_utils.h $
+    ../../base/android/jni_weak_ref.cc ../../base/android/jni_weak_ref.h $
+    ../../base/android/library_loader/library_load_from_apk_status_codes.h $
+    ../../base/android/library_loader/library_loader_hooks.cc $
+    ../../base/android/library_loader/library_loader_hooks.h $
+    ../../base/android/library_loader/library_prefetcher.cc $
+    ../../base/android/library_loader/library_prefetcher.h $
+    ../../base/android/locale_utils.cc ../../base/android/locale_utils.h $
+    ../../base/android/memory_pressure_listener_android.cc $
+    ../../base/android/memory_pressure_listener_android.h $
+    ../../base/android/path_service_android.cc $
+    ../../base/android/path_service_android.h $
+    ../../base/android/path_utils.cc ../../base/android/path_utils.h $
+    ../../base/android/record_histogram.cc $
+    ../../base/android/record_histogram.h $
+    ../../base/android/record_user_action.cc $
+    ../../base/android/record_user_action.h $
+    ../../base/android/scoped_java_ref.cc $
+    ../../base/android/scoped_java_ref.h ../../base/android/sys_utils.cc $
+    ../../base/android/sys_utils.h ../../base/android/thread_utils.h $
+    ../../base/android/trace_event_binding.cc $
+    ../../base/android/trace_event_binding.h ../../base/at_exit.cc $
+    ../../base/at_exit.h ../../base/atomic_ref_count.h $
+    ../../base/atomic_sequence_num.h ../../base/atomicops.h $
+    ../../base/atomicops_internals_atomicword_compat.h $
+    ../../base/atomicops_internals_portable.h $
+    ../../base/atomicops_internals_x86_msvc.h ../../base/barrier_closure.cc $
+    ../../base/barrier_closure.h ../../base/base64.cc ../../base/base64.h $
+    ../../base/base64url.cc ../../base/base64url.h ../../base/base_export.h $
+    ../../base/base_paths.cc ../../base/base_paths.h $
+    ../../base/base_paths_android.cc ../../base/base_paths_android.h $
+    ../../base/base_paths_mac.h ../../base/base_paths_mac.mm $
+    ../../base/base_paths_posix.cc ../../base/base_paths_posix.h $
+    ../../base/base_paths_win.cc ../../base/base_paths_win.h $
+    ../../base/base_switches.cc ../../base/base_switches.h $
+    ../../base/basictypes.h ../../base/big_endian.cc $
+    ../../base/big_endian.h ../../base/bind.h ../../base/bind_helpers.cc $
+    ../../base/bind_helpers.h ../../base/bind_internal.h $
+    ../../base/bind_internal_win.h ../../base/bits.h $
+    ../../base/build_time.cc ../../base/build_time.h ../../base/callback.h $
+    ../../base/callback_forward.h ../../base/callback_helpers.cc $
+    ../../base/callback_helpers.h ../../base/callback_internal.cc $
+    ../../base/callback_internal.h ../../base/callback_list.h $
+    ../../base/cancelable_callback.h ../../base/command_line.cc $
+    ../../base/command_line.h ../../base/compiler_specific.h $
+    ../../base/containers/adapters.h ../../base/containers/hash_tables.h $
+    ../../base/containers/linked_list.h ../../base/containers/mru_cache.h $
+    ../../base/containers/scoped_ptr_hash_map.h $
+    ../../base/containers/small_map.h $
+    ../../base/containers/stack_container.h ../../base/cpu.cc $
+    ../../base/cpu.h ../../base/critical_closure.h $
+    ../../base/critical_closure_internal_ios.mm ../../base/debug/alias.cc $
+    ../../base/debug/alias.h ../../base/debug/asan_invalid_access.cc $
+    ../../base/debug/asan_invalid_access.h $
+    ../../base/debug/crash_logging.cc ../../base/debug/crash_logging.h $
+    ../../base/debug/debugger.cc ../../base/debug/debugger.h $
+    ../../base/debug/debugger_posix.cc ../../base/debug/debugger_win.cc $
+    ../../base/debug/dump_without_crashing.cc $
+    ../../base/debug/dump_without_crashing.h $
+    ../../base/debug/gdi_debug_util_win.cc $
+    ../../base/debug/gdi_debug_util_win.h $
+    ../../base/debug/leak_annotations.h ../../base/debug/leak_tracker.h $
+    ../../base/debug/proc_maps_linux.cc ../../base/debug/proc_maps_linux.h $
+    ../../base/debug/profiler.cc ../../base/debug/profiler.h $
+    ../../base/debug/stack_trace.cc ../../base/debug/stack_trace.h $
+    ../../base/debug/stack_trace_android.cc $
+    ../../base/debug/stack_trace_posix.cc $
+    ../../base/debug/stack_trace_win.cc ../../base/debug/task_annotator.cc $
+    ../../base/debug/task_annotator.h $
+    ../../base/deferred_sequenced_task_runner.cc $
+    ../../base/deferred_sequenced_task_runner.h ../../base/environment.cc $
+    ../../base/environment.h ../../base/event_types.h $
+    ../../base/feature_list.cc ../../base/feature_list.h $
+    ../../base/file_descriptor_posix.h ../../base/file_version_info.h $
+    ../../base/file_version_info_mac.h ../../base/file_version_info_mac.mm $
+    ../../base/file_version_info_win.cc ../../base/file_version_info_win.h $
+    ../../base/files/dir_reader_fallback.h $
+    ../../base/files/dir_reader_linux.h ../../base/files/dir_reader_posix.h $
+    ../../base/files/file.cc ../../base/files/file.h $
+    ../../base/files/file_enumerator.cc ../../base/files/file_enumerator.h $
+    ../../base/files/file_enumerator_posix.cc $
+    ../../base/files/file_enumerator_win.cc ../../base/files/file_path.cc $
+    ../../base/files/file_path.h ../../base/files/file_path_constants.cc $
+    ../../base/files/file_path_watcher.cc $
+    ../../base/files/file_path_watcher.h $
+    ../../base/files/file_path_watcher_fsevents.cc $
+    ../../base/files/file_path_watcher_fsevents.h $
+    ../../base/files/file_path_watcher_kqueue.cc $
+    ../../base/files/file_path_watcher_kqueue.h $
+    ../../base/files/file_path_watcher_linux.cc $
+    ../../base/files/file_path_watcher_mac.cc $
+    ../../base/files/file_path_watcher_stub.cc $
+    ../../base/files/file_path_watcher_win.cc $
+    ../../base/files/file_posix.cc ../../base/files/file_proxy.cc $
+    ../../base/files/file_proxy.h ../../base/files/file_tracing.cc $
+    ../../base/files/file_tracing.h ../../base/files/file_util.cc $
+    ../../base/files/file_util.h ../../base/files/file_util_android.cc $
+    ../../base/files/file_util_linux.cc ../../base/files/file_util_mac.mm $
+    ../../base/files/file_util_posix.cc ../../base/files/file_util_proxy.cc $
+    ../../base/files/file_util_proxy.h ../../base/files/file_util_win.cc $
+    ../../base/files/file_win.cc ../../base/files/important_file_writer.cc $
+    ../../base/files/important_file_writer.h $
+    ../../base/files/memory_mapped_file.cc $
+    ../../base/files/memory_mapped_file.h $
+    ../../base/files/memory_mapped_file_posix.cc $
+    ../../base/files/memory_mapped_file_win.cc $
+    ../../base/files/scoped_file.cc ../../base/files/scoped_file.h $
+    ../../base/files/scoped_temp_dir.cc ../../base/files/scoped_temp_dir.h $
+    ../../base/format_macros.h ../../base/gtest_prod_util.h $
+    ../../base/guid.cc ../../base/guid.h ../../base/guid_posix.cc $
+    ../../base/guid_win.cc ../../base/hash.cc ../../base/hash.h $
+    ../../base/id_map.h ../../base/ios/block_types.h $
+    ../../base/ios/crb_protocol_observers.h $
+    ../../base/ios/crb_protocol_observers.mm ../../base/ios/device_util.h $
+    ../../base/ios/device_util.mm ../../base/ios/ios_util.h $
+    ../../base/ios/ios_util.mm ../../base/ios/ns_error_util.h $
+    ../../base/ios/ns_error_util.mm ../../base/ios/scoped_critical_action.h $
+    ../../base/ios/scoped_critical_action.mm ../../base/ios/weak_nsobject.h $
+    ../../base/ios/weak_nsobject.mm $
+    ../../base/json/json_file_value_serializer.cc $
+    ../../base/json/json_file_value_serializer.h $
+    ../../base/json/json_parser.cc ../../base/json/json_parser.h $
+    ../../base/json/json_reader.cc ../../base/json/json_reader.h $
+    ../../base/json/json_string_value_serializer.cc $
+    ../../base/json/json_string_value_serializer.h $
+    ../../base/json/json_value_converter.cc $
+    ../../base/json/json_value_converter.h ../../base/json/json_writer.cc $
+    ../../base/json/json_writer.h ../../base/json/string_escape.cc $
+    ../../base/json/string_escape.h ../../base/lazy_instance.cc $
+    ../../base/lazy_instance.h ../../base/location.cc ../../base/location.h $
+    ../../base/logging.cc ../../base/logging.h ../../base/logging_win.cc $
+    ../../base/logging_win.h ../../base/mac/authorization_util.h $
+    ../../base/mac/authorization_util.mm ../../base/mac/bind_objc_block.h $
+    ../../base/mac/bundle_locations.h ../../base/mac/bundle_locations.mm $
+    ../../base/mac/call_with_eh_frame.cc $
+    ../../base/mac/call_with_eh_frame.h $
+    ../../base/mac/call_with_eh_frame_asm.S $
+    ../../base/mac/close_nocancel.cc ../../base/mac/cocoa_protocols.h $
+    ../../base/mac/dispatch_source_mach.cc $
+    ../../base/mac/dispatch_source_mach.h ../../base/mac/foundation_util.h $
+    ../../base/mac/foundation_util.mm $
+    ../../base/mac/launch_services_util.cc $
+    ../../base/mac/launch_services_util.h ../../base/mac/launchd.cc $
+    ../../base/mac/launchd.h ../../base/mac/libdispatch_task_runner.cc $
+    ../../base/mac/libdispatch_task_runner.h ../../base/mac/mac_logging.cc $
+    ../../base/mac/mac_logging.h ../../base/mac/mac_util.h $
+    ../../base/mac/mac_util.mm ../../base/mac/mach_logging.cc $
+    ../../base/mac/mach_logging.h ../../base/mac/objc_property_releaser.h $
+    ../../base/mac/objc_property_releaser.mm $
+    ../../base/mac/os_crash_dumps.cc ../../base/mac/os_crash_dumps.h $
+    ../../base/mac/scoped_aedesc.h ../../base/mac/scoped_authorizationref.h $
+    ../../base/mac/scoped_block.h $
+    ../../base/mac/scoped_cffiledescriptorref.h $
+    ../../base/mac/scoped_cftyperef.h ../../base/mac/scoped_ioobject.h $
+    ../../base/mac/scoped_ioplugininterface.h $
+    ../../base/mac/scoped_launch_data.h ../../base/mac/scoped_mach_port.cc $
+    ../../base/mac/scoped_mach_port.h ../../base/mac/scoped_mach_vm.cc $
+    ../../base/mac/scoped_mach_vm.h $
+    ../../base/mac/scoped_nsautorelease_pool.h $
+    ../../base/mac/scoped_nsautorelease_pool.mm $
+    ../../base/mac/scoped_nsobject.h $
+    ../../base/mac/scoped_objc_class_swizzler.h $
+    ../../base/mac/scoped_objc_class_swizzler.mm $
+    ../../base/mac/scoped_sending_event.h $
+    ../../base/mac/scoped_sending_event.mm ../../base/mac/scoped_typeref.h $
+    ../../base/mac/sdk_forward_declarations.h $
+    ../../base/mac/sdk_forward_declarations.mm ../../base/macros.h $
+    ../../base/md5.cc ../../base/md5.h ../../base/memory/aligned_memory.cc $
+    ../../base/memory/aligned_memory.h $
+    ../../base/memory/discardable_memory.cc $
+    ../../base/memory/discardable_memory.h $
+    ../../base/memory/discardable_memory_allocator.cc $
+    ../../base/memory/discardable_memory_allocator.h $
+    ../../base/memory/discardable_shared_memory.cc $
+    ../../base/memory/discardable_shared_memory.h $
+    ../../base/memory/linked_ptr.h ../../base/memory/manual_constructor.h $
+    ../../base/memory/memory_pressure_listener.cc $
+    ../../base/memory/memory_pressure_listener.h $
+    ../../base/memory/memory_pressure_monitor.cc $
+    ../../base/memory/memory_pressure_monitor.h $
+    ../../base/memory/memory_pressure_monitor_chromeos.cc $
+    ../../base/memory/memory_pressure_monitor_chromeos.h $
+    ../../base/memory/memory_pressure_monitor_mac.cc $
+    ../../base/memory/memory_pressure_monitor_mac.h $
+    ../../base/memory/memory_pressure_monitor_win.cc $
+    ../../base/memory/memory_pressure_monitor_win.h $
+    ../../base/memory/ptr_util.h $
+    ../../base/memory/raw_scoped_refptr_mismatch_checker.h $
+    ../../base/memory/ref_counted.cc ../../base/memory/ref_counted.h $
+    ../../base/memory/ref_counted_delete_on_message_loop.h $
+    ../../base/memory/ref_counted_memory.cc $
+    ../../base/memory/ref_counted_memory.h $
+    ../../base/memory/scoped_policy.h ../../base/memory/scoped_ptr.h $
+    ../../base/memory/scoped_vector.h ../../base/memory/shared_memory.h $
+    ../../base/memory/shared_memory_android.cc $
+    ../../base/memory/shared_memory_handle.h $
+    ../../base/memory/shared_memory_handle_mac.cc $
+    ../../base/memory/shared_memory_handle_win.cc $
+    ../../base/memory/shared_memory_mac.cc $
+    ../../base/memory/shared_memory_nacl.cc $
+    ../../base/memory/shared_memory_posix.cc $
+    ../../base/memory/shared_memory_win.cc ../../base/memory/singleton.cc $
+    ../../base/memory/singleton.h ../../base/memory/weak_ptr.cc $
+    ../../base/memory/weak_ptr.h $
+    ../../base/message_loop/incoming_task_queue.cc $
+    ../../base/message_loop/incoming_task_queue.h $
+    ../../base/message_loop/message_loop.cc $
+    ../../base/message_loop/message_loop.h $
+    ../../base/message_loop/message_loop_task_runner.cc $
+    ../../base/message_loop/message_loop_task_runner.h $
+    ../../base/message_loop/message_pump.cc $
+    ../../base/message_loop/message_pump.h $
+    ../../base/message_loop/message_pump_android.cc $
+    ../../base/message_loop/message_pump_android.h $
+    ../../base/message_loop/message_pump_default.cc $
+    ../../base/message_loop/message_pump_default.h $
+    ../../base/message_loop/message_pump_dispatcher.h $
+    ../../base/message_loop/message_pump_glib.h $
+    ../../base/message_loop/message_pump_io_ios.h $
+    ../../base/message_loop/message_pump_libevent.h $
+    ../../base/message_loop/message_pump_mac.h $
+    ../../base/message_loop/message_pump_win.cc $
+    ../../base/message_loop/message_pump_win.h $
+    ../../base/message_loop/timer_slack.h $
+    ../../base/metrics/bucket_ranges.cc ../../base/metrics/bucket_ranges.h $
+    ../../base/metrics/field_trial.h ../../base/metrics/histogram.cc $
+    ../../base/metrics/histogram.h ../../base/metrics/histogram_base.cc $
+    ../../base/metrics/histogram_base.h $
+    ../../base/metrics/histogram_delta_serialization.cc $
+    ../../base/metrics/histogram_delta_serialization.h $
+    ../../base/metrics/histogram_flattener.h $
+    ../../base/metrics/histogram_macros.h $
+    ../../base/metrics/histogram_samples.cc $
+    ../../base/metrics/histogram_samples.h $
+    ../../base/metrics/histogram_snapshot_manager.cc $
+    ../../base/metrics/histogram_snapshot_manager.h $
+    ../../base/metrics/metrics_hashes.cc $
+    ../../base/metrics/metrics_hashes.h ../../base/metrics/sample_map.cc $
+    ../../base/metrics/sample_map.h ../../base/metrics/sample_vector.cc $
+    ../../base/metrics/sample_vector.h $
+    ../../base/metrics/sparse_histogram.cc $
+    ../../base/metrics/sparse_histogram.h $
+    ../../base/metrics/statistics_recorder.cc $
+    ../../base/metrics/statistics_recorder.h $
+    ../../base/metrics/user_metrics.cc ../../base/metrics/user_metrics.h $
+    ../../base/metrics/user_metrics_action.h ../../base/move.h $
+    ../../base/native_library.h ../../base/native_library_ios.mm $
+    ../../base/native_library_mac.mm ../../base/native_library_posix.cc $
+    ../../base/native_library_win.cc ../../base/nix/mime_util_xdg.cc $
+    ../../base/nix/mime_util_xdg.h ../../base/nix/xdg_util.cc $
+    ../../base/nix/xdg_util.h ../../base/numerics/safe_conversions.h $
+    ../../base/numerics/safe_conversions_impl.h $
+    ../../base/numerics/safe_math.h ../../base/numerics/safe_math_impl.h $
+    ../../base/observer_list.h ../../base/observer_list_threadsafe.h $
+    ../../base/os_compat_android.cc ../../base/os_compat_android.h $
+    ../../base/os_compat_nacl.cc ../../base/os_compat_nacl.h $
+    ../../base/path_service.cc ../../base/path_service.h $
+    ../../base/pending_task.cc ../../base/pending_task.h $
+    ../../base/pickle.cc ../../base/pickle.h $
+    ../../base/posix/eintr_wrapper.h $
+    ../../base/posix/file_descriptor_shuffle.h $
+    ../../base/posix/global_descriptors.cc $
+    ../../base/posix/global_descriptors.h ../../base/posix/safe_strerror.cc $
+    ../../base/posix/safe_strerror.h $
+    ../../base/posix/unix_domain_socket_linux.cc $
+    ../../base/posix/unix_domain_socket_linux.h $
+    ../../base/power_monitor/power_monitor.cc $
+    ../../base/power_monitor/power_monitor.h $
+    ../../base/power_monitor/power_monitor_device_source.cc $
+    ../../base/power_monitor/power_monitor_device_source.h $
+    ../../base/power_monitor/power_monitor_device_source_android.cc $
+    ../../base/power_monitor/power_monitor_device_source_android.h $
+    ../../base/power_monitor/power_monitor_device_source_chromeos.cc $
+    ../../base/power_monitor/power_monitor_device_source_ios.mm $
+    ../../base/power_monitor/power_monitor_device_source_mac.mm $
+    ../../base/power_monitor/power_monitor_device_source_posix.cc $
+    ../../base/power_monitor/power_monitor_device_source_win.cc $
+    ../../base/power_monitor/power_monitor_source.cc $
+    ../../base/power_monitor/power_monitor_source.h $
+    ../../base/power_monitor/power_observer.h $
+    ../../base/process/internal_linux.cc $
+    ../../base/process/internal_linux.h ../../base/process/kill.cc $
+    ../../base/process/kill.h ../../base/process/kill_mac.cc $
+    ../../base/process/kill_posix.cc ../../base/process/kill_win.cc $
+    ../../base/process/launch.cc ../../base/process/launch.h $
+    ../../base/process/launch_ios.cc ../../base/process/launch_mac.cc $
+    ../../base/process/launch_posix.cc ../../base/process/launch_win.cc $
+    ../../base/process/memory.cc ../../base/process/memory.h $
+    ../../base/process/memory_linux.cc ../../base/process/memory_mac.mm $
+    ../../base/process/memory_win.cc $
+    ../../base/process/port_provider_mac.cc $
+    ../../base/process/port_provider_mac.h ../../base/process/process.h $
+    ../../base/process/process_handle.cc $
+    ../../base/process/process_handle.h $
+    ../../base/process/process_handle_freebsd.cc $
+    ../../base/process/process_handle_linux.cc $
+    ../../base/process/process_handle_mac.cc $
+    ../../base/process/process_handle_openbsd.cc $
+    ../../base/process/process_handle_posix.cc $
+    ../../base/process/process_handle_win.cc $
+    ../../base/process/process_info.h $
+    ../../base/process/process_info_linux.cc $
+    ../../base/process/process_info_mac.cc $
+    ../../base/process/process_info_win.cc $
+    ../../base/process/process_iterator.cc $
+    ../../base/process/process_iterator.h $
+    ../../base/process/process_iterator_freebsd.cc $
+    ../../base/process/process_iterator_linux.cc $
+    ../../base/process/process_iterator_mac.cc $
+    ../../base/process/process_iterator_openbsd.cc $
+    ../../base/process/process_iterator_win.cc $
+    ../../base/process/process_linux.cc $
+    ../../base/process/process_metrics.cc $
+    ../../base/process/process_metrics.h $
+    ../../base/process/process_metrics_freebsd.cc $
+    ../../base/process/process_metrics_ios.cc $
+    ../../base/process/process_metrics_linux.cc $
+    ../../base/process/process_metrics_mac.cc $
+    ../../base/process/process_metrics_nacl.cc $
+    ../../base/process/process_metrics_openbsd.cc $
+    ../../base/process/process_metrics_posix.cc $
+    ../../base/process/process_metrics_win.cc $
+    ../../base/process/process_posix.cc ../../base/process/process_win.cc $
+    ../../base/profiler/alternate_timer.cc $
+    ../../base/profiler/alternate_timer.h $
+    ../../base/profiler/native_stack_sampler.cc $
+    ../../base/profiler/native_stack_sampler.h $
+    ../../base/profiler/native_stack_sampler_posix.cc $
+    ../../base/profiler/native_stack_sampler_win.cc $
+    ../../base/profiler/scoped_profile.cc $
+    ../../base/profiler/scoped_profile.h $
+    ../../base/profiler/scoped_tracker.cc $
+    ../../base/profiler/scoped_tracker.h $
+    ../../base/profiler/stack_sampling_profiler.cc $
+    ../../base/profiler/stack_sampling_profiler.h $
+    ../../base/profiler/tracked_time.cc ../../base/profiler/tracked_time.h $
+    ../../base/profiler/win32_stack_frame_unwinder.h $
+    ../../base/rand_util.cc ../../base/rand_util.h $
+    ../../base/rand_util_nacl.cc ../../base/rand_util_posix.cc $
+    ../../base/rand_util_win.cc ../../base/run_loop.cc $
+    ../../base/run_loop.h ../../base/scoped_clear_errno.h $
+    ../../base/scoped_generic.h ../../base/scoped_native_library.cc $
+    ../../base/scoped_native_library.h ../../base/scoped_observer.h $
+    ../../base/sequence_checker.h ../../base/sequence_checker_impl.cc $
+    ../../base/sequence_checker_impl.h ../../base/sequenced_task_runner.cc $
+    ../../base/sequenced_task_runner.h $
+    ../../base/sequenced_task_runner_helpers.h ../../base/sha1.h $
+    ../../base/sha1_portable.cc ../../base/sha1_win.cc $
+    ../../base/single_thread_task_runner.h ../../base/stl_util.h $
+    ../../base/strings/latin1_string_conversions.cc $
+    ../../base/strings/latin1_string_conversions.h $
+    ../../base/strings/nullable_string16.cc $
+    ../../base/strings/nullable_string16.h ../../base/strings/pattern.cc $
+    ../../base/strings/pattern.h ../../base/strings/safe_sprintf.cc $
+    ../../base/strings/safe_sprintf.h ../../base/strings/string16.cc $
+    ../../base/strings/string16.h $
+    ../../base/strings/string_number_conversions.cc $
+    ../../base/strings/string_number_conversions.h $
+    ../../base/strings/string_piece.cc ../../base/strings/string_piece.h $
+    ../../base/strings/string_split.cc ../../base/strings/string_split.h $
+    ../../base/strings/string_tokenizer.h ../../base/strings/string_util.cc $
+    ../../base/strings/string_util.h $
+    ../../base/strings/string_util_constants.cc $
+    ../../base/strings/string_util_posix.h $
+    ../../base/strings/string_util_win.h $
+    ../../base/strings/stringize_macros.h $
+    ../../base/strings/stringprintf.cc ../../base/strings/stringprintf.h $
+    ../../base/strings/sys_string_conversions.h $
+    ../../base/strings/sys_string_conversions_mac.mm $
+    ../../base/strings/sys_string_conversions_posix.cc $
+    ../../base/strings/sys_string_conversions_win.cc $
+    ../../base/strings/utf_offset_string_conversions.cc $
+    ../../base/strings/utf_offset_string_conversions.h $
+    ../../base/strings/utf_string_conversion_utils.cc $
+    ../../base/strings/utf_string_conversion_utils.h $
+    ../../base/strings/utf_string_conversions.cc $
+    ../../base/strings/utf_string_conversions.h $
+    ../../base/supports_user_data.cc ../../base/supports_user_data.h $
+    ../../base/sync_socket.h ../../base/sync_socket_nacl.cc $
+    ../../base/synchronization/cancellation_flag.cc $
+    ../../base/synchronization/cancellation_flag.h $
+    ../../base/synchronization/condition_variable.h $
+    ../../base/synchronization/condition_variable_posix.cc $
+    ../../base/synchronization/condition_variable_win.cc $
+    ../../base/synchronization/lock.cc ../../base/synchronization/lock.h $
+    ../../base/synchronization/lock_impl.h $
+    ../../base/synchronization/lock_impl_posix.cc $
+    ../../base/synchronization/lock_impl_win.cc $
+    ../../base/synchronization/spin_wait.h $
+    ../../base/synchronization/waitable_event.h $
+    ../../base/synchronization/waitable_event_posix.cc $
+    ../../base/synchronization/waitable_event_watcher.h $
+    ../../base/synchronization/waitable_event_watcher_posix.cc $
+    ../../base/synchronization/waitable_event_watcher_win.cc $
+    ../../base/synchronization/waitable_event_win.cc $
+    ../../base/sys_byteorder.h ../../base/sys_info.cc ../../base/sys_info.h $
+    ../../base/sys_info_android.cc ../../base/sys_info_chromeos.cc $
+    ../../base/sys_info_freebsd.cc ../../base/sys_info_internal.h $
+    ../../base/sys_info_ios.mm ../../base/sys_info_linux.cc $
+    ../../base/sys_info_mac.cc ../../base/sys_info_openbsd.cc $
+    ../../base/sys_info_posix.cc ../../base/sys_info_win.cc $
+    ../../base/system_monitor/system_monitor.cc $
+    ../../base/system_monitor/system_monitor.h $
+    ../../base/task/cancelable_task_tracker.cc $
+    ../../base/task/cancelable_task_tracker.h ../../base/task_runner.cc $
+    ../../base/task_runner.h ../../base/task_runner_util.h $
+    ../../base/template_util.h ../../base/third_party/dmg_fp/dmg_fp.h $
+    ../../base/third_party/dmg_fp/dtoa.cc $
+    ../../base/third_party/dmg_fp/dtoa_wrapper.cc $
+    ../../base/third_party/dmg_fp/g_fmt.cc $
+    ../../base/third_party/dynamic_annotations/dynamic_annotations.h $
+    ../../base/third_party/icu/icu_utf.cc $
+    ../../base/third_party/icu/icu_utf.h $
+    ../../base/third_party/nspr/prtime.cc $
+    ../../base/third_party/nspr/prtime.h $
+    ../../base/third_party/superfasthash/superfasthash.c $
+    ../../base/third_party/symbolize/config.h $
+    ../../base/third_party/symbolize/glog/logging.h $
+    ../../base/third_party/symbolize/symbolize.h $
+    ../../base/third_party/symbolize/utilities.h $
+    ../../base/third_party/valgrind/memcheck.h $
+    ../../base/third_party/valgrind/valgrind.h $
+    ../../base/third_party/xdg_mime/xdgmime.h $
+    ../../base/third_party/xdg_user_dirs/xdg_user_dir_lookup.h $
+    ../../base/thread_task_runner_handle.cc $
+    ../../base/thread_task_runner_handle.h $
+    ../../base/threading/non_thread_safe.h $
+    ../../base/threading/non_thread_safe_impl.cc $
+    ../../base/threading/non_thread_safe_impl.h $
+    ../../base/threading/platform_thread.h $
+    ../../base/threading/platform_thread_android.cc $
+    ../../base/threading/platform_thread_internal_posix.cc $
+    ../../base/threading/platform_thread_internal_posix.h $
+    ../../base/threading/platform_thread_linux.cc $
+    ../../base/threading/platform_thread_mac.mm $
+    ../../base/threading/platform_thread_posix.cc $
+    ../../base/threading/platform_thread_win.cc $
+    ../../base/threading/post_task_and_reply_impl.cc $
+    ../../base/threading/post_task_and_reply_impl.h $
+    ../../base/threading/sequenced_task_runner_handle.cc $
+    ../../base/threading/sequenced_task_runner_handle.h $
+    ../../base/threading/sequenced_worker_pool.cc $
+    ../../base/threading/sequenced_worker_pool.h $
+    ../../base/threading/simple_thread.cc $
+    ../../base/threading/simple_thread.h ../../base/threading/thread.cc $
+    ../../base/threading/thread.h ../../base/threading/thread_checker.h $
+    ../../base/threading/thread_checker_impl.cc $
+    ../../base/threading/thread_checker_impl.h $
+    ../../base/threading/thread_collision_warner.cc $
+    ../../base/threading/thread_collision_warner.h $
+    ../../base/threading/thread_id_name_manager.cc $
+    ../../base/threading/thread_id_name_manager.h $
+    ../../base/threading/thread_local.h $
+    ../../base/threading/thread_local_android.cc $
+    ../../base/threading/thread_local_posix.cc $
+    ../../base/threading/thread_local_storage.cc $
+    ../../base/threading/thread_local_storage.h $
+    ../../base/threading/thread_local_storage_posix.cc $
+    ../../base/threading/thread_local_storage_win.cc $
+    ../../base/threading/thread_local_win.cc $
+    ../../base/threading/thread_restrictions.cc $
+    ../../base/threading/thread_restrictions.h $
+    ../../base/threading/watchdog.cc ../../base/threading/watchdog.h $
+    ../../base/threading/worker_pool.cc ../../base/threading/worker_pool.h $
+    ../../base/threading/worker_pool_posix.cc $
+    ../../base/threading/worker_pool_posix.h $
+    ../../base/threading/worker_pool_win.cc ../../base/time/clock.cc $
+    ../../base/time/clock.h ../../base/time/default_clock.cc $
+    ../../base/time/default_clock.h ../../base/time/default_tick_clock.cc $
+    ../../base/time/default_tick_clock.h ../../base/time/tick_clock.cc $
+    ../../base/time/tick_clock.h ../../base/time/time.cc $
+    ../../base/time/time.h ../../base/time/time_mac.cc $
+    ../../base/time/time_posix.cc ../../base/time/time_win.cc $
+    ../../base/timer/elapsed_timer.cc ../../base/timer/elapsed_timer.h $
+    ../../base/timer/hi_res_timer_manager.h $
+    ../../base/timer/hi_res_timer_manager_posix.cc $
+    ../../base/timer/hi_res_timer_manager_win.cc $
+    ../../base/timer/mock_timer.cc ../../base/timer/mock_timer.h $
+    ../../base/timer/timer.cc ../../base/timer/timer.h $
+    ../../base/trace_event/common/trace_event_common.h $
+    ../../base/trace_event/heap_profiler_allocation_context.cc $
+    ../../base/trace_event/heap_profiler_allocation_context.h $
+    ../../base/trace_event/heap_profiler_allocation_context_tracker.cc $
+    ../../base/trace_event/heap_profiler_allocation_context_tracker.h $
+    ../../base/trace_event/heap_profiler_allocation_register.cc $
+    ../../base/trace_event/heap_profiler_allocation_register.h $
+    ../../base/trace_event/heap_profiler_allocation_register_posix.cc $
+    ../../base/trace_event/heap_profiler_allocation_register_win.cc $
+    ../../base/trace_event/heap_profiler_heap_dump_writer.cc $
+    ../../base/trace_event/heap_profiler_heap_dump_writer.h $
+    ../../base/trace_event/heap_profiler_stack_frame_deduplicator.cc $
+    ../../base/trace_event/heap_profiler_stack_frame_deduplicator.h $
+    ../../base/trace_event/heap_profiler_type_name_deduplicator.cc $
+    ../../base/trace_event/heap_profiler_type_name_deduplicator.h $
+    ../../base/trace_event/java_heap_dump_provider_android.cc $
+    ../../base/trace_event/java_heap_dump_provider_android.h $
+    ../../base/trace_event/malloc_dump_provider.cc $
+    ../../base/trace_event/malloc_dump_provider.h $
+    ../../base/trace_event/memory_allocator_dump.cc $
+    ../../base/trace_event/memory_allocator_dump.h $
+    ../../base/trace_event/memory_allocator_dump_guid.cc $
+    ../../base/trace_event/memory_allocator_dump_guid.h $
+    ../../base/trace_event/memory_dump_manager.cc $
+    ../../base/trace_event/memory_dump_manager.h $
+    ../../base/trace_event/memory_dump_provider.h $
+    ../../base/trace_event/memory_dump_request_args.cc $
+    ../../base/trace_event/memory_dump_request_args.h $
+    ../../base/trace_event/memory_dump_session_state.cc $
+    ../../base/trace_event/memory_dump_session_state.h $
+    ../../base/trace_event/process_memory_dump.cc $
+    ../../base/trace_event/process_memory_dump.h $
+    ../../base/trace_event/process_memory_maps.cc $
+    ../../base/trace_event/process_memory_maps.h $
+    ../../base/trace_event/process_memory_maps_dump_provider.cc $
+    ../../base/trace_event/process_memory_maps_dump_provider.h $
+    ../../base/trace_event/process_memory_totals.cc $
+    ../../base/trace_event/process_memory_totals.h $
+    ../../base/trace_event/process_memory_totals_dump_provider.cc $
+    ../../base/trace_event/process_memory_totals_dump_provider.h $
+    ../../base/trace_event/trace_buffer.cc $
+    ../../base/trace_event/trace_buffer.h $
+    ../../base/trace_event/trace_config.cc $
+    ../../base/trace_event/trace_config.h $
+    ../../base/trace_event/trace_event.h $
+    ../../base/trace_event/trace_event_android.cc $
+    ../../base/trace_event/trace_event_argument.cc $
+    ../../base/trace_event/trace_event_argument.h $
+    ../../base/trace_event/trace_event_etw_export_win.cc $
+    ../../base/trace_event/trace_event_etw_export_win.h $
+    ../../base/trace_event/trace_event_impl.cc $
+    ../../base/trace_event/trace_event_impl.h $
+    ../../base/trace_event/trace_event_memory_overhead.cc $
+    ../../base/trace_event/trace_event_memory_overhead.h $
+    ../../base/trace_event/trace_event_synthetic_delay.cc $
+    ../../base/trace_event/trace_event_synthetic_delay.h $
+    ../../base/trace_event/trace_event_system_stats_monitor.cc $
+    ../../base/trace_event/trace_event_system_stats_monitor.h $
+    ../../base/trace_event/trace_log.cc ../../base/trace_event/trace_log.h $
+    ../../base/trace_event/trace_log_constants.cc $
+    ../../base/trace_event/trace_sampling_thread.cc $
+    ../../base/trace_event/trace_sampling_thread.h $
+    ../../base/trace_event/winheap_dump_provider_win.cc $
+    ../../base/trace_event/winheap_dump_provider_win.h $
+    ../../base/tracked_objects.cc ../../base/tracked_objects.h $
+    ../../base/tracking_info.cc ../../base/tracking_info.h $
+    ../../base/tuple.h ../../base/value_conversions.cc $
+    ../../base/value_conversions.h ../../base/values.cc ../../base/values.h $
+    ../../base/version.cc ../../base/version.h ../../base/vlog.cc $
+    ../../base/vlog.h ../../base/win/enum_variant.cc $
+    ../../base/win/enum_variant.h ../../base/win/event_trace_consumer.h $
+    ../../base/win/event_trace_controller.cc $
+    ../../base/win/event_trace_controller.h $
+    ../../base/win/event_trace_provider.cc $
+    ../../base/win/event_trace_provider.h ../../base/win/i18n.cc $
+    ../../base/win/i18n.h ../../base/win/iat_patch_function.cc $
+    ../../base/win/iat_patch_function.h ../../base/win/iunknown_impl.cc $
+    ../../base/win/iunknown_impl.h ../../base/win/message_window.cc $
+    ../../base/win/message_window.h ../../base/win/metro.cc $
+    ../../base/win/metro.h ../../base/win/object_watcher.cc $
+    ../../base/win/object_watcher.h ../../base/win/pe_image.h $
+    ../../base/win/process_startup_helper.cc $
+    ../../base/win/process_startup_helper.h ../../base/win/registry.cc $
+    ../../base/win/registry.h ../../base/win/resource_util.cc $
+    ../../base/win/resource_util.h ../../base/win/scoped_bstr.cc $
+    ../../base/win/scoped_bstr.h ../../base/win/scoped_co_mem.h $
+    ../../base/win/scoped_com_initializer.h ../../base/win/scoped_comptr.h $
+    ../../base/win/scoped_gdi_object.h ../../base/win/scoped_handle.cc $
+    ../../base/win/scoped_handle.h ../../base/win/scoped_hdc.h $
+    ../../base/win/scoped_hglobal.h $
+    ../../base/win/scoped_process_information.cc $
+    ../../base/win/scoped_process_information.h $
+    ../../base/win/scoped_propvariant.h $
+    ../../base/win/scoped_select_object.h ../../base/win/scoped_variant.cc $
+    ../../base/win/scoped_variant.h ../../base/win/shortcut.cc $
+    ../../base/win/shortcut.h ../../base/win/startup_information.cc $
+    ../../base/win/startup_information.h ../../base/win/win_util.cc $
+    ../../base/win/win_util.h ../../base/win/windows_version.cc $
+    ../../base/win/windows_version.h ../../base/win/wrapped_window_proc.cc $
+    ../../base/win/wrapped_window_proc.h $
+    ../../out/gypfiles/base/pnacl_newlib.base_nacl.source_list.gypcmd $
+    ../../native_client/toolchain/linux_x86/pnacl_newlib/pnacl_newlib.json $
+    || gen/base/debug/debugging_flags.h
+
+rule base_nacl_target_build_irt_x86_64_nlib_9b4f41e4158ebb93a5d28e6734a13e85
+  command = cd ../../base; python ../native_client/build/build_nexe.py $
+      --root .. --product-dir ../out/Debug/xyz --config-name Debug -t $
+      ../native_client/toolchain/ --arch x86-64 --build newlib_nlib_clang $
+      --name ../out/Debug/gen/tc_irt/lib64/libbase_nacl.a --objdir $
+      ../out/Debug/obj/base/base_nacl.gen/irt-x86-64/base_nacl $
+      "--include-dirs=../out/Debug/gen/tc_newlib/include .. $
+      \"../out/Debug/gen\" .." "--compile_flags=-O2 -g -Wall $
+      -fdiagnostics-show-option -Werror -fno-strict-aliasing  $
+      -Wno-unused-function -Wno-char-subscripts -Wno-c++11-extensions $
+      -Wno-unnamed-type-template-args -Wno-extra-semi $
+      -Wno-unused-private-field -Wno-char-subscripts -Wno-unused-function $
+      \"-std=gnu++11\"  -Os -fno-exceptions -ffunction-sections $
+      -fdata-sections -fasynchronous-unwind-tables -fomit-frame-pointer $
+      -integrated-as" --gomadir "" "--defines=\"__STDC_LIMIT_MACROS=1\" $
+      \"__STDC_FORMAT_MACROS=1\" \"_GNU_SOURCE=1\" $
+      \"_POSIX_C_SOURCE=199506\" \"_XOPEN_SOURCE=600\" $
+      \"DYNAMIC_ANNOTATIONS_ENABLED=1\" $
+      \"DYNAMIC_ANNOTATIONS_PREFIX=NACL_\" \"NACL_BUILD_ARCH=x86\" $
+      V8_DEPRECATION_WARNINGS \"CLD_VERSION=2\" \"_FILE_OFFSET_BITS=64\" $
+      CHROMIUM_BUILD \"CR_CLANG_REVISION=255169-1\" $
+      UI_COMPOSITOR_IMAGE_TRANSPORT \"USE_AURA=1\" \"USE_ASH=1\" $
+      \"USE_PANGO=1\" \"USE_CAIRO=1\" \"USE_DEFAULT_RENDER_THEME=1\" $
+      \"USE_LIBJPEG_TURBO=1\" \"USE_X11=1\" \"USE_CLIPBOARD_AURAX11=1\" $
+      ENABLE_ONE_CLICK_SIGNIN \"ENABLE_WEBRTC=1\" \"ENABLE_MEDIA_ROUTER=1\" $
+      ENABLE_PEPPER_CDMS ENABLE_CONFIGURATION_POLICY ENABLE_NOTIFICATIONS $
+      \"ENABLE_HIDPI=1\" \"ENABLE_TOPCHROME_MD=1\" USE_UDEV $
+      DONT_EMBED_BUILD_METADATA FIELDTRIAL_TESTING_ENABLED $
+      \"ENABLE_TASK_MANAGER=1\" \"ENABLE_EXTENSIONS=1\" \"ENABLE_PDF=1\" $
+      \"ENABLE_PLUGINS=1\" \"ENABLE_SESSION_SERVICE=1\" \"ENABLE_THEMES=1\" $
+      \"ENABLE_AUTOFILL_DIALOG=1\" \"ENABLE_BACKGROUND=1\" $
+      \"ENABLE_PRINTING=1\" \"ENABLE_BASIC_PRINTING=1\" $
+      \"ENABLE_PRINT_PREVIEW=1\" \"ENABLE_SPELLCHECK=1\" $
+      \"ENABLE_CAPTIVE_PORTAL_DETECTION=1\" \"ENABLE_APP_LIST=1\" $
+      \"ENABLE_SETTINGS_APP=1\" \"ENABLE_SUPERVISED_USERS=1\" $
+      \"ENABLE_MDNS=1\" \"ENABLE_SERVICE_DISCOVERY=1\" $
+      V8_USE_EXTERNAL_STARTUP_DATA FULL_SAFE_BROWSING SAFE_BROWSING_CSD $
+      SAFE_BROWSING_DB_LOCAL \"USE_LIBPCI=1\" \"USE_OPENSSL=1\" $
+      \"USE_OPENSSL_CERTS=1\" __STDC_CONSTANT_MACROS __STDC_FORMAT_MACROS $
+      BASE_IMPLEMENTATION" "--link_flags=-B../out/Debug/gen/tc_irt/lib64   $
+      -Wl,--gc-sections -nodefaultlibs -lc++ -lm -lirt_browser $
+      -Wl,--start-group -lc -lnacl -lgcc -lgcc_eh -Wl,--end-group" $
+      "--source-list=../out/gypfiles/base/irt-x86-64.base_nacl.source_list.gypcmd"
+  description = ACTION base_nacl: build irt x86-64 $
+      nlib_9b4f41e4158ebb93a5d28e6734a13e85
+  restat = 1
+
+build gen/tc_irt/lib64/libbase_nacl.a: $
+    base_nacl_target_build_irt_x86_64_nlib_9b4f41e4158ebb93a5d28e6734a13e85 $
+    ../../native_client/build/build_nexe.py $
+    ../../native_client/build/build_nexe_tools.py $
+    ../../build/build_config.h $
+    ../../testing/gtest/include/gtest/gtest_prod.h $
+    ../../third_party/apple_apsl/CFBase.h $
+    ../../third_party/apple_apsl/CFRuntime.h $
+    ../../third_party/apple_apsl/malloc.h ../../third_party/ashmem/ashmem.h $
+    ../../third_party/modp_b64/modp_b64.h $
+    ../../third_party/tcmalloc/chromium/src/gperftools/profiler.h $
+    ../../base/allocator/allocator_extension.cc $
+    ../../base/allocator/allocator_extension.h $
+    ../../base/android/animation_frame_time_histogram.cc $
+    ../../base/android/animation_frame_time_histogram.h $
+    ../../base/android/apk_assets.cc ../../base/android/apk_assets.h $
+    ../../base/android/application_status_listener.cc $
+    ../../base/android/application_status_listener.h $
+    ../../base/android/base_jni_onload.cc $
+    ../../base/android/base_jni_onload.h $
+    ../../base/android/base_jni_registrar.cc $
+    ../../base/android/base_jni_registrar.h $
+    ../../base/android/build_info.cc ../../base/android/build_info.h $
+    ../../base/android/command_line_android.cc $
+    ../../base/android/command_line_android.h $
+    ../../base/android/content_uri_utils.cc $
+    ../../base/android/content_uri_utils.h $
+    ../../base/android/context_utils.cc ../../base/android/context_utils.h $
+    ../../base/android/cpu_features.cc ../../base/android/cpu_features.h $
+    ../../base/android/cxa_demangle_stub.cc ../../base/android/event_log.cc $
+    ../../base/android/event_log.h ../../base/android/field_trial_list.cc $
+    ../../base/android/field_trial_list.h ../../base/android/fifo_utils.cc $
+    ../../base/android/fifo_utils.h $
+    ../../base/android/important_file_writer_android.cc $
+    ../../base/android/important_file_writer_android.h $
+    ../../base/android/java_handler_thread.cc $
+    ../../base/android/java_handler_thread.h $
+    ../../base/android/java_runtime.cc ../../base/android/java_runtime.h $
+    ../../base/android/jni_android.cc ../../base/android/jni_android.h $
+    ../../base/android/jni_array.cc ../../base/android/jni_array.h $
+    ../../base/android/jni_registrar.cc ../../base/android/jni_registrar.h $
+    ../../base/android/jni_string.cc ../../base/android/jni_string.h $
+    ../../base/android/jni_utils.cc ../../base/android/jni_utils.h $
+    ../../base/android/jni_weak_ref.cc ../../base/android/jni_weak_ref.h $
+    ../../base/android/library_loader/library_load_from_apk_status_codes.h $
+    ../../base/android/library_loader/library_loader_hooks.cc $
+    ../../base/android/library_loader/library_loader_hooks.h $
+    ../../base/android/library_loader/library_prefetcher.cc $
+    ../../base/android/library_loader/library_prefetcher.h $
+    ../../base/android/locale_utils.cc ../../base/android/locale_utils.h $
+    ../../base/android/memory_pressure_listener_android.cc $
+    ../../base/android/memory_pressure_listener_android.h $
+    ../../base/android/path_service_android.cc $
+    ../../base/android/path_service_android.h $
+    ../../base/android/path_utils.cc ../../base/android/path_utils.h $
+    ../../base/android/record_histogram.cc $
+    ../../base/android/record_histogram.h $
+    ../../base/android/record_user_action.cc $
+    ../../base/android/record_user_action.h $
+    ../../base/android/scoped_java_ref.cc $
+    ../../base/android/scoped_java_ref.h ../../base/android/sys_utils.cc $
+    ../../base/android/sys_utils.h ../../base/android/thread_utils.h $
+    ../../base/android/trace_event_binding.cc $
+    ../../base/android/trace_event_binding.h ../../base/at_exit.cc $
+    ../../base/at_exit.h ../../base/atomic_ref_count.h $
+    ../../base/atomic_sequence_num.h ../../base/atomicops.h $
+    ../../base/atomicops_internals_atomicword_compat.h $
+    ../../base/atomicops_internals_portable.h $
+    ../../base/atomicops_internals_x86_msvc.h ../../base/barrier_closure.cc $
+    ../../base/barrier_closure.h ../../base/base64.cc ../../base/base64.h $
+    ../../base/base64url.cc ../../base/base64url.h ../../base/base_export.h $
+    ../../base/base_paths.cc ../../base/base_paths.h $
+    ../../base/base_paths_android.cc ../../base/base_paths_android.h $
+    ../../base/base_paths_mac.h ../../base/base_paths_mac.mm $
+    ../../base/base_paths_posix.cc ../../base/base_paths_posix.h $
+    ../../base/base_paths_win.cc ../../base/base_paths_win.h $
+    ../../base/base_switches.cc ../../base/base_switches.h $
+    ../../base/basictypes.h ../../base/big_endian.cc $
+    ../../base/big_endian.h ../../base/bind.h ../../base/bind_helpers.cc $
+    ../../base/bind_helpers.h ../../base/bind_internal.h $
+    ../../base/bind_internal_win.h ../../base/bits.h $
+    ../../base/build_time.cc ../../base/build_time.h ../../base/callback.h $
+    ../../base/callback_forward.h ../../base/callback_helpers.cc $
+    ../../base/callback_helpers.h ../../base/callback_internal.cc $
+    ../../base/callback_internal.h ../../base/callback_list.h $
+    ../../base/cancelable_callback.h ../../base/command_line.cc $
+    ../../base/command_line.h ../../base/compiler_specific.h $
+    ../../base/containers/adapters.h ../../base/containers/hash_tables.h $
+    ../../base/containers/linked_list.h ../../base/containers/mru_cache.h $
+    ../../base/containers/scoped_ptr_hash_map.h $
+    ../../base/containers/small_map.h $
+    ../../base/containers/stack_container.h ../../base/cpu.cc $
+    ../../base/cpu.h ../../base/critical_closure.h $
+    ../../base/critical_closure_internal_ios.mm ../../base/debug/alias.cc $
+    ../../base/debug/alias.h ../../base/debug/asan_invalid_access.cc $
+    ../../base/debug/asan_invalid_access.h $
+    ../../base/debug/crash_logging.cc ../../base/debug/crash_logging.h $
+    ../../base/debug/debugger.cc ../../base/debug/debugger.h $
+    ../../base/debug/debugger_posix.cc ../../base/debug/debugger_win.cc $
+    ../../base/debug/dump_without_crashing.cc $
+    ../../base/debug/dump_without_crashing.h $
+    ../../base/debug/gdi_debug_util_win.cc $
+    ../../base/debug/gdi_debug_util_win.h $
+    ../../base/debug/leak_annotations.h ../../base/debug/leak_tracker.h $
+    ../../base/debug/proc_maps_linux.cc ../../base/debug/proc_maps_linux.h $
+    ../../base/debug/profiler.cc ../../base/debug/profiler.h $
+    ../../base/debug/stack_trace.cc ../../base/debug/stack_trace.h $
+    ../../base/debug/stack_trace_android.cc $
+    ../../base/debug/stack_trace_posix.cc $
+    ../../base/debug/stack_trace_win.cc ../../base/debug/task_annotator.cc $
+    ../../base/debug/task_annotator.h $
+    ../../base/deferred_sequenced_task_runner.cc $
+    ../../base/deferred_sequenced_task_runner.h ../../base/environment.cc $
+    ../../base/environment.h ../../base/event_types.h $
+    ../../base/feature_list.cc ../../base/feature_list.h $
+    ../../base/file_descriptor_posix.h ../../base/file_version_info.h $
+    ../../base/file_version_info_mac.h ../../base/file_version_info_mac.mm $
+    ../../base/file_version_info_win.cc ../../base/file_version_info_win.h $
+    ../../base/files/dir_reader_fallback.h $
+    ../../base/files/dir_reader_linux.h ../../base/files/dir_reader_posix.h $
+    ../../base/files/file.cc ../../base/files/file.h $
+    ../../base/files/file_enumerator.cc ../../base/files/file_enumerator.h $
+    ../../base/files/file_enumerator_posix.cc $
+    ../../base/files/file_enumerator_win.cc ../../base/files/file_path.cc $
+    ../../base/files/file_path.h ../../base/files/file_path_constants.cc $
+    ../../base/files/file_path_watcher.cc $
+    ../../base/files/file_path_watcher.h $
+    ../../base/files/file_path_watcher_fsevents.cc $
+    ../../base/files/file_path_watcher_fsevents.h $
+    ../../base/files/file_path_watcher_kqueue.cc $
+    ../../base/files/file_path_watcher_kqueue.h $
+    ../../base/files/file_path_watcher_linux.cc $
+    ../../base/files/file_path_watcher_mac.cc $
+    ../../base/files/file_path_watcher_stub.cc $
+    ../../base/files/file_path_watcher_win.cc $
+    ../../base/files/file_posix.cc ../../base/files/file_proxy.cc $
+    ../../base/files/file_proxy.h ../../base/files/file_tracing.cc $
+    ../../base/files/file_tracing.h ../../base/files/file_util.cc $
+    ../../base/files/file_util.h ../../base/files/file_util_android.cc $
+    ../../base/files/file_util_linux.cc ../../base/files/file_util_mac.mm $
+    ../../base/files/file_util_posix.cc ../../base/files/file_util_proxy.cc $
+    ../../base/files/file_util_proxy.h ../../base/files/file_util_win.cc $
+    ../../base/files/file_win.cc ../../base/files/important_file_writer.cc $
+    ../../base/files/important_file_writer.h $
+    ../../base/files/memory_mapped_file.cc $
+    ../../base/files/memory_mapped_file.h $
+    ../../base/files/memory_mapped_file_posix.cc $
+    ../../base/files/memory_mapped_file_win.cc $
+    ../../base/files/scoped_file.cc ../../base/files/scoped_file.h $
+    ../../base/files/scoped_temp_dir.cc ../../base/files/scoped_temp_dir.h $
+    ../../base/format_macros.h ../../base/gtest_prod_util.h $
+    ../../base/guid.cc ../../base/guid.h ../../base/guid_posix.cc $
+    ../../base/guid_win.cc ../../base/hash.cc ../../base/hash.h $
+    ../../base/id_map.h ../../base/ios/block_types.h $
+    ../../base/ios/crb_protocol_observers.h $
+    ../../base/ios/crb_protocol_observers.mm ../../base/ios/device_util.h $
+    ../../base/ios/device_util.mm ../../base/ios/ios_util.h $
+    ../../base/ios/ios_util.mm ../../base/ios/ns_error_util.h $
+    ../../base/ios/ns_error_util.mm ../../base/ios/scoped_critical_action.h $
+    ../../base/ios/scoped_critical_action.mm ../../base/ios/weak_nsobject.h $
+    ../../base/ios/weak_nsobject.mm $
+    ../../base/json/json_file_value_serializer.cc $
+    ../../base/json/json_file_value_serializer.h $
+    ../../base/json/json_parser.cc ../../base/json/json_parser.h $
+    ../../base/json/json_reader.cc ../../base/json/json_reader.h $
+    ../../base/json/json_string_value_serializer.cc $
+    ../../base/json/json_string_value_serializer.h $
+    ../../base/json/json_value_converter.cc $
+    ../../base/json/json_value_converter.h ../../base/json/json_writer.cc $
+    ../../base/json/json_writer.h ../../base/json/string_escape.cc $
+    ../../base/json/string_escape.h ../../base/lazy_instance.cc $
+    ../../base/lazy_instance.h ../../base/location.cc ../../base/location.h $
+    ../../base/logging.cc ../../base/logging.h ../../base/logging_win.cc $
+    ../../base/logging_win.h ../../base/mac/authorization_util.h $
+    ../../base/mac/authorization_util.mm ../../base/mac/bind_objc_block.h $
+    ../../base/mac/bundle_locations.h ../../base/mac/bundle_locations.mm $
+    ../../base/mac/call_with_eh_frame.cc $
+    ../../base/mac/call_with_eh_frame.h $
+    ../../base/mac/call_with_eh_frame_asm.S $
+    ../../base/mac/close_nocancel.cc ../../base/mac/cocoa_protocols.h $
+    ../../base/mac/dispatch_source_mach.cc $
+    ../../base/mac/dispatch_source_mach.h ../../base/mac/foundation_util.h $
+    ../../base/mac/foundation_util.mm $
+    ../../base/mac/launch_services_util.cc $
+    ../../base/mac/launch_services_util.h ../../base/mac/launchd.cc $
+    ../../base/mac/launchd.h ../../base/mac/libdispatch_task_runner.cc $
+    ../../base/mac/libdispatch_task_runner.h ../../base/mac/mac_logging.cc $
+    ../../base/mac/mac_logging.h ../../base/mac/mac_util.h $
+    ../../base/mac/mac_util.mm ../../base/mac/mach_logging.cc $
+    ../../base/mac/mach_logging.h ../../base/mac/objc_property_releaser.h $
+    ../../base/mac/objc_property_releaser.mm $
+    ../../base/mac/os_crash_dumps.cc ../../base/mac/os_crash_dumps.h $
+    ../../base/mac/scoped_aedesc.h ../../base/mac/scoped_authorizationref.h $
+    ../../base/mac/scoped_block.h $
+    ../../base/mac/scoped_cffiledescriptorref.h $
+    ../../base/mac/scoped_cftyperef.h ../../base/mac/scoped_ioobject.h $
+    ../../base/mac/scoped_ioplugininterface.h $
+    ../../base/mac/scoped_launch_data.h ../../base/mac/scoped_mach_port.cc $
+    ../../base/mac/scoped_mach_port.h ../../base/mac/scoped_mach_vm.cc $
+    ../../base/mac/scoped_mach_vm.h $
+    ../../base/mac/scoped_nsautorelease_pool.h $
+    ../../base/mac/scoped_nsautorelease_pool.mm $
+    ../../base/mac/scoped_nsobject.h $
+    ../../base/mac/scoped_objc_class_swizzler.h $
+    ../../base/mac/scoped_objc_class_swizzler.mm $
+    ../../base/mac/scoped_sending_event.h $
+    ../../base/mac/scoped_sending_event.mm ../../base/mac/scoped_typeref.h $
+    ../../base/mac/sdk_forward_declarations.h $
+    ../../base/mac/sdk_forward_declarations.mm ../../base/macros.h $
+    ../../base/md5.cc ../../base/md5.h ../../base/memory/aligned_memory.cc $
+    ../../base/memory/aligned_memory.h $
+    ../../base/memory/discardable_memory.cc $
+    ../../base/memory/discardable_memory.h $
+    ../../base/memory/discardable_memory_allocator.cc $
+    ../../base/memory/discardable_memory_allocator.h $
+    ../../base/memory/discardable_shared_memory.cc $
+    ../../base/memory/discardable_shared_memory.h $
+    ../../base/memory/linked_ptr.h ../../base/memory/manual_constructor.h $
+    ../../base/memory/memory_pressure_listener.cc $
+    ../../base/memory/memory_pressure_listener.h $
+    ../../base/memory/memory_pressure_monitor.cc $
+    ../../base/memory/memory_pressure_monitor.h $
+    ../../base/memory/memory_pressure_monitor_chromeos.cc $
+    ../../base/memory/memory_pressure_monitor_chromeos.h $
+    ../../base/memory/memory_pressure_monitor_mac.cc $
+    ../../base/memory/memory_pressure_monitor_mac.h $
+    ../../base/memory/memory_pressure_monitor_win.cc $
+    ../../base/memory/memory_pressure_monitor_win.h $
+    ../../base/memory/ptr_util.h $
+    ../../base/memory/raw_scoped_refptr_mismatch_checker.h $
+    ../../base/memory/ref_counted.cc ../../base/memory/ref_counted.h $
+    ../../base/memory/ref_counted_delete_on_message_loop.h $
+    ../../base/memory/ref_counted_memory.cc $
+    ../../base/memory/ref_counted_memory.h $
+    ../../base/memory/scoped_policy.h ../../base/memory/scoped_ptr.h $
+    ../../base/memory/scoped_vector.h ../../base/memory/shared_memory.h $
+    ../../base/memory/shared_memory_android.cc $
+    ../../base/memory/shared_memory_handle.h $
+    ../../base/memory/shared_memory_handle_mac.cc $
+    ../../base/memory/shared_memory_handle_win.cc $
+    ../../base/memory/shared_memory_mac.cc $
+    ../../base/memory/shared_memory_nacl.cc $
+    ../../base/memory/shared_memory_posix.cc $
+    ../../base/memory/shared_memory_win.cc ../../base/memory/singleton.cc $
+    ../../base/memory/singleton.h ../../base/memory/weak_ptr.cc $
+    ../../base/memory/weak_ptr.h $
+    ../../base/message_loop/incoming_task_queue.cc $
+    ../../base/message_loop/incoming_task_queue.h $
+    ../../base/message_loop/message_loop.cc $
+    ../../base/message_loop/message_loop.h $
+    ../../base/message_loop/message_loop_task_runner.cc $
+    ../../base/message_loop/message_loop_task_runner.h $
+    ../../base/message_loop/message_pump.cc $
+    ../../base/message_loop/message_pump.h $
+    ../../base/message_loop/message_pump_android.cc $
+    ../../base/message_loop/message_pump_android.h $
+    ../../base/message_loop/message_pump_default.cc $
+    ../../base/message_loop/message_pump_default.h $
+    ../../base/message_loop/message_pump_dispatcher.h $
+    ../../base/message_loop/message_pump_glib.h $
+    ../../base/message_loop/message_pump_io_ios.h $
+    ../../base/message_loop/message_pump_libevent.h $
+    ../../base/message_loop/message_pump_mac.h $
+    ../../base/message_loop/message_pump_win.cc $
+    ../../base/message_loop/message_pump_win.h $
+    ../../base/message_loop/timer_slack.h $
+    ../../base/metrics/bucket_ranges.cc ../../base/metrics/bucket_ranges.h $
+    ../../base/metrics/field_trial.h ../../base/metrics/histogram.cc $
+    ../../base/metrics/histogram.h ../../base/metrics/histogram_base.cc $
+    ../../base/metrics/histogram_base.h $
+    ../../base/metrics/histogram_delta_serialization.cc $
+    ../../base/metrics/histogram_delta_serialization.h $
+    ../../base/metrics/histogram_flattener.h $
+    ../../base/metrics/histogram_macros.h $
+    ../../base/metrics/histogram_samples.cc $
+    ../../base/metrics/histogram_samples.h $
+    ../../base/metrics/histogram_snapshot_manager.cc $
+    ../../base/metrics/histogram_snapshot_manager.h $
+    ../../base/metrics/metrics_hashes.cc $
+    ../../base/metrics/metrics_hashes.h ../../base/metrics/sample_map.cc $
+    ../../base/metrics/sample_map.h ../../base/metrics/sample_vector.cc $
+    ../../base/metrics/sample_vector.h $
+    ../../base/metrics/sparse_histogram.cc $
+    ../../base/metrics/sparse_histogram.h $
+    ../../base/metrics/statistics_recorder.cc $
+    ../../base/metrics/statistics_recorder.h $
+    ../../base/metrics/user_metrics.cc ../../base/metrics/user_metrics.h $
+    ../../base/metrics/user_metrics_action.h ../../base/move.h $
+    ../../base/native_library.h ../../base/native_library_ios.mm $
+    ../../base/native_library_mac.mm ../../base/native_library_posix.cc $
+    ../../base/native_library_win.cc ../../base/nix/mime_util_xdg.cc $
+    ../../base/nix/mime_util_xdg.h ../../base/nix/xdg_util.cc $
+    ../../base/nix/xdg_util.h ../../base/numerics/safe_conversions.h $
+    ../../base/numerics/safe_conversions_impl.h $
+    ../../base/numerics/safe_math.h ../../base/numerics/safe_math_impl.h $
+    ../../base/observer_list.h ../../base/observer_list_threadsafe.h $
+    ../../base/os_compat_android.cc ../../base/os_compat_android.h $
+    ../../base/os_compat_nacl.cc ../../base/os_compat_nacl.h $
+    ../../base/path_service.cc ../../base/path_service.h $
+    ../../base/pending_task.cc ../../base/pending_task.h $
+    ../../base/pickle.cc ../../base/pickle.h $
+    ../../base/posix/eintr_wrapper.h $
+    ../../base/posix/file_descriptor_shuffle.h $
+    ../../base/posix/global_descriptors.cc $
+    ../../base/posix/global_descriptors.h ../../base/posix/safe_strerror.cc $
+    ../../base/posix/safe_strerror.h $
+    ../../base/posix/unix_domain_socket_linux.cc $
+    ../../base/posix/unix_domain_socket_linux.h $
+    ../../base/power_monitor/power_monitor.cc $
+    ../../base/power_monitor/power_monitor.h $
+    ../../base/power_monitor/power_monitor_device_source.cc $
+    ../../base/power_monitor/power_monitor_device_source.h $
+    ../../base/power_monitor/power_monitor_device_source_android.cc $
+    ../../base/power_monitor/power_monitor_device_source_android.h $
+    ../../base/power_monitor/power_monitor_device_source_chromeos.cc $
+    ../../base/power_monitor/power_monitor_device_source_ios.mm $
+    ../../base/power_monitor/power_monitor_device_source_mac.mm $
+    ../../base/power_monitor/power_monitor_device_source_posix.cc $
+    ../../base/power_monitor/power_monitor_device_source_win.cc $
+    ../../base/power_monitor/power_monitor_source.cc $
+    ../../base/power_monitor/power_monitor_source.h $
+    ../../base/power_monitor/power_observer.h $
+    ../../base/process/internal_linux.cc $
+    ../../base/process/internal_linux.h ../../base/process/kill.cc $
+    ../../base/process/kill.h ../../base/process/kill_mac.cc $
+    ../../base/process/kill_posix.cc ../../base/process/kill_win.cc $
+    ../../base/process/launch.cc ../../base/process/launch.h $
+    ../../base/process/launch_ios.cc ../../base/process/launch_mac.cc $
+    ../../base/process/launch_posix.cc ../../base/process/launch_win.cc $
+    ../../base/process/memory.cc ../../base/process/memory.h $
+    ../../base/process/memory_linux.cc ../../base/process/memory_mac.mm $
+    ../../base/process/memory_win.cc $
+    ../../base/process/port_provider_mac.cc $
+    ../../base/process/port_provider_mac.h ../../base/process/process.h $
+    ../../base/process/process_handle.cc $
+    ../../base/process/process_handle.h $
+    ../../base/process/process_handle_freebsd.cc $
+    ../../base/process/process_handle_linux.cc $
+    ../../base/process/process_handle_mac.cc $
+    ../../base/process/process_handle_openbsd.cc $
+    ../../base/process/process_handle_posix.cc $
+    ../../base/process/process_handle_win.cc $
+    ../../base/process/process_info.h $
+    ../../base/process/process_info_linux.cc $
+    ../../base/process/process_info_mac.cc $
+    ../../base/process/process_info_win.cc $
+    ../../base/process/process_iterator.cc $
+    ../../base/process/process_iterator.h $
+    ../../base/process/process_iterator_freebsd.cc $
+    ../../base/process/process_iterator_linux.cc $
+    ../../base/process/process_iterator_mac.cc $
+    ../../base/process/process_iterator_openbsd.cc $
+    ../../base/process/process_iterator_win.cc $
+    ../../base/process/process_linux.cc $
+    ../../base/process/process_metrics.cc $
+    ../../base/process/process_metrics.h $
+    ../../base/process/process_metrics_freebsd.cc $
+    ../../base/process/process_metrics_ios.cc $
+    ../../base/process/process_metrics_linux.cc $
+    ../../base/process/process_metrics_mac.cc $
+    ../../base/process/process_metrics_nacl.cc $
+    ../../base/process/process_metrics_openbsd.cc $
+    ../../base/process/process_metrics_posix.cc $
+    ../../base/process/process_metrics_win.cc $
+    ../../base/process/process_posix.cc ../../base/process/process_win.cc $
+    ../../base/profiler/alternate_timer.cc $
+    ../../base/profiler/alternate_timer.h $
+    ../../base/profiler/native_stack_sampler.cc $
+    ../../base/profiler/native_stack_sampler.h $
+    ../../base/profiler/native_stack_sampler_posix.cc $
+    ../../base/profiler/native_stack_sampler_win.cc $
+    ../../base/profiler/scoped_profile.cc $
+    ../../base/profiler/scoped_profile.h $
+    ../../base/profiler/scoped_tracker.cc $
+    ../../base/profiler/scoped_tracker.h $
+    ../../base/profiler/stack_sampling_profiler.cc $
+    ../../base/profiler/stack_sampling_profiler.h $
+    ../../base/profiler/tracked_time.cc ../../base/profiler/tracked_time.h $
+    ../../base/profiler/win32_stack_frame_unwinder.h $
+    ../../base/rand_util.cc ../../base/rand_util.h $
+    ../../base/rand_util_nacl.cc ../../base/rand_util_posix.cc $
+    ../../base/rand_util_win.cc ../../base/run_loop.cc $
+    ../../base/run_loop.h ../../base/scoped_clear_errno.h $
+    ../../base/scoped_generic.h ../../base/scoped_native_library.cc $
+    ../../base/scoped_native_library.h ../../base/scoped_observer.h $
+    ../../base/sequence_checker.h ../../base/sequence_checker_impl.cc $
+    ../../base/sequence_checker_impl.h ../../base/sequenced_task_runner.cc $
+    ../../base/sequenced_task_runner.h $
+    ../../base/sequenced_task_runner_helpers.h ../../base/sha1.h $
+    ../../base/sha1_portable.cc ../../base/sha1_win.cc $
+    ../../base/single_thread_task_runner.h ../../base/stl_util.h $
+    ../../base/strings/latin1_string_conversions.cc $
+    ../../base/strings/latin1_string_conversions.h $
+    ../../base/strings/nullable_string16.cc $
+    ../../base/strings/nullable_string16.h ../../base/strings/pattern.cc $
+    ../../base/strings/pattern.h ../../base/strings/safe_sprintf.cc $
+    ../../base/strings/safe_sprintf.h ../../base/strings/string16.cc $
+    ../../base/strings/string16.h $
+    ../../base/strings/string_number_conversions.cc $
+    ../../base/strings/string_number_conversions.h $
+    ../../base/strings/string_piece.cc ../../base/strings/string_piece.h $
+    ../../base/strings/string_split.cc ../../base/strings/string_split.h $
+    ../../base/strings/string_tokenizer.h ../../base/strings/string_util.cc $
+    ../../base/strings/string_util.h $
+    ../../base/strings/string_util_constants.cc $
+    ../../base/strings/string_util_posix.h $
+    ../../base/strings/string_util_win.h $
+    ../../base/strings/stringize_macros.h $
+    ../../base/strings/stringprintf.cc ../../base/strings/stringprintf.h $
+    ../../base/strings/sys_string_conversions.h $
+    ../../base/strings/sys_string_conversions_mac.mm $
+    ../../base/strings/sys_string_conversions_posix.cc $
+    ../../base/strings/sys_string_conversions_win.cc $
+    ../../base/strings/utf_offset_string_conversions.cc $
+    ../../base/strings/utf_offset_string_conversions.h $
+    ../../base/strings/utf_string_conversion_utils.cc $
+    ../../base/strings/utf_string_conversion_utils.h $
+    ../../base/strings/utf_string_conversions.cc $
+    ../../base/strings/utf_string_conversions.h $
+    ../../base/supports_user_data.cc ../../base/supports_user_data.h $
+    ../../base/sync_socket.h ../../base/sync_socket_nacl.cc $
+    ../../base/synchronization/cancellation_flag.cc $
+    ../../base/synchronization/cancellation_flag.h $
+    ../../base/synchronization/condition_variable.h $
+    ../../base/synchronization/condition_variable_posix.cc $
+    ../../base/synchronization/condition_variable_win.cc $
+    ../../base/synchronization/lock.cc ../../base/synchronization/lock.h $
+    ../../base/synchronization/lock_impl.h $
+    ../../base/synchronization/lock_impl_posix.cc $
+    ../../base/synchronization/lock_impl_win.cc $
+    ../../base/synchronization/spin_wait.h $
+    ../../base/synchronization/waitable_event.h $
+    ../../base/synchronization/waitable_event_posix.cc $
+    ../../base/synchronization/waitable_event_watcher.h $
+    ../../base/synchronization/waitable_event_watcher_posix.cc $
+    ../../base/synchronization/waitable_event_watcher_win.cc $
+    ../../base/synchronization/waitable_event_win.cc $
+    ../../base/sys_byteorder.h ../../base/sys_info.cc ../../base/sys_info.h $
+    ../../base/sys_info_android.cc ../../base/sys_info_chromeos.cc $
+    ../../base/sys_info_freebsd.cc ../../base/sys_info_internal.h $
+    ../../base/sys_info_ios.mm ../../base/sys_info_linux.cc $
+    ../../base/sys_info_mac.cc ../../base/sys_info_openbsd.cc $
+    ../../base/sys_info_posix.cc ../../base/sys_info_win.cc $
+    ../../base/system_monitor/system_monitor.cc $
+    ../../base/system_monitor/system_monitor.h $
+    ../../base/task/cancelable_task_tracker.cc $
+    ../../base/task/cancelable_task_tracker.h ../../base/task_runner.cc $
+    ../../base/task_runner.h ../../base/task_runner_util.h $
+    ../../base/template_util.h ../../base/third_party/dmg_fp/dmg_fp.h $
+    ../../base/third_party/dmg_fp/dtoa.cc $
+    ../../base/third_party/dmg_fp/dtoa_wrapper.cc $
+    ../../base/third_party/dmg_fp/g_fmt.cc $
+    ../../base/third_party/dynamic_annotations/dynamic_annotations.h $
+    ../../base/third_party/icu/icu_utf.cc $
+    ../../base/third_party/icu/icu_utf.h $
+    ../../base/third_party/nspr/prtime.cc $
+    ../../base/third_party/nspr/prtime.h $
+    ../../base/third_party/superfasthash/superfasthash.c $
+    ../../base/third_party/symbolize/config.h $
+    ../../base/third_party/symbolize/glog/logging.h $
+    ../../base/third_party/symbolize/symbolize.h $
+    ../../base/third_party/symbolize/utilities.h $
+    ../../base/third_party/valgrind/memcheck.h $
+    ../../base/third_party/valgrind/valgrind.h $
+    ../../base/third_party/xdg_mime/xdgmime.h $
+    ../../base/third_party/xdg_user_dirs/xdg_user_dir_lookup.h $
+    ../../base/thread_task_runner_handle.cc $
+    ../../base/thread_task_runner_handle.h $
+    ../../base/threading/non_thread_safe.h $
+    ../../base/threading/non_thread_safe_impl.cc $
+    ../../base/threading/non_thread_safe_impl.h $
+    ../../base/threading/platform_thread.h $
+    ../../base/threading/platform_thread_android.cc $
+    ../../base/threading/platform_thread_internal_posix.cc $
+    ../../base/threading/platform_thread_internal_posix.h $
+    ../../base/threading/platform_thread_linux.cc $
+    ../../base/threading/platform_thread_mac.mm $
+    ../../base/threading/platform_thread_posix.cc $
+    ../../base/threading/platform_thread_win.cc $
+    ../../base/threading/post_task_and_reply_impl.cc $
+    ../../base/threading/post_task_and_reply_impl.h $
+    ../../base/threading/sequenced_task_runner_handle.cc $
+    ../../base/threading/sequenced_task_runner_handle.h $
+    ../../base/threading/sequenced_worker_pool.cc $
+    ../../base/threading/sequenced_worker_pool.h $
+    ../../base/threading/simple_thread.cc $
+    ../../base/threading/simple_thread.h ../../base/threading/thread.cc $
+    ../../base/threading/thread.h ../../base/threading/thread_checker.h $
+    ../../base/threading/thread_checker_impl.cc $
+    ../../base/threading/thread_checker_impl.h $
+    ../../base/threading/thread_collision_warner.cc $
+    ../../base/threading/thread_collision_warner.h $
+    ../../base/threading/thread_id_name_manager.cc $
+    ../../base/threading/thread_id_name_manager.h $
+    ../../base/threading/thread_local.h $
+    ../../base/threading/thread_local_android.cc $
+    ../../base/threading/thread_local_posix.cc $
+    ../../base/threading/thread_local_storage.cc $
+    ../../base/threading/thread_local_storage.h $
+    ../../base/threading/thread_local_storage_posix.cc $
+    ../../base/threading/thread_local_storage_win.cc $
+    ../../base/threading/thread_local_win.cc $
+    ../../base/threading/thread_restrictions.cc $
+    ../../base/threading/thread_restrictions.h $
+    ../../base/threading/watchdog.cc ../../base/threading/watchdog.h $
+    ../../base/threading/worker_pool.cc ../../base/threading/worker_pool.h $
+    ../../base/threading/worker_pool_posix.cc $
+    ../../base/threading/worker_pool_posix.h $
+    ../../base/threading/worker_pool_win.cc ../../base/time/clock.cc $
+    ../../base/time/clock.h ../../base/time/default_clock.cc $
+    ../../base/time/default_clock.h ../../base/time/default_tick_clock.cc $
+    ../../base/time/default_tick_clock.h ../../base/time/tick_clock.cc $
+    ../../base/time/tick_clock.h ../../base/time/time.cc $
+    ../../base/time/time.h ../../base/time/time_mac.cc $
+    ../../base/time/time_posix.cc ../../base/time/time_win.cc $
+    ../../base/timer/elapsed_timer.cc ../../base/timer/elapsed_timer.h $
+    ../../base/timer/hi_res_timer_manager.h $
+    ../../base/timer/hi_res_timer_manager_posix.cc $
+    ../../base/timer/hi_res_timer_manager_win.cc $
+    ../../base/timer/mock_timer.cc ../../base/timer/mock_timer.h $
+    ../../base/timer/timer.cc ../../base/timer/timer.h $
+    ../../base/trace_event/common/trace_event_common.h $
+    ../../base/trace_event/heap_profiler_allocation_context.cc $
+    ../../base/trace_event/heap_profiler_allocation_context.h $
+    ../../base/trace_event/heap_profiler_allocation_context_tracker.cc $
+    ../../base/trace_event/heap_profiler_allocation_context_tracker.h $
+    ../../base/trace_event/heap_profiler_allocation_register.cc $
+    ../../base/trace_event/heap_profiler_allocation_register.h $
+    ../../base/trace_event/heap_profiler_allocation_register_posix.cc $
+    ../../base/trace_event/heap_profiler_allocation_register_win.cc $
+    ../../base/trace_event/heap_profiler_heap_dump_writer.cc $
+    ../../base/trace_event/heap_profiler_heap_dump_writer.h $
+    ../../base/trace_event/heap_profiler_stack_frame_deduplicator.cc $
+    ../../base/trace_event/heap_profiler_stack_frame_deduplicator.h $
+    ../../base/trace_event/heap_profiler_type_name_deduplicator.cc $
+    ../../base/trace_event/heap_profiler_type_name_deduplicator.h $
+    ../../base/trace_event/java_heap_dump_provider_android.cc $
+    ../../base/trace_event/java_heap_dump_provider_android.h $
+    ../../base/trace_event/malloc_dump_provider.cc $
+    ../../base/trace_event/malloc_dump_provider.h $
+    ../../base/trace_event/memory_allocator_dump.cc $
+    ../../base/trace_event/memory_allocator_dump.h $
+    ../../base/trace_event/memory_allocator_dump_guid.cc $
+    ../../base/trace_event/memory_allocator_dump_guid.h $
+    ../../base/trace_event/memory_dump_manager.cc $
+    ../../base/trace_event/memory_dump_manager.h $
+    ../../base/trace_event/memory_dump_provider.h $
+    ../../base/trace_event/memory_dump_request_args.cc $
+    ../../base/trace_event/memory_dump_request_args.h $
+    ../../base/trace_event/memory_dump_session_state.cc $
+    ../../base/trace_event/memory_dump_session_state.h $
+    ../../base/trace_event/process_memory_dump.cc $
+    ../../base/trace_event/process_memory_dump.h $
+    ../../base/trace_event/process_memory_maps.cc $
+    ../../base/trace_event/process_memory_maps.h $
+    ../../base/trace_event/process_memory_maps_dump_provider.cc $
+    ../../base/trace_event/process_memory_maps_dump_provider.h $
+    ../../base/trace_event/process_memory_totals.cc $
+    ../../base/trace_event/process_memory_totals.h $
+    ../../base/trace_event/process_memory_totals_dump_provider.cc $
+    ../../base/trace_event/process_memory_totals_dump_provider.h $
+    ../../base/trace_event/trace_buffer.cc $
+    ../../base/trace_event/trace_buffer.h $
+    ../../base/trace_event/trace_config.cc $
+    ../../base/trace_event/trace_config.h $
+    ../../base/trace_event/trace_event.h $
+    ../../base/trace_event/trace_event_android.cc $
+    ../../base/trace_event/trace_event_argument.cc $
+    ../../base/trace_event/trace_event_argument.h $
+    ../../base/trace_event/trace_event_etw_export_win.cc $
+    ../../base/trace_event/trace_event_etw_export_win.h $
+    ../../base/trace_event/trace_event_impl.cc $
+    ../../base/trace_event/trace_event_impl.h $
+    ../../base/trace_event/trace_event_memory_overhead.cc $
+    ../../base/trace_event/trace_event_memory_overhead.h $
+    ../../base/trace_event/trace_event_synthetic_delay.cc $
+    ../../base/trace_event/trace_event_synthetic_delay.h $
+    ../../base/trace_event/trace_event_system_stats_monitor.cc $
+    ../../base/trace_event/trace_event_system_stats_monitor.h $
+    ../../base/trace_event/trace_log.cc ../../base/trace_event/trace_log.h $
+    ../../base/trace_event/trace_log_constants.cc $
+    ../../base/trace_event/trace_sampling_thread.cc $
+    ../../base/trace_event/trace_sampling_thread.h $
+    ../../base/trace_event/winheap_dump_provider_win.cc $
+    ../../base/trace_event/winheap_dump_provider_win.h $
+    ../../base/tracked_objects.cc ../../base/tracked_objects.h $
+    ../../base/tracking_info.cc ../../base/tracking_info.h $
+    ../../base/tuple.h ../../base/value_conversions.cc $
+    ../../base/value_conversions.h ../../base/values.cc ../../base/values.h $
+    ../../base/version.cc ../../base/version.h ../../base/vlog.cc $
+    ../../base/vlog.h ../../base/win/enum_variant.cc $
+    ../../base/win/enum_variant.h ../../base/win/event_trace_consumer.h $
+    ../../base/win/event_trace_controller.cc $
+    ../../base/win/event_trace_controller.h $
+    ../../base/win/event_trace_provider.cc $
+    ../../base/win/event_trace_provider.h ../../base/win/i18n.cc $
+    ../../base/win/i18n.h ../../base/win/iat_patch_function.cc $
+    ../../base/win/iat_patch_function.h ../../base/win/iunknown_impl.cc $
+    ../../base/win/iunknown_impl.h ../../base/win/message_window.cc $
+    ../../base/win/message_window.h ../../base/win/metro.cc $
+    ../../base/win/metro.h ../../base/win/object_watcher.cc $
+    ../../base/win/object_watcher.h ../../base/win/pe_image.h $
+    ../../base/win/process_startup_helper.cc $
+    ../../base/win/process_startup_helper.h ../../base/win/registry.cc $
+    ../../base/win/registry.h ../../base/win/resource_util.cc $
+    ../../base/win/resource_util.h ../../base/win/scoped_bstr.cc $
+    ../../base/win/scoped_bstr.h ../../base/win/scoped_co_mem.h $
+    ../../base/win/scoped_com_initializer.h ../../base/win/scoped_comptr.h $
+    ../../base/win/scoped_gdi_object.h ../../base/win/scoped_handle.cc $
+    ../../base/win/scoped_handle.h ../../base/win/scoped_hdc.h $
+    ../../base/win/scoped_hglobal.h $
+    ../../base/win/scoped_process_information.cc $
+    ../../base/win/scoped_process_information.h $
+    ../../base/win/scoped_propvariant.h $
+    ../../base/win/scoped_select_object.h ../../base/win/scoped_variant.cc $
+    ../../base/win/scoped_variant.h ../../base/win/shortcut.cc $
+    ../../base/win/shortcut.h ../../base/win/startup_information.cc $
+    ../../base/win/startup_information.h ../../base/win/win_util.cc $
+    ../../base/win/win_util.h ../../base/win/windows_version.cc $
+    ../../base/win/windows_version.h ../../base/win/wrapped_window_proc.cc $
+    ../../base/win/wrapped_window_proc.h $
+    ../../out/gypfiles/base/irt-x86-64.base_nacl.source_list.gypcmd $
+    ../../native_client/toolchain/linux_x86/pnacl_newlib/pnacl_newlib.json $
+    || gen/base/debug/debugging_flags.h
+
+build obj/base/base_nacl.actions_rules_copies.stamp: stamp $
+    gen/tc_pnacl_newlib/lib/libbase_nacl.a gen/tc_irt/lib64/libbase_nacl.a
+
+defines = -DV8_DEPRECATION_WARNINGS -DCLD_VERSION=2 -D_FILE_OFFSET_BITS=64 $
+    -DCHROMIUM_BUILD -DCR_CLANG_REVISION=255169-1 $
+    -DUI_COMPOSITOR_IMAGE_TRANSPORT -DUSE_AURA=1 -DUSE_ASH=1 -DUSE_PANGO=1 $
+    -DUSE_CAIRO=1 -DUSE_DEFAULT_RENDER_THEME=1 -DUSE_LIBJPEG_TURBO=1 $
+    -DUSE_X11=1 -DUSE_CLIPBOARD_AURAX11=1 -DENABLE_ONE_CLICK_SIGNIN $
+    -DENABLE_WEBRTC=1 -DENABLE_MEDIA_ROUTER=1 -DENABLE_PEPPER_CDMS $
+    -DENABLE_CONFIGURATION_POLICY -DENABLE_NOTIFICATIONS -DENABLE_HIDPI=1 $
+    -DENABLE_TOPCHROME_MD=1 -DUSE_UDEV -DDONT_EMBED_BUILD_METADATA $
+    -DFIELDTRIAL_TESTING_ENABLED -DENABLE_TASK_MANAGER=1 $
+    -DENABLE_EXTENSIONS=1 -DENABLE_PDF=1 -DENABLE_PLUGINS=1 $
+    -DENABLE_SESSION_SERVICE=1 -DENABLE_THEMES=1 -DENABLE_AUTOFILL_DIALOG=1 $
+    -DENABLE_BACKGROUND=1 -DENABLE_PRINTING=1 -DENABLE_BASIC_PRINTING=1 $
+    -DENABLE_PRINT_PREVIEW=1 -DENABLE_SPELLCHECK=1 $
+    -DENABLE_CAPTIVE_PORTAL_DETECTION=1 -DENABLE_APP_LIST=1 $
+    -DENABLE_SETTINGS_APP=1 -DENABLE_SUPERVISED_USERS=1 -DENABLE_MDNS=1 $
+    -DENABLE_SERVICE_DISCOVERY=1 -DV8_USE_EXTERNAL_STARTUP_DATA $
+    -DFULL_SAFE_BROWSING -DSAFE_BROWSING_CSD -DSAFE_BROWSING_DB_LOCAL $
+    -DUSE_LIBPCI=1 -DUSE_OPENSSL=1 -DUSE_OPENSSL_CERTS=1 $
+    -D__STDC_CONSTANT_MACROS -D__STDC_FORMAT_MACROS -DBASE_IMPLEMENTATION $
+    -DDYNAMIC_ANNOTATIONS_ENABLED=1 -DWTF_USE_DYNAMIC_ANNOTATIONS=1 $
+    -D_DEBUG -D_GLIBCXX_DEBUG=1
+includes = -Igen -I../..
+cflags = -fstack-protector --param=ssp-buffer-size=4 -Werror -pthread $
+    -fno-strict-aliasing -Wall -Wno-unused-parameter $
+    -Wno-missing-field-initializers -fvisibility=hidden -pipe -fPIC $
+    -Wno-reserved-user-defined-literal -Xclang -load -Xclang $
+    /b/build/slave/publish_tarball/build/src/third_party/llvm-build/Release+Asserts/lib/libFindBadConstructs.so $
+    -Xclang -add-plugin -Xclang find-bad-constructs -Xclang $
+    -plugin-arg-find-bad-constructs -Xclang check-templates $
+    -fcolor-diagnostics $
+    -B/b/build/slave/publish_tarball/build/src/third_party/binutils/Linux_x64/Release/bin $
+    -Wheader-hygiene -Wno-char-subscripts $
+    -Wno-unneeded-internal-declaration -Wno-covered-switch-default $
+    -Wstring-conversion -Wno-c++11-narrowing -Wno-deprecated-register $
+    -Wno-inconsistent-missing-override -Wno-shift-negative-value $
+    -Wno-bitfield-width -m64 -march=x86-64 $
+    --sysroot=/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot $
+    -O0 -g -funwind-tables -gsplit-dwarf -Wno-undefined-bool-conversion $
+    -Wno-tautological-undefined-compare
+cflags_c = 
+cflags_cc = -fno-exceptions -fno-rtti -fno-threadsafe-statics $
+    -fvisibility-inlines-hidden -Wsign-compare -std=gnu++11
+arflags = 
+
+build obj/base/allocator/base_nacl.allocator_extension.o: cxx $
+    ../../base/allocator/allocator_extension.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/base_nacl.at_exit.o: cxx ../../base/at_exit.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/base_nacl.barrier_closure.o: cxx $
+    ../../base/barrier_closure.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/base_nacl.base64.o: cxx ../../base/base64.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/base_nacl.base64url.o: cxx ../../base/base64url.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/base_nacl.base_paths_posix.o: cxx $
+    ../../base/base_paths_posix.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/base_nacl.big_endian.o: cxx ../../base/big_endian.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/base_nacl.bind_helpers.o: cxx ../../base/bind_helpers.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/base_nacl.build_time.o: cxx ../../base/build_time.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/base_nacl.callback_helpers.o: cxx $
+    ../../base/callback_helpers.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/base_nacl.callback_internal.o: cxx $
+    ../../base/callback_internal.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/base_nacl.command_line.o: cxx ../../base/command_line.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/debug/base_nacl.alias.o: cxx ../../base/debug/alias.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/debug/base_nacl.asan_invalid_access.o: cxx $
+    ../../base/debug/asan_invalid_access.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/debug/base_nacl.crash_logging.o: cxx $
+    ../../base/debug/crash_logging.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/debug/base_nacl.debugger.o: cxx ../../base/debug/debugger.cc $
+    || obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/debug/base_nacl.debugger_posix.o: cxx $
+    ../../base/debug/debugger_posix.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/debug/base_nacl.dump_without_crashing.o: cxx $
+    ../../base/debug/dump_without_crashing.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/debug/base_nacl.profiler.o: cxx ../../base/debug/profiler.cc $
+    || obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/debug/base_nacl.task_annotator.o: cxx $
+    ../../base/debug/task_annotator.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/base_nacl.deferred_sequenced_task_runner.o: cxx $
+    ../../base/deferred_sequenced_task_runner.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/base_nacl.environment.o: cxx ../../base/environment.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/base_nacl.feature_list.o: cxx ../../base/feature_list.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/files/base_nacl.file.o: cxx ../../base/files/file.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/files/base_nacl.file_enumerator.o: cxx $
+    ../../base/files/file_enumerator.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/files/base_nacl.file_path.o: cxx $
+    ../../base/files/file_path.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/files/base_nacl.file_path_constants.o: cxx $
+    ../../base/files/file_path_constants.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/files/base_nacl.file_path_watcher.o: cxx $
+    ../../base/files/file_path_watcher.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/files/base_nacl.file_path_watcher_stub.o: cxx $
+    ../../base/files/file_path_watcher_stub.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/files/base_nacl.file_posix.o: cxx $
+    ../../base/files/file_posix.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/files/base_nacl.file_tracing.o: cxx $
+    ../../base/files/file_tracing.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/files/base_nacl.memory_mapped_file.o: cxx $
+    ../../base/files/memory_mapped_file.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/files/base_nacl.memory_mapped_file_posix.o: cxx $
+    ../../base/files/memory_mapped_file_posix.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/files/base_nacl.scoped_file.o: cxx $
+    ../../base/files/scoped_file.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/base_nacl.guid.o: cxx ../../base/guid.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/base_nacl.guid_posix.o: cxx ../../base/guid_posix.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/base_nacl.hash.o: cxx ../../base/hash.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/json/base_nacl.json_file_value_serializer.o: cxx $
+    ../../base/json/json_file_value_serializer.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/json/base_nacl.json_parser.o: cxx $
+    ../../base/json/json_parser.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/json/base_nacl.json_reader.o: cxx $
+    ../../base/json/json_reader.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/json/base_nacl.json_string_value_serializer.o: cxx $
+    ../../base/json/json_string_value_serializer.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/json/base_nacl.json_value_converter.o: cxx $
+    ../../base/json/json_value_converter.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/json/base_nacl.json_writer.o: cxx $
+    ../../base/json/json_writer.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/json/base_nacl.string_escape.o: cxx $
+    ../../base/json/string_escape.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/base_nacl.lazy_instance.o: cxx ../../base/lazy_instance.cc $
+    || obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/base_nacl.location.o: cxx ../../base/location.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/base_nacl.logging.o: cxx ../../base/logging.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/base_nacl.md5.o: cxx ../../base/md5.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/memory/base_nacl.aligned_memory.o: cxx $
+    ../../base/memory/aligned_memory.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/memory/base_nacl.discardable_memory.o: cxx $
+    ../../base/memory/discardable_memory.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/memory/base_nacl.discardable_memory_allocator.o: cxx $
+    ../../base/memory/discardable_memory_allocator.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/memory/base_nacl.discardable_shared_memory.o: cxx $
+    ../../base/memory/discardable_shared_memory.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/memory/base_nacl.memory_pressure_listener.o: cxx $
+    ../../base/memory/memory_pressure_listener.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/memory/base_nacl.memory_pressure_monitor.o: cxx $
+    ../../base/memory/memory_pressure_monitor.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/memory/base_nacl.ref_counted.o: cxx $
+    ../../base/memory/ref_counted.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/memory/base_nacl.ref_counted_memory.o: cxx $
+    ../../base/memory/ref_counted_memory.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/memory/base_nacl.shared_memory_nacl.o: cxx $
+    ../../base/memory/shared_memory_nacl.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/memory/base_nacl.singleton.o: cxx $
+    ../../base/memory/singleton.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/memory/base_nacl.weak_ptr.o: cxx $
+    ../../base/memory/weak_ptr.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/message_loop/base_nacl.incoming_task_queue.o: cxx $
+    ../../base/message_loop/incoming_task_queue.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/message_loop/base_nacl.message_loop.o: cxx $
+    ../../base/message_loop/message_loop.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/message_loop/base_nacl.message_loop_task_runner.o: cxx $
+    ../../base/message_loop/message_loop_task_runner.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/message_loop/base_nacl.message_pump.o: cxx $
+    ../../base/message_loop/message_pump.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/message_loop/base_nacl.message_pump_default.o: cxx $
+    ../../base/message_loop/message_pump_default.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/metrics/base_nacl.bucket_ranges.o: cxx $
+    ../../base/metrics/bucket_ranges.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/metrics/base_nacl.histogram.o: cxx $
+    ../../base/metrics/histogram.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/metrics/base_nacl.histogram_base.o: cxx $
+    ../../base/metrics/histogram_base.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/metrics/base_nacl.histogram_delta_serialization.o: cxx $
+    ../../base/metrics/histogram_delta_serialization.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/metrics/base_nacl.histogram_samples.o: cxx $
+    ../../base/metrics/histogram_samples.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/metrics/base_nacl.histogram_snapshot_manager.o: cxx $
+    ../../base/metrics/histogram_snapshot_manager.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/metrics/base_nacl.metrics_hashes.o: cxx $
+    ../../base/metrics/metrics_hashes.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/metrics/base_nacl.sample_map.o: cxx $
+    ../../base/metrics/sample_map.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/metrics/base_nacl.sample_vector.o: cxx $
+    ../../base/metrics/sample_vector.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/metrics/base_nacl.sparse_histogram.o: cxx $
+    ../../base/metrics/sparse_histogram.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/metrics/base_nacl.statistics_recorder.o: cxx $
+    ../../base/metrics/statistics_recorder.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/metrics/base_nacl.user_metrics.o: cxx $
+    ../../base/metrics/user_metrics.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/base_nacl.os_compat_nacl.o: cxx ../../base/os_compat_nacl.cc $
+    || obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/base_nacl.pending_task.o: cxx ../../base/pending_task.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/base_nacl.pickle.o: cxx ../../base/pickle.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/posix/base_nacl.global_descriptors.o: cxx $
+    ../../base/posix/global_descriptors.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/posix/base_nacl.safe_strerror.o: cxx $
+    ../../base/posix/safe_strerror.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/power_monitor/base_nacl.power_monitor.o: cxx $
+    ../../base/power_monitor/power_monitor.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/power_monitor/base_nacl.power_monitor_device_source.o: cxx $
+    ../../base/power_monitor/power_monitor_device_source.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/power_monitor/base_nacl.power_monitor_device_source_posix.o: $
+    cxx ../../base/power_monitor/power_monitor_device_source_posix.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/power_monitor/base_nacl.power_monitor_source.o: cxx $
+    ../../base/power_monitor/power_monitor_source.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/process/base_nacl.memory.o: cxx ../../base/process/memory.cc $
+    || obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/process/base_nacl.process_handle.o: cxx $
+    ../../base/process/process_handle.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/process/base_nacl.process_handle_posix.o: cxx $
+    ../../base/process/process_handle_posix.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/process/base_nacl.process_iterator.o: cxx $
+    ../../base/process/process_iterator.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/process/base_nacl.process_metrics_nacl.o: cxx $
+    ../../base/process/process_metrics_nacl.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/profiler/base_nacl.alternate_timer.o: cxx $
+    ../../base/profiler/alternate_timer.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/profiler/base_nacl.native_stack_sampler.o: cxx $
+    ../../base/profiler/native_stack_sampler.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/profiler/base_nacl.native_stack_sampler_posix.o: cxx $
+    ../../base/profiler/native_stack_sampler_posix.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/profiler/base_nacl.scoped_profile.o: cxx $
+    ../../base/profiler/scoped_profile.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/profiler/base_nacl.scoped_tracker.o: cxx $
+    ../../base/profiler/scoped_tracker.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/profiler/base_nacl.stack_sampling_profiler.o: cxx $
+    ../../base/profiler/stack_sampling_profiler.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/profiler/base_nacl.tracked_time.o: cxx $
+    ../../base/profiler/tracked_time.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/base_nacl.rand_util.o: cxx ../../base/rand_util.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/base_nacl.rand_util_nacl.o: cxx ../../base/rand_util_nacl.cc $
+    || obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/base_nacl.run_loop.o: cxx ../../base/run_loop.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/base_nacl.sequence_checker_impl.o: cxx $
+    ../../base/sequence_checker_impl.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/base_nacl.sequenced_task_runner.o: cxx $
+    ../../base/sequenced_task_runner.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/base_nacl.sha1_portable.o: cxx ../../base/sha1_portable.cc $
+    || obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/strings/base_nacl.latin1_string_conversions.o: cxx $
+    ../../base/strings/latin1_string_conversions.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/strings/base_nacl.nullable_string16.o: cxx $
+    ../../base/strings/nullable_string16.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/strings/base_nacl.pattern.o: cxx $
+    ../../base/strings/pattern.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/strings/base_nacl.safe_sprintf.o: cxx $
+    ../../base/strings/safe_sprintf.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/strings/base_nacl.string16.o: cxx $
+    ../../base/strings/string16.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/strings/base_nacl.string_number_conversions.o: cxx $
+    ../../base/strings/string_number_conversions.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/strings/base_nacl.string_piece.o: cxx $
+    ../../base/strings/string_piece.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/strings/base_nacl.string_split.o: cxx $
+    ../../base/strings/string_split.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/strings/base_nacl.string_util.o: cxx $
+    ../../base/strings/string_util.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/strings/base_nacl.string_util_constants.o: cxx $
+    ../../base/strings/string_util_constants.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/strings/base_nacl.stringprintf.o: cxx $
+    ../../base/strings/stringprintf.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/strings/base_nacl.sys_string_conversions_posix.o: cxx $
+    ../../base/strings/sys_string_conversions_posix.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/strings/base_nacl.utf_offset_string_conversions.o: cxx $
+    ../../base/strings/utf_offset_string_conversions.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/strings/base_nacl.utf_string_conversion_utils.o: cxx $
+    ../../base/strings/utf_string_conversion_utils.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/strings/base_nacl.utf_string_conversions.o: cxx $
+    ../../base/strings/utf_string_conversions.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/base_nacl.supports_user_data.o: cxx $
+    ../../base/supports_user_data.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/synchronization/base_nacl.cancellation_flag.o: cxx $
+    ../../base/synchronization/cancellation_flag.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/synchronization/base_nacl.condition_variable_posix.o: cxx $
+    ../../base/synchronization/condition_variable_posix.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/synchronization/base_nacl.lock.o: cxx $
+    ../../base/synchronization/lock.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/synchronization/base_nacl.lock_impl_posix.o: cxx $
+    ../../base/synchronization/lock_impl_posix.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/synchronization/base_nacl.waitable_event_posix.o: cxx $
+    ../../base/synchronization/waitable_event_posix.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/synchronization/base_nacl.waitable_event_watcher_posix.o: $
+    cxx ../../base/synchronization/waitable_event_watcher_posix.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/system_monitor/base_nacl.system_monitor.o: cxx $
+    ../../base/system_monitor/system_monitor.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/task/base_nacl.cancelable_task_tracker.o: cxx $
+    ../../base/task/cancelable_task_tracker.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/base_nacl.task_runner.o: cxx ../../base/task_runner.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/third_party/dmg_fp/base_nacl.dtoa_wrapper.o: cxx $
+    ../../base/third_party/dmg_fp/dtoa_wrapper.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/third_party/dmg_fp/base_nacl.g_fmt.o: cxx $
+    ../../base/third_party/dmg_fp/g_fmt.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/third_party/icu/base_nacl.icu_utf.o: cxx $
+    ../../base/third_party/icu/icu_utf.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/third_party/nspr/base_nacl.prtime.o: cxx $
+    ../../base/third_party/nspr/prtime.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/third_party/superfasthash/base_nacl.superfasthash.o: cc $
+    ../../base/third_party/superfasthash/superfasthash.c || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/base_nacl.thread_task_runner_handle.o: cxx $
+    ../../base/thread_task_runner_handle.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/threading/base_nacl.non_thread_safe_impl.o: cxx $
+    ../../base/threading/non_thread_safe_impl.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/threading/base_nacl.platform_thread_internal_posix.o: cxx $
+    ../../base/threading/platform_thread_internal_posix.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/threading/base_nacl.platform_thread_linux.o: cxx $
+    ../../base/threading/platform_thread_linux.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/threading/base_nacl.platform_thread_posix.o: cxx $
+    ../../base/threading/platform_thread_posix.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/threading/base_nacl.post_task_and_reply_impl.o: cxx $
+    ../../base/threading/post_task_and_reply_impl.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/threading/base_nacl.sequenced_task_runner_handle.o: cxx $
+    ../../base/threading/sequenced_task_runner_handle.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/threading/base_nacl.sequenced_worker_pool.o: cxx $
+    ../../base/threading/sequenced_worker_pool.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/threading/base_nacl.simple_thread.o: cxx $
+    ../../base/threading/simple_thread.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/threading/base_nacl.thread.o: cxx $
+    ../../base/threading/thread.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/threading/base_nacl.thread_checker_impl.o: cxx $
+    ../../base/threading/thread_checker_impl.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/threading/base_nacl.thread_collision_warner.o: cxx $
+    ../../base/threading/thread_collision_warner.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/threading/base_nacl.thread_id_name_manager.o: cxx $
+    ../../base/threading/thread_id_name_manager.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/threading/base_nacl.thread_local_posix.o: cxx $
+    ../../base/threading/thread_local_posix.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/threading/base_nacl.thread_local_storage.o: cxx $
+    ../../base/threading/thread_local_storage.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/threading/base_nacl.thread_local_storage_posix.o: cxx $
+    ../../base/threading/thread_local_storage_posix.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/threading/base_nacl.thread_restrictions.o: cxx $
+    ../../base/threading/thread_restrictions.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/threading/base_nacl.watchdog.o: cxx $
+    ../../base/threading/watchdog.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/threading/base_nacl.worker_pool.o: cxx $
+    ../../base/threading/worker_pool.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/threading/base_nacl.worker_pool_posix.o: cxx $
+    ../../base/threading/worker_pool_posix.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/time/base_nacl.clock.o: cxx ../../base/time/clock.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/time/base_nacl.default_clock.o: cxx $
+    ../../base/time/default_clock.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/time/base_nacl.default_tick_clock.o: cxx $
+    ../../base/time/default_tick_clock.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/time/base_nacl.tick_clock.o: cxx $
+    ../../base/time/tick_clock.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/time/base_nacl.time.o: cxx ../../base/time/time.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/time/base_nacl.time_posix.o: cxx $
+    ../../base/time/time_posix.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/timer/base_nacl.elapsed_timer.o: cxx $
+    ../../base/timer/elapsed_timer.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/timer/base_nacl.hi_res_timer_manager_posix.o: cxx $
+    ../../base/timer/hi_res_timer_manager_posix.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/timer/base_nacl.mock_timer.o: cxx $
+    ../../base/timer/mock_timer.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/timer/base_nacl.timer.o: cxx ../../base/timer/timer.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/base_nacl.tracked_objects.o: cxx $
+    ../../base/tracked_objects.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/base_nacl.tracking_info.o: cxx ../../base/tracking_info.cc $
+    || obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/base_nacl.value_conversions.o: cxx $
+    ../../base/value_conversions.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/base_nacl.values.o: cxx ../../base/values.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/base_nacl.version.o: cxx ../../base/version.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/base_nacl.vlog.o: cxx ../../base/vlog.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/trace_event/base_nacl.heap_profiler_allocation_context.o: $
+    cxx ../../base/trace_event/heap_profiler_allocation_context.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build $
+    obj/base/trace_event/base_nacl.heap_profiler_allocation_context_tracker.o: $
+    cxx ../../base/trace_event/heap_profiler_allocation_context_tracker.cc $
+    || obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/trace_event/base_nacl.heap_profiler_allocation_register.o: $
+    cxx ../../base/trace_event/heap_profiler_allocation_register.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build $
+    obj/base/trace_event/base_nacl.heap_profiler_allocation_register_posix.o: $
+    cxx ../../base/trace_event/heap_profiler_allocation_register_posix.cc $
+    || obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/trace_event/base_nacl.heap_profiler_heap_dump_writer.o: cxx $
+    ../../base/trace_event/heap_profiler_heap_dump_writer.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build $
+    obj/base/trace_event/base_nacl.heap_profiler_stack_frame_deduplicator.o: $
+    cxx ../../base/trace_event/heap_profiler_stack_frame_deduplicator.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build $
+    obj/base/trace_event/base_nacl.heap_profiler_type_name_deduplicator.o: $
+    cxx ../../base/trace_event/heap_profiler_type_name_deduplicator.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/trace_event/base_nacl.memory_allocator_dump.o: cxx $
+    ../../base/trace_event/memory_allocator_dump.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/trace_event/base_nacl.memory_allocator_dump_guid.o: cxx $
+    ../../base/trace_event/memory_allocator_dump_guid.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/trace_event/base_nacl.memory_dump_manager.o: cxx $
+    ../../base/trace_event/memory_dump_manager.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/trace_event/base_nacl.memory_dump_request_args.o: cxx $
+    ../../base/trace_event/memory_dump_request_args.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/trace_event/base_nacl.memory_dump_session_state.o: cxx $
+    ../../base/trace_event/memory_dump_session_state.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/trace_event/base_nacl.process_memory_dump.o: cxx $
+    ../../base/trace_event/process_memory_dump.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/trace_event/base_nacl.process_memory_maps.o: cxx $
+    ../../base/trace_event/process_memory_maps.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/trace_event/base_nacl.process_memory_totals.o: cxx $
+    ../../base/trace_event/process_memory_totals.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/trace_event/base_nacl.process_memory_totals_dump_provider.o: $
+    cxx ../../base/trace_event/process_memory_totals_dump_provider.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/trace_event/base_nacl.trace_buffer.o: cxx $
+    ../../base/trace_event/trace_buffer.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/trace_event/base_nacl.trace_config.o: cxx $
+    ../../base/trace_event/trace_config.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/trace_event/base_nacl.trace_event_argument.o: cxx $
+    ../../base/trace_event/trace_event_argument.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/trace_event/base_nacl.trace_event_impl.o: cxx $
+    ../../base/trace_event/trace_event_impl.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/trace_event/base_nacl.trace_event_memory_overhead.o: cxx $
+    ../../base/trace_event/trace_event_memory_overhead.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/trace_event/base_nacl.trace_event_synthetic_delay.o: cxx $
+    ../../base/trace_event/trace_event_synthetic_delay.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/trace_event/base_nacl.trace_event_system_stats_monitor.o: $
+    cxx ../../base/trace_event/trace_event_system_stats_monitor.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/trace_event/base_nacl.trace_log.o: cxx $
+    ../../base/trace_event/trace_log.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/trace_event/base_nacl.trace_log_constants.o: cxx $
+    ../../base/trace_event/trace_log_constants.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/trace_event/base_nacl.trace_sampling_thread.o: cxx $
+    ../../base/trace_event/trace_sampling_thread.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/trace_event/base_nacl.malloc_dump_provider.o: cxx $
+    ../../base/trace_event/malloc_dump_provider.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+build obj/base/trace_event/base_nacl.process_memory_maps_dump_provider.o: $
+    cxx ../../base/trace_event/process_memory_maps_dump_provider.cc || $
+    obj/base/base_nacl.actions_rules_copies.stamp
+

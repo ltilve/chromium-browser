@@ -72,8 +72,8 @@ bool ReadConfig(const base::FilePath& filename,
   }
 
   // Parse the JSON configuration, expecting it to contain a dictionary.
-  scoped_ptr<base::Value> value(base::JSONReader::DeprecatedRead(
-      file_content, base::JSON_ALLOW_TRAILING_COMMAS));
+  scoped_ptr<base::Value> value =
+      base::JSONReader::Read(file_content, base::JSON_ALLOW_TRAILING_COMMAS);
 
   base::DictionaryValue* dictionary;
   if (!value || !value->GetAsDictionary(&dictionary)) {
@@ -263,17 +263,6 @@ void InvokeCompletionCallback(
   DaemonController::AsyncResult async_result =
       success ? DaemonController::RESULT_OK : DaemonController::RESULT_FAILED;
   done.Run(async_result);
-}
-
-bool SetConfig(const std::string& config) {
-  // Determine the config directory path and create it if necessary.
-  base::FilePath config_dir = remoting::GetConfigDir();
-  if (!base::CreateDirectory(config_dir)) {
-    PLOG(ERROR) << "Failed to create the config directory.";
-    return false;
-  }
-
-  return WriteConfig(config);
 }
 
 bool StartDaemon() {

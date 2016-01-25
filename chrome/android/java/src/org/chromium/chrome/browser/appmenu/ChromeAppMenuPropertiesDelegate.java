@@ -9,15 +9,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import org.chromium.chrome.R;
-import org.chromium.chrome.browser.BookmarkUtils;
 import org.chromium.chrome.browser.BookmarksBridge;
 import org.chromium.chrome.browser.ChromeActivity;
 import org.chromium.chrome.browser.ChromeBrowserProviderClient;
-import org.chromium.chrome.browser.Tab;
+import org.chromium.chrome.browser.ShortcutHelper;
 import org.chromium.chrome.browser.UrlConstants;
+import org.chromium.chrome.browser.offlinepages.OfflinePageBridge;
 import org.chromium.chrome.browser.preferences.ManagedPreferencesUtils;
 import org.chromium.chrome.browser.preferences.PrefServiceBridge;
 import org.chromium.chrome.browser.share.ShareHelper;
+import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.util.FeatureUtilities;
 import org.chromium.components.dom_distiller.core.DomDistillerUrlUtils;
 import org.chromium.printing.PrintingController;
@@ -35,6 +36,8 @@ public class ChromeAppMenuPropertiesDelegate implements AppMenuPropertiesDelegat
     protected MenuItem mReloadMenuItem;
 
     protected final ChromeActivity mActivity;
+
+    protected BookmarksBridge mBookmarksBridge;
 
     public ChromeAppMenuPropertiesDelegate(ChromeActivity activity) {
         mActivity = activity;
@@ -92,8 +95,7 @@ public class ChromeAppMenuPropertiesDelegate implements AppMenuPropertiesDelegat
                 loadingStateChanged(currentTab.isLoading());
 
                 MenuItem bookmarkMenuItem = menu.findItem(R.id.bookmark_this_page_id);
-                bookmarkMenuItem.setEnabled(BookmarksBridge.isEditBookmarksEnabled(
-                        mActivity.getActivityTab().getProfile().getOriginalProfile()));
+                bookmarkMenuItem.setEnabled(mBookmarksBridge.isEditBookmarksEnabled());
                 if (currentTab.getBookmarkId() != ChromeBrowserProviderClient.INVALID_BOOKMARK_ID) {
                     bookmarkMenuItem.setIcon(R.drawable.btn_star_filled);
                     bookmarkMenuItem.setChecked(true);
@@ -109,6 +111,12 @@ public class ChromeAppMenuPropertiesDelegate implements AppMenuPropertiesDelegat
             MenuItem recentTabsMenuItem = menu.findItem(R.id.recent_tabs_menu_id);
             recentTabsMenuItem.setVisible(!isIncognito && FeatureUtilities.canAllowSync(mActivity));
             recentTabsMenuItem.setTitle(R.string.menu_recent_tabs);
+
+            if (OfflinePageBridge.isEnabled()) {
+                MenuItem allBookmarksMenuItem = menu.findItem(R.id.all_bookmarks_menu_id);
+                allBookmarksMenuItem.setTitle(mActivity.getString(
+                        R.string.menu_bookmarks_offline_pages));
+            }
 
             // Don't allow "chrome://" pages to be shared.
             menu.findItem(R.id.share_row_menu_id).setVisible(!isChromeScheme);
@@ -126,7 +134,7 @@ public class ChromeAppMenuPropertiesDelegate implements AppMenuPropertiesDelegat
             // creating shortcuts is supported at all.
             MenuItem homescreenItem = menu.findItem(R.id.add_to_homescreen_id);
             boolean canAddShortcutToHomescreen =
-                    BookmarkUtils.isAddToHomeIntentSupported(mActivity);
+                    ShortcutHelper.isAddToHomeIntentSupported(mActivity);
             homescreenItem.setVisible(
                     canAddShortcutToHomescreen && !isChromeScheme && !isIncognito);
 
@@ -224,5 +232,14 @@ public class ChromeAppMenuPropertiesDelegate implements AppMenuPropertiesDelegat
     @Override
     public int getFooterResourceId() {
         return 0;
+    }
+
+    /**
+     * Updates the bookmarks bridge.
+     *
+     * @param bookmarksBridge The bookmarks bridge.
+     */
+    public void setBookmarksBridge(BookmarksBridge bookmarksBridge) {
+        mBookmarksBridge = bookmarksBridge;
     }
 }

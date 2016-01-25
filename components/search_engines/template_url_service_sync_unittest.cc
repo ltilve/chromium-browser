@@ -9,7 +9,6 @@
 #include "base/strings/utf_string_conversions.h"
 #include "base/time/time.h"
 #include "chrome/browser/search_engines/template_url_service_test_util.h"
-#include "chrome/test/base/testing_pref_service_syncable.h"
 #include "chrome/test/base/testing_profile.h"
 #include "components/search_engines/search_engines_pref_names.h"
 #include "components/search_engines/search_terms_data.h"
@@ -17,6 +16,7 @@
 #include "components/search_engines/template_url_prepopulate_data.h"
 #include "components/search_engines/template_url_service.h"
 #include "components/search_engines/template_url_service_client.h"
+#include "components/syncable_prefs/testing_pref_service_syncable.h"
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "net/base/net_util.h"
 #include "sync/api/sync_change_processor_wrapper_for_test.h"
@@ -68,7 +68,8 @@ syncer::SyncData CreateCustomSyncData(const TemplateURL& turl,
   se_specifics->set_safe_for_autoreplace(turl.safe_for_autoreplace());
   se_specifics->set_originating_url(turl.originating_url().spec());
   se_specifics->set_date_created(turl.date_created().ToInternalValue());
-  se_specifics->set_input_encodings(JoinString(turl.input_encodings(), ';'));
+  se_specifics->set_input_encodings(
+      base::JoinString(turl.input_encodings(), ";"));
   se_specifics->set_show_in_default_list(turl.show_in_default_list());
   se_specifics->set_suggestions_url(turl.suggestions_url());
   se_specifics->set_prepopulate_id(turl.prepopulate_id());

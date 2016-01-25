@@ -9,23 +9,23 @@ import android.graphics.Bitmap;
 
 import org.chromium.base.ObserverList;
 import org.chromium.base.ThreadUtils;
-import org.chromium.chrome.browser.ForeignSessionHelper;
-import org.chromium.chrome.browser.ForeignSessionHelper.ForeignSession;
-import org.chromium.chrome.browser.ForeignSessionHelper.ForeignSessionCallback;
-import org.chromium.chrome.browser.ForeignSessionHelper.ForeignSessionTab;
-import org.chromium.chrome.browser.NewTabPagePrefs;
-import org.chromium.chrome.browser.RecentlyClosedBridge;
-import org.chromium.chrome.browser.RecentlyClosedBridge.RecentlyClosedCallback;
-import org.chromium.chrome.browser.RecentlyClosedBridge.RecentlyClosedTab;
-import org.chromium.chrome.browser.Tab;
 import org.chromium.chrome.browser.UrlConstants;
 import org.chromium.chrome.browser.favicon.FaviconHelper;
 import org.chromium.chrome.browser.favicon.FaviconHelper.FaviconImageCallback;
+import org.chromium.chrome.browser.firstrun.ProfileDataCache;
+import org.chromium.chrome.browser.invalidation.InvalidationController;
+import org.chromium.chrome.browser.metrics.StartupMetrics;
+import org.chromium.chrome.browser.ntp.ForeignSessionHelper.ForeignSession;
+import org.chromium.chrome.browser.ntp.ForeignSessionHelper.ForeignSessionCallback;
+import org.chromium.chrome.browser.ntp.ForeignSessionHelper.ForeignSessionTab;
 import org.chromium.chrome.browser.ntp.RecentTabsPromoView.SyncPromoModel;
+import org.chromium.chrome.browser.ntp.RecentlyClosedBridge.RecentlyClosedCallback;
+import org.chromium.chrome.browser.ntp.RecentlyClosedBridge.RecentlyClosedTab;
 import org.chromium.chrome.browser.profiles.Profile;
 import org.chromium.chrome.browser.signin.SigninManager;
 import org.chromium.chrome.browser.signin.SigninManager.SignInStateObserver;
 import org.chromium.chrome.browser.sync.SyncController;
+import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.content_public.browser.LoadUrlParams;
 import org.chromium.sync.AndroidSyncSettings;
 import org.chromium.sync.AndroidSyncSettings.AndroidSyncSettingsObserver;
@@ -66,6 +66,7 @@ public class RecentTabsManager implements AndroidSyncSettingsObserver, SignInSta
     private RecentlyClosedBridge mRecentlyClosedBridge;
     private SigninManager mSignInManager;
     private UpdatedCallback mUpdatedCallback;
+    private ProfileDataCache mProfileDataCache;
 
     /**
      * Create an RecentTabsManager to be used with RecentTabsPage and RecentTabsRowAdapter.
@@ -89,6 +90,8 @@ public class RecentTabsManager implements AndroidSyncSettingsObserver, SignInSta
         updateForeignSessions();
         mForeignSessionHelper.triggerSessionSync();
         registerForSignInAndSyncNotifications();
+
+        InvalidationController.get(mContext).onRecentTabsPageOpened();
     }
 
     /**
@@ -113,6 +116,13 @@ public class RecentTabsManager implements AndroidSyncSettingsObserver, SignInSta
 
         mNewTabPagePrefs.destroy();
         mNewTabPagePrefs = null;
+
+        if (mProfileDataCache != null) {
+            mProfileDataCache.destroy();
+            mProfileDataCache = null;
+        }
+
+        InvalidationController.get(mContext).onRecentTabsPageClosed();
     }
 
     private static ForeignSessionHelper buildForeignSessionHelper(Profile profile) {
@@ -220,6 +230,7 @@ public class RecentTabsManager implements AndroidSyncSettingsObserver, SignInSta
      */
     public void openHistoryPage() {
         mTab.loadUrl(new LoadUrlParams(UrlConstants.HISTORY_URL));
+        StartupMetrics.getInstance().recordOpenedHistory();
     }
 
     /**
@@ -243,10 +254,7 @@ public class RecentTabsManager implements AndroidSyncSettingsObserver, SignInSta
      */
     public boolean getLocalFaviconForUrl(String url, int size,
             FaviconImageCallback faviconCallback) {
-        return mFaviconHelper.getLocalFaviconImageForURL(mProfile, url,
-                FaviconHelper.FAVICON | FaviconHelper.TOUCH_ICON
-                        | FaviconHelper.TOUCH_PRECOMPOSED_ICON,
-                size, faviconCallback);
+        return mFaviconHelper.getLocalFaviconImageForURL(mProfile, url, size, faviconCallback);
     }
 
     /**
@@ -445,5 +453,13 @@ public class RecentTabsManager implements AndroidSyncSettingsObserver, SignInSta
     @Override
     public void unregisterForSyncUpdates(AndroidSyncSettingsObserver changeListener) {
         mObservers.removeObserver(changeListener);
+    }
+
+    @Override
+    public ProfileDataCache getProfileDataCache() {
+        if (mProfileDataCache == null) {
+            mProfileDataCache = new ProfileDataCache(mContext, Profile.getLastUsedProfile());
+        }
+        return mProfileDataCache;
     }
 }

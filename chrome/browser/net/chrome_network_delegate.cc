@@ -33,7 +33,7 @@
 #include "chrome/browser/net/request_source_bandwidth_histograms.h"
 #include "chrome/browser/net/safe_search_util.h"
 #include "chrome/browser/profiles/profile_manager.h"
-#include "chrome/browser/task_manager/task_manager.h"
+#include "chrome/browser/task_management/task_manager_interface.h"
 #include "chrome/common/pref_names.h"
 #include "components/content_settings/core/browser/cookie_settings.h"
 #include "components/domain_reliability/monitor.h"
@@ -106,23 +106,26 @@ void ForceGoogleSafeSearchCallbackWrapper(
 
 #if defined(OS_ANDROID)
 void RecordPrecacheStatsOnUIThread(const GURL& url,
-                                   const base::Time& fetch_time, int64 size,
-                                   bool was_cached, void* profile_id) {
+                                   const GURL& referrer,
+                                   base::TimeDelta latency,
+                                   const base::Time& fetch_time,
+                                   int64 size,
+                                   bool was_cached,
+                                   void* profile_id) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
   Profile* profile = reinterpret_cast<Profile*>(profile_id);
-  if (!g_browser_process->profile_manager()->IsValidProfile(profile)) {
+  if (!g_browser_process->profile_manager()->IsValidProfile(profile))
     return;
-  }
 
   precache::PrecacheManager* precache_manager =
       precache::PrecacheManagerFactory::GetForBrowserContext(profile);
-  if (!precache_manager || !precache_manager->IsPrecachingAllowed()) {
-    // |precache_manager| could be NULL if the profile is off the record.
+  // |precache_manager| could be NULL if the profile is off the record.
+  if (!precache_manager || !precache_manager->IsPrecachingAllowed())
     return;
-  }
 
-  precache_manager->RecordStatsForFetch(url, fetch_time, size, was_cached);
+  precache_manager->RecordStatsForFetch(url, referrer, latency, fetch_time,
+                                        size, was_cached);
 }
 #endif  // defined(OS_ANDROID)
 
@@ -465,6 +468,10 @@ int ChromeNetworkDelegate::OnHeadersReceived(
 
 void ChromeNetworkDelegate::OnBeforeRedirect(net::URLRequest* request,
                                              const GURL& new_location) {
+// Recording data use of request on redirects.
+#if !defined(OS_IOS)
+  data_use_measurement_.ReportDataUseUMA(request);
+#endif
   if (domain_reliability_monitor_)
     domain_reliability_monitor_->OnBeforeRedirect(request);
   extensions_delegate_->OnBeforeRedirect(request, new_location);
@@ -475,18 +482,24 @@ void ChromeNetworkDelegate::OnResponseStarted(net::URLRequest* request) {
   extensions_delegate_->OnResponseStarted(request);
 }
 
-void ChromeNetworkDelegate::OnRawBytesRead(const net::URLRequest& request,
-                                           int bytes_read) {
+void ChromeNetworkDelegate::OnNetworkBytesReceived(
+    const net::URLRequest& request,
+    int64_t bytes_received) {
 #if defined(ENABLE_TASK_MANAGER)
-  // This is not completely accurate, but as a first approximation ignore
-  // requests that are served from the cache. See bug 330931 for more info.
-  if (!request.was_cached())
-    TaskManager::GetInstance()->model()->NotifyBytesRead(request, bytes_read);
+  // Note: Currently, OnNetworkBytesReceived is only implemented for HTTP jobs,
+  // not FTP or other types, so those kinds of bytes will not be reported here.
+  task_management::TaskManagerInterface::OnRawBytesRead(request,
+                                                        bytes_received);
 #endif  // defined(ENABLE_TASK_MANAGER)
 }
 
 void ChromeNetworkDelegate::OnCompleted(net::URLRequest* request,
                                         bool started) {
+#if !defined(OS_IOS)
+  // TODO(amohammadkhan): Verify that there is no double recording in data use
+  // of redirected requests.
+  data_use_measurement_.ReportDataUseUMA(request);
+#endif
   RecordNetworkErrorHistograms(request);
   if (started) {
     // Only call in for requests that were started, to obey the precondition
@@ -501,16 +514,15 @@ void ChromeNetworkDelegate::OnCompleted(net::URLRequest* request,
     // specified with the Content-Length header, which may be inaccurate,
     // or missing, as is the case with chunked encoding.
     int64 received_content_length = request->received_response_content_length();
+    base::TimeDelta latency = base::TimeTicks::Now() - request->creation_time();
 
-    if (precache::PrecacheManager::IsPrecachingEnabled()) {
-      // Record precache metrics when a fetch is completed successfully, if
-      // precaching is enabled.
-      BrowserThread::PostTask(
-          BrowserThread::UI, FROM_HERE,
-          base::Bind(&RecordPrecacheStatsOnUIThread, request->url(),
-                     base::Time::Now(), received_content_length,
-                     request->was_cached(), profile_));
-    }
+    // Record precache metrics when a fetch is completed successfully, if
+    // precaching is allowed.
+    BrowserThread::PostTask(
+        BrowserThread::UI, FROM_HERE,
+        base::Bind(&RecordPrecacheStatsOnUIThread, request->url(),
+                   GURL(request->referrer()), latency, base::Time::Now(),
+                   received_content_length, request->was_cached(), profile_));
 #endif  // defined(OS_ANDROID)
     extensions_delegate_->OnCompleted(request, started);
   } else if (request->status().status() == net::URLRequestStatus::FAILED ||
@@ -528,6 +540,10 @@ void ChromeNetworkDelegate::OnCompleted(net::URLRequest* request,
 
 void ChromeNetworkDelegate::OnURLRequestDestroyed(net::URLRequest* request) {
   extensions_delegate_->OnURLRequestDestroyed(request);
+}
+
+void ChromeNetworkDelegate::OnURLRequestJobOrphaned(net::URLRequest* request) {
+  extensions_delegate_->OnURLRequestJobOrphaned(request);
 }
 
 void ChromeNetworkDelegate::OnPACScriptError(int line_number,

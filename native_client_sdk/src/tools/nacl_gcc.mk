@@ -26,18 +26,12 @@ X86_64_STRIP := $(shell $(NACL_CONFIG) -t $(TOOLCHAIN) -a x86_64 --tool=strip)
 X86_64_NM := $(shell $(NACL_CONFIG) -t $(TOOLCHAIN) -a x86_64 --tool=nm)
 endif
 
-ifneq (,$(findstring $(TOOLCHAIN),newlib bionic clang-newlib))
-ARM_SUPPORT=1
-endif
-
-ifeq ($(ARM_SUPPORT),1)
 ARM_CC := $(NACL_COMPILER_PREFIX) $(shell $(NACL_CONFIG) -t $(TOOLCHAIN) -a arm --tool=cc)
 ARM_CXX := $(NACL_COMPILER_PREFIX) $(shell $(NACL_CONFIG) -t $(TOOLCHAIN) -a arm --tool=c++)
 ARM_LINK := $(shell $(NACL_CONFIG) -t $(TOOLCHAIN) -a arm --tool=c++)
 ARM_LIB := $(shell $(NACL_CONFIG) -t $(TOOLCHAIN) -a arm --tool=ar)
 ARM_STRIP := $(shell $(NACL_CONFIG) -t $(TOOLCHAIN) -a arm --tool=strip)
 ARM_NM := $(shell $(NACL_CONFIG) -t $(TOOLCHAIN) -a arm --tool=nm)
-endif
 
 NCVAL ?= python $(NACL_SDK_ROOT)/tools/ncval.py
 
@@ -183,9 +177,7 @@ endef
 ifneq ($(TOOLCHAIN),bionic)
 VALID_ARCHES := x86_32 x86_64
 endif
-ifeq ($(ARM_SUPPORT),1)
 VALID_ARCHES += arm
-endif
 
 ifdef NACL_ARCH
 ifeq (,$(findstring $(NACL_ARCH),$(VALID_ARCHES)))
@@ -323,7 +315,6 @@ $(LIBDIR)/$(TOOLCHAIN)_x86_64/$(CONFIG_DIR)/lib$(1).a: $(X86_64_OUTDIR)/lib$(1)_
 endif
 
 ifneq (,$(findstring arm,$(ARCHES)))
-ifeq ($(ARM_SUPPORT),1)
 all: $(ARM_OUTDIR)/lib$(1)_arm.a
 $(ARM_OUTDIR)/lib$(1)_arm.a: $(foreach src,$(2),$(call SRC_TO_OBJ,$(src),_arm))
 	$(MKDIR) -p $$(dir $$@)
@@ -335,7 +326,6 @@ install: $(LIBDIR)/$(TOOLCHAIN)_arm/$(CONFIG_DIR)/lib$(1).a
 $(LIBDIR)/$(TOOLCHAIN)_arm/$(CONFIG_DIR)/lib$(1).a: $(ARM_OUTDIR)/lib$(1)_arm.a
 	$(MKDIR) -p $$(dir $$@)
 	$(call LOG,CP  ,$$@,$(OSHELPERS) cp $$^ $$@)
-endif
 endif
 endef
 
@@ -478,6 +468,7 @@ endef
 #
 NMF := python $(NACL_SDK_ROOT)/tools/create_nmf.py
 NMF_FLAGS += --config=$(CONFIG_DIR)
+SEL_LDR_ARGS += --config=$(CONFIG_DIR)
 
 EXECUTABLES = $(GLIBC_SO_LIST)
 ifneq (,$(findstring x86_32,$(ARCHES)))
@@ -541,8 +532,11 @@ endef
 #
 ifeq (x86_32,$(SYSARCH))
 LIB_NAME = lib32
-else
+ifeq (x86_64,$(SYSARCH))
 LIB_NAME = lib64
+else
+LIB_NAME = lib
+endif
 endif
 
 

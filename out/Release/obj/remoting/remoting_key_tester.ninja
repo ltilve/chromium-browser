@@ -1,0 +1,38 @@
+build remoting/key_tester/background.js: copy $
+    ../../remoting/tools/javascript_key_tester/background.js || $
+    obj/remoting/remoting_key_tester_pexe.actions_rules_copies.stamp
+build remoting/key_tester/chord_tracker.js: copy $
+    ../../remoting/tools/javascript_key_tester/chord_tracker.js || $
+    obj/remoting/remoting_key_tester_pexe.actions_rules_copies.stamp
+build remoting/key_tester/event_listeners.js: copy $
+    ../../remoting/tools/javascript_key_tester/event_listeners.js || $
+    obj/remoting/remoting_key_tester_pexe.actions_rules_copies.stamp
+build remoting/key_tester/main.js: copy $
+    ../../remoting/tools/javascript_key_tester/main.js || $
+    obj/remoting/remoting_key_tester_pexe.actions_rules_copies.stamp
+build remoting/key_tester/main.css: copy $
+    ../../remoting/tools/javascript_key_tester/main.css || $
+    obj/remoting/remoting_key_tester_pexe.actions_rules_copies.stamp
+build remoting/key_tester/main.html: copy $
+    ../../remoting/tools/javascript_key_tester/main.html || $
+    obj/remoting/remoting_key_tester_pexe.actions_rules_copies.stamp
+build remoting/key_tester/manifest.json: copy $
+    ../../remoting/tools/javascript_key_tester/manifest.json || $
+    obj/remoting/remoting_key_tester_pexe.actions_rules_copies.stamp
+build remoting/key_tester/icon_128.png: copy $
+    ../../remoting/tools/javascript_key_tester/icon_128.png || $
+    obj/remoting/remoting_key_tester_pexe.actions_rules_copies.stamp
+build remoting/key_tester/remoting_key_tester.nmf: copy $
+    ../../remoting/tools/javascript_key_tester/pnacl/remoting_key_tester.nmf $
+    || obj/remoting/remoting_key_tester_pexe.actions_rules_copies.stamp
+build remoting/key_tester/remoting_key_tester_newlib.pexe: copy $
+    remoting_key_tester_newlib.pexe || $
+    obj/remoting/remoting_key_tester_pexe.actions_rules_copies.stamp
+build obj/remoting/remoting_key_tester.actions_rules_copies.stamp: stamp $
+    remoting/key_tester/background.js remoting/key_tester/chord_tracker.js $
+    remoting/key_tester/event_listeners.js remoting/key_tester/main.js $
+    remoting/key_tester/main.css remoting/key_tester/main.html $
+    remoting/key_tester/manifest.json remoting/key_tester/icon_128.png $
+    remoting/key_tester/remoting_key_tester.nmf $
+    remoting/key_tester/remoting_key_tester_newlib.pexe
+

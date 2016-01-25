@@ -1,0 +1,80 @@
+build obj/build/aura_builder.actions_depends.stamp: stamp $
+    cc_blink_unittests cc_unittests components_unittests $
+    content_browsertests content_unittests device_unittests gcm_unit_tests $
+    ppapi_unittests remoting_unittests skia_unittests $
+    obj/ui/app_list/libapp_list.a $
+    obj/ui/app_list/libapp_list_test_support.a app_list_unittests $
+    app_list_demo app_list_unittests.isolated obj/ui/aura/libaura.a $
+    obj/ui/aura/libaura_test_support.a aura_demo aura_bench aura_unittests $
+    aura_unittests.isolated obj/ui/aura_extra/libaura_extra.a $
+    ui_base_unittests obj/ui/compositor/libcompositor.a $
+    obj/ui/compositor/libcompositor_test_support.a compositor_unittests $
+    compositor_unittests.isolated display_unittests $
+    obj/ui/events/libdom_keycode_converter.a obj/ui/events/libevents_base.a $
+    obj/ui/events/libevents.a obj/ui/events/libgestures_blink.a $
+    obj/ui/events/libgesture_detection.a obj/ui/events/libevents_ipc.a $
+    obj/ui/events/libevents_test_support.a gfx_unittests gl_unittests $
+    obj/ui/keyboard/keyboard_resources.actions_rules_copies.stamp $
+    obj/ui/keyboard/libkeyboard.a $
+    obj/ui/keyboard/libkeyboard_with_content.a keyboard_unittests $
+    snapshot_unittests ui_touch_selection_unittests obj/ui/wm/libwm.a $
+    obj/ui/wm/libwm_test_support.a wm_unittests wm_unittests.isolated $
+    obj/build/blink_tests.actions_depends.stamp ash_shell_with_content $
+    ash_unittests base_unittests ipc_tests sql_unittests sync_unit_tests $
+    browser_tests chrome interactive_ui_tests unit_tests $
+    obj/ui/message_center/libmessage_center.a $
+    obj/ui/message_center/libmessage_center_test_support.a $
+    message_center_unittests message_center_unittests.isolated $
+    views_examples_with_content_exe obj/ui/views/libviews.a views_unittests
+
+build obj/build/aura_builder.compile_depends.stamp: stamp $
+    obj/cc/blink/cc_blink_unittests.compile_depends.stamp $
+    obj/cc/cc_unittests.compile_depends.stamp $
+    obj/components/components_unittests.compile_depends.stamp $
+    obj/content/content_browsertests.compile_depends.stamp $
+    obj/content/content_unittests.compile_depends.stamp $
+    obj/device/device_unittests.compile_depends.stamp $
+    obj/google_apis/gcm/gcm_unit_tests.compile_depends.stamp $
+    obj/ppapi/ppapi_unittests.compile_depends.stamp $
+    obj/remoting/remoting_unittests.compile_depends.stamp $
+    obj/skia/skia_unittests.compile_depends.stamp $
+    obj/ui/app_list/app_list.compile_depends.stamp $
+    obj/ui/accessibility/ax_gen.actions_rules_copies.stamp $
+    obj/ui/app_list/app_list_unittests.compile_depends.stamp $
+    obj/ui/app_list/app_list_demo.compile_depends.stamp $
+    app_list_unittests.isolated obj/ui/aura/aura_demo.compile_depends.stamp $
+    obj/ui/aura/aura_bench.compile_depends.stamp $
+    obj/ui/aura/aura_unittests.compile_depends.stamp $
+    aura_unittests.isolated $
+    obj/ui/base/ui_base_unittests.compile_depends.stamp $
+    obj/ui/compositor/compositor_unittests.compile_depends.stamp $
+    compositor_unittests.isolated $
+    obj/ui/display/display_unittests.compile_depends.stamp $
+    obj/ui/gfx/gfx_unittests.compile_depends.stamp $
+    obj/ui/gl/gl_unittests.compile_depends.stamp $
+    obj/ui/keyboard/keyboard_resources.actions_rules_copies.stamp $
+    obj/ui/keyboard/keyboard_resources.actions_rules_copies.stamp $
+    obj/ui/keyboard/keyboard_with_content.compile_depends.stamp $
+    obj/ui/keyboard/keyboard_unittests.compile_depends.stamp $
+    obj/ui/snapshot/snapshot_unittests.compile_depends.stamp $
+    obj/ui/touch_selection/ui_touch_selection_unittests.compile_depends.stamp $
+    obj/ui/resources/ui_resources.actions_rules_copies.stamp $
+    obj/ui/wm/wm_unittests.compile_depends.stamp wm_unittests.isolated $
+    obj/build/blink_tests.compile_depends.stamp $
+    obj/ash/ash_shell_with_content.compile_depends.stamp $
+    obj/ash/ash_unittests.compile_depends.stamp $
+    obj/base/base_unittests.compile_depends.stamp $
+    obj/ipc/ipc_tests.compile_depends.stamp $
+    obj/sql/sql_unittests.compile_depends.stamp $
+    obj/sync/sync_unit_tests.compile_depends.stamp $
+    obj/chrome/browser_tests.actions_rules_copies.stamp $
+    obj/chrome/chrome_initial.actions_rules_copies.stamp $
+    obj/chrome/interactive_ui_tests.compile_depends.stamp $
+    obj/chrome/unit_tests.actions_rules_copies.stamp $
+    obj/ui/message_center/message_center.compile_depends.stamp $
+    obj/ui/message_center/message_center_unittests.compile_depends.stamp $
+    message_center_unittests.isolated $
+    obj/ui/views/examples/views_examples_with_content_exe.compile_depends.stamp $
+    obj/ui/views/views.compile_depends.stamp $
+    obj/ui/views/views_unittests.compile_depends.stamp
+

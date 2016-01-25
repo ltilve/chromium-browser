@@ -705,7 +705,11 @@ def try_remove(filepath):
 
 
 def link_file(outfile, infile, action):
-  """Links a file. The type of link depends on |action|."""
+  """Links a file. The type of link depends on |action|.
+
+  Returns:
+    True if the action was caried on, False if fallback was used.
+  """
   assert isinstance(outfile, unicode), outfile
   assert isinstance(infile, unicode), infile
   if action not in (HARDLINK, HARDLINK_WITH_FALLBACK, SYMLINK, COPY):
@@ -734,6 +738,9 @@ def link_file(outfile, infile, action):
           'Failed to hardlink, failing back to copy %s to %s' % (
             infile, outfile))
       readable_copy(outfile, infile)
+      # Signal caller that fallback copy was used.
+      return False
+  return True
 
 
 ### Write directory functions.
@@ -868,12 +875,10 @@ def rmtree(root):
   root = unicode(root)
   make_tree_deleteable(root)
   logging.info('rmtree(%s)', root)
-  if sys.platform != 'win32':
-    shutil.rmtree(root)
-    return True
 
-  # Windows is more 'challenging'. First tries the soft way: tries 3 times to
-  # delete and sleep a bit in between.
+  # First try the soft way: tries 3 times to delete and sleep a bit in between.
+  # Retries help if test subprocesses outlive main process and try to actively
+  # use or write to the directory while it is being deleted.
   max_tries = 3
   for i in xrange(max_tries):
     # errors is a list of tuple(function, path, excinfo).
@@ -881,7 +886,7 @@ def rmtree(root):
     shutil.rmtree(root, onerror=lambda *args: errors.append(args))
     if not errors:
       return True
-    if not i:
+    if not i and sys.platform == 'win32':
       for _, path, _ in errors:
         try:
           change_acl_for_delete_win(path)
@@ -901,6 +906,10 @@ def rmtree(root):
           '  Sleeping %d seconds.\n' %
           (root, len(errors), delay))
       time.sleep(delay)
+
+  # If soft retries fail on Linux, there's nothing better we can do.
+  if sys.platform != 'win32':
+    raise errors[0][2][0], errors[0][2][1], errors[0][2][2]
 
   # The soft way was not good enough. Try the hard way. Enumerates both:
   # - all child processes from this process.

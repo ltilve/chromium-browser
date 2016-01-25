@@ -1,0 +1,169 @@
+defines = -DV8_DEPRECATION_WARNINGS -DCLD_VERSION=2 -D_FILE_OFFSET_BITS=64 $
+    -DCHROMIUM_BUILD -DCR_CLANG_REVISION=255169-1 $
+    -DUI_COMPOSITOR_IMAGE_TRANSPORT -DUSE_AURA=1 -DUSE_ASH=1 -DUSE_PANGO=1 $
+    -DUSE_CAIRO=1 -DUSE_DEFAULT_RENDER_THEME=1 -DUSE_LIBJPEG_TURBO=1 $
+    -DUSE_X11=1 -DUSE_CLIPBOARD_AURAX11=1 -DENABLE_ONE_CLICK_SIGNIN $
+    -DENABLE_WEBRTC=1 -DENABLE_MEDIA_ROUTER=1 -DENABLE_PEPPER_CDMS $
+    -DENABLE_CONFIGURATION_POLICY -DENABLE_NOTIFICATIONS -DENABLE_HIDPI=1 $
+    -DENABLE_TOPCHROME_MD=1 -DUSE_UDEV -DDONT_EMBED_BUILD_METADATA $
+    -DFIELDTRIAL_TESTING_ENABLED -DENABLE_TASK_MANAGER=1 $
+    -DENABLE_EXTENSIONS=1 -DENABLE_PDF=1 -DENABLE_PLUGINS=1 $
+    -DENABLE_SESSION_SERVICE=1 -DENABLE_THEMES=1 -DENABLE_AUTOFILL_DIALOG=1 $
+    -DENABLE_BACKGROUND=1 -DENABLE_PRINTING=1 -DENABLE_BASIC_PRINTING=1 $
+    -DENABLE_PRINT_PREVIEW=1 -DENABLE_SPELLCHECK=1 $
+    -DENABLE_CAPTIVE_PORTAL_DETECTION=1 -DENABLE_APP_LIST=1 $
+    -DENABLE_SETTINGS_APP=1 -DENABLE_SUPERVISED_USERS=1 -DENABLE_MDNS=1 $
+    -DENABLE_SERVICE_DISCOVERY=1 -DV8_USE_EXTERNAL_STARTUP_DATA $
+    -DFULL_SAFE_BROWSING -DSAFE_BROWSING_CSD -DSAFE_BROWSING_DB_LOCAL $
+    -DUSE_LIBPCI=1 -DUSE_OPENSSL=1 -DUSE_GLIB=1 -DUSE_NSS_CERTS=1 $
+    -D__STDC_CONSTANT_MACROS -D__STDC_FORMAT_MACROS $
+    -DDYNAMIC_ANNOTATIONS_ENABLED=1 -DWTF_USE_DYNAMIC_ANNOTATIONS=1 $
+    -D_DEBUG -D_GLIBCXX_DEBUG=1
+includes = -I../.. -Igen
+cflags = -fstack-protector --param=ssp-buffer-size=4 -Werror -pthread $
+    -fno-strict-aliasing -Wall -Wno-unused-parameter $
+    -Wno-missing-field-initializers -fvisibility=hidden -pipe -fPIC $
+    -Wno-reserved-user-defined-literal -Xclang -load -Xclang $
+    /b/build/slave/publish_tarball/build/src/third_party/llvm-build/Release+Asserts/lib/libFindBadConstructs.so $
+    -Xclang -add-plugin -Xclang find-bad-constructs -Xclang $
+    -plugin-arg-find-bad-constructs -Xclang check-templates $
+    -fcolor-diagnostics $
+    -B/b/build/slave/publish_tarball/build/src/third_party/binutils/Linux_x64/Release/bin $
+    -Wheader-hygiene -Wno-char-subscripts $
+    -Wno-unneeded-internal-declaration -Wno-covered-switch-default $
+    -Wstring-conversion -Wno-c++11-narrowing -Wno-deprecated-register $
+    -Wno-inconsistent-missing-override -Wno-shift-negative-value $
+    -Wno-bitfield-width -m64 -march=x86-64 $
+    --sysroot=/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot $
+    -O0 -g -funwind-tables -gsplit-dwarf -Wno-undefined-bool-conversion $
+    -Wno-tautological-undefined-compare
+cflags_c = 
+cflags_cc = -fno-exceptions -fno-rtti -fno-threadsafe-statics $
+    -fvisibility-inlines-hidden -Wsign-compare -std=gnu++11
+arflags = 
+
+build obj/mojo/public/cpp/bindings/lib/mojo_cpp_bindings.array_internal.o: $
+    cxx ../../mojo/public/cpp/bindings/lib/array_internal.cc || $
+    obj/third_party/mojo/mojo_interface_bindings_mojom.actions_rules_copies.stamp
+build $
+    obj/mojo/public/cpp/bindings/lib/mojo_cpp_bindings.associated_group.o: $
+    cxx ../../mojo/public/cpp/bindings/lib/associated_group.cc || $
+    obj/third_party/mojo/mojo_interface_bindings_mojom.actions_rules_copies.stamp
+build $
+    obj/mojo/public/cpp/bindings/lib/mojo_cpp_bindings.bindings_serialization.o: $
+    cxx ../../mojo/public/cpp/bindings/lib/bindings_serialization.cc || $
+    obj/third_party/mojo/mojo_interface_bindings_mojom.actions_rules_copies.stamp
+build obj/mojo/public/cpp/bindings/lib/mojo_cpp_bindings.bounds_checker.o: $
+    cxx ../../mojo/public/cpp/bindings/lib/bounds_checker.cc || $
+    obj/third_party/mojo/mojo_interface_bindings_mojom.actions_rules_copies.stamp
+build obj/mojo/public/cpp/bindings/lib/mojo_cpp_bindings.connector.o: cxx $
+    ../../mojo/public/cpp/bindings/lib/connector.cc || $
+    obj/third_party/mojo/mojo_interface_bindings_mojom.actions_rules_copies.stamp
+build $
+    obj/mojo/public/cpp/bindings/lib/mojo_cpp_bindings.control_message_handler.o: $
+    cxx ../../mojo/public/cpp/bindings/lib/control_message_handler.cc || $
+    obj/third_party/mojo/mojo_interface_bindings_mojom.actions_rules_copies.stamp
+build $
+    obj/mojo/public/cpp/bindings/lib/mojo_cpp_bindings.control_message_proxy.o: $
+    cxx ../../mojo/public/cpp/bindings/lib/control_message_proxy.cc || $
+    obj/third_party/mojo/mojo_interface_bindings_mojom.actions_rules_copies.stamp
+build obj/mojo/public/cpp/bindings/lib/mojo_cpp_bindings.filter_chain.o: $
+    cxx ../../mojo/public/cpp/bindings/lib/filter_chain.cc || $
+    obj/third_party/mojo/mojo_interface_bindings_mojom.actions_rules_copies.stamp
+build obj/mojo/public/cpp/bindings/lib/mojo_cpp_bindings.fixed_buffer.o: $
+    cxx ../../mojo/public/cpp/bindings/lib/fixed_buffer.cc || $
+    obj/third_party/mojo/mojo_interface_bindings_mojom.actions_rules_copies.stamp
+build $
+    obj/mojo/public/cpp/bindings/lib/mojo_cpp_bindings.interface_endpoint_client.o: $
+    cxx ../../mojo/public/cpp/bindings/lib/interface_endpoint_client.cc || $
+    obj/third_party/mojo/mojo_interface_bindings_mojom.actions_rules_copies.stamp
+build obj/mojo/public/cpp/bindings/lib/mojo_cpp_bindings.message.o: cxx $
+    ../../mojo/public/cpp/bindings/lib/message.cc || $
+    obj/third_party/mojo/mojo_interface_bindings_mojom.actions_rules_copies.stamp
+build obj/mojo/public/cpp/bindings/lib/mojo_cpp_bindings.message_builder.o: $
+    cxx ../../mojo/public/cpp/bindings/lib/message_builder.cc || $
+    obj/third_party/mojo/mojo_interface_bindings_mojom.actions_rules_copies.stamp
+build obj/mojo/public/cpp/bindings/lib/mojo_cpp_bindings.message_filter.o: $
+    cxx ../../mojo/public/cpp/bindings/lib/message_filter.cc || $
+    obj/third_party/mojo/mojo_interface_bindings_mojom.actions_rules_copies.stamp
+build $
+    obj/mojo/public/cpp/bindings/lib/mojo_cpp_bindings.message_header_validator.o: $
+    cxx ../../mojo/public/cpp/bindings/lib/message_header_validator.cc || $
+    obj/third_party/mojo/mojo_interface_bindings_mojom.actions_rules_copies.stamp
+build $
+    obj/mojo/public/cpp/bindings/lib/mojo_cpp_bindings.multiplex_router.o: $
+    cxx ../../mojo/public/cpp/bindings/lib/multiplex_router.cc || $
+    obj/third_party/mojo/mojo_interface_bindings_mojom.actions_rules_copies.stamp
+build obj/mojo/public/cpp/bindings/lib/mojo_cpp_bindings.no_interface.o: $
+    cxx ../../mojo/public/cpp/bindings/lib/no_interface.cc || $
+    obj/third_party/mojo/mojo_interface_bindings_mojom.actions_rules_copies.stamp
+build $
+    obj/mojo/public/cpp/bindings/lib/mojo_cpp_bindings.pipe_control_message_handler.o: $
+    cxx ../../mojo/public/cpp/bindings/lib/pipe_control_message_handler.cc $
+    || $
+    obj/third_party/mojo/mojo_interface_bindings_mojom.actions_rules_copies.stamp
+build $
+    obj/mojo/public/cpp/bindings/lib/mojo_cpp_bindings.pipe_control_message_proxy.o: $
+    cxx ../../mojo/public/cpp/bindings/lib/pipe_control_message_proxy.cc || $
+    obj/third_party/mojo/mojo_interface_bindings_mojom.actions_rules_copies.stamp
+build obj/mojo/public/cpp/bindings/lib/mojo_cpp_bindings.router.o: cxx $
+    ../../mojo/public/cpp/bindings/lib/router.cc || $
+    obj/third_party/mojo/mojo_interface_bindings_mojom.actions_rules_copies.stamp
+build $
+    obj/mojo/public/cpp/bindings/lib/mojo_cpp_bindings.scoped_interface_endpoint_handle.o: $
+    cxx $
+    ../../mojo/public/cpp/bindings/lib/scoped_interface_endpoint_handle.cc $
+    || $
+    obj/third_party/mojo/mojo_interface_bindings_mojom.actions_rules_copies.stamp
+build $
+    obj/mojo/public/cpp/bindings/lib/mojo_cpp_bindings.string_serialization.o: $
+    cxx ../../mojo/public/cpp/bindings/lib/string_serialization.cc || $
+    obj/third_party/mojo/mojo_interface_bindings_mojom.actions_rules_copies.stamp
+build $
+    obj/mojo/public/cpp/bindings/lib/mojo_cpp_bindings.validation_errors.o: $
+    cxx ../../mojo/public/cpp/bindings/lib/validation_errors.cc || $
+    obj/third_party/mojo/mojo_interface_bindings_mojom.actions_rules_copies.stamp
+build obj/mojo/public/cpp/bindings/lib/mojo_cpp_bindings.validation_util.o: $
+    cxx ../../mojo/public/cpp/bindings/lib/validation_util.cc || $
+    obj/third_party/mojo/mojo_interface_bindings_mojom.actions_rules_copies.stamp
+build $
+    obj/third_party/mojo/gen/mojo/public/interfaces/bindings/mojo_cpp_bindings.interface_control_messages.mojom.o: $
+    cxx $
+    gen/third_party/mojo/../../mojo/public/interfaces/bindings/interface_control_messages.mojom.cc $
+    || $
+    obj/third_party/mojo/mojo_interface_bindings_mojom.actions_rules_copies.stamp
+build $
+    obj/third_party/mojo/gen/mojo/public/interfaces/bindings/mojo_cpp_bindings.pipe_control_messages.mojom.o: $
+    cxx $
+    gen/third_party/mojo/../../mojo/public/interfaces/bindings/pipe_control_messages.mojom.cc $
+    || $
+    obj/third_party/mojo/mojo_interface_bindings_mojom.actions_rules_copies.stamp
+
+build obj/third_party/mojo/libmojo_cpp_bindings.a: alink_thin $
+    obj/mojo/public/cpp/bindings/lib/mojo_cpp_bindings.array_internal.o $
+    obj/mojo/public/cpp/bindings/lib/mojo_cpp_bindings.associated_group.o $
+    obj/mojo/public/cpp/bindings/lib/mojo_cpp_bindings.bindings_serialization.o $
+    obj/mojo/public/cpp/bindings/lib/mojo_cpp_bindings.bounds_checker.o $
+    obj/mojo/public/cpp/bindings/lib/mojo_cpp_bindings.connector.o $
+    obj/mojo/public/cpp/bindings/lib/mojo_cpp_bindings.control_message_handler.o $
+    obj/mojo/public/cpp/bindings/lib/mojo_cpp_bindings.control_message_proxy.o $
+    obj/mojo/public/cpp/bindings/lib/mojo_cpp_bindings.filter_chain.o $
+    obj/mojo/public/cpp/bindings/lib/mojo_cpp_bindings.fixed_buffer.o $
+    obj/mojo/public/cpp/bindings/lib/mojo_cpp_bindings.interface_endpoint_client.o $
+    obj/mojo/public/cpp/bindings/lib/mojo_cpp_bindings.message.o $
+    obj/mojo/public/cpp/bindings/lib/mojo_cpp_bindings.message_builder.o $
+    obj/mojo/public/cpp/bindings/lib/mojo_cpp_bindings.message_filter.o $
+    obj/mojo/public/cpp/bindings/lib/mojo_cpp_bindings.message_header_validator.o $
+    obj/mojo/public/cpp/bindings/lib/mojo_cpp_bindings.multiplex_router.o $
+    obj/mojo/public/cpp/bindings/lib/mojo_cpp_bindings.no_interface.o $
+    obj/mojo/public/cpp/bindings/lib/mojo_cpp_bindings.pipe_control_message_handler.o $
+    obj/mojo/public/cpp/bindings/lib/mojo_cpp_bindings.pipe_control_message_proxy.o $
+    obj/mojo/public/cpp/bindings/lib/mojo_cpp_bindings.router.o $
+    obj/mojo/public/cpp/bindings/lib/mojo_cpp_bindings.scoped_interface_endpoint_handle.o $
+    obj/mojo/public/cpp/bindings/lib/mojo_cpp_bindings.string_serialization.o $
+    obj/mojo/public/cpp/bindings/lib/mojo_cpp_bindings.validation_errors.o $
+    obj/mojo/public/cpp/bindings/lib/mojo_cpp_bindings.validation_util.o $
+    obj/third_party/mojo/gen/mojo/public/interfaces/bindings/mojo_cpp_bindings.interface_control_messages.mojom.o $
+    obj/third_party/mojo/gen/mojo/public/interfaces/bindings/mojo_cpp_bindings.pipe_control_messages.mojom.o $
+    || $
+    obj/third_party/mojo/mojo_interface_bindings_mojom.actions_rules_copies.stamp

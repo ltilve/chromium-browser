@@ -10,23 +10,20 @@ bool PasswordManagerClient::IsAutomaticPasswordSavingEnabled() const {
   return false;
 }
 
-bool PasswordManagerClient::IsPasswordManagementEnabledForCurrentPage() const {
+bool PasswordManagerClient::IsSavingAndFillingEnabledForCurrentPage() const {
   return true;
 }
 
-bool PasswordManagerClient::IsSavingEnabledForCurrentPage() const {
+bool PasswordManagerClient::IsFillingEnabledForCurrentPage() const {
   return true;
-}
-
-void PasswordManagerClient::AutofillResultsComputed() {
 }
 
 void PasswordManagerClient::ForceSavePassword() {
 }
 
 void PasswordManagerClient::PasswordWasAutofilled(
-    const autofill::PasswordFormMap& best_matches) const {
-}
+    const autofill::PasswordFormMap& best_matches,
+    const GURL& origin) const {}
 
 void PasswordManagerClient::PasswordAutofillWasBlocked(
     const autofill::PasswordFormMap& best_matches) const {
@@ -87,6 +84,10 @@ PasswordManagerClient::GetAutofillManagerForMainFrame() {
 
 const GURL& PasswordManagerClient::GetMainFrameURL() const {
   return GURL::EmptyGURL();
+}
+
+bool PasswordManagerClient::IsUpdatePasswordUIEnabled() const {
+  return false;
 }
 
 }  // namespace password_manager

@@ -5,4 +5,9 @@
 #include "android_webview/common/aw_switches.h"
 
 namespace switches {
+
+const char kDisablePageVisibility[] = "disable-page-visibility";
+const char kUseInProcCommandBuffer[] = "use-in-proc-command-buffer";
+const char kWebViewSandboxedRenderer[] = "webview-sandboxed-renderer";
+
 }  // namespace switches

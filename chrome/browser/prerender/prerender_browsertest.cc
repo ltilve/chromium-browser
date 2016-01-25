@@ -28,6 +28,7 @@
 #include "chrome/browser/browsing_data/browsing_data_remover_test_util.h"
 #include "chrome/browser/chrome_content_browser_client.h"
 #include "chrome/browser/chrome_notification_types.h"
+#include "chrome/browser/content_settings/host_content_settings_map_factory.h"
 #include "chrome/browser/extensions/api/web_navigation/web_navigation_api.h"
 #include "chrome/browser/extensions/extension_apitest.h"
 #include "chrome/browser/external_protocol/external_protocol_handler.h"
@@ -56,12 +57,8 @@
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_commands.h"
 #include "chrome/browser/ui/browser_finder.h"
-#include "chrome/browser/ui/browser_navigator.h"
 #include "chrome/browser/ui/browser_window.h"
 #include "chrome/browser/ui/location_bar/location_bar.h"
-#include "chrome/browser/ui/omnibox/omnibox_edit_model.h"
-#include "chrome/browser/ui/omnibox/omnibox_popup_model.h"
-#include "chrome/browser/ui/omnibox/omnibox_view.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/browser/ui/tabs/tab_strip_model_observer.h"
 #include "chrome/common/chrome_paths.h"
@@ -74,6 +71,9 @@
 #include "components/content_settings/core/browser/host_content_settings_map.h"
 #include "components/favicon/content/content_favicon_driver.h"
 #include "components/favicon/core/favicon_driver_observer.h"
+#include "components/omnibox/browser/omnibox_edit_model.h"
+#include "components/omnibox/browser/omnibox_popup_model.h"
+#include "components/omnibox/browser/omnibox_view.h"
 #include "components/variations/entropy_provider.h"
 #include "components/variations/variations_associated_data.h"
 #include "content/public/browser/browser_message_filter.h"
@@ -945,6 +945,7 @@ class RequestCounter : public base::SupportsWeakPtr<RequestCounter> {
 
     EXPECT_EQ(expected_count, count_);
   }
+
  private:
   int count_;
   int expected_count_;
@@ -1006,18 +1007,18 @@ void CreateMockInterceptorOnIO(const GURL& url, const base::FilePath& file) {
 }
 
 // A ContentBrowserClient that cancels all prerenderers on OpenURL.
-class TestContentBrowserClient : public chrome::ChromeContentBrowserClient {
+class TestContentBrowserClient : public ChromeContentBrowserClient {
  public:
   TestContentBrowserClient() {}
   ~TestContentBrowserClient() override {}
 
-  // chrome::ChromeContentBrowserClient implementation.
+  // ChromeContentBrowserClient:
   bool ShouldAllowOpenURL(content::SiteInstance* site_instance,
                           const GURL& url) override {
     PrerenderManagerFactory::GetForProfile(
         Profile::FromBrowserContext(site_instance->GetBrowserContext()))
         ->CancelAllPrerenders();
-    return chrome::ChromeContentBrowserClient::ShouldAllowOpenURL(site_instance,
+    return ChromeContentBrowserClient::ShouldAllowOpenURL(site_instance,
                                                                   url);
   }
 
@@ -1026,13 +1027,12 @@ class TestContentBrowserClient : public chrome::ChromeContentBrowserClient {
 };
 
 // A ContentBrowserClient that forces cross-process navigations.
-class SwapProcessesContentBrowserClient
-    : public chrome::ChromeContentBrowserClient {
+class SwapProcessesContentBrowserClient : public ChromeContentBrowserClient {
  public:
   SwapProcessesContentBrowserClient() {}
   ~SwapProcessesContentBrowserClient() override {}
 
-  // chrome::ChromeContentBrowserClient implementation.
+  // ChromeContentBrowserClient:
   bool ShouldSwapProcessesForRedirect(
       content::ResourceContext* resource_context,
       const GURL& current_url,
@@ -1263,14 +1263,15 @@ class PrerenderBrowserTest : virtual public InProcessBrowserTest {
   }
 
   void RemoveLinkElement(int i) const {
-    GetActiveWebContents()->GetMainFrame()->ExecuteJavaScript(
+    GetActiveWebContents()->GetMainFrame()->ExecuteJavaScriptForTests(
         base::ASCIIToUTF16(base::StringPrintf("RemoveLinkElement(%d)", i)));
   }
 
   void ClickToNextPageAfterPrerender() {
     TestNavigationObserver nav_observer(GetActiveWebContents());
     RenderFrameHost* render_frame_host = GetActiveWebContents()->GetMainFrame();
-    render_frame_host->ExecuteJavaScript(base::ASCIIToUTF16("ClickOpenLink()"));
+    render_frame_host->ExecuteJavaScriptForTests(
+        base::ASCIIToUTF16("ClickOpenLink()"));
     nav_observer.Wait();
   }
 
@@ -1528,7 +1529,8 @@ class PrerenderBrowserTest : virtual public InProcessBrowserTest {
     std::string javascript = base::StringPrintf(
         "AddPrerender('%s', %d)", url.spec().c_str(), index);
     RenderFrameHost* render_frame_host = GetActiveWebContents()->GetMainFrame();
-    render_frame_host->ExecuteJavaScript(base::ASCIIToUTF16(javascript));
+    render_frame_host->ExecuteJavaScriptForTests(
+        base::ASCIIToUTF16(javascript));
   }
 
   // Returns a string for pattern-matching TaskManager tab entries.
@@ -1678,7 +1680,8 @@ class PrerenderBrowserTest : virtual public InProcessBrowserTest {
     } else {
       NavigationOrSwapObserver observer(current_browser()->tab_strip_model(),
                                         web_contents);
-      render_frame_host->ExecuteJavaScript(base::ASCIIToUTF16(javascript));
+      render_frame_host->ExecuteJavaScriptForTests(
+          base::ASCIIToUTF16(javascript));
       observer.Wait();
     }
   }
@@ -1994,7 +1997,8 @@ IN_PROC_BROWSER_TEST_F(PrerenderBrowserTest, PrerenderDelayLoadPlugin) {
 // a page is being preloaded, but are loaded when the page is displayed.
 IN_PROC_BROWSER_TEST_F(PrerenderBrowserTest, PrerenderContentSettingDetect) {
   HostContentSettingsMap* content_settings_map =
-      current_browser()->profile()->GetHostContentSettingsMap();
+      HostContentSettingsMapFactory::GetForProfile(
+          current_browser()->profile());
   content_settings_map->SetDefaultContentSetting(
       CONTENT_SETTINGS_TYPE_PLUGINS, CONTENT_SETTING_DETECT_IMPORTANT_CONTENT);
 
@@ -2013,7 +2017,8 @@ IN_PROC_BROWSER_TEST_F(PrerenderBrowserTest, PrerenderContentSettingDetect) {
 // For Content Setting BLOCK, checks that plugins are never loaded.
 IN_PROC_BROWSER_TEST_F(PrerenderBrowserTest, PrerenderContentSettingBlock) {
   HostContentSettingsMap* content_settings_map =
-      current_browser()->profile()->GetHostContentSettingsMap();
+      HostContentSettingsMapFactory::GetForProfile(
+          current_browser()->profile());
   content_settings_map->SetDefaultContentSetting(CONTENT_SETTINGS_TYPE_PLUGINS,
                                                  CONTENT_SETTING_BLOCK);
 
@@ -2486,6 +2491,10 @@ IN_PROC_BROWSER_TEST_F(PrerenderBrowserTest, PrerenderAbortPendingOnCancel) {
 }
 
 IN_PROC_BROWSER_TEST_F(PrerenderBrowserTest, OpenTaskManagerBeforePrerender) {
+  // This test is for the old implementation of the task manager. We must
+  // explicitly disable the new one.
+  task_manager::browsertest_util::EnableOldTaskManager();
+
   const base::string16 any_prerender = MatchTaskManagerPrerender("*");
   const base::string16 any_tab = MatchTaskManagerTab("*");
   const base::string16 original = MatchTaskManagerTab("Preloader");
@@ -2521,6 +2530,10 @@ IN_PROC_BROWSER_TEST_F(PrerenderBrowserTest, OpenTaskManagerBeforePrerender) {
 }
 
 IN_PROC_BROWSER_TEST_F(PrerenderBrowserTest, OpenTaskManagerAfterPrerender) {
+  // This test is for the old implementation of the task manager. We must
+  // explicitly disable the new one.
+  task_manager::browsertest_util::EnableOldTaskManager();
+
   const base::string16 any_prerender = MatchTaskManagerPrerender("*");
   const base::string16 any_tab = MatchTaskManagerTab("*");
   const base::string16 original = MatchTaskManagerTab("Preloader");
@@ -2555,6 +2568,10 @@ IN_PROC_BROWSER_TEST_F(PrerenderBrowserTest, OpenTaskManagerAfterPrerender) {
 }
 
 IN_PROC_BROWSER_TEST_F(PrerenderBrowserTest, OpenTaskManagerAfterSwapIn) {
+  // This test is for the old implementation of the task manager. We must
+  // explicitly disable the new one.
+  task_manager::browsertest_util::EnableOldTaskManager();
+
   const base::string16 any_prerender = MatchTaskManagerPrerender("*");
   const base::string16 any_tab = MatchTaskManagerTab("*");
   const base::string16 final = MatchTaskManagerTab("Prerender Page");
@@ -3443,6 +3460,11 @@ class PrerenderBrowserTestWithExtensions : public PrerenderBrowserTest,
     ExtensionApiTest::TearDownInProcessBrowserTestFixture();
   }
 
+  void TearDownOnMainThread() override {
+    PrerenderBrowserTest::TearDownOnMainThread();
+    ExtensionApiTest::TearDownOnMainThread();
+  }
+
   void SetUpOnMainThread() override {
     PrerenderBrowserTest::SetUpOnMainThread();
   }
@@ -3929,8 +3951,7 @@ class PrerenderIncognitoBrowserTest : public PrerenderBrowserTest {
  public:
   void SetUpOnMainThread() override {
     Profile* normal_profile = current_browser()->profile();
-    set_browser(ui_test_utils::OpenURLOffTheRecord(
-        normal_profile, GURL("about:blank")));
+    set_browser(OpenURLOffTheRecord(normal_profile, GURL("about:blank")));
     PrerenderBrowserTest::SetUpOnMainThread();
   }
 };
@@ -4044,7 +4065,7 @@ IN_PROC_BROWSER_TEST_F(PrerenderOmniboxBrowserTest,
 }
 
 // Can't run tests with NaCl plugins if built with DISABLE_NACL.
-#if !defined(DISABLE_NACL)
+#if !defined(DISABLE_NACL) && !defined(DISABLE_NACL_BROWSERTESTS)
 class PrerenderBrowserTestWithNaCl : public PrerenderBrowserTest {
  public:
   PrerenderBrowserTestWithNaCl() {}

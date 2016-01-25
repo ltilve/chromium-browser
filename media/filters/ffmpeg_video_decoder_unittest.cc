@@ -14,6 +14,7 @@
 #include "media/base/decoder_buffer.h"
 #include "media/base/gmock_callback_support.h"
 #include "media/base/limits.h"
+#include "media/base/media_util.h"
 #include "media/base/mock_filters.h"
 #include "media/base/test_data_util.h"
 #include "media/base/test_helpers.h"
@@ -36,7 +37,7 @@ using ::testing::StrictMock;
 
 namespace media {
 
-static const VideoFrame::Format kVideoFormat = VideoFrame::YV12;
+static const VideoPixelFormat kVideoFormat = PIXEL_FORMAT_YV12;
 static const gfx::Size kCodedSize(320, 240);
 static const gfx::Rect kVisibleRect(320, 240);
 static const gfx::Size kNaturalSize(320, 240);
@@ -223,18 +224,18 @@ TEST_F(FFmpegVideoDecoderTest, Initialize_UnsupportedDecoder) {
 TEST_F(FFmpegVideoDecoderTest, Initialize_UnsupportedPixelFormat) {
   // Ensure decoder handles unsupported pixel formats without crashing.
   VideoDecoderConfig config(kCodecVP8, VIDEO_CODEC_PROFILE_UNKNOWN,
-                            VideoFrame::UNKNOWN,
+                            PIXEL_FORMAT_UNKNOWN, COLOR_SPACE_UNSPECIFIED,
                             kCodedSize, kVisibleRect, kNaturalSize,
-                            NULL, 0, false);
+                            EmptyExtraData(), false);
   InitializeWithConfigWithResult(config, false);
 }
 
 TEST_F(FFmpegVideoDecoderTest, Initialize_OpenDecoderFails) {
   // Specify Theora w/o extra data so that avcodec_open2() fails.
   VideoDecoderConfig config(kCodecTheora, VIDEO_CODEC_PROFILE_UNKNOWN,
-                            kVideoFormat,
-                            kCodedSize, kVisibleRect, kNaturalSize,
-                            NULL, 0, false);
+                            kVideoFormat, COLOR_SPACE_UNSPECIFIED, kCodedSize,
+                            kVisibleRect, kNaturalSize, EmptyExtraData(),
+                            false);
   InitializeWithConfigWithResult(config, false);
 }
 
@@ -243,11 +244,11 @@ TEST_F(FFmpegVideoDecoderTest, Initialize_AspectRatioNumeratorZero) {
   VideoDecoderConfig config(kCodecVP8,
                             VP8PROFILE_ANY,
                             kVideoFormat,
+                            COLOR_SPACE_UNSPECIFIED,
                             kCodedSize,
                             kVisibleRect,
                             natural_size,
-                            NULL,
-                            0,
+                            EmptyExtraData(),
                             false);
   InitializeWithConfigWithResult(config, false);
 }
@@ -257,11 +258,11 @@ TEST_F(FFmpegVideoDecoderTest, Initialize_AspectRatioDenominatorZero) {
   VideoDecoderConfig config(kCodecVP8,
                             VP8PROFILE_ANY,
                             kVideoFormat,
+                            COLOR_SPACE_UNSPECIFIED,
                             kCodedSize,
                             kVisibleRect,
                             natural_size,
-                            NULL,
-                            0,
+                            EmptyExtraData(),
                             false);
   InitializeWithConfigWithResult(config, false);
 }
@@ -271,11 +272,11 @@ TEST_F(FFmpegVideoDecoderTest, Initialize_AspectRatioNumeratorNegative) {
   VideoDecoderConfig config(kCodecVP8,
                             VP8PROFILE_ANY,
                             kVideoFormat,
+                            COLOR_SPACE_UNSPECIFIED,
                             kCodedSize,
                             kVisibleRect,
                             natural_size,
-                            NULL,
-                            0,
+                            EmptyExtraData(),
                             false);
   InitializeWithConfigWithResult(config, false);
 }
@@ -285,11 +286,11 @@ TEST_F(FFmpegVideoDecoderTest, Initialize_AspectRatioDenominatorNegative) {
   VideoDecoderConfig config(kCodecVP8,
                             VP8PROFILE_ANY,
                             kVideoFormat,
+                            COLOR_SPACE_UNSPECIFIED,
                             kCodedSize,
                             kVisibleRect,
                             natural_size,
-                            NULL,
-                            0,
+                            EmptyExtraData(),
                             false);
   InitializeWithConfigWithResult(config, false);
 }
@@ -301,26 +302,28 @@ TEST_F(FFmpegVideoDecoderTest, Initialize_AspectRatioNumeratorTooLarge) {
   VideoDecoderConfig config(kCodecVP8,
                             VP8PROFILE_ANY,
                             kVideoFormat,
+                            COLOR_SPACE_UNSPECIFIED,
                             kCodedSize,
                             kVisibleRect,
                             natural_size,
-                            NULL,
-                            0,
+                            EmptyExtraData(),
                             false);
   InitializeWithConfigWithResult(config, false);
 }
 
 TEST_F(FFmpegVideoDecoderTest, Initialize_AspectRatioDenominatorTooLarge) {
-  int den = kVisibleRect.size().width() + 1;
+  // Denominator is large enough that the natural size height will be zero.
+  int den = 2 * kVisibleRect.size().width() + 1;
   gfx::Size natural_size = GetNaturalSize(kVisibleRect.size(), 1, den);
+  EXPECT_EQ(0, natural_size.width());
   VideoDecoderConfig config(kCodecVP8,
                             VP8PROFILE_ANY,
                             kVideoFormat,
+                            COLOR_SPACE_UNSPECIFIED,
                             kCodedSize,
                             kVisibleRect,
                             natural_size,
-                            NULL,
-                            0,
+                            EmptyExtraData(),
                             false);
   InitializeWithConfigWithResult(config, false);
 }
@@ -392,15 +395,12 @@ TEST_F(FFmpegVideoDecoderTest, DecodeFrame_DecodeError) {
   EXPECT_TRUE(output_frames_.empty());
 }
 
-// Multi-threaded decoders have different behavior than single-threaded
-// decoders at the end of the stream. Multithreaded decoders hide errors
-// that happen on the last |codec_context_->thread_count| frames to avoid
-// prematurely signalling EOS. This test just exposes that behavior so we can
-// detect if it changes.
+// A corrupt frame followed by an EOS buffer should raise a decode error.
 TEST_F(FFmpegVideoDecoderTest, DecodeFrame_DecodeErrorAtEndOfStream) {
   Initialize();
 
-  EXPECT_EQ(VideoDecoder::kOk, DecodeSingleFrame(corrupt_i_frame_buffer_));
+  EXPECT_EQ(VideoDecoder::kDecodeError,
+            DecodeSingleFrame(corrupt_i_frame_buffer_));
 }
 
 // Decode |i_frame_buffer_| and then a frame with a larger width and verify

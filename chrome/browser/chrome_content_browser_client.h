@@ -10,11 +10,9 @@
 #include <utility>
 #include <vector>
 
-#include "base/compiler_specific.h"
-#include "base/gtest_prod_util.h"
+#include "base/macros.h"
 #include "base/memory/scoped_ptr.h"
 #include "base/memory/weak_ptr.h"
-#include "chrome/common/chrome_version_info.h"
 #include "content/public/browser/content_browser_client.h"
 
 class ChromeContentBrowserClientParts;
@@ -35,7 +33,9 @@ namespace user_prefs {
 class PrefRegistrySyncable;
 }
 
-namespace chrome {
+namespace version_info {
+enum class Channel;
+}
 
 class ChromeContentBrowserClient : public content::ContentBrowserClient {
  public:
@@ -70,12 +70,15 @@ class ChromeContentBrowserClient : public content::ContentBrowserClient {
   void RenderProcessWillLaunch(content::RenderProcessHost* host) override;
   bool ShouldUseProcessPerSite(content::BrowserContext* browser_context,
                                const GURL& effective_url) override;
+  bool ShouldLockToOrigin(content::BrowserContext* browser_context,
+                          const GURL& effective_site_url) override;
   GURL GetEffectiveURL(content::BrowserContext* browser_context,
                        const GURL& url) override;
   void GetAdditionalWebUISchemes(
       std::vector<std::string>* additional_schemes) override;
   void GetAdditionalWebUIHostsToIgnoreParititionCheck(
       std::vector<std::string>* hosts) override;
+  bool LogWebUIUrl(const GURL& web_ui_url) const override;
   net::URLRequestContextGetter* CreateRequestContext(
       content::BrowserContext* browser_context,
       content::ProtocolHandlerMap* protocol_handlers,
@@ -89,6 +92,9 @@ class ChromeContentBrowserClient : public content::ContentBrowserClient {
   bool IsHandledURL(const GURL& url) override;
   bool CanCommitURL(content::RenderProcessHost* process_host,
                     const GURL& url) override;
+  bool IsIllegalOrigin(content::ResourceContext* resource_context,
+                       int child_process_id,
+                       const GURL& origin) override;
   bool ShouldAllowOpenURL(content::SiteInstance* site_instance,
                           const GURL& url) override;
   bool IsSuitableHost(content::RenderProcessHost* process_host,
@@ -217,6 +223,7 @@ class ChromeContentBrowserClient : public content::ContentBrowserClient {
   void ClearCookies(content::RenderFrameHost* rfh) override;
   base::FilePath GetDefaultDownloadDirectory() override;
   std::string GetDefaultDownloadName() override;
+  base::FilePath GetShaderDiskCacheDirectory() override;
   void DidCreatePpapiPlugin(content::BrowserPpapiHost* browser_host) override;
   content::BrowserPpapiHost* GetExternalBrowserPpapiHost(
       int plugin_process_id) override;
@@ -265,10 +272,11 @@ class ChromeContentBrowserClient : public content::ContentBrowserClient {
   base::string16 GetAppContainerSidForSandboxType(
       int sandbox_type) const override;
 #endif
-  void OverrideFrameMojoShellServices(
+  void RegisterFrameMojoShellServices(
       content::ServiceRegistry* registry,
       content::RenderFrameHost* render_frame_host) override;
-  void RegisterMojoApplications(StaticMojoApplicationMap* apps) override;
+  void RegisterInProcessMojoApplications(
+      StaticMojoApplicationMap* apps) override;
   void OpenURL(content::BrowserContext* browser_context,
                const content::OpenURLParams& params,
                const base::Callback<void(content::WebContents*)>& callback)
@@ -277,6 +285,8 @@ class ChromeContentBrowserClient : public content::ContentBrowserClient {
       content::WebContents* web_contents) override;
 
   void RecordURLMetric(const std::string& metric, const GURL& url) override;
+  ScopedVector<content::NavigationThrottle> CreateThrottlesForNavigation(
+      content::NavigationHandle* handle) override;
 
  private:
   friend class DisableWebRtcEncryptionFlagTest;
@@ -286,7 +296,7 @@ class ChromeContentBrowserClient : public content::ContentBrowserClient {
   static void MaybeCopyDisableWebRtcEncryptionSwitch(
       base::CommandLine* to_command_line,
       const base::CommandLine& from_command_line,
-      VersionInfo::Channel channel);
+      version_info::Channel channel);
 #endif
 
   void FileSystemAccessed(
@@ -328,7 +338,5 @@ class ChromeContentBrowserClient : public content::ContentBrowserClient {
 
   DISALLOW_COPY_AND_ASSIGN(ChromeContentBrowserClient);
 };
-
-}  // namespace chrome
 
 #endif  // CHROME_BROWSER_CHROME_CONTENT_BROWSER_CLIENT_H_

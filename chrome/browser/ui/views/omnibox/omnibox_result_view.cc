@@ -14,17 +14,19 @@
 #include <algorithm>  // NOLINT
 
 #include "base/i18n/bidi_line_iterator.h"
-#include "base/memory/scoped_vector.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_util.h"
-#include "chrome/browser/ui/omnibox/omnibox_popup_model.h"
+#include "chrome/browser/ui/views/layout_constants.h"
 #include "chrome/browser/ui/views/location_bar/location_bar_view.h"
 #include "chrome/browser/ui/views/omnibox/omnibox_popup_contents_view.h"
 #include "chrome/grit/generated_resources.h"
+#include "components/omnibox/browser/omnibox_popup_model.h"
 #include "grit/components_scaled_resources.h"
 #include "grit/theme_resources.h"
 #include "third_party/skia/include/core/SkColor.h"
+#include "ui/accessibility/ax_view_state.h"
 #include "ui/base/l10n/l10n_util.h"
+#include "ui/base/resource/material_design/material_design_controller.h"
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/base/theme_provider.h"
 #include "ui/gfx/canvas.h"
@@ -37,10 +39,6 @@
 using ui::NativeTheme;
 
 namespace {
-
-// The minimum distance between the top and bottom of the icon and the
-// top or bottom of the row.
-const int kMinimumIconVerticalPadding = 2;
 
 // A mapping from OmniboxResultView's ResultViewState/ColorKind types to
 // NativeTheme colors.
@@ -218,9 +216,7 @@ OmniboxResultView::OmniboxResultView(OmniboxPopupContentsView* model,
                                      int model_index,
                                      LocationBarView* location_bar_view,
                                      const gfx::FontList& font_list)
-    : edge_item_padding_(LocationBarView::kItemPadding),
-      item_padding_(LocationBarView::kItemPadding),
-      model_(model),
+    : model_(model),
       model_index_(model_index),
       location_bar_view_(location_bar_view),
       font_list_(font_list),
@@ -276,7 +272,8 @@ void OmniboxResultView::SetMatch(const AutocompleteMatch& match) {
     RemoveChildView(keyword_icon_.get());
   }
 
-  Layout();
+  if (GetWidget())
+    Layout();
 }
 
 void OmniboxResultView::ShowKeyword(bool show_keyword) {
@@ -295,11 +292,30 @@ void OmniboxResultView::Invalidate() {
   SchedulePaint();
 }
 
+void OmniboxResultView::OnSelected() {
+  DCHECK_EQ(SELECTED, GetState());
+
+  // Notify assistive technology when results with answers attached are
+  // selected. The non-answer text is already accessible as a consequence of
+  // updating the text in the omnibox but this alert and GetAccessibleState
+  // below make the answer contents accessible.
+  if (match_.answer)
+    NotifyAccessibilityEvent(ui::AX_EVENT_ALERT, true);
+}
+
 gfx::Size OmniboxResultView::GetPreferredSize() const {
   if (!match_.answer)
     return gfx::Size(0, GetContentLineHeight());
   // An answer implies a match and a description in a large font.
   return gfx::Size(0, GetContentLineHeight() + GetAnswerLineHeight());
+}
+
+void OmniboxResultView::GetAccessibleState(ui::AXViewState* state) {
+  state->name = match_.answer
+                    ? l10n_util::GetStringFUTF16(
+                          IDS_OMNIBOX_ACCESSIBLE_ANSWER, match_.contents,
+                          match_.answer->second_line().AccessibleText())
+                    : match_.contents;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -355,7 +371,9 @@ void OmniboxResultView::PaintMatch(const AutocompleteMatch& match,
             answer_image_,
             0, 0, answer_image_.width(), answer_image_.height(),
             GetMirroredXInView(x), y, answer_icon_size, answer_icon_size, true);
-        x += answer_icon_size + LocationBarView::kIconInternalPadding;
+        // See TODO in Layout().
+        x += answer_icon_size +
+             GetLayoutConstant(ICON_LABEL_VIEW_TRAILING_PADDING);
       }
     } else {
       x = DrawRenderText(match, separator_rendertext_.get(), false, canvas,
@@ -551,7 +569,8 @@ gfx::ImageSkia OmniboxResultView::GetIcon() const {
 
   int icon = model_->IsStarredMatch(match_) ?
       IDR_OMNIBOX_STAR : AutocompleteMatch::TypeToIcon(match_.type);
-  if (GetState() == SELECTED) {
+  if (GetState() == SELECTED &&
+      !ui::MaterialDesignController::IsModeMaterial()) {
     switch (icon) {
       case IDR_OMNIBOX_CALCULATOR:
         icon = IDR_OMNIBOX_CALCULATOR_SELECTED;
@@ -579,8 +598,11 @@ gfx::ImageSkia OmniboxResultView::GetIcon() const {
 const gfx::ImageSkia* OmniboxResultView::GetKeywordIcon() const {
   // NOTE: If we ever begin returning icons of varying size, then callers need
   // to ensure that |keyword_icon_| is resized each time its image is reset.
-  return location_bar_view_->GetThemeProvider()->GetImageSkiaNamed(
-      (GetState() == SELECTED) ? IDR_OMNIBOX_TTS_SELECTED : IDR_OMNIBOX_TTS);
+  int icon = IDR_OMNIBOX_TTS;
+  if (GetState() == SELECTED && !ui::MaterialDesignController::IsModeMaterial())
+    icon = IDR_OMNIBOX_TTS_SELECTED;
+
+  return location_bar_view_->GetThemeProvider()->GetImageSkiaNamed(icon);
 }
 
 bool OmniboxResultView::ShowOnlyKeywordMatch() const {
@@ -605,30 +627,29 @@ void OmniboxResultView::InitContentsRenderTextIfNecessary() const {
 }
 
 void OmniboxResultView::Layout() {
+  const int horizontal_padding =
+      GetLayoutConstant(LOCATION_BAR_HORIZONTAL_PADDING);
+  const int start_x = StartMargin() + horizontal_padding;
+  const int end_x = width() - EndMargin() - horizontal_padding;
+
   const gfx::ImageSkia icon = GetIcon();
-
   icon_bounds_.SetRect(
-      edge_item_padding_ + ((icon.width() == default_icon_size_)
-                                ? 0
-                                : LocationBarView::kIconInternalPadding),
-      (GetContentLineHeight() - icon.height()) / 2, icon.width(),
-      icon.height());
+      start_x + ((icon.width() == default_icon_size_) ?
+          0 : GetLayoutConstant(ICON_LABEL_VIEW_TRAILING_PADDING)),
+      (GetContentLineHeight() - icon.height()) / 2,
+      icon.width(), icon.height());
 
-  int text_x = edge_item_padding_ + default_icon_size_ + item_padding_;
-  int text_width = width() - text_x - edge_item_padding_;
+  const int text_x = start_x + default_icon_size_ + horizontal_padding;
+  int text_width = end_x - text_x;
 
   if (match_.associated_keyword.get()) {
-    const int kw_collapsed_size =
-        keyword_icon_->width() + edge_item_padding_;
-    const int max_kw_x = width() - kw_collapsed_size;
-    const int kw_x =
-        animation_->CurrentValueBetween(max_kw_x, edge_item_padding_);
-    const int kw_text_x = kw_x + keyword_icon_->width() + item_padding_;
+    const int max_kw_x = end_x - keyword_icon_->width();
+    const int kw_x = animation_->CurrentValueBetween(max_kw_x, start_x);
+    const int kw_text_x = kw_x + keyword_icon_->width() + horizontal_padding;
 
-    text_width = kw_x - text_x - item_padding_;
+    text_width = kw_x - text_x - horizontal_padding;
     keyword_text_bounds_.SetRect(
-        kw_text_x, 0,
-        std::max(width() - kw_text_x - edge_item_padding_, 0), height());
+        kw_text_x, 0, std::max(end_x - kw_text_x, 0), height());
     keyword_icon_->SetPosition(
         gfx::Point(kw_x, (height() - keyword_icon_->height()) / 2));
   }
@@ -637,7 +658,7 @@ void OmniboxResultView::Layout() {
 }
 
 void OmniboxResultView::OnBoundsChanged(const gfx::Rect& previous_bounds) {
-  animation_->SetSlideDuration(width() / 4);
+  animation_->SetSlideDuration((width() - StartMargin() - EndMargin()) / 4);
 }
 
 void OmniboxResultView::OnPaint(gfx::Canvas* canvas) {
@@ -707,8 +728,9 @@ int OmniboxResultView::GetAnswerLineHeight() const {
 }
 
 int OmniboxResultView::GetContentLineHeight() const {
-  return std::max(default_icon_size_ + (kMinimumIconVerticalPadding * 2),
-                  GetTextHeight() + (kMinimumTextVerticalPadding * 2));
+  return std::max(
+      default_icon_size_ + GetLayoutInsets(OMNIBOX_DROPDOWN_ICON).height(),
+      GetTextHeight() + GetLayoutInsets(OMNIBOX_DROPDOWN_TEXT).height());
 }
 
 scoped_ptr<gfx::RenderText> OmniboxResultView::CreateAnswerLine(
@@ -777,4 +799,14 @@ void OmniboxResultView::AppendAnswerTextHelper(gfx::RenderText* destination,
   destination->ApplyColor(
       GetNativeTheme()->GetSystemColor(text_style.colors[GetState()]), range);
   destination->ApplyBaselineStyle(text_style.baseline, range);
+}
+
+int OmniboxResultView::StartMargin() const {
+  return ui::MaterialDesignController::IsModeMaterial() ?
+      model_->start_margin() : 0;
+}
+
+int OmniboxResultView::EndMargin() const {
+  return ui::MaterialDesignController::IsModeMaterial() ?
+      model_->end_margin() : 0;
 }

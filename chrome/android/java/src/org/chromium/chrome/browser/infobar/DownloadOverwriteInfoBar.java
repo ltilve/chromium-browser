@@ -17,7 +17,7 @@ import android.text.style.ClickableSpan;
 import android.text.style.StyleSpan;
 import android.view.View;
 
-import org.chromium.base.CalledByNative;
+import org.chromium.base.annotations.CalledByNative;
 import org.chromium.chrome.R;
 
 import java.util.List;
@@ -52,9 +52,9 @@ public class DownloadOverwriteInfoBar extends InfoBar {
 
     @Override
     public void onButtonClicked(boolean isPrimaryButton) {
-        int action = isPrimaryButton ? InfoBar.ACTION_TYPE_OVERWRITE
-                                     : InfoBar.ACTION_TYPE_CREATE_NEW_FILE;
-        onButtonClicked(action, "");
+        int action = isPrimaryButton ? ActionType.OVERWRITE
+                                     : ActionType.CREATE_NEW_FILE;
+        onButtonClicked(action);
     }
 
     private CharSequence getMessageText(Context context) {

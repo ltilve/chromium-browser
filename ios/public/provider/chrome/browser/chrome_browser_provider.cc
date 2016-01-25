@@ -37,6 +37,16 @@ PrefService* ChromeBrowserProvider::GetLocalState() {
   return nullptr;
 }
 
+void ChromeBrowserProvider::AssertBrowserContextKeyedFactoriesBuilt() {
+}
+
+void ChromeBrowserProvider::RegisterLocalState(PrefRegistrySimple* registry) {
+}
+
+void ChromeBrowserProvider::RegisterProfilePrefs(
+    user_prefs::PrefRegistrySyncable* registry) {
+}
+
 ProfileOAuth2TokenServiceIOSProvider*
 ChromeBrowserProvider::GetProfileOAuth2TokenServiceIOSProvider() {
   return nullptr;
@@ -58,7 +68,15 @@ InfoBarViewPlaceholder ChromeBrowserProvider::CreateInfoBarView(
   return nullptr;
 }
 
+ChromeIdentityService* ChromeBrowserProvider::GetChromeIdentityService() {
+  return nullptr;
+}
+
 StringProvider* ChromeBrowserProvider::GetStringProvider() {
+  return nullptr;
+}
+
+LiveTabContextProvider* ChromeBrowserProvider::GetLiveTabContextProvider() {
   return nullptr;
 }
 
@@ -67,11 +85,8 @@ ChromeBrowserProvider::GetGeolocationUpdaterProvider() {
   return nullptr;
 }
 
-void ChromeBrowserProvider::ShowTranslateSettings() {
-}
-
-bool ChromeBrowserProvider::IsBookmarkCollectionEnabled() {
-  return false;
+std::string ChromeBrowserProvider::GetDistributionBrandCode() {
+  return std::string();
 }
 
 const char* ChromeBrowserProvider::GetChromeUIScheme() {
@@ -96,18 +111,17 @@ std::string ChromeBrowserProvider::GetRiskData() {
   return std::string();
 }
 
-std::string ChromeBrowserProvider::GetProductVersionWithPrefix(
-    const std::string& prefix) {
-  NOTREACHED();
-  return std::string();
+policy::BrowserPolicyConnector*
+ChromeBrowserProvider::GetBrowserPolicyConnector() {
+  return nullptr;
 }
 
-std::string ChromeBrowserProvider::GetVersionString() {
-  return std::string();
+rappor::RapporService* ChromeBrowserProvider::GetRapporService() {
+  return nullptr;
 }
 
-std::string ChromeBrowserProvider::GetVersionNumber() {
-  return std::string();
+bool ChromeBrowserProvider::IsOffTheRecordSessionActive() {
+  return false;
 }
 
 }  // namespace ios

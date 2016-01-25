@@ -1,0 +1,982 @@
+rule icuuc_nacl_target_build_newlib_plib_b953332fe929e096d8ec9e1eb86fda45
+  command = cd ../../third_party/icu; python $
+      ../../native_client/build/build_nexe.py --root ../.. --product-dir $
+      ../../out/Release/xyz --config-name Release -t $
+      ../../native_client/toolchain/ --arch pnacl --build newlib_plib $
+      --name ../../out/Release/gen/tc_pnacl_newlib/lib/libicuuc_nacl.a $
+      --objdir $
+      ../../out/Release/obj/third_party/icu/icuuc_nacl.gen/pnacl_newlib-pnacl/icuuc_nacl $
+      "--include-dirs=../../out/Release/gen/tc_pnacl_newlib/include ../.. $
+      source/common source/i18n \"../../out/Release/gen\"" $
+      "--compile_flags=-O2 -g -Wall -fdiagnostics-show-option -Werror  $
+      -Wno-unused-function -Wno-char-subscripts -Wno-c++11-extensions $
+      -Wno-unnamed-type-template-args -Wno-extra-semi $
+      -Wno-unused-private-field -Wno-char-subscripts -Wno-unused-function $
+      \"-std=gnu++11\" -Wno-char-subscripts -Wno-deprecated-declarations $
+      -Wno-header-hygiene -Wno-logical-op-parentheses $
+      -Wno-return-type-c-linkage -Wno-switch -Wno-tautological-compare $
+      -Wno-unused-variable" --gomadir "" $
+      "--defines=\"__STDC_LIMIT_MACROS=1\" \"__STDC_FORMAT_MACROS=1\" $
+      \"_GNU_SOURCE=1\" \"_POSIX_C_SOURCE=199506\" \"_XOPEN_SOURCE=600\" $
+      \"DYNAMIC_ANNOTATIONS_ENABLED=1\" $
+      \"DYNAMIC_ANNOTATIONS_PREFIX=NACL_\" \"NACL_BUILD_ARCH=x86\" $
+      \"U_USING_ICU_NAMESPACE=0\" U_STATIC_IMPLEMENTATION $
+      V8_DEPRECATION_WARNINGS \"CLD_VERSION=2\" \"_FILE_OFFSET_BITS=64\" $
+      CHROMIUM_BUILD \"CR_CLANG_REVISION=255169-1\" $
+      UI_COMPOSITOR_IMAGE_TRANSPORT \"USE_AURA=1\" \"USE_ASH=1\" $
+      \"USE_PANGO=1\" \"USE_CAIRO=1\" \"USE_DEFAULT_RENDER_THEME=1\" $
+      \"USE_LIBJPEG_TURBO=1\" \"USE_X11=1\" \"USE_CLIPBOARD_AURAX11=1\" $
+      ENABLE_ONE_CLICK_SIGNIN \"ENABLE_WEBRTC=1\" \"ENABLE_MEDIA_ROUTER=1\" $
+      ENABLE_PEPPER_CDMS ENABLE_CONFIGURATION_POLICY ENABLE_NOTIFICATIONS $
+      \"ENABLE_HIDPI=1\" \"ENABLE_TOPCHROME_MD=1\" USE_UDEV $
+      DONT_EMBED_BUILD_METADATA FIELDTRIAL_TESTING_ENABLED $
+      \"ENABLE_TASK_MANAGER=1\" \"ENABLE_EXTENSIONS=1\" \"ENABLE_PDF=1\" $
+      \"ENABLE_PLUGINS=1\" \"ENABLE_SESSION_SERVICE=1\" \"ENABLE_THEMES=1\" $
+      \"ENABLE_AUTOFILL_DIALOG=1\" \"ENABLE_BACKGROUND=1\" $
+      \"ENABLE_PRINTING=1\" \"ENABLE_BASIC_PRINTING=1\" $
+      \"ENABLE_PRINT_PREVIEW=1\" \"ENABLE_SPELLCHECK=1\" $
+      \"ENABLE_CAPTIVE_PORTAL_DETECTION=1\" \"ENABLE_APP_LIST=1\" $
+      \"ENABLE_SETTINGS_APP=1\" \"ENABLE_SUPERVISED_USERS=1\" $
+      \"ENABLE_MDNS=1\" \"ENABLE_SERVICE_DISCOVERY=1\" $
+      V8_USE_EXTERNAL_STARTUP_DATA FULL_SAFE_BROWSING SAFE_BROWSING_CSD $
+      SAFE_BROWSING_DB_LOCAL U_COMMON_IMPLEMENTATION \"U_ENABLE_DYLOAD=0\" $
+      \"USE_LIBPCI=1\" \"USE_OPENSSL=1\" \"USE_GLIB=1\" $
+      \"USE_NSS_CERTS=1\"" $
+      "--link_flags=-B../../out/Release/gen/tc_pnacl_newlib/lib  " $
+      "--source-list=../../out/gypfiles/third_party/icu/pnacl_newlib.icuuc_nacl.source_list.gypcmd"
+  description = ACTION icuuc_nacl: build newlib $
+      plib_b953332fe929e096d8ec9e1eb86fda45
+  restat = 1
+
+build gen/tc_pnacl_newlib/lib/libicuuc_nacl.a: $
+    icuuc_nacl_target_build_newlib_plib_b953332fe929e096d8ec9e1eb86fda45 $
+    ../../native_client/build/build_nexe.py $
+    ../../native_client/build/build_nexe_tools.py $
+    ../../third_party/icu/source/common/appendable.cpp $
+    ../../third_party/icu/source/common/bmpset.cpp $
+    ../../third_party/icu/source/common/bmpset.h $
+    ../../third_party/icu/source/common/brkeng.cpp $
+    ../../third_party/icu/source/common/brkeng.h $
+    ../../third_party/icu/source/common/brkiter.cpp $
+    ../../third_party/icu/source/common/bytestream.cpp $
+    ../../third_party/icu/source/common/bytestrie.cpp $
+    ../../third_party/icu/source/common/bytestriebuilder.cpp $
+    ../../third_party/icu/source/common/bytestrieiterator.cpp $
+    ../../third_party/icu/source/common/caniter.cpp $
+    ../../third_party/icu/source/common/chariter.cpp $
+    ../../third_party/icu/source/common/charstr.cpp $
+    ../../third_party/icu/source/common/charstr.h $
+    ../../third_party/icu/source/common/cmemory.c $
+    ../../third_party/icu/source/common/cmemory.h $
+    ../../third_party/icu/source/common/cpputils.h $
+    ../../third_party/icu/source/common/cstring.c $
+    ../../third_party/icu/source/common/cstring.h $
+    ../../third_party/icu/source/common/cwchar.c $
+    ../../third_party/icu/source/common/cwchar.h $
+    ../../third_party/icu/source/common/dictbe.cpp $
+    ../../third_party/icu/source/common/dictbe.h $
+    ../../third_party/icu/source/common/dictionarydata.cpp $
+    ../../third_party/icu/source/common/dictionarydata.h $
+    ../../third_party/icu/source/common/dtintrv.cpp $
+    ../../third_party/icu/source/common/errorcode.cpp $
+    ../../third_party/icu/source/common/filterednormalizer2.cpp $
+    ../../third_party/icu/source/common/hash.h $
+    ../../third_party/icu/source/common/icudataver.c $
+    ../../third_party/icu/source/common/icuplug.cpp $
+    ../../third_party/icu/source/common/icuplugimp.h $
+    ../../third_party/icu/source/common/listformatter.cpp $
+    ../../third_party/icu/source/common/loadednormalizer2impl.cpp $
+    ../../third_party/icu/source/common/localsvc.h $
+    ../../third_party/icu/source/common/locavailable.cpp $
+    ../../third_party/icu/source/common/locbased.cpp $
+    ../../third_party/icu/source/common/locbased.h $
+    ../../third_party/icu/source/common/locdispnames.cpp $
+    ../../third_party/icu/source/common/locid.cpp $
+    ../../third_party/icu/source/common/loclikely.cpp $
+    ../../third_party/icu/source/common/locmap.c $
+    ../../third_party/icu/source/common/locmap.h $
+    ../../third_party/icu/source/common/locresdata.cpp $
+    ../../third_party/icu/source/common/locutil.cpp $
+    ../../third_party/icu/source/common/locutil.h $
+    ../../third_party/icu/source/common/messageimpl.h $
+    ../../third_party/icu/source/common/messagepattern.cpp $
+    ../../third_party/icu/source/common/mutex.h $
+    ../../third_party/icu/source/common/norm2_nfc_data.h $
+    ../../third_party/icu/source/common/norm2allmodes.h $
+    ../../third_party/icu/source/common/normalizer2.cpp $
+    ../../third_party/icu/source/common/normalizer2impl.cpp $
+    ../../third_party/icu/source/common/normalizer2impl.h $
+    ../../third_party/icu/source/common/normlzr.cpp $
+    ../../third_party/icu/source/common/parsepos.cpp $
+    ../../third_party/icu/source/common/patternprops.cpp $
+    ../../third_party/icu/source/common/patternprops.h $
+    ../../third_party/icu/source/common/propname.cpp $
+    ../../third_party/icu/source/common/propname.h $
+    ../../third_party/icu/source/common/propname_data.h $
+    ../../third_party/icu/source/common/propsvec.c $
+    ../../third_party/icu/source/common/propsvec.h $
+    ../../third_party/icu/source/common/punycode.cpp $
+    ../../third_party/icu/source/common/punycode.h $
+    ../../third_party/icu/source/common/putil.cpp $
+    ../../third_party/icu/source/common/putilimp.h $
+    ../../third_party/icu/source/common/rbbi.cpp $
+    ../../third_party/icu/source/common/rbbidata.cpp $
+    ../../third_party/icu/source/common/rbbidata.h $
+    ../../third_party/icu/source/common/rbbinode.cpp $
+    ../../third_party/icu/source/common/rbbinode.h $
+    ../../third_party/icu/source/common/rbbirb.cpp $
+    ../../third_party/icu/source/common/rbbirb.h $
+    ../../third_party/icu/source/common/rbbirpt.h $
+    ../../third_party/icu/source/common/rbbiscan.cpp $
+    ../../third_party/icu/source/common/rbbiscan.h $
+    ../../third_party/icu/source/common/rbbisetb.cpp $
+    ../../third_party/icu/source/common/rbbisetb.h $
+    ../../third_party/icu/source/common/rbbistbl.cpp $
+    ../../third_party/icu/source/common/rbbitblb.cpp $
+    ../../third_party/icu/source/common/rbbitblb.h $
+    ../../third_party/icu/source/common/resbund.cpp $
+    ../../third_party/icu/source/common/resbund_cnv.cpp $
+    ../../third_party/icu/source/common/ruleiter.cpp $
+    ../../third_party/icu/source/common/ruleiter.h $
+    ../../third_party/icu/source/common/schriter.cpp $
+    ../../third_party/icu/source/common/serv.cpp $
+    ../../third_party/icu/source/common/serv.h $
+    ../../third_party/icu/source/common/servlk.cpp $
+    ../../third_party/icu/source/common/servlkf.cpp $
+    ../../third_party/icu/source/common/servloc.h $
+    ../../third_party/icu/source/common/servls.cpp $
+    ../../third_party/icu/source/common/servnotf.cpp $
+    ../../third_party/icu/source/common/servnotf.h $
+    ../../third_party/icu/source/common/servrbf.cpp $
+    ../../third_party/icu/source/common/servslkf.cpp $
+    ../../third_party/icu/source/common/sharedobject.cpp $
+    ../../third_party/icu/source/common/sharedobject.h $
+    ../../third_party/icu/source/common/simplepatternformatter.cpp $
+    ../../third_party/icu/source/common/simplepatternformatter.h $
+    ../../third_party/icu/source/common/sprpimpl.h $
+    ../../third_party/icu/source/common/stringpiece.cpp $
+    ../../third_party/icu/source/common/stringtriebuilder.cpp $
+    ../../third_party/icu/source/common/uarrsort.c $
+    ../../third_party/icu/source/common/uarrsort.h $
+    ../../third_party/icu/source/common/uassert.h $
+    ../../third_party/icu/source/common/ubidi.c $
+    ../../third_party/icu/source/common/ubidi_props.c $
+    ../../third_party/icu/source/common/ubidi_props.h $
+    ../../third_party/icu/source/common/ubidi_props_data.h $
+    ../../third_party/icu/source/common/ubidiimp.h $
+    ../../third_party/icu/source/common/ubidiln.c $
+    ../../third_party/icu/source/common/ubidiwrt.c $
+    ../../third_party/icu/source/common/ubrk.cpp $
+    ../../third_party/icu/source/common/ubrkimpl.h $
+    ../../third_party/icu/source/common/ucase.cpp $
+    ../../third_party/icu/source/common/ucase.h $
+    ../../third_party/icu/source/common/ucase_props_data.h $
+    ../../third_party/icu/source/common/ucasemap.cpp $
+    ../../third_party/icu/source/common/ucasemap_titlecase_brkiter.cpp $
+    ../../third_party/icu/source/common/ucat.c $
+    ../../third_party/icu/source/common/uchar.c $
+    ../../third_party/icu/source/common/uchar_props_data.h $
+    ../../third_party/icu/source/common/ucharstrie.cpp $
+    ../../third_party/icu/source/common/ucharstriebuilder.cpp $
+    ../../third_party/icu/source/common/ucharstrieiterator.cpp $
+    ../../third_party/icu/source/common/uchriter.cpp $
+    ../../third_party/icu/source/common/ucln.h $
+    ../../third_party/icu/source/common/ucln_cmn.cpp $
+    ../../third_party/icu/source/common/ucln_cmn.h $
+    ../../third_party/icu/source/common/ucln_imp.h $
+    ../../third_party/icu/source/common/ucmndata.c $
+    ../../third_party/icu/source/common/ucmndata.h $
+    ../../third_party/icu/source/common/ucnv.c $
+    ../../third_party/icu/source/common/ucnv2022.cpp $
+    ../../third_party/icu/source/common/ucnv_bld.cpp $
+    ../../third_party/icu/source/common/ucnv_bld.h $
+    ../../third_party/icu/source/common/ucnv_cb.c $
+    ../../third_party/icu/source/common/ucnv_cnv.c $
+    ../../third_party/icu/source/common/ucnv_cnv.h $
+    ../../third_party/icu/source/common/ucnv_ct.c $
+    ../../third_party/icu/source/common/ucnv_err.c $
+    ../../third_party/icu/source/common/ucnv_ext.cpp $
+    ../../third_party/icu/source/common/ucnv_ext.h $
+    ../../third_party/icu/source/common/ucnv_imp.h $
+    ../../third_party/icu/source/common/ucnv_io.cpp $
+    ../../third_party/icu/source/common/ucnv_io.h $
+    ../../third_party/icu/source/common/ucnv_lmb.c $
+    ../../third_party/icu/source/common/ucnv_set.c $
+    ../../third_party/icu/source/common/ucnv_u16.c $
+    ../../third_party/icu/source/common/ucnv_u32.c $
+    ../../third_party/icu/source/common/ucnv_u7.c $
+    ../../third_party/icu/source/common/ucnv_u8.c $
+    ../../third_party/icu/source/common/ucnvbocu.cpp $
+    ../../third_party/icu/source/common/ucnvdisp.c $
+    ../../third_party/icu/source/common/ucnvhz.c $
+    ../../third_party/icu/source/common/ucnvisci.c $
+    ../../third_party/icu/source/common/ucnvlat1.c $
+    ../../third_party/icu/source/common/ucnvmbcs.cpp $
+    ../../third_party/icu/source/common/ucnvmbcs.h $
+    ../../third_party/icu/source/common/ucnvscsu.c $
+    ../../third_party/icu/source/common/ucnvsel.cpp $
+    ../../third_party/icu/source/common/ucol_data.h $
+    ../../third_party/icu/source/common/ucol_swp.cpp $
+    ../../third_party/icu/source/common/ucol_swp.h $
+    ../../third_party/icu/source/common/udata.cpp $
+    ../../third_party/icu/source/common/udatamem.c $
+    ../../third_party/icu/source/common/udatamem.h $
+    ../../third_party/icu/source/common/udataswp.c $
+    ../../third_party/icu/source/common/udataswp.h $
+    ../../third_party/icu/source/common/uelement.h $
+    ../../third_party/icu/source/common/uenum.c $
+    ../../third_party/icu/source/common/uenumimp.h $
+    ../../third_party/icu/source/common/uhash.c $
+    ../../third_party/icu/source/common/uhash.h $
+    ../../third_party/icu/source/common/uhash_us.cpp $
+    ../../third_party/icu/source/common/uidna.cpp $
+    ../../third_party/icu/source/common/uinit.cpp $
+    ../../third_party/icu/source/common/uinvchar.c $
+    ../../third_party/icu/source/common/uinvchar.h $
+    ../../third_party/icu/source/common/uiter.cpp $
+    ../../third_party/icu/source/common/ulist.c $
+    ../../third_party/icu/source/common/ulist.h $
+    ../../third_party/icu/source/common/uloc.cpp $
+    ../../third_party/icu/source/common/uloc_keytype.cpp $
+    ../../third_party/icu/source/common/uloc_tag.c $
+    ../../third_party/icu/source/common/ulocimp.h $
+    ../../third_party/icu/source/common/umapfile.c $
+    ../../third_party/icu/source/common/umapfile.h $
+    ../../third_party/icu/source/common/umath.c $
+    ../../third_party/icu/source/common/umutex.cpp $
+    ../../third_party/icu/source/common/umutex.h $
+    ../../third_party/icu/source/common/unames.cpp $
+    ../../third_party/icu/source/common/unicode/appendable.h $
+    ../../third_party/icu/source/common/unicode/brkiter.h $
+    ../../third_party/icu/source/common/unicode/bytestream.h $
+    ../../third_party/icu/source/common/unicode/bytestrie.h $
+    ../../third_party/icu/source/common/unicode/bytestriebuilder.h $
+    ../../third_party/icu/source/common/unicode/caniter.h $
+    ../../third_party/icu/source/common/unicode/chariter.h $
+    ../../third_party/icu/source/common/unicode/dtintrv.h $
+    ../../third_party/icu/source/common/unicode/errorcode.h $
+    ../../third_party/icu/source/common/unicode/icudataver.h $
+    ../../third_party/icu/source/common/unicode/icuplug.h $
+    ../../third_party/icu/source/common/unicode/idna.h $
+    ../../third_party/icu/source/common/unicode/listformatter.h $
+    ../../third_party/icu/source/common/unicode/localpointer.h $
+    ../../third_party/icu/source/common/unicode/locid.h $
+    ../../third_party/icu/source/common/unicode/messagepattern.h $
+    ../../third_party/icu/source/common/unicode/normalizer2.h $
+    ../../third_party/icu/source/common/unicode/normlzr.h $
+    ../../third_party/icu/source/common/unicode/parseerr.h $
+    ../../third_party/icu/source/common/unicode/parsepos.h $
+    ../../third_party/icu/source/common/unicode/platform.h $
+    ../../third_party/icu/source/common/unicode/ptypes.h $
+    ../../third_party/icu/source/common/unicode/putil.h $
+    ../../third_party/icu/source/common/unicode/rbbi.h $
+    ../../third_party/icu/source/common/unicode/rep.h $
+    ../../third_party/icu/source/common/unicode/resbund.h $
+    ../../third_party/icu/source/common/unicode/schriter.h $
+    ../../third_party/icu/source/common/unicode/std_string.h $
+    ../../third_party/icu/source/common/unicode/strenum.h $
+    ../../third_party/icu/source/common/unicode/stringpiece.h $
+    ../../third_party/icu/source/common/unicode/stringtriebuilder.h $
+    ../../third_party/icu/source/common/unicode/symtable.h $
+    ../../third_party/icu/source/common/unicode/ubidi.h $
+    ../../third_party/icu/source/common/unicode/ubrk.h $
+    ../../third_party/icu/source/common/unicode/ucasemap.h $
+    ../../third_party/icu/source/common/unicode/ucat.h $
+    ../../third_party/icu/source/common/unicode/uchar.h $
+    ../../third_party/icu/source/common/unicode/ucharstrie.h $
+    ../../third_party/icu/source/common/unicode/ucharstriebuilder.h $
+    ../../third_party/icu/source/common/unicode/uchriter.h $
+    ../../third_party/icu/source/common/unicode/uclean.h $
+    ../../third_party/icu/source/common/unicode/ucnv.h $
+    ../../third_party/icu/source/common/unicode/ucnv_cb.h $
+    ../../third_party/icu/source/common/unicode/ucnv_err.h $
+    ../../third_party/icu/source/common/unicode/ucnvsel.h $
+    ../../third_party/icu/source/common/unicode/uconfig.h $
+    ../../third_party/icu/source/common/unicode/udata.h $
+    ../../third_party/icu/source/common/unicode/uenum.h $
+    ../../third_party/icu/source/common/unicode/uidna.h $
+    ../../third_party/icu/source/common/unicode/uiter.h $
+    ../../third_party/icu/source/common/unicode/uloc.h $
+    ../../third_party/icu/source/common/unicode/umachine.h $
+    ../../third_party/icu/source/common/unicode/umisc.h $
+    ../../third_party/icu/source/common/unicode/unifilt.h $
+    ../../third_party/icu/source/common/unicode/unifunct.h $
+    ../../third_party/icu/source/common/unicode/unimatch.h $
+    ../../third_party/icu/source/common/unicode/uniset.h $
+    ../../third_party/icu/source/common/unicode/unistr.h $
+    ../../third_party/icu/source/common/unicode/unorm.h $
+    ../../third_party/icu/source/common/unicode/unorm2.h $
+    ../../third_party/icu/source/common/unicode/uobject.h $
+    ../../third_party/icu/source/common/unicode/urename.h $
+    ../../third_party/icu/source/common/unicode/ures.h $
+    ../../third_party/icu/source/common/unicode/uscript.h $
+    ../../third_party/icu/source/common/unicode/uset.h $
+    ../../third_party/icu/source/common/unicode/usetiter.h $
+    ../../third_party/icu/source/common/unicode/ushape.h $
+    ../../third_party/icu/source/common/unicode/usprep.h $
+    ../../third_party/icu/source/common/unicode/ustring.h $
+    ../../third_party/icu/source/common/unicode/ustringtrie.h $
+    ../../third_party/icu/source/common/unicode/utext.h $
+    ../../third_party/icu/source/common/unicode/utf.h $
+    ../../third_party/icu/source/common/unicode/utf16.h $
+    ../../third_party/icu/source/common/unicode/utf8.h $
+    ../../third_party/icu/source/common/unicode/utf_old.h $
+    ../../third_party/icu/source/common/unicode/utrace.h $
+    ../../third_party/icu/source/common/unicode/utypes.h $
+    ../../third_party/icu/source/common/unicode/uvernum.h $
+    ../../third_party/icu/source/common/unicode/uversion.h $
+    ../../third_party/icu/source/common/unifiedcache.cpp $
+    ../../third_party/icu/source/common/unifiedcache.h $
+    ../../third_party/icu/source/common/unifilt.cpp $
+    ../../third_party/icu/source/common/unifunct.cpp $
+    ../../third_party/icu/source/common/uniset.cpp $
+    ../../third_party/icu/source/common/uniset_closure.cpp $
+    ../../third_party/icu/source/common/uniset_props.cpp $
+    ../../third_party/icu/source/common/unisetspan.cpp $
+    ../../third_party/icu/source/common/unisetspan.h $
+    ../../third_party/icu/source/common/unistr.cpp $
+    ../../third_party/icu/source/common/unistr_case.cpp $
+    ../../third_party/icu/source/common/unistr_case_locale.cpp $
+    ../../third_party/icu/source/common/unistr_cnv.cpp $
+    ../../third_party/icu/source/common/unistr_props.cpp $
+    ../../third_party/icu/source/common/unistr_titlecase_brkiter.cpp $
+    ../../third_party/icu/source/common/unorm.cpp $
+    ../../third_party/icu/source/common/unormcmp.cpp $
+    ../../third_party/icu/source/common/unormimp.h $
+    ../../third_party/icu/source/common/uobject.cpp $
+    ../../third_party/icu/source/common/uposixdefs.h $
+    ../../third_party/icu/source/common/uprops.cpp $
+    ../../third_party/icu/source/common/uprops.h $
+    ../../third_party/icu/source/common/ures_cnv.c $
+    ../../third_party/icu/source/common/uresbund.cpp $
+    ../../third_party/icu/source/common/uresdata.c $
+    ../../third_party/icu/source/common/uresdata.h $
+    ../../third_party/icu/source/common/uresimp.h $
+    ../../third_party/icu/source/common/ureslocs.h $
+    ../../third_party/icu/source/common/usc_impl.c $
+    ../../third_party/icu/source/common/usc_impl.h $
+    ../../third_party/icu/source/common/uscript.c $
+    ../../third_party/icu/source/common/uscript_props.cpp $
+    ../../third_party/icu/source/common/uset.cpp $
+    ../../third_party/icu/source/common/uset_imp.h $
+    ../../third_party/icu/source/common/uset_props.cpp $
+    ../../third_party/icu/source/common/usetiter.cpp $
+    ../../third_party/icu/source/common/ushape.cpp $
+    ../../third_party/icu/source/common/usprep.cpp $
+    ../../third_party/icu/source/common/ustack.cpp $
+    ../../third_party/icu/source/common/ustr_cnv.cpp $
+    ../../third_party/icu/source/common/ustr_cnv.h $
+    ../../third_party/icu/source/common/ustr_imp.h $
+    ../../third_party/icu/source/common/ustr_titlecase_brkiter.cpp $
+    ../../third_party/icu/source/common/ustr_wcs.cpp $
+    ../../third_party/icu/source/common/ustrcase.cpp $
+    ../../third_party/icu/source/common/ustrcase_locale.cpp $
+    ../../third_party/icu/source/common/ustrenum.cpp $
+    ../../third_party/icu/source/common/ustrenum.h $
+    ../../third_party/icu/source/common/ustrfmt.c $
+    ../../third_party/icu/source/common/ustrfmt.h $
+    ../../third_party/icu/source/common/ustring.cpp $
+    ../../third_party/icu/source/common/ustrtrns.cpp $
+    ../../third_party/icu/source/common/utext.cpp $
+    ../../third_party/icu/source/common/utf_impl.c $
+    ../../third_party/icu/source/common/util.cpp $
+    ../../third_party/icu/source/common/util.h $
+    ../../third_party/icu/source/common/util_props.cpp $
+    ../../third_party/icu/source/common/utrace.c $
+    ../../third_party/icu/source/common/utracimp.h $
+    ../../third_party/icu/source/common/utrie.cpp $
+    ../../third_party/icu/source/common/utrie.h $
+    ../../third_party/icu/source/common/utrie2.cpp $
+    ../../third_party/icu/source/common/utrie2.h $
+    ../../third_party/icu/source/common/utrie2_builder.cpp $
+    ../../third_party/icu/source/common/utrie2_impl.h $
+    ../../third_party/icu/source/common/uts46.cpp $
+    ../../third_party/icu/source/common/utypeinfo.h $
+    ../../third_party/icu/source/common/utypes.c $
+    ../../third_party/icu/source/common/uvector.cpp $
+    ../../third_party/icu/source/common/uvector.h $
+    ../../third_party/icu/source/common/uvectr32.cpp $
+    ../../third_party/icu/source/common/uvectr32.h $
+    ../../third_party/icu/source/common/uvectr64.cpp $
+    ../../third_party/icu/source/common/uvectr64.h $
+    ../../third_party/icu/source/common/wintz.c $
+    ../../third_party/icu/source/common/wintz.h $
+    ../../out/gypfiles/third_party/icu/pnacl_newlib.icuuc_nacl.source_list.gypcmd $
+    ../../native_client/toolchain/linux_x86/pnacl_newlib/pnacl_newlib.json $
+    || gen/tc_pnacl_newlib/lib/libicudata_nacl.a
+
+defines = -DU_USING_ICU_NAMESPACE=0 -DU_STATIC_IMPLEMENTATION $
+    -DV8_DEPRECATION_WARNINGS -DCLD_VERSION=2 -D_FILE_OFFSET_BITS=64 $
+    -DCHROMIUM_BUILD -DCR_CLANG_REVISION=255169-1 $
+    -DUI_COMPOSITOR_IMAGE_TRANSPORT -DUSE_AURA=1 -DUSE_ASH=1 -DUSE_PANGO=1 $
+    -DUSE_CAIRO=1 -DUSE_DEFAULT_RENDER_THEME=1 -DUSE_LIBJPEG_TURBO=1 $
+    -DUSE_X11=1 -DUSE_CLIPBOARD_AURAX11=1 -DENABLE_ONE_CLICK_SIGNIN $
+    -DENABLE_WEBRTC=1 -DENABLE_MEDIA_ROUTER=1 -DENABLE_PEPPER_CDMS $
+    -DENABLE_CONFIGURATION_POLICY -DENABLE_NOTIFICATIONS -DENABLE_HIDPI=1 $
+    -DENABLE_TOPCHROME_MD=1 -DUSE_UDEV -DDONT_EMBED_BUILD_METADATA $
+    -DFIELDTRIAL_TESTING_ENABLED -DENABLE_TASK_MANAGER=1 $
+    -DENABLE_EXTENSIONS=1 -DENABLE_PDF=1 -DENABLE_PLUGINS=1 $
+    -DENABLE_SESSION_SERVICE=1 -DENABLE_THEMES=1 -DENABLE_AUTOFILL_DIALOG=1 $
+    -DENABLE_BACKGROUND=1 -DENABLE_PRINTING=1 -DENABLE_BASIC_PRINTING=1 $
+    -DENABLE_PRINT_PREVIEW=1 -DENABLE_SPELLCHECK=1 $
+    -DENABLE_CAPTIVE_PORTAL_DETECTION=1 -DENABLE_APP_LIST=1 $
+    -DENABLE_SETTINGS_APP=1 -DENABLE_SUPERVISED_USERS=1 -DENABLE_MDNS=1 $
+    -DENABLE_SERVICE_DISCOVERY=1 -DV8_USE_EXTERNAL_STARTUP_DATA $
+    -DFULL_SAFE_BROWSING -DSAFE_BROWSING_CSD -DSAFE_BROWSING_DB_LOCAL $
+    -DU_COMMON_IMPLEMENTATION -DU_ENABLE_DYLOAD=0 -DUSE_LIBPCI=1 $
+    -DUSE_OPENSSL=1 -DUSE_GLIB=1 -DUSE_NSS_CERTS=1 -DNDEBUG -DNVALGRIND $
+    -DDYNAMIC_ANNOTATIONS_ENABLED=0
+includes = -I../../third_party/icu/source/common $
+    -I../../third_party/icu/source/i18n -Igen
+cflags = -fstack-protector --param=ssp-buffer-size=4 -Werror -pthread $
+    -fno-strict-aliasing -Wno-unused-parameter $
+    -Wno-missing-field-initializers -fvisibility=hidden -pipe -fPIC $
+    -Wno-reserved-user-defined-literal -Xclang -load -Xclang $
+    /b/build/slave/publish_tarball/build/src/third_party/llvm-build/Release+Asserts/lib/libFindBadConstructs.so $
+    -Xclang -add-plugin -Xclang find-bad-constructs -Xclang $
+    -plugin-arg-find-bad-constructs -Xclang check-templates $
+    -fcolor-diagnostics $
+    -B/b/build/slave/publish_tarball/build/src/third_party/binutils/Linux_x64/Release/bin $
+    -Wheader-hygiene -Wno-char-subscripts $
+    -Wno-unneeded-internal-declaration -Wno-covered-switch-default $
+    -Wstring-conversion -Wno-c++11-narrowing -Wno-deprecated-register $
+    -Wno-inconsistent-missing-override -Wno-shift-negative-value $
+    -Wno-bitfield-width -Wno-unused-variable -Wno-format -Wno-unused-result $
+    -m64 -march=x86-64 $
+    --sysroot=/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot $
+    -O2 -fno-ident -fdata-sections -ffunction-sections -funwind-tables
+cflags_c = 
+cflags_cc = -fno-exceptions -fno-rtti -fno-threadsafe-statics $
+    -fvisibility-inlines-hidden -std=gnu++11 -Wno-deprecated
+arflags = 
+
+build obj/third_party/icu/source/common/icuuc_nacl.appendable.o: cxx $
+    ../../third_party/icu/source/common/appendable.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.bmpset.o: cxx $
+    ../../third_party/icu/source/common/bmpset.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.brkeng.o: cxx $
+    ../../third_party/icu/source/common/brkeng.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.brkiter.o: cxx $
+    ../../third_party/icu/source/common/brkiter.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.bytestream.o: cxx $
+    ../../third_party/icu/source/common/bytestream.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.bytestriebuilder.o: cxx $
+    ../../third_party/icu/source/common/bytestriebuilder.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.bytestrie.o: cxx $
+    ../../third_party/icu/source/common/bytestrie.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.bytestrieiterator.o: cxx $
+    ../../third_party/icu/source/common/bytestrieiterator.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.caniter.o: cxx $
+    ../../third_party/icu/source/common/caniter.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.chariter.o: cxx $
+    ../../third_party/icu/source/common/chariter.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.charstr.o: cxx $
+    ../../third_party/icu/source/common/charstr.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.cmemory.o: cc $
+    ../../third_party/icu/source/common/cmemory.c || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.cstring.o: cc $
+    ../../third_party/icu/source/common/cstring.c || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.cwchar.o: cc $
+    ../../third_party/icu/source/common/cwchar.c || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.dictbe.o: cxx $
+    ../../third_party/icu/source/common/dictbe.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.dictionarydata.o: cxx $
+    ../../third_party/icu/source/common/dictionarydata.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.dtintrv.o: cxx $
+    ../../third_party/icu/source/common/dtintrv.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.errorcode.o: cxx $
+    ../../third_party/icu/source/common/errorcode.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.filterednormalizer2.o: $
+    cxx ../../third_party/icu/source/common/filterednormalizer2.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.icudataver.o: cc $
+    ../../third_party/icu/source/common/icudataver.c || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.icuplug.o: cxx $
+    ../../third_party/icu/source/common/icuplug.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.listformatter.o: cxx $
+    ../../third_party/icu/source/common/listformatter.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.loadednormalizer2impl.o: $
+    cxx ../../third_party/icu/source/common/loadednormalizer2impl.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.locavailable.o: cxx $
+    ../../third_party/icu/source/common/locavailable.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.locbased.o: cxx $
+    ../../third_party/icu/source/common/locbased.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.locdispnames.o: cxx $
+    ../../third_party/icu/source/common/locdispnames.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.locid.o: cxx $
+    ../../third_party/icu/source/common/locid.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.loclikely.o: cxx $
+    ../../third_party/icu/source/common/loclikely.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.locmap.o: cc $
+    ../../third_party/icu/source/common/locmap.c || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.locresdata.o: cxx $
+    ../../third_party/icu/source/common/locresdata.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.locutil.o: cxx $
+    ../../third_party/icu/source/common/locutil.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.messagepattern.o: cxx $
+    ../../third_party/icu/source/common/messagepattern.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.normalizer2.o: cxx $
+    ../../third_party/icu/source/common/normalizer2.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.normalizer2impl.o: cxx $
+    ../../third_party/icu/source/common/normalizer2impl.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.normlzr.o: cxx $
+    ../../third_party/icu/source/common/normlzr.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.parsepos.o: cxx $
+    ../../third_party/icu/source/common/parsepos.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.patternprops.o: cxx $
+    ../../third_party/icu/source/common/patternprops.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.propname.o: cxx $
+    ../../third_party/icu/source/common/propname.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.propsvec.o: cc $
+    ../../third_party/icu/source/common/propsvec.c || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.punycode.o: cxx $
+    ../../third_party/icu/source/common/punycode.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.putil.o: cxx $
+    ../../third_party/icu/source/common/putil.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.rbbi.o: cxx $
+    ../../third_party/icu/source/common/rbbi.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.rbbidata.o: cxx $
+    ../../third_party/icu/source/common/rbbidata.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.rbbinode.o: cxx $
+    ../../third_party/icu/source/common/rbbinode.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.rbbirb.o: cxx $
+    ../../third_party/icu/source/common/rbbirb.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.rbbiscan.o: cxx $
+    ../../third_party/icu/source/common/rbbiscan.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.rbbisetb.o: cxx $
+    ../../third_party/icu/source/common/rbbisetb.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.rbbistbl.o: cxx $
+    ../../third_party/icu/source/common/rbbistbl.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.rbbitblb.o: cxx $
+    ../../third_party/icu/source/common/rbbitblb.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.resbund_cnv.o: cxx $
+    ../../third_party/icu/source/common/resbund_cnv.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.resbund.o: cxx $
+    ../../third_party/icu/source/common/resbund.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.ruleiter.o: cxx $
+    ../../third_party/icu/source/common/ruleiter.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.schriter.o: cxx $
+    ../../third_party/icu/source/common/schriter.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.serv.o: cxx $
+    ../../third_party/icu/source/common/serv.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.servlk.o: cxx $
+    ../../third_party/icu/source/common/servlk.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.servlkf.o: cxx $
+    ../../third_party/icu/source/common/servlkf.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.servls.o: cxx $
+    ../../third_party/icu/source/common/servls.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.servnotf.o: cxx $
+    ../../third_party/icu/source/common/servnotf.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.servrbf.o: cxx $
+    ../../third_party/icu/source/common/servrbf.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.servslkf.o: cxx $
+    ../../third_party/icu/source/common/servslkf.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.sharedobject.o: cxx $
+    ../../third_party/icu/source/common/sharedobject.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build $
+    obj/third_party/icu/source/common/icuuc_nacl.simplepatternformatter.o: $
+    cxx ../../third_party/icu/source/common/simplepatternformatter.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.stringpiece.o: cxx $
+    ../../third_party/icu/source/common/stringpiece.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.stringtriebuilder.o: cxx $
+    ../../third_party/icu/source/common/stringtriebuilder.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.uarrsort.o: cc $
+    ../../third_party/icu/source/common/uarrsort.c || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.ubidi.o: cc $
+    ../../third_party/icu/source/common/ubidi.c || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.ubidiln.o: cc $
+    ../../third_party/icu/source/common/ubidiln.c || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.ubidi_props.o: cc $
+    ../../third_party/icu/source/common/ubidi_props.c || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.ubidiwrt.o: cc $
+    ../../third_party/icu/source/common/ubidiwrt.c || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.ubrk.o: cxx $
+    ../../third_party/icu/source/common/ubrk.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.ucase.o: cxx $
+    ../../third_party/icu/source/common/ucase.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.ucasemap.o: cxx $
+    ../../third_party/icu/source/common/ucasemap.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build $
+    obj/third_party/icu/source/common/icuuc_nacl.ucasemap_titlecase_brkiter.o: $
+    cxx ../../third_party/icu/source/common/ucasemap_titlecase_brkiter.cpp $
+    || gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.ucat.o: cc $
+    ../../third_party/icu/source/common/ucat.c || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.uchar.o: cc $
+    ../../third_party/icu/source/common/uchar.c || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.ucharstriebuilder.o: cxx $
+    ../../third_party/icu/source/common/ucharstriebuilder.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.ucharstrie.o: cxx $
+    ../../third_party/icu/source/common/ucharstrie.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.ucharstrieiterator.o: $
+    cxx ../../third_party/icu/source/common/ucharstrieiterator.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.uchriter.o: cxx $
+    ../../third_party/icu/source/common/uchriter.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.ucln_cmn.o: cxx $
+    ../../third_party/icu/source/common/ucln_cmn.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.ucmndata.o: cc $
+    ../../third_party/icu/source/common/ucmndata.c || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.ucnv2022.o: cxx $
+    ../../third_party/icu/source/common/ucnv2022.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.ucnv_bld.o: cxx $
+    ../../third_party/icu/source/common/ucnv_bld.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.ucnvbocu.o: cxx $
+    ../../third_party/icu/source/common/ucnvbocu.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.ucnv.o: cc $
+    ../../third_party/icu/source/common/ucnv.c || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.ucnv_cb.o: cc $
+    ../../third_party/icu/source/common/ucnv_cb.c || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.ucnv_cnv.o: cc $
+    ../../third_party/icu/source/common/ucnv_cnv.c || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.ucnv_ct.o: cc $
+    ../../third_party/icu/source/common/ucnv_ct.c || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.ucnvdisp.o: cc $
+    ../../third_party/icu/source/common/ucnvdisp.c || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.ucnv_err.o: cc $
+    ../../third_party/icu/source/common/ucnv_err.c || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.ucnv_ext.o: cxx $
+    ../../third_party/icu/source/common/ucnv_ext.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.ucnvhz.o: cc $
+    ../../third_party/icu/source/common/ucnvhz.c || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.ucnv_io.o: cxx $
+    ../../third_party/icu/source/common/ucnv_io.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.ucnvisci.o: cc $
+    ../../third_party/icu/source/common/ucnvisci.c || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.ucnvlat1.o: cc $
+    ../../third_party/icu/source/common/ucnvlat1.c || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.ucnv_lmb.o: cc $
+    ../../third_party/icu/source/common/ucnv_lmb.c || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.ucnvmbcs.o: cxx $
+    ../../third_party/icu/source/common/ucnvmbcs.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.ucnvscsu.o: cc $
+    ../../third_party/icu/source/common/ucnvscsu.c || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.ucnvsel.o: cxx $
+    ../../third_party/icu/source/common/ucnvsel.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.ucnv_set.o: cc $
+    ../../third_party/icu/source/common/ucnv_set.c || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.ucnv_u16.o: cc $
+    ../../third_party/icu/source/common/ucnv_u16.c || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.ucnv_u32.o: cc $
+    ../../third_party/icu/source/common/ucnv_u32.c || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.ucnv_u7.o: cc $
+    ../../third_party/icu/source/common/ucnv_u7.c || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.ucnv_u8.o: cc $
+    ../../third_party/icu/source/common/ucnv_u8.c || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.ucol_swp.o: cxx $
+    ../../third_party/icu/source/common/ucol_swp.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.udata.o: cxx $
+    ../../third_party/icu/source/common/udata.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.udatamem.o: cc $
+    ../../third_party/icu/source/common/udatamem.c || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.udataswp.o: cc $
+    ../../third_party/icu/source/common/udataswp.c || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.uenum.o: cc $
+    ../../third_party/icu/source/common/uenum.c || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.uhash.o: cc $
+    ../../third_party/icu/source/common/uhash.c || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.uhash_us.o: cxx $
+    ../../third_party/icu/source/common/uhash_us.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.uidna.o: cxx $
+    ../../third_party/icu/source/common/uidna.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.uinit.o: cxx $
+    ../../third_party/icu/source/common/uinit.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.uinvchar.o: cc $
+    ../../third_party/icu/source/common/uinvchar.c || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.uiter.o: cxx $
+    ../../third_party/icu/source/common/uiter.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.ulist.o: cc $
+    ../../third_party/icu/source/common/ulist.c || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.uloc.o: cxx $
+    ../../third_party/icu/source/common/uloc.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.uloc_keytype.o: cxx $
+    ../../third_party/icu/source/common/uloc_keytype.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.uloc_tag.o: cc $
+    ../../third_party/icu/source/common/uloc_tag.c || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.umapfile.o: cc $
+    ../../third_party/icu/source/common/umapfile.c || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.umath.o: cc $
+    ../../third_party/icu/source/common/umath.c || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.umutex.o: cxx $
+    ../../third_party/icu/source/common/umutex.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.unames.o: cxx $
+    ../../third_party/icu/source/common/unames.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.unifiedcache.o: cxx $
+    ../../third_party/icu/source/common/unifiedcache.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.unifilt.o: cxx $
+    ../../third_party/icu/source/common/unifilt.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.unifunct.o: cxx $
+    ../../third_party/icu/source/common/unifunct.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.uniset_closure.o: cxx $
+    ../../third_party/icu/source/common/uniset_closure.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.uniset.o: cxx $
+    ../../third_party/icu/source/common/uniset.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.uniset_props.o: cxx $
+    ../../third_party/icu/source/common/uniset_props.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.unisetspan.o: cxx $
+    ../../third_party/icu/source/common/unisetspan.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.unistr_case.o: cxx $
+    ../../third_party/icu/source/common/unistr_case.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.unistr_case_locale.o: $
+    cxx ../../third_party/icu/source/common/unistr_case_locale.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.unistr_cnv.o: cxx $
+    ../../third_party/icu/source/common/unistr_cnv.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.unistr.o: cxx $
+    ../../third_party/icu/source/common/unistr.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.unistr_props.o: cxx $
+    ../../third_party/icu/source/common/unistr_props.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build $
+    obj/third_party/icu/source/common/icuuc_nacl.unistr_titlecase_brkiter.o: $
+    cxx ../../third_party/icu/source/common/unistr_titlecase_brkiter.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.unormcmp.o: cxx $
+    ../../third_party/icu/source/common/unormcmp.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.unorm.o: cxx $
+    ../../third_party/icu/source/common/unorm.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.uobject.o: cxx $
+    ../../third_party/icu/source/common/uobject.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.uprops.o: cxx $
+    ../../third_party/icu/source/common/uprops.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.uresbund.o: cxx $
+    ../../third_party/icu/source/common/uresbund.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.ures_cnv.o: cc $
+    ../../third_party/icu/source/common/ures_cnv.c || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.uresdata.o: cc $
+    ../../third_party/icu/source/common/uresdata.c || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.usc_impl.o: cc $
+    ../../third_party/icu/source/common/usc_impl.c || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.uscript.o: cc $
+    ../../third_party/icu/source/common/uscript.c || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.uscript_props.o: cxx $
+    ../../third_party/icu/source/common/uscript_props.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.uset.o: cxx $
+    ../../third_party/icu/source/common/uset.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.usetiter.o: cxx $
+    ../../third_party/icu/source/common/usetiter.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.uset_props.o: cxx $
+    ../../third_party/icu/source/common/uset_props.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.ushape.o: cxx $
+    ../../third_party/icu/source/common/ushape.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.usprep.o: cxx $
+    ../../third_party/icu/source/common/usprep.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.ustack.o: cxx $
+    ../../third_party/icu/source/common/ustack.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.ustrcase.o: cxx $
+    ../../third_party/icu/source/common/ustrcase.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.ustrcase_locale.o: cxx $
+    ../../third_party/icu/source/common/ustrcase_locale.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.ustr_cnv.o: cxx $
+    ../../third_party/icu/source/common/ustr_cnv.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.ustrenum.o: cxx $
+    ../../third_party/icu/source/common/ustrenum.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.ustrfmt.o: cc $
+    ../../third_party/icu/source/common/ustrfmt.c || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.ustring.o: cxx $
+    ../../third_party/icu/source/common/ustring.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build $
+    obj/third_party/icu/source/common/icuuc_nacl.ustr_titlecase_brkiter.o: $
+    cxx ../../third_party/icu/source/common/ustr_titlecase_brkiter.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.ustrtrns.o: cxx $
+    ../../third_party/icu/source/common/ustrtrns.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.ustr_wcs.o: cxx $
+    ../../third_party/icu/source/common/ustr_wcs.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.utext.o: cxx $
+    ../../third_party/icu/source/common/utext.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.utf_impl.o: cc $
+    ../../third_party/icu/source/common/utf_impl.c || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.util.o: cxx $
+    ../../third_party/icu/source/common/util.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.util_props.o: cxx $
+    ../../third_party/icu/source/common/util_props.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.utrace.o: cc $
+    ../../third_party/icu/source/common/utrace.c || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.utrie2_builder.o: cxx $
+    ../../third_party/icu/source/common/utrie2_builder.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.utrie2.o: cxx $
+    ../../third_party/icu/source/common/utrie2.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.utrie.o: cxx $
+    ../../third_party/icu/source/common/utrie.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.uts46.o: cxx $
+    ../../third_party/icu/source/common/uts46.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.utypes.o: cc $
+    ../../third_party/icu/source/common/utypes.c || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.uvector.o: cxx $
+    ../../third_party/icu/source/common/uvector.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.uvectr32.o: cxx $
+    ../../third_party/icu/source/common/uvectr32.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.uvectr64.o: cxx $
+    ../../third_party/icu/source/common/uvectr64.cpp || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+build obj/third_party/icu/source/common/icuuc_nacl.wintz.o: cc $
+    ../../third_party/icu/source/common/wintz.c || $
+    gen/tc_pnacl_newlib/lib/libicuuc_nacl.a
+

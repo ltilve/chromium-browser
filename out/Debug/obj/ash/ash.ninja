@@ -1,0 +1,941 @@
+build obj/ash/ash.actions_depends.stamp: stamp $
+    obj/mojo/libmojo_application_bindings.a $
+    obj/mojo/libnetwork_service_bindings_lib.a $
+    obj/ui/accessibility/libax_gen.a $
+    obj/content/libcontent_common_mojo_bindings.a $
+    obj/skia/skia.actions_depends.stamp $
+    obj/ui/accessibility/libaccessibility.a $
+    obj/ui/resources/ui_resources.actions_rules_copies.stamp $
+    obj/ui/strings/ui_strings.actions_rules_copies.stamp $
+    obj/ash/ash_resources.actions_rules_copies.stamp $
+    obj/ash/ash_strings.actions_rules_copies.stamp
+
+build obj/ash/ash.compile_depends.stamp: stamp $
+    obj/mojo/mojo_application_bindings.compile_depends.stamp $
+    obj/mojo/network_service_bindings_mojom.actions_rules_copies.stamp $
+    obj/ui/accessibility/ax_gen.actions_rules_copies.stamp $
+    obj/content/content_common_mojo_bindings.compile_depends.stamp $
+    obj/ui/accessibility/ax_gen.actions_rules_copies.stamp $
+    obj/ui/resources/ui_resources.actions_rules_copies.stamp $
+    obj/ui/strings/ui_strings.actions_rules_copies.stamp $
+    obj/ash/ash_resources.actions_rules_copies.stamp $
+    obj/ash/ash_strings.actions_rules_copies.stamp
+
+defines = -DV8_DEPRECATION_WARNINGS -DCLD_VERSION=2 -D_FILE_OFFSET_BITS=64 $
+    -DCHROMIUM_BUILD -DCR_CLANG_REVISION=255169-1 $
+    -DUI_COMPOSITOR_IMAGE_TRANSPORT -DUSE_AURA=1 -DUSE_ASH=1 -DUSE_PANGO=1 $
+    -DUSE_CAIRO=1 -DUSE_DEFAULT_RENDER_THEME=1 -DUSE_LIBJPEG_TURBO=1 $
+    -DUSE_X11=1 -DUSE_CLIPBOARD_AURAX11=1 -DENABLE_ONE_CLICK_SIGNIN $
+    -DENABLE_WEBRTC=1 -DENABLE_MEDIA_ROUTER=1 -DENABLE_PEPPER_CDMS $
+    -DENABLE_CONFIGURATION_POLICY -DENABLE_NOTIFICATIONS -DENABLE_HIDPI=1 $
+    -DENABLE_TOPCHROME_MD=1 -DUSE_UDEV -DDONT_EMBED_BUILD_METADATA $
+    -DFIELDTRIAL_TESTING_ENABLED -DENABLE_TASK_MANAGER=1 $
+    -DENABLE_EXTENSIONS=1 -DENABLE_PDF=1 -DENABLE_PLUGINS=1 $
+    -DENABLE_SESSION_SERVICE=1 -DENABLE_THEMES=1 -DENABLE_AUTOFILL_DIALOG=1 $
+    -DENABLE_BACKGROUND=1 -DENABLE_PRINTING=1 -DENABLE_BASIC_PRINTING=1 $
+    -DENABLE_PRINT_PREVIEW=1 -DENABLE_SPELLCHECK=1 $
+    -DENABLE_CAPTIVE_PORTAL_DETECTION=1 -DENABLE_APP_LIST=1 $
+    -DENABLE_SETTINGS_APP=1 -DENABLE_SUPERVISED_USERS=1 -DENABLE_MDNS=1 $
+    -DENABLE_SERVICE_DISCOVERY=1 -DV8_USE_EXTERNAL_STARTUP_DATA $
+    -DFULL_SAFE_BROWSING -DSAFE_BROWSING_CSD -DSAFE_BROWSING_DB_LOCAL $
+    -DASH_IMPLEMENTATION -DGL_GLEXT_PROTOTYPES -DMOJO_USE_SYSTEM_IMPL $
+    -DTOOLKIT_VIEWS=1 -DSK_SUPPORT_GPU=1 $
+    -DSK_IGNORE_LINEONLY_AA_CONVEX_PATH_OPTS -DU_USING_ICU_NAMESPACE=0 $
+    -DU_ENABLE_DYLOAD=0 -DU_STATIC_IMPLEMENTATION -DUSE_LIBPCI=1 $
+    -DUSE_OPENSSL=1 -DUSE_GLIB=1 -DUSE_NSS_CERTS=1 -D__STDC_CONSTANT_MACROS $
+    -D__STDC_FORMAT_MACROS -DDYNAMIC_ANNOTATIONS_ENABLED=1 $
+    -DWTF_USE_DYNAMIC_ANNOTATIONS=1 -D_DEBUG -D_GLIBCXX_DEBUG=1
+includes = -Igen -I../../third_party/khronos -I../../gpu -I../.. $
+    -I../../skia/config -Igen/angle -I../../third_party/WebKit/Source $
+    -I../../third_party/WebKit -I../../third_party/opus/src/include $
+    -I../../third_party/skia/include/core $
+    -I../../third_party/skia/include/effects $
+    -I../../third_party/skia/include/pdf $
+    -I../../third_party/skia/include/gpu $
+    -I../../third_party/skia/include/lazy $
+    -I../../third_party/skia/include/pathops $
+    -I../../third_party/skia/include/pipe $
+    -I../../third_party/skia/include/ports $
+    -I../../third_party/skia/include/utils -I../../skia/ext $
+    -I../../third_party/icu/source/i18n $
+    -I../../third_party/icu/source/common -Igen/ui/resources $
+    -Igen/ui/views/resources -Igen/ash/resources -Igen/ash/strings
+cflags = -fstack-protector --param=ssp-buffer-size=4 -Werror -pthread $
+    -fno-strict-aliasing -Wall -Wno-unused-parameter $
+    -Wno-missing-field-initializers -fvisibility=hidden -pipe -fPIC $
+    -Wno-reserved-user-defined-literal -Xclang -load -Xclang $
+    /b/build/slave/publish_tarball/build/src/third_party/llvm-build/Release+Asserts/lib/libFindBadConstructs.so $
+    -Xclang -add-plugin -Xclang find-bad-constructs -Xclang $
+    -plugin-arg-find-bad-constructs -Xclang check-templates $
+    -fcolor-diagnostics $
+    -B/b/build/slave/publish_tarball/build/src/third_party/binutils/Linux_x64/Release/bin $
+    -Wheader-hygiene -Wno-char-subscripts $
+    -Wno-unneeded-internal-declaration -Wno-covered-switch-default $
+    -Wstring-conversion -Wno-c++11-narrowing -Wno-deprecated-register $
+    -Wno-inconsistent-missing-override -Wno-shift-negative-value $
+    -Wno-bitfield-width -pthread $
+    -I/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/include/glib-2.0 $
+    -I/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/lib/x86_64-linux-gnu/glib-2.0/include $
+    -m64 -march=x86-64 $
+    --sysroot=/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot $
+    -O0 -g -funwind-tables -gsplit-dwarf -Wno-undefined-bool-conversion $
+    -Wno-tautological-undefined-compare
+cflags_c = 
+cflags_cc = -fno-exceptions -fno-rtti -fno-threadsafe-statics $
+    -fvisibility-inlines-hidden -Wsign-compare -std=gnu++11
+arflags = 
+
+build obj/ash/accelerators/ash.accelerator_commands.o: cxx $
+    ../../ash/accelerators/accelerator_commands.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/accelerators/ash.accelerator_controller.o: cxx $
+    ../../ash/accelerators/accelerator_controller.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/accelerators/ash.accelerator_delegate.o: cxx $
+    ../../ash/accelerators/accelerator_delegate.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/accelerators/ash.accelerator_table.o: cxx $
+    ../../ash/accelerators/accelerator_table.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/accelerators/ash.debug_commands.o: cxx $
+    ../../ash/accelerators/debug_commands.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/accelerators/ash.exit_warning_handler.o: cxx $
+    ../../ash/accelerators/exit_warning_handler.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/accelerators/ash.focus_manager_factory.o: cxx $
+    ../../ash/accelerators/focus_manager_factory.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/accelerators/ash.nested_accelerator_delegate.o: cxx $
+    ../../ash/accelerators/nested_accelerator_delegate.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/ash.ash_constants.o: cxx ../../ash/ash_constants.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/ash.ash_switches.o: cxx ../../ash/ash_switches.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/audio/ash.sounds.o: cxx ../../ash/audio/sounds.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/autoclick/ash.autoclick_controller.o: cxx $
+    ../../ash/autoclick/autoclick_controller.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/ash.cancel_mode.o: cxx ../../ash/cancel_mode.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/ash.cast_config_delegate.o: cxx $
+    ../../ash/cast_config_delegate.cc || obj/ash/ash.compile_depends.stamp
+build obj/ash/ash.debug.o: cxx ../../ash/debug.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/ash.default_accessibility_delegate.o: cxx $
+    ../../ash/default_accessibility_delegate.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/ash.default_user_wallpaper_delegate.o: cxx $
+    ../../ash/default_user_wallpaper_delegate.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/desktop_background/ash.desktop_background_controller.o: cxx $
+    ../../ash/desktop_background/desktop_background_controller.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/desktop_background/ash.desktop_background_view.o: cxx $
+    ../../ash/desktop_background/desktop_background_view.cc || $
+    obj/ash/ash.compile_depends.stamp
+build $
+    obj/ash/desktop_background/ash.desktop_background_widget_controller.o: $
+    cxx $
+    ../../ash/desktop_background/desktop_background_widget_controller.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/display/ash.cursor_window_controller.o: cxx $
+    ../../ash/display/cursor_window_controller.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/display/ash.window_tree_host_manager.o: cxx $
+    ../../ash/display/window_tree_host_manager.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/display/ash.display_info.o: cxx $
+    ../../ash/display/display_info.cc || obj/ash/ash.compile_depends.stamp
+build obj/ash/display/ash.display_layout.o: cxx $
+    ../../ash/display/display_layout.cc || obj/ash/ash.compile_depends.stamp
+build obj/ash/display/ash.display_layout_store.o: cxx $
+    ../../ash/display/display_layout_store.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/display/ash.display_manager.o: cxx $
+    ../../ash/display/display_manager.cc || obj/ash/ash.compile_depends.stamp
+build obj/ash/display/ash.display_util.o: cxx $
+    ../../ash/display/display_util.cc || obj/ash/ash.compile_depends.stamp
+build obj/ash/display/ash.extended_mouse_warp_controller.o: cxx $
+    ../../ash/display/extended_mouse_warp_controller.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/display/ash.event_transformation_handler.o: cxx $
+    ../../ash/display/event_transformation_handler.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/display/ash.mirror_window_controller.o: cxx $
+    ../../ash/display/mirror_window_controller.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/display/ash.mouse_cursor_event_filter.o: cxx $
+    ../../ash/display/mouse_cursor_event_filter.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/display/ash.null_mouse_warp_controller.o: cxx $
+    ../../ash/display/null_mouse_warp_controller.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/display/ash.root_window_transformers.o: cxx $
+    ../../ash/display/root_window_transformers.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/display/ash.screen_ash.o: cxx ../../ash/display/screen_ash.cc $
+    || obj/ash/ash.compile_depends.stamp
+build obj/ash/display/ash.screen_position_controller.o: cxx $
+    ../../ash/display/screen_position_controller.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/display/ash.shared_display_edge_indicator.o: cxx $
+    ../../ash/display/shared_display_edge_indicator.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/display/ash.unified_mouse_warp_controller.o: cxx $
+    ../../ash/display/unified_mouse_warp_controller.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/drag_drop/ash.drag_drop_controller.o: cxx $
+    ../../ash/drag_drop/drag_drop_controller.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/drag_drop/ash.drag_drop_tracker.o: cxx $
+    ../../ash/drag_drop/drag_drop_tracker.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/drag_drop/ash.drag_image_view.o: cxx $
+    ../../ash/drag_drop/drag_image_view.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/first_run/ash.desktop_cleaner.o: cxx $
+    ../../ash/first_run/desktop_cleaner.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/first_run/ash.first_run_helper.o: cxx $
+    ../../ash/first_run/first_run_helper.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/first_run/ash.first_run_helper_impl.o: cxx $
+    ../../ash/first_run/first_run_helper_impl.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/ash.focus_cycler.o: cxx ../../ash/focus_cycler.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/frame/caption_buttons/ash.frame_caption_button.o: cxx $
+    ../../ash/frame/caption_buttons/frame_caption_button.cc || $
+    obj/ash/ash.compile_depends.stamp
+build $
+    obj/ash/frame/caption_buttons/ash.frame_caption_button_container_view.o: $
+    cxx $
+    ../../ash/frame/caption_buttons/frame_caption_button_container_view.cc $
+    || obj/ash/ash.compile_depends.stamp
+build obj/ash/frame/caption_buttons/ash.frame_size_button.o: cxx $
+    ../../ash/frame/caption_buttons/frame_size_button.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/frame/ash.custom_frame_view_ash.o: cxx $
+    ../../ash/frame/custom_frame_view_ash.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/frame/ash.default_header_painter.o: cxx $
+    ../../ash/frame/default_header_painter.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/frame/ash.frame_border_hit_test_controller.o: cxx $
+    ../../ash/frame/frame_border_hit_test_controller.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/frame/ash.header_painter_util.o: cxx $
+    ../../ash/frame/header_painter_util.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/ash.gpu_support_stub.o: cxx ../../ash/gpu_support_stub.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/high_contrast/ash.high_contrast_controller.o: cxx $
+    ../../ash/high_contrast/high_contrast_controller.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/host/ash.ash_window_tree_host.o: cxx $
+    ../../ash/host/ash_window_tree_host.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/host/ash.ash_window_tree_host_init_params.o: cxx $
+    ../../ash/host/ash_window_tree_host_init_params.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/host/ash.ash_window_tree_host_unified.o: cxx $
+    ../../ash/host/ash_window_tree_host_unified.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/host/ash.ash_window_tree_host_x11.o: cxx $
+    ../../ash/host/ash_window_tree_host_x11.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/host/ash.transformer_helper.o: cxx $
+    ../../ash/host/transformer_helper.cc || obj/ash/ash.compile_depends.stamp
+build obj/ash/ime/ash.input_method_event_handler.o: cxx $
+    ../../ash/ime/input_method_event_handler.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/ash.keyboard_uma_event_filter.o: cxx $
+    ../../ash/keyboard_uma_event_filter.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/magnifier/ash.magnification_controller.o: cxx $
+    ../../ash/magnifier/magnification_controller.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/magnifier/ash.partial_magnification_controller.o: cxx $
+    ../../ash/magnifier/partial_magnification_controller.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/metrics/ash.desktop_task_switch_metric_recorder.o: cxx $
+    ../../ash/metrics/desktop_task_switch_metric_recorder.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/metrics/ash.task_switch_metrics_recorder.o: cxx $
+    ../../ash/metrics/task_switch_metrics_recorder.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/metrics/ash.task_switch_time_tracker.o: cxx $
+    ../../ash/metrics/task_switch_time_tracker.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/metrics/ash.user_metrics_recorder.o: cxx $
+    ../../ash/metrics/user_metrics_recorder.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/ash.multi_profile_uma.o: cxx ../../ash/multi_profile_uma.cc $
+    || obj/ash/ash.compile_depends.stamp
+build obj/ash/ash.networking_config_delegate.o: cxx $
+    ../../ash/networking_config_delegate.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/ash.popup_message.o: cxx ../../ash/popup_message.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/ash.root_window_controller.o: cxx $
+    ../../ash/root_window_controller.cc || obj/ash/ash.compile_depends.stamp
+build obj/ash/ash.root_window_settings.o: cxx $
+    ../../ash/root_window_settings.cc || obj/ash/ash.compile_depends.stamp
+build obj/ash/rotator/ash.screen_rotation_animation.o: cxx $
+    ../../ash/rotator/screen_rotation_animation.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/rotator/ash.screen_rotation_animator.o: cxx $
+    ../../ash/rotator/screen_rotation_animator.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/rotator/ash.window_rotation.o: cxx $
+    ../../ash/rotator/window_rotation.cc || obj/ash/ash.compile_depends.stamp
+build obj/ash/ash.scoped_target_root_window.o: cxx $
+    ../../ash/scoped_target_root_window.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/ash.screen_util.o: cxx ../../ash/screen_util.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/session/ash.session_state_delegate.o: cxx $
+    ../../ash/session/session_state_delegate.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/session/ash.session_state_observer.o: cxx $
+    ../../ash/session/session_state_observer.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/shelf/ash.app_list_button.o: cxx $
+    ../../ash/shelf/app_list_button.cc || obj/ash/ash.compile_depends.stamp
+build obj/ash/shelf/ash.app_list_shelf_item_delegate.o: cxx $
+    ../../ash/shelf/app_list_shelf_item_delegate.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/shelf/ash.background_animator.o: cxx $
+    ../../ash/shelf/background_animator.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/shelf/ash.overflow_bubble.o: cxx $
+    ../../ash/shelf/overflow_bubble.cc || obj/ash/ash.compile_depends.stamp
+build obj/ash/shelf/ash.overflow_bubble_view.o: cxx $
+    ../../ash/shelf/overflow_bubble_view.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/shelf/ash.overflow_button.o: cxx $
+    ../../ash/shelf/overflow_button.cc || obj/ash/ash.compile_depends.stamp
+build obj/ash/shelf/ash.shelf.o: cxx ../../ash/shelf/shelf.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/shelf/ash.shelf_alignment_menu.o: cxx $
+    ../../ash/shelf/shelf_alignment_menu.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/shelf/ash.shelf_bezel_event_filter.o: cxx $
+    ../../ash/shelf/shelf_bezel_event_filter.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/shelf/ash.shelf_button.o: cxx ../../ash/shelf/shelf_button.cc $
+    || obj/ash/ash.compile_depends.stamp
+build obj/ash/shelf/ash.shelf_constants.o: cxx $
+    ../../ash/shelf/shelf_constants.cc || obj/ash/ash.compile_depends.stamp
+build obj/ash/shelf/ash.shelf_item_delegate_manager.o: cxx $
+    ../../ash/shelf/shelf_item_delegate_manager.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/shelf/ash.shelf_item_types.o: cxx $
+    ../../ash/shelf/shelf_item_types.cc || obj/ash/ash.compile_depends.stamp
+build obj/ash/shelf/ash.shelf_layout_manager.o: cxx $
+    ../../ash/shelf/shelf_layout_manager.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/shelf/ash.shelf_model.o: cxx ../../ash/shelf/shelf_model.cc $
+    || obj/ash/ash.compile_depends.stamp
+build obj/ash/shelf/ash.shelf_navigator.o: cxx $
+    ../../ash/shelf/shelf_navigator.cc || obj/ash/ash.compile_depends.stamp
+build obj/ash/shelf/ash.shelf_tooltip_manager.o: cxx $
+    ../../ash/shelf/shelf_tooltip_manager.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/shelf/ash.shelf_util.o: cxx ../../ash/shelf/shelf_util.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/shelf/ash.shelf_view.o: cxx ../../ash/shelf/shelf_view.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/shelf/ash.shelf_button_pressed_metric_tracker.o: cxx $
+    ../../ash/shelf/shelf_button_pressed_metric_tracker.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/shelf/ash.shelf_widget.o: cxx ../../ash/shelf/shelf_widget.cc $
+    || obj/ash/ash.compile_depends.stamp
+build obj/ash/shelf/ash.shelf_window_watcher.o: cxx $
+    ../../ash/shelf/shelf_window_watcher.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/shelf/ash.shelf_window_watcher_item_delegate.o: cxx $
+    ../../ash/shelf/shelf_window_watcher_item_delegate.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/ash.shell.o: cxx ../../ash/shell.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/ash.shell_init_params.o: cxx ../../ash/shell_init_params.cc $
+    || obj/ash/ash.compile_depends.stamp
+build obj/ash/ash.snap_to_pixel_layout_manager.o: cxx $
+    ../../ash/snap_to_pixel_layout_manager.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/sticky_keys/ash.sticky_keys_controller.o: cxx $
+    ../../ash/sticky_keys/sticky_keys_controller.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/sticky_keys/ash.sticky_keys_overlay.o: cxx $
+    ../../ash/sticky_keys/sticky_keys_overlay.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/ash.switchable_windows.o: cxx ../../ash/switchable_windows.cc $
+    || obj/ash/ash.compile_depends.stamp
+build obj/ash/system/audio/ash.tray_audio.o: cxx $
+    ../../ash/system/audio/tray_audio.cc || obj/ash/ash.compile_depends.stamp
+build obj/ash/system/audio/ash.volume_view.o: cxx $
+    ../../ash/system/audio/volume_view.cc || obj/ash/ash.compile_depends.stamp
+build obj/ash/system/bluetooth/ash.tray_bluetooth.o: cxx $
+    ../../ash/system/bluetooth/tray_bluetooth.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/system/cast/ash.tray_cast.o: cxx $
+    ../../ash/system/cast/tray_cast.cc || obj/ash/ash.compile_depends.stamp
+build obj/ash/system/date/ash.date_default_view.o: cxx $
+    ../../ash/system/date/date_default_view.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/system/date/ash.date_view.o: cxx $
+    ../../ash/system/date/date_view.cc || obj/ash/ash.compile_depends.stamp
+build obj/ash/system/date/ash.tray_date.o: cxx $
+    ../../ash/system/date/tray_date.cc || obj/ash/ash.compile_depends.stamp
+build obj/ash/system/locale/ash.locale_notification_controller.o: cxx $
+    ../../ash/system/locale/locale_notification_controller.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/system/overview/ash.overview_button_tray.o: cxx $
+    ../../ash/system/overview/overview_button_tray.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/system/ash.status_area_widget.o: cxx $
+    ../../ash/system/status_area_widget.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/system/ash.status_area_widget_delegate.o: cxx $
+    ../../ash/system/status_area_widget_delegate.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/system/ash.system_notifier.o: cxx $
+    ../../ash/system/system_notifier.cc || obj/ash/ash.compile_depends.stamp
+build obj/ash/system/tray/ash.actionable_view.o: cxx $
+    ../../ash/system/tray/actionable_view.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/system/tray/ash.default_system_tray_delegate.o: cxx $
+    ../../ash/system/tray/default_system_tray_delegate.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/system/tray/ash.fixed_sized_image_view.o: cxx $
+    ../../ash/system/tray/fixed_sized_image_view.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/system/tray/ash.fixed_sized_scroll_view.o: cxx $
+    ../../ash/system/tray/fixed_sized_scroll_view.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/system/tray/ash.hover_highlight_view.o: cxx $
+    ../../ash/system/tray/hover_highlight_view.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/system/tray/ash.special_popup_row.o: cxx $
+    ../../ash/system/tray/special_popup_row.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/system/tray/ash.system_tray.o: cxx $
+    ../../ash/system/tray/system_tray.cc || obj/ash/ash.compile_depends.stamp
+build obj/ash/system/tray/ash.system_tray_bubble.o: cxx $
+    ../../ash/system/tray/system_tray_bubble.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/system/tray/ash.system_tray_delegate.o: cxx $
+    ../../ash/system/tray/system_tray_delegate.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/system/tray/ash.system_tray_item.o: cxx $
+    ../../ash/system/tray/system_tray_item.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/system/tray/ash.system_tray_notifier.o: cxx $
+    ../../ash/system/tray/system_tray_notifier.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/system/tray/ash.throbber_view.o: cxx $
+    ../../ash/system/tray/throbber_view.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/system/tray/ash.tray_background_view.o: cxx $
+    ../../ash/system/tray/tray_background_view.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/system/tray/ash.tray_bar_button_with_title.o: cxx $
+    ../../ash/system/tray/tray_bar_button_with_title.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/system/tray/ash.tray_bubble_wrapper.o: cxx $
+    ../../ash/system/tray/tray_bubble_wrapper.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/system/tray/ash.tray_constants.o: cxx $
+    ../../ash/system/tray/tray_constants.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/system/tray/ash.tray_details_view.o: cxx $
+    ../../ash/system/tray/tray_details_view.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/system/tray/ash.tray_empty.o: cxx $
+    ../../ash/system/tray/tray_empty.cc || obj/ash/ash.compile_depends.stamp
+build obj/ash/system/tray/ash.tray_event_filter.o: cxx $
+    ../../ash/system/tray/tray_event_filter.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/system/tray/ash.tray_image_item.o: cxx $
+    ../../ash/system/tray/tray_image_item.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/system/tray/ash.tray_item_more.o: cxx $
+    ../../ash/system/tray/tray_item_more.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/system/tray/ash.tray_item_view.o: cxx $
+    ../../ash/system/tray/tray_item_view.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/system/tray/ash.tray_notification_view.o: cxx $
+    ../../ash/system/tray/tray_notification_view.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/system/tray/ash.tray_popup_header_button.o: cxx $
+    ../../ash/system/tray/tray_popup_header_button.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/system/tray/ash.tray_popup_item_container.o: cxx $
+    ../../ash/system/tray/tray_popup_item_container.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/system/tray/ash.tray_popup_label_button.o: cxx $
+    ../../ash/system/tray/tray_popup_label_button.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/system/tray/ash.tray_popup_label_button_border.o: cxx $
+    ../../ash/system/tray/tray_popup_label_button_border.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/system/tray/ash.tray_utils.o: cxx $
+    ../../ash/system/tray/tray_utils.cc || obj/ash/ash.compile_depends.stamp
+build obj/ash/system/ash.tray_accessibility.o: cxx $
+    ../../ash/system/tray_accessibility.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/system/ash.tray_update.o: cxx ../../ash/system/tray_update.cc $
+    || obj/ash/ash.compile_depends.stamp
+build obj/ash/system/user/ash.button_from_view.o: cxx $
+    ../../ash/system/user/button_from_view.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/system/user/ash.login_status.o: cxx $
+    ../../ash/system/user/login_status.cc || obj/ash/ash.compile_depends.stamp
+build obj/ash/system/user/ash.rounded_image_view.o: cxx $
+    ../../ash/system/user/rounded_image_view.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/system/user/ash.tray_user.o: cxx $
+    ../../ash/system/user/tray_user.cc || obj/ash/ash.compile_depends.stamp
+build obj/ash/system/user/ash.tray_user_separator.o: cxx $
+    ../../ash/system/user/tray_user_separator.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/system/user/ash.user_card_view.o: cxx $
+    ../../ash/system/user/user_card_view.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/system/user/ash.user_view.o: cxx $
+    ../../ash/system/user/user_view.cc || obj/ash/ash.compile_depends.stamp
+build obj/ash/system/web_notification/ash.ash_popup_alignment_delegate.o: $
+    cxx ../../ash/system/web_notification/ash_popup_alignment_delegate.cc $
+    || obj/ash/ash.compile_depends.stamp
+build obj/ash/system/web_notification/ash.web_notification_tray.o: cxx $
+    ../../ash/system/web_notification/web_notification_tray.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/touch/ash.touch_hud_debug.o: cxx $
+    ../../ash/touch/touch_hud_debug.cc || obj/ash/ash.compile_depends.stamp
+build obj/ash/touch/ash.touch_hud_projection.o: cxx $
+    ../../ash/touch/touch_hud_projection.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/touch/ash.touch_observer_hud.o: cxx $
+    ../../ash/touch/touch_observer_hud.cc || obj/ash/ash.compile_depends.stamp
+build obj/ash/touch/ash.touch_uma.o: cxx ../../ash/touch/touch_uma.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/utility/ash.partial_screenshot_controller.o: cxx $
+    ../../ash/utility/partial_screenshot_controller.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/wm/ash.always_on_top_controller.o: cxx $
+    ../../ash/wm/always_on_top_controller.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/wm/ash.app_list_controller.o: cxx $
+    ../../ash/wm/app_list_controller.cc || obj/ash/ash.compile_depends.stamp
+build obj/ash/wm/ash.ash_focus_rules.o: cxx ../../ash/wm/ash_focus_rules.cc $
+    || obj/ash/ash.compile_depends.stamp
+build obj/ash/wm/ash.ash_native_cursor_manager.o: cxx $
+    ../../ash/wm/ash_native_cursor_manager.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/wm/ash.coordinate_conversion.o: cxx $
+    ../../ash/wm/coordinate_conversion.cc || obj/ash/ash.compile_depends.stamp
+build obj/ash/wm/ash.default_state.o: cxx ../../ash/wm/default_state.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/wm/ash.default_window_resizer.o: cxx $
+    ../../ash/wm/default_window_resizer.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/wm/ash.dim_window.o: cxx ../../ash/wm/dim_window.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/wm/dock/ash.docked_window_layout_manager.o: cxx $
+    ../../ash/wm/dock/docked_window_layout_manager.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/wm/dock/ash.docked_window_resizer.o: cxx $
+    ../../ash/wm/dock/docked_window_resizer.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/wm/ash.drag_details.o: cxx ../../ash/wm/drag_details.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/wm/ash.drag_window_controller.o: cxx $
+    ../../ash/wm/drag_window_controller.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/wm/ash.drag_window_resizer.o: cxx $
+    ../../ash/wm/drag_window_resizer.cc || obj/ash/ash.compile_depends.stamp
+build obj/ash/wm/ash.event_client_impl.o: cxx $
+    ../../ash/wm/event_client_impl.cc || obj/ash/ash.compile_depends.stamp
+build obj/ash/wm/gestures/ash.long_press_affordance_handler.o: cxx $
+    ../../ash/wm/gestures/long_press_affordance_handler.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/wm/gestures/ash.overview_gesture_handler.o: cxx $
+    ../../ash/wm/gestures/overview_gesture_handler.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/wm/gestures/ash.shelf_gesture_handler.o: cxx $
+    ../../ash/wm/gestures/shelf_gesture_handler.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/wm/ash.immersive_fullscreen_controller.o: cxx $
+    ../../ash/wm/immersive_fullscreen_controller.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/wm/ash.immersive_revealed_lock.o: cxx $
+    ../../ash/wm/immersive_revealed_lock.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/wm/ash.lock_layout_manager.o: cxx $
+    ../../ash/wm/lock_layout_manager.cc || obj/ash/ash.compile_depends.stamp
+build obj/ash/wm/ash.lock_state_controller.o: cxx $
+    ../../ash/wm/lock_state_controller.cc || obj/ash/ash.compile_depends.stamp
+build obj/ash/wm/ash.lock_window_state.o: cxx $
+    ../../ash/wm/lock_window_state.cc || obj/ash/ash.compile_depends.stamp
+build obj/ash/wm/maximize_mode/ash.maximize_mode_controller.o: cxx $
+    ../../ash/wm/maximize_mode/maximize_mode_controller.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/wm/maximize_mode/ash.maximize_mode_window_manager.o: cxx $
+    ../../ash/wm/maximize_mode/maximize_mode_window_manager.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/wm/maximize_mode/ash.maximize_mode_window_state.o: cxx $
+    ../../ash/wm/maximize_mode/maximize_mode_window_state.cc || $
+    obj/ash/ash.compile_depends.stamp
+build $
+    obj/ash/wm/maximize_mode/ash.scoped_disable_internal_mouse_and_keyboard_x11.o: $
+    cxx $
+    ../../ash/wm/maximize_mode/scoped_disable_internal_mouse_and_keyboard_x11.cc $
+    || obj/ash/ash.compile_depends.stamp
+build obj/ash/wm/maximize_mode/ash.workspace_backdrop_delegate.o: cxx $
+    ../../ash/wm/maximize_mode/workspace_backdrop_delegate.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/wm/ash.mru_window_tracker.o: cxx $
+    ../../ash/wm/mru_window_tracker.cc || obj/ash/ash.compile_depends.stamp
+build obj/ash/wm/ash.overlay_event_filter.o: cxx $
+    ../../ash/wm/overlay_event_filter.cc || obj/ash/ash.compile_depends.stamp
+build obj/ash/wm/overview/ash.scoped_overview_animation_settings.o: cxx $
+    ../../ash/wm/overview/scoped_overview_animation_settings.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/wm/overview/ash.scoped_transform_overview_window.o: cxx $
+    ../../ash/wm/overview/scoped_transform_overview_window.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/wm/overview/ash.window_grid.o: cxx $
+    ../../ash/wm/overview/window_grid.cc || obj/ash/ash.compile_depends.stamp
+build obj/ash/wm/overview/ash.window_selector.o: cxx $
+    ../../ash/wm/overview/window_selector.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/wm/overview/ash.window_selector_controller.o: cxx $
+    ../../ash/wm/overview/window_selector_controller.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/wm/overview/ash.window_selector_item.o: cxx $
+    ../../ash/wm/overview/window_selector_item.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/wm/panels/ash.attached_panel_window_targeter.o: cxx $
+    ../../ash/wm/panels/attached_panel_window_targeter.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/wm/panels/ash.panel_frame_view.o: cxx $
+    ../../ash/wm/panels/panel_frame_view.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/wm/panels/ash.panel_layout_manager.o: cxx $
+    ../../ash/wm/panels/panel_layout_manager.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/wm/panels/ash.panel_window_event_handler.o: cxx $
+    ../../ash/wm/panels/panel_window_event_handler.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/wm/panels/ash.panel_window_resizer.o: cxx $
+    ../../ash/wm/panels/panel_window_resizer.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/wm/ash.power_button_controller.o: cxx $
+    ../../ash/wm/power_button_controller.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/wm/ash.resize_handle_window_targeter.o: cxx $
+    ../../ash/wm/resize_handle_window_targeter.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/wm/ash.resize_shadow.o: cxx ../../ash/wm/resize_shadow.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/wm/ash.resize_shadow_controller.o: cxx $
+    ../../ash/wm/resize_shadow_controller.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/wm/ash.root_window_layout_manager.o: cxx $
+    ../../ash/wm/root_window_layout_manager.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/wm/ash.screen_dimmer.o: cxx ../../ash/wm/screen_dimmer.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/wm/ash.session_state_animator.o: cxx $
+    ../../ash/wm/session_state_animator.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/wm/ash.session_state_animator_impl.o: cxx $
+    ../../ash/wm/session_state_animator_impl.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/wm/ash.stacking_controller.o: cxx $
+    ../../ash/wm/stacking_controller.cc || obj/ash/ash.compile_depends.stamp
+build obj/ash/wm/ash.status_area_layout_manager.o: cxx $
+    ../../ash/wm/status_area_layout_manager.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/wm/ash.system_background_controller.o: cxx $
+    ../../ash/wm/system_background_controller.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/wm/ash.system_gesture_event_filter.o: cxx $
+    ../../ash/wm/system_gesture_event_filter.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/wm/ash.system_modal_container_event_filter.o: cxx $
+    ../../ash/wm/system_modal_container_event_filter.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/wm/ash.system_modal_container_layout_manager.o: cxx $
+    ../../ash/wm/system_modal_container_layout_manager.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/wm/ash.toplevel_window_event_handler.o: cxx $
+    ../../ash/wm/toplevel_window_event_handler.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/wm/ash.video_detector.o: cxx ../../ash/wm/video_detector.cc $
+    || obj/ash/ash.compile_depends.stamp
+build obj/ash/wm/ash.window_animations.o: cxx $
+    ../../ash/wm/window_animations.cc || obj/ash/ash.compile_depends.stamp
+build obj/ash/wm/ash.window_cycle_controller.o: cxx $
+    ../../ash/wm/window_cycle_controller.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/wm/ash.window_cycle_list.o: cxx $
+    ../../ash/wm/window_cycle_list.cc || obj/ash/ash.compile_depends.stamp
+build obj/ash/wm/ash.window_positioner.o: cxx $
+    ../../ash/wm/window_positioner.cc || obj/ash/ash.compile_depends.stamp
+build obj/ash/wm/ash.window_properties.o: cxx $
+    ../../ash/wm/window_properties.cc || obj/ash/ash.compile_depends.stamp
+build obj/ash/wm/ash.window_resizer.o: cxx ../../ash/wm/window_resizer.cc $
+    || obj/ash/ash.compile_depends.stamp
+build obj/ash/wm/ash.window_state.o: cxx ../../ash/wm/window_state.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/wm/ash.window_state_delegate.o: cxx $
+    ../../ash/wm/window_state_delegate.cc || obj/ash/ash.compile_depends.stamp
+build obj/ash/wm/ash.window_state_util.o: cxx $
+    ../../ash/wm/window_state_util.cc || obj/ash/ash.compile_depends.stamp
+build obj/ash/wm/ash.window_util.o: cxx ../../ash/wm/window_util.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/wm/ash.wm_event.o: cxx ../../ash/wm/wm_event.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/wm/ash.wm_types.o: cxx ../../ash/wm/wm_types.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/wm/workspace/ash.magnetism_matcher.o: cxx $
+    ../../ash/wm/workspace/magnetism_matcher.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/wm/workspace/ash.multi_window_resize_controller.o: cxx $
+    ../../ash/wm/workspace/multi_window_resize_controller.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/wm/workspace/ash.phantom_window_controller.o: cxx $
+    ../../ash/wm/workspace/phantom_window_controller.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/wm/workspace/ash.two_step_edge_cycler.o: cxx $
+    ../../ash/wm/workspace/two_step_edge_cycler.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/wm/workspace/ash.workspace_event_handler.o: cxx $
+    ../../ash/wm/workspace/workspace_event_handler.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/wm/workspace/ash.workspace_layout_manager.o: cxx $
+    ../../ash/wm/workspace/workspace_layout_manager.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/wm/workspace/ash.workspace_window_resizer.o: cxx $
+    ../../ash/wm/workspace/workspace_window_resizer.cc || $
+    obj/ash/ash.compile_depends.stamp
+build obj/ash/wm/ash.workspace_controller.o: cxx $
+    ../../ash/wm/workspace_controller.cc || obj/ash/ash.compile_depends.stamp
+
+build obj/ash/libash.a: alink_thin $
+    obj/ash/accelerators/ash.accelerator_commands.o $
+    obj/ash/accelerators/ash.accelerator_controller.o $
+    obj/ash/accelerators/ash.accelerator_delegate.o $
+    obj/ash/accelerators/ash.accelerator_table.o $
+    obj/ash/accelerators/ash.debug_commands.o $
+    obj/ash/accelerators/ash.exit_warning_handler.o $
+    obj/ash/accelerators/ash.focus_manager_factory.o $
+    obj/ash/accelerators/ash.nested_accelerator_delegate.o $
+    obj/ash/ash.ash_constants.o obj/ash/ash.ash_switches.o $
+    obj/ash/audio/ash.sounds.o obj/ash/autoclick/ash.autoclick_controller.o $
+    obj/ash/ash.cancel_mode.o obj/ash/ash.cast_config_delegate.o $
+    obj/ash/ash.debug.o obj/ash/ash.default_accessibility_delegate.o $
+    obj/ash/ash.default_user_wallpaper_delegate.o $
+    obj/ash/desktop_background/ash.desktop_background_controller.o $
+    obj/ash/desktop_background/ash.desktop_background_view.o $
+    obj/ash/desktop_background/ash.desktop_background_widget_controller.o $
+    obj/ash/display/ash.cursor_window_controller.o $
+    obj/ash/display/ash.window_tree_host_manager.o $
+    obj/ash/display/ash.display_info.o obj/ash/display/ash.display_layout.o $
+    obj/ash/display/ash.display_layout_store.o $
+    obj/ash/display/ash.display_manager.o $
+    obj/ash/display/ash.display_util.o $
+    obj/ash/display/ash.extended_mouse_warp_controller.o $
+    obj/ash/display/ash.event_transformation_handler.o $
+    obj/ash/display/ash.mirror_window_controller.o $
+    obj/ash/display/ash.mouse_cursor_event_filter.o $
+    obj/ash/display/ash.null_mouse_warp_controller.o $
+    obj/ash/display/ash.root_window_transformers.o $
+    obj/ash/display/ash.screen_ash.o $
+    obj/ash/display/ash.screen_position_controller.o $
+    obj/ash/display/ash.shared_display_edge_indicator.o $
+    obj/ash/display/ash.unified_mouse_warp_controller.o $
+    obj/ash/drag_drop/ash.drag_drop_controller.o $
+    obj/ash/drag_drop/ash.drag_drop_tracker.o $
+    obj/ash/drag_drop/ash.drag_image_view.o $
+    obj/ash/first_run/ash.desktop_cleaner.o $
+    obj/ash/first_run/ash.first_run_helper.o $
+    obj/ash/first_run/ash.first_run_helper_impl.o $
+    obj/ash/ash.focus_cycler.o $
+    obj/ash/frame/caption_buttons/ash.frame_caption_button.o $
+    obj/ash/frame/caption_buttons/ash.frame_caption_button_container_view.o $
+    obj/ash/frame/caption_buttons/ash.frame_size_button.o $
+    obj/ash/frame/ash.custom_frame_view_ash.o $
+    obj/ash/frame/ash.default_header_painter.o $
+    obj/ash/frame/ash.frame_border_hit_test_controller.o $
+    obj/ash/frame/ash.header_painter_util.o obj/ash/ash.gpu_support_stub.o $
+    obj/ash/high_contrast/ash.high_contrast_controller.o $
+    obj/ash/host/ash.ash_window_tree_host.o $
+    obj/ash/host/ash.ash_window_tree_host_init_params.o $
+    obj/ash/host/ash.ash_window_tree_host_unified.o $
+    obj/ash/host/ash.ash_window_tree_host_x11.o $
+    obj/ash/host/ash.transformer_helper.o $
+    obj/ash/ime/ash.input_method_event_handler.o $
+    obj/ash/ash.keyboard_uma_event_filter.o $
+    obj/ash/magnifier/ash.magnification_controller.o $
+    obj/ash/magnifier/ash.partial_magnification_controller.o $
+    obj/ash/metrics/ash.desktop_task_switch_metric_recorder.o $
+    obj/ash/metrics/ash.task_switch_metrics_recorder.o $
+    obj/ash/metrics/ash.task_switch_time_tracker.o $
+    obj/ash/metrics/ash.user_metrics_recorder.o $
+    obj/ash/ash.multi_profile_uma.o $
+    obj/ash/ash.networking_config_delegate.o obj/ash/ash.popup_message.o $
+    obj/ash/ash.root_window_controller.o obj/ash/ash.root_window_settings.o $
+    obj/ash/rotator/ash.screen_rotation_animation.o $
+    obj/ash/rotator/ash.screen_rotation_animator.o $
+    obj/ash/rotator/ash.window_rotation.o $
+    obj/ash/ash.scoped_target_root_window.o obj/ash/ash.screen_util.o $
+    obj/ash/session/ash.session_state_delegate.o $
+    obj/ash/session/ash.session_state_observer.o $
+    obj/ash/shelf/ash.app_list_button.o $
+    obj/ash/shelf/ash.app_list_shelf_item_delegate.o $
+    obj/ash/shelf/ash.background_animator.o $
+    obj/ash/shelf/ash.overflow_bubble.o $
+    obj/ash/shelf/ash.overflow_bubble_view.o $
+    obj/ash/shelf/ash.overflow_button.o obj/ash/shelf/ash.shelf.o $
+    obj/ash/shelf/ash.shelf_alignment_menu.o $
+    obj/ash/shelf/ash.shelf_bezel_event_filter.o $
+    obj/ash/shelf/ash.shelf_button.o obj/ash/shelf/ash.shelf_constants.o $
+    obj/ash/shelf/ash.shelf_item_delegate_manager.o $
+    obj/ash/shelf/ash.shelf_item_types.o $
+    obj/ash/shelf/ash.shelf_layout_manager.o $
+    obj/ash/shelf/ash.shelf_model.o obj/ash/shelf/ash.shelf_navigator.o $
+    obj/ash/shelf/ash.shelf_tooltip_manager.o $
+    obj/ash/shelf/ash.shelf_util.o obj/ash/shelf/ash.shelf_view.o $
+    obj/ash/shelf/ash.shelf_button_pressed_metric_tracker.o $
+    obj/ash/shelf/ash.shelf_widget.o $
+    obj/ash/shelf/ash.shelf_window_watcher.o $
+    obj/ash/shelf/ash.shelf_window_watcher_item_delegate.o $
+    obj/ash/ash.shell.o obj/ash/ash.shell_init_params.o $
+    obj/ash/ash.snap_to_pixel_layout_manager.o $
+    obj/ash/sticky_keys/ash.sticky_keys_controller.o $
+    obj/ash/sticky_keys/ash.sticky_keys_overlay.o $
+    obj/ash/ash.switchable_windows.o obj/ash/system/audio/ash.tray_audio.o $
+    obj/ash/system/audio/ash.volume_view.o $
+    obj/ash/system/bluetooth/ash.tray_bluetooth.o $
+    obj/ash/system/cast/ash.tray_cast.o $
+    obj/ash/system/date/ash.date_default_view.o $
+    obj/ash/system/date/ash.date_view.o obj/ash/system/date/ash.tray_date.o $
+    obj/ash/system/locale/ash.locale_notification_controller.o $
+    obj/ash/system/overview/ash.overview_button_tray.o $
+    obj/ash/system/ash.status_area_widget.o $
+    obj/ash/system/ash.status_area_widget_delegate.o $
+    obj/ash/system/ash.system_notifier.o $
+    obj/ash/system/tray/ash.actionable_view.o $
+    obj/ash/system/tray/ash.default_system_tray_delegate.o $
+    obj/ash/system/tray/ash.fixed_sized_image_view.o $
+    obj/ash/system/tray/ash.fixed_sized_scroll_view.o $
+    obj/ash/system/tray/ash.hover_highlight_view.o $
+    obj/ash/system/tray/ash.special_popup_row.o $
+    obj/ash/system/tray/ash.system_tray.o $
+    obj/ash/system/tray/ash.system_tray_bubble.o $
+    obj/ash/system/tray/ash.system_tray_delegate.o $
+    obj/ash/system/tray/ash.system_tray_item.o $
+    obj/ash/system/tray/ash.system_tray_notifier.o $
+    obj/ash/system/tray/ash.throbber_view.o $
+    obj/ash/system/tray/ash.tray_background_view.o $
+    obj/ash/system/tray/ash.tray_bar_button_with_title.o $
+    obj/ash/system/tray/ash.tray_bubble_wrapper.o $
+    obj/ash/system/tray/ash.tray_constants.o $
+    obj/ash/system/tray/ash.tray_details_view.o $
+    obj/ash/system/tray/ash.tray_empty.o $
+    obj/ash/system/tray/ash.tray_event_filter.o $
+    obj/ash/system/tray/ash.tray_image_item.o $
+    obj/ash/system/tray/ash.tray_item_more.o $
+    obj/ash/system/tray/ash.tray_item_view.o $
+    obj/ash/system/tray/ash.tray_notification_view.o $
+    obj/ash/system/tray/ash.tray_popup_header_button.o $
+    obj/ash/system/tray/ash.tray_popup_item_container.o $
+    obj/ash/system/tray/ash.tray_popup_label_button.o $
+    obj/ash/system/tray/ash.tray_popup_label_button_border.o $
+    obj/ash/system/tray/ash.tray_utils.o $
+    obj/ash/system/ash.tray_accessibility.o $
+    obj/ash/system/ash.tray_update.o $
+    obj/ash/system/user/ash.button_from_view.o $
+    obj/ash/system/user/ash.login_status.o $
+    obj/ash/system/user/ash.rounded_image_view.o $
+    obj/ash/system/user/ash.tray_user.o $
+    obj/ash/system/user/ash.tray_user_separator.o $
+    obj/ash/system/user/ash.user_card_view.o $
+    obj/ash/system/user/ash.user_view.o $
+    obj/ash/system/web_notification/ash.ash_popup_alignment_delegate.o $
+    obj/ash/system/web_notification/ash.web_notification_tray.o $
+    obj/ash/touch/ash.touch_hud_debug.o $
+    obj/ash/touch/ash.touch_hud_projection.o $
+    obj/ash/touch/ash.touch_observer_hud.o obj/ash/touch/ash.touch_uma.o $
+    obj/ash/utility/ash.partial_screenshot_controller.o $
+    obj/ash/wm/ash.always_on_top_controller.o $
+    obj/ash/wm/ash.app_list_controller.o obj/ash/wm/ash.ash_focus_rules.o $
+    obj/ash/wm/ash.ash_native_cursor_manager.o $
+    obj/ash/wm/ash.coordinate_conversion.o obj/ash/wm/ash.default_state.o $
+    obj/ash/wm/ash.default_window_resizer.o obj/ash/wm/ash.dim_window.o $
+    obj/ash/wm/dock/ash.docked_window_layout_manager.o $
+    obj/ash/wm/dock/ash.docked_window_resizer.o $
+    obj/ash/wm/ash.drag_details.o obj/ash/wm/ash.drag_window_controller.o $
+    obj/ash/wm/ash.drag_window_resizer.o obj/ash/wm/ash.event_client_impl.o $
+    obj/ash/wm/gestures/ash.long_press_affordance_handler.o $
+    obj/ash/wm/gestures/ash.overview_gesture_handler.o $
+    obj/ash/wm/gestures/ash.shelf_gesture_handler.o $
+    obj/ash/wm/ash.immersive_fullscreen_controller.o $
+    obj/ash/wm/ash.immersive_revealed_lock.o $
+    obj/ash/wm/ash.lock_layout_manager.o $
+    obj/ash/wm/ash.lock_state_controller.o $
+    obj/ash/wm/ash.lock_window_state.o $
+    obj/ash/wm/maximize_mode/ash.maximize_mode_controller.o $
+    obj/ash/wm/maximize_mode/ash.maximize_mode_window_manager.o $
+    obj/ash/wm/maximize_mode/ash.maximize_mode_window_state.o $
+    obj/ash/wm/maximize_mode/ash.scoped_disable_internal_mouse_and_keyboard_x11.o $
+    obj/ash/wm/maximize_mode/ash.workspace_backdrop_delegate.o $
+    obj/ash/wm/ash.mru_window_tracker.o $
+    obj/ash/wm/ash.overlay_event_filter.o $
+    obj/ash/wm/overview/ash.scoped_overview_animation_settings.o $
+    obj/ash/wm/overview/ash.scoped_transform_overview_window.o $
+    obj/ash/wm/overview/ash.window_grid.o $
+    obj/ash/wm/overview/ash.window_selector.o $
+    obj/ash/wm/overview/ash.window_selector_controller.o $
+    obj/ash/wm/overview/ash.window_selector_item.o $
+    obj/ash/wm/panels/ash.attached_panel_window_targeter.o $
+    obj/ash/wm/panels/ash.panel_frame_view.o $
+    obj/ash/wm/panels/ash.panel_layout_manager.o $
+    obj/ash/wm/panels/ash.panel_window_event_handler.o $
+    obj/ash/wm/panels/ash.panel_window_resizer.o $
+    obj/ash/wm/ash.power_button_controller.o $
+    obj/ash/wm/ash.resize_handle_window_targeter.o $
+    obj/ash/wm/ash.resize_shadow.o $
+    obj/ash/wm/ash.resize_shadow_controller.o $
+    obj/ash/wm/ash.root_window_layout_manager.o $
+    obj/ash/wm/ash.screen_dimmer.o obj/ash/wm/ash.session_state_animator.o $
+    obj/ash/wm/ash.session_state_animator_impl.o $
+    obj/ash/wm/ash.stacking_controller.o $
+    obj/ash/wm/ash.status_area_layout_manager.o $
+    obj/ash/wm/ash.system_background_controller.o $
+    obj/ash/wm/ash.system_gesture_event_filter.o $
+    obj/ash/wm/ash.system_modal_container_event_filter.o $
+    obj/ash/wm/ash.system_modal_container_layout_manager.o $
+    obj/ash/wm/ash.toplevel_window_event_handler.o $
+    obj/ash/wm/ash.video_detector.o obj/ash/wm/ash.window_animations.o $
+    obj/ash/wm/ash.window_cycle_controller.o $
+    obj/ash/wm/ash.window_cycle_list.o obj/ash/wm/ash.window_positioner.o $
+    obj/ash/wm/ash.window_properties.o obj/ash/wm/ash.window_resizer.o $
+    obj/ash/wm/ash.window_state.o obj/ash/wm/ash.window_state_delegate.o $
+    obj/ash/wm/ash.window_state_util.o obj/ash/wm/ash.window_util.o $
+    obj/ash/wm/ash.wm_event.o obj/ash/wm/ash.wm_types.o $
+    obj/ash/wm/workspace/ash.magnetism_matcher.o $
+    obj/ash/wm/workspace/ash.multi_window_resize_controller.o $
+    obj/ash/wm/workspace/ash.phantom_window_controller.o $
+    obj/ash/wm/workspace/ash.two_step_edge_cycler.o $
+    obj/ash/wm/workspace/ash.workspace_event_handler.o $
+    obj/ash/wm/workspace/ash.workspace_layout_manager.o $
+    obj/ash/wm/workspace/ash.workspace_window_resizer.o $
+    obj/ash/wm/ash.workspace_controller.o || obj/ash/ash.actions_depends.stamp

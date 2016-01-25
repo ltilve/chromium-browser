@@ -4,6 +4,7 @@
 
 #include "ash/accelerators/accelerator_table.h"
 
+#include "ash/strings/grit/ash_strings.h"
 #include "base/basictypes.h"
 
 namespace ash {
@@ -53,7 +54,7 @@ const AcceleratorData kAcceleratorData[] = {
     MAGNIFY_SCREEN_ZOOM_OUT},
   { true, ui::VKEY_BRIGHTNESS_UP, ui::EF_CONTROL_DOWN | ui::EF_ALT_DOWN,
     MAGNIFY_SCREEN_ZOOM_IN},
-  { true, ui::VKEY_L, ui::EF_SHIFT_DOWN | ui::EF_CONTROL_DOWN, LOCK_SCREEN },
+  { true, ui::VKEY_L, ui::EF_COMMAND_DOWN, LOCK_SCREEN },
   // The lock key on Chrome OS keyboards produces F13 scancodes.
   { true, ui::VKEY_F13, ui::EF_NONE, LOCK_PRESSED },
   { false, ui::VKEY_F13, ui::EF_NONE, LOCK_RELEASED },
@@ -100,6 +101,12 @@ const AcceleratorData kAcceleratorData[] = {
   { true, ui::VKEY_VOLUME_MUTE, ui::EF_NONE, VOLUME_MUTE },
   { true, ui::VKEY_VOLUME_DOWN, ui::EF_NONE, VOLUME_DOWN },
   { true, ui::VKEY_VOLUME_UP, ui::EF_NONE, VOLUME_UP },
+  { true, ui::VKEY_ESCAPE, ui::EF_COMMAND_DOWN, SHOW_TASK_MANAGER },
+#else
+  // This key has been deprecated on CrOS. It is instead included below in the
+  // |kDeprecatedAccelerators|, and above in the CrOS accelerators as
+  // Search+Esc.
+  { true, ui::VKEY_ESCAPE, ui::EF_SHIFT_DOWN, SHOW_TASK_MANAGER },
 #endif  // defined(OS_CHROMEOS)
   { true, ui::VKEY_I, ui::EF_SHIFT_DOWN | ui::EF_ALT_DOWN, OPEN_FEEDBACK_PAGE },
 #if !defined(OS_WIN)
@@ -140,7 +147,6 @@ const AcceleratorData kAcceleratorData[] = {
     SHOW_MESSAGE_CENTER_BUBBLE },
   { true, ui::VKEY_S, ui::EF_SHIFT_DOWN | ui::EF_ALT_DOWN,
     SHOW_SYSTEM_TRAY_BUBBLE },
-  { true, ui::VKEY_ESCAPE, ui::EF_SHIFT_DOWN, SHOW_TASK_MANAGER },
   { true, ui::VKEY_1, ui::EF_ALT_DOWN, LAUNCH_APP_0 },
   { true, ui::VKEY_2, ui::EF_ALT_DOWN, LAUNCH_APP_1 },
   { true, ui::VKEY_3, ui::EF_ALT_DOWN, LAUNCH_APP_2 },
@@ -177,52 +183,99 @@ const AcceleratorData kAcceleratorData[] = {
 
 const size_t kAcceleratorDataLength = arraysize(kAcceleratorData);
 
+// Instructions for how to deprecate and replace an Accelerator:
+//
+// 1- Replace the old deprecated accelerator from the above list with the new
+//    accelerator that will take its place.
+// 2- Add an entry for it in the following |kDeprecatedAccelerators| list.
+// 3- That entry should contain the following:
+//    - The deprecated accelerator data you removed from above.
+//    - Define a histogram for this action in |histograms.xml| in the form
+//      "Ash.Accelerators.Deprecated.{ActionName}" and include the name of this
+//      histogram in this entry. This name will be used as the ID of the
+//      notification to be shown to the user. This is to prevent duplication of
+//      same notification.
+//    - The ID of the localized notification message to give the users telling
+//      them about the deprecation (Add one in |ash_chromeos_strings.grdp|.
+//      Search for the comment <!-- Deprecated Accelerators Messages -->).
+//    - {true or false} whether the deprecated accelerator is still enabled (we
+//      don't disable a deprecated accelerator abruptly).
+// 4- Don't forget to update the keyboard overlay.
+#if defined(OS_CHROMEOS)
+
+const DeprecatedAcceleratorData kDeprecatedAccelerators[] = {
+  {
+    { true, ui::VKEY_L, ui::EF_SHIFT_DOWN | ui::EF_CONTROL_DOWN, LOCK_SCREEN },
+    "Ash.Accelerators.Deprecated.LockScreen",
+    IDS_DEPRECATED_LOCK_SCREEN_MSG,
+    true
+  },
+  {
+    { true, ui::VKEY_ESCAPE, ui::EF_SHIFT_DOWN, SHOW_TASK_MANAGER },
+    "Ash.Accelerators.Deprecated.ShowTaskManager",
+    IDS_DEPRECATED_SHOW_TASK_MANAGER_MSG,
+    true
+  },
+};
+
+const size_t kDeprecatedAcceleratorsLength = arraysize(kDeprecatedAccelerators);
+
+#endif  // defined(OS_CHROMEOS)
+
 const AcceleratorData kDebugAcceleratorData[] = {
 #if defined(OS_CHROMEOS)
-  // Extra shortcut for debug build to control magnifier on linux desktop.
-  { true, ui::VKEY_BRIGHTNESS_DOWN, ui::EF_CONTROL_DOWN,
-    MAGNIFY_SCREEN_ZOOM_OUT},
-  { true, ui::VKEY_BRIGHTNESS_UP, ui::EF_CONTROL_DOWN, MAGNIFY_SCREEN_ZOOM_IN},
-  // Extra shortcuts to lock the screen on linux desktop.
-  { true, ui::VKEY_L, ui::EF_ALT_DOWN, LOCK_SCREEN },
-  { true, ui::VKEY_POWER, ui::EF_SHIFT_DOWN, LOCK_PRESSED },
-  { false, ui::VKEY_POWER, ui::EF_SHIFT_DOWN, LOCK_RELEASED },
-  { true, ui::VKEY_D, ui::EF_CONTROL_DOWN | ui::EF_SHIFT_DOWN,
-    DEBUG_ADD_REMOVE_DISPLAY },
-  { true, ui::VKEY_M, ui::EF_CONTROL_DOWN | ui::EF_SHIFT_DOWN,
-    TOGGLE_MIRROR_MODE },
-  { true, ui::VKEY_W, ui::EF_CONTROL_DOWN | ui::EF_ALT_DOWN, TOGGLE_WIFI },
-  // Extra shortcut for display swapping as alt-f4 is taken on linux desktop.
-  { true, ui::VKEY_S, ui::EF_SHIFT_DOWN | ui::EF_CONTROL_DOWN,
-    SWAP_PRIMARY_DISPLAY },
+    // Extra shortcut for debug build to control magnifier on linux desktop.
+    {true, ui::VKEY_BRIGHTNESS_DOWN, ui::EF_CONTROL_DOWN,
+     MAGNIFY_SCREEN_ZOOM_OUT},
+    {true, ui::VKEY_BRIGHTNESS_UP, ui::EF_CONTROL_DOWN, MAGNIFY_SCREEN_ZOOM_IN},
+    // Extra shortcuts to lock the screen on linux desktop.
+    {true, ui::VKEY_L, ui::EF_ALT_DOWN, LOCK_SCREEN},
+    {true, ui::VKEY_POWER, ui::EF_SHIFT_DOWN, LOCK_PRESSED},
+    {false, ui::VKEY_POWER, ui::EF_SHIFT_DOWN, LOCK_RELEASED},
+    {true, ui::VKEY_D, ui::EF_CONTROL_DOWN | ui::EF_SHIFT_DOWN,
+     DEBUG_ADD_REMOVE_DISPLAY},
+    {true, ui::VKEY_J, ui::EF_CONTROL_DOWN | ui::EF_SHIFT_DOWN,
+     DEBUG_TOGGLE_UNIFIED_DESKTOP},
+    {true, ui::VKEY_M, ui::EF_CONTROL_DOWN | ui::EF_SHIFT_DOWN,
+     TOGGLE_MIRROR_MODE},
+    {true, ui::VKEY_W, ui::EF_CONTROL_DOWN | ui::EF_ALT_DOWN, TOGGLE_WIFI},
+    // Extra shortcut for display swapping as alt-f4 is taken on linux desktop.
+    {true, ui::VKEY_S, ui::EF_SHIFT_DOWN | ui::EF_CONTROL_DOWN,
+     SWAP_PRIMARY_DISPLAY},
 #endif
-  // Extra shortcut to rotate/scale up/down the screen on linux desktop.
-  { true, ui::VKEY_R,
-    ui::EF_SHIFT_DOWN | ui::EF_CONTROL_DOWN | ui::EF_ALT_DOWN, ROTATE_SCREEN },
-  // For testing on systems where Alt-Tab is already mapped.
-  { true, ui::VKEY_W, ui::EF_ALT_DOWN, CYCLE_FORWARD_MRU },
-  { true, ui::VKEY_F11, ui::EF_CONTROL_DOWN,
-    DEBUG_TOGGLE_ROOT_WINDOW_FULL_SCREEN },
-  { true, ui::VKEY_W, ui::EF_SHIFT_DOWN | ui::EF_ALT_DOWN,
-      CYCLE_BACKWARD_MRU },
-  { true, ui::VKEY_B, ui::EF_CONTROL_DOWN | ui::EF_ALT_DOWN,
-    DEBUG_TOGGLE_DESKTOP_BACKGROUND_MODE },
-  { true, ui::VKEY_F, ui::EF_SHIFT_DOWN | ui::EF_CONTROL_DOWN,
-    TOGGLE_FULLSCREEN },
-  { true, ui::VKEY_L, ui::EF_SHIFT_DOWN | ui::EF_CONTROL_DOWN | ui::EF_ALT_DOWN,
-    DEBUG_PRINT_LAYER_HIERARCHY },
-  { true, ui::VKEY_V, ui::EF_SHIFT_DOWN | ui::EF_CONTROL_DOWN | ui::EF_ALT_DOWN,
-    DEBUG_PRINT_VIEW_HIERARCHY },
-  { true, ui::VKEY_W, ui::EF_SHIFT_DOWN | ui::EF_CONTROL_DOWN | ui::EF_ALT_DOWN,
-    DEBUG_PRINT_WINDOW_HIERARCHY },
-  { true, ui::VKEY_S, ui::EF_SHIFT_DOWN | ui::EF_CONTROL_DOWN | ui::EF_ALT_DOWN,
-    DEBUG_TOGGLE_DEVICE_SCALE_FACTOR },
-  { true, ui::VKEY_B, ui::EF_SHIFT_DOWN | ui::EF_CONTROL_DOWN | ui::EF_ALT_DOWN,
-    DEBUG_TOGGLE_SHOW_DEBUG_BORDERS },
-  { true, ui::VKEY_F, ui::EF_SHIFT_DOWN | ui::EF_CONTROL_DOWN | ui::EF_ALT_DOWN,
-    DEBUG_TOGGLE_SHOW_FPS_COUNTER },
-  { true, ui::VKEY_P, ui::EF_SHIFT_DOWN | ui::EF_CONTROL_DOWN | ui::EF_ALT_DOWN,
-    DEBUG_TOGGLE_SHOW_PAINT_RECTS },
+    // Extra shortcut to rotate/scale up/down the screen on linux desktop.
+    {true, ui::VKEY_R,
+     ui::EF_SHIFT_DOWN | ui::EF_CONTROL_DOWN | ui::EF_ALT_DOWN, ROTATE_SCREEN},
+    // For testing on systems where Alt-Tab is already mapped.
+    {true, ui::VKEY_W, ui::EF_ALT_DOWN, CYCLE_FORWARD_MRU},
+    {true, ui::VKEY_F11, ui::EF_CONTROL_DOWN,
+     DEBUG_TOGGLE_ROOT_WINDOW_FULL_SCREEN},
+    {true, ui::VKEY_W, ui::EF_SHIFT_DOWN | ui::EF_ALT_DOWN, CYCLE_BACKWARD_MRU},
+    {true, ui::VKEY_B, ui::EF_CONTROL_DOWN | ui::EF_ALT_DOWN,
+     DEBUG_TOGGLE_DESKTOP_BACKGROUND_MODE},
+    {true, ui::VKEY_F, ui::EF_SHIFT_DOWN | ui::EF_CONTROL_DOWN,
+     TOGGLE_FULLSCREEN},
+    {true, ui::VKEY_L,
+     ui::EF_SHIFT_DOWN | ui::EF_CONTROL_DOWN | ui::EF_ALT_DOWN,
+     DEBUG_PRINT_LAYER_HIERARCHY},
+    {true, ui::VKEY_V,
+     ui::EF_SHIFT_DOWN | ui::EF_CONTROL_DOWN | ui::EF_ALT_DOWN,
+     DEBUG_PRINT_VIEW_HIERARCHY},
+    {true, ui::VKEY_W,
+     ui::EF_SHIFT_DOWN | ui::EF_CONTROL_DOWN | ui::EF_ALT_DOWN,
+     DEBUG_PRINT_WINDOW_HIERARCHY},
+    {true, ui::VKEY_S,
+     ui::EF_SHIFT_DOWN | ui::EF_CONTROL_DOWN | ui::EF_ALT_DOWN,
+     DEBUG_TOGGLE_DEVICE_SCALE_FACTOR},
+    {true, ui::VKEY_B,
+     ui::EF_SHIFT_DOWN | ui::EF_CONTROL_DOWN | ui::EF_ALT_DOWN,
+     DEBUG_TOGGLE_SHOW_DEBUG_BORDERS},
+    {true, ui::VKEY_F,
+     ui::EF_SHIFT_DOWN | ui::EF_CONTROL_DOWN | ui::EF_ALT_DOWN,
+     DEBUG_TOGGLE_SHOW_FPS_COUNTER},
+    {true, ui::VKEY_P,
+     ui::EF_SHIFT_DOWN | ui::EF_CONTROL_DOWN | ui::EF_ALT_DOWN,
+     DEBUG_TOGGLE_SHOW_PAINT_RECTS},
 };
 
 const size_t kDebugAcceleratorDataLength = arraysize(kDebugAcceleratorData);
@@ -255,7 +308,10 @@ const AcceleratorAction kActionsAllowedAtLoginOrLockScreen[] = {
   NEXT_IME,
   PREVIOUS_IME,
   PRINT_UI_HIERARCHIES,
-  ROTATE_WINDOW,
+  ROTATE_SCREEN,
+  SCALE_UI_UP,
+  SCALE_UI_DOWN,
+  SCALE_UI_RESET,
   SHOW_SYSTEM_TRAY_BUBBLE,
   SWITCH_IME,  // Switch to another IME depending on the accelerator.
   TAKE_PARTIAL_SCREENSHOT,
@@ -349,6 +405,8 @@ const AcceleratorAction kNonrepeatableActions[] = {
     SCALE_UI_UP,
     SCALE_UI_DOWN,
     SCALE_UI_RESET,
+    TAKE_PARTIAL_SCREENSHOT,
+    TAKE_SCREENSHOT,
     TOGGLE_FULLSCREEN,
     TOGGLE_MAXIMIZED,
     WINDOW_MINIMIZE,
@@ -416,5 +474,33 @@ const AcceleratorAction kActionsNeedingWindow[] = {
 };
 
 const size_t kActionsNeedingWindowLength = arraysize(kActionsNeedingWindow);
+
+const AcceleratorAction kActionsKeepingMenuOpen[] = {
+    MEDIA_NEXT_TRACK,
+    MEDIA_PLAY_PAUSE,
+    MEDIA_PREV_TRACK,
+    NEXT_IME,
+    PREVIOUS_IME,
+    PRINT_UI_HIERARCHIES,
+    SWITCH_IME,
+    TAKE_PARTIAL_SCREENSHOT,
+    TAKE_SCREENSHOT,
+#if defined(OS_CHROMEOS)
+    BRIGHTNESS_DOWN,
+    BRIGHTNESS_UP,
+    DISABLE_CAPS_LOCK,
+    KEYBOARD_BRIGHTNESS_DOWN,
+    KEYBOARD_BRIGHTNESS_UP,
+    SILENCE_SPOKEN_FEEDBACK,
+    TOGGLE_CAPS_LOCK,
+    TOGGLE_SPOKEN_FEEDBACK,
+    TOGGLE_WIFI,
+    VOLUME_DOWN,
+    VOLUME_MUTE,
+    VOLUME_UP,
+#endif  // defined(OS_CHROMEOS)
+};
+
+const size_t kActionsKeepingMenuOpenLength = arraysize(kActionsKeepingMenuOpen);
 
 }  // namespace ash

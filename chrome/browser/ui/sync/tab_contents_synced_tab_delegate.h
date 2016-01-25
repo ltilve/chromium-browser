@@ -7,7 +7,7 @@
 
 #include "base/compiler_specific.h"
 #include "chrome/browser/sync/glue/synced_tab_delegate.h"
-#include "components/sessions/session_id.h"
+#include "components/sessions/core/session_id.h"
 #include "content/public/browser/web_contents_user_data.h"
 
 namespace content {
@@ -40,7 +40,6 @@ class TabContentsSyncedTabDelegate
   content::WebContents* GetWebContents() const override;
   int GetSyncId() const override;
   void SetSyncId(int sync_id) override;
-  bool ShouldSync() const override;
 
  private:
   explicit TabContentsSyncedTabDelegate(content::WebContents* web_contents);

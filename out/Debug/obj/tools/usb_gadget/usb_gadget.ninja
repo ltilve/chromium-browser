@@ -1,0 +1,37 @@
+rule $
+    usb_gadget_target_Building_USB_Gadget_ZIP_bundle_ba84ae0789f72a2176fffcffd1770aa9
+  command = cd ../../tools/usb_gadget; python package.py --zip-file $
+      ../../out/Debug/usb_gadget.zip --hash-file $
+      ../../out/Debug/usb_gadget.zip.md5 __init__.py __main__.py $
+      composite_echo_gadget.py composite_gadget.py default_gadget.py $
+      echo_gadget.py gadget.py hid_constants.py hid_descriptors.py $
+      hid_echo_gadget.py hid_gadget.py keyboard_gadget.py linux_gadgetfs.py $
+      mouse_gadget.py msos20_descriptors.py server.py usb_constants.py $
+      usb_descriptors.py
+  description = ACTION usb_gadget: Building USB Gadget ZIP $
+      bundle_ba84ae0789f72a2176fffcffd1770aa9
+  restat = 1
+
+build usb_gadget.zip usb_gadget.zip.md5: $
+    usb_gadget_target_Building_USB_Gadget_ZIP_bundle_ba84ae0789f72a2176fffcffd1770aa9 $
+    ../../tools/usb_gadget/package.py ../../tools/usb_gadget/__init__.py $
+    ../../tools/usb_gadget/__main__.py $
+    ../../tools/usb_gadget/composite_echo_gadget.py $
+    ../../tools/usb_gadget/composite_gadget.py $
+    ../../tools/usb_gadget/default_gadget.py $
+    ../../tools/usb_gadget/echo_gadget.py ../../tools/usb_gadget/gadget.py $
+    ../../tools/usb_gadget/hid_constants.py $
+    ../../tools/usb_gadget/hid_descriptors.py $
+    ../../tools/usb_gadget/hid_echo_gadget.py $
+    ../../tools/usb_gadget/hid_gadget.py $
+    ../../tools/usb_gadget/keyboard_gadget.py $
+    ../../tools/usb_gadget/linux_gadgetfs.py $
+    ../../tools/usb_gadget/mouse_gadget.py $
+    ../../tools/usb_gadget/msos20_descriptors.py $
+    ../../tools/usb_gadget/server.py $
+    ../../tools/usb_gadget/usb_constants.py $
+    ../../tools/usb_gadget/usb_descriptors.py
+
+build obj/tools/usb_gadget/usb_gadget.actions_rules_copies.stamp: stamp $
+    usb_gadget.zip usb_gadget.zip.md5
+

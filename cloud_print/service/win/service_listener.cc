@@ -92,8 +92,10 @@ void ServiceListener::Connect() {
                    SECURITY_SQOS_PRESENT | SECURITY_IDENTIFICATION |
                    FILE_FLAG_OVERLAPPED, NULL));
   if (handle.IsValid()) {
-    channel_ = IPC::Channel::CreateClient(IPC::ChannelHandle(handle.Get()),
-                                          this);
+    // This process never sends or receives brokered attachments, so there's no
+    // need for an attachment broker.
+    channel_ =
+        IPC::Channel::CreateClient(IPC::ChannelHandle(handle.Get()), this);
     channel_->Connect();
   } else {
     ipc_thread_->message_loop()->PostDelayedTask(

@@ -12,6 +12,7 @@
 #include "base/callback.h"
 #include "base/gtest_prod_util.h"
 #include "base/memory/scoped_ptr.h"
+#include "base/memory/scoped_vector.h"
 #include "base/observer_list.h"
 #include "base/prefs/pref_change_registrar.h"
 #include "base/scoped_observer.h"
@@ -30,10 +31,10 @@
 #endif
 
 class Browser;
+class FileDownloader;
 class GoogleServiceAuthError;
 class PermissionRequestCreator;
 class Profile;
-class SupervisedUserBlacklistDownloader;
 class SupervisedUserRegistrationUtility;
 class SupervisedUserServiceObserver;
 class SupervisedUserSettingsService;
@@ -136,6 +137,7 @@ class SupervisedUserService : public KeyedService,
   // mint access tokens for Sync.
   void InitSync(const std::string& refresh_token);
 
+#if !defined(OS_ANDROID) && !defined(OS_IOS)
   // Convenience method that registers this supervised user using
   // |registration_utility| and initializes sync with the returned token.
   // The |callback| will be called when registration is complete,
@@ -146,6 +148,7 @@ class SupervisedUserService : public KeyedService,
       Profile* custodian_profile,
       const std::string& supervised_user_id,
       const AuthErrorCallback& callback);
+#endif
 
   void AddNavigationBlockedCallback(const NavigationBlockedCallback& callback);
   void DidBlockNavigation(content::WebContents* web_contents);
@@ -344,7 +347,7 @@ class SupervisedUserService : public KeyedService,
   bool did_shutdown_;
 
   URLFilterContext url_filter_context_;
-  scoped_ptr<SupervisedUserBlacklistDownloader> blacklist_downloader_;
+  scoped_ptr<FileDownloader> blacklist_downloader_;
 
   scoped_ptr<SupervisedUserWhitelistService> whitelist_service_;
 

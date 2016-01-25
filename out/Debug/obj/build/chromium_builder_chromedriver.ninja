@@ -1,0 +1,8 @@
+build obj/build/chromium_builder_chromedriver.actions_depends.stamp: stamp $
+    chromedriver chromedriver_tests chromedriver_unittests
+
+build obj/build/chromium_builder_chromedriver.compile_depends.stamp: stamp $
+    obj/chrome/chromedriver.compile_depends.stamp $
+    obj/chrome/chromedriver_tests.compile_depends.stamp $
+    obj/chrome/chromedriver_unittests.compile_depends.stamp
+

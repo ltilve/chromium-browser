@@ -103,15 +103,15 @@ Profile* FakeProfile::GetOriginalProfile() {
   return this;
 }
 
-bool FakeProfile::IsSupervised() {
+bool FakeProfile::IsSupervised() const {
   return false;
 }
 
-bool FakeProfile::IsChild() {
+bool FakeProfile::IsChild() const {
   return false;
 }
 
-bool FakeProfile::IsLegacySupervised() {
+bool FakeProfile::IsLegacySupervised() const {
   return false;
 }
 
@@ -140,10 +140,6 @@ net::URLRequestContextGetter* FakeProfile::GetRequestContextForExtensions() {
 }
 
 net::SSLConfigService* FakeProfile::GetSSLConfigService() {
-  return nullptr;
-}
-
-HostContentSettingsMap* FakeProfile::GetHostContentSettingsMap() {
   return nullptr;
 }
 
@@ -191,7 +187,8 @@ chrome_browser_net::Predictor* FakeProfile::GetNetworkPredictor() {
   return nullptr;
 }
 
-DevToolsNetworkController* FakeProfile::GetDevToolsNetworkController() {
+DevToolsNetworkControllerHandle*
+FakeProfile::GetDevToolsNetworkControllerHandle() {
   return nullptr;
 }
 

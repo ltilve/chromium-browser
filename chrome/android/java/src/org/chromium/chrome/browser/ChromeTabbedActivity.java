@@ -9,12 +9,11 @@ import android.app.ActivityManager;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Rect;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -22,9 +21,10 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
-import android.widget.Toast;
 
+import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.base.CommandLine;
+import org.chromium.base.Log;
 import org.chromium.base.MemoryPressureListener;
 import org.chromium.base.TraceEvent;
 import org.chromium.base.VisibleForTesting;
@@ -32,7 +32,6 @@ import org.chromium.base.library_loader.LibraryLoader;
 import org.chromium.base.metrics.RecordHistogram;
 import org.chromium.base.metrics.RecordUserAction;
 import org.chromium.chrome.R;
-import org.chromium.chrome.browser.ContextualMenuBar.ActionBarDelegate;
 import org.chromium.chrome.browser.IntentHandler.IntentHandlerDelegate;
 import org.chromium.chrome.browser.IntentHandler.TabOpenType;
 import org.chromium.chrome.browser.compositor.CompositorViewHolder;
@@ -57,6 +56,7 @@ import org.chromium.chrome.browser.firstrun.FirstRunFlowSequencer;
 import org.chromium.chrome.browser.firstrun.FirstRunSignInProcessor;
 import org.chromium.chrome.browser.firstrun.FirstRunStatus;
 import org.chromium.chrome.browser.metrics.LaunchMetrics;
+import org.chromium.chrome.browser.metrics.StartupMetrics;
 import org.chromium.chrome.browser.metrics.UmaUtils;
 import org.chromium.chrome.browser.ntp.NativePageAssassin;
 import org.chromium.chrome.browser.omaha.OmahaClient;
@@ -66,12 +66,12 @@ import org.chromium.chrome.browser.partnercustomizations.PartnerBrowserCustomiza
 import org.chromium.chrome.browser.preferences.ChromePreferenceManager;
 import org.chromium.chrome.browser.preferences.ConnectionChangeReceiver;
 import org.chromium.chrome.browser.preferences.PrefServiceBridge;
-import org.chromium.chrome.browser.preferences.bandwidth.BandwidthReductionPreferences;
-import org.chromium.chrome.browser.preferences.bandwidth.DataReductionPromoScreen;
+import org.chromium.chrome.browser.preferences.datareduction.DataReductionPreferences;
+import org.chromium.chrome.browser.preferences.datareduction.DataReductionPromoScreen;
 import org.chromium.chrome.browser.signin.SigninPromoScreen;
 import org.chromium.chrome.browser.snackbar.undo.UndoBarPopupController;
-import org.chromium.chrome.browser.sync.SyncController;
 import org.chromium.chrome.browser.tab.ChromeTab;
+import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.tabmodel.ChromeTabCreator;
 import org.chromium.chrome.browser.tabmodel.EmptyTabModelObserver;
 import org.chromium.chrome.browser.tabmodel.TabModel;
@@ -92,13 +92,13 @@ import org.chromium.content.common.ContentSwitches;
 import org.chromium.content_public.browser.LoadUrlParams;
 import org.chromium.ui.base.DeviceFormFactor;
 import org.chromium.ui.base.PageTransition;
+import org.chromium.ui.widget.Toast;
 
 /**
  * This is the main activity for ChromeMobile when not running in document mode.  All the tabs
  * are accessible via a chrome specific tab switching UI.
  */
-public class ChromeTabbedActivity extends ChromeActivity implements ActionBarDelegate,
-        OverviewModeObserver {
+public class ChromeTabbedActivity extends ChromeActivity implements OverviewModeObserver {
 
     private static final int FIRST_RUN_EXPERIENCE_RESULT = 101;
 
@@ -145,8 +145,6 @@ public class ChromeTabbedActivity extends ChromeActivity implements ActionBarDel
     private UndoBarPopupController mUndoBarPopupController;
 
     private LayoutManagerChrome mLayoutManager;
-
-    private View mMenuAnchor;
 
     private ViewGroup mContentContainer;
 
@@ -220,7 +218,7 @@ public class ChromeTabbedActivity extends ChromeActivity implements ActionBarDel
                 public void didAddTab(Tab tab, TabLaunchType type) {
                     if (type == TabLaunchType.FROM_LONGPRESS_BACKGROUND
                             && !DeviceClassManager.enableAnimations(getApplicationContext())) {
-                        Toast.makeText(getBaseContext(),
+                        Toast.makeText(ChromeTabbedActivity.this,
                                 R.string.open_in_new_tab_toast,
                                 Toast.LENGTH_SHORT).show();
                     }
@@ -241,7 +239,7 @@ public class ChromeTabbedActivity extends ChromeActivity implements ActionBarDel
 
     private void refreshSignIn() {
         if (mIsOnFirstRun) return;
-        android.util.Log.i(TAG, "in refreshSignIn before starting the sign-in processor");
+        Log.i(TAG, "in refreshSignIn before starting the sign-in processor");
         FirstRunSignInProcessor.start(this);
     }
 
@@ -288,7 +286,7 @@ public class ChromeTabbedActivity extends ChromeActivity implements ActionBarDel
             super.finishNativeInitialization();
 
             if (getActivityTab() != null) {
-                BandwidthReductionPreferences.launchDataReductionSSLInfoBar(
+                DataReductionPreferences.launchDataReductionSSLInfoBar(
                         this, getActivityTab().getWebContents());
             }
         } finally {
@@ -300,6 +298,7 @@ public class ChromeTabbedActivity extends ChromeActivity implements ActionBarDel
     public void onResumeWithNative() {
         super.onResumeWithNative();
         CookiesFetcher.restoreCookies(this);
+        StartupMetrics.getInstance().recordHistogram(false);
     }
 
     @Override
@@ -318,6 +317,13 @@ public class ChromeTabbedActivity extends ChromeActivity implements ActionBarDel
         } catch (IllegalArgumentException e) {
             // This may happen when onStop get called very early in UI test.
         }
+        StartupMetrics.getInstance().recordHistogram(true);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        StartupMetrics.getInstance().updateIntent(getIntent());
     }
 
     @Override
@@ -403,7 +409,7 @@ public class ChromeTabbedActivity extends ChromeActivity implements ActionBarDel
                 mLayoutManager = new LayoutManagerChromePhone(compositorViewHolder,
                         new StackLayoutFactory());
             }
-
+            mLayoutManager.setEnableAnimations(DeviceClassManager.enableAnimations(this));
             mLayoutManager.addOverviewModeObserver(this);
 
             // TODO(yusufo): get rid of findViewById(R.id.url_bar).
@@ -429,7 +435,10 @@ public class ChromeTabbedActivity extends ChromeActivity implements ActionBarDel
 
             mFindToolbarManager = new FindToolbarManager(this, getTabModelSelector(),
                     getToolbarManager()
-                            .getContextualMenuBar().getCustomSelectionActionModeCallback());
+                            .getActionModeController().getActionModeCallback());
+            if (getContextualSearchManager() != null) {
+                getContextualSearchManager().setFindToolbarManager(mFindToolbarManager);
+            }
 
             OnClickListener tabSwitcherClickHandler = new OnClickListener() {
                 @Override
@@ -459,8 +468,6 @@ public class ChromeTabbedActivity extends ChromeActivity implements ActionBarDel
             getToolbarManager().initializeWithNative(mTabModelSelectorImpl, getFullscreenManager(),
                     mFindToolbarManager, mLayoutManager, mLayoutManager,
                     tabSwitcherClickHandler, newTabClickHandler, bookmarkClickHandler, null);
-
-            mMenuAnchor = findViewById(R.id.menu_anchor_stub);
 
             removeWindowBackground();
 
@@ -562,8 +569,7 @@ public class ChromeTabbedActivity extends ChromeActivity implements ActionBarDel
     private void createInitialTab() {
         String url = HomepageManager.getHomepageUri(getApplicationContext());
         if (TextUtils.isEmpty(url)) url = UrlConstants.NTP_URL;
-        getTabCreator(false).createNewTab(
-                new LoadUrlParams(url), TabLaunchType.FROM_MENU_OR_OVERVIEW, null);
+        getTabCreator(false).launchUrl(url, TabLaunchType.FROM_MENU_OR_OVERVIEW);
     }
 
     @Override
@@ -619,7 +625,7 @@ public class ChromeTabbedActivity extends ChromeActivity implements ActionBarDel
         @Override
         public void processUrlViewIntent(String url, String referer, String headers,
                 TabOpenType tabOpenType, String externalAppId, int tabIdToBringToFront,
-                Intent intent) {
+                boolean hasUserGesture, Intent intent) {
             TabModel tabModel = getCurrentTabModel();
             switch (tabOpenType) {
                 case REUSE_URL_MATCHING_TAB_ELSE_NEW_TAB:
@@ -640,7 +646,7 @@ public class ChromeTabbedActivity extends ChromeActivity implements ActionBarDel
                     }
                     RecordUserAction.record("MobileReceivedExternalIntent");
                     int shortcutSource = intent.getIntExtra(
-                            ShortcutHelper.EXTRA_SOURCE, ShortcutHelper.SOURCE_UNKNOWN);
+                            ShortcutHelper.EXTRA_SOURCE, ShortcutSource.UNKNOWN);
                     LaunchMetrics.recordHomeScreenLaunchIntoTab(url, shortcutSource);
                     break;
                 case REUSE_APP_ID_MATCHING_TAB_ELSE_NEW_TAB:
@@ -673,6 +679,7 @@ public class ChromeTabbedActivity extends ChromeActivity implements ActionBarDel
                         int transitionType = PageTransition.LINK | PageTransition.FROM_API;
                         LoadUrlParams loadUrlParams = new LoadUrlParams(url, transitionType);
                         loadUrlParams.setIntentReceivedTimestamp(mIntentHandlingTimeMs);
+                        loadUrlParams.setHasUserGesture(hasUserGesture);
                         currentTab.loadUrl(loadUrlParams);
                         RecordUserAction.record("MobileTabClobbered");
                     } else {
@@ -753,7 +760,7 @@ public class ChromeTabbedActivity extends ChromeActivity implements ActionBarDel
                     ChromeTabbedActivity.INTENT_EXTRA_TEST_RENDER_PROCESS_LIMIT, -1);
             if (value != -1) {
                 String[] args = new String[1];
-                args[0] = "--" + ChromeSwitches.RENDER_PROCESS_LIMIT
+                args[0] = "--" + ContentSwitches.RENDER_PROCESS_LIMIT
                         + "=" + Integer.toString(value);
                 commandLine.appendSwitchesAndArguments(args);
             }
@@ -812,7 +819,6 @@ public class ChromeTabbedActivity extends ChromeActivity implements ActionBarDel
      * been exposed to the ToS and Privacy Notice.
      */
     private void launchFirstRunExperience() {
-        SyncController.get(this).setDelaySync(false);
         if (mIsOnFirstRun) {
             mTabModelSelectorImpl.clearState();
             return;
@@ -820,10 +826,10 @@ public class ChromeTabbedActivity extends ChromeActivity implements ActionBarDel
 
         final boolean isIntentActionMain = getIntent() != null
                 && TextUtils.equals(getIntent().getAction(), Intent.ACTION_MAIN);
-        android.util.Log.i(TAG, "begin FirstRunFlowSequencer.checkIfFirstRunIsNecessary");
+        Log.i(TAG, "begin FirstRunFlowSequencer.checkIfFirstRunIsNecessary");
         final Intent freIntent = FirstRunFlowSequencer.checkIfFirstRunIsNecessary(
                 this, isIntentActionMain);
-        android.util.Log.i(TAG, "end FirstRunFlowSequencer.checkIfFirstRunIsNecessary");
+        Log.i(TAG, "end FirstRunFlowSequencer.checkIfFirstRunIsNecessary");
         if (freIntent == null) return;
 
         mIsOnFirstRun = true;
@@ -925,6 +931,7 @@ public class ChromeTabbedActivity extends ChromeActivity implements ActionBarDel
                 getCompositorViewHolder().hideKeyboard(new Runnable() {
                     @Override
                     public void run() {
+                        StartupMetrics.getInstance().recordOpenedBookmarks();
                         if (!EnhancedBookmarkUtils.showEnhancedBookmarkIfEnabled(
                                 ChromeTabbedActivity.this)) {
                             currentTab.loadUrl(new LoadUrlParams(
@@ -961,8 +968,6 @@ public class ChromeTabbedActivity extends ChromeActivity implements ActionBarDel
             } else {
                 RecordUserAction.record("MobileShortcutFindInPage");
             }
-        } else if (id == R.id.show_menu) {
-            showMenu();
         } else if (id == R.id.focus_url_bar) {
             boolean isUrlBarVisible = !mLayoutManager.overviewVisible()
                     && (!isTablet() || getCurrentTabModel().getCount() != 0);
@@ -1000,14 +1005,7 @@ public class ChromeTabbedActivity extends ChromeActivity implements ActionBarDel
             return true;
         }
 
-        if (isFullscreenVideoPlaying()) {
-            ContentVideoView.getContentVideoView().exitFullscreen(false);
-            Log.i(TAG, "handleBackPressed() - exit fullscreen video");
-            return true;
-        }
-
-        if (getFullscreenManager().getPersistentFullscreenMode()) {
-            getFullscreenManager().setPersistentFullscreenMode(false);
+        if (exitFullscreenIfShowing()) {
             Log.i(TAG, "handleBackPressed() - exit fullscreen");
             return true;
         }
@@ -1149,13 +1147,23 @@ public class ChromeTabbedActivity extends ChromeActivity implements ActionBarDel
     @Override
     public void onDestroyInternal() {
         if (mLayoutManager != null) mLayoutManager.removeOverviewModeObserver(this);
-        if (mTabModelSelectorTabObserver != null) mTabModelSelectorTabObserver.destroy();
+
+        if (mTabModelSelectorTabObserver != null) {
+            mTabModelSelectorTabObserver.destroy();
+            mTabModelSelectorTabObserver = null;
+        }
+
         if (mTabModelObserver != null) {
             for (TabModel model : mTabModelSelectorImpl.getModels()) {
                 model.removeObserver(mTabModelObserver);
             }
         }
-        if (mUndoBarPopupController != null) mUndoBarPopupController.destroy();
+
+        if (mUndoBarPopupController != null) {
+            mUndoBarPopupController.destroy();
+            mUndoBarPopupController = null;
+        }
+
         super.onDestroyInternal();
     }
 
@@ -1178,7 +1186,9 @@ public class ChromeTabbedActivity extends ChromeActivity implements ActionBarDel
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (!mUIInitialized) return false;
+        if (!mUIInitialized) {
+            return super.onKeyDown(keyCode, event);
+        }
         boolean isCurrentTabVisible = !mLayoutManager.overviewVisible()
                 && (!isTablet() || getCurrentTabModel().getCount() != 0);
         return KeyboardShortcuts.onKeyDown(event, this, isCurrentTabVisible, true)
@@ -1190,35 +1200,6 @@ public class ChromeTabbedActivity extends ChromeActivity implements ActionBarDel
             mConnectionChangeReceiver = new ConnectionChangeReceiver();
         }
         return mConnectionChangeReceiver;
-    }
-
-    /**
-     * Sets the top margin of the control container.
-     *
-     * @param margin The new top margin of the control container.
-     */
-    @Override
-    public void setControlTopMargin(int margin) {
-        FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams)
-                mControlContainer.getLayoutParams();
-        lp.topMargin = margin;
-        mControlContainer.setLayoutParams(lp);
-    }
-
-    /**
-     * @return The top margin of the control container.
-     */
-    @Override
-    public int getControlTopMargin() {
-        FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams)
-                mControlContainer.getLayoutParams();
-        return lp.topMargin;
-    }
-
-    @Override
-    public void setActionBarBackgroundVisibility(boolean visible) {
-        int visibility = visible ? View.VISIBLE : View.GONE;
-        findViewById(R.id.action_bar_black_background).setVisibility(visibility);
     }
 
     @VisibleForTesting
@@ -1262,21 +1243,10 @@ public class ChromeTabbedActivity extends ChromeActivity implements ActionBarDel
         return super.shouldShowAppMenu();
     }
 
-    private boolean showMenu() {
-        if (!mUIInitialized || isFullscreenVideoPlaying()) return false;
-
-        // The following will deduct the status bar height from the screen height and this
-        // is used as the height for the menu anchor. This fixes the bug where clicking
-        // inside a search box on google.com causes the menu to appear on top as keyboard
-        // reduces the view height.
-        int displayHeight = getResources().getDisplayMetrics().heightPixels;
-
-        Rect rect = new Rect();
-        this.getWindow().getDecorView().getWindowVisibleDisplayFrame(rect);
-        int statusBarHeight = rect.top;
-        mMenuAnchor.setY((displayHeight - statusBarHeight));
-        getAppMenuHandler().showAppMenu(mMenuAnchor, true, false);
-        return true;
+    @Override
+    protected void showAppMenuForKeyboardEvent() {
+        if (!mUIInitialized || isFullscreenVideoPlaying()) return;
+        super.showAppMenuForKeyboardEvent();
     }
 
     private boolean isFullscreenVideoPlaying() {
@@ -1304,16 +1274,27 @@ public class ChromeTabbedActivity extends ChromeActivity implements ActionBarDel
     public void onOverviewModeStartedShowing(boolean showToolbar) {
         if (mFindToolbarManager != null) mFindToolbarManager.hideToolbar();
         if (getAssistStatusHandler() != null) getAssistStatusHandler().updateAssistState();
+        ApiCompatibilityUtils.setStatusBarColor(getWindow(), Color.BLACK);
+        StartupMetrics.getInstance().recordOpenedTabSwitcher();
     }
 
     @Override
     public void onOverviewModeFinishedShowing() {}
 
     @Override
-    public void onOverviewModeStartedHiding(boolean showToolbar, boolean delayAnimation) {}
+    public void onOverviewModeStartedHiding(boolean showToolbar, boolean delayAnimation) {
+    }
 
     @Override
     public void onOverviewModeFinishedHiding() {
         if (getAssistStatusHandler() != null) getAssistStatusHandler().updateAssistState();
+        if (getActivityTab() != null) {
+            setStatusBarColor(getActivityTab(), getActivityTab().getThemeColor());
+        }
+    }
+
+    @Override
+    protected void setStatusBarColor(Tab tab, int color) {
+        super.setStatusBarColor(tab, isInOverviewMode() ? Color.BLACK : color);
     }
 }

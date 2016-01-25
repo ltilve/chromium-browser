@@ -30,6 +30,10 @@ ManagementPolicy* MockExtensionSystem::management_policy() {
   return nullptr;
 }
 
+ServiceWorkerManager* MockExtensionSystem::service_worker_manager() {
+  return nullptr;
+}
+
 SharedUserScriptMaster* MockExtensionSystem::shared_user_script_master() {
   return nullptr;
 }
@@ -47,6 +51,10 @@ InfoMap* MockExtensionSystem::info_map() {
 }
 
 QuotaService* MockExtensionSystem::quota_service() {
+  return nullptr;
+}
+
+AppSorting* MockExtensionSystem::app_sorting() {
   return nullptr;
 }
 

@@ -1,0 +1,166 @@
+rule $
+    ozone_target_generate_ozone_platform_list_4d5bcd172266325d3fc5a6b7d912a35c
+  command = cd ../../ui/ozone; python generate_ozone_platform_list.py $
+      "--output_cc=../../out/Debug/obj/ui/ozone/ozone.gen/ui/ozone/platform_list.cc" $
+      "--output_h=../../out/Debug/gen/ui/ozone/platform_list.h" $
+      "--output_txt=../../out/Debug/gen/ui/ozone/platform_list.txt" $
+      "--default="
+  description = ACTION ozone: $
+      generate_ozone_platform_list_4d5bcd172266325d3fc5a6b7d912a35c
+  restat = 1
+
+build obj/ui/ozone/ozone.gen/ui/ozone/platform_list.cc $
+    gen/ui/ozone/platform_list.h gen/ui/ozone/platform_list.txt: $
+    ozone_target_generate_ozone_platform_list_4d5bcd172266325d3fc5a6b7d912a35c $
+    ../../ui/ozone/generate_ozone_platform_list.py || $
+    obj/skia/skia.actions_depends.stamp
+
+rule ozone_target_generate_constructor_list_4d5bcd172266325d3fc5a6b7d912a35c
+  command = cd ../../ui/ozone; python generate_constructor_list.py $
+      "--platform_list=../../out/Debug/gen/ui/ozone/platform_list.txt" $
+      "--output_cc=../../out/Debug/obj/ui/ozone/ozone.gen/ui/ozone/constructor_list.cc" $
+      "--namespace=ui" "--typename=OzonePlatform" $
+      "--typename=ClientNativePixmapFactory" $
+      "--include=\"ui/ozone/public/ozone_platform.h\"" $
+      "--include=\"ui/ozone/public/client_native_pixmap_factory.h\""
+  description = ACTION ozone: $
+      generate_constructor_list_4d5bcd172266325d3fc5a6b7d912a35c
+  restat = 1
+
+build obj/ui/ozone/ozone.gen/ui/ozone/constructor_list.cc: $
+    ozone_target_generate_constructor_list_4d5bcd172266325d3fc5a6b7d912a35c $
+    ../../ui/ozone/generate_constructor_list.py $
+    gen/ui/ozone/platform_list.txt || obj/skia/skia.actions_depends.stamp
+
+build obj/ui/ozone/ozone.actions_rules_copies.stamp: stamp $
+    obj/ui/ozone/ozone.gen/ui/ozone/platform_list.cc $
+    gen/ui/ozone/platform_list.h gen/ui/ozone/platform_list.txt $
+    obj/ui/ozone/ozone.gen/ui/ozone/constructor_list.cc
+
+defines = -DV8_DEPRECATION_WARNINGS -DCLD_VERSION=2 -D_FILE_OFFSET_BITS=64 $
+    -DCHROMIUM_BUILD -DCR_CLANG_REVISION=255169-1 $
+    -DUI_COMPOSITOR_IMAGE_TRANSPORT -DUSE_AURA=1 -DUSE_ASH=1 -DUSE_PANGO=1 $
+    -DUSE_CAIRO=1 -DUSE_DEFAULT_RENDER_THEME=1 -DUSE_LIBJPEG_TURBO=1 $
+    -DUSE_X11=1 -DUSE_CLIPBOARD_AURAX11=1 -DENABLE_ONE_CLICK_SIGNIN $
+    -DENABLE_WEBRTC=1 -DENABLE_MEDIA_ROUTER=1 -DENABLE_PEPPER_CDMS $
+    -DENABLE_CONFIGURATION_POLICY -DENABLE_NOTIFICATIONS -DENABLE_HIDPI=1 $
+    -DENABLE_TOPCHROME_MD=1 -DUSE_UDEV -DDONT_EMBED_BUILD_METADATA $
+    -DFIELDTRIAL_TESTING_ENABLED -DENABLE_TASK_MANAGER=1 $
+    -DENABLE_EXTENSIONS=1 -DENABLE_PDF=1 -DENABLE_PLUGINS=1 $
+    -DENABLE_SESSION_SERVICE=1 -DENABLE_THEMES=1 -DENABLE_AUTOFILL_DIALOG=1 $
+    -DENABLE_BACKGROUND=1 -DENABLE_PRINTING=1 -DENABLE_BASIC_PRINTING=1 $
+    -DENABLE_PRINT_PREVIEW=1 -DENABLE_SPELLCHECK=1 $
+    -DENABLE_CAPTIVE_PORTAL_DETECTION=1 -DENABLE_APP_LIST=1 $
+    -DENABLE_SETTINGS_APP=1 -DENABLE_SUPERVISED_USERS=1 -DENABLE_MDNS=1 $
+    -DENABLE_SERVICE_DISCOVERY=1 -DV8_USE_EXTERNAL_STARTUP_DATA $
+    -DFULL_SAFE_BROWSING -DSAFE_BROWSING_CSD -DSAFE_BROWSING_DB_LOCAL $
+    -DOZONE_IMPLEMENTATION -DSK_SUPPORT_GPU=1 $
+    -DSK_IGNORE_LINEONLY_AA_CONVEX_PATH_OPTS -DU_USING_ICU_NAMESPACE=0 $
+    -DU_ENABLE_DYLOAD=0 -DU_STATIC_IMPLEMENTATION -DUSE_LIBPCI=1 $
+    -DUSE_OPENSSL=1 -DUSE_GLIB=1 -DUSE_NSS_CERTS=1 -D__STDC_CONSTANT_MACROS $
+    -D__STDC_FORMAT_MACROS -DDYNAMIC_ANNOTATIONS_ENABLED=1 $
+    -DWTF_USE_DYNAMIC_ANNOTATIONS=1 -D_DEBUG -D_GLIBCXX_DEBUG=1
+includes = -Igen -I../.. -I../../skia/config $
+    -I../../third_party/skia/include/core $
+    -I../../third_party/skia/include/effects $
+    -I../../third_party/skia/include/pdf $
+    -I../../third_party/skia/include/gpu $
+    -I../../third_party/skia/include/lazy $
+    -I../../third_party/skia/include/pathops $
+    -I../../third_party/skia/include/pipe $
+    -I../../third_party/skia/include/ports $
+    -I../../third_party/skia/include/utils -I../../skia/ext $
+    -I../../third_party/icu/source/i18n -I../../third_party/icu/source/common
+cflags = -fstack-protector --param=ssp-buffer-size=4 -Werror -pthread $
+    -fno-strict-aliasing -Wall -Wno-unused-parameter $
+    -Wno-missing-field-initializers -fvisibility=hidden -pipe -fPIC $
+    -Wno-reserved-user-defined-literal -Xclang -load -Xclang $
+    /b/build/slave/publish_tarball/build/src/third_party/llvm-build/Release+Asserts/lib/libFindBadConstructs.so $
+    -Xclang -add-plugin -Xclang find-bad-constructs -Xclang $
+    -plugin-arg-find-bad-constructs -Xclang check-templates $
+    -fcolor-diagnostics $
+    -B/b/build/slave/publish_tarball/build/src/third_party/binutils/Linux_x64/Release/bin $
+    -Wheader-hygiene -Wno-char-subscripts $
+    -Wno-unneeded-internal-declaration -Wno-covered-switch-default $
+    -Wstring-conversion -Wno-c++11-narrowing -Wno-deprecated-register $
+    -Wno-inconsistent-missing-override -Wno-shift-negative-value $
+    -Wno-bitfield-width -pthread $
+    -I/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/include/glib-2.0 $
+    -I/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/lib/x86_64-linux-gnu/glib-2.0/include $
+    -m64 -march=x86-64 $
+    --sysroot=/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot $
+    -O0 -g -funwind-tables -gsplit-dwarf -Wno-undefined-bool-conversion $
+    -Wno-tautological-undefined-compare
+cflags_c = 
+cflags_cc = -fno-exceptions -fno-rtti -fno-threadsafe-statics $
+    -fvisibility-inlines-hidden -Wsign-compare -std=gnu++11
+arflags = 
+
+build obj/ui/ozone/obj/ui/ozone/ozone.gen/ui/ozone/ozone.platform_list.o: $
+    cxx obj/ui/ozone/ozone.gen/ui/ozone/platform_list.cc || $
+    obj/ui/ozone/ozone.actions_rules_copies.stamp
+build $
+    obj/ui/ozone/obj/ui/ozone/ozone.gen/ui/ozone/ozone.constructor_list.o: $
+    cxx obj/ui/ozone/ozone.gen/ui/ozone/constructor_list.cc || $
+    obj/ui/ozone/ozone.actions_rules_copies.stamp
+build obj/ui/ozone/common/ozone.display_mode_proxy.o: cxx $
+    ../../ui/ozone/common/display_mode_proxy.cc || $
+    obj/ui/ozone/ozone.actions_rules_copies.stamp
+build obj/ui/ozone/common/ozone.display_snapshot_proxy.o: cxx $
+    ../../ui/ozone/common/display_snapshot_proxy.cc || $
+    obj/ui/ozone/ozone.actions_rules_copies.stamp
+build obj/ui/ozone/common/ozone.display_util.o: cxx $
+    ../../ui/ozone/common/display_util.cc || $
+    obj/ui/ozone/ozone.actions_rules_copies.stamp
+build obj/ui/ozone/common/ozone.egl_util.o: cxx $
+    ../../ui/ozone/common/egl_util.cc || $
+    obj/ui/ozone/ozone.actions_rules_copies.stamp
+build obj/ui/ozone/common/gpu/ozone.ozone_gpu_message_generator.o: cxx $
+    ../../ui/ozone/common/gpu/ozone_gpu_message_generator.cc || $
+    obj/ui/ozone/ozone.actions_rules_copies.stamp
+build obj/ui/ozone/common/gpu/ozone.ozone_gpu_message_params.o: cxx $
+    ../../ui/ozone/common/gpu/ozone_gpu_message_params.cc || $
+    obj/ui/ozone/ozone.actions_rules_copies.stamp
+build obj/ui/ozone/common/ozone.stub_client_native_pixmap_factory.o: cxx $
+    ../../ui/ozone/common/stub_client_native_pixmap_factory.cc || $
+    obj/ui/ozone/ozone.actions_rules_copies.stamp
+build obj/ui/ozone/common/ozone.stub_overlay_manager.o: cxx $
+    ../../ui/ozone/common/stub_overlay_manager.cc || $
+    obj/ui/ozone/ozone.actions_rules_copies.stamp
+build obj/ui/ozone/ozone.platform_selection.o: cxx $
+    ../../ui/ozone/platform_selection.cc || $
+    obj/ui/ozone/ozone.actions_rules_copies.stamp
+build obj/ui/ozone/public/ozone.client_native_pixmap_factory.o: cxx $
+    ../../ui/ozone/public/client_native_pixmap_factory.cc || $
+    obj/ui/ozone/ozone.actions_rules_copies.stamp
+build obj/ui/ozone/public/ozone.input_controller.o: cxx $
+    ../../ui/ozone/public/input_controller.cc || $
+    obj/ui/ozone/ozone.actions_rules_copies.stamp
+build obj/ui/ozone/public/ozone.ozone_gpu_test_helper.o: cxx $
+    ../../ui/ozone/public/ozone_gpu_test_helper.cc || $
+    obj/ui/ozone/ozone.actions_rules_copies.stamp
+build obj/ui/ozone/public/ozone.ozone_platform.o: cxx $
+    ../../ui/ozone/public/ozone_platform.cc || $
+    obj/ui/ozone/ozone.actions_rules_copies.stamp
+build obj/ui/ozone/public/ozone.ozone_switches.o: cxx $
+    ../../ui/ozone/public/ozone_switches.cc || $
+    obj/ui/ozone/ozone.actions_rules_copies.stamp
+
+build obj/ui/ozone/libozone.a: alink_thin $
+    obj/ui/ozone/obj/ui/ozone/ozone.gen/ui/ozone/ozone.platform_list.o $
+    obj/ui/ozone/obj/ui/ozone/ozone.gen/ui/ozone/ozone.constructor_list.o $
+    obj/ui/ozone/common/ozone.display_mode_proxy.o $
+    obj/ui/ozone/common/ozone.display_snapshot_proxy.o $
+    obj/ui/ozone/common/ozone.display_util.o $
+    obj/ui/ozone/common/ozone.egl_util.o $
+    obj/ui/ozone/common/gpu/ozone.ozone_gpu_message_generator.o $
+    obj/ui/ozone/common/gpu/ozone.ozone_gpu_message_params.o $
+    obj/ui/ozone/common/ozone.stub_client_native_pixmap_factory.o $
+    obj/ui/ozone/common/ozone.stub_overlay_manager.o $
+    obj/ui/ozone/ozone.platform_selection.o $
+    obj/ui/ozone/public/ozone.client_native_pixmap_factory.o $
+    obj/ui/ozone/public/ozone.input_controller.o $
+    obj/ui/ozone/public/ozone.ozone_gpu_test_helper.o $
+    obj/ui/ozone/public/ozone.ozone_platform.o $
+    obj/ui/ozone/public/ozone.ozone_switches.o || $
+    obj/ui/ozone/ozone.actions_rules_copies.stamp

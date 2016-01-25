@@ -5,10 +5,14 @@
 package org.chromium.chromoting;
 
 import android.annotation.SuppressLint;
-import android.content.res.Configuration;
+import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.KeyCharacterMap;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -16,6 +20,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
+import org.chromium.chromoting.cardboard.DesktopActivity;
 import org.chromium.chromoting.jni.JniInterface;
 
 import java.util.Set;
@@ -24,7 +29,7 @@ import java.util.TreeSet;
 /**
  * A simple screen that does nothing except display a DesktopView and notify it of rotations.
  */
-public class Desktop extends ActionBarActivity implements View.OnSystemUiVisibilityChangeListener {
+public class Desktop extends AppCompatActivity implements View.OnSystemUiVisibilityChangeListener {
     /** Web page to be displayed in the Help screen when launched from this activity. */
     private static final String HELP_URL =
             "https://support.google.com/chrome/?p=mobile_crd_connecthost";
@@ -37,13 +42,25 @@ public class Desktop extends ActionBarActivity implements View.OnSystemUiVisibil
 
     private ActivityLifecycleListener mActivityLifecycleListener;
 
+    // Flag to indicate whether the current activity is going to switch to Cardboard
+    // desktop activity.
+    private boolean mSwitchToCardboardDesktopActivity;
+
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.desktop);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
         mRemoteHostDesktop = (DesktopView) findViewById(R.id.desktop_view);
         mRemoteHostDesktop.setDesktop(this);
+        mSwitchToCardboardDesktopActivity = false;
+
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // For this Activity, the home button in the action bar acts as a Disconnect button, so
         // set the description for accessibility/screen readers.
@@ -62,13 +79,16 @@ public class Desktop extends ActionBarActivity implements View.OnSystemUiVisibil
         super.onStart();
         mActivityLifecycleListener.onActivityStarted(this);
         JniInterface.enableVideoChannel(true);
+        mRemoteHostDesktop.attachRedrawCallback();
     }
 
     @Override
     protected void onPause() {
         if (isFinishing()) mActivityLifecycleListener.onActivityPaused(this);
         super.onPause();
-        JniInterface.enableVideoChannel(false);
+        if (!mSwitchToCardboardDesktopActivity) {
+            JniInterface.enableVideoChannel(false);
+        }
     }
 
     @Override
@@ -82,21 +102,11 @@ public class Desktop extends ActionBarActivity implements View.OnSystemUiVisibil
     protected void onStop() {
         mActivityLifecycleListener.onActivityStopped(this);
         super.onStop();
-        JniInterface.enableVideoChannel(false);
-    }
-
-    /** Called when the activity is finally finished. */
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        JniInterface.disconnectFromHost();
-    }
-
-    /** Called when the display is rotated (as registered in the manifest). */
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        mRemoteHostDesktop.onScreenConfigurationChanged();
+        if (mSwitchToCardboardDesktopActivity) {
+            mSwitchToCardboardDesktopActivity = false;
+        } else {
+            JniInterface.enableVideoChannel(false);
+        }
     }
 
     /** Called to initialize the action bar. */
@@ -105,6 +115,21 @@ public class Desktop extends ActionBarActivity implements View.OnSystemUiVisibil
         getMenuInflater().inflate(R.menu.desktop_actionbar, menu);
 
         mActivityLifecycleListener.onActivityCreatedOptionsMenu(this, menu);
+
+        boolean enableCardboard = false;
+        try {
+            ApplicationInfo ai = getPackageManager()
+                    .getApplicationInfo(getPackageName(), PackageManager.GET_META_DATA);
+            Bundle bundle = ai.metaData;
+            enableCardboard = bundle.getInt("enable_cardboard") == 1;
+        } catch (NameNotFoundException e) {
+            // Does nothing since by default Cardboard activity is turned off.
+        }
+
+        MenuItem item = menu.findItem(R.id.actionbar_cardboard);
+        item.setVisible(enableCardboard);
+
+        ChromotingUtil.tintMenuIcons(this, menu);
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -188,6 +213,12 @@ public class Desktop extends ActionBarActivity implements View.OnSystemUiVisibil
 
         mActivityLifecycleListener.onActivityOptionsItemSelected(this, item);
 
+        if (id == R.id.actionbar_cardboard) {
+            mSwitchToCardboardDesktopActivity = true;
+            Intent intent = new Intent(this, DesktopActivity.class);
+            startActivityForResult(intent, Chromoting.CARDBOARD_DESKTOP_ACTIVITY);
+            return true;
+        }
         if (id == R.id.actionbar_keyboard) {
             ((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE)).toggleSoftInput(0, 0);
             return true;
@@ -207,10 +238,10 @@ public class Desktop extends ActionBarActivity implements View.OnSystemUiVisibil
                 KeyEvent.KEYCODE_FORWARD_DEL,
             };
             for (int key : keys) {
-                JniInterface.sendKeyEvent(key, true);
+                JniInterface.sendKeyEvent(0, key, true);
             }
             for (int key : keys) {
-                JniInterface.sendKeyEvent(key, false);
+                JniInterface.sendKeyEvent(0, key, false);
             }
             return true;
         }
@@ -232,13 +263,25 @@ public class Desktop extends ActionBarActivity implements View.OnSystemUiVisibil
 
         // Dispatch the back button to the system to handle navigation
         if (keyCode == KeyEvent.KEYCODE_BACK) {
+            JniInterface.disconnectFromHost();
             return super.dispatchKeyEvent(event);
         }
 
-        // Send TextEvent in two cases:
+        boolean pressed = event.getAction() == KeyEvent.ACTION_DOWN;
+
+        // Physical keyboard must work as if it is connected to the remote host
+        // and so events coming from physical keyboard never generate text
+        // events. Also scan codes must be used instead of key code, so that
+        // the keyboard layout selected on the client doesn't affect the key
+        // codes sent to the host.
+        if (event.getDeviceId() != KeyCharacterMap.VIRTUAL_KEYBOARD) {
+            return JniInterface.sendKeyEvent(event.getScanCode(), 0, pressed);
+        }
+
+        // Events received from software keyboards generate TextEvent in two
+        // cases:
         //   1. This is an ACTION_MULTIPLE event.
-        //   2. The event was generated by on-screen keyboard and Ctrl, Alt and
-        //      Meta are not pressed.
+        //   2. Ctrl, Alt and Meta are not pressed.
         // This ensures that on-screen keyboard always injects input that
         // correspond to what user sees on the screen, while physical keyboard
         // acts as if it is connected to the remote host.
@@ -247,8 +290,6 @@ public class Desktop extends ActionBarActivity implements View.OnSystemUiVisibil
             return true;
         }
 
-        boolean pressed = event.getAction() == KeyEvent.ACTION_DOWN;
-
         // For Enter getUnicodeChar() returns 10 (line feed), but we still
         // want to send it as KeyEvent.
         int unicode = keyCode != KeyEvent.KEYCODE_ENTER ? event.getUnicodeChar() : 0;
@@ -256,8 +297,7 @@ public class Desktop extends ActionBarActivity implements View.OnSystemUiVisibil
         boolean no_modifiers = !event.isAltPressed()
                 && !event.isCtrlPressed() && !event.isMetaPressed();
 
-        if (event.getDeviceId() == KeyCharacterMap.VIRTUAL_KEYBOARD
-                && pressed && unicode != 0 && no_modifiers) {
+        if (pressed && unicode != 0 && no_modifiers) {
             mPressedTextKeys.add(keyCode);
             int[] codePoints = { unicode };
             JniInterface.sendTextEvent(new String(codePoints, 0, 1));
@@ -270,29 +310,33 @@ public class Desktop extends ActionBarActivity implements View.OnSystemUiVisibil
         }
 
         switch (keyCode) {
+            // KEYCODE_AT, KEYCODE_POUND, KEYCODE_STAR and KEYCODE_PLUS are
+            // deprecated, but they still need to be here for older devices and
+            // third-party keyboards that may still generate these events. See
+            // https://source.android.com/devices/input/keyboard-devices.html#legacy-unsupported-keys
             case KeyEvent.KEYCODE_AT:
-                JniInterface.sendKeyEvent(KeyEvent.KEYCODE_SHIFT_LEFT, pressed);
-                JniInterface.sendKeyEvent(KeyEvent.KEYCODE_2, pressed);
+                JniInterface.sendKeyEvent(0, KeyEvent.KEYCODE_SHIFT_LEFT, pressed);
+                JniInterface.sendKeyEvent(0, KeyEvent.KEYCODE_2, pressed);
                 return true;
 
             case KeyEvent.KEYCODE_POUND:
-                JniInterface.sendKeyEvent(KeyEvent.KEYCODE_SHIFT_LEFT, pressed);
-                JniInterface.sendKeyEvent(KeyEvent.KEYCODE_3, pressed);
+                JniInterface.sendKeyEvent(0, KeyEvent.KEYCODE_SHIFT_LEFT, pressed);
+                JniInterface.sendKeyEvent(0, KeyEvent.KEYCODE_3, pressed);
                 return true;
 
             case KeyEvent.KEYCODE_STAR:
-                JniInterface.sendKeyEvent(KeyEvent.KEYCODE_SHIFT_LEFT, pressed);
-                JniInterface.sendKeyEvent(KeyEvent.KEYCODE_8, pressed);
+                JniInterface.sendKeyEvent(0, KeyEvent.KEYCODE_SHIFT_LEFT, pressed);
+                JniInterface.sendKeyEvent(0, KeyEvent.KEYCODE_8, pressed);
                 return true;
 
             case KeyEvent.KEYCODE_PLUS:
-                JniInterface.sendKeyEvent(KeyEvent.KEYCODE_SHIFT_LEFT, pressed);
-                JniInterface.sendKeyEvent(KeyEvent.KEYCODE_EQUALS, pressed);
+                JniInterface.sendKeyEvent(0, KeyEvent.KEYCODE_SHIFT_LEFT, pressed);
+                JniInterface.sendKeyEvent(0, KeyEvent.KEYCODE_EQUALS, pressed);
                 return true;
 
             default:
                 // We try to send all other key codes to the host directly.
-                return JniInterface.sendKeyEvent(keyCode, pressed);
+                return JniInterface.sendKeyEvent(0, keyCode, pressed);
         }
     }
 }

@@ -124,6 +124,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionPreferenceApiTest, MAYBE_Standard) {
   prefs->SetBoolean(prefs::kSearchSuggestEnabled, false);
 #if defined(ENABLE_WEBRTC)
   prefs->SetBoolean(prefs::kWebRTCMultipleRoutesEnabled, false);
+  prefs->SetBoolean(prefs::kWebRTCNonProxiedUdpEnabled, false);
 #endif
 
   const char kExtensionPath[] = "preference/standard";
@@ -225,7 +226,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionPreferenceApiTest, OnChangeSplit) {
       profile_->GetOffTheRecordProfile());
 
   // Open an incognito window.
-  ui_test_utils::OpenURLOffTheRecord(profile_, GURL("chrome://newtab/"));
+  OpenURLOffTheRecord(profile_, GURL("chrome://newtab/"));
 
   // changeDefault listeners.
   ExtensionTestMessageListener listener1("changeDefault regular ready", true);

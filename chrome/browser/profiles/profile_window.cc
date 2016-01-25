@@ -12,7 +12,6 @@
 #include "chrome/browser/about_flags.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/lifetime/application_lifetime.h"
-#include "chrome/browser/pref_service_flags_storage.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/profiles/profile_avatar_icon_util.h"
 #include "chrome/browser/profiles/profile_manager.h"
@@ -29,6 +28,7 @@
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/common/url_constants.h"
+#include "components/flags_ui/pref_service_flags_storage.h"
 #include "components/signin/core/browser/account_reconcilor.h"
 #include "components/signin/core/browser/account_tracker_service.h"
 #include "components/signin/core/browser/signin_manager.h"
@@ -44,13 +44,13 @@
 #include "extensions/browser/extension_system.h"
 #endif  // defined(ENABLE_EXTENSIONS)
 
-#if !defined(OS_IOS)
+#if !defined(OS_ANDROID)
 #include "chrome/browser/ui/browser_finder.h"
 #include "chrome/browser/ui/browser_list.h"
 #include "chrome/browser/ui/browser_list_observer.h"
 #include "chrome/browser/ui/browser_window.h"
 #include "chrome/browser/ui/startup/startup_browser_creator.h"
-#endif  // !defined (OS_IOS)
+#endif  // !defined (OS_ANDROID)
 
 using base::UserMetricsAction;
 using content::BrowserThread;
@@ -202,7 +202,7 @@ void OnUserManagerSystemProfileCreated(
     size_t index = cache.GetIndexOfProfileWithPath(profile_path_to_focus);
     if (index != std::string::npos) {
       page += "#";
-      page += base::IntToString(index);
+      page += base::SizeTToString(index);
     }
   } else if (profile_open_action ==
              profiles::USER_MANAGER_SELECT_PROFILE_TASK_MANAGER) {
@@ -244,15 +244,24 @@ const char kUserManagerSelectProfileChromeSettings[] = "#chrome-settings";
 const char kUserManagerSelectProfileChromeMemory[] = "#chrome-memory";
 const char kUserManagerSelectProfileAppLauncher[] = "#app-launcher";
 
+base::FilePath GetPathOfProfileWithEmail(ProfileManager* profile_manager,
+                                         const std::string& email) {
+  base::string16 profile_email = base::UTF8ToUTF16(email);
+  std::vector<ProfileAttributesEntry*> entries =
+      profile_manager->GetProfileInfoCache().GetAllProfilesAttributes();
+  for (ProfileAttributesEntry* entry : entries) {
+    if (entry->GetUserName() == profile_email)
+      return entry->GetPath();
+  }
+  return base::FilePath();
+}
+
 void FindOrCreateNewWindowForProfile(
     Profile* profile,
     chrome::startup::IsProcessStartup process_startup,
     chrome::startup::IsFirstRun is_first_run,
     chrome::HostDesktopType desktop_type,
     bool always_create) {
-#if defined(OS_IOS)
-  NOTREACHED();
-#else
   DCHECK(profile);
 
   if (!always_create) {
@@ -268,9 +277,9 @@ void FindOrCreateNewWindowForProfile(
   StartupBrowserCreator browser_creator;
   browser_creator.LaunchBrowser(
       command_line, profile, base::FilePath(), process_startup, is_first_run);
-#endif  // defined(OS_IOS)
 }
 
+#if !defined(OS_ANDROID)
 void SwitchToProfile(const base::FilePath& path,
                      chrome::HostDesktopType desktop_type,
                      bool always_create,
@@ -308,6 +317,7 @@ void SwitchToGuestProfile(chrome::HostDesktopType desktop_type,
       base::string16(),
       std::string());
 }
+#endif
 
 bool HasProfileSwitchTargets(Profile* profile) {
   size_t min_profiles = profile->IsGuestSession() ? 1 : 2;
@@ -465,7 +475,7 @@ void EnableNewProfileManagementPreview(Profile* profile) {
       NULL,  // not used with ENABLE_DISABLE_VALUE type
       3
   };
-  about_flags::PrefServiceFlagsStorage flags_storage(
+  flags_ui::PrefServiceFlagsStorage flags_storage(
       g_browser_process->local_state());
   about_flags::SetExperimentEnabled(
       &flags_storage,
@@ -482,7 +492,7 @@ void EnableNewProfileManagementPreview(Profile* profile) {
 }
 
 void DisableNewProfileManagementPreview(Profile* profile) {
-  about_flags::PrefServiceFlagsStorage flags_storage(
+  flags_ui::PrefServiceFlagsStorage flags_storage(
       g_browser_process->local_state());
   about_flags::SetExperimentEnabled(
       &flags_storage,

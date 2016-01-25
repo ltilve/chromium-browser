@@ -1,0 +1,4 @@
+files/lib/expat.h
+files/lib/xmlparse.c
+files/lib/xmlrole.c
+files/lib/xmltok.c

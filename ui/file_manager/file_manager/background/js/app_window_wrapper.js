@@ -23,7 +23,7 @@ function AppWindowWrapper(url, id, options) {
   this.url_ = url;
   this.id_ = id;
   // Do deep copy for the template of options to assign customized params later.
-  this.options_ = /** @type chrome.app.window.CreateWindowOptions */(
+  this.options_ = /** @type {!chrome.app.window.CreateWindowOptions} */(
       JSON.parse(JSON.stringify(options)));
   this.window_ = null;
   this.appState_ = null;
@@ -141,9 +141,13 @@ AppWindowWrapper.prototype.launch = function(appState, reopen, opt_callback) {
 
     // Create a window.
     chrome.app.window.create(this.url_, this.options_, function(appWindow) {
+      // Exit full screen state if it's created as a full screen window.
+      if (appWindow.isFullscreen())
+        appWindow.restore();
+
       // This is a temporary workaround for crbug.com/452737.
       // {state: 'maximized'} in CreateWindowOptions is ignored when a window is
-      // launched with hidden option, so we maximize the window manually here.
+      // launched with hidden option, so we maximize the window manually here.
       if (this.options_.hidden && this.options_.state === 'maximized')
         appWindow.maximize();
       this.window_ = appWindow;

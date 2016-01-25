@@ -6,7 +6,7 @@
 #include "base/run_loop.h"
 #include "base/sequenced_task_runner.h"
 #include "base/thread_task_runner_handle.h"
-#include "sync/engine/model_type_sync_proxy_impl.h"
+#include "sync/engine/model_type_processor_impl.h"
 #include "sync/internal_api/public/base/model_type.h"
 #include "sync/internal_api/public/sync_context.h"
 #include "sync/internal_api/sync_context_proxy_impl.h"
@@ -15,7 +15,7 @@
 #include "sync/test/engine/test_directory_setter_upper.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
-namespace syncer {
+namespace syncer_v2 {
 
 class SyncContextProxyImplTest : public ::testing::Test {
  public:
@@ -25,7 +25,7 @@ class SyncContextProxyImplTest : public ::testing::Test {
 
   void SetUp() override {
     dir_maker_.SetUp();
-    registry_.reset(new ModelTypeRegistry(
+    registry_.reset(new syncer::ModelTypeRegistry(
         workers_, dir_maker_.directory(), &nudge_handler_));
     context_proxy_.reset(
         new SyncContextProxyImpl(sync_task_runner_, registry_->AsWeakPtr()));
@@ -48,17 +48,18 @@ class SyncContextProxyImplTest : public ::testing::Test {
   scoped_refptr<base::SequencedTaskRunner> sync_task_runner_;
   scoped_refptr<base::SequencedTaskRunner> type_task_runner_;
 
-  std::vector<scoped_refptr<ModelSafeWorker> > workers_;
-  TestDirectorySetterUpper dir_maker_;
-  MockNudgeHandler nudge_handler_;
-  scoped_ptr<ModelTypeRegistry> registry_;
+  std::vector<scoped_refptr<syncer::ModelSafeWorker>> workers_;
+  syncer::TestDirectorySetterUpper dir_maker_;
+  syncer::MockNudgeHandler nudge_handler_;
+  scoped_ptr<syncer::ModelTypeRegistry> registry_;
 
   scoped_ptr<SyncContextProxyImpl> context_proxy_;
 };
 
 // Try to connect a type to a SyncContext that has already shut down.
 TEST_F(SyncContextProxyImplTest, FailToConnect1) {
-  ModelTypeSyncProxyImpl themes_sync_proxy(syncer::THEMES);
+  ModelTypeProcessorImpl themes_sync_proxy(syncer::THEMES,
+                                           base::WeakPtr<ModelTypeStore>());
   DisableSync();
   themes_sync_proxy.Enable(GetProxy());
 
@@ -69,7 +70,8 @@ TEST_F(SyncContextProxyImplTest, FailToConnect1) {
 
 // Try to connect a type to a SyncContext as it shuts down.
 TEST_F(SyncContextProxyImplTest, FailToConnect2) {
-  ModelTypeSyncProxyImpl themes_sync_proxy(syncer::THEMES);
+  ModelTypeProcessorImpl themes_sync_proxy(syncer::THEMES,
+                                           base::WeakPtr<ModelTypeStore>());
   themes_sync_proxy.Enable(GetProxy());
   DisableSync();
 
@@ -80,8 +82,9 @@ TEST_F(SyncContextProxyImplTest, FailToConnect2) {
 
 // Tests the case where the type's sync proxy shuts down first.
 TEST_F(SyncContextProxyImplTest, TypeDisconnectsFirst) {
-  scoped_ptr<ModelTypeSyncProxyImpl> themes_sync_proxy(
-      new ModelTypeSyncProxyImpl(syncer::THEMES));
+  scoped_ptr<ModelTypeProcessorImpl> themes_sync_proxy(
+      new ModelTypeProcessorImpl(syncer::THEMES,
+                                 base::WeakPtr<ModelTypeStore>()));
   themes_sync_proxy->Enable(GetProxy());
 
   base::RunLoop run_loop_;
@@ -93,8 +96,9 @@ TEST_F(SyncContextProxyImplTest, TypeDisconnectsFirst) {
 
 // Tests the case where the sync thread shuts down first.
 TEST_F(SyncContextProxyImplTest, SyncDisconnectsFirst) {
-  scoped_ptr<ModelTypeSyncProxyImpl> themes_sync_proxy(
-      new ModelTypeSyncProxyImpl(syncer::THEMES));
+  scoped_ptr<ModelTypeProcessorImpl> themes_sync_proxy(
+      new ModelTypeProcessorImpl(syncer::THEMES,
+                                 base::WeakPtr<ModelTypeStore>()));
   themes_sync_proxy->Enable(GetProxy());
 
   base::RunLoop run_loop_;

@@ -1,0 +1,4 @@
+
+nacl/loader/nonsfi/nonsfi_sandbox_sigsys_unittest.cc
+nacl/loader/nonsfi/nonsfi_sandbox_unittest.cc
+nacl/loader/nonsfi/run_all_unittests.cc

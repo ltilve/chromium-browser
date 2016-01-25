@@ -23,6 +23,7 @@
 #include "content/public/test/test_utils.h"
 #include "content/test/content_browser_sanity_checker.h"
 #include "net/base/net_errors.h"
+#include "net/base/net_util.h"
 #include "net/dns/mock_host_resolver.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
 #include "ui/compositor/compositor_switches.h"
@@ -137,7 +138,8 @@ extern int BrowserMain(const MainFunctionParams&);
 BrowserTestBase::BrowserTestBase()
     : expected_exit_code_(0),
       enable_pixel_output_(false),
-      use_software_compositing_(false) {
+      use_software_compositing_(false),
+      set_up_called_(false) {
 #if defined(OS_MACOSX)
   base::mac::SetOverrideAmIBundled(true);
 #endif
@@ -167,16 +169,23 @@ BrowserTestBase::~BrowserTestBase() {
   base::ThreadRestrictions::ScopedAllowWait allow_wait;
   test_server_.reset(NULL);
 #endif
+
+  CHECK(set_up_called_) << "SetUp was not called. This probably means that the "
+                           "developer has overridden the method and not called "
+                           "the superclass version. In this case, the test "
+                           "does not run and reports a false positive result.";
 }
 
 void BrowserTestBase::SetUp() {
+  set_up_called_ = true;
+
   base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
 
   // Override the child process connection timeout since tests can exceed that
   // when sharded.
   command_line->AppendSwitchASCII(
       switches::kIPCConnectionTimeout,
-      base::IntToString(TestTimeouts::action_max_timeout().InSeconds()));
+      base::Int64ToString(TestTimeouts::action_max_timeout().InSeconds()));
 
   // The tests assume that file:// URIs can freely access other file:// URIs.
   command_line->AppendSwitch(switches::kAllowFileAccessFromFiles);
@@ -187,12 +196,8 @@ void BrowserTestBase::SetUp() {
   // GPU blacklisting decisions were made.
   command_line->AppendSwitch(switches::kLogGpuControlListDecisions);
 
-  if (use_software_compositing_) {
+  if (use_software_compositing_)
     command_line->AppendSwitch(switches::kDisableGpu);
-#if defined(USE_AURA)
-    command_line->AppendSwitch(switches::kUIDisableThreadedCompositing);
-#endif
-  }
 
 #if defined(USE_AURA)
   // Most tests do not need pixel output, so we don't produce any. The command

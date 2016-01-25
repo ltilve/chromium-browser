@@ -7,10 +7,6 @@
  */
 
 login.createScreen('GaiaSigninScreen', 'gaia-signin', function() {
-  // Gaia loading time after which error message must be displayed and
-  // lazy portal check should be fired.
-  /** @const */ var GAIA_LOADING_PORTAL_SUSSPECT_TIME_SEC = 7;
-
   // GAIA animation guard timer. Started when GAIA page is loaded
   // (Authenticator 'ready' event) and is intended to guard against edge cases
   // when 'showView' message is not generated/received.
@@ -24,11 +20,20 @@ login.createScreen('GaiaSigninScreen', 'gaia-signin', function() {
   // The help topic regarding user not being in the whitelist.
   /** @const */ var HELP_CANT_ACCESS_ACCOUNT = 188036;
 
+  // Amount of time the user has to be idle for before showing the online login
+  // page.
+  /** @const */ var IDLE_TIME_UNTIL_EXIT_OFFLINE_IN_MILLISECONDS = 180 * 1000;
+
+  // Approximate amount of time between checks to see if we should go to the
+  // online login page when we're in the offline login page and the device is
+  // online.
+  /** @const */ var IDLE_TIME_CHECK_FREQUENCY = 5 * 1000;
+
   return {
     EXTERNAL_API: [
       'loadAuthExtension',
-      'updateAuthExtension',
       'doReload',
+      'monitorOfflineIdle',
       'onWebviewError',
       'onFrameError',
       'updateCancelButtonState',
@@ -117,6 +122,19 @@ login.createScreen('GaiaSigninScreen', 'gaia-signin', function() {
      * @type {number}
      */
     samlPasswordConfirmAttempt_: 0,
+
+    /**
+     * Do we currently have a setTimeout task running that tries to bring us
+     * back to the online login page after the user has idled for awhile? If so,
+     * then this id will be non-negative.
+     */
+    tryToGoToOnlineLoginPageCallbackId_: -1,
+
+    /**
+     * The most recent period of time that the user has interacted. This is
+     * only updated when the offline page is active and the device is online.
+     */
+    mostRecentUserActivity_: Date.now(),
 
     /**
      * Whether we should show webview based signin.
@@ -230,6 +248,76 @@ login.createScreen('GaiaSigninScreen', 'gaia-signin', function() {
     },
 
     /**
+     * This enables or disables trying to go back to the online login page
+     * after the user is idle for a few minutes, assuming that we're currently
+     * in the offline one. This is only applicable when the offline page is
+     * currently active. It is intended that when the device goes online, this
+     * gets called with true; when it goes offline, this gets called with
+     * false.
+     */
+    monitorOfflineIdle: function(shouldMonitor) {
+      var ACTIVITY_EVENTS = ['click', 'mousemove', 'keypress'];
+      var self = this;
+
+      // updateActivityTime_ is used as a callback for addEventListener, so we
+      // need the exact reference for removeEventListener. Because the callback
+      // needs to access the |this| as scoped inside of this function, we create
+      // a closure that uses the appropriate |this|.
+      //
+      // Unfourtantely, we cannot define this function inside of the JSON object
+      // as then we have to no way to create to capture the correct |this|
+      // reference. We define it here instead.
+      if (!self.updateActivityTime_) {
+        self.updateActivityTime_ = function() {
+          self.mostRecentUserActivity_ = Date.now();
+        };
+      }
+
+      // Begin monitoring.
+      if (shouldMonitor) {
+        // If we're not using the offline login page or we're already
+        // monitoring, then we don't need to do anything.
+        if (self.isLocal === false ||
+            self.tryToGoToOnlineLoginPageCallbackId_ !== -1)
+          return;
+
+        self.mostRecentUserActivity_ = Date.now();
+        ACTIVITY_EVENTS.forEach(function(event) {
+          document.addEventListener(event, self.updateActivityTime_);
+        });
+
+        self.tryToGoToOnlineLoginPageCallbackId_ = setInterval(function() {
+          // If we're not in the offline page or the signin page, then we want
+          // to terminate monitoring.
+          if (self.isLocal === false ||
+              Oobe.getInstance().currentScreen.id != 'gaia-signin') {
+            self.monitorOfflineIdle(false);
+            return;
+          }
+
+          var idleDuration = Date.now() - self.mostRecentUserActivity_;
+          if (idleDuration > IDLE_TIME_UNTIL_EXIT_OFFLINE_IN_MILLISECONDS) {
+            self.isLocal = false;
+            self.monitorOfflineIdle(false);
+          }
+        }, IDLE_TIME_CHECK_FREQUENCY);
+      }
+
+      // Stop monitoring.
+      else {
+        // We're not monitoring, so we don't need to do anything.
+        if (self.tryToGoToOnlineLoginPageCallbackId_ === -1)
+          return;
+
+        ACTIVITY_EVENTS.forEach(function(event) {
+          document.removeEventListener(event, self.updateActivityTime_);
+        });
+        clearInterval(self.tryToGoToOnlineLoginPageCallbackId_);
+        self.tryToGoToOnlineLoginPageCallbackId_ = -1;
+      }
+    },
+
+    /**
      * Shows/hides loading UI.
      * @param {boolean} show True to show loading UI.
      * @private
@@ -251,24 +339,12 @@ login.createScreen('GaiaSigninScreen', 'gaia-signin', function() {
     },
 
     /**
-     * Handler for Gaia loading suspiciously long timeout.
-     * @private
-     */
-    onLoadingSuspiciouslyLong_: function() {
-      if (this != Oobe.getInstance().currentScreen)
-        return;
-      chrome.send('showLoadingTimeoutError');
-      this.loadingTimer_ = setTimeout(
-          this.onLoadingTimeOut_.bind(this),
-          (MAX_GAIA_LOADING_TIME_SEC - GAIA_LOADING_PORTAL_SUSSPECT_TIME_SEC) *
-          1000);
-    },
-
-    /**
      * Handler for Gaia loading timeout.
      * @private
      */
     onLoadingTimeOut_: function() {
+      if (this != Oobe.getInstance().currentScreen)
+        return;
       this.loadingTimer_ = undefined;
       chrome.send('showLoadingTimeoutError');
     },
@@ -290,9 +366,8 @@ login.createScreen('GaiaSigninScreen', 'gaia-signin', function() {
      */
     startLoadingTimer_: function() {
       this.clearLoadingTimer_();
-      this.loadingTimer_ = setTimeout(
-          this.onLoadingSuspiciouslyLong_.bind(this),
-          GAIA_LOADING_PORTAL_SUSSPECT_TIME_SEC * 1000);
+      this.loadingTimer_ = setTimeout(this.onLoadingTimeOut_.bind(this),
+                                      MAX_GAIA_LOADING_TIME_SEC * 1000);
     },
 
     /**
@@ -397,7 +472,7 @@ login.createScreen('GaiaSigninScreen', 'gaia-signin', function() {
       this.classList.toggle('full-width', false);
       this.samlPasswordConfirmAttempt_ = 0;
 
-      this.updateAuthExtension(data);
+      this.updateAuthExtension_(data);
 
       var params = {};
       for (var i in cr.login.GaiaAuthHost.SUPPORTED_PARAMS) {
@@ -456,19 +531,10 @@ login.createScreen('GaiaSigninScreen', 'gaia-signin', function() {
      * @param {Object} data New extension parameters bag.
      * @private
      */
-    updateAuthExtension: function(data) {
-      var reasonLabel = $('gaia-signin-reason');
-      if (data.passwordChanged) {
-        reasonLabel.textContent =
-            loadTimeData.getString('signinScreenPasswordChanged');
-        reasonLabel.hidden = false;
-      } else {
-        reasonLabel.hidden = true;
-      }
-
+    updateAuthExtension_: function(data) {
       if (this.isNewGaiaFlow) {
         $('login-header-bar').showCreateSupervisedButton =
-            data.supervisedUsersCanCreate;
+            data.supervisedUsersEnabled && data.supervisedUsersCanCreate;
         $('login-header-bar').showGuestButton = data.guestSignin;
       } else {
         $('createAccount').hidden = !data.createAccount;
@@ -492,8 +558,7 @@ login.createScreen('GaiaSigninScreen', 'gaia-signin', function() {
       this.isEnrollingConsumerManagement_ = isEnrollingConsumerManagement;
 
       // Sign-in right panel is hidden if all of its items are hidden.
-      var noRightPanel = $('gaia-signin-reason').hidden &&
-                         $('createAccount').hidden &&
+      var noRightPanel = $('createAccount').hidden &&
                          $('guestSignin').hidden &&
                          $('createSupervisedUserPane').hidden &&
                          $('consumerManagementEnrollment').hidden;
@@ -595,6 +660,7 @@ login.createScreen('GaiaSigninScreen', 'gaia-signin', function() {
     onBackButton_: function(e) {
       $('back-button-item').hidden = !e.detail;
       $('login-header-bar').updateUI_();
+      $('signin-frame').focus();
     },
 
     /**

@@ -492,6 +492,14 @@ WebAXObjectProxy::GetObjectTemplateBuilder(v8::Isolate* isolate) {
       .SetProperty("maxValue", &WebAXObjectProxy::MaxValue)
       .SetProperty("valueDescription", &WebAXObjectProxy::ValueDescription)
       .SetProperty("childrenCount", &WebAXObjectProxy::ChildrenCount)
+      .SetProperty("selectionAnchorObject",
+                   &WebAXObjectProxy::SelectionAnchorObject)
+      .SetProperty("selectionAnchorOffset",
+                   &WebAXObjectProxy::SelectionAnchorOffset)
+      .SetProperty("selectionFocusObject",
+                   &WebAXObjectProxy::SelectionFocusObject)
+      .SetProperty("selectionFocusOffset",
+                   &WebAXObjectProxy::SelectionFocusOffset)
       .SetProperty("selectionStart", &WebAXObjectProxy::SelectionStart)
       .SetProperty("selectionEnd", &WebAXObjectProxy::SelectionEnd)
       .SetProperty("selectionStartLineNumber",
@@ -500,6 +508,7 @@ WebAXObjectProxy::GetObjectTemplateBuilder(v8::Isolate* isolate) {
                    &WebAXObjectProxy::SelectionEndLineNumber)
       .SetProperty("isEnabled", &WebAXObjectProxy::IsEnabled)
       .SetProperty("isRequired", &WebAXObjectProxy::IsRequired)
+      .SetProperty("isEditable", &WebAXObjectProxy::IsEditable)
       .SetProperty("isRichlyEditable", &WebAXObjectProxy::IsRichlyEditable)
       .SetProperty("isFocused", &WebAXObjectProxy::IsFocused)
       .SetProperty("isFocusable", &WebAXObjectProxy::IsFocusable)
@@ -552,6 +561,8 @@ WebAXObjectProxy::GetObjectTemplateBuilder(v8::Isolate* isolate) {
       .SetMethod("cellForColumnAndRow", &WebAXObjectProxy::CellForColumnAndRow)
       .SetMethod("setSelectedTextRange",
                  &WebAXObjectProxy::SetSelectedTextRange)
+      .SetMethod("setSelection",
+                 &WebAXObjectProxy::SetSelection)
       .SetMethod("isAttributeSettable", &WebAXObjectProxy::IsAttributeSettable)
       .SetMethod("isPressActionSupported",
                  &WebAXObjectProxy::IsPressActionSupported)
@@ -564,6 +575,7 @@ WebAXObjectProxy::GetObjectTemplateBuilder(v8::Isolate* isolate) {
       .SetMethod("decrement", &WebAXObjectProxy::Decrement)
       .SetMethod("showMenu", &WebAXObjectProxy::ShowMenu)
       .SetMethod("press", &WebAXObjectProxy::Press)
+      .SetMethod("setValue", &WebAXObjectProxy::SetValue)
       .SetMethod("isEqual", &WebAXObjectProxy::IsEqual)
       .SetMethod("setNotificationListener",
                  &WebAXObjectProxy::SetNotificationListener)
@@ -733,6 +745,66 @@ int WebAXObjectProxy::ChildrenCount() {
   return count;
 }
 
+v8::Local<v8::Value> WebAXObjectProxy::SelectionAnchorObject() {
+  accessibility_object_.updateLayoutAndCheckValidity();
+
+  blink::WebAXObject anchorObject;
+  int anchorOffset = -1;
+  blink::WebAXObject focusObject;
+  int focusOffset = -1;
+  accessibility_object_.selection(anchorObject, anchorOffset,
+                                  focusObject, focusOffset);
+  if (anchorObject.isNull())
+    return v8::Null(blink::mainThreadIsolate());
+
+  return factory_->GetOrCreate(anchorObject);
+}
+
+int WebAXObjectProxy::SelectionAnchorOffset() {
+  accessibility_object_.updateLayoutAndCheckValidity();
+
+  blink::WebAXObject anchorObject;
+  int anchorOffset = -1;
+  blink::WebAXObject focusObject;
+  int focusOffset = -1;
+  accessibility_object_.selection(anchorObject, anchorOffset,
+                                  focusObject, focusOffset);
+  if (anchorOffset < 0)
+    return -1;
+
+  return anchorOffset;
+}
+
+v8::Local<v8::Value> WebAXObjectProxy::SelectionFocusObject() {
+  accessibility_object_.updateLayoutAndCheckValidity();
+
+  blink::WebAXObject anchorObject;
+  int anchorOffset = -1;
+  blink::WebAXObject focusObject;
+  int focusOffset = -1;
+  accessibility_object_.selection(anchorObject, anchorOffset,
+                                  focusObject, focusOffset);
+  if (focusObject.isNull())
+    return v8::Null(blink::mainThreadIsolate());
+
+  return factory_->GetOrCreate(focusObject);
+}
+
+int WebAXObjectProxy::SelectionFocusOffset() {
+  accessibility_object_.updateLayoutAndCheckValidity();
+
+  blink::WebAXObject anchorObject;
+  int anchorOffset = -1;
+  blink::WebAXObject focusObject;
+  int focusOffset = -1;
+  accessibility_object_.selection(anchorObject, anchorOffset,
+                                  focusObject, focusOffset);
+  if (focusOffset < 0)
+    return -1;
+
+  return focusOffset;
+}
+
 int WebAXObjectProxy::SelectionStart() {
   accessibility_object_.updateLayoutAndCheckValidity();
   return accessibility_object_.selectionStart();
@@ -761,6 +833,11 @@ bool WebAXObjectProxy::IsEnabled() {
 bool WebAXObjectProxy::IsRequired() {
   accessibility_object_.updateLayoutAndCheckValidity();
   return accessibility_object_.isRequired();
+}
+
+bool WebAXObjectProxy::IsEditable() {
+  accessibility_object_.updateLayoutAndCheckValidity();
+  return accessibility_object_.isEditable();
 }
 
 bool WebAXObjectProxy::IsRichlyEditable() {
@@ -1104,6 +1181,35 @@ void WebAXObjectProxy::SetSelectedTextRange(int selection_start,
                                               selection_start + length);
 }
 
+void WebAXObjectProxy::SetSelection(
+    v8::Local<v8::Value> anchor_object, int anchor_offset,
+    v8::Local<v8::Value> focus_object, int focus_offset) {
+  if (anchor_object.IsEmpty() || focus_object.IsEmpty() ||
+      !anchor_object->IsObject() || !focus_object->IsObject() ||
+      anchor_offset < 0 || focus_offset < 0) {
+    return;
+  }
+
+  WebAXObjectProxy* web_ax_anchor = nullptr;
+  if (!gin::ConvertFromV8(
+      blink::mainThreadIsolate(), anchor_object, &web_ax_anchor)) {
+    return;
+  }
+  DCHECK(web_ax_anchor);
+
+  WebAXObjectProxy* web_ax_focus = nullptr;
+  if (!gin::ConvertFromV8(
+      blink::mainThreadIsolate(), focus_object, &web_ax_focus)) {
+    return;
+  }
+  DCHECK(web_ax_focus);
+
+  accessibility_object_.updateLayoutAndCheckValidity();
+  accessibility_object_.setSelection(
+      web_ax_anchor->accessibility_object_, anchor_offset,
+      web_ax_focus->accessibility_object_, focus_offset);
+}
+
 bool WebAXObjectProxy::IsAttributeSettable(const std::string& attribute) {
   accessibility_object_.updateLayoutAndCheckValidity();
   bool settable = false;
@@ -1152,6 +1258,15 @@ void WebAXObjectProxy::ShowMenu() {
 void WebAXObjectProxy::Press() {
   accessibility_object_.updateLayoutAndCheckValidity();
   accessibility_object_.press();
+}
+
+bool WebAXObjectProxy::SetValue(const std::string& value) {
+  accessibility_object_.updateLayoutAndCheckValidity();
+  if (!accessibility_object_.canSetValueAttribute())
+    return false;
+
+  accessibility_object_.setValue(blink::WebString::fromUTF8(value));
+  return true;
 }
 
 bool WebAXObjectProxy::IsEqual(v8::Local<v8::Object> proxy) {

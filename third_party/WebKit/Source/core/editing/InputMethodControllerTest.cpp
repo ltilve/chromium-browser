@@ -7,6 +7,7 @@
 
 #include "core/dom/Element.h"
 #include "core/dom/Range.h"
+#include "core/editing/FrameSelection.h"
 #include "core/frame/LocalFrame.h"
 #include "core/html/HTMLDocument.h"
 #include "core/html/HTMLInputElement.h"
@@ -26,7 +27,7 @@ private:
     void SetUp() override;
 
     OwnPtr<DummyPageHolder> m_dummyPageHolder;
-    HTMLDocument* m_document;
+    RefPtrWillBePersistent<HTMLDocument> m_document;
 };
 
 void InputMethodControllerTest::SetUp()
@@ -106,6 +107,20 @@ TEST_F(InputMethodControllerTest, SetCompositionFromExistingText)
     EXPECT_EQ(5u, plainTextRange.end());
 }
 
+TEST_F(InputMethodControllerTest, SelectionOnConfirmExistingText)
+{
+    insertHTMLElement(
+        "<div id='sample' contenteditable='true'>hello world</div>", "sample");
+
+    Vector<CompositionUnderline> underlines;
+    underlines.append(CompositionUnderline(0, 5, Color(255, 0, 0), false, 0));
+    controller().setCompositionFromExistingText(underlines, 0, 5);
+
+    controller().confirmComposition();
+    EXPECT_EQ(0, frame().selection().start().computeOffsetInContainerNode());
+    EXPECT_EQ(0, frame().selection().end().computeOffsetInContainerNode());
+}
+
 TEST_F(InputMethodControllerTest, SetCompositionFromExistingTextWithCollapsedWhiteSpace)
 {
     // Creates a div with one leading new line char. The new line char is hidden
@@ -135,6 +150,19 @@ TEST_F(InputMethodControllerTest, SetCompositionFromExistingTextWithInvalidOffse
     controller().setCompositionFromExistingText(underlines, 7, 8);
 
     EXPECT_FALSE(controller().compositionRange());
+}
+
+TEST_F(InputMethodControllerTest, ConfirmPasswordComposition)
+{
+    HTMLInputElement* input = toHTMLInputElement(
+        insertHTMLElement("<input id='sample' type='password' size='24'>", "sample"));
+
+    Vector<CompositionUnderline> underlines;
+    underlines.append(CompositionUnderline(0, 5, Color(255, 0, 0), false, 0));
+    controller().setComposition("foo", underlines, 0, 3);
+    controller().confirmComposition();
+
+    EXPECT_STREQ("foo", input->value().utf8().data());
 }
 
 } // namespace blink

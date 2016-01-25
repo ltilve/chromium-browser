@@ -1,0 +1,438 @@
+build obj/device/device_unittests.actions_depends.stamp: stamp $
+    obj/base/libtest_support_base.a obj/mojo/libmojo_environment_chromium.a $
+    obj/testing/libgmock.a obj/testing/libgtest.a $
+    obj/third_party/mojo/libmojo_system_impl.a $
+    obj/third_party/mojo/libmojo_cpp_bindings.a $
+    obj/tools/usb_gadget/usb_gadget.actions_rules_copies.stamp $
+    obj/device/battery/libdevice_battery.a $
+    obj/device/battery/libdevice_battery_mojo_bindings.a $
+    obj/device/bluetooth/libdevice_bluetooth.a $
+    obj/device/bluetooth/libdevice_bluetooth_mocks.a $
+    obj/device/core/libdevice_core.a obj/device/core/libdevice_core_mocks.a $
+    obj/device/devices_app/libdevices_app_lib.a $
+    obj/device/nfc/libdevice_nfc.a obj/device/usb/libdevice_usb.a $
+    obj/device/usb/libdevice_usb_mocks.a obj/device/hid/libdevice_hid.a $
+    obj/device/hid/libdevice_hid_mocks.a $
+    obj/device/serial/libdevice_serial.a $
+    obj/device/serial/libdevice_serial_test_util.a obj/dbus/libdbus.a $
+    obj/base/allocator/liballocator.a obj/device/udev_linux/libudev_linux.a $
+    obj/base/libbase.a gen/base/debug/debugging_flags.h $
+    obj/base/libbase_static.a obj/third_party/modp_b64/libmodp_b64.a $
+    obj/base/third_party/dynamic_annotations/libdynamic_annotations.a $
+    obj/base/libsymbolize.a obj/base/libxdg_mime.a $
+    obj/third_party/libevent/libevent.a obj/base/libbase_i18n.a $
+    obj/third_party/icu/libicui18n.a obj/third_party/icu/libicuuc.a $
+    icudtl.dat icudtl.dat obj/third_party/libxml/libxml2.a $
+    obj/third_party/zlib/libchrome_zlib.a $
+    obj/third_party/zlib/libzlib_x86_simd.a $
+    obj/mojo/libmojo_environment_chromium_impl.a $
+    obj/mojo/libmojo_message_pump_lib.a $
+    obj/third_party/mojo/mojo_interface_bindings_mojom.actions_rules_copies.stamp $
+    obj/third_party/mojo/mojo_interface_bindings_mojom.actions_rules_copies.stamp $
+    obj/mojo/libmojo_system_impl2.a $
+    obj/third_party/mojo/mojo_interface_bindings_mojom.actions_rules_copies.stamp $
+    obj/third_party/protobuf/libprotobuf_lite.a obj/crypto/libcrcrypto.a $
+    obj/third_party/boringssl/libboringssl.a $
+    obj/third_party/boringssl/libboringssl.a obj/net/libnet.a $
+    obj/url/liburl_lib.a obj/net/libnet_quic_proto.a $
+    obj/base/libbase_prefs.a obj/sdch/libsdch.a $
+    obj/net/net_derived_sources.actions_rules_copies.stamp $
+    obj/net/net_resources.actions_rules_copies.stamp $
+    obj/build/linux/libgio.a obj/ui/base/libui_base.a $
+    obj/skia/skia.actions_depends.stamp obj/skia/libskia_library.a $
+    obj/skia/libskia_opts.a obj/skia/libskia_opts_ssse3.a $
+    obj/skia/libskia_opts_sse41.a obj/skia/libskia_opts_sse42.a $
+    obj/skia/libskia_opts_avx.a obj/skia/libskia_opts_avx2.a $
+    obj/third_party/sfntly/libsfntly.a obj/skia/libskia_chrome.a $
+    obj/ui/events/libevents.a obj/ui/gfx/libgfx.a $
+    obj/third_party/harfbuzz-ng/libharfbuzz-ng.a $
+    obj/third_party/libpng/libpng.a obj/ui/gfx/libgfx_geometry.a $
+    obj/third_party/libjpeg_turbo/libjpeg_turbo.a obj/ui/gfx/x/libgfx_x11.a $
+    obj/ui/events/libdom_keycode_converter.a obj/ui/events/libevents_base.a $
+    obj/ui/events/libgesture_detection.a $
+    obj/ui/events/devices/libevents_devices.a $
+    obj/ui/events/platform/libevents_platform.a $
+    obj/ui/resources/ui_resources.actions_rules_copies.stamp $
+    obj/ui/strings/ui_strings.actions_rules_copies.stamp $
+    obj/ui/events/platform/x11/libx11_events_platform.a $
+    obj/device/bluetooth/bluetooth_strings.actions_rules_copies.stamp $
+    obj/device/bluetooth/liburibeacon.a $
+    obj/device/devices_app/libdevice_usb_mojo_bindings_lib.a $
+    obj/device/devices_app/device_usb_mojo_bindings.actions_rules_copies.stamp $
+    obj/components/libdevice_event_log_component.a $
+    obj/third_party/libusb/libusb.a obj/build/linux/libudev.a $
+    obj/mojo/libmojo_application_base.a $
+    obj/mojo/libmojo_application_bindings.a $
+    obj/mojo/mojo_application_bindings_mojom.actions_rules_copies.stamp $
+    obj/mojo/network_service_bindings_mojom.actions_rules_copies.stamp $
+    obj/mojo/network_service_bindings_mojom.actions_rules_copies.stamp $
+    obj/mojo/libnetwork_service_bindings_lib.a $
+    obj/mojo/libnetwork_type_converters.a $
+    obj/mojo/libmojo_url_type_converters.a $
+    obj/device/serial/device_serial_mojo.actions_rules_copies.stamp $
+    obj/third_party/re2/libre2.a
+
+build obj/device/device_unittests.compile_depends.stamp: stamp $
+    obj/third_party/mojo/mojo_interface_bindings_mojom.actions_rules_copies.stamp $
+    obj/tools/usb_gadget/usb_gadget.actions_rules_copies.stamp $
+    obj/device/battery/device_battery_mojo_bindings.actions_rules_copies.stamp $
+    obj/device/battery/device_battery_mojo_bindings.actions_rules_copies.stamp $
+    obj/device/bluetooth/bluetooth_strings.actions_rules_copies.stamp $
+    obj/device/devices_app/devices_app_lib.compile_depends.stamp $
+    gen/device/usb/usb_ids_gen.cc $
+    obj/device/serial/device_serial_mojo.actions_rules_copies.stamp $
+    obj/device/serial/device_serial_mojo.actions_rules_copies.stamp $
+    obj/build/linux/udev.actions_rules_copies.stamp $
+    gen/base/debug/debugging_flags.h gen/base/debug/debugging_flags.h $
+    icudtl.dat icudtl.dat icudtl.dat $
+    obj/third_party/mojo/mojo_interface_bindings_mojom.actions_rules_copies.stamp $
+    obj/third_party/mojo/mojo_interface_bindings_mojom.actions_rules_copies.stamp $
+    obj/third_party/mojo/mojo_interface_bindings_mojom.actions_rules_copies.stamp $
+    obj/net/net.compile_depends.stamp $
+    obj/net/net_quic_proto.actions_rules_copies.stamp $
+    obj/net/net_derived_sources.actions_rules_copies.stamp $
+    obj/net/net_resources.actions_rules_copies.stamp $
+    obj/build/linux/gio.actions_rules_copies.stamp $
+    obj/ui/base/ui_base.compile_depends.stamp $
+    obj/third_party/libjpeg_turbo/libjpeg.actions_rules_copies.stamp $
+    obj/ui/resources/ui_resources.actions_rules_copies.stamp $
+    obj/ui/strings/ui_strings.actions_rules_copies.stamp $
+    obj/device/bluetooth/bluetooth_strings.actions_rules_copies.stamp $
+    obj/device/devices_app/device_usb_mojo_bindings.actions_rules_copies.stamp $
+    obj/device/devices_app/device_usb_mojo_bindings.actions_rules_copies.stamp $
+    obj/build/linux/udev.actions_rules_copies.stamp $
+    obj/mojo/mojo_application_base.compile_depends.stamp $
+    obj/mojo/mojo_application_bindings.compile_depends.stamp $
+    obj/mojo/mojo_application_bindings_mojom.actions_rules_copies.stamp $
+    obj/mojo/network_service_bindings_mojom.actions_rules_copies.stamp $
+    obj/mojo/network_service_bindings_mojom.actions_rules_copies.stamp $
+    obj/mojo/network_service_bindings_mojom.actions_rules_copies.stamp $
+    obj/mojo/network_service_bindings_mojom.actions_rules_copies.stamp $
+    obj/device/serial/device_serial_mojo.actions_rules_copies.stamp
+
+defines = -DV8_DEPRECATION_WARNINGS -DCLD_VERSION=2 -D_FILE_OFFSET_BITS=64 $
+    -DCHROMIUM_BUILD -DCR_CLANG_REVISION=255169-1 $
+    -DUI_COMPOSITOR_IMAGE_TRANSPORT -DUSE_AURA=1 -DUSE_ASH=1 -DUSE_PANGO=1 $
+    -DUSE_CAIRO=1 -DUSE_DEFAULT_RENDER_THEME=1 -DUSE_LIBJPEG_TURBO=1 $
+    -DUSE_X11=1 -DUSE_CLIPBOARD_AURAX11=1 -DENABLE_ONE_CLICK_SIGNIN $
+    -DENABLE_WEBRTC=1 -DENABLE_MEDIA_ROUTER=1 -DENABLE_PEPPER_CDMS $
+    -DENABLE_CONFIGURATION_POLICY -DENABLE_NOTIFICATIONS -DENABLE_HIDPI=1 $
+    -DENABLE_TOPCHROME_MD=1 -DUSE_UDEV -DDONT_EMBED_BUILD_METADATA $
+    -DFIELDTRIAL_TESTING_ENABLED -DENABLE_TASK_MANAGER=1 $
+    -DENABLE_EXTENSIONS=1 -DENABLE_PDF=1 -DENABLE_PLUGINS=1 $
+    -DENABLE_SESSION_SERVICE=1 -DENABLE_THEMES=1 -DENABLE_AUTOFILL_DIALOG=1 $
+    -DENABLE_BACKGROUND=1 -DENABLE_PRINTING=1 -DENABLE_BASIC_PRINTING=1 $
+    -DENABLE_PRINT_PREVIEW=1 -DENABLE_SPELLCHECK=1 $
+    -DENABLE_CAPTIVE_PORTAL_DETECTION=1 -DENABLE_APP_LIST=1 $
+    -DENABLE_SETTINGS_APP=1 -DENABLE_SUPERVISED_USERS=1 -DENABLE_MDNS=1 $
+    -DENABLE_SERVICE_DISCOVERY=1 -DV8_USE_EXTERNAL_STARTUP_DATA $
+    -DFULL_SAFE_BROWSING -DSAFE_BROWSING_CSD -DSAFE_BROWSING_DB_LOCAL $
+    -DGTEST_HAS_POSIX_RE=0 -DGTEST_LANG_CXX11=0 -DMOJO_USE_SYSTEM_IMPL $
+    -DUNIT_TEST -DGTEST_HAS_RTTI=0 -DUSE_LIBPCI=1 -DUSE_OPENSSL=1 $
+    -DUSE_GLIB=1 -DUSE_NSS_CERTS=1 -D__STDC_CONSTANT_MACROS $
+    -D__STDC_FORMAT_MACROS -DDYNAMIC_ANNOTATIONS_ENABLED=1 $
+    -DWTF_USE_DYNAMIC_ANNOTATIONS=1 -D_DEBUG -D_GLIBCXX_DEBUG=1
+includes = -Igen -I../.. -I../../skia/config -I../../testing/gmock/include $
+    -I../../testing/gtest/include
+cflags = -fstack-protector --param=ssp-buffer-size=4 -Werror -pthread $
+    -fno-strict-aliasing -Wall -Wno-unused-parameter $
+    -Wno-missing-field-initializers -fvisibility=hidden -pipe -fPIC $
+    -Wno-reserved-user-defined-literal -Xclang -load -Xclang $
+    /b/build/slave/publish_tarball/build/src/third_party/llvm-build/Release+Asserts/lib/libFindBadConstructs.so $
+    -Xclang -add-plugin -Xclang find-bad-constructs -Xclang $
+    -plugin-arg-find-bad-constructs -Xclang check-templates $
+    -fcolor-diagnostics $
+    -B/b/build/slave/publish_tarball/build/src/third_party/binutils/Linux_x64/Release/bin $
+    -Wheader-hygiene -Wno-char-subscripts $
+    -Wno-unneeded-internal-declaration -Wno-covered-switch-default $
+    -Wstring-conversion -Wno-c++11-narrowing -Wno-deprecated-register $
+    -Wno-inconsistent-missing-override -Wno-shift-negative-value $
+    -Wno-bitfield-width -pthread $
+    -I/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/include/glib-2.0 $
+    -I/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/lib/x86_64-linux-gnu/glib-2.0/include $
+    -I/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/include/dbus-1.0 $
+    -I/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/lib/x86_64-linux-gnu/dbus-1.0/include $
+    -m64 -march=x86-64 $
+    --sysroot=/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot $
+    -O0 -g -funwind-tables -gsplit-dwarf -Wno-undefined-bool-conversion $
+    -Wno-tautological-undefined-compare
+cflags_c = 
+cflags_cc = -fno-exceptions -fno-rtti -fno-threadsafe-statics $
+    -fvisibility-inlines-hidden -Wsign-compare -std=gnu++11
+arflags = 
+
+build $
+    obj/device/battery/device_unittests.battery_status_manager_linux_unittest.o: $
+    cxx ../../device/battery/battery_status_manager_linux_unittest.cc || $
+    obj/device/device_unittests.compile_depends.stamp
+build $
+    obj/device/battery/device_unittests.battery_status_service_unittest.o: $
+    cxx ../../device/battery/battery_status_service_unittest.cc || $
+    obj/device/device_unittests.compile_depends.stamp
+build obj/device/bluetooth/device_unittests.bluetooth_adapter_unittest.o: $
+    cxx ../../device/bluetooth/bluetooth_adapter_unittest.cc || $
+    obj/device/device_unittests.compile_depends.stamp
+build $
+    obj/device/bluetooth/device_unittests.bluetooth_advertisement_unittest.o: $
+    cxx ../../device/bluetooth/bluetooth_advertisement_unittest.cc || $
+    obj/device/device_unittests.compile_depends.stamp
+build obj/device/bluetooth/device_unittests.bluetooth_device_unittest.o: $
+    cxx ../../device/bluetooth/bluetooth_device_unittest.cc || $
+    obj/device/device_unittests.compile_depends.stamp
+build $
+    obj/device/bluetooth/device_unittests.bluetooth_discovery_filter_unittest.o: $
+    cxx ../../device/bluetooth/bluetooth_discovery_filter_unittest.cc || $
+    obj/device/device_unittests.compile_depends.stamp
+build $
+    obj/device/bluetooth/device_unittests.bluetooth_gatt_characteristic_unittest.o: $
+    cxx ../../device/bluetooth/bluetooth_gatt_characteristic_unittest.cc || $
+    obj/device/device_unittests.compile_depends.stamp
+build $
+    obj/device/bluetooth/device_unittests.bluetooth_gatt_service_unittest.o: $
+    cxx ../../device/bluetooth/bluetooth_gatt_service_unittest.cc || $
+    obj/device/device_unittests.compile_depends.stamp
+build obj/device/bluetooth/device_unittests.bluetooth_uuid_unittest.o: cxx $
+    ../../device/bluetooth/bluetooth_uuid_unittest.cc || $
+    obj/device/device_unittests.compile_depends.stamp
+build obj/device/bluetooth/test/device_unittests.bluetooth_test.o: cxx $
+    ../../device/bluetooth/test/bluetooth_test.cc || $
+    obj/device/device_unittests.compile_depends.stamp
+build $
+    obj/device/bluetooth/test/device_unittests.test_bluetooth_adapter_observer.o: $
+    cxx ../../device/bluetooth/test/test_bluetooth_adapter_observer.cc || $
+    obj/device/device_unittests.compile_depends.stamp
+build obj/device/devices_app/usb/device_unittests.device_impl_unittest.o: $
+    cxx ../../device/devices_app/usb/device_impl_unittest.cc || $
+    obj/device/device_unittests.compile_depends.stamp
+build $
+    obj/device/devices_app/usb/device_unittests.device_manager_impl_unittest.o: $
+    cxx ../../device/devices_app/usb/device_manager_impl_unittest.cc || $
+    obj/device/device_unittests.compile_depends.stamp
+build $
+    obj/device/devices_app/usb/device_unittests.fake_permission_provider.o: $
+    cxx ../../device/devices_app/usb/fake_permission_provider.cc || $
+    obj/device/device_unittests.compile_depends.stamp
+build obj/device/hid/device_unittests.hid_connection_unittest.o: cxx $
+    ../../device/hid/hid_connection_unittest.cc || $
+    obj/device/device_unittests.compile_depends.stamp
+build obj/device/hid/device_unittests.hid_device_filter_unittest.o: cxx $
+    ../../device/hid/hid_device_filter_unittest.cc || $
+    obj/device/device_unittests.compile_depends.stamp
+build obj/device/hid/device_unittests.hid_report_descriptor_unittest.o: cxx $
+    ../../device/hid/hid_report_descriptor_unittest.cc || $
+    obj/device/device_unittests.compile_depends.stamp
+build obj/device/hid/device_unittests.input_service_linux_unittest.o: cxx $
+    ../../device/hid/input_service_linux_unittest.cc || $
+    obj/device/device_unittests.compile_depends.stamp
+build obj/device/hid/device_unittests.test_report_descriptors.o: cxx $
+    ../../device/hid/test_report_descriptors.cc || $
+    obj/device/device_unittests.compile_depends.stamp
+build obj/device/nfc/device_unittests.nfc_ndef_record_unittest.o: cxx $
+    ../../device/nfc/nfc_ndef_record_unittest.cc || $
+    obj/device/device_unittests.compile_depends.stamp
+build obj/device/serial/device_unittests.data_sink_unittest.o: cxx $
+    ../../device/serial/data_sink_unittest.cc || $
+    obj/device/device_unittests.compile_depends.stamp
+build obj/device/serial/device_unittests.data_source_unittest.o: cxx $
+    ../../device/serial/data_source_unittest.cc || $
+    obj/device/device_unittests.compile_depends.stamp
+build obj/device/serial/device_unittests.serial_connection_unittest.o: cxx $
+    ../../device/serial/serial_connection_unittest.cc || $
+    obj/device/device_unittests.compile_depends.stamp
+build $
+    obj/device/serial/device_unittests.serial_io_handler_posix_unittest.o: $
+    cxx ../../device/serial/serial_io_handler_posix_unittest.cc || $
+    obj/device/device_unittests.compile_depends.stamp
+build obj/device/serial/device_unittests.serial_service_unittest.o: cxx $
+    ../../device/serial/serial_service_unittest.cc || $
+    obj/device/device_unittests.compile_depends.stamp
+build obj/device/test/device_unittests.run_all_unittests.o: cxx $
+    ../../device/test/run_all_unittests.cc || $
+    obj/device/device_unittests.compile_depends.stamp
+build obj/device/test/device_unittests.test_device_client.o: cxx $
+    ../../device/test/test_device_client.cc || $
+    obj/device/device_unittests.compile_depends.stamp
+build obj/device/test/device_unittests.usb_test_gadget_impl.o: cxx $
+    ../../device/test/usb_test_gadget_impl.cc || $
+    obj/device/device_unittests.compile_depends.stamp
+build obj/device/usb/device_unittests.usb_descriptors_unittest.o: cxx $
+    ../../device/usb/usb_descriptors_unittest.cc || $
+    obj/device/device_unittests.compile_depends.stamp
+build obj/device/usb/device_unittests.usb_device_filter_unittest.o: cxx $
+    ../../device/usb/usb_device_filter_unittest.cc || $
+    obj/device/device_unittests.compile_depends.stamp
+build obj/device/usb/device_unittests.usb_device_handle_unittest.o: cxx $
+    ../../device/usb/usb_device_handle_unittest.cc || $
+    obj/device/device_unittests.compile_depends.stamp
+build obj/device/usb/device_unittests.usb_ids_unittest.o: cxx $
+    ../../device/usb/usb_ids_unittest.cc || $
+    obj/device/device_unittests.compile_depends.stamp
+build obj/device/usb/device_unittests.usb_service_unittest.o: cxx $
+    ../../device/usb/usb_service_unittest.cc || $
+    obj/device/device_unittests.compile_depends.stamp
+build obj/device/usb/device_unittests.webusb_descriptors_unittest.o: cxx $
+    ../../device/usb/webusb_descriptors_unittest.cc || $
+    obj/device/device_unittests.compile_depends.stamp
+build $
+    obj/device/bluetooth/device_unittests.bluetooth_adapter_profile_bluez_unittest.o: $
+    cxx ../../device/bluetooth/bluetooth_adapter_profile_bluez_unittest.cc $
+    || obj/device/device_unittests.compile_depends.stamp
+build $
+    obj/device/bluetooth/device_unittests.bluetooth_advertisement_bluez_unittest.o: $
+    cxx ../../device/bluetooth/bluetooth_advertisement_bluez_unittest.cc || $
+    obj/device/device_unittests.compile_depends.stamp
+build $
+    obj/device/bluetooth/device_unittests.bluetooth_audio_sink_bluez_unittest.o: $
+    cxx ../../device/bluetooth/bluetooth_audio_sink_bluez_unittest.cc || $
+    obj/device/device_unittests.compile_depends.stamp
+build obj/device/bluetooth/device_unittests.bluetooth_bluez_unittest.o: cxx $
+    ../../device/bluetooth/bluetooth_bluez_unittest.cc || $
+    obj/device/device_unittests.compile_depends.stamp
+build $
+    obj/device/bluetooth/device_unittests.bluetooth_gatt_bluez_unittest.o: $
+    cxx ../../device/bluetooth/bluetooth_gatt_bluez_unittest.cc || $
+    obj/device/device_unittests.compile_depends.stamp
+build $
+    obj/device/bluetooth/device_unittests.bluetooth_socket_bluez_unittest.o: $
+    cxx ../../device/bluetooth/bluetooth_socket_bluez_unittest.cc || $
+    obj/device/device_unittests.compile_depends.stamp
+build obj/device/udev_linux/device_unittests.udev_unittest.o: cxx $
+    ../../device/udev_linux/udev_unittest.cc || $
+    obj/device/device_unittests.compile_depends.stamp
+
+ldflags = -Wl,-z,now -Wl,-z,relro -Wl,--fatal-warnings -Wl,-z,defs -pthread $
+    -Wl,-z,noexecstack -fPIC -fuse-ld=gold $
+    -B/b/build/slave/publish_tarball/build/src/third_party/binutils/Linux_x64/Release/bin $
+    -Wl,--disable-new-dtags -L. $
+    -Wl,-uhb_ft_face_create_cached,-uhb_glib_get_unicode_funcs $
+    -Wl,-uIsHeapProfilerRunning,-uProfilerStart $
+    -Wl,-u_Z21InitialMallocHook_NewPKvj,-u_Z22InitialMallocHook_MMapPKvS0_jiiix,-u_Z22InitialMallocHook_SbrkPKvi $
+    -Wl,-u_Z21InitialMallocHook_NewPKvm,-u_Z22InitialMallocHook_MMapPKvS0_miiil,-u_Z22InitialMallocHook_SbrkPKvl $
+    -Wl,-u_ZN15HeapLeakChecker12IgnoreObjectEPKv,-u_ZN15HeapLeakChecker14UnIgnoreObjectEPKv $
+    -m64 $
+    --sysroot=/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot $
+    -L/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/lib/x86_64-linux-gnu $
+    -Wl,-rpath-link=/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/lib/x86_64-linux-gnu $
+    -L/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/lib/x86_64-linux-gnu $
+    -Wl,-rpath-link=/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/lib/x86_64-linux-gnu $
+    -L/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/lib/gcc/x86_64-linux-gnu/4.6 $
+    -Wl,-rpath-link=/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/lib/gcc/x86_64-linux-gnu/4.6 $
+    -L/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/lib $
+    -Wl,-rpath-link=/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/lib $
+    -Wl,--detect-odr-violations -Wl,--icf=all
+libs =  -lrt -ldl -lgmodule-2.0 -lgobject-2.0 -lgthread-2.0 -lglib-2.0 -lm $
+    -ldbus-1 -lnss3 -lnssutil3 -lsmime3 -lplds4 -lplc4 -lnspr4 -lgconf-2 $
+    -lgio-2.0 -lresolv -lfontconfig -lfreetype -lpangocairo-1.0 -lcairo $
+    -lpangoft2-1.0 -lpango-1.0 -lX11 -lXi -lXcursor -lXext -lXfixes $
+    -lXrender -lXss
+build device_unittests: link $
+    obj/device/battery/device_unittests.battery_status_manager_linux_unittest.o $
+    obj/device/battery/device_unittests.battery_status_service_unittest.o $
+    obj/device/bluetooth/device_unittests.bluetooth_adapter_unittest.o $
+    obj/device/bluetooth/device_unittests.bluetooth_advertisement_unittest.o $
+    obj/device/bluetooth/device_unittests.bluetooth_device_unittest.o $
+    obj/device/bluetooth/device_unittests.bluetooth_discovery_filter_unittest.o $
+    obj/device/bluetooth/device_unittests.bluetooth_gatt_characteristic_unittest.o $
+    obj/device/bluetooth/device_unittests.bluetooth_gatt_service_unittest.o $
+    obj/device/bluetooth/device_unittests.bluetooth_uuid_unittest.o $
+    obj/device/bluetooth/test/device_unittests.bluetooth_test.o $
+    obj/device/bluetooth/test/device_unittests.test_bluetooth_adapter_observer.o $
+    obj/device/devices_app/usb/device_unittests.device_impl_unittest.o $
+    obj/device/devices_app/usb/device_unittests.device_manager_impl_unittest.o $
+    obj/device/devices_app/usb/device_unittests.fake_permission_provider.o $
+    obj/device/hid/device_unittests.hid_connection_unittest.o $
+    obj/device/hid/device_unittests.hid_device_filter_unittest.o $
+    obj/device/hid/device_unittests.hid_report_descriptor_unittest.o $
+    obj/device/hid/device_unittests.input_service_linux_unittest.o $
+    obj/device/hid/device_unittests.test_report_descriptors.o $
+    obj/device/nfc/device_unittests.nfc_ndef_record_unittest.o $
+    obj/device/serial/device_unittests.data_sink_unittest.o $
+    obj/device/serial/device_unittests.data_source_unittest.o $
+    obj/device/serial/device_unittests.serial_connection_unittest.o $
+    obj/device/serial/device_unittests.serial_io_handler_posix_unittest.o $
+    obj/device/serial/device_unittests.serial_service_unittest.o $
+    obj/device/test/device_unittests.run_all_unittests.o $
+    obj/device/test/device_unittests.test_device_client.o $
+    obj/device/test/device_unittests.usb_test_gadget_impl.o $
+    obj/device/usb/device_unittests.usb_descriptors_unittest.o $
+    obj/device/usb/device_unittests.usb_device_filter_unittest.o $
+    obj/device/usb/device_unittests.usb_device_handle_unittest.o $
+    obj/device/usb/device_unittests.usb_ids_unittest.o $
+    obj/device/usb/device_unittests.usb_service_unittest.o $
+    obj/device/usb/device_unittests.webusb_descriptors_unittest.o $
+    obj/device/bluetooth/device_unittests.bluetooth_adapter_profile_bluez_unittest.o $
+    obj/device/bluetooth/device_unittests.bluetooth_advertisement_bluez_unittest.o $
+    obj/device/bluetooth/device_unittests.bluetooth_audio_sink_bluez_unittest.o $
+    obj/device/bluetooth/device_unittests.bluetooth_bluez_unittest.o $
+    obj/device/bluetooth/device_unittests.bluetooth_gatt_bluez_unittest.o $
+    obj/device/bluetooth/device_unittests.bluetooth_socket_bluez_unittest.o $
+    obj/device/udev_linux/device_unittests.udev_unittest.o $
+    obj/base/libtest_support_base.a obj/mojo/libmojo_environment_chromium.a $
+    obj/testing/libgmock.a obj/testing/libgtest.a $
+    obj/third_party/mojo/libmojo_system_impl.a $
+    obj/third_party/mojo/libmojo_cpp_bindings.a $
+    obj/device/battery/libdevice_battery.a $
+    obj/device/battery/libdevice_battery_mojo_bindings.a $
+    obj/device/bluetooth/libdevice_bluetooth.a $
+    obj/device/bluetooth/libdevice_bluetooth_mocks.a $
+    obj/device/core/libdevice_core.a obj/device/core/libdevice_core_mocks.a $
+    obj/device/devices_app/libdevices_app_lib.a $
+    obj/device/nfc/libdevice_nfc.a obj/device/usb/libdevice_usb.a $
+    obj/device/usb/libdevice_usb_mocks.a obj/device/hid/libdevice_hid.a $
+    obj/device/hid/libdevice_hid_mocks.a $
+    obj/device/serial/libdevice_serial.a $
+    obj/device/serial/libdevice_serial_test_util.a obj/dbus/libdbus.a $
+    obj/base/allocator/liballocator.a obj/device/udev_linux/libudev_linux.a $
+    obj/base/libbase.a obj/base/libbase_static.a $
+    obj/third_party/modp_b64/libmodp_b64.a $
+    obj/base/third_party/dynamic_annotations/libdynamic_annotations.a $
+    obj/base/libsymbolize.a obj/base/libxdg_mime.a $
+    obj/third_party/libevent/libevent.a obj/base/libbase_i18n.a $
+    obj/third_party/icu/libicui18n.a obj/third_party/icu/libicuuc.a $
+    obj/third_party/libxml/libxml2.a obj/third_party/zlib/libchrome_zlib.a $
+    obj/third_party/zlib/libzlib_x86_simd.a $
+    obj/mojo/libmojo_environment_chromium_impl.a $
+    obj/mojo/libmojo_message_pump_lib.a obj/mojo/libmojo_system_impl2.a $
+    obj/third_party/protobuf/libprotobuf_lite.a obj/crypto/libcrcrypto.a $
+    obj/third_party/boringssl/libboringssl.a obj/net/libnet.a $
+    obj/url/liburl_lib.a obj/net/libnet_quic_proto.a $
+    obj/base/libbase_prefs.a obj/sdch/libsdch.a obj/build/linux/libgio.a $
+    obj/ui/base/libui_base.a obj/skia/libskia_library.a $
+    obj/skia/libskia_opts.a obj/skia/libskia_opts_ssse3.a $
+    obj/skia/libskia_opts_sse41.a obj/skia/libskia_opts_sse42.a $
+    obj/skia/libskia_opts_avx.a obj/skia/libskia_opts_avx2.a $
+    obj/third_party/sfntly/libsfntly.a obj/skia/libskia_chrome.a $
+    obj/ui/events/libevents.a obj/ui/gfx/libgfx.a $
+    obj/third_party/harfbuzz-ng/libharfbuzz-ng.a $
+    obj/third_party/libpng/libpng.a obj/ui/gfx/libgfx_geometry.a $
+    obj/third_party/libjpeg_turbo/libjpeg_turbo.a obj/ui/gfx/x/libgfx_x11.a $
+    obj/ui/events/libdom_keycode_converter.a obj/ui/events/libevents_base.a $
+    obj/ui/events/libgesture_detection.a $
+    obj/ui/events/devices/libevents_devices.a $
+    obj/ui/events/platform/libevents_platform.a $
+    obj/ui/events/platform/x11/libx11_events_platform.a $
+    obj/device/bluetooth/liburibeacon.a $
+    obj/device/devices_app/libdevice_usb_mojo_bindings_lib.a $
+    obj/components/libdevice_event_log_component.a $
+    obj/third_party/libusb/libusb.a obj/build/linux/libudev.a $
+    obj/mojo/libmojo_application_base.a $
+    obj/mojo/libmojo_application_bindings.a $
+    obj/mojo/libnetwork_service_bindings_lib.a $
+    obj/mojo/libnetwork_type_converters.a $
+    obj/mojo/libmojo_url_type_converters.a obj/third_party/re2/libre2.a | $
+    gen/base/debug/debugging_flags.h $
+    obj/third_party/mojo/mojo_interface_bindings_mojom.actions_rules_copies.stamp $
+    obj/third_party/boringssl/libboringssl.a $
+    obj/device/bluetooth/bluetooth_strings.actions_rules_copies.stamp $
+    obj/device/serial/device_serial_mojo.actions_rules_copies.stamp $
+    obj/ui/resources/ui_resources.actions_rules_copies.stamp $
+    obj/net/net_derived_sources.actions_rules_copies.stamp $
+    obj/ui/strings/ui_strings.actions_rules_copies.stamp icudtl.dat $
+    obj/skia/skia.actions_depends.stamp $
+    obj/net/net_resources.actions_rules_copies.stamp $
+    obj/device/devices_app/device_usb_mojo_bindings.actions_rules_copies.stamp $
+    obj/mojo/network_service_bindings_mojom.actions_rules_copies.stamp $
+    obj/mojo/mojo_application_bindings_mojom.actions_rules_copies.stamp $
+    obj/tools/usb_gadget/usb_gadget.actions_rules_copies.stamp || $
+    obj/device/device_unittests.actions_depends.stamp
+  ld = $ldxx

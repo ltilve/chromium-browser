@@ -19,8 +19,8 @@ class MediaPermission {
  public:
   MediaPermission(ContentSettingsType content_type,
                   content::MediaStreamRequestType request_type,
-                  const GURL& origin,
-                  const std::string& device_id,
+                  const GURL& requesting_origin,
+                  const GURL& embedding_origin,
                   Profile* profile);
 
   // Returns the status of the permission. If the setting is
@@ -29,13 +29,20 @@ class MediaPermission {
   ContentSetting GetPermissionStatus(
       content::MediaStreamRequestResult* denial_reason) const;
 
+  // Returns the status of the permission as with GetPermissionStatus but also
+  // checks that the specified |device_id| is an available device.
+  ContentSetting GetPermissionStatusWithDeviceRequired(
+      const std::string& device_id,
+      content::MediaStreamRequestResult* denial_reason) const;
+
  private:
   ContentSetting GetStoredContentSetting() const;
-  bool HasAvailableDevices() const;
+  bool HasAvailableDevices(const std::string& device_id) const;
 
   const ContentSettingsType content_type_;
   const content::MediaStreamRequestType request_type_;
-  const GURL origin_;
+  const GURL requesting_origin_;
+  const GURL embedding_origin_;
   const std::string device_id_;
   Profile* const profile_;
 

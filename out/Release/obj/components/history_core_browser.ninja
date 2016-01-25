@@ -1,0 +1,259 @@
+build obj/components/history_core_browser.actions_depends.stamp: stamp $
+    obj/skia/skia.actions_depends.stamp obj/sync/sync.actions_depends.stamp $
+    obj/sync/libsync_proto.a
+
+build obj/components/history_core_browser.compile_depends.stamp: stamp $
+    obj/sync/sync.compile_depends.stamp $
+    obj/sync/sync_proto.actions_rules_copies.stamp
+
+defines = -DV8_DEPRECATION_WARNINGS -DCLD_VERSION=2 -D_FILE_OFFSET_BITS=64 $
+    -DCHROMIUM_BUILD -DCR_CLANG_REVISION=255169-1 $
+    -DUI_COMPOSITOR_IMAGE_TRANSPORT -DUSE_AURA=1 -DUSE_ASH=1 -DUSE_PANGO=1 $
+    -DUSE_CAIRO=1 -DUSE_DEFAULT_RENDER_THEME=1 -DUSE_LIBJPEG_TURBO=1 $
+    -DUSE_X11=1 -DUSE_CLIPBOARD_AURAX11=1 -DENABLE_ONE_CLICK_SIGNIN $
+    -DENABLE_WEBRTC=1 -DENABLE_MEDIA_ROUTER=1 -DENABLE_PEPPER_CDMS $
+    -DENABLE_CONFIGURATION_POLICY -DENABLE_NOTIFICATIONS -DENABLE_HIDPI=1 $
+    -DENABLE_TOPCHROME_MD=1 -DUSE_UDEV -DDONT_EMBED_BUILD_METADATA $
+    -DFIELDTRIAL_TESTING_ENABLED -DENABLE_TASK_MANAGER=1 $
+    -DENABLE_EXTENSIONS=1 -DENABLE_PDF=1 -DENABLE_PLUGINS=1 $
+    -DENABLE_SESSION_SERVICE=1 -DENABLE_THEMES=1 -DENABLE_AUTOFILL_DIALOG=1 $
+    -DENABLE_BACKGROUND=1 -DENABLE_PRINTING=1 -DENABLE_BASIC_PRINTING=1 $
+    -DENABLE_PRINT_PREVIEW=1 -DENABLE_SPELLCHECK=1 $
+    -DENABLE_CAPTIVE_PORTAL_DETECTION=1 -DENABLE_APP_LIST=1 $
+    -DENABLE_SETTINGS_APP=1 -DENABLE_SUPERVISED_USERS=1 -DENABLE_MDNS=1 $
+    -DENABLE_SERVICE_DISCOVERY=1 -DV8_USE_EXTERNAL_STARTUP_DATA $
+    -DFULL_SAFE_BROWSING -DSAFE_BROWSING_CSD -DSAFE_BROWSING_DB_LOCAL $
+    -DGL_GLEXT_PROTOTYPES -DMOJO_USE_SYSTEM_IMPL -DTOOLKIT_VIEWS=1 $
+    -DU_USING_ICU_NAMESPACE=0 -DU_ENABLE_DYLOAD=0 -DU_STATIC_IMPLEMENTATION $
+    -DSK_SUPPORT_GPU=1 -DSK_IGNORE_LINEONLY_AA_CONVEX_PATH_OPTS $
+    -DPROTOBUF_USE_DLLS -DGOOGLE_PROTOBUF_NO_RTTI $
+    -DGOOGLE_PROTOBUF_NO_STATIC_INITIALIZER -DUSE_LIBPCI=1 -DUSE_OPENSSL=1 $
+    -DUSE_GLIB=1 -DUSE_NSS_CERTS=1 -D__STDC_CONSTANT_MACROS $
+    -D__STDC_FORMAT_MACROS -DNDEBUG -DNVALGRIND $
+    -DDYNAMIC_ANNOTATIONS_ENABLED=0
+includes = -Igen -I../.. -I../../skia/config -I../../third_party/khronos $
+    -I../../gpu -Igen/angle -I../../third_party/WebKit/Source $
+    -I../../third_party/icu/source/common $
+    -I../../third_party/icu/source/i18n $
+    -I../../third_party/skia/include/core $
+    -I../../third_party/skia/include/effects $
+    -I../../third_party/skia/include/pdf $
+    -I../../third_party/skia/include/gpu $
+    -I../../third_party/skia/include/lazy $
+    -I../../third_party/skia/include/pathops $
+    -I../../third_party/skia/include/pipe $
+    -I../../third_party/skia/include/ports $
+    -I../../third_party/skia/include/utils -I../../skia/ext $
+    -Igen/protoc_out -I../../third_party/protobuf $
+    -I../../third_party/protobuf/src
+cflags = -fstack-protector --param=ssp-buffer-size=4 -Werror -pthread $
+    -fno-strict-aliasing -Wall -Wno-unused-parameter $
+    -Wno-missing-field-initializers -fvisibility=hidden -pipe -fPIC $
+    -Wno-reserved-user-defined-literal -Xclang -load -Xclang $
+    /b/build/slave/publish_tarball/build/src/third_party/llvm-build/Release+Asserts/lib/libFindBadConstructs.so $
+    -Xclang -add-plugin -Xclang find-bad-constructs -Xclang $
+    -plugin-arg-find-bad-constructs -Xclang check-templates $
+    -fcolor-diagnostics $
+    -B/b/build/slave/publish_tarball/build/src/third_party/binutils/Linux_x64/Release/bin $
+    -Wheader-hygiene -Wno-char-subscripts $
+    -Wno-unneeded-internal-declaration -Wno-covered-switch-default $
+    -Wstring-conversion -Wno-c++11-narrowing -Wno-deprecated-register $
+    -Wno-inconsistent-missing-override -Wno-shift-negative-value $
+    -Wno-bitfield-width -pthread $
+    -I/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/include/glib-2.0 $
+    -I/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot/usr/lib/x86_64-linux-gnu/glib-2.0/include $
+    -m64 -march=x86-64 $
+    --sysroot=/b/build/slave/publish_tarball/build/src/build/linux/debian_wheezy_amd64-sysroot $
+    -O2 -fno-ident -fdata-sections -ffunction-sections -funwind-tables
+cflags_c = 
+cflags_cc = -fno-exceptions -fno-rtti -fno-threadsafe-statics $
+    -fvisibility-inlines-hidden -Wsign-compare -std=gnu++11
+arflags = 
+
+build $
+    obj/components/history/core/browser/history_core_browser.delete_directive_handler.o: $
+    cxx ../../components/history/core/browser/delete_directive_handler.cc $
+    || obj/components/history_core_browser.compile_depends.stamp
+build $
+    obj/components/history/core/browser/history_core_browser.download_database.o: $
+    cxx ../../components/history/core/browser/download_database.cc || $
+    obj/components/history_core_browser.compile_depends.stamp
+build $
+    obj/components/history/core/browser/history_core_browser.download_row.o: $
+    cxx ../../components/history/core/browser/download_row.cc || $
+    obj/components/history_core_browser.compile_depends.stamp
+build $
+    obj/components/history/core/browser/history_core_browser.download_types.o: $
+    cxx ../../components/history/core/browser/download_types.cc || $
+    obj/components/history_core_browser.compile_depends.stamp
+build $
+    obj/components/history/core/browser/history_core_browser.expire_history_backend.o: $
+    cxx ../../components/history/core/browser/expire_history_backend.cc || $
+    obj/components/history_core_browser.compile_depends.stamp
+build $
+    obj/components/history/core/browser/history_core_browser.history_backend.o: $
+    cxx ../../components/history/core/browser/history_backend.cc || $
+    obj/components/history_core_browser.compile_depends.stamp
+build $
+    obj/components/history/core/browser/history_core_browser.history_constants.o: $
+    cxx ../../components/history/core/browser/history_constants.cc || $
+    obj/components/history_core_browser.compile_depends.stamp
+build $
+    obj/components/history/core/browser/history_core_browser.history_database.o: $
+    cxx ../../components/history/core/browser/history_database.cc || $
+    obj/components/history_core_browser.compile_depends.stamp
+build $
+    obj/components/history/core/browser/history_core_browser.history_database_params.o: $
+    cxx ../../components/history/core/browser/history_database_params.cc || $
+    obj/components/history_core_browser.compile_depends.stamp
+build $
+    obj/components/history/core/browser/history_core_browser.history_delete_directives_data_type_controller.o: $
+    cxx $
+    ../../components/history/core/browser/history_delete_directives_data_type_controller.cc $
+    || obj/components/history_core_browser.compile_depends.stamp
+build $
+    obj/components/history/core/browser/history_core_browser.history_match.o: $
+    cxx ../../components/history/core/browser/history_match.cc || $
+    obj/components/history_core_browser.compile_depends.stamp
+build $
+    obj/components/history/core/browser/history_core_browser.history_model_worker.o: $
+    cxx ../../components/history/core/browser/history_model_worker.cc || $
+    obj/components/history_core_browser.compile_depends.stamp
+build $
+    obj/components/history/core/browser/history_core_browser.history_service.o: $
+    cxx ../../components/history/core/browser/history_service.cc || $
+    obj/components/history_core_browser.compile_depends.stamp
+build $
+    obj/components/history/core/browser/history_core_browser.history_types.o: $
+    cxx ../../components/history/core/browser/history_types.cc || $
+    obj/components/history_core_browser.compile_depends.stamp
+build $
+    obj/components/history/core/browser/history_core_browser.in_memory_database.o: $
+    cxx ../../components/history/core/browser/in_memory_database.cc || $
+    obj/components/history_core_browser.compile_depends.stamp
+build $
+    obj/components/history/core/browser/history_core_browser.in_memory_history_backend.o: $
+    cxx ../../components/history/core/browser/in_memory_history_backend.cc $
+    || obj/components/history_core_browser.compile_depends.stamp
+build $
+    obj/components/history/core/browser/history_core_browser.keyword_search_term.o: $
+    cxx ../../components/history/core/browser/keyword_search_term.cc || $
+    obj/components/history_core_browser.compile_depends.stamp
+build $
+    obj/components/history/core/browser/history_core_browser.page_usage_data.o: $
+    cxx ../../components/history/core/browser/page_usage_data.cc || $
+    obj/components/history_core_browser.compile_depends.stamp
+build $
+    obj/components/history/core/browser/history_core_browser.thumbnail_database.o: $
+    cxx ../../components/history/core/browser/thumbnail_database.cc || $
+    obj/components/history_core_browser.compile_depends.stamp
+build obj/components/history/core/browser/history_core_browser.top_sites.o: $
+    cxx ../../components/history/core/browser/top_sites.cc || $
+    obj/components/history_core_browser.compile_depends.stamp
+build $
+    obj/components/history/core/browser/history_core_browser.top_sites_backend.o: $
+    cxx ../../components/history/core/browser/top_sites_backend.cc || $
+    obj/components/history_core_browser.compile_depends.stamp
+build $
+    obj/components/history/core/browser/history_core_browser.top_sites_cache.o: $
+    cxx ../../components/history/core/browser/top_sites_cache.cc || $
+    obj/components/history_core_browser.compile_depends.stamp
+build $
+    obj/components/history/core/browser/history_core_browser.top_sites_database.o: $
+    cxx ../../components/history/core/browser/top_sites_database.cc || $
+    obj/components/history_core_browser.compile_depends.stamp
+build $
+    obj/components/history/core/browser/history_core_browser.top_sites_impl.o: $
+    cxx ../../components/history/core/browser/top_sites_impl.cc || $
+    obj/components/history_core_browser.compile_depends.stamp
+build $
+    obj/components/history/core/browser/history_core_browser.typed_url_change_processor.o: $
+    cxx ../../components/history/core/browser/typed_url_change_processor.cc $
+    || obj/components/history_core_browser.compile_depends.stamp
+build $
+    obj/components/history/core/browser/history_core_browser.typed_url_data_type_controller.o: $
+    cxx $
+    ../../components/history/core/browser/typed_url_data_type_controller.cc $
+    || obj/components/history_core_browser.compile_depends.stamp
+build $
+    obj/components/history/core/browser/history_core_browser.typed_url_model_associator.o: $
+    cxx ../../components/history/core/browser/typed_url_model_associator.cc $
+    || obj/components/history_core_browser.compile_depends.stamp
+build $
+    obj/components/history/core/browser/history_core_browser.typed_url_syncable_service.o: $
+    cxx ../../components/history/core/browser/typed_url_syncable_service.cc $
+    || obj/components/history_core_browser.compile_depends.stamp
+build $
+    obj/components/history/core/browser/history_core_browser.url_database.o: $
+    cxx ../../components/history/core/browser/url_database.cc || $
+    obj/components/history_core_browser.compile_depends.stamp
+build obj/components/history/core/browser/history_core_browser.url_row.o: $
+    cxx ../../components/history/core/browser/url_row.cc || $
+    obj/components/history_core_browser.compile_depends.stamp
+build obj/components/history/core/browser/history_core_browser.url_utils.o: $
+    cxx ../../components/history/core/browser/url_utils.cc || $
+    obj/components/history_core_browser.compile_depends.stamp
+build $
+    obj/components/history/core/browser/history_core_browser.visit_database.o: $
+    cxx ../../components/history/core/browser/visit_database.cc || $
+    obj/components/history_core_browser.compile_depends.stamp
+build $
+    obj/components/history/core/browser/history_core_browser.visit_delegate.o: $
+    cxx ../../components/history/core/browser/visit_delegate.cc || $
+    obj/components/history_core_browser.compile_depends.stamp
+build $
+    obj/components/history/core/browser/history_core_browser.visit_filter.o: $
+    cxx ../../components/history/core/browser/visit_filter.cc || $
+    obj/components/history_core_browser.compile_depends.stamp
+build $
+    obj/components/history/core/browser/history_core_browser.visit_tracker.o: $
+    cxx ../../components/history/core/browser/visit_tracker.cc || $
+    obj/components/history_core_browser.compile_depends.stamp
+build $
+    obj/components/history/core/browser/history_core_browser.visitsegment_database.o: $
+    cxx ../../components/history/core/browser/visitsegment_database.cc || $
+    obj/components/history_core_browser.compile_depends.stamp
+build $
+    obj/components/history/core/browser/history_core_browser.web_history_service.o: $
+    cxx ../../components/history/core/browser/web_history_service.cc || $
+    obj/components/history_core_browser.compile_depends.stamp
+
+build obj/components/libhistory_core_browser.a: alink_thin $
+    obj/components/history/core/browser/history_core_browser.delete_directive_handler.o $
+    obj/components/history/core/browser/history_core_browser.download_database.o $
+    obj/components/history/core/browser/history_core_browser.download_row.o $
+    obj/components/history/core/browser/history_core_browser.download_types.o $
+    obj/components/history/core/browser/history_core_browser.expire_history_backend.o $
+    obj/components/history/core/browser/history_core_browser.history_backend.o $
+    obj/components/history/core/browser/history_core_browser.history_constants.o $
+    obj/components/history/core/browser/history_core_browser.history_database.o $
+    obj/components/history/core/browser/history_core_browser.history_database_params.o $
+    obj/components/history/core/browser/history_core_browser.history_delete_directives_data_type_controller.o $
+    obj/components/history/core/browser/history_core_browser.history_match.o $
+    obj/components/history/core/browser/history_core_browser.history_model_worker.o $
+    obj/components/history/core/browser/history_core_browser.history_service.o $
+    obj/components/history/core/browser/history_core_browser.history_types.o $
+    obj/components/history/core/browser/history_core_browser.in_memory_database.o $
+    obj/components/history/core/browser/history_core_browser.in_memory_history_backend.o $
+    obj/components/history/core/browser/history_core_browser.keyword_search_term.o $
+    obj/components/history/core/browser/history_core_browser.page_usage_data.o $
+    obj/components/history/core/browser/history_core_browser.thumbnail_database.o $
+    obj/components/history/core/browser/history_core_browser.top_sites.o $
+    obj/components/history/core/browser/history_core_browser.top_sites_backend.o $
+    obj/components/history/core/browser/history_core_browser.top_sites_cache.o $
+    obj/components/history/core/browser/history_core_browser.top_sites_database.o $
+    obj/components/history/core/browser/history_core_browser.top_sites_impl.o $
+    obj/components/history/core/browser/history_core_browser.typed_url_change_processor.o $
+    obj/components/history/core/browser/history_core_browser.typed_url_data_type_controller.o $
+    obj/components/history/core/browser/history_core_browser.typed_url_model_associator.o $
+    obj/components/history/core/browser/history_core_browser.typed_url_syncable_service.o $
+    obj/components/history/core/browser/history_core_browser.url_database.o $
+    obj/components/history/core/browser/history_core_browser.url_row.o $
+    obj/components/history/core/browser/history_core_browser.url_utils.o $
+    obj/components/history/core/browser/history_core_browser.visit_database.o $
+    obj/components/history/core/browser/history_core_browser.visit_delegate.o $
+    obj/components/history/core/browser/history_core_browser.visit_filter.o $
+    obj/components/history/core/browser/history_core_browser.visit_tracker.o $
+    obj/components/history/core/browser/history_core_browser.visitsegment_database.o $
+    obj/components/history/core/browser/history_core_browser.web_history_service.o $
+    || obj/components/history_core_browser.actions_depends.stamp

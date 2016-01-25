@@ -1,0 +1,9 @@
+build obj/media/cast/cast_testing_tools.actions_depends.stamp: stamp $
+    cast_receiver_app cast_sender_app cast_simulator udp_proxy
+
+build obj/media/cast/cast_testing_tools.compile_depends.stamp: stamp $
+    obj/media/cast/cast_receiver_app.compile_depends.stamp $
+    obj/media/cast/cast_sender_app.compile_depends.stamp $
+    obj/media/cast/cast_simulator.compile_depends.stamp $
+    obj/media/cast/udp_proxy.compile_depends.stamp
+

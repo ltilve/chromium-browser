@@ -6,14 +6,13 @@ package org.chromium.chrome.browser.toolbar;
 
 import android.content.Context;
 
+import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.base.ApplicationStatus;
 import org.chromium.chrome.R;
-import org.chromium.chrome.browser.Tab;
 import org.chromium.chrome.browser.ntp.NewTabPage;
-import org.chromium.chrome.browser.tab.BackgroundContentViewHelper;
 import org.chromium.chrome.browser.tab.ChromeTab;
+import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.toolbar.ToolbarModel.ToolbarModelDelegate;
-import org.chromium.chrome.browser.util.FeatureUtilities;
 import org.chromium.content_public.browser.WebContents;
 
 /**
@@ -23,7 +22,6 @@ class ToolbarModelImpl extends ToolbarModel implements ToolbarDataProvider, Tool
 
     private ChromeTab mTab;
     private boolean mIsIncognito;
-    private int mLoadProgress;
     private int mPrimaryColor;
     private boolean mIsUsingBrandColor;
 
@@ -38,12 +36,6 @@ class ToolbarModelImpl extends ToolbarModel implements ToolbarDataProvider, Tool
     public WebContents getActiveWebContents() {
         ChromeTab tab = getTab();
         if (tab == null) return null;
-        BackgroundContentViewHelper backgroundViewHelper = tab.getBackgroundContentViewHelper();
-        boolean hasPendingBackgroundPage =
-                backgroundViewHelper != null && backgroundViewHelper.hasPendingBackgroundPage();
-        if (hasPendingBackgroundPage) {
-            return backgroundViewHelper.getContentViewCore().getWebContents();
-        }
         return tab.getWebContents();
     }
 
@@ -84,31 +76,15 @@ class ToolbarModelImpl extends ToolbarModel implements ToolbarDataProvider, Tool
     }
 
     /**
-     * Set the load progress for the current tab.
-     * @param progress The loading progress for the tab.
-     */
-    public void setLoadProgress(int progress) {
-        assert progress >= 0;
-        assert progress <= 100;
-
-        mLoadProgress = progress;
-    }
-
-    @Override
-    public int getLoadProgress() {
-        return mLoadProgress;
-    }
-
-    /**
      * Sets the primary color and changes the state for isUsingBrandColor.
      * @param color The primary color for the current tab.
      */
     public void setPrimaryColor(int color) {
         mPrimaryColor = color;
         Context context = ApplicationStatus.getApplicationContext();
-        mIsUsingBrandColor = FeatureUtilities.isDocumentMode(context)
-                && !isIncognito()
-                && mPrimaryColor != context.getResources().getColor(R.color.default_primary_color)
+        mIsUsingBrandColor = !isIncognito()
+                && mPrimaryColor != ApiCompatibilityUtils.getColor(context.getResources(),
+                        R.color.default_primary_color)
                 && getTab() != null && !getTab().isNativePage();
     }
 

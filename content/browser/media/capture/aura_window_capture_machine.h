@@ -8,7 +8,7 @@
 #include "base/memory/scoped_ptr.h"
 #include "base/memory/weak_ptr.h"
 #include "base/timer/timer.h"
-#include "media/capture/screen_capture_device_core.h"
+#include "media/capture/content/screen_capture_device_core.h"
 #include "ui/aura/window.h"
 #include "ui/aura/window_observer.h"
 #include "ui/base/cursor/cursors_aura.h"
@@ -28,8 +28,7 @@ class ReadbackYUVInterface;
 class AuraWindowCaptureMachine
     : public media::VideoCaptureMachine,
       public aura::WindowObserver,
-      public ui::CompositorObserver,
-      public base::SupportsWeakPtr<AuraWindowCaptureMachine> {
+      public ui::CompositorObserver {
  public:
   AuraWindowCaptureMachine();
   ~AuraWindowCaptureMachine() override;
@@ -44,7 +43,7 @@ class AuraWindowCaptureMachine
   void OnWindowBoundsChanged(aura::Window* window,
                              const gfx::Rect& old_bounds,
                              const gfx::Rect& new_bounds) override;
-  void OnWindowDestroyed(aura::Window* window) override;
+  void OnWindowDestroying(aura::Window* window) override;
   void OnWindowAddedToRootWindow(aura::Window* window) override;
   void OnWindowRemovingFromRootWindow(aura::Window* window,
                                       aura::Window* new_root) override;
@@ -128,6 +127,12 @@ class AuraWindowCaptureMachine
   // TODO(jiayl): Remove power_save_blocker_ when there is an API to keep the
   // screen from sleeping for the drive-by web.
   scoped_ptr<PowerSaveBlocker> power_save_blocker_;
+
+  // WeakPtrs are used for the asynchronous capture callbacks passed to external
+  // modules.  They are only valid on the UI thread and become invalidated
+  // immediately when InternalStop() is called to ensure that no more captured
+  // frames will be delivered to the client.
+  base::WeakPtrFactory<AuraWindowCaptureMachine> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(AuraWindowCaptureMachine);
 };
