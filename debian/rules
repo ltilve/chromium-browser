@@ -219,8 +219,6 @@ FFMPEG_EXTRA_GYP_DEFINES = ffmpeg_branding=Chrome
 
 # Precise doesn't set some settings.
 ifeq (,$(filter 12.04%,$(UBUNTU_DIST)))
-# enable compile-time dependency on gnome-keyring
-GYP_DEFINES += use_gnome_keyring=1 linux_link_gnome_keyring=1
 # controlling the use of GConf (the classic GNOME configuration
 # and GIO, which contains GSettings (the new GNOME config system)
 GYP_DEFINES += use_gconf=0 use_gio=1

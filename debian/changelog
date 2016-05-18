@@ -1,13 +1,38 @@
-chromium-browser (49.0.2623.108-0ubuntu1.1233) xenial; urgency=medium
+chromium-browser (50.0.2661.102-0ubuntu1.1242) yakkety; urgency=medium
 
-  * Upstream release 49.0.2623.108:
-    - CVE-2016-1646: Out-of-bounds read in V8.
-    - CVE-2016-1647: Use-after-free in Navigation.
-    - CVE-2016-1648: Use-after-free in Extensions.
-    - CVE-2016-1649: Buffer overflow in libANGLE.
-    - CVE-2016-1650: Various fixes from internal audits, fuzzing and other
+  * Upstream release 50.0.2661.102:
+    - CVE-2016-1667: Same origin bypass in DOM.
+    - CVE-2016-1668: Same origin bypass in Blink V8 bindings.
+    - CVE-2016-1669: Buffer overflow in V8.
+    - CVE-2016-1670: Race condition in loader.
+    - CVE-2016-1671: Directory traversal using the file scheme on Android.
+  * Upstream release 50.0.2661.94:
+    - CVE-2016-1660: Out-of-bounds write in Blink.
+    - CVE-2016-1661: Memory corruption in cross-process frames.
+    - CVE-2016-1662: Use-after-free in extensions.
+    - CVE-2016-1663: Use-after-free in Blink’s V8 bindings.
+    - CVE-2016-1664: Address bar spoofing.
+    - CVE-2016-1665: Information leak in V8.
+    - CVE-2016-1666: Various fixes from internal audits, fuzzing and other
       initiatives.
-    - Multiple vulnerabilities in V8 fixed at the tip of the 4.9 branch
-      (currently 4.9.385.33).
+  * Upstream release 50.0.2661.75:
+    - CVE-2016-1652: Universal XSS in extension bindings.
+    - CVE-2016-1653: Out-of-bounds write in V8.
+    - CVE-2016-1651: Out-of-bounds read in Pdfium JPEG2000 decoding.
+    - CVE-2016-1654: Uninitialized memory read in media.
+    - CVE-2016-1655: Use-after-free related to extensions.
+    - CVE-2016-1656: Android downloaded file path restriction bypass.
+    - CVE-2016-1657: Address bar spoofing.
+    - CVE-2016-1658: Potential leak of sensitive information to malicious
+      extensions.
+    - CVE-2015-1659: Various fixes from internal audits, fuzzing and other
+      initiatives.
+  * debian/patches/seccomp-allow-set-robust-list: pass through syscall
+    set_robust_list. glibc nptl thread creation uses it.
+  * debian/rules: use new libsecret way of contacting keyring.
+  * debian/patches/blink-platform-export-class: avoid Trusty bug where
+    WebKit Platform class vtable not found at link time.
+  * debian/apport/chromium-browser.py: Handle case when crash and no
+    chromium directory exists. Still report errors in apport.
 
- -- Chad MILLER <chad.miller@canonical.com>  Thu, 24 Mar 2016 16:52:52 -0400
+ -- Chad MILLER <chad.miller@canonical.com>  Fri, 13 May 2016 10:52:23 -0400
