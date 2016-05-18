@@ -16,10 +16,12 @@ Build-Depends:
 	python,
 	bison,
 	gperf,
+	clang (>= 3.5),
 	libpulse-dev,
 	libcups2-dev | libcupsys2-dev,
 	libasound2-dev,
 	libnss3-dev,
+	mesa-common-dev,
 	libgles2-mesa-dev [armel armhf],
 	libpci-dev,
 	libxtst-dev,
@@ -36,6 +38,7 @@ Build-Depends:
 	libxkbcommon-dev,
 	libssl-dev,
 	libpam0g-dev,
+	libffi-dev,
 	chrpath,
 	xdg-utils
 Standards-Version: 3.9.6
