@@ -1,3 +1,9 @@
+chromium-browser (50.0.2661.102-0ubuntu1.1242endless1) eos; urgency=medium
+
+  * Rebase to Ubuntu's Chromium 50
+
+ -- Michael Catanzaro <mcatanzaro@igalia.com>  Sat, 21 May 2016 18:44:12 -0500
+
 chromium-browser (50.0.2661.102-0ubuntu1.1242) yakkety; urgency=medium
 
   * Upstream release 50.0.2661.102:
