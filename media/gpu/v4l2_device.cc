@@ -89,21 +89,35 @@ uint32_t V4L2Device::VideoPixelFormatToV4L2PixFmt(VideoPixelFormat format) {
 // static
 uint32_t V4L2Device::VideoCodecProfileToV4L2PixFmt(VideoCodecProfile profile,
                                                    bool slice_based) {
+  if (slice_based){
+    LOG(FATAL) << "Endless does not support the V4L2 slice video decode accelerator!";
+    return 0;
+  }
+
   if (profile >= H264PROFILE_MIN && profile <= H264PROFILE_MAX) {
+#if 0
     if (slice_based)
       return V4L2_PIX_FMT_H264_SLICE;
     else
+#endif
       return V4L2_PIX_FMT_H264;
   } else if (profile >= VP8PROFILE_MIN && profile <= VP8PROFILE_MAX) {
+#if 0
     if (slice_based)
       return V4L2_PIX_FMT_VP8_FRAME;
     else
+#endif
       return V4L2_PIX_FMT_VP8;
   } else if (profile >= VP9PROFILE_MIN && profile <= VP9PROFILE_MAX) {
+#if 0
     if (slice_based)
       return V4L2_PIX_FMT_VP9_FRAME;
     else
       return V4L2_PIX_FMT_VP9;
+#endif
+
+    LOG(FATAL) << "Endless does not support the V4L2 VP9 accelerator yet";
+    return 0;
   } else {
     LOG(FATAL) << "Add more cases as needed";
     return 0;
