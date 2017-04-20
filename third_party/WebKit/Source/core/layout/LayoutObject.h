@@ -677,10 +677,11 @@ class CORE_EXPORT LayoutObject : public ImageResourceObserver,
 
   // Returns the smallest rectangle enclosing all of the painted content
   // respecting clipping, masking, filters, opacity, stroke-width and markers.
-  // The local SVG coordinate space is the space where localSVGTransform
-  // applies. For SVG objects defining viewports (e.g.
-  // LayoutSVGViewportContainer and  LayoutSVGResourceMarker), the local SVG
-  // coordinate space is the viewport space.
+  // For most SVG objects, the local SVG coordinate space is the space where
+  // localSVGTransform applies. For SVG objects defining viewports (e.g.
+  // LayoutSVGForeignObject, LayoutSVGViewportContainer,
+  // LayoutSVGResourceMarker), the local SVG coordinate space is the viewport
+  // space.
   virtual FloatRect visualRectInLocalSVGCoordinates() const;
 
   // This returns the transform applying to the local SVG coordinate space,
@@ -812,10 +813,7 @@ class CORE_EXPORT LayoutObject : public ImageResourceObserver,
     return isOutOfFlowPositioned() && !style()->hasAutoClip();
   }
   bool hasOverflowClip() const { return m_bitfields.hasOverflowClip(); }
-  bool hasClipRelatedProperty() const {
-    return hasClip() || hasOverflowClip() || hasClipPath() ||
-           style()->containsPaint();
-  }
+  bool hasClipRelatedProperty() const;
 
   bool hasTransformRelatedProperty() const {
     return m_bitfields.hasTransformRelatedProperty();
