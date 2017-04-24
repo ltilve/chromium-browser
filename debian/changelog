@@ -1,4 +1,9 @@
-chromium-browser (57.0.2987.98-0endless1) eos; urgency=medium
+chromium-browser (57.0.2987.133-0endless1) eos; urgency=medium
+
+  * Upstream release: 57.0.2987.133
+
+ -- Lorenzo Tilve <ltilve@igalia.com>  Mon, 24 Apr 2017 12:51:41 +0100
+
 
   * Upstream release: 57.0.2987.98
 
