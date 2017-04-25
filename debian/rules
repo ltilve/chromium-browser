@@ -93,6 +93,7 @@ common_defines+=\
 	use_pulseaudio=true \
 	use_sysroot=false \
 	use_system_harfbuzz=false \
+	use_vulcanize=false \
 	use_system_libjpeg=false \
 	use_system_sqlite=false \
 	rtc_enable_protobuf=false \
