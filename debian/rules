@@ -130,8 +130,8 @@ else ifeq (armhf,$(DEB_HOST_ARCH))
 common_defines += target_cpu="arm"
 common_defines += arm_use_neon=true
 common_defines += arm_float_abi="hard" arm_use_thumb=true
-else ifeq (arm64,$(DEB_HOST_ARCH))
 common_defines += use_v4l2_codec=true
+else ifeq (arm64,$(DEB_HOST_ARCH))
 common_defines += target_cpu="arm64"
 else ifeq (i386,$(DEB_HOST_ARCH))
 common_defines += target_cpu="x86"
