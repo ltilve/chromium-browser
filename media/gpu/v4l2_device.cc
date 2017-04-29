@@ -135,7 +135,9 @@ std::vector<VideoCodecProfile> V4L2Device::V4L2PixFmtToVideoCodecProfiles(
 
   switch (pix_fmt) {
     case V4L2_PIX_FMT_H264:
+#if 0
     case V4L2_PIX_FMT_H264_SLICE:
+#endif
       if (is_encoder) {
         // TODO(posciak): need to query the device for supported H.264 profiles,
         // for now choose Main as a sensible default.
@@ -148,7 +150,9 @@ std::vector<VideoCodecProfile> V4L2Device::V4L2PixFmtToVideoCodecProfiles(
       break;
 
     case V4L2_PIX_FMT_VP8:
+#if 0
     case V4L2_PIX_FMT_VP8_FRAME:
+#endif
       min_profile = VP8PROFILE_MIN;
       max_profile = VP8PROFILE_MAX;
       break;
@@ -188,9 +192,10 @@ uint32_t V4L2Device::V4L2PixFmtToDrmFormat(uint32_t format) {
 
     case V4L2_PIX_FMT_RGB32:
       return DRM_FORMAT_ARGB8888;
-
+#if 0
     case V4L2_PIX_FMT_MT21:
       return DRM_FORMAT_MT21;
+#endif
 
     default:
       DVLOG(1) << "Unrecognized format " << std::hex << "0x" << format;
